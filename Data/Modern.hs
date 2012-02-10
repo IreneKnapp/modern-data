@@ -17,6 +17,8 @@ module Data.Modern
    runModernDeserializationFromFile,
    runModernSerializationToByteString,
    runModernSerializationToFile,
+   serializeData,
+   deserializeSchema,
    ensureTypeInContext)
   where
 
@@ -35,6 +37,7 @@ import qualified Data.Map as Map
 import Data.String
 import Data.Typeable
 import Data.Word
+import Prelude hiding (read)
 
 
 class (Monad m, MonadSerial underlying)
@@ -246,7 +249,7 @@ textualSchema theTypes =
       visitType depth (ModernNamedType typeName contentType) =
 	"Named "
 	++ visitTypeName typeName ++ " "
-	++ visitType (depth + 1) contentType
+	++ visitType depth contentType
 	++ ";"
       visitTypeName (ModernTypeName name) =
 	UTF8.toString name
@@ -266,7 +269,10 @@ textualSchema theTypes =
       block depth items =
 	"{\n"
 	++ (concat
-	     $ map (\item -> take (depth * 2) (repeat ' ') ++ item ++ "\n")
+	     $ map (\item ->
+		      take ((depth + 1) * 2) (repeat ' ')
+		      ++ item
+		      ++ "\n")
 	           items)
 	++ "}"
   in intercalate "\n" $ map (visitType 0) theTypes
@@ -597,6 +603,77 @@ serializeData items = do
   mapM_ ensureTypeInContext $ map dataType items
 
 
+deserializeSchema :: ModernDeserialization [ModernType]
+deserializeSchema = do
+  a <- deserializeOneCommand
+  b <- deserializeOneCommand
+  return [a, b]
+
+
+deserializeOneCommand :: ModernDeserialization ModernType
+deserializeOneCommand = do
+  context <- getContext
+  let commandAttachments = modernContextCommands context
+      knownTypes = modernContextTypes context
+  maybeCommandType <- inputCommandBits commandAttachments
+  case maybeCommandType of
+    Nothing -> return undefined -- TODO
+    Just ModernCommandTypePad -> do
+      return undefined -- TODO
+    Just ModernCommandTypeAssume -> do
+      return undefined -- TODO
+    Just ModernCommandTypeAttach -> do
+      return undefined -- TODO
+    Just ModernCommandTypeSplit -> do
+      return undefined -- TODO
+    Just ModernCommandTypeDetach -> do
+      return undefined -- TODO
+    Just ModernCommandTypeBeginConfiguration -> do
+      return undefined -- TODO
+    Just ModernCommandTypeEndConfiguration -> do
+      return undefined -- TODO
+    Just ModernCommandTypeListType -> do
+      return undefined -- TODO
+    Just ModernCommandTypeTupleType -> do
+      return undefined -- TODO
+    Just ModernCommandTypeUnionType -> do
+      return undefined -- TODO
+    Just ModernCommandTypeStructureType -> do
+      nFields <- inputDataWord64
+      let loop soFar i = do
+	    if i == nFields
+	      then return soFar
+	      else do
+		fieldName <- inputDataUTF8
+		fieldTypeHash <- inputDataHash
+		let fieldType =
+		      case Map.lookup (ModernHash fieldTypeHash) knownTypes of
+		        Nothing -> undefined -- TODO
+		        Just knownType -> knownType
+		loop (soFar ++ [(ModernFieldName fieldName, fieldType)])
+		     (i + 1)
+      fields <- loop [] 0
+      let theType = ModernStructureType fields
+	  theHash = computeTypeHash theType
+          newKnownTypes = Map.insert theHash theType knownTypes
+	  newContext = context {
+			   modernContextTypes = newKnownTypes
+			 }
+      putContext newContext
+      return theType
+    Just ModernCommandTypeNamedType -> do
+      typeName <- inputDataUTF8
+      contentTypeHash <- inputDataHash
+      let contentType =
+	    case Map.lookup (ModernHash contentTypeHash) knownTypes of
+	      Nothing -> error "A" -- TODO
+	      Just knownType -> knownType
+	  theType = ModernNamedType (ModernTypeName typeName) contentType
+      return theType
+    Just (ModernCommandTypeData theType) -> do
+      return undefined -- TODO
+
+
 dataType :: ModernData -> ModernType
 dataType (ModernDataInt8 _) = ModernInt8Type
 dataType (ModernDataInt16 _) = ModernInt16Type
@@ -686,7 +763,7 @@ commandStructureType
 commandStructureType fields = do
   bitpath <- getCommandBitpath ModernCommandTypeStructureType
   outputCommandBits bitpath
-  outputDataInt $ length fields
+  outputDataWord64 $ genericLength fields
   mapM_ (\(ModernFieldName fieldName, ModernHash fieldTypeHash) -> do
            outputDataUTF8 fieldName
            outputData fieldTypeHash)
@@ -697,10 +774,11 @@ commandNamedType
   :: ModernTypeName
   -> ModernHash
   -> ModernSerialization ()
-commandNamedType (ModernTypeName name) contentType = do
+commandNamedType (ModernTypeName name) (ModernHash contentTypeHash) = do
   bitpath <- getCommandBitpath ModernCommandTypeNamedType
   outputCommandBits bitpath
   outputDataUTF8 name
+  outputData contentTypeHash
 
 
 getCommandBitpath
@@ -719,6 +797,51 @@ getCommandBitpath commandType = do
     Just bits -> return bits
 
 
+inputCommandBits
+  :: ModernAttachments object
+  -> ModernDeserialization (Maybe object)
+inputCommandBits attachments = MakeModernDeserialization $ do
+  source <- lift $ deserializeWord
+    :: StateT ModernContext (ContextualDeserialization Endianness) Word64
+  let loop attachments i = do
+	case attachments of
+          Attached object -> return $ Just object
+  	  Unattached -> return Nothing
+  	  Split { } -> do
+            let nextLevel = case shiftR source i .&. 0x1 of
+	                      0 -> splitZero attachments
+			      1 -> splitOne attachments
+	    loop nextLevel (i + 1)
+  loop attachments 0
+
+
+inputDataHash
+  :: ModernDeserialization ByteString
+inputDataHash = MakeModernDeserialization $ do
+  lift $ read 16
+
+
+inputDataWord64
+  :: ModernDeserialization Word64
+inputDataWord64 = MakeModernDeserialization $ do
+  lift $ deserializeWord
+
+
+inputDataUTF8
+  :: ModernDeserialization ByteString
+inputDataUTF8 = MakeModernDeserialization $ do
+  let loop soFar = do
+	next <- lift $ read 8
+	if 0x00 == (BS.head $ BS.drop 7 next)
+	  then do
+	    let validNext =
+	          (BS.pack . reverse . dropWhile (== 0x00) . reverse
+		   . BS.unpack) next
+	    return $ BS.concat [soFar, validNext]
+	  else loop $ BS.concat [soFar, next]
+  loop BS.empty
+
+
 outputCommandBits
   :: ModernBitpath
   -> ModernSerialization ()
@@ -733,11 +856,11 @@ outputData byteString = MakeModernSerialization $ do
   lift $ write byteString
 
 
-outputDataInt
-  :: Int
+outputDataWord64
+  :: Word64
   -> ModernSerialization ()
-outputDataInt int = MakeModernSerialization $ do
-  lift $ serializeWord (fromIntegral int :: Word64)
+outputDataWord64 word64 = MakeModernSerialization $ do
+  lift $ serializeWord word64
 
 
 outputDataUTF8
