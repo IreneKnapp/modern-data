@@ -9,6 +9,7 @@ module Data.Modern
    ModernFieldName,
    ModernContext,
    ModernFailure(..),
+   textualSchema,
    fromString,
    initialContext,
    computeTypeHash,
@@ -207,6 +208,68 @@ data ModernFailure
 instance Show ModernFailure where
   show (ModernFailure string) = string
 instance SerializationFailure ModernFailure
+
+
+textualSchema :: [ModernType] -> String
+textualSchema theTypes =
+  let visitType _ ModernInt8Type = "Int8;"
+      visitType _ ModernInt16Type = "Int16;"
+      visitType _ ModernInt32Type = "Int32;"
+      visitType _ ModernInt64Type = "Int64;"
+      visitType _ ModernWord8Type = "Word8;"
+      visitType _ ModernWord16Type = "Word16;"
+      visitType _ ModernWord32Type = "Word32;"
+      visitType _ ModernWord64Type = "Word64;"
+      visitType _ ModernFloatType = "Float;"
+      visitType _ ModernDoubleType = "Double;"
+      visitType _ ModernUTF8Type = "UTF8;"
+      visitType _ ModernBlobType = "Blob;"
+      visitType depth (ModernListType contentType) =
+	"List " ++ block depth [visitType (depth + 1) contentType]
+      visitType depth (ModernTupleType contentTypes) =
+	"Tuple " ++ block depth (map (visitType (depth + 1)) contentTypes)
+      visitType depth (ModernUnionType attachments) =
+	"Union "
+	++ block depth
+		 (map (\(bitpath, contentType) ->
+			 visitBitpath bitpath ++ " "
+			 ++ visitType (depth + 1) contentType)
+		      (attachmentsToList attachments))
+      visitType depth (ModernStructureType fields) =
+	"Structure "
+	++ block depth
+		 (map (\(fieldName, contentType) ->
+		 	  visitFieldName fieldName
+			  ++ " "
+			  ++ visitType (depth + 1) contentType)
+		      fields)
+      visitType depth (ModernNamedType typeName contentType) =
+	"Named "
+	++ visitTypeName typeName ++ " "
+	++ visitType (depth + 1) contentType
+	++ ";"
+      visitTypeName (ModernTypeName name) =
+	UTF8.toString name
+      visitFieldName (ModernFieldName name) =
+	UTF8.toString name
+      visitBitpath (ModernBitpath count source) =
+	let single i =
+	      case shiftR source (fromIntegral $ count - i - 1) .&. 0x1 of
+		0 -> "0"
+		1 -> "1"
+	    loop soFar i =
+	      if i == count
+		then soFar
+		else loop (soFar ++ (single i)) (i + 1)
+        in loop "" 0
+      block _ [onlyItem] = "{ " ++ onlyItem ++ " }"
+      block depth items =
+	"{\n"
+	++ (concat
+	     $ map (\item -> take (depth * 2) (repeat ' ') ++ item ++ "\n")
+	           items)
+	++ "}"
+  in intercalate "\n" $ map (visitType 0) theTypes
 
 
 initialTypes :: Map ModernHash ModernType
