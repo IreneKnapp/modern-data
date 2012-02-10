@@ -95,8 +95,10 @@ data ModernType
   | ModernUTF8Type
   | ModernBlobType
   | ModernListType ModernType
-  | ModernUnionType ModernTypeName (ModernAttachments ModernType)
-  | ModernStructureType ModernTypeName [(ModernFieldName, ModernType)]
+  | ModernTupleType [ModernType]
+  | ModernUnionType (ModernAttachments ModernType)
+  | ModernStructureType [(ModernFieldName, ModernType)]
+  | ModernNamedType ModernTypeName ModernType
   deriving (Eq, Show)
 
 
@@ -114,7 +116,9 @@ data ModernData
   | ModernDataUTF8 ByteString
   | ModernDataBlob ByteString
   | ModernDataList (Array Int ModernData)
-  | ModernDataStructure ModernTypeName [(ModernFieldName, ModernData)]
+  | ModernDataTuple [ModernData]
+  | ModernDataStructure [(ModernFieldName, ModernData)]
+  | ModernDataNamed ModernTypeName ModernData
 
 
 data ModernCommandType
@@ -126,8 +130,10 @@ data ModernCommandType
   | ModernCommandTypeBeginConfiguration
   | ModernCommandTypeEndConfiguration
   | ModernCommandTypeListType
+  | ModernCommandTypeTupleType
   | ModernCommandTypeUnionType
   | ModernCommandTypeStructureType
+  | ModernCommandTypeNamedType
   | ModernCommandTypeData ModernType
   deriving (Eq, Show)
 
@@ -140,8 +146,10 @@ data ModernCommand
   | ModernCommandBeginConfiguration ModernTypeName
   | ModernCommandEndConfiguration
   | ModernCommandListType ModernHash
-  | ModernCommandUnionType ModernTypeName (ModernAttachments ModernHash)
-  | ModernCommandStructureType ModernTypeName [(ModernFieldName, ModernHash)]
+  | ModernCommandTupleType [ModernHash]
+  | ModernCommandUnionType (ModernAttachments ModernHash)
+  | ModernCommandStructureType [(ModernFieldName, ModernHash)]
+  | ModernCommandNamedType ModernTypeName ModernHash
   | ModernCommandData ModernData
 
 
@@ -201,6 +209,24 @@ instance Show ModernFailure where
 instance SerializationFailure ModernFailure
 
 
+initialTypes :: Map ModernHash ModernType
+initialTypes =
+  Map.fromList
+   $ map (\theType -> (computeTypeHash theType, theType))
+         [ModernInt8Type,
+          ModernInt16Type,
+          ModernInt32Type,
+          ModernInt64Type,
+          ModernWord8Type,
+          ModernWord16Type,
+          ModernWord32Type,
+          ModernWord64Type,
+          ModernFloatType,
+          ModernDoubleType,
+          ModernUTF8Type,
+          ModernBlobType]
+
+
 {-
 1000 -> Assume
 1001 -> Detach
@@ -237,21 +263,27 @@ initialCommandAttachments =
               Split {
                   splitZero =
                     Split {
-                        splitZero = Attached ModernCommandTypePad,
-                        splitOne =
+                        splitZero =
                           Split {
                               splitZero =
                                 Attached ModernCommandTypeBeginConfiguration,
                               splitOne =
                                 Attached ModernCommandTypeEndConfiguration
+                            },
+                        splitOne =
+                          Split {
+                              splitZero =
+                                Attached ModernCommandTypePad,
+                              splitOne =
+                                Attached ModernCommandTypeNamedType
                             }
                       },
                   splitOne =
                     Split {
                         splitZero =
                           Split {
-                              splitZero = Unattached,
-                              splitOne = Attached ModernCommandTypeListType
+                              splitZero = Attached ModernCommandTypeListType,
+                              splitOne = Attached ModernCommandTypeTupleType
                             },
                         splitOne =
                           Split {
@@ -269,7 +301,7 @@ initialCommandAttachments =
 initialContext :: ModernContext
 initialContext =
   ModernContext {
-      modernContextTypes = Map.empty,
+      modernContextTypes = initialTypes,
       modernContextCommands = initialCommandAttachments
     }
 
@@ -394,10 +426,14 @@ computeTypeByteString modernType =
             BS.concat [UTF8.fromString "List(",
                        typeHelper contentType,
                        UTF8.fromString ")"]
-          ModernUnionType (ModernTypeName name) possibilities ->
+          ModernTupleType contentTypes ->
+            BS.concat [UTF8.fromString "Tuple(",
+                       BS.intercalate
+                        (UTF8.fromString ",")
+                        $ map typeHelper contentTypes,
+                       UTF8.fromString ")"]
+          ModernUnionType possibilities ->
             BS.concat [UTF8.fromString "Union(",
-                       name,
-                       BS.pack [0x00],
                        BS.intercalate
                         (UTF8.fromString ",")
                         $ map (\(bitpath, possibilityType) ->
@@ -405,10 +441,8 @@ computeTypeByteString modernType =
                                              typeHelper possibilityType])
                               $ attachmentsToList possibilities,
                        UTF8.fromString ")"]
-          ModernStructureType (ModernTypeName name) fields ->
+          ModernStructureType fields ->
             BS.concat [UTF8.fromString "Structure(",
-                       name,
-                       BS.pack [0x00],
                        BS.intercalate
                         (UTF8.fromString ",")
                         $ map (\(ModernFieldName fieldName, fieldType) ->
@@ -416,6 +450,12 @@ computeTypeByteString modernType =
                                              BS.pack [0x00],
                                              typeHelper fieldType])
                               fields,
+                       UTF8.fromString ")"]
+          ModernNamedType (ModernTypeName name) contentType ->
+            BS.concat [UTF8.fromString "Named(",
+                       name,
+                       BS.pack [0x00],
+                       typeHelper contentType,
                        UTF8.fromString ")"]
       bitpathHelper bitpath =
         UTF8.fromString
@@ -509,11 +549,14 @@ dataType (ModernDataUTF8 _) = ModernUTF8Type
 dataType (ModernDataBlob _) = ModernBlobType
 dataType (ModernDataList theArray) =
   ModernListType $ dataType $ theArray ! (fst $ bounds theArray)
-dataType (ModernDataStructure typeName fields) =
-  ModernStructureType typeName
-                      $ map (\(fieldName, fieldData) ->
+dataType (ModernDataTuple theValues) =
+  ModernTupleType $ map dataType theValues
+dataType (ModernDataStructure fields) =
+  ModernStructureType $ map (\(fieldName, fieldData) ->
                                (fieldName, dataType fieldData))
                             fields
+dataType (ModernDataNamed typeName theValue) =
+  ModernNamedType typeName $ dataType theValue
 
 
 ensureTypeInContext
@@ -528,41 +571,66 @@ ensureTypeInContext theType = do
     else case theType of
            ModernListType contentType -> do
              ensureTypeInContext contentType
-             commandListType contentType
-           ModernUnionType unionName contents -> do
-             mapM ensureTypeInContext $ attachmentsContents contents
-             let contentTypes = mapAttachments computeTypeHash contents
-             commandUnionType unionName contentTypes
-           ModernStructureType structureName fields -> do
+             let contentTypeHash = computeTypeHash contentType
+             commandListType contentTypeHash
+           ModernTupleType contentTypes -> do
+             mapM ensureTypeInContext contentTypes
+             let contentTypeHashes = map computeTypeHash contentTypes
+             commandTupleType contentTypeHashes
+           ModernUnionType contentTypes -> do
+             mapM ensureTypeInContext $ attachmentsContents contentTypes
+             let contentTypeHashes =
+                   mapAttachments computeTypeHash contentTypes
+             commandUnionType contentTypeHashes
+           ModernStructureType fields -> do
              mapM ensureTypeInContext $ map snd fields
-             let fieldTypes =
+             let fieldTypeHashes =
                    map (\(fieldName, fieldType) ->
                            (fieldName, computeTypeHash fieldType))
                        fields
-             commandStructureType structureName fieldTypes
+             commandStructureType fieldTypeHashes
+           ModernNamedType name contentType -> do
+             ensureTypeInContext contentType
+             let contentTypeHash = computeTypeHash contentType
+             commandNamedType name contentTypeHash
            _ -> return ()
 
 
-commandListType :: ModernType -> ModernSerialization ()
+commandListType
+  :: ModernHash
+  -> ModernSerialization ()
 commandListType contentType = MakeModernSerialization $ do
-    lift $ throw $ ModernFailure "commandListType not implemented."
+  lift $ throw $ ModernFailure "commandListType not implemented."
+
+
+commandTupleType
+  :: [ModernHash]
+  -> ModernSerialization ()
+commandTupleType contentTypes = MakeModernSerialization $ do
+  lift $ throw $ ModernFailure "commandTupleType not implemented."
 
 
 commandUnionType
-  :: ModernTypeName
-  -> ModernAttachments ModernHash
+  :: ModernAttachments ModernHash
   -> ModernSerialization ()
-commandUnionType contents attachments = MakeModernSerialization $ do
+commandUnionType attachments = MakeModernSerialization $ do
   lift $ throw $ ModernFailure "commandUnionType not implemented."
 
 
 commandStructureType
-  :: ModernTypeName
-  -> [(ModernFieldName, ModernHash)]
+  :: [(ModernFieldName, ModernHash)]
   -> ModernSerialization ()
-commandStructureType structureName fields = do
+commandStructureType fields = do
   bitpath <- getCommandBitpath ModernCommandTypeStructureType
   outputCommandBits bitpath
+
+
+commandNamedType
+  :: ModernTypeName
+  -> ModernHash
+  -> ModernSerialization ()
+commandNamedType name contentType = MakeModernSerialization $ do
+  lift $ throw $ ModernFailure "commandNamedType not implemented."
 
 
 getCommandBitpath
