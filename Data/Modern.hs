@@ -607,7 +607,9 @@ deserializeSchema :: ModernDeserialization [ModernType]
 deserializeSchema = do
   a <- deserializeOneCommand
   b <- deserializeOneCommand
-  return [a, b]
+  c <- deserializeOneCommand
+  d <- deserializeOneCommand
+  return [a, b, c, d]
 
 
 deserializeOneCommand :: ModernDeserialization ModernType
@@ -633,9 +635,30 @@ deserializeOneCommand = do
     Just ModernCommandTypeEndConfiguration -> do
       return undefined -- TODO
     Just ModernCommandTypeListType -> do
-      return undefined -- TODO
+      contentTypeHash <- inputDataHash
+      let contentType =
+	    case Map.lookup (ModernHash contentTypeHash) knownTypes of
+	      Nothing -> undefined -- TODO
+	      Just knownType -> knownType
+          theType = ModernListType contentType
+      learnType theType
+      return theType
     Just ModernCommandTypeTupleType -> do
-      return undefined -- TODO
+      nItems <- inputDataWord64
+      let loop soFar i = do
+	    if i == nItems
+	      then return soFar
+	      else do
+		itemTypeHash <- inputDataHash
+		let itemType =
+		      case Map.lookup (ModernHash itemTypeHash) knownTypes of
+		        Nothing -> undefined -- TODO
+		        Just knownType -> knownType
+		loop (soFar ++ [itemType]) (i + 1)
+      items <- loop [] 0
+      let theType = ModernTupleType items
+      learnType theType
+      return theType
     Just ModernCommandTypeUnionType -> do
       return undefined -- TODO
     Just ModernCommandTypeStructureType -> do
@@ -654,19 +677,14 @@ deserializeOneCommand = do
 		     (i + 1)
       fields <- loop [] 0
       let theType = ModernStructureType fields
-	  theHash = computeTypeHash theType
-          newKnownTypes = Map.insert theHash theType knownTypes
-	  newContext = context {
-			   modernContextTypes = newKnownTypes
-			 }
-      putContext newContext
+      learnType theType
       return theType
     Just ModernCommandTypeNamedType -> do
       typeName <- inputDataUTF8
       contentTypeHash <- inputDataHash
       let contentType =
 	    case Map.lookup (ModernHash contentTypeHash) knownTypes of
-	      Nothing -> error "A" -- TODO
+	      Nothing -> undefined -- TODO
 	      Just knownType -> knownType
 	  theType = ModernNamedType (ModernTypeName typeName) contentType
       return theType
@@ -697,6 +715,20 @@ dataType (ModernDataStructure fields) =
                             fields
 dataType (ModernDataNamed typeName theValue) =
   ModernNamedType typeName $ dataType theValue
+
+
+learnType
+  :: ModernType
+  -> ModernDeserialization ()
+learnType theType = do
+  oldContext <- getContext
+  let oldKnownTypes = modernContextTypes oldContext
+      theHash = computeTypeHash theType
+      newKnownTypes = Map.insert theHash theType oldKnownTypes
+      newContext = oldContext {
+		       modernContextTypes = newKnownTypes
+		     }
+  putContext newContext
 
 
 ensureTypeInContext
@@ -739,15 +771,22 @@ ensureTypeInContext theType = do
 commandListType
   :: ModernHash
   -> ModernSerialization ()
-commandListType contentType = do
-  return () -- TODO
+commandListType (ModernHash contentTypeHash) = do
+  bitpath <- getCommandBitpath ModernCommandTypeListType
+  outputCommandBits bitpath
+  outputData contentTypeHash
 
 
 commandTupleType
   :: [ModernHash]
   -> ModernSerialization ()
-commandTupleType contentTypes = do
-  return () -- TODO
+commandTupleType contentTypeHashes = do
+  bitpath <- getCommandBitpath ModernCommandTypeTupleType
+  outputCommandBits bitpath
+  outputDataWord64 $ genericLength contentTypeHashes
+  mapM_ (\(ModernHash contentTypeHash) -> do
+	   outputData contentTypeHash)
+	contentTypeHashes
 
 
 commandUnionType

@@ -29,10 +29,17 @@ testOutput = do
       structureType =
         ModernStructureType [(fromString "key", ModernUTF8Type),
 			     (fromString "value", ModernWord64Type)]
+      listOfStringsType = ModernListType ModernUTF8Type
+      tupleType =
+	ModernTupleType [ModernWord8Type,
+			 ModernWord16Type,
+			 ModernWord32Type,
+			 ModernWord64Type]
+      schema = [itemType, listOfStringsType, tupleType]
       context = initialContext
-  putStrLn $ textualSchema [itemType]
+  putStrLn $ textualSchema schema
   result <- runModernSerializationToFile context "output.txt" $ do
-	      ensureTypeInContext itemType
+	      mapM_ ensureTypeInContext schema
   context <- case result of
                Left failure -> do
 		 putStrLn $ show failure
