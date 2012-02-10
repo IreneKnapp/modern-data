@@ -599,22 +599,22 @@ ensureTypeInContext theType = do
 commandListType
   :: ModernHash
   -> ModernSerialization ()
-commandListType contentType = MakeModernSerialization $ do
-  lift $ throw $ ModernFailure "commandListType not implemented."
+commandListType contentType = do
+  return () -- TODO
 
 
 commandTupleType
   :: [ModernHash]
   -> ModernSerialization ()
-commandTupleType contentTypes = MakeModernSerialization $ do
-  lift $ throw $ ModernFailure "commandTupleType not implemented."
+commandTupleType contentTypes = do
+  return () -- TODO
 
 
 commandUnionType
   :: ModernAttachments ModernHash
   -> ModernSerialization ()
-commandUnionType attachments = MakeModernSerialization $ do
-  lift $ throw $ ModernFailure "commandUnionType not implemented."
+commandUnionType attachments = do
+  return () -- TODO
 
 
 commandStructureType
@@ -623,14 +623,21 @@ commandStructureType
 commandStructureType fields = do
   bitpath <- getCommandBitpath ModernCommandTypeStructureType
   outputCommandBits bitpath
+  outputDataInt $ length fields
+  mapM_ (\(ModernFieldName fieldName, ModernHash fieldTypeHash) -> do
+           outputDataUTF8 fieldName
+           outputData fieldTypeHash)
+        fields
 
 
 commandNamedType
   :: ModernTypeName
   -> ModernHash
   -> ModernSerialization ()
-commandNamedType name contentType = MakeModernSerialization $ do
-  lift $ throw $ ModernFailure "commandNamedType not implemented."
+commandNamedType (ModernTypeName name) contentType = do
+  bitpath <- getCommandBitpath ModernCommandTypeNamedType
+  outputCommandBits bitpath
+  outputDataUTF8 name
 
 
 getCommandBitpath
@@ -653,5 +660,32 @@ outputCommandBits
   :: ModernBitpath
   -> ModernSerialization ()
 outputCommandBits (ModernBitpath count source) = MakeModernSerialization $ do
-  lift $ withContext LittleEndian $ do
-    serializeWord source
+  lift $ serializeWord source
+
+
+outputData
+  :: ByteString
+  -> ModernSerialization ()
+outputData byteString = MakeModernSerialization $ do
+  lift $ write byteString
+
+
+outputDataInt
+  :: Int
+  -> ModernSerialization ()
+outputDataInt int = MakeModernSerialization $ do
+  lift $ serializeWord (fromIntegral int :: Word64)
+
+
+outputDataUTF8
+  :: ByteString
+  -> ModernSerialization ()
+outputDataUTF8 byteString = do
+  let payloadLength = BS.length byteString
+      prospectivePadLength = 8 - mod payloadLength 8
+      padLength = if prospectivePadLength == 0
+		    then 8
+		    else prospectivePadLength
+  outputData byteString
+  outputData $ BS.pack $ take padLength $ repeat 0x00
+
