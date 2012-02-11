@@ -213,53 +213,53 @@ textualSchema theTypes =
       visitType _ ModernUTF8Type = "UTF8;"
       visitType _ ModernBlobType = "Blob;"
       visitType depth (ModernListType contentType) =
-	"List " ++ block depth [visitType (depth + 1) contentType]
+        "List " ++ block depth [visitType (depth + 1) contentType]
       visitType depth (ModernTupleType contentTypes) =
-	"Tuple " ++ block depth (map (visitType (depth + 1)) contentTypes)
+        "Tuple " ++ block depth (map (visitType (depth + 1)) contentTypes)
       visitType depth (ModernUnionType attachments) =
-	"Union "
-	++ block depth
-		 (map (\(bitpath, contentType) ->
-			 visitBitpath bitpath ++ " "
-			 ++ visitType (depth + 1) contentType)
-		      (attachmentsToList attachments))
+        "Union "
+        ++ block depth
+                 (map (\(bitpath, contentType) ->
+                         visitBitpath bitpath ++ " "
+                         ++ visitType (depth + 1) contentType)
+                      (attachmentsToList attachments))
       visitType depth (ModernStructureType fields) =
-	"Structure "
-	++ block depth
-		 (map (\(fieldName, contentType) ->
-		 	  visitFieldName fieldName
-			  ++ " "
-			  ++ visitType (depth + 1) contentType)
-		      fields)
+        "Structure "
+        ++ block depth
+                 (map (\(fieldName, contentType) ->
+                          visitFieldName fieldName
+                          ++ " "
+                          ++ visitType (depth + 1) contentType)
+                      fields)
       visitType depth (ModernNamedType typeName contentType) =
-	"Named "
-	++ visitTypeName typeName ++ " "
-	++ visitType depth contentType
-	++ ";"
+        "Named "
+        ++ visitTypeName typeName ++ " "
+        ++ visitType depth contentType
+        ++ ";"
       visitTypeName (ModernTypeName name) =
-	UTF8.toString name
+        UTF8.toString name
       visitFieldName (ModernFieldName name) =
-	UTF8.toString name
+        UTF8.toString name
       visitBitpath (ModernBitpath count source) =
-	let single i =
-	      case shiftR source (fromIntegral $ count - i - 1) .&. 0x1 of
-		0 -> "0"
-		1 -> "1"
-	    loop soFar i =
-	      if i == count
-		then soFar
-		else loop (soFar ++ (single i)) (i + 1)
+        let single i =
+              case shiftR source (fromIntegral $ count - i - 1) .&. 0x1 of
+                0 -> "0"
+                1 -> "1"
+            loop soFar i =
+              if i == count
+                then soFar
+                else loop (soFar ++ (single i)) (i + 1)
         in loop "" 0
       block _ [onlyItem] = "{ " ++ onlyItem ++ " }"
       block depth items =
-	"{\n"
-	++ (concat
-	     $ map (\item ->
-		      take ((depth + 1) * 2) (repeat ' ')
-		      ++ item
-		      ++ "\n")
-	           items)
-	++ "}"
+        "{\n"
+        ++ (concat
+             $ map (\item ->
+                      take ((depth + 1) * 2) (repeat ' ')
+                      ++ item
+                      ++ "\n")
+                   items)
+        ++ "}"
   in intercalate "\n" $ map (visitType 0) theTypes
 
 
@@ -577,24 +577,24 @@ deserializeOneCommand = do
     Just ModernCommandTypeListType -> do
       contentTypeHash <- inputDataHash
       let contentType =
-	    case Map.lookup (ModernHash contentTypeHash) knownTypes of
-	      Nothing -> undefined -- TODO
-	      Just knownType -> knownType
+            case Map.lookup (ModernHash contentTypeHash) knownTypes of
+              Nothing -> undefined -- TODO
+              Just knownType -> knownType
           theType = ModernListType contentType
       learnType theType
       return theType
     Just ModernCommandTypeTupleType -> do
       nItems <- inputDataWord64
       let loop soFar i = do
-	    if i == nItems
-	      then return soFar
-	      else do
-		itemTypeHash <- inputDataHash
-		let itemType =
-		      case Map.lookup (ModernHash itemTypeHash) knownTypes of
-		        Nothing -> undefined -- TODO
-		        Just knownType -> knownType
-		loop (soFar ++ [itemType]) (i + 1)
+            if i == nItems
+              then return soFar
+              else do
+                itemTypeHash <- inputDataHash
+                let itemType =
+                      case Map.lookup (ModernHash itemTypeHash) knownTypes of
+                        Nothing -> undefined -- TODO
+                        Just knownType -> knownType
+                loop (soFar ++ [itemType]) (i + 1)
       items <- loop [] 0
       let theType = ModernTupleType items
       learnType theType
@@ -604,17 +604,17 @@ deserializeOneCommand = do
     Just ModernCommandTypeStructureType -> do
       nFields <- inputDataWord64
       let loop soFar i = do
-	    if i == nFields
-	      then return soFar
-	      else do
-		fieldName <- inputDataUTF8
-		fieldTypeHash <- inputDataHash
-		let fieldType =
-		      case Map.lookup (ModernHash fieldTypeHash) knownTypes of
-		        Nothing -> undefined -- TODO
-		        Just knownType -> knownType
-		loop (soFar ++ [(ModernFieldName fieldName, fieldType)])
-		     (i + 1)
+            if i == nFields
+              then return soFar
+              else do
+                fieldName <- inputDataUTF8
+                fieldTypeHash <- inputDataHash
+                let fieldType =
+                      case Map.lookup (ModernHash fieldTypeHash) knownTypes of
+                        Nothing -> undefined -- TODO
+                        Just knownType -> knownType
+                loop (soFar ++ [(ModernFieldName fieldName, fieldType)])
+                     (i + 1)
       fields <- loop [] 0
       let theType = ModernStructureType fields
       learnType theType
@@ -623,10 +623,10 @@ deserializeOneCommand = do
       typeName <- inputDataUTF8
       contentTypeHash <- inputDataHash
       let contentType =
-	    case Map.lookup (ModernHash contentTypeHash) knownTypes of
-	      Nothing -> undefined -- TODO
-	      Just knownType -> knownType
-	  theType = ModernNamedType (ModernTypeName typeName) contentType
+            case Map.lookup (ModernHash contentTypeHash) knownTypes of
+              Nothing -> undefined -- TODO
+              Just knownType -> knownType
+          theType = ModernNamedType (ModernTypeName typeName) contentType
       return theType
 
 
@@ -664,8 +664,8 @@ learnType theType = do
       theHash = computeTypeHash theType
       newKnownTypes = Map.insert theHash theType oldKnownTypes
       newContext = oldContext {
-		       modernContextTypes = newKnownTypes
-		     }
+                       modernContextTypes = newKnownTypes
+                     }
   putContext newContext
 
 
@@ -723,8 +723,8 @@ commandTupleType contentTypeHashes = do
   outputCommandBits bitpath
   outputDataWord64 $ genericLength contentTypeHashes
   mapM_ (\(ModernHash contentTypeHash) -> do
-	   outputData contentTypeHash)
-	contentTypeHashes
+           outputData contentTypeHash)
+        contentTypeHashes
 
 
 commandUnionType
@@ -781,14 +781,14 @@ inputCommandBits attachments = MakeModernDeserialization $ do
   source <- lift $ deserializeWord
     :: StateT ModernContext (ContextualDeserialization Endianness) Word64
   let loop attachments i = do
-	case attachments of
+        case attachments of
           Attached object -> return $ Just object
-  	  Unattached -> return Nothing
-  	  Split { } -> do
+          Unattached -> return Nothing
+          Split { } -> do
             let nextLevel = case shiftR source i .&. 0x1 of
-	                      0 -> splitZero attachments
-			      1 -> splitOne attachments
-	    loop nextLevel (i + 1)
+                              0 -> splitZero attachments
+                              1 -> splitOne attachments
+            loop nextLevel (i + 1)
   loop attachments 0
 
 
@@ -808,14 +808,14 @@ inputDataUTF8
   :: ModernDeserialization ByteString
 inputDataUTF8 = MakeModernDeserialization $ do
   let loop soFar = do
-	next <- lift $ read 8
-	if 0x00 == (BS.head $ BS.drop 7 next)
-	  then do
-	    let validNext =
-	          (BS.pack . reverse . dropWhile (== 0x00) . reverse
-		   . BS.unpack) next
-	    return $ BS.concat [soFar, validNext]
-	  else loop $ BS.concat [soFar, next]
+        next <- lift $ read 8
+        if 0x00 == (BS.head $ BS.drop 7 next)
+          then do
+            let validNext =
+                  (BS.pack . reverse . dropWhile (== 0x00) . reverse
+                   . BS.unpack) next
+            return $ BS.concat [soFar, validNext]
+          else loop $ BS.concat [soFar, next]
   loop BS.empty
 
 
@@ -847,8 +847,8 @@ outputDataUTF8 byteString = do
   let payloadLength = BS.length byteString
       prospectivePadLength = 8 - mod payloadLength 8
       padLength = if prospectivePadLength == 0
-		    then 8
-		    else prospectivePadLength
+                    then 8
+                    else prospectivePadLength
   outputData byteString
   outputData $ BS.pack $ take padLength $ repeat 0x00
 
