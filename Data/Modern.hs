@@ -4,7 +4,6 @@ module Data.Modern
   (ModernType(..),
    ModernData(..),
    ModernHash,
-   ModernBitpath,
    ModernTypeName,
    ModernFieldName,
    ModernContext,
@@ -141,13 +140,6 @@ data ModernHash
   deriving (Eq, Ord)
 
 
-data ModernBitpath
-  = ModernBitpath Word8 Word64
-
-
-data Bit = Zero | One
-
-
 data ModernTypeName
   = ModernTypeName ByteString
   deriving (Eq, Ord)
@@ -221,16 +213,6 @@ textualSchema theTypes =
         UTF8.toString name
       visitFieldName (ModernFieldName name) =
         UTF8.toString name
-      visitBitpath (ModernBitpath count source) =
-        let single i =
-              case shiftR source (fromIntegral $ count - i - 1) .&. 0x1 of
-                0 -> "0"
-                1 -> "1"
-            loop soFar i =
-              if i == count
-                then soFar
-                else loop (soFar ++ (single i)) (i + 1)
-        in loop "" 0
       block _ [onlyItem] = "{ " ++ onlyItem ++ " }"
       block depth items =
         "{\n"
@@ -289,35 +271,6 @@ initialContext =
   ModernContext {
       modernContextTypes = initialTypes
     }
-
-
-nullBitpath :: ModernBitpath
-nullBitpath = ModernBitpath 0 0
-
-
-bitpathToList :: ModernBitpath -> [Bit]
-bitpathToList (ModernBitpath count source) =
-  unfoldr (\i ->
-             if fromIntegral i == count
-               then Nothing
-               else Just (case fromIntegral $ shiftR source i .&. 1 of
-                            0 -> Zero
-                            _ -> One,
-                          i + 1))
-          0
-
-
-bitpathAppend :: ModernBitpath -> Bit -> Maybe ModernBitpath
-bitpathAppend (ModernBitpath count source) bit =
-  if count == 64
-    then Nothing
-    else let bit' = case bit of
-                      Zero -> 0
-                      One -> 1
-             shiftedBit = shiftL bit' (fromIntegral count)
-             source' = source .|. shiftedBit
-             count' = count + 1
-         in Just $ ModernBitpath count' source'
 
 
 computeTypeHash :: ModernType -> ModernHash
