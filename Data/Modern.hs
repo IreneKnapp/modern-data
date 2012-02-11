@@ -9,7 +9,6 @@ module Data.Modern
    ModernFieldName,
    ModernContext,
    ModernFailure(..),
-   ModernAttachments(..),
    textualSchema,
    fromString,
    initialContext,
@@ -41,13 +40,9 @@ import Data.Word
 import Prelude hiding (read)
 
 
-class (Monad m, MonadSerial underlying)
-      => ModernMonad m underlying
-      | m -> underlying
+class (Monad m)
+      => ModernMonad m
       where
-  makeModernAction
-    :: StateT ModernContext (underlying Endianness) a
-    -> m a
   getContext :: m ModernContext
   putContext :: ModernContext -> m ()
 
@@ -63,8 +58,7 @@ instance Monad ModernDeserialization where
     MakeModernDeserialization $ do
       v <- modernDeserializationAction x
       modernDeserializationAction $ f v
-instance ModernMonad ModernDeserialization ContextualDeserialization where
-  makeModernAction = MakeModernDeserialization
+instance ModernMonad ModernDeserialization where
   getContext = MakeModernDeserialization $ get
   putContext context = MakeModernDeserialization $ put context
 
@@ -80,8 +74,7 @@ instance Monad ModernSerialization where
     MakeModernSerialization $ do
       v <- modernSerializationAction x
       modernSerializationAction $ f v
-instance ModernMonad ModernSerialization ContextualSerialization where
-  makeModernAction = MakeModernSerialization
+instance ModernMonad ModernSerialization where
   getContext = MakeModernSerialization $ get
   putContext context = MakeModernSerialization $ put context
 
@@ -132,7 +125,7 @@ data ModernCommandType
   | ModernCommandTypeUnionType
   | ModernCommandTypeStructureType
   | ModernCommandTypeNamedType
-  deriving (Eq)
+  deriving (Eq, Ord)
 
 
 data ModernCommand
@@ -177,17 +170,6 @@ data ModernContext =
   ModernContext {
       modernContextTypes :: Map ModernHash ModernType
     }
-
-
-data ModernAttachments client
-  = Attached client
-  | Unattached
-  | Split {
-        splitZero :: ModernAttachments client,
-        splitOne :: ModernAttachments client
-      }
-deriving instance (Eq client) => Eq (ModernAttachments client)
-deriving instance (Show client) => Show (ModernAttachments client)
 
 
 data ModernFailure
@@ -281,44 +263,25 @@ initialTypes =
           ModernBlobType]
 
 
-standardCommandAttachments :: ModernAttachments ModernCommandType
-standardCommandAttachments =
-  Split {
-      splitZero = Unattached,
-      splitOne =
-        Split {
-            splitZero = Unattached,
-            splitOne =
-              Split {
-                  splitZero =
-                    Split {
-                        splitZero = Unattached,
-                        splitOne =
-                          Split {
-                              splitZero =
-                                Unattached,
-                              splitOne =
-                                Attached ModernCommandTypeNamedType
-                            }
-                      },
-                  splitOne =
-                    Split {
-                        splitZero =
-                          Split {
-                              splitZero = Attached ModernCommandTypeListType,
-                              splitOne = Attached ModernCommandTypeTupleType
-                            },
-                        splitOne =
-                          Split {
-                              splitZero =
-                                Attached ModernCommandTypeUnionType,
-                              splitOne =
-                                Attached ModernCommandTypeStructureType
-                            }
-                      }
-                }
-          }
-    }
+standardCommandEncodingBitsize :: Word8
+standardCommandEncodingBitsize = 3
+
+
+standardCommandDecodings :: Map Word64 ModernCommandType
+standardCommandDecodings =
+  Map.fromList
+    [(0x03, ModernCommandTypeListType),
+     (0x04, ModernCommandTypeTupleType),
+     (0x05, ModernCommandTypeUnionType),
+     (0x06, ModernCommandTypeStructureType),
+     (0x07, ModernCommandTypeNamedType)]
+
+
+standardCommandEncodings :: Map ModernCommandType Word64
+standardCommandEncodings =
+  Map.fromList
+   $ map (\(key, value) -> (value, key))
+         $ Map.toList standardCommandDecodings
 
 
 initialContext :: ModernContext
@@ -355,69 +318,6 @@ bitpathAppend (ModernBitpath count source) bit =
              source' = source .|. shiftedBit
              count' = count + 1
          in Just $ ModernBitpath count' source'
-
-
-attachmentsToList :: ModernAttachments client -> [(ModernBitpath, client)]
-attachmentsToList attachments =
-  let loop bitpath (Attached client) = [(bitpath, client)]
-      loop _ Unattached = []
-      loop bitpath node@(Split { }) =
-        (case bitpathAppend bitpath Zero of
-          Nothing -> []
-          Just bitpathZero -> loop bitpathZero (splitZero node))
-        ++ (case bitpathAppend bitpath One of
-              Nothing -> []
-              Just bitpathOne -> loop bitpathOne (splitOne node))
-  in loop nullBitpath attachments
-
-
-attachmentsContents :: ModernAttachments client -> [client]
-attachmentsContents attachments =
-  let loop (Attached client) = [client]
-      loop Unattached = []
-      loop node@(Split { }) =
-        (loop $ splitZero node)
-        ++ (loop $ splitOne node)
-  in loop attachments
-
-
-mapAttachments
-  :: (client -> client')
-  -> ModernAttachments client
-  -> ModernAttachments client'
-mapAttachments function attachments =
-  let loop (Attached client) = Attached $ function client
-      loop Unattached = Unattached
-      loop node@(Split { }) =
-        Split {
-            splitZero = loop $ splitZero node,
-            splitOne = loop $ splitOne node
-          }
-  in loop attachments
-
-
-attachmentsLookup
-  :: (Eq client)
-  => client
-  -> ModernAttachments client
-  -> Maybe ModernBitpath
-attachmentsLookup client attachments =
-  let loop bitpath (Attached foundClient) =
-        if client == foundClient
-          then Just bitpath
-          else Nothing
-      loop _ Unattached = Nothing
-      loop bitpath node@(Split { }) =
-        let zeroResult = case bitpathAppend bitpath Zero of
-                           Nothing -> Nothing
-                           Just bitpathZero -> loop bitpathZero (splitZero node)
-            oneResult = case bitpathAppend bitpath One of
-                          Nothing -> Nothing
-                          Just bitpathOne -> loop bitpathOne (splitOne node)
-        in case zeroResult of
-             Just _ -> zeroResult
-             Nothing -> oneResult
-  in loop nullBitpath attachments
 
 
 computeTypeHash :: ModernType -> ModernHash
@@ -561,7 +461,7 @@ deserializeOneCommand :: ModernDeserialization ModernType
 deserializeOneCommand = do
   context <- getContext
   let knownTypes = modernContextTypes context
-  maybeCommandType <- inputCommandBits standardCommandAttachments
+  maybeCommandType <- inputCommandType
   case maybeCommandType of
     Nothing -> return undefined -- TODO
     Just ModernCommandTypeListType -> do
@@ -719,8 +619,7 @@ commandListType
   :: ModernHash
   -> ModernSerialization ()
 commandListType (ModernHash contentTypeHash) = do
-  bitpath <- getCommandBitpath ModernCommandTypeListType
-  outputCommandBits bitpath
+  outputCommandType ModernCommandTypeListType
   outputData contentTypeHash
 
 
@@ -728,8 +627,7 @@ commandTupleType
   :: [ModernHash]
   -> ModernSerialization ()
 commandTupleType contentTypeHashes = do
-  bitpath <- getCommandBitpath ModernCommandTypeTupleType
-  outputCommandBits bitpath
+  outputCommandType ModernCommandTypeTupleType
   outputDataWord64 $ genericLength contentTypeHashes
   mapM_ (\(ModernHash contentTypeHash) -> do
            outputData contentTypeHash)
@@ -740,8 +638,7 @@ commandUnionType
   :: [ModernHash]
   -> ModernSerialization ()
 commandUnionType possibilities = do
-  bitpath <- getCommandBitpath ModernCommandTypeUnionType
-  outputCommandBits bitpath
+  outputCommandType ModernCommandTypeUnionType
   outputDataWord64 $ genericLength possibilities
   mapM_ (\(ModernHash possibility) -> outputData possibility)
         possibilities
@@ -751,8 +648,7 @@ commandStructureType
   :: [(ModernFieldName, ModernHash)]
   -> ModernSerialization ()
 commandStructureType fields = do
-  bitpath <- getCommandBitpath ModernCommandTypeStructureType
-  outputCommandBits bitpath
+  outputCommandType ModernCommandTypeStructureType
   outputDataWord64 $ genericLength fields
   mapM_ (\(ModernFieldName fieldName, ModernHash fieldTypeHash) -> do
            outputDataUTF8 fieldName
@@ -765,40 +661,26 @@ commandNamedType
   -> ModernHash
   -> ModernSerialization ()
 commandNamedType (ModernTypeName name) (ModernHash contentTypeHash) = do
-  bitpath <- getCommandBitpath ModernCommandTypeNamedType
-  outputCommandBits bitpath
+  outputCommandType ModernCommandTypeNamedType
   outputDataUTF8 name
   outputData contentTypeHash
 
 
-getCommandBitpath
-  :: (ModernMonad m underlying,
-      Monad (underlying Endianness))
-  => ModernCommandType
-  -> m ModernBitpath
-getCommandBitpath commandType = do
-  case attachmentsLookup commandType standardCommandAttachments of
-    Nothing ->
-      makeModernAction $ lift $ throw $ ModernFailure "Internal failure."
-    Just bits -> return bits
-
-
 inputCommandBits
-  :: ModernAttachments object
+  :: Word8
+  -> Map Word64 object
   -> ModernDeserialization (Maybe object)
-inputCommandBits attachments = MakeModernDeserialization $ do
+inputCommandBits count decodings = MakeModernDeserialization $ do
   source <- lift $ deserializeWord
     :: StateT ModernContext (ContextualDeserialization Endianness) Word64
-  let loop attachments i = do
-        case attachments of
-          Attached object -> return $ Just object
-          Unattached -> return Nothing
-          Split { } -> do
-            let nextLevel = case shiftR source i .&. 0x1 of
-                              0 -> splitZero attachments
-                              1 -> splitOne attachments
-            loop nextLevel (i + 1)
-  loop attachments 0
+  let lowBits = source .&. (shiftL 1 (fromIntegral count) - 1)
+  return $ Map.lookup lowBits decodings
+
+
+inputCommandType
+  :: ModernDeserialization (Maybe ModernCommandType)
+inputCommandType = do
+  inputCommandBits standardCommandEncodingBitsize standardCommandDecodings
 
 
 inputDataHash
@@ -829,10 +711,20 @@ inputDataUTF8 = MakeModernDeserialization $ do
 
 
 outputCommandBits
-  :: ModernBitpath
+  :: Word8
+  -> Word64
   -> ModernSerialization ()
-outputCommandBits (ModernBitpath count source) = MakeModernSerialization $ do
+outputCommandBits count source = MakeModernSerialization $ do
   lift $ serializeWord source
+
+
+outputCommandType
+  :: ModernCommandType
+  -> ModernSerialization ()
+outputCommandType commandType = do
+  case Map.lookup commandType standardCommandEncodings of
+    Just source -> outputCommandBits standardCommandEncodingBitsize source
+    Nothing -> return ()
 
 
 outputData
