@@ -9,6 +9,7 @@ module Data.Modern
    ModernFieldName,
    ModernContext,
    ModernFailure(..),
+   ModernAttachments(..),
    textualSchema,
    fromString,
    initialContext,
@@ -100,7 +101,7 @@ data ModernType
   | ModernBlobType
   | ModernListType ModernType
   | ModernTupleType [ModernType]
-  | ModernUnionType (ModernAttachments ModernType)
+  | ModernUnionType [ModernType]
   | ModernStructureType [(ModernFieldName, ModernType)]
   | ModernNamedType ModernTypeName ModernType
   deriving (Eq, Show)
@@ -131,13 +132,13 @@ data ModernCommandType
   | ModernCommandTypeUnionType
   | ModernCommandTypeStructureType
   | ModernCommandTypeNamedType
-  deriving (Eq, Show)
+  deriving (Eq)
 
 
 data ModernCommand
   = ModernCommandListType ModernHash
   | ModernCommandTupleType [ModernHash]
-  | ModernCommandUnionType (ModernAttachments ModernHash)
+  | ModernCommandUnionType [ModernHash]
   | ModernCommandStructureType [(ModernFieldName, ModernHash)]
   | ModernCommandNamedType ModernTypeName ModernHash
 
@@ -174,8 +175,7 @@ instance Show ModernFieldName where
 
 data ModernContext =
   ModernContext {
-      modernContextTypes :: Map ModernHash ModernType,
-      modernContextCommands :: ModernAttachments ModernCommandType
+      modernContextTypes :: Map ModernHash ModernType
     }
 
 
@@ -216,13 +216,12 @@ textualSchema theTypes =
         "List " ++ block depth [visitType (depth + 1) contentType]
       visitType depth (ModernTupleType contentTypes) =
         "Tuple " ++ block depth (map (visitType (depth + 1)) contentTypes)
-      visitType depth (ModernUnionType attachments) =
+      visitType depth (ModernUnionType contentTypes) =
         "Union "
         ++ block depth
-                 (map (\(bitpath, contentType) ->
-                         visitBitpath bitpath ++ " "
-                         ++ visitType (depth + 1) contentType)
-                      (attachmentsToList attachments))
+                 (map (\contentType ->
+                         visitType (depth + 1) contentType)
+                      contentTypes)
       visitType depth (ModernStructureType fields) =
         "Structure "
         ++ block depth
@@ -259,6 +258,7 @@ textualSchema theTypes =
                       ++ item
                       ++ "\n")
                    items)
+        ++ take (depth * 2) (repeat ' ')
         ++ "}"
   in intercalate "\n" $ map (visitType 0) theTypes
 
@@ -281,8 +281,8 @@ initialTypes =
           ModernBlobType]
 
 
-initialCommandAttachments :: ModernAttachments ModernCommandType
-initialCommandAttachments =
+standardCommandAttachments :: ModernAttachments ModernCommandType
+standardCommandAttachments =
   Split {
       splitZero = Unattached,
       splitOne =
@@ -324,8 +324,7 @@ initialCommandAttachments =
 initialContext :: ModernContext
 initialContext =
   ModernContext {
-      modernContextTypes = initialTypes,
-      modernContextCommands = initialCommandAttachments
+      modernContextTypes = initialTypes
     }
 
 
@@ -459,10 +458,7 @@ computeTypeByteString modernType =
             BS.concat [UTF8.fromString "Union(",
                        BS.intercalate
                         (UTF8.fromString ",")
-                        $ map (\(bitpath, possibilityType) ->
-                                  BS.concat [bitpathHelper bitpath,
-                                             typeHelper possibilityType])
-                              $ attachmentsToList possibilities,
+                        $ map typeHelper possibilities,
                        UTF8.fromString ")"]
           ModernStructureType fields ->
             BS.concat [UTF8.fromString "Structure(",
@@ -480,12 +476,6 @@ computeTypeByteString modernType =
                        BS.pack [0x00],
                        typeHelper contentType,
                        UTF8.fromString ")"]
-      bitpathHelper bitpath =
-        UTF8.fromString
-         $ map (\bit -> case bit of
-                  Zero -> '0'
-                  One -> '1')
-               $ bitpathToList bitpath
   in BS.concat [UTF8.fromString "Type(",
                 typeHelper modernType,
                 UTF8.fromString ")"]
@@ -563,15 +553,15 @@ deserializeSchema = do
   b <- deserializeOneCommand
   c <- deserializeOneCommand
   d <- deserializeOneCommand
-  return [a, b, c, d]
+  e <- deserializeOneCommand
+  return [a, b, c, d, e]
 
 
 deserializeOneCommand :: ModernDeserialization ModernType
 deserializeOneCommand = do
   context <- getContext
-  let commandAttachments = modernContextCommands context
-      knownTypes = modernContextTypes context
-  maybeCommandType <- inputCommandBits commandAttachments
+  let knownTypes = modernContextTypes context
+  maybeCommandType <- inputCommandBits standardCommandAttachments
   case maybeCommandType of
     Nothing -> return undefined -- TODO
     Just ModernCommandTypeListType -> do
@@ -600,7 +590,21 @@ deserializeOneCommand = do
       learnType theType
       return theType
     Just ModernCommandTypeUnionType -> do
-      return undefined -- TODO
+      nItems <- inputDataWord64
+      let loop soFar i = do
+            if i == nItems
+              then return soFar
+              else do
+                itemTypeHash <- inputDataHash
+                let itemType =
+                      case Map.lookup (ModernHash itemTypeHash) knownTypes of
+                        Nothing -> undefined -- TODO
+                        Just knownType -> knownType
+                loop (soFar ++ [itemType]) (i + 1)
+      items <- loop [] 0
+      let theType = ModernUnionType items
+      learnType theType
+      return theType
     Just ModernCommandTypeStructureType -> do
       nFields <- inputDataWord64
       let loop soFar i = do
@@ -627,6 +631,7 @@ deserializeOneCommand = do
               Nothing -> undefined -- TODO
               Just knownType -> knownType
           theType = ModernNamedType (ModernTypeName typeName) contentType
+      learnType theType
       return theType
 
 
@@ -678,32 +683,36 @@ ensureTypeInContext theType = do
       knownTypes = modernContextTypes context
   if Map.member hash knownTypes
     then return ()
-    else case theType of
-           ModernListType contentType -> do
-             ensureTypeInContext contentType
-             let contentTypeHash = computeTypeHash contentType
-             commandListType contentTypeHash
-           ModernTupleType contentTypes -> do
-             mapM ensureTypeInContext contentTypes
-             let contentTypeHashes = map computeTypeHash contentTypes
-             commandTupleType contentTypeHashes
-           ModernUnionType contentTypes -> do
-             mapM ensureTypeInContext $ attachmentsContents contentTypes
-             let contentTypeHashes =
-                   mapAttachments computeTypeHash contentTypes
-             commandUnionType contentTypeHashes
-           ModernStructureType fields -> do
-             mapM ensureTypeInContext $ map snd fields
-             let fieldTypeHashes =
-                   map (\(fieldName, fieldType) ->
-                           (fieldName, computeTypeHash fieldType))
-                       fields
-             commandStructureType fieldTypeHashes
-           ModernNamedType name contentType -> do
-             ensureTypeInContext contentType
-             let contentTypeHash = computeTypeHash contentType
-             commandNamedType name contentTypeHash
-           _ -> return ()
+    else do
+      let newKnownTypes = Map.insert hash theType knownTypes
+          newContext = context {
+                           modernContextTypes = newKnownTypes
+                         }
+      putContext newContext
+      case theType of
+        ModernListType contentType -> do
+          ensureTypeInContext contentType
+          let contentTypeHash = computeTypeHash contentType
+          commandListType contentTypeHash
+        ModernTupleType contentTypes -> do
+          mapM ensureTypeInContext contentTypes
+          let contentTypeHashes = map computeTypeHash contentTypes
+          commandTupleType contentTypeHashes
+        ModernUnionType contentTypes -> do
+          mapM ensureTypeInContext contentTypes
+          let contentTypeHashes = map computeTypeHash contentTypes
+          commandUnionType contentTypeHashes
+        ModernStructureType fields -> do
+          mapM ensureTypeInContext $ map snd fields
+          let fieldTypeHashes =
+                map (\(fieldName, fieldType) ->
+                        (fieldName, computeTypeHash fieldType))
+                    fields
+          commandStructureType fieldTypeHashes
+        ModernNamedType name contentType -> do
+          ensureTypeInContext contentType
+          let contentTypeHash = computeTypeHash contentType
+          commandNamedType name contentTypeHash
 
 
 commandListType
@@ -728,10 +737,14 @@ commandTupleType contentTypeHashes = do
 
 
 commandUnionType
-  :: ModernAttachments ModernHash
+  :: [ModernHash]
   -> ModernSerialization ()
-commandUnionType attachments = do
-  return () -- TODO
+commandUnionType possibilities = do
+  bitpath <- getCommandBitpath ModernCommandTypeUnionType
+  outputCommandBits bitpath
+  outputDataWord64 $ genericLength possibilities
+  mapM_ (\(ModernHash possibility) -> outputData possibility)
+        possibilities
 
 
 commandStructureType
@@ -764,13 +777,9 @@ getCommandBitpath
   => ModernCommandType
   -> m ModernBitpath
 getCommandBitpath commandType = do
-  context <- getContext
-  let commands = modernContextCommands context
-      maybeBits = attachmentsLookup commandType commands
-  case maybeBits of
+  case attachmentsLookup commandType standardCommandAttachments of
     Nothing ->
-      makeModernAction
-       $ lift $ throw $ ModernFailure $ show commandType ++ " not mapped."
+      makeModernAction $ lift $ throw $ ModernFailure "Internal failure."
     Just bits -> return bits
 
 

@@ -5,7 +5,7 @@ import Data.Modern
 
 main :: IO ()
 main = do
-  testOutput
+  testInput
 
 
 testInput :: IO ()
@@ -35,7 +35,11 @@ testOutput = do
                          ModernWord16Type,
                          ModernWord32Type,
                          ModernWord64Type]
-      schema = [itemType, listOfStringsType, tupleType]
+      unionType =
+        ModernUnionType [itemType,
+                         listOfStringsType,
+                         tupleType]
+      schema = [itemType, listOfStringsType, tupleType, unionType]
       context = initialContext
   putStrLn $ textualSchema schema
   result <- runModernSerializationToFile context "output.txt" $ do
