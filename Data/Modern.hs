@@ -126,35 +126,20 @@ data ModernData
 
 
 data ModernCommandType
-  = ModernCommandTypePad
-  | ModernCommandTypeAssume
-  | ModernCommandTypeAttach
-  | ModernCommandTypeSplit
-  | ModernCommandTypeDetach
-  | ModernCommandTypeBeginConfiguration
-  | ModernCommandTypeEndConfiguration
-  | ModernCommandTypeListType
+  = ModernCommandTypeListType
   | ModernCommandTypeTupleType
   | ModernCommandTypeUnionType
   | ModernCommandTypeStructureType
   | ModernCommandTypeNamedType
-  | ModernCommandTypeData ModernType
   deriving (Eq, Show)
 
 
 data ModernCommand
-  = ModernCommandAssume ModernHash
-  | ModernCommandAttach ModernBitpath ModernHash
-  | ModernCommandSplit ModernBitpath
-  | ModernCommandDetach ModernBitpath
-  | ModernCommandBeginConfiguration ModernTypeName
-  | ModernCommandEndConfiguration
-  | ModernCommandListType ModernHash
+  = ModernCommandListType ModernHash
   | ModernCommandTupleType [ModernHash]
   | ModernCommandUnionType (ModernAttachments ModernHash)
   | ModernCommandStructureType [(ModernFieldName, ModernHash)]
   | ModernCommandNamedType ModernTypeName ModernHash
-  | ModernCommandData ModernData
 
 
 data ModernHash
@@ -296,53 +281,22 @@ initialTypes =
           ModernBlobType]
 
 
-{-
-1000 -> Assume
-1001 -> Detach
-1010 -> Attach
-1011 -> Split
-1100 -> Pad
-11010 -> BeginConfiguration
-11011 -> EndConfiguration
-11100 -> (Unattached)
-11101 -> ListType
-11110 -> UnionType
-11111 -> StructureType
--}
 initialCommandAttachments :: ModernAttachments ModernCommandType
 initialCommandAttachments =
   Split {
       splitZero = Unattached,
       splitOne =
         Split {
-            splitZero =
-              Split {
-                  splitZero =
-                    Split {
-                        splitZero = Attached ModernCommandTypeAssume,
-                        splitOne = Attached ModernCommandTypeDetach
-                      },
-                  splitOne =
-                    Split {
-                        splitZero = Attached ModernCommandTypeAttach,
-                        splitOne = Attached ModernCommandTypeSplit
-                      }
-                },
+            splitZero = Unattached,
             splitOne =
               Split {
                   splitZero =
                     Split {
-                        splitZero =
-                          Split {
-                              splitZero =
-                                Attached ModernCommandTypeBeginConfiguration,
-                              splitOne =
-                                Attached ModernCommandTypeEndConfiguration
-                            },
+                        splitZero = Unattached,
                         splitOne =
                           Split {
                               splitZero =
-                                Attached ModernCommandTypePad,
+                                Unattached,
                               splitOne =
                                 Attached ModernCommandTypeNamedType
                             }
@@ -620,20 +574,6 @@ deserializeOneCommand = do
   maybeCommandType <- inputCommandBits commandAttachments
   case maybeCommandType of
     Nothing -> return undefined -- TODO
-    Just ModernCommandTypePad -> do
-      return undefined -- TODO
-    Just ModernCommandTypeAssume -> do
-      return undefined -- TODO
-    Just ModernCommandTypeAttach -> do
-      return undefined -- TODO
-    Just ModernCommandTypeSplit -> do
-      return undefined -- TODO
-    Just ModernCommandTypeDetach -> do
-      return undefined -- TODO
-    Just ModernCommandTypeBeginConfiguration -> do
-      return undefined -- TODO
-    Just ModernCommandTypeEndConfiguration -> do
-      return undefined -- TODO
     Just ModernCommandTypeListType -> do
       contentTypeHash <- inputDataHash
       let contentType =
@@ -688,8 +628,6 @@ deserializeOneCommand = do
 	      Just knownType -> knownType
 	  theType = ModernNamedType (ModernTypeName typeName) contentType
       return theType
-    Just (ModernCommandTypeData theType) -> do
-      return undefined -- TODO
 
 
 dataType :: ModernData -> ModernType

@@ -5,21 +5,21 @@ import Data.Modern
 
 main :: IO ()
 main = do
-  testInput
+  testOutput
 
 
 testInput :: IO ()
 testInput = do
   let context = initialContext
   result <- runModernDeserializationFromFile context "input.txt" $ do
-	      deserializeSchema
+              deserializeSchema
   context <- case result of
-	       Left failure -> do
-		 putStrLn $ show failure
-		 return context
-	       Right (context, schema) -> do
-		 putStrLn $ textualSchema schema
-		 return context
+               Left failure -> do
+                 putStrLn $ show failure
+                 return context
+               Right (context, schema) -> do
+                 putStrLn $ textualSchema schema
+                 return context
   return ()
 
 
@@ -28,22 +28,22 @@ testOutput = do
   let itemType = ModernNamedType (fromString "Item") structureType
       structureType =
         ModernStructureType [(fromString "key", ModernUTF8Type),
-			     (fromString "value", ModernWord64Type)]
+                             (fromString "value", ModernWord64Type)]
       listOfStringsType = ModernListType ModernUTF8Type
       tupleType =
-	ModernTupleType [ModernWord8Type,
-			 ModernWord16Type,
-			 ModernWord32Type,
-			 ModernWord64Type]
+        ModernTupleType [ModernWord8Type,
+                         ModernWord16Type,
+                         ModernWord32Type,
+                         ModernWord64Type]
       schema = [itemType, listOfStringsType, tupleType]
       context = initialContext
   putStrLn $ textualSchema schema
   result <- runModernSerializationToFile context "output.txt" $ do
-	      mapM_ ensureTypeInContext schema
+              mapM_ ensureTypeInContext schema
   context <- case result of
                Left failure -> do
-		 putStrLn $ show failure
-		 return context
+                 putStrLn $ show failure
+                 return context
                Right (context, ()) -> return context
   return ()
 
