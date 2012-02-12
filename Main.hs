@@ -44,6 +44,7 @@ testOutput = do
   putStrLn $ textualSchema schema
   result <- runModernSerializationToFile context "output.txt" $ do
               mapM_ ensureTypeInContext schema
+              outputSynchronize
   context <- case result of
                Left failure -> do
                  putStrLn $ show failure

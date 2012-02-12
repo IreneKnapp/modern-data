@@ -1,5 +1,4 @@
-{-# LANGUAGE Rank2Types, StandaloneDeriving, DeriveDataTypeable,
-             MultiParamTypeClasses, FunctionalDependencies #-}
+{-# LANGUAGE Rank2Types, StandaloneDeriving, DeriveDataTypeable #-}
 module Data.Modern
   (ModernType(..),
    ModernData(..),
@@ -18,7 +17,8 @@ module Data.Modern
    runModernSerializationToFile,
    serializeData,
    deserializeSchema,
-   ensureTypeInContext)
+   ensureTypeInContext,
+   outputSynchronize)
   where
 
 import BinaryFiles hiding (getContext)
@@ -119,20 +119,13 @@ data ModernData
 
 
 data ModernCommandType
-  = ModernCommandTypeListType
+  = ModernCommandTypeSynchronize
+  | ModernCommandTypeListType
   | ModernCommandTypeTupleType
   | ModernCommandTypeUnionType
   | ModernCommandTypeStructureType
   | ModernCommandTypeNamedType
   deriving (Eq, Ord)
-
-
-data ModernCommand
-  = ModernCommandListType ModernHash
-  | ModernCommandTupleType [ModernHash]
-  | ModernCommandUnionType [ModernHash]
-  | ModernCommandStructureType [(ModernFieldName, ModernHash)]
-  | ModernCommandNamedType ModernTypeName ModernHash
 
 
 data ModernHash
@@ -160,7 +153,10 @@ instance Show ModernFieldName where
 
 data ModernContext =
   ModernContext {
-      modernContextTypes :: Map ModernHash ModernType
+      modernContextTypes :: Map ModernHash ModernType,
+      modernContextPendingCommandBitCount :: Word8,
+      modernContextPendingCommandBitSource :: Word64,
+      modernContextPendingDataBytes :: ByteString
     }
 
 
@@ -252,7 +248,8 @@ standardCommandEncodingBitsize = 3
 standardCommandDecodings :: Map Word64 ModernCommandType
 standardCommandDecodings =
   Map.fromList
-    [(0x03, ModernCommandTypeListType),
+    [(0x00, ModernCommandTypeSynchronize),
+     (0x03, ModernCommandTypeListType),
      (0x04, ModernCommandTypeTupleType),
      (0x05, ModernCommandTypeUnionType),
      (0x06, ModernCommandTypeStructureType),
@@ -269,7 +266,10 @@ standardCommandEncodings =
 initialContext :: ModernContext
 initialContext =
   ModernContext {
-      modernContextTypes = initialTypes
+      modernContextTypes = initialTypes,
+      modernContextPendingCommandBitCount = 0,
+      modernContextPendingCommandBitSource = 0,
+      modernContextPendingDataBytes = BS.empty
     }
 
 
@@ -402,22 +402,25 @@ serializeData items = do
 
 deserializeSchema :: ModernDeserialization [ModernType]
 deserializeSchema = do
-  a <- deserializeOneCommand
-  b <- deserializeOneCommand
-  c <- deserializeOneCommand
-  d <- deserializeOneCommand
-  e <- deserializeOneCommand
-  return [a, b, c, d, e]
+  let loop soFar = do
+        maybeCommandType <- inputCommandType
+        case maybeCommandType of
+          Nothing -> return soFar
+          Just ModernCommandTypeSynchronize -> return soFar
+          Just commandType -> loop $ soFar ++ [commandType]
+  commandTypes <- loop []
+  inputSynchronize
+  mapM_ deserializeOneCommand commandTypes
+  context <- getContext
+  return $ Map.elems $ modernContextTypes context
 
 
-deserializeOneCommand :: ModernDeserialization ModernType
-deserializeOneCommand = do
+deserializeOneCommand :: ModernCommandType -> ModernDeserialization ()
+deserializeOneCommand commandType = do
   context <- getContext
   let knownTypes = modernContextTypes context
-  maybeCommandType <- inputCommandType
-  case maybeCommandType of
-    Nothing -> return undefined -- TODO
-    Just ModernCommandTypeListType -> do
+  case commandType of
+    ModernCommandTypeListType -> do
       contentTypeHash <- inputDataHash
       let contentType =
             case Map.lookup (ModernHash contentTypeHash) knownTypes of
@@ -425,8 +428,7 @@ deserializeOneCommand = do
               Just knownType -> knownType
           theType = ModernListType contentType
       learnType theType
-      return theType
-    Just ModernCommandTypeTupleType -> do
+    ModernCommandTypeTupleType -> do
       nItems <- inputDataWord64
       let loop soFar i = do
             if i == nItems
@@ -441,8 +443,7 @@ deserializeOneCommand = do
       items <- loop [] 0
       let theType = ModernTupleType items
       learnType theType
-      return theType
-    Just ModernCommandTypeUnionType -> do
+    ModernCommandTypeUnionType -> do
       nItems <- inputDataWord64
       let loop soFar i = do
             if i == nItems
@@ -457,8 +458,7 @@ deserializeOneCommand = do
       items <- loop [] 0
       let theType = ModernUnionType items
       learnType theType
-      return theType
-    Just ModernCommandTypeStructureType -> do
+    ModernCommandTypeStructureType -> do
       nFields <- inputDataWord64
       let loop soFar i = do
             if i == nFields
@@ -475,8 +475,7 @@ deserializeOneCommand = do
       fields <- loop [] 0
       let theType = ModernStructureType fields
       learnType theType
-      return theType
-    Just ModernCommandTypeNamedType -> do
+    ModernCommandTypeNamedType -> do
       typeName <- inputDataUTF8
       contentTypeHash <- inputDataHash
       let contentType =
@@ -485,7 +484,6 @@ deserializeOneCommand = do
               Just knownType -> knownType
           theType = ModernNamedType (ModernTypeName typeName) contentType
       learnType theType
-      return theType
 
 
 dataType :: ModernData -> ModernType
@@ -619,21 +617,52 @@ commandNamedType (ModernTypeName name) (ModernHash contentTypeHash) = do
   outputData contentTypeHash
 
 
+inputSynchronize
+  :: ModernDeserialization ()
+inputSynchronize = do
+  return ()
+
+
 inputCommandBits
   :: Word8
-  -> Map Word64 object
-  -> ModernDeserialization (Maybe object)
-inputCommandBits count decodings = MakeModernDeserialization $ do
-  source <- lift $ deserializeWord
-    :: StateT ModernContext (ContextualDeserialization Endianness) Word64
-  let lowBits = source .&. (shiftL 1 (fromIntegral count) - 1)
-  return $ Map.lookup lowBits decodings
+  -> ModernDeserialization Word64
+inputCommandBits inputCount = do
+  oldContext <- getContext
+  let oldCount = modernContextPendingCommandBitCount oldContext
+      oldSource = modernContextPendingCommandBitSource oldContext
+  if inputCount <= oldCount
+    then do
+      let resultBits = oldSource .&. (shiftL 1 (fromIntegral inputCount) - 1)
+          newCount = oldCount - inputCount
+          newSource = shiftR oldSource (fromIntegral inputCount)
+          newContext = oldContext {
+                           modernContextPendingCommandBitCount = newCount,
+                           modernContextPendingCommandBitSource = newSource
+                         }
+      putContext newContext
+      return resultBits
+    else do
+      inputSource <- MakeModernDeserialization $ lift $ deserializeWord
+      let newCount = oldCount + 64 - inputCount
+          wrappedCount = inputCount - oldCount
+          resultHighBits =
+            inputSource .&. (shiftL 1 (fromIntegral wrappedCount) - 1)
+          resultBits =
+            oldSource .|. (shiftL resultHighBits (fromIntegral oldCount))
+          newSource = shiftR inputSource (fromIntegral wrappedCount)
+          newContext = oldContext {
+                           modernContextPendingCommandBitCount = newCount,
+                           modernContextPendingCommandBitSource = newSource
+                         }
+      putContext newContext
+      return resultBits
 
 
 inputCommandType
   :: ModernDeserialization (Maybe ModernCommandType)
 inputCommandType = do
-  inputCommandBits standardCommandEncodingBitsize standardCommandDecodings
+  bits <- inputCommandBits standardCommandEncodingBitsize
+  return $ Map.lookup bits standardCommandDecodings
 
 
 inputDataHash
@@ -663,12 +692,52 @@ inputDataUTF8 = MakeModernDeserialization $ do
   loop BS.empty
 
 
+outputSynchronize
+  :: ModernSerialization ()
+outputSynchronize = do
+  outputCommandType ModernCommandTypeSynchronize
+  oldContext <- getContext
+  let oldCount = modernContextPendingCommandBitCount oldContext
+      oldSource = modernContextPendingCommandBitSource oldContext
+      oldDataBytes = modernContextPendingDataBytes oldContext
+      newContext = oldContext {
+                       modernContextPendingCommandBitCount = 0,
+                       modernContextPendingCommandBitSource = 0,
+                       modernContextPendingDataBytes = BS.empty
+                     }
+  if oldCount > 0
+    then MakeModernSerialization $ lift $ serializeWord oldSource
+    else return ()
+  MakeModernSerialization $ lift $ write oldDataBytes
+  putContext newContext
+
+
 outputCommandBits
   :: Word8
   -> Word64
   -> ModernSerialization ()
-outputCommandBits count source = MakeModernSerialization $ do
-  lift $ serializeWord source
+outputCommandBits outputCount outputSource = do
+  oldContext <- getContext
+  let oldCount = modernContextPendingCommandBitCount oldContext
+      oldSource = modernContextPendingCommandBitSource oldContext
+      combinedSources =
+        oldSource .|. (shiftL outputSource $ fromIntegral oldCount)
+      (newCount, newSource, immediateOutput) =
+        if oldCount + outputCount >= 64
+          then (oldCount + outputCount - 64,
+                shiftR outputSource $ fromIntegral $ 64 - oldCount,
+                Just combinedSources)
+          else (oldCount + outputCount,
+                combinedSources,
+                Nothing)
+      newContext = oldContext {
+                       modernContextPendingCommandBitCount = newCount,
+                       modernContextPendingCommandBitSource = newSource
+                     }
+  case immediateOutput of
+    Nothing -> return ()
+    Just it -> MakeModernSerialization $ lift $ serializeWord it
+  putContext newContext
 
 
 outputCommandType
@@ -683,15 +752,24 @@ outputCommandType commandType = do
 outputData
   :: ByteString
   -> ModernSerialization ()
-outputData byteString = MakeModernSerialization $ do
-  lift $ write byteString
+outputData byteString = do
+  oldContext <- getContext
+  let oldDataBytes = modernContextPendingDataBytes oldContext
+      newDataBytes = BS.concat [oldDataBytes, byteString]
+      newContext = oldContext {
+                       modernContextPendingDataBytes = newDataBytes
+                     }
+  putContext newContext
 
 
 outputDataWord64
   :: Word64
   -> ModernSerialization ()
-outputDataWord64 word64 = MakeModernSerialization $ do
-  lift $ serializeWord word64
+outputDataWord64 word64 = do
+  let result = runSerializationToByteString $ withContext LittleEndian
+                $ serializeWord word64
+  case result of
+    Right ((), byteString) -> outputData byteString
 
 
 outputDataUTF8
