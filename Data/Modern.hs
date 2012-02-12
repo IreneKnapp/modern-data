@@ -16,7 +16,7 @@ module Data.Modern
    runModernSerializationToByteString,
    runModernSerializationToFile,
    serializeData,
-   deserializeSchema,
+   deserializeData,
    ensureTypeInContext,
    outputSynchronize)
   where
@@ -33,10 +33,13 @@ import Data.Int
 import Data.List
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Data.Maybe
 import Data.String
 import Data.Typeable
 import Data.Word
 import Prelude hiding (read)
+
+import Debug.Trace
 
 
 class (Monad m)
@@ -92,9 +95,9 @@ data ModernType
   | ModernUTF8Type
   | ModernBlobType
   | ModernListType ModernType
-  | ModernTupleType [ModernType]
-  | ModernUnionType [ModernType]
-  | ModernStructureType [(ModernFieldName, ModernType)]
+  | ModernTupleType (Maybe (Array Word64 ModernType))
+  | ModernUnionType (Maybe (Word8, (Array Word64 ModernType)))
+  | ModernStructureType (Maybe (Array Word64 (ModernFieldName, ModernType)))
   | ModernNamedType ModernTypeName ModernType
   deriving (Eq, Show)
 
@@ -112,14 +115,16 @@ data ModernData
   | ModernDataDouble Double
   | ModernDataUTF8 ByteString
   | ModernDataBlob ByteString
-  | ModernDataList (Array Int ModernData)
-  | ModernDataTuple [ModernData]
-  | ModernDataStructure [(ModernFieldName, ModernData)]
-  | ModernDataNamed ModernTypeName ModernData
+  | ModernDataList ModernType (Array Int ModernData)
+  | ModernDataTuple ModernType (Array Int ModernData)
+  | ModernDataUnion ModernType Word64 ModernData
+  | ModernDataStructure ModernType (Array Int ModernData)
+  | ModernDataNamed ModernType ModernData
 
 
 data ModernCommandType
   = ModernCommandTypeSynchronize
+  | ModernCommandTypeDatum
   | ModernCommandTypeListType
   | ModernCommandTypeTupleType
   | ModernCommandTypeUnionType
@@ -156,8 +161,15 @@ data ModernContext =
       modernContextTypes :: Map ModernHash ModernType,
       modernContextPendingCommandBitCount :: Word8,
       modernContextPendingCommandBitSource :: Word64,
-      modernContextPendingDataBytes :: ByteString
+      modernContextPendingCommandWords :: [Word64],
+      modernContextPendingData :: [PendingData],
+      modernContextStartingOffset :: Word64
     }
+
+
+data PendingData
+  = PendingBytes ByteString
+  | PendingAlignmentMark Word64
 
 
 data ModernFailure
@@ -184,22 +196,30 @@ textualSchema theTypes =
       visitType _ ModernBlobType = "Blob;"
       visitType depth (ModernListType contentType) =
         "List " ++ block depth [visitType (depth + 1) contentType]
-      visitType depth (ModernTupleType contentTypes) =
-        "Tuple " ++ block depth (map (visitType (depth + 1)) contentTypes)
-      visitType depth (ModernUnionType contentTypes) =
+      visitType depth (ModernTupleType maybeContentTypes) =
+        "Tuple " ++ block depth (map (visitType (depth + 1))
+                                     (case maybeContentTypes of
+                                        Nothing -> []
+                                        Just contentTypes ->
+                                          elems contentTypes))
+      visitType depth (ModernUnionType maybeContentTypes) =
         "Union "
         ++ block depth
                  (map (\contentType ->
                          visitType (depth + 1) contentType)
-                      contentTypes)
-      visitType depth (ModernStructureType fields) =
+                      (case maybeContentTypes of
+                         Nothing -> []
+                         Just (_, contentTypes) -> elems contentTypes))
+      visitType depth (ModernStructureType maybeFields) =
         "Structure "
         ++ block depth
                  (map (\(fieldName, contentType) ->
                           visitFieldName fieldName
                           ++ " "
                           ++ visitType (depth + 1) contentType)
-                      fields)
+                      (case maybeFields of
+                         Nothing -> []
+                         Just fields -> elems fields))
       visitType depth (ModernNamedType typeName contentType) =
         "Named "
         ++ visitTypeName typeName ++ " "
@@ -249,6 +269,7 @@ standardCommandDecodings :: Map Word64 ModernCommandType
 standardCommandDecodings =
   Map.fromList
     [(0x00, ModernCommandTypeSynchronize),
+     (0x01, ModernCommandTypeDatum),
      (0x03, ModernCommandTypeListType),
      (0x04, ModernCommandTypeTupleType),
      (0x05, ModernCommandTypeUnionType),
@@ -269,7 +290,9 @@ initialContext =
       modernContextTypes = initialTypes,
       modernContextPendingCommandBitCount = 0,
       modernContextPendingCommandBitSource = 0,
-      modernContextPendingDataBytes = BS.empty
+      modernContextPendingCommandWords = [],
+      modernContextPendingData = [],
+      modernContextStartingOffset = 0
     }
 
 
@@ -301,19 +324,25 @@ computeTypeByteString modernType =
             BS.concat [UTF8.fromString "List(",
                        typeHelper contentType,
                        UTF8.fromString ")"]
-          ModernTupleType contentTypes ->
+          ModernTupleType maybeContentTypes ->
             BS.concat [UTF8.fromString "Tuple(",
                        BS.intercalate
                         (UTF8.fromString ",")
-                        $ map typeHelper contentTypes,
+                        (case maybeContentTypes of
+                          Nothing -> []
+                          Just contentTypes ->
+                            map typeHelper $ elems contentTypes),
                        UTF8.fromString ")"]
-          ModernUnionType possibilities ->
+          ModernUnionType maybePossibilities ->
             BS.concat [UTF8.fromString "Union(",
                        BS.intercalate
                         (UTF8.fromString ",")
-                        $ map typeHelper possibilities,
+                        (case maybePossibilities of
+                           Nothing -> []
+                           Just (_, possibilities) ->
+                             map typeHelper $ elems possibilities),
                        UTF8.fromString ")"]
-          ModernStructureType fields ->
+          ModernStructureType maybeFields ->
             BS.concat [UTF8.fromString "Structure(",
                        BS.intercalate
                         (UTF8.fromString ",")
@@ -321,7 +350,9 @@ computeTypeByteString modernType =
                                   BS.concat [fieldName,
                                              BS.pack [0x00],
                                              typeHelper fieldType])
-                              fields,
+                              (case maybeFields of
+                                 Nothing -> []
+                                 Just fields -> elems fields),
                        UTF8.fromString ")"]
           ModernNamedType (ModernTypeName name) contentType ->
             BS.concat [UTF8.fromString "Named(",
@@ -398,10 +429,11 @@ runModernSerializationToFile context filePath action = do
 serializeData :: [ModernData] -> ModernSerialization ()
 serializeData items = do
   mapM_ ensureTypeInContext $ map dataType items
+  mapM_ commandDatum items
 
 
-deserializeSchema :: ModernDeserialization [ModernType]
-deserializeSchema = do
+deserializeData :: ModernDeserialization ([ModernType], [ModernData])
+deserializeData = do
   let loop soFar = do
         maybeCommandType <- inputCommandType
         case maybeCommandType of
@@ -409,17 +441,26 @@ deserializeSchema = do
           Just ModernCommandTypeSynchronize -> return soFar
           Just commandType -> loop $ soFar ++ [commandType]
   commandTypes <- loop []
-  inputSynchronize
-  mapM_ deserializeOneCommand commandTypes
+  maybeDatas <- mapM deserializeOneCommand commandTypes
   context <- getContext
-  return $ Map.elems $ modernContextTypes context
+  return (Map.elems $ modernContextTypes context,
+          catMaybes maybeDatas)
 
 
-deserializeOneCommand :: ModernCommandType -> ModernDeserialization ()
+deserializeOneCommand
+  :: ModernCommandType
+  -> ModernDeserialization (Maybe ModernData)
 deserializeOneCommand commandType = do
   context <- getContext
   let knownTypes = modernContextTypes context
   case commandType of
+    ModernCommandTypeDatum -> do
+      typeHash <- inputDataHash
+      case Map.lookup (ModernHash typeHash) knownTypes of
+        Nothing -> undefined -- TODO
+        Just theType -> do
+          datum <- deserializeOneDatum theType
+          return $ Just datum
     ModernCommandTypeListType -> do
       contentTypeHash <- inputDataHash
       let contentType =
@@ -428,6 +469,7 @@ deserializeOneCommand commandType = do
               Just knownType -> knownType
           theType = ModernListType contentType
       learnType theType
+      return Nothing
     ModernCommandTypeTupleType -> do
       nItems <- inputDataWord64
       let loop soFar i = do
@@ -441,8 +483,15 @@ deserializeOneCommand commandType = do
                         Just knownType -> knownType
                 loop (soFar ++ [itemType]) (i + 1)
       items <- loop [] 0
-      let theType = ModernTupleType items
-      learnType theType
+      if nItems == 0
+        then learnType $ ModernTupleType Nothing
+        else do
+          let itemKeyValuePairs = zip [0 .. nItems - 1] items
+              itemBounds = (0, nItems - 1)
+              itemArray = array itemBounds itemKeyValuePairs
+              theType = ModernTupleType $ Just itemArray
+          learnType theType
+      return Nothing
     ModernCommandTypeUnionType -> do
       nItems <- inputDataWord64
       let loop soFar i = do
@@ -456,15 +505,25 @@ deserializeOneCommand commandType = do
                         Just knownType -> knownType
                 loop (soFar ++ [itemType]) (i + 1)
       items <- loop [] 0
-      let theType = ModernUnionType items
-      learnType theType
+      if nItems == 0
+        then learnType $ ModernUnionType Nothing
+        else do
+          let itemKeyValuePairs = zip [0 .. nItems - 1] items
+              itemBounds = (0, nItems - 1)
+              itemArray = array itemBounds itemKeyValuePairs
+              nBits = ceiling $ logBase 2 (fromIntegral nItems :: Double)
+              theType = ModernUnionType $ Just (nBits, itemArray)
+          learnType theType
+      return Nothing
     ModernCommandTypeStructureType -> do
       nFields <- inputDataWord64
       let loop soFar i = do
             if i == nFields
               then return soFar
               else do
+                inputAlign 8
                 fieldName <- inputDataUTF8
+                inputAlign 8
                 fieldTypeHash <- inputDataHash
                 let fieldType =
                       case Map.lookup (ModernHash fieldTypeHash) knownTypes of
@@ -473,10 +532,19 @@ deserializeOneCommand commandType = do
                 loop (soFar ++ [(ModernFieldName fieldName, fieldType)])
                      (i + 1)
       fields <- loop [] 0
-      let theType = ModernStructureType fields
-      learnType theType
+      if nFields == 0
+        then learnType $ ModernStructureType Nothing
+        else do
+          let fieldKeyValuePairs = zip [0 .. nFields - 1] fields
+              fieldBounds = (0, nFields - 1)
+              fieldArray = array fieldBounds fieldKeyValuePairs
+              theType = ModernStructureType $ Just fieldArray
+          learnType theType
+      return Nothing
     ModernCommandTypeNamedType -> do
+      inputAlign 8
       typeName <- inputDataUTF8
+      inputAlign 8
       contentTypeHash <- inputDataHash
       let contentType =
             case Map.lookup (ModernHash contentTypeHash) knownTypes of
@@ -484,6 +552,67 @@ deserializeOneCommand commandType = do
               Just knownType -> knownType
           theType = ModernNamedType (ModernTypeName typeName) contentType
       learnType theType
+      return Nothing
+
+
+deserializeOneDatum
+  :: ModernType
+  -> ModernDeserialization ModernData
+deserializeOneDatum theType = do
+  return $ ModernDataInt8 42
+  {-
+  case theType of
+    ModernInt8Type -> do
+      inputAlign 1
+      undefined -- TODO
+    ModernInt16Type -> do
+      inputAlign 2
+      undefined -- TODO
+    ModernInt32Type -> do
+      inputAlign 4
+      undefined -- TODO
+    ModernInt64Type -> do
+      inputAlign 8
+      undefined -- TODO
+    ModernWord8Type -> do
+      inputAlign 1
+      undefined -- TODO
+    ModernWord16Type -> do
+      inputAlign 2
+      undefined -- TODO
+    ModernWord32Type -> do
+      inputAlign 4
+      undefined -- TODO
+    ModernWord64Type -> do
+      inputAlign 8
+      undefined -- TODO
+    ModernFloatType -> do
+      inputAlign 4
+      undefined -- TODO
+    ModernDoubleType -> do
+      inputAlign 8
+      undefined -- TODO
+    ModernUTF8Type -> do
+      inputAlign 8
+      result <- undefined -- TODO
+      inputAlign 8
+      return result
+    ModernBlobType -> do
+      inputAlign 8
+      result <- undefined -- TODO
+      inputAlign 8
+      return result
+    ModernListType contentType -> do
+      undefined -- TODO
+    ModernTupleType maybeContentTypes -> do
+      undefined -- TODO
+    ModernUnionType maybeContentTypes -> do
+      undefined -- TODO
+    ModernStructureType maybeContentTypes -> do
+      undefined -- TODO
+    ModernNamedType _ contentType -> do
+      undefined -- TODO
+      -}
 
 
 dataType :: ModernData -> ModernType
@@ -499,16 +628,11 @@ dataType (ModernDataFloat _) = ModernFloatType
 dataType (ModernDataDouble _) = ModernDoubleType
 dataType (ModernDataUTF8 _) = ModernUTF8Type
 dataType (ModernDataBlob _) = ModernBlobType
-dataType (ModernDataList theArray) =
-  ModernListType $ dataType $ theArray ! (fst $ bounds theArray)
-dataType (ModernDataTuple theValues) =
-  ModernTupleType $ map dataType theValues
-dataType (ModernDataStructure fields) =
-  ModernStructureType $ map (\(fieldName, fieldData) ->
-                               (fieldName, dataType fieldData))
-                            fields
-dataType (ModernDataNamed typeName theValue) =
-  ModernNamedType typeName $ dataType theValue
+dataType (ModernDataList theType _) = theType
+dataType (ModernDataTuple theType _) = theType
+dataType (ModernDataUnion theType _ _) = theType
+dataType (ModernDataStructure theType _) = theType
+dataType (ModernDataNamed theType theValue) = theType
 
 
 learnType
@@ -545,25 +669,107 @@ ensureTypeInContext theType = do
           ensureTypeInContext contentType
           let contentTypeHash = computeTypeHash contentType
           commandListType contentTypeHash
-        ModernTupleType contentTypes -> do
-          mapM ensureTypeInContext contentTypes
-          let contentTypeHashes = map computeTypeHash contentTypes
+        ModernTupleType maybeContentTypes -> do
+          contentTypeHashes <-
+            case maybeContentTypes of
+              Nothing -> return []
+              Just contentTypes -> do
+                mapM_ ensureTypeInContext $ elems contentTypes
+                return $ map computeTypeHash $ elems contentTypes
           commandTupleType contentTypeHashes
-        ModernUnionType contentTypes -> do
-          mapM ensureTypeInContext contentTypes
-          let contentTypeHashes = map computeTypeHash contentTypes
+        ModernUnionType maybeContentTypes -> do
+          contentTypeHashes <-
+            case maybeContentTypes of
+              Nothing -> return []
+              Just (_, contentTypes) -> do
+                mapM_ ensureTypeInContext $ elems contentTypes
+                return $ map computeTypeHash $ elems contentTypes
           commandUnionType contentTypeHashes
-        ModernStructureType fields -> do
-          mapM ensureTypeInContext $ map snd fields
-          let fieldTypeHashes =
-                map (\(fieldName, fieldType) ->
-                        (fieldName, computeTypeHash fieldType))
-                    fields
+        ModernStructureType maybeFields -> do
+          fieldTypeHashes <-
+            case maybeFields of
+              Nothing -> return []
+              Just fields -> do
+                mapM_ ensureTypeInContext $ map snd $ elems fields
+                return $ map (\(fieldName, fieldType) ->
+                                 (fieldName, computeTypeHash fieldType))
+                             $ elems fields
           commandStructureType fieldTypeHashes
         ModernNamedType name contentType -> do
           ensureTypeInContext contentType
           let contentTypeHash = computeTypeHash contentType
           commandNamedType name contentTypeHash
+
+
+commandDatum
+  :: ModernData
+  -> ModernSerialization ()
+commandDatum datum = do
+  let theType = dataType datum
+      ModernHash theTypeHash = computeTypeHash theType
+  ensureTypeInContext theType
+  outputCommandType ModernCommandTypeDatum
+  outputData theTypeHash
+  let helper datum = do
+        case datum of
+          ModernDataInt8 value -> do
+            outputAlign 1
+            outputDataWord (fromIntegral value :: Word8)
+          ModernDataInt16 value -> do
+            outputAlign 2
+            outputDataWord (fromIntegral value :: Word16)
+          ModernDataInt32 value -> do
+            outputAlign 4
+            outputDataWord (fromIntegral value :: Word32)
+          ModernDataInt64 value -> do
+            outputAlign 8
+            outputDataWord (fromIntegral value :: Word64)
+          ModernDataWord8 value -> do
+            outputAlign 1
+            outputDataWord value
+          ModernDataWord16 value -> do
+            outputAlign 2
+            outputDataWord value
+          ModernDataWord32 value -> do
+            outputAlign 4
+            outputDataWord value
+          ModernDataWord64 value -> do
+            outputAlign 8
+            outputDataWord value
+          ModernDataFloat value -> do
+            outputAlign 4
+            undefined
+          ModernDataDouble value -> do
+            outputAlign 8
+            undefined
+          ModernDataUTF8 value -> do
+            outputAlign 8
+            outputData $ BS.concat [value, BS.pack [0x00]]
+            outputAlign 8
+          ModernDataBlob value -> do
+            outputAlign 8
+            outputData value
+            outputAlign 8
+          ModernDataList _ values -> do
+            outputAlign 8
+            let (start, end) = bounds values
+            outputDataWord $ end - start + 1
+            mapM_ helper $ elems values
+          ModernDataTuple _ values -> do
+            mapM_ helper $ elems values
+          ModernDataUnion theType index value -> do
+            case theType of
+              ModernUnionType Nothing -> do
+                undefined -- TODO
+              ModernUnionType (Just (bitCount, _)) -> do
+                outputCommandBits bitCount index
+                helper value
+              _ -> undefined -- TODO
+          ModernDataStructure _ values -> do
+            mapM_ helper $ elems values
+          ModernDataNamed _ value -> do
+            helper value
+  helper datum
 
 
 commandListType
@@ -579,7 +785,7 @@ commandTupleType
   -> ModernSerialization ()
 commandTupleType contentTypeHashes = do
   outputCommandType ModernCommandTypeTupleType
-  outputDataWord64 $ genericLength contentTypeHashes
+  outputDataWord (genericLength contentTypeHashes :: Word64)
   mapM_ (\(ModernHash contentTypeHash) -> do
            outputData contentTypeHash)
         contentTypeHashes
@@ -590,7 +796,7 @@ commandUnionType
   -> ModernSerialization ()
 commandUnionType possibilities = do
   outputCommandType ModernCommandTypeUnionType
-  outputDataWord64 $ genericLength possibilities
+  outputDataWord (genericLength possibilities :: Word64)
   mapM_ (\(ModernHash possibility) -> outputData possibility)
         possibilities
 
@@ -600,9 +806,10 @@ commandStructureType
   -> ModernSerialization ()
 commandStructureType fields = do
   outputCommandType ModernCommandTypeStructureType
-  outputDataWord64 $ genericLength fields
+  outputDataWord (genericLength fields :: Word64)
   mapM_ (\(ModernFieldName fieldName, ModernHash fieldTypeHash) -> do
-           outputDataUTF8 fieldName
+           outputData $ BS.concat [fieldName, BS.pack [0x00]]
+           outputAlign 8
            outputData fieldTypeHash)
         fields
 
@@ -613,14 +820,9 @@ commandNamedType
   -> ModernSerialization ()
 commandNamedType (ModernTypeName name) (ModernHash contentTypeHash) = do
   outputCommandType ModernCommandTypeNamedType
-  outputDataUTF8 name
+  outputData $ BS.concat [name, BS.pack [0x00]]
+  outputAlign 8
   outputData contentTypeHash
-
-
-inputSynchronize
-  :: ModernDeserialization ()
-inputSynchronize = do
-  return ()
 
 
 inputCommandBits
@@ -630,6 +832,7 @@ inputCommandBits inputCount = do
   oldContext <- getContext
   let oldCount = modernContextPendingCommandBitCount oldContext
       oldSource = modernContextPendingCommandBitSource oldContext
+      oldStartingOffset = modernContextStartingOffset oldContext
   if inputCount <= oldCount
     then do
       let resultBits = oldSource .&. (shiftL 1 (fromIntegral inputCount) - 1)
@@ -650,9 +853,11 @@ inputCommandBits inputCount = do
           resultBits =
             oldSource .|. (shiftL resultHighBits (fromIntegral oldCount))
           newSource = shiftR inputSource (fromIntegral wrappedCount)
+          newStartingOffset = oldStartingOffset + 8
           newContext = oldContext {
                            modernContextPendingCommandBitCount = newCount,
-                           modernContextPendingCommandBitSource = newSource
+                           modernContextPendingCommandBitSource = newSource,
+                           modernContextStartingOffset = newStartingOffset
                          }
       putContext newContext
       return resultBits
@@ -667,29 +872,112 @@ inputCommandType = do
 
 inputDataHash
   :: ModernDeserialization ByteString
-inputDataHash = MakeModernDeserialization $ do
-  lift $ read 16
+inputDataHash = do
+  oldContext <- getContext
+  let oldStartingOffset = modernContextStartingOffset oldContext
+  result <- MakeModernDeserialization $ lift $ read 16
+  let newStartingOffset = oldStartingOffset + 16
+      newContext = oldContext {
+                       modernContextStartingOffset = newStartingOffset
+                     }
+  putContext newContext
+  return result
+
+
+inputDataWord8
+  :: ModernDeserialization Word8
+inputDataWord8 = do
+  oldContext <- getContext
+  let oldStartingOffset = modernContextStartingOffset oldContext
+  result <- MakeModernDeserialization $ lift $ deserializeWord
+  let newStartingOffset = oldStartingOffset + 1
+      newContext = oldContext {
+                       modernContextStartingOffset = newStartingOffset
+                     }
+  putContext newContext
+  return result
+
+
+inputDataWord16
+  :: ModernDeserialization Word16
+inputDataWord16 = do
+  oldContext <- getContext
+  let oldStartingOffset = modernContextStartingOffset oldContext
+  result <- MakeModernDeserialization $ lift $ deserializeWord
+  let newStartingOffset = oldStartingOffset + 2
+      newContext = oldContext {
+                       modernContextStartingOffset = newStartingOffset
+                     }
+  putContext newContext
+  return result
+
+
+inputDataWord32
+  :: ModernDeserialization Word32
+inputDataWord32 = do
+  oldContext <- getContext
+  let oldStartingOffset = modernContextStartingOffset oldContext
+  result <- MakeModernDeserialization $ lift $ deserializeWord
+  let newStartingOffset = oldStartingOffset + 4
+      newContext = oldContext {
+                       modernContextStartingOffset = newStartingOffset
+                     }
+  putContext newContext
+  return result
 
 
 inputDataWord64
   :: ModernDeserialization Word64
-inputDataWord64 = MakeModernDeserialization $ do
-  lift $ deserializeWord
+inputDataWord64 = do
+  oldContext <- getContext
+  let oldStartingOffset = modernContextStartingOffset oldContext
+  result <- MakeModernDeserialization $ lift $ deserializeWord
+  let newStartingOffset = oldStartingOffset + 8
+      newContext = oldContext {
+                       modernContextStartingOffset = newStartingOffset
+                     }
+  putContext newContext
+  return result
 
 
 inputDataUTF8
   :: ModernDeserialization ByteString
-inputDataUTF8 = MakeModernDeserialization $ do
-  let loop soFar = do
-        next <- lift $ read 8
-        if 0x00 == (BS.head $ BS.drop 7 next)
-          then do
-            let validNext =
-                  (BS.pack . reverse . dropWhile (== 0x00) . reverse
-                   . BS.unpack) next
-            return $ BS.concat [soFar, validNext]
-          else loop $ BS.concat [soFar, next]
-  loop BS.empty
+inputDataUTF8 = do
+  oldContext <- getContext
+  let oldStartingOffset = modernContextStartingOffset oldContext
+  result <- MakeModernDeserialization $ lift deserializeNullTerminatedText
+  let newStartingOffset =
+        oldStartingOffset + (fromIntegral $ BS.length result) + 1
+      newContext = oldContext {
+                       modernContextStartingOffset = newStartingOffset
+                     }
+  putContext newContext
+  return result
+
+
+inputAlign
+  :: Word64
+  -> ModernDeserialization ()
+inputAlign alignment = do
+  oldContext <- getContext
+  let oldStartingOffset = modernContextStartingOffset oldContext
+      misalignment = mod oldStartingOffset alignment
+      padLength = if misalignment == 0
+                    then 0
+                    else alignment - misalignment
+      newStartingOffset = oldStartingOffset + padLength
+      newContext = oldContext {
+                       modernContextStartingOffset = newStartingOffset
+                     }
+  byteString <-
+    MakeModernDeserialization $ lift $ read $ fromIntegral padLength
+  putContext newContext
+  mapM_ (\byte ->
+           if byte == 0x00
+             then return ()
+             else error (show byte) -- TODO
+        )
+        (BS.unpack byteString)
 
 
 outputSynchronize
@@ -699,16 +987,39 @@ outputSynchronize = do
   oldContext <- getContext
   let oldCount = modernContextPendingCommandBitCount oldContext
       oldSource = modernContextPendingCommandBitSource oldContext
-      oldDataBytes = modernContextPendingDataBytes oldContext
-      newContext = oldContext {
-                       modernContextPendingCommandBitCount = 0,
-                       modernContextPendingCommandBitSource = 0,
-                       modernContextPendingDataBytes = BS.empty
-                     }
+      oldPendingCommandWords = modernContextPendingCommandWords oldContext
+      oldPendingData = modernContextPendingData oldContext
+      oldStartingOffset = modernContextStartingOffset oldContext
+  mapM_ (\commandWord -> do
+           MakeModernSerialization $ lift $ serializeWord commandWord)
+        oldPendingCommandWords
   if oldCount > 0
     then MakeModernSerialization $ lift $ serializeWord oldSource
     else return ()
-  MakeModernSerialization $ lift $ write oldDataBytes
+  newStartingOffset <-
+    foldM (\startingOffset pendingDatum -> do
+             case pendingDatum of
+               PendingBytes byteString -> do
+                 MakeModernSerialization $ lift $ write byteString
+                 return $ startingOffset
+                          + (fromIntegral $ BS.length byteString)
+               PendingAlignmentMark alignment -> do
+                 let misalignment = mod startingOffset alignment
+                     padLength = if misalignment == 0
+                                   then 0
+                                   else alignment - misalignment
+                 MakeModernSerialization
+                  $ lift $ write $ BS.pack $ genericTake padLength $ repeat 0x00  
+                 return $ startingOffset + padLength)
+          oldStartingOffset
+          oldPendingData
+  let newContext = oldContext {
+                       modernContextPendingCommandBitCount = 0,
+                       modernContextPendingCommandBitSource = 0,
+                       modernContextPendingCommandWords = [],
+                       modernContextPendingData = [],
+                       modernContextStartingOffset = newStartingOffset
+                     }
   putContext newContext
 
 
@@ -730,13 +1041,23 @@ outputCommandBits outputCount outputSource = do
           else (oldCount + outputCount,
                 combinedSources,
                 Nothing)
+      oldStartingOffset = modernContextStartingOffset oldContext
+      newStartingOffset =
+        case immediateOutput of
+          Nothing -> oldStartingOffset
+          Just _ -> oldStartingOffset + 8
+      oldPendingCommandWords = modernContextPendingCommandWords oldContext
+      newPendingCommandWords =
+        case immediateOutput of
+          Nothing -> oldPendingCommandWords
+          Just word -> oldPendingCommandWords ++ [word]
       newContext = oldContext {
                        modernContextPendingCommandBitCount = newCount,
-                       modernContextPendingCommandBitSource = newSource
+                       modernContextPendingCommandBitSource = newSource,
+                       modernContextPendingCommandWords =
+                         newPendingCommandWords,
+                       modernContextStartingOffset = newStartingOffset
                      }
-  case immediateOutput of
-    Nothing -> return ()
-    Just it -> MakeModernSerialization $ lift $ serializeWord it
   putContext newContext
 
 
@@ -754,33 +1075,33 @@ outputData
   -> ModernSerialization ()
 outputData byteString = do
   oldContext <- getContext
-  let oldDataBytes = modernContextPendingDataBytes oldContext
-      newDataBytes = BS.concat [oldDataBytes, byteString]
+  let oldPendingData = modernContextPendingData oldContext
+      newPendingData = oldPendingData ++ [PendingBytes byteString]
       newContext = oldContext {
-                       modernContextPendingDataBytes = newDataBytes
+                       modernContextPendingData = newPendingData
                      }
   putContext newContext
 
 
-outputDataWord64
-  :: Word64
+outputDataWord
+  :: (Bits word, Integral word, Num word)
+  => word
   -> ModernSerialization ()
-outputDataWord64 word64 = do
+outputDataWord word = do
   let result = runSerializationToByteString $ withContext LittleEndian
-                $ serializeWord word64
+                $ serializeWord word
   case result of
     Right ((), byteString) -> outputData byteString
 
 
-outputDataUTF8
-  :: ByteString
+outputAlign
+  :: Word64
   -> ModernSerialization ()
-outputDataUTF8 byteString = do
-  let payloadLength = BS.length byteString
-      prospectivePadLength = 8 - mod payloadLength 8
-      padLength = if prospectivePadLength == 0
-                    then 8
-                    else prospectivePadLength
-  outputData byteString
-  outputData $ BS.pack $ take padLength $ repeat 0x00
-
+outputAlign alignment = do
+  oldContext <- getContext
+  let oldPendingData = modernContextPendingData oldContext
+      newPendingData = oldPendingData ++ [PendingAlignmentMark alignment]
+      newContext = oldContext {
+                       modernContextPendingData = newPendingData
+                     }
+  putContext newContext

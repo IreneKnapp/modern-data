@@ -2,6 +2,9 @@ module Main (main) where
 
 import Data.Modern
 
+import Data.Array
+import qualified Data.ByteString.UTF8 as UTF8
+
 
 main :: IO ()
 main = do
@@ -12,12 +15,12 @@ testInput :: IO ()
 testInput = do
   let context = initialContext
   result <- runModernDeserializationFromFile context "input.txt" $ do
-              deserializeSchema
+              deserializeData
   context <- case result of
                Left failure -> do
                  putStrLn $ show failure
                  return context
-               Right (context, schema) -> do
+               Right (context, (schema, values)) -> do
                  putStrLn $ textualSchema schema
                  return context
   return ()
@@ -27,23 +30,33 @@ testOutput :: IO ()
 testOutput = do
   let itemType = ModernNamedType (fromString "Item") structureType
       structureType =
-        ModernStructureType [(fromString "key", ModernUTF8Type),
-                             (fromString "value", ModernWord64Type)]
+        ModernStructureType
+         $ Just $ array (0, 1) [(0, (fromString "key", ModernUTF8Type)),
+                                (1, (fromString "value", ModernWord64Type))]
       listOfStringsType = ModernListType ModernUTF8Type
       tupleType =
-        ModernTupleType [ModernWord8Type,
-                         ModernWord16Type,
-                         ModernWord32Type,
-                         ModernWord64Type]
+        ModernTupleType
+         $ Just $ array (0, 3) [(0, ModernWord8Type),
+                                (1, ModernWord16Type),
+                                (2, ModernWord32Type),
+                                (3, ModernWord64Type)]
       unionType =
-        ModernUnionType [itemType,
-                         listOfStringsType,
-                         tupleType]
+        ModernUnionType
+         $ Just (2, array (0, 2) [(0, itemType),
+                                  (1, listOfStringsType),
+                                  (2, tupleType)])
       schema = [itemType, listOfStringsType, tupleType, unionType]
+      datum =
+        ModernDataUnion unionType 0
+         $ ModernDataNamed itemType
+            $ ModernDataStructure structureType
+               $ array (0, 1)
+                       [(0, ModernDataUTF8 $ UTF8.fromString "Pi"),
+                        (1, ModernDataWord64 0xC90FDAA22168C000)]
       context = initialContext
   putStrLn $ textualSchema schema
   result <- runModernSerializationToFile context "output.txt" $ do
-              mapM_ ensureTypeInContext schema
+              serializeData [datum]
               outputSynchronize
   context <- case result of
                Left failure -> do
