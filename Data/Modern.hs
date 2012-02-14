@@ -405,7 +405,9 @@ runModernSerializationToByteString
 runModernSerializationToByteString context action =
   case runSerializationToByteString $ do
          withContext LittleEndian $ do
-           runStateT (modernSerializationAction action) context of
+           runStateT (modernSerializationAction
+                       $ wrapModernSerialization action)
+                     context of
     Left failure -> Left failure
     Right ((result, context'), output) -> Right (output, context', result)
 
@@ -420,7 +422,8 @@ runModernSerializationToFile context filePath action = do
   eitherFailureResult <-
     flip runSerializationToFile filePath $ do
       withContext LittleEndian $ do
-        runStateT (modernSerializationAction action) context
+        runStateT (modernSerializationAction
+                    $ wrapModernSerialization action) context
   return $ case eitherFailureResult of
              Left failure -> Left failure
              Right (result, context') -> Right (context', result)
@@ -439,6 +442,8 @@ deserializeData = do
         case maybeCommandType of
           Nothing -> return soFar
           Just ModernCommandTypeSynchronize -> return soFar
+          Just commandType@ModernCommandTypeDatum
+            -> return $ soFar ++ [commandType]
           Just commandType -> loop $ soFar ++ [commandType]
   commandTypes <- loop []
   maybeDatas <- mapM deserializeOneCommand commandTypes
@@ -701,6 +706,13 @@ ensureTypeInContext theType = do
           commandNamedType name contentTypeHash
 
 
+commandSynchronize
+  :: ModernSerialization ()
+commandSynchronize = do
+  outputCommandType ModernCommandTypeSynchronize
+  outputSynchronize
+
+
 commandDatum
   :: ModernData
   -> ModernSerialization ()
@@ -710,6 +722,7 @@ commandDatum datum = do
   ensureTypeInContext theType
   outputCommandType ModernCommandTypeDatum
   outputData theTypeHash
+  outputSynchronize
   let helper datum = do
         case datum of
           ModernDataInt8 value -> do
@@ -762,6 +775,7 @@ commandDatum datum = do
               ModernUnionType Nothing -> do
                 undefined -- TODO
               ModernUnionType (Just (bitCount, _)) -> do
+                outputSynchronize
                 outputCommandBits bitCount index
                 helper value
               _ -> undefined -- TODO
@@ -980,10 +994,18 @@ inputAlign alignment = do
         (BS.unpack byteString)
 
 
+wrapModernSerialization
+  :: ModernSerialization a
+  -> ModernSerialization a
+wrapModernSerialization action = do
+  result <- action
+  outputSynchronize
+  return result
+
+
 outputSynchronize
   :: ModernSerialization ()
 outputSynchronize = do
-  outputCommandType ModernCommandTypeSynchronize
   oldContext <- getContext
   let oldCount = modernContextPendingCommandBitCount oldContext
       oldSource = modernContextPendingCommandBitSource oldContext

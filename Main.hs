@@ -8,7 +8,7 @@ import qualified Data.ByteString.UTF8 as UTF8
 
 main :: IO ()
 main = do
-  testInput
+  testOutput
 
 
 testInput :: IO ()
@@ -57,7 +57,6 @@ testOutput = do
   putStrLn $ textualSchema schema
   result <- runModernSerializationToFile context "output.txt" $ do
               serializeData [datum]
-              outputSynchronize
   context <- case result of
                Left failure -> do
                  putStrLn $ show failure
