@@ -8,7 +8,7 @@ import qualified Data.ByteString.UTF8 as UTF8
 
 main :: IO ()
 main = do
-  testOutput
+  testInput
 
 
 testInput :: IO ()
@@ -22,6 +22,7 @@ testInput = do
                  return context
                Right (context, (schema, values)) -> do
                  putStrLn $ textualSchema schema
+                 putStrLn $ textualData values
                  return context
   return ()
 
@@ -55,6 +56,7 @@ testOutput = do
                         (1, ModernDataWord64 0xC90FDAA22168C000)]
       context = initialContext
   putStrLn $ textualSchema schema
+  putStrLn $ textualData [datum]
   result <- runModernSerializationToFile context "output.txt" $ do
               serializeData [datum]
   context <- case result of

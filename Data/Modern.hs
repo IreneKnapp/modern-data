@@ -8,6 +8,7 @@ module Data.Modern
    ModernContext,
    ModernFailure(..),
    textualSchema,
+   textualData,
    fromString,
    initialContext,
    computeTypeHash,
@@ -28,6 +29,7 @@ import Data.Bits
 import Data.ByteString (ByteString)
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.UTF8 as UTF8
+import Data.Char
 import qualified Data.Digest.Murmur3 as Hash
 import Data.Int
 import Data.List
@@ -37,6 +39,7 @@ import Data.Maybe
 import Data.String
 import Data.Typeable
 import Data.Word
+import Numeric
 import Prelude hiding (read)
 
 import Debug.Trace
@@ -241,6 +244,59 @@ textualSchema theTypes =
         ++ take (depth * 2) (repeat ' ')
         ++ "}"
   in intercalate "\n" $ map (visitType 0) theTypes
+
+
+textualData :: [ModernData] -> String
+textualData theData =
+  let visitDatum (ModernDataInt8 value) = "int8:" ++ (showHexBytes 1 value)
+      visitDatum (ModernDataInt16 value) = "int16:" ++ (showHexBytes 2 value)
+      visitDatum (ModernDataInt32 value) = "int32:" ++ (showHexBytes 4 value)
+      visitDatum (ModernDataInt64 value) = "int64:" ++ (showHexBytes 8 value)
+      visitDatum (ModernDataWord8 value) = "word8:" ++ (showHexBytes 1 value) 
+      visitDatum (ModernDataWord16 value) = "word16:" ++ (showHexBytes 2 value)
+      visitDatum (ModernDataWord32 value) = "word32:" ++ (showHexBytes 4 value)
+      visitDatum (ModernDataWord64 value) = "word64:" ++ (showHexBytes 8 value)
+      visitDatum (ModernDataFloat value) = "float:" ++ (show value) -- TODO
+      visitDatum (ModernDataDouble value) = "double:" ++ (show value) -- TODO
+      visitDatum (ModernDataUTF8 value) = "utf8:" ++ (showString value)
+      visitDatum (ModernDataBlob value) =
+        "blob:" ++ (concat $ map (showHexBytes 1) (BS.unpack value))
+      visitDatum (ModernDataList _ items) =
+        "list:{"
+        ++ (concat $ map (\item -> visitDatum item ++ ";") (elems items))
+        ++ "}"
+      visitDatum (ModernDataTuple _ items) =
+        "tuple:{"
+        ++ (concat $ map (\item -> visitDatum item ++ ";") (elems items))
+        ++ "}"
+      visitDatum (ModernDataUnion _ which datum) =
+        "union:" ++ (show which) ++ "{" ++ visitDatum datum ++ "}"
+      visitDatum (ModernDataStructure theType values) =
+        "struct:{"
+        ++ (concat $ map (\(name, value) ->
+                            showString name ++ "=" ++ visitDatum value ++ ";")
+                         (zip (case theType of
+                                 ModernStructureType Nothing -> []
+                                 ModernStructureType (Just fields) ->
+                                   map (\(ModernFieldName bs, _) -> bs)
+                                       (elems fields)
+                                 _ -> repeat $ error "Unknown name.")
+                              (elems values)))
+        ++ "}"
+      visitDatum (ModernDataNamed theType datum) =
+        let bs = case theType of
+                     ModernNamedType (ModernTypeName bs) _ -> bs
+                     _ -> error "Unknown name."
+        in "named:" ++ (showString bs) ++ "={" ++ visitDatum datum ++ "}"
+      showString bs = "'" ++ (concat $ map (\c -> case c of
+                                                    '\'' -> "''"
+                                                    _ -> [c])
+                                           $ UTF8.toString bs) ++ "'"
+      showHexBytes w b =
+        let h = map toUpper $ showHex b ""
+            p = take (w * 2 - length h) (repeat '0')
+        in p ++ h
+  in concat $ map (\datum -> visitDatum datum ++ ";") theData
 
 
 initialTypes :: Map ModernHash ModernType

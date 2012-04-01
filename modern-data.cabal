@@ -1,4 +1,4 @@
-name: TMC
+name: modern-data
 version: 1.0
 cabal-version: >= 1.12
 build-type: Simple
@@ -10,12 +10,12 @@ maintainer: ireney.knapp@gmail.com
 homepage: http://ireneknapp.com/software/
 bug-reports: http://ireneknapp.com/issues/create/
 category: Data
-synopsis: Types for Modern Computing
+synopsis: Efficient binary self-describing data with parametric types
 description:
 
 Source-Repository head
   type: darcs
-  location: http://ireneknapp.com/software/darcs/TMC/
+  location: http://ireneknapp.com/software/darcs/modern-data/
 
 Library
   exposed-modules: Data.Modern
