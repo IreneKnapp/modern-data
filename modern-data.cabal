@@ -19,7 +19,11 @@ Source-Repository head
 
 Library
   exposed-modules: Data.Modern
-  other-modules: Data.Modern.Types
+  other-modules: Data.Modern.Deserialization,
+                 Data.Modern.Hash,
+                 Data.Modern.Initial,
+                 Data.Modern.Serialization,
+                 Data.Modern.Types
   build-depends: base >= 4.1 && < 5,
                  array >= 0.3.0.0 && < 1,
                  bytestring >= 0.9.1.5 && < 1,
@@ -34,6 +38,10 @@ Library
 Executable test
   main-is: Main.hs
   other-modules: Data.Modern,
+                 Data.Modern.Deserialization,
+                 Data.Modern.Hash,
+                 Data.Modern.Initial,
+                 Data.Modern.Serialization,
                  Data.Modern.Types
   build-depends: base >= 4.1 && < 5,
                  array >= 0.3.0.0 && < 1,

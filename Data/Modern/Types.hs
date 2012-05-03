@@ -1,21 +1,20 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 module Data.Modern.Types
   (ModernMonad(..),
-   ModernDeserialization(..),
-   ModernSerialization(..),
    ModernType(..),
    ModernData(..),
+   dataType,
    ModernCommandType(..),
    ModernHash(..),
    ModernTypeName(..),
    ModernFieldName(..),
    ModernContext(..),
    PendingData(..),
-   ModernFailure(..))
+   ModernFailure(..),
+   fromString)
   where
 
 import BinaryFiles hiding (getContext)
-import Control.Monad.State.Strict
 import Data.Array (Array)
 import Data.ByteString (ByteString)
 import qualified Data.ByteString.UTF8 as UTF8
@@ -31,38 +30,6 @@ class (Monad m)
       where
   getContext :: m ModernContext
   putContext :: ModernContext -> m ()
-
-
-data ModernDeserialization a =
-  MakeModernDeserialization {
-      modernDeserializationAction
-        :: StateT ModernContext (ContextualDeserialization Endianness) a
-    }
-instance Monad ModernDeserialization where
-  return a = MakeModernDeserialization $ return a
-  x >>= f =
-    MakeModernDeserialization $ do
-      v <- modernDeserializationAction x
-      modernDeserializationAction $ f v
-instance ModernMonad ModernDeserialization where
-  getContext = MakeModernDeserialization $ get
-  putContext context = MakeModernDeserialization $ put context
-
-
-data ModernSerialization a =
-  MakeModernSerialization {
-      modernSerializationAction
-        :: StateT ModernContext (ContextualSerialization Endianness) a
-    }
-instance Monad ModernSerialization where
-  return a = MakeModernSerialization $ return a
-  x >>= f =
-    MakeModernSerialization $ do
-      v <- modernSerializationAction x
-      modernSerializationAction $ f v
-instance ModernMonad ModernSerialization where
-  getContext = MakeModernSerialization $ get
-  putContext context = MakeModernSerialization $ put context
 
 
 data ModernType
@@ -106,6 +73,26 @@ data ModernData
   | ModernDataNamed ModernType ModernData
 
 
+dataType :: ModernData -> ModernType
+dataType (ModernDataInt8 _) = ModernInt8Type
+dataType (ModernDataInt16 _) = ModernInt16Type
+dataType (ModernDataInt32 _) = ModernInt32Type
+dataType (ModernDataInt64 _) = ModernInt64Type
+dataType (ModernDataWord8 _) = ModernWord8Type
+dataType (ModernDataWord16 _) = ModernWord16Type
+dataType (ModernDataWord32 _) = ModernWord32Type
+dataType (ModernDataWord64 _) = ModernWord64Type
+dataType (ModernDataFloat _) = ModernFloatType
+dataType (ModernDataDouble _) = ModernDoubleType
+dataType (ModernDataUTF8 _) = ModernUTF8Type
+dataType (ModernDataBlob _) = ModernBlobType
+dataType (ModernDataList theType _) = theType
+dataType (ModernDataTuple theType _) = theType
+dataType (ModernDataUnion theType _ _) = theType
+dataType (ModernDataStructure theType _) = theType
+dataType (ModernDataNamed theType theValue) = theType
+
+
 data ModernCommandType
   = ModernCommandTypeSynchronize
   | ModernCommandTypeDatum
@@ -142,12 +129,7 @@ instance Show ModernFieldName where
 
 data ModernContext =
   ModernContext {
-      modernContextTypes :: Map ModernHash ModernType,
-      modernContextPendingCommandBitCount :: Word8,
-      modernContextPendingCommandBitSource :: Word64,
-      modernContextPendingCommandWords :: [Word64],
-      modernContextPendingData :: [PendingData],
-      modernContextStartingOffset :: Word64
+      modernContextTypes :: Map ModernHash ModernType
     }
 
 
