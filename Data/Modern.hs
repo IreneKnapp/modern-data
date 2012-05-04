@@ -9,6 +9,7 @@ module Data.Modern
    ModernContext,
    ModernFailure(..),
    fromString,
+   ModernFormat,
   
    -- From Data.Modern.Hash
    computeTypeHash,
@@ -23,11 +24,15 @@ module Data.Modern
    runModernSerializationToFile,
    
    -- From Data.Modern.Deserialization
-   deserializeData,
-   runModernDeserializationFromByteString,
-   runModernDeserializationFromFile)
+   -- deserializeData,
+   -- runModernDeserializationFromByteString,
+   -- runModernDeserializationFromFile,
+   
+   -- From Data.Modern.Binary
+   FormatBinary(..))
   where
 
+import Data.Modern.Binary
 import Data.Modern.Deserialization
 import Data.Modern.Hash
 import Data.Modern.Initial

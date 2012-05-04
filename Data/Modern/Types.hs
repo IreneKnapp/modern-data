@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveDataTypeable, TypeFamilies #-}
 module Data.Modern.Types
   (ModernMonad(..),
    ModernType(..),
@@ -11,11 +11,18 @@ module Data.Modern.Types
    ModernContext(..),
    PendingData(..),
    ModernFailure(..),
-   fromString)
+   fromString,
+   ModernSerialization(..),
+   getSerializationContext,
+   putSerializationContext,
+   ModernFormat(..),
+   FormatSerializationContext(..))
   where
 
 import BinaryFiles hiding (getContext)
+import Control.Monad.State.Strict
 import Data.Array (Array)
+import Data.Bits
 import Data.ByteString (ByteString)
 import qualified Data.ByteString.UTF8 as UTF8
 import Data.Int
@@ -144,4 +151,62 @@ data ModernFailure
 instance Show ModernFailure where
   show (ModernFailure string) = string
 instance SerializationFailure ModernFailure
+
+
+data ModernSerialization format a =
+  MakeModernSerialization {
+      modernSerializationAction
+        :: StateT (ModernContext, FormatSerializationContext format)
+		  (ContextualSerialization Endianness) a
+    }
+instance (ModernFormat format)
+         => Monad (ModernSerialization format)
+         where
+  return a = MakeModernSerialization $ return a
+  x >>= f =
+    MakeModernSerialization $ do
+      v <- modernSerializationAction x
+      modernSerializationAction $ f v
+instance (ModernFormat format)
+         => ModernMonad (ModernSerialization format)
+         where
+  getContext = MakeModernSerialization $ do
+    (context, _) <- get
+    return context
+  putContext context = MakeModernSerialization $ do
+    (_, serializationContext) <- get
+    put (context, serializationContext)
+
+
+getSerializationContext
+  :: (ModernFormat format)
+  => ModernSerialization format (FormatSerializationContext format)
+getSerializationContext = MakeModernSerialization $ do
+  (_, serializationContext) <- get
+  return serializationContext
+
+
+putSerializationContext
+  :: (ModernFormat format)
+  => FormatSerializationContext format -> ModernSerialization format ()
+putSerializationContext serializationContext = MakeModernSerialization $ do
+  (context, _) <- get
+  put (context, serializationContext)
+
+
+class ModernFormat format where
+  data FormatSerializationContext format
+  initialSerializationContext :: FormatSerializationContext format
+  outputCommandType :: ModernCommandType -> ModernSerialization format ()
+  outputCommandBits
+    :: Word8
+    -> Word64
+    -> ModernSerialization format ()
+  outputData :: ByteString -> ModernSerialization format ()
+  outputDataWord
+    :: (Bits word, Integral word, Num word)
+    => word
+    -> ModernSerialization format ()
+  outputSynchronize :: ModernSerialization format ()
+  outputAlign :: Word64 -> ModernSerialization format ()
 

@@ -1,5 +1,5 @@
 module Data.Modern.Deserialization
-  (deserializeData,
+  (-- deserializeData,
    runModernDeserializationFromByteString,
    runModernDeserializationFromFile)
   where
@@ -73,6 +73,7 @@ putDeserializationContext deserializationContext =
     put (context, deserializationContext)
 
 
+{-
 deserializeData :: ModernDeserialization ([ModernType], [ModernData])
 deserializeData = do
   let loop soFar = do
@@ -436,7 +437,7 @@ inputAlign alignment = do
              else error (show byte) -- TODO
         )
         (BS.unpack byteString)
-
+-}
 
 runModernDeserializationFromByteString
   :: ModernContext

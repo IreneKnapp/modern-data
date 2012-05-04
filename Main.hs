@@ -11,6 +11,7 @@ main = do
   testOutput
 
 
+{-
 testInput :: IO ()
 testInput = do
   let context = initialContext
@@ -25,6 +26,7 @@ testInput = do
                  -- putStrLn $ textualData values
                  return context
   return ()
+  -}
 
 
 testOutput :: IO ()
@@ -57,8 +59,9 @@ testOutput = do
       context = initialContext
   -- putStrLn $ textualSchema schema
   -- putStrLn $ textualData [datum]
-  result <- runModernSerializationToFile context "output.txt" $ do
-              serializeData [datum]
+  result <- runModernSerializationToFile
+	      FormatBinaryExperimental context "output.txt" $ do
+                serializeData [datum]
   context <- case result of
                Left failure -> do
                  putStrLn $ show failure
