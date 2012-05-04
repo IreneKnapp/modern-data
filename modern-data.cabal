@@ -19,7 +19,9 @@ Source-Repository head
 
 Library
   exposed-modules: Data.Modern
-  other-modules: Data.Modern.Deserialization,
+  other-modules: Data.Modern.Binary,
+                 Data.Modern.Deserialization,
+                 Data.Modern.Explicatory,
                  Data.Modern.Hash,
                  Data.Modern.Initial,
                  Data.Modern.Serialization,
@@ -38,7 +40,9 @@ Library
 Executable test
   main-is: Main.hs
   other-modules: Data.Modern,
+                 Data.Modern.Binary,
                  Data.Modern.Deserialization,
+                 Data.Modern.Explicatory,
                  Data.Modern.Hash,
                  Data.Modern.Initial,
                  Data.Modern.Serialization,

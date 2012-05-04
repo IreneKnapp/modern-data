@@ -29,10 +29,14 @@ module Data.Modern
    -- runModernDeserializationFromFile,
    
    -- From Data.Modern.Binary
-   FormatBinary(..))
+   FormatBinary(..),
+
+   -- From Data.Modern.Explicatory
+   FormatExplicatory(..))
   where
 
 import Data.Modern.Binary
+import Data.Modern.Explicatory
 import Data.Modern.Deserialization
 import Data.Modern.Hash
 import Data.Modern.Initial

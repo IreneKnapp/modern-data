@@ -60,7 +60,7 @@ testOutput = do
   -- putStrLn $ textualSchema schema
   -- putStrLn $ textualData [datum]
   result <- runModernSerializationToFile
-	      FormatBinaryExperimental context "output.txt" $ do
+	      FormatExplicatory context "output.txt" $ do
                 serializeData [datum]
   context <- case result of
                Left failure -> do
