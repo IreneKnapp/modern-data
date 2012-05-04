@@ -7,12 +7,16 @@ import Data.Bits
 import Data.ByteString (ByteString)
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.UTF8 as UTF8
+import Data.Char
 import Data.List
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Word
+import Prelude hiding (read)
 
 import Data.Modern.Types
+
+import Debug.Trace
 
 
 data FormatExplicatory
@@ -27,9 +31,7 @@ instance ModernFormat FormatExplicatory where
       }
   outputCommandType commandType = do
     case Map.lookup commandType standardCommandEncodings of
-      Just encoding -> do
-	MakeModernSerialization $ lift
-	 $ write $ UTF8.fromString $ encoding ++ "\n"
+      Just encoding -> writeLine encoding
       Nothing -> return ()
   outputCommandBits outputCount outputSource = do
     let loop soFar index =
@@ -42,8 +44,7 @@ instance ModernFormat FormatExplicatory where
 			   else '0'
 		 in loop (soFar ++ [c]) (index + 1)
         output = loop "C" 0
-    MakeModernSerialization $ lift
-     $ write $ UTF8.fromString $ output ++ "\n"
+    writeLine output
   outputData byteString = do
     oldContext <- getSerializationContext
     let oldPendingData = serializationContextPendingData oldContext
@@ -60,10 +61,7 @@ instance ModernFormat FormatExplicatory where
   outputSynchronize = do
     oldContext <- getSerializationContext
     let oldPendingData = serializationContextPendingData oldContext
-    mapM_ (\pendingDatum -> do
-	     MakeModernSerialization $ lift
-	      $ write $ UTF8.fromString $ pendingDatum ++ "\n")
-          oldPendingData
+    mapM_ writeLine oldPendingData
     let newContext = oldContext {
                          serializationContextPendingData = []
                        }
@@ -87,29 +85,57 @@ instance ModernFormat FormatExplicatory where
   inputCommandBits inputCount = do
     return undefined
   inputCommandType = do
-    return undefined
+    encoding <- readLine
+    return $ Map.lookup encoding standardCommandDecodings
   inputDataHash = do
     return undefined
-  inputDataWord8 = do
-    return undefined
-  inputDataWord16 = do
-    return undefined
-  inputDataWord32 = do
-    return undefined
-  inputDataWord64 = do
-    return undefined
+  inputDataWord8 = inputDataWord
+  inputDataWord16 = inputDataWord
+  inputDataWord32 = inputDataWord
+  inputDataWord64 = inputDataWord
   inputDataUTF8 = do
     return undefined
   inputAlign alignment = do
     return undefined
 
 
-commandSynchronize
+inputDataWord
+  :: (Bits word, Integral word, Num word, ModernFormat format)
+  => ModernDeserialization format word
+inputDataWord = do
+  encoding <- readLine
+  trace encoding $ return ()
+  case parseBytes encoding of
+    Just byteString -> do
+      case runDeserializationFromByteString
+             (withContext LittleEndian deserializeWord)
+	     byteString of
+        Right word -> return word
+        Left _ -> error "Hm." -- TODO
+    Nothing -> error "Hm." -- TODO
+
+
+writeLine
   :: (ModernFormat format)
-  => ModernSerialization format ()
-commandSynchronize = do
-  outputCommandType ModernCommandTypeSynchronize
-  outputSynchronize
+  => String
+  -> ModernSerialization format ()
+writeLine string = do
+  MakeModernSerialization $ lift $ write $ UTF8.fromString $ string ++ "\n"
+
+
+readLine
+  :: (ModernFormat format)
+  => ModernDeserialization format String
+readLine = do
+  let readChar = MakeModernDeserialization $ lift $ read 1
+      loop soFar = do
+	byteString <- readChar
+	if (BS.null byteString)
+	   || (byteString == UTF8.fromString "\n")
+	  then return soFar
+	  else loop (BS.concat [soFar, byteString])
+  byteString <- loop BS.empty
+  return $ UTF8.toString byteString
 
 
 standardCommandDecodings :: Map String ModernCommandType
@@ -142,4 +168,36 @@ showBytes byteString =
 	       in loop (soFar ++ [highNibble, lowNibble]) (index + 1)
       showNibble nibble = head $ drop (fromIntegral nibble) "0123456789abcdef"
   in loop "0x" 0
+
+
+parseBytes :: String -> Maybe ByteString
+parseBytes string =
+  if (length string > 2) && (take 2 string == "0x")
+    then let nibbles = drop 2 string
+	     parseNibblePair nibblePair =
+	       let highNibble = head nibblePair
+		   lowNibble = head $ drop 1 nibblePair
+	       in do
+		 highBits <- parseNibble highNibble
+		 lowBits <- parseNibble lowNibble
+		 return (shiftL highBits 4 .|. lowBits)
+	     parseNibble nibble =
+	       fmap fromIntegral
+		    $ elemIndex (toLower nibble) "0123456789abcdef"
+	 in if even (length nibbles)
+	      then Just
+		    $ BS.pack
+		    $ reverse
+		    $ unfoldr (\restNibbles ->
+				 if null restNibbles
+				   then Nothing
+				   else let (nibblePair, restNibbles') =
+					      splitAt 2 restNibbles
+					in case parseNibblePair nibblePair of
+					     Just byte ->
+					       Just (byte, restNibbles')
+					     Nothing -> Nothing)
+			      nibbles
+	      else Nothing
+    else Nothing
 

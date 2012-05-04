@@ -8,15 +8,15 @@ import qualified Data.ByteString.UTF8 as UTF8
 
 main :: IO ()
 main = do
-  testOutput
+  testInput
 
 
-{-
 testInput :: IO ()
 testInput = do
   let context = initialContext
-  result <- runModernDeserializationFromFile context "input.txt" $ do
-              deserializeData
+  result <- runModernDeserializationFromExplicatoryFile
+	      context "input.txt" $ do
+                deserializeData
   context <- case result of
                Left failure -> do
                  putStrLn $ show failure
@@ -26,7 +26,6 @@ testInput = do
                  -- putStrLn $ textualData values
                  return context
   return ()
-  -}
 
 
 testOutput :: IO ()

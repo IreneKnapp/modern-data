@@ -25,11 +25,11 @@ module Data.Modern
    runModernSerializationToExplicatoryFile,
    
    -- From Data.Modern.Deserialization
-   -- deserializeData,
-   -- runModernDeserializationFromByteString,
-   -- runModernDeserializationFromFile,
-   -- runModernDeserializationFromExplicatoryByteString,
-   -- runModernDeserializationFromExplicatoryFile,
+   Internal.deserializeData,
+   runModernDeserializationFromByteString,
+   runModernDeserializationFromFile,
+   runModernDeserializationFromExplicatoryByteString,
+   runModernDeserializationFromExplicatoryFile,
    
    -- From Data.Modern.Binary
    Internal.FormatBinary(..),
@@ -92,4 +92,44 @@ runModernSerializationToExplicatoryFile
                 (Internal.ModernContext, a))
 runModernSerializationToExplicatoryFile =
   Internal.runModernSerializationToFile
+
+
+runModernDeserializationFromByteString
+  :: Internal.ModernContext
+  -> ByteString
+  -> (Internal.ModernDeserialization Internal.FormatBinary a)
+  -> Either (Int, [(Int, String)], SomeSerializationFailure)
+            (Internal.ModernContext, a)
+runModernDeserializationFromByteString =
+  Internal.runModernDeserializationFromByteString
+
+
+runModernDeserializationFromFile
+  :: Internal.ModernContext
+  -> FilePath
+  -> (Internal.ModernDeserialization Internal.FormatBinary a)
+  -> IO (Either (Int, [(Int, String)], SomeSerializationFailure)
+                (Internal.ModernContext, a))
+runModernDeserializationFromFile =
+  Internal.runModernDeserializationFromFile
+
+
+runModernDeserializationFromExplicatoryByteString
+  :: Internal.ModernContext
+  -> ByteString
+  -> (Internal.ModernDeserialization Internal.FormatExplicatory a)
+  -> Either (Int, [(Int, String)], SomeSerializationFailure)
+            (Internal.ModernContext, a)
+runModernDeserializationFromExplicatoryByteString =
+  Internal.runModernDeserializationFromByteString
+
+
+runModernDeserializationFromExplicatoryFile
+  :: Internal.ModernContext
+  -> FilePath
+  -> (Internal.ModernDeserialization Internal.FormatExplicatory a)
+  -> IO (Either (Int, [(Int, String)], SomeSerializationFailure)
+                (Internal.ModernContext, a))
+runModernDeserializationFromExplicatoryFile =
+  Internal.runModernDeserializationFromFile
 

@@ -1,5 +1,5 @@
 module Data.Modern.Deserialization
-  (-- deserializeData,
+  (deserializeData,
    runModernDeserializationFromByteString,
    runModernDeserializationFromFile)
   where
@@ -10,7 +10,6 @@ import qualified Data.Array as Array
 import Data.Bits
 import Data.ByteString (ByteString)
 import qualified Data.ByteString as BS
--- import Data.List
 import qualified Data.Map as Map
 import Data.Maybe
 import Data.Word
@@ -29,8 +28,9 @@ data ModernDeserializationContext =
     }
 
 
-{-
-deserializeData :: ModernDeserialization ([ModernType], [ModernData])
+deserializeData
+  :: (ModernFormat format)
+  => ModernDeserialization format ([ModernType], [ModernData])
 deserializeData = do
   let loop soFar = do
         maybeCommandType <- inputCommandType
@@ -48,8 +48,9 @@ deserializeData = do
 
 
 deserializeOneCommand
-  :: ModernCommandType
-  -> ModernDeserialization (Maybe ModernData)
+  :: (ModernFormat format)
+  => ModernCommandType
+  -> ModernDeserialization format (Maybe ModernData)
 deserializeOneCommand commandType = do
   context <- getContext
   let knownTypes = modernContextTypes context
@@ -156,8 +157,9 @@ deserializeOneCommand commandType = do
 
 
 deserializeOneDatum
-  :: ModernType
-  -> ModernDeserialization ModernData
+  :: (ModernFormat format)
+  => ModernType
+  -> ModernDeserialization format ModernData
 deserializeOneDatum theType = do
   return $ ModernDataInt8 42
   {-
@@ -216,8 +218,9 @@ deserializeOneDatum theType = do
 
 
 learnType
-  :: ModernType
-  -> ModernDeserialization ()
+  :: (ModernFormat format)
+  => ModernType
+  -> ModernDeserialization format ()
 learnType theType = do
   oldContext <- getContext
   let oldKnownTypes = modernContextTypes oldContext
@@ -227,7 +230,7 @@ learnType theType = do
                        modernContextTypes = newKnownTypes
                      }
   putContext newContext
--}
+
 
 runModernDeserializationFromByteString
   :: (ModernFormat format)
