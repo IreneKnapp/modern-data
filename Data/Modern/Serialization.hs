@@ -216,12 +216,11 @@ commandNamedType (ModernTypeName name) (ModernHash contentTypeHash) = do
 
 runModernSerializationToByteString
   :: (ModernFormat format)
-  => format
-  -> ModernContext
+  => ModernContext
   -> (ModernSerialization format a)
   -> Either (Int, [(Int, String)], SomeSerializationFailure)
             (ByteString, ModernContext, a)
-runModernSerializationToByteString _ context action =
+runModernSerializationToByteString context action =
   case runSerializationToByteString $ do
          withContext LittleEndian $ do
            runStateT (modernSerializationAction
@@ -233,13 +232,12 @@ runModernSerializationToByteString _ context action =
 
 runModernSerializationToFile
   :: (ModernFormat format)
-  => format
-  -> ModernContext
+  => ModernContext
   -> FilePath
   -> (ModernSerialization format a)
   -> IO (Either (Int, [(Int, String)], SomeSerializationFailure)
                 (ModernContext, a))
-runModernSerializationToFile _ context filePath action = do
+runModernSerializationToFile context filePath action = do
   eitherFailureResult <-
     flip runSerializationToFile filePath $ do
       withContext LittleEndian $ do

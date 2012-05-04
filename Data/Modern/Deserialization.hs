@@ -29,50 +29,6 @@ data ModernDeserializationContext =
     }
 
 
-initialDeserializationContext :: ModernDeserializationContext
-initialDeserializationContext =
-  ModernDeserializationContext {
-      modernDeserializationContextPendingCommandBitCount = 0,
-      modernDeserializationContextPendingCommandBitSource = 0,
-      modernDeserializationContextStartingOffset = 0
-    }
-
-
-data ModernDeserialization a =
-  MakeModernDeserialization {
-      modernDeserializationAction
-        :: StateT (ModernContext, ModernDeserializationContext)
-		  (ContextualDeserialization Endianness) a
-    }
-instance Monad ModernDeserialization where
-  return a = MakeModernDeserialization $ return a
-  x >>= f =
-    MakeModernDeserialization $ do
-      v <- modernDeserializationAction x
-      modernDeserializationAction $ f v
-instance ModernMonad ModernDeserialization where
-  getContext = MakeModernDeserialization $ do
-    (context, _) <- get
-    return context
-  putContext context = MakeModernDeserialization $ do
-    (_, deserializationContext) <- get
-    put (context, deserializationContext)
-
-
-getDeserializationContext :: ModernDeserialization ModernDeserializationContext
-getDeserializationContext = MakeModernDeserialization $ do
-  (_, deserializationContext) <- get
-  return deserializationContext
-
-
-putDeserializationContext
-  :: ModernDeserializationContext -> ModernDeserialization ()
-putDeserializationContext deserializationContext =
-  MakeModernDeserialization $ do
-    (context, _) <- get
-    put (context, deserializationContext)
-
-
 {-
 deserializeData :: ModernDeserialization ([ModernType], [ModernData])
 deserializeData = do
@@ -271,178 +227,13 @@ learnType theType = do
                        modernContextTypes = newKnownTypes
                      }
   putContext newContext
-
-
-inputCommandBits
-  :: Word8
-  -> ModernDeserialization Word64
-inputCommandBits inputCount = do
-  oldContext <- getDeserializationContext
-  let oldCount = modernDeserializationContextPendingCommandBitCount oldContext
-      oldSource =
-	modernDeserializationContextPendingCommandBitSource oldContext
-      oldStartingOffset = modernDeserializationContextStartingOffset oldContext
-  if inputCount <= oldCount
-    then do
-      let resultBits = oldSource .&. (shiftL 1 (fromIntegral inputCount) - 1)
-          newCount = oldCount - inputCount
-          newSource = shiftR oldSource (fromIntegral inputCount)
-          newContext =
-	    oldContext {
-                modernDeserializationContextPendingCommandBitCount = newCount,
-                modernDeserializationContextPendingCommandBitSource = newSource
-              }
-      putDeserializationContext newContext
-      return resultBits
-    else do
-      inputSource <- MakeModernDeserialization $ lift $ deserializeWord
-      let newCount = oldCount + 64 - inputCount
-          wrappedCount = inputCount - oldCount
-          resultHighBits =
-            inputSource .&. (shiftL 1 (fromIntegral wrappedCount) - 1)
-          resultBits =
-            oldSource .|. (shiftL resultHighBits (fromIntegral oldCount))
-          newSource = shiftR inputSource (fromIntegral wrappedCount)
-          newStartingOffset = oldStartingOffset + 8
-          newContext =
-	    oldContext {
-                modernDeserializationContextPendingCommandBitCount = newCount,
-                modernDeserializationContextPendingCommandBitSource =
-		  newSource,
-                modernDeserializationContextStartingOffset = newStartingOffset
-              }
-      putDeserializationContext newContext
-      return resultBits
-
-
-inputCommandType
-  :: ModernDeserialization (Maybe ModernCommandType)
-inputCommandType = do
-  bits <- inputCommandBits standardCommandEncodingBitsize
-  return $ Map.lookup bits standardCommandDecodings
-
-
-inputDataHash
-  :: ModernDeserialization ByteString
-inputDataHash = do
-  oldContext <- getDeserializationContext
-  let oldStartingOffset = modernDeserializationContextStartingOffset oldContext
-  result <- MakeModernDeserialization $ lift $ read 16
-  let newStartingOffset = oldStartingOffset + 16
-      newContext =
-	oldContext {
-            modernDeserializationContextStartingOffset = newStartingOffset
-          }
-  putDeserializationContext newContext
-  return result
-
-
-inputDataWord8
-  :: ModernDeserialization Word8
-inputDataWord8 = do
-  oldContext <- getDeserializationContext
-  let oldStartingOffset = modernDeserializationContextStartingOffset oldContext
-  result <- MakeModernDeserialization $ lift $ deserializeWord
-  let newStartingOffset = oldStartingOffset + 1
-      newContext =
-	oldContext {
-            modernDeserializationContextStartingOffset = newStartingOffset
-          }
-  putDeserializationContext newContext
-  return result
-
-
-inputDataWord16
-  :: ModernDeserialization Word16
-inputDataWord16 = do
-  oldContext <- getDeserializationContext
-  let oldStartingOffset = modernDeserializationContextStartingOffset oldContext
-  result <- MakeModernDeserialization $ lift $ deserializeWord
-  let newStartingOffset = oldStartingOffset + 2
-      newContext =
-	oldContext {
-            modernDeserializationContextStartingOffset = newStartingOffset
-          }
-  putDeserializationContext newContext
-  return result
-
-
-inputDataWord32
-  :: ModernDeserialization Word32
-inputDataWord32 = do
-  oldContext <- getDeserializationContext
-  let oldStartingOffset = modernDeserializationContextStartingOffset oldContext
-  result <- MakeModernDeserialization $ lift $ deserializeWord
-  let newStartingOffset = oldStartingOffset + 4
-      newContext =
-	oldContext {
-            modernDeserializationContextStartingOffset = newStartingOffset
-          }
-  putDeserializationContext newContext
-  return result
-
-
-inputDataWord64
-  :: ModernDeserialization Word64
-inputDataWord64 = do
-  oldContext <- getDeserializationContext
-  let oldStartingOffset = modernDeserializationContextStartingOffset oldContext
-  result <- MakeModernDeserialization $ lift $ deserializeWord
-  let newStartingOffset = oldStartingOffset + 8
-      newContext =
-	oldContext {
-            modernDeserializationContextStartingOffset = newStartingOffset
-          }
-  putDeserializationContext newContext
-  return result
-
-
-inputDataUTF8
-  :: ModernDeserialization ByteString
-inputDataUTF8 = do
-  oldContext <- getDeserializationContext
-  let oldStartingOffset = modernDeserializationContextStartingOffset oldContext
-  result <- MakeModernDeserialization $ lift deserializeNullTerminatedText
-  let newStartingOffset =
-        oldStartingOffset + (fromIntegral $ BS.length result) + 1
-      newContext =
-	oldContext {
-            modernDeserializationContextStartingOffset = newStartingOffset
-          }
-  putDeserializationContext newContext
-  return result
-
-
-inputAlign
-  :: Word64
-  -> ModernDeserialization ()
-inputAlign alignment = do
-  oldContext <- getDeserializationContext
-  let oldStartingOffset = modernDeserializationContextStartingOffset oldContext
-      misalignment = mod oldStartingOffset alignment
-      padLength = if misalignment == 0
-                    then 0
-                    else alignment - misalignment
-      newStartingOffset = oldStartingOffset + padLength
-      newContext =
-	oldContext {
-            modernDeserializationContextStartingOffset = newStartingOffset
-          }
-  byteString <-
-    MakeModernDeserialization $ lift $ read $ fromIntegral padLength
-  putDeserializationContext newContext
-  mapM_ (\byte ->
-           if byte == 0x00
-             then return ()
-             else error (show byte) -- TODO
-        )
-        (BS.unpack byteString)
 -}
 
 runModernDeserializationFromByteString
-  :: ModernContext
+  :: (ModernFormat format)
+  => ModernContext
   -> ByteString
-  -> (ModernDeserialization a)
+  -> (ModernDeserialization format a)
   -> Either (Int, [(Int, String)], SomeSerializationFailure)
             (ModernContext, a)
 runModernDeserializationFromByteString context input action =
@@ -457,9 +248,10 @@ runModernDeserializationFromByteString context input action =
 
 
 runModernDeserializationFromFile
-  :: ModernContext
+  :: (ModernFormat format)
+  => ModernContext
   -> FilePath
-  -> (ModernDeserialization a)
+  -> (ModernDeserialization format a)
   -> IO (Either (Int, [(Int, String)], SomeSerializationFailure)
                 (ModernContext, a))
 runModernDeserializationFromFile context filePath action = do

@@ -15,8 +15,10 @@ module Data.Modern.Types
    ModernSerialization(..),
    getSerializationContext,
    putSerializationContext,
-   ModernFormat(..),
-   FormatSerializationContext(..))
+   ModernDeserialization(..),
+   getDeserializationContext,
+   putDeserializationContext,
+   ModernFormat(..))
   where
 
 import BinaryFiles hiding (getContext)
@@ -194,6 +196,49 @@ putSerializationContext serializationContext = MakeModernSerialization $ do
   put (context, serializationContext)
 
 
+data ModernDeserialization format a =
+  MakeModernDeserialization {
+      modernDeserializationAction
+        :: StateT (ModernContext, FormatDeserializationContext format)
+		  (ContextualDeserialization Endianness) a
+    }
+instance (ModernFormat format)
+         => Monad (ModernDeserialization format)
+         where
+  return a = MakeModernDeserialization $ return a
+  x >>= f =
+    MakeModernDeserialization $ do
+      v <- modernDeserializationAction x
+      modernDeserializationAction $ f v
+instance (ModernFormat format)
+         => ModernMonad (ModernDeserialization format)
+	 where
+  getContext = MakeModernDeserialization $ do
+    (context, _) <- get
+    return context
+  putContext context = MakeModernDeserialization $ do
+    (_, deserializationContext) <- get
+    put (context, deserializationContext)
+
+
+getDeserializationContext
+  :: (ModernFormat format)
+  => ModernDeserialization format (FormatDeserializationContext format)
+getDeserializationContext = MakeModernDeserialization $ do
+  (_, deserializationContext) <- get
+  return deserializationContext
+
+
+putDeserializationContext
+  :: (ModernFormat format)
+  => FormatDeserializationContext format
+  -> ModernDeserialization format ()
+putDeserializationContext deserializationContext =
+  MakeModernDeserialization $ do
+    (context, _) <- get
+    put (context, deserializationContext)
+
+
 class ModernFormat format where
   data FormatSerializationContext format
   initialSerializationContext :: FormatSerializationContext format
@@ -209,4 +254,27 @@ class ModernFormat format where
     -> ModernSerialization format ()
   outputSynchronize :: ModernSerialization format ()
   outputAlign :: Word64 -> ModernSerialization format ()
+  
+  data FormatDeserializationContext format
+  initialDeserializationContext :: FormatDeserializationContext format
+  inputCommandBits
+    :: Word8
+    -> ModernDeserialization format Word64
+  inputCommandType
+    :: ModernDeserialization format (Maybe ModernCommandType)
+  inputDataHash
+    :: ModernDeserialization format ByteString
+  inputDataWord8
+    :: ModernDeserialization format Word8
+  inputDataWord16
+    :: ModernDeserialization format Word16
+  inputDataWord32
+    :: ModernDeserialization format Word32
+  inputDataWord64
+    :: ModernDeserialization format Word64
+  inputDataUTF8
+    :: ModernDeserialization format ByteString
+  inputAlign
+    :: Word64
+    -> ModernDeserialization format ()
 

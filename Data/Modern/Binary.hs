@@ -9,12 +9,12 @@ import Data.List
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Word
+import Prelude hiding (read)
 
 import Data.Modern.Types
 
 
 data FormatBinary
-  = FormatBinaryExperimental
 instance ModernFormat FormatBinary where
   data FormatSerializationContext FormatBinary =
     SerializationContext {
@@ -133,6 +133,147 @@ instance ModernFormat FormatBinary where
                          serializationContextPendingData = newPendingData
                        }
     putSerializationContext newContext
+  data FormatDeserializationContext FormatBinary =
+    DeserializationContext {
+        deserializationContextPendingCommandBitCount :: Word8,
+        deserializationContextPendingCommandBitSource :: Word64,
+        deserializationContextStartingOffset :: Word64
+      }
+  initialDeserializationContext =
+    DeserializationContext {
+        deserializationContextPendingCommandBitCount = 0,
+        deserializationContextPendingCommandBitSource = 0,
+        deserializationContextStartingOffset = 0
+      }
+  inputCommandBits inputCount = do
+    oldContext <- getDeserializationContext
+    let oldCount = deserializationContextPendingCommandBitCount oldContext
+        oldSource = deserializationContextPendingCommandBitSource oldContext
+        oldStartingOffset = deserializationContextStartingOffset oldContext
+    if inputCount <= oldCount
+      then do
+        let resultBits = oldSource .&. (shiftL 1 (fromIntegral inputCount) - 1)
+            newCount = oldCount - inputCount
+            newSource = shiftR oldSource (fromIntegral inputCount)
+            newContext =
+	      oldContext {
+                  deserializationContextPendingCommandBitCount = newCount,
+                  deserializationContextPendingCommandBitSource = newSource
+                }
+        putDeserializationContext newContext
+        return resultBits
+      else do
+        inputSource <- MakeModernDeserialization $ lift $ deserializeWord
+        let newCount = oldCount + 64 - inputCount
+            wrappedCount = inputCount - oldCount
+            resultHighBits =
+              inputSource .&. (shiftL 1 (fromIntegral wrappedCount) - 1)
+            resultBits =
+              oldSource .|. (shiftL resultHighBits (fromIntegral oldCount))
+            newSource = shiftR inputSource (fromIntegral wrappedCount)
+            newStartingOffset = oldStartingOffset + 8
+            newContext =
+	      oldContext {
+                  deserializationContextPendingCommandBitCount = newCount,
+                  deserializationContextPendingCommandBitSource = newSource,
+                  deserializationContextStartingOffset = newStartingOffset
+                }
+        putDeserializationContext newContext
+        return resultBits
+  inputCommandType = do
+    bits <- inputCommandBits standardCommandEncodingBitsize
+    return $ Map.lookup bits standardCommandDecodings
+  inputDataHash = do
+    oldContext <- getDeserializationContext
+    let oldStartingOffset =
+	  deserializationContextStartingOffset oldContext
+    result <- MakeModernDeserialization $ lift $ read 16
+    let newStartingOffset = oldStartingOffset + 16
+        newContext =
+	  oldContext {
+              deserializationContextStartingOffset = newStartingOffset
+            }
+    putDeserializationContext newContext
+    return result
+  inputDataWord8 = do
+    oldContext <- getDeserializationContext
+    let oldStartingOffset = deserializationContextStartingOffset oldContext
+    result <- MakeModernDeserialization $ lift $ deserializeWord
+    let newStartingOffset = oldStartingOffset + 1
+        newContext =
+	  oldContext {
+              deserializationContextStartingOffset = newStartingOffset
+            }
+    putDeserializationContext newContext
+    return result
+  inputDataWord16 = do
+    oldContext <- getDeserializationContext
+    let oldStartingOffset = deserializationContextStartingOffset oldContext
+    result <- MakeModernDeserialization $ lift $ deserializeWord
+    let newStartingOffset = oldStartingOffset + 2
+        newContext =
+	  oldContext {
+              deserializationContextStartingOffset = newStartingOffset
+            }
+    putDeserializationContext newContext
+    return result
+  inputDataWord32 = do
+    oldContext <- getDeserializationContext
+    let oldStartingOffset = deserializationContextStartingOffset oldContext
+    result <- MakeModernDeserialization $ lift $ deserializeWord
+    let newStartingOffset = oldStartingOffset + 4
+        newContext =
+	  oldContext {
+              deserializationContextStartingOffset = newStartingOffset
+            }
+    putDeserializationContext newContext
+    return result
+  inputDataWord64 = do
+    oldContext <- getDeserializationContext
+    let oldStartingOffset =
+	  deserializationContextStartingOffset oldContext
+    result <- MakeModernDeserialization $ lift $ deserializeWord
+    let newStartingOffset = oldStartingOffset + 8
+        newContext =
+	  oldContext {
+              deserializationContextStartingOffset = newStartingOffset
+            }
+    putDeserializationContext newContext
+    return result
+  inputDataUTF8 = do
+    oldContext <- getDeserializationContext
+    let oldStartingOffset =
+	  deserializationContextStartingOffset oldContext
+    result <- MakeModernDeserialization $ lift deserializeNullTerminatedText
+    let newStartingOffset =
+          oldStartingOffset + (fromIntegral $ BS.length result) + 1
+        newContext =
+	  oldContext {
+              deserializationContextStartingOffset = newStartingOffset
+            }
+    putDeserializationContext newContext
+    return result
+  inputAlign alignment = do
+    oldContext <- getDeserializationContext
+    let oldStartingOffset = deserializationContextStartingOffset oldContext
+        misalignment = mod oldStartingOffset alignment
+        padLength = if misalignment == 0
+                      then 0
+                      else alignment - misalignment
+        newStartingOffset = oldStartingOffset + padLength
+        newContext =
+	  oldContext {
+              deserializationContextStartingOffset = newStartingOffset
+            }
+    byteString <-
+      MakeModernDeserialization $ lift $ read $ fromIntegral padLength
+    putDeserializationContext newContext
+    mapM_ (\byte ->
+             if byte == 0x00
+               then return ()
+               else error (show byte) -- TODO
+          )
+          (BS.unpack byteString)
 
 
 commandSynchronize
@@ -164,3 +305,4 @@ standardCommandEncodings =
   Map.fromList
    $ map (\(key, value) -> (value, key))
          $ Map.toList standardCommandDecodings
+

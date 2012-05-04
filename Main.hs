@@ -59,8 +59,8 @@ testOutput = do
       context = initialContext
   -- putStrLn $ textualSchema schema
   -- putStrLn $ textualData [datum]
-  result <- runModernSerializationToFile
-	      FormatExplicatory context "output.txt" $ do
+  result <- runModernSerializationToExplicatoryFile
+	      context "output.txt" $ do
                 serializeData [datum]
   context <- case result of
                Left failure -> do
