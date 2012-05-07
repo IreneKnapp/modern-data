@@ -19,6 +19,8 @@ import Data.Modern.Hash
 import Data.Modern.Initial
 import Data.Modern.Types
 
+import Debug.Trace
+
 
 data ModernDeserializationContext =
   ModernDeserializationContext {
@@ -57,7 +59,7 @@ deserializeOneCommand commandType = do
   case commandType of
     ModernCommandTypeDatum -> do
       typeHash <- inputDataHash
-      case Map.lookup (ModernHash typeHash) knownTypes of
+      case Map.lookup typeHash knownTypes of
         Nothing -> undefined -- TODO
         Just theType -> do
           datum <- deserializeOneDatum theType
@@ -65,7 +67,7 @@ deserializeOneCommand commandType = do
     ModernCommandTypeListType -> do
       contentTypeHash <- inputDataHash
       let contentType =
-            case Map.lookup (ModernHash contentTypeHash) knownTypes of
+            case Map.lookup contentTypeHash knownTypes of
               Nothing -> undefined -- TODO
               Just knownType -> knownType
           theType = ModernListType contentType
@@ -79,7 +81,7 @@ deserializeOneCommand commandType = do
               else do
                 itemTypeHash <- inputDataHash
                 let itemType =
-                      case Map.lookup (ModernHash itemTypeHash) knownTypes of
+                      case Map.lookup itemTypeHash knownTypes of
                         Nothing -> undefined -- TODO
                         Just knownType -> knownType
                 loop (soFar ++ [itemType]) (i + 1)
@@ -101,7 +103,7 @@ deserializeOneCommand commandType = do
               else do
                 itemTypeHash <- inputDataHash
                 let itemType =
-                      case Map.lookup (ModernHash itemTypeHash) knownTypes of
+                      case Map.lookup itemTypeHash knownTypes of
                         Nothing -> undefined -- TODO
                         Just knownType -> knownType
                 loop (soFar ++ [itemType]) (i + 1)
@@ -122,12 +124,11 @@ deserializeOneCommand commandType = do
             if i == nFields
               then return soFar
               else do
-                inputAlign 8
                 fieldName <- inputDataUTF8
                 inputAlign 8
                 fieldTypeHash <- inputDataHash
                 let fieldType =
-                      case Map.lookup (ModernHash fieldTypeHash) knownTypes of
+                      case Map.lookup fieldTypeHash knownTypes of
                         Nothing -> undefined -- TODO
                         Just knownType -> knownType
                 loop (soFar ++ [(ModernFieldName fieldName, fieldType)])
@@ -143,12 +144,11 @@ deserializeOneCommand commandType = do
           learnType theType
       return Nothing
     ModernCommandTypeNamedType -> do
-      inputAlign 8
       typeName <- inputDataUTF8
       inputAlign 8
       contentTypeHash <- inputDataHash
       let contentType =
-            case Map.lookup (ModernHash contentTypeHash) knownTypes of
+            case Map.lookup contentTypeHash knownTypes of
               Nothing -> undefined -- TODO
               Just knownType -> knownType
           theType = ModernNamedType (ModernTypeName typeName) contentType

@@ -247,7 +247,9 @@ class ModernFormat format where
     :: Word8
     -> Word64
     -> ModernSerialization format ()
-  outputData :: ByteString -> ModernSerialization format ()
+  outputDataHash :: ModernHash -> ModernSerialization format ()
+  outputDataUTF8 :: ByteString -> ModernSerialization format ()
+  outputDataBlob :: ByteString -> ModernSerialization format ()
   outputDataWord
     :: (Bits word, Integral word, Num word)
     => word
@@ -263,7 +265,7 @@ class ModernFormat format where
   inputCommandType
     :: ModernDeserialization format (Maybe ModernCommandType)
   inputDataHash
-    :: ModernDeserialization format ByteString
+    :: ModernDeserialization format ModernHash
   inputDataWord8
     :: ModernDeserialization format Word8
   inputDataWord16

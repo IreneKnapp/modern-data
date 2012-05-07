@@ -45,19 +45,17 @@ instance ModernFormat FormatExplicatory where
 		 in loop (soFar ++ [c]) (index + 1)
         output = loop "C" 0
     writeLine output
-  outputData byteString = do
-    oldContext <- getSerializationContext
-    let oldPendingData = serializationContextPendingData oldContext
-        newPendingData = oldPendingData ++ [showBytes byteString]
-        newContext = oldContext {
-                         serializationContextPendingData = newPendingData
-                       }
-    putSerializationContext newContext
+  outputDataHash (ModernHash byteString) = do
+    outputDataRaw byteString
+  outputDataUTF8 byteString = do
+    outputDataRaw byteString
+  outputDataBlob byteString = do
+    outputDataRaw byteString
   outputDataWord word = do
-    let result = runSerializationToByteString $ withContext LittleEndian
+    let result = runSerializationToByteString $ withContext BigEndian
                   $ serializeWord word
     case result of
-      Right ((), byteString) -> outputData byteString
+      Right ((), byteString) -> outputDataRaw byteString
   outputSynchronize = do
     oldContext <- getSerializationContext
     let oldPendingData = serializationContextPendingData oldContext
@@ -88,15 +86,38 @@ instance ModernFormat FormatExplicatory where
     encoding <- readLine
     return $ Map.lookup encoding standardCommandDecodings
   inputDataHash = do
-    return undefined
+    encoding <- readLine
+    case parseBytes encoding of
+      Just byteString ->
+	if BS.length byteString == 16
+	  then return $ ModernHash byteString
+	  else error "Hm F." -- TODO
+      Nothing -> error "Hm E." -- TODO
   inputDataWord8 = inputDataWord
   inputDataWord16 = inputDataWord
   inputDataWord32 = inputDataWord
   inputDataWord64 = inputDataWord
   inputDataUTF8 = do
-    return undefined
+    encoding <- readLine
+    case parseBytes encoding of
+      Just byteString -> return byteString
+      Nothing -> error "Hm A." -- TODO
   inputAlign alignment = do
-    return undefined
+    encoding <- readLine
+    if encoding == ("Align " ++ show alignment)
+      then return ()
+      else error "Hm D." -- TODO
+
+
+outputDataRaw :: ByteString -> ModernSerialization FormatExplicatory ()
+outputDataRaw byteString = do
+  oldContext <- getSerializationContext
+  let oldPendingData = serializationContextPendingData oldContext
+      newPendingData = oldPendingData ++ [showBytes byteString]
+      newContext = oldContext {
+                       serializationContextPendingData = newPendingData
+                     }
+  putSerializationContext newContext
 
 
 inputDataWord
@@ -104,15 +125,14 @@ inputDataWord
   => ModernDeserialization format word
 inputDataWord = do
   encoding <- readLine
-  trace encoding $ return ()
   case parseBytes encoding of
     Just byteString -> do
       case runDeserializationFromByteString
-             (withContext LittleEndian deserializeWord)
+             (withContext BigEndian deserializeWord)
 	     byteString of
         Right word -> return word
-        Left _ -> error "Hm." -- TODO
-    Nothing -> error "Hm." -- TODO
+        Left _ -> error "Hm B." -- TODO
+    Nothing -> error "Hm C." -- TODO
 
 
 writeLine
@@ -187,7 +207,6 @@ parseBytes string =
 	 in if even (length nibbles)
 	      then Just
 		    $ BS.pack
-		    $ reverse
 		    $ unfoldr (\restNibbles ->
 				 if null restNibbles
 				   then Nothing

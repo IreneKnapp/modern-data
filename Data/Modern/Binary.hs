@@ -4,6 +4,7 @@ module Data.Modern.Binary (FormatBinary(..)) where
 import BinaryFiles
 import Control.Monad.State.Strict
 import Data.Bits
+import Data.ByteString (ByteString)
 import qualified Data.ByteString as BS
 import Data.List
 import Data.Map (Map)
@@ -72,19 +73,14 @@ instance ModernFormat FormatBinary where
 			   newStartingOffset
                        }
     putSerializationContext newContext
-  outputData byteString = do
-    oldContext <- getSerializationContext
-    let oldPendingData = serializationContextPendingData oldContext
-        newPendingData = oldPendingData ++ [PendingBytes byteString]
-        newContext = oldContext {
-                         serializationContextPendingData = newPendingData
-                       }
-    putSerializationContext newContext
+  outputDataHash (ModernHash byteString) = outputDataRaw byteString
+  outputDataUTF8 byteString = outputDataRaw $ BS.snoc byteString 0x00
+  outputDataBlob byteString = outputDataRaw byteString
   outputDataWord word = do
     let result = runSerializationToByteString $ withContext LittleEndian
                   $ serializeWord word
     case result of
-      Right ((), byteString) -> outputData byteString
+      Right ((), byteString) -> outputDataRaw byteString
   outputSynchronize = do
     oldContext <- getSerializationContext
     let oldCount = serializationContextPendingCommandBitCount oldContext
@@ -194,7 +190,7 @@ instance ModernFormat FormatBinary where
               deserializationContextStartingOffset = newStartingOffset
             }
     putDeserializationContext newContext
-    return result
+    return $ ModernHash result
   inputDataWord8 = do
     oldContext <- getDeserializationContext
     let oldStartingOffset = deserializationContextStartingOffset oldContext
@@ -274,6 +270,17 @@ instance ModernFormat FormatBinary where
                else error (show byte) -- TODO
           )
           (BS.unpack byteString)
+
+
+outputDataRaw :: ByteString -> ModernSerialization FormatBinary ()
+outputDataRaw byteString = do
+  oldContext <- getSerializationContext
+  let oldPendingData = serializationContextPendingData oldContext
+      newPendingData = oldPendingData ++ [PendingBytes byteString]
+      newContext = oldContext {
+                       serializationContextPendingData = newPendingData
+                     }
+  putSerializationContext newContext
 
 
 commandSynchronize

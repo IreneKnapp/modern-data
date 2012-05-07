@@ -88,10 +88,10 @@ commandDatum
   -> ModernSerialization format ()
 commandDatum datum = do
   let theType = dataType datum
-      ModernHash theTypeHash = computeTypeHash theType
+      theTypeHash = computeTypeHash theType
   ensureTypeInContext theType
   outputCommandType ModernCommandTypeDatum
-  outputData theTypeHash
+  outputDataHash theTypeHash
   outputSynchronize
   let helper datum = do
         case datum of
@@ -127,11 +127,11 @@ commandDatum datum = do
             undefined
           ModernDataUTF8 value -> do
             outputAlign 8
-            outputData $ BS.concat [value, BS.pack [0x00]]
+	    outputDataUTF8 value
             outputAlign 8
           ModernDataBlob value -> do
             outputAlign 8
-            outputData value
+            outputDataBlob value
             outputAlign 8
           ModernDataList _ values -> do
             outputAlign 8
@@ -160,9 +160,9 @@ commandListType
   :: (ModernFormat format)
   => ModernHash
   -> ModernSerialization format ()
-commandListType (ModernHash contentTypeHash) = do
+commandListType contentTypeHash = do
   outputCommandType ModernCommandTypeListType
-  outputData contentTypeHash
+  outputDataHash contentTypeHash
 
 
 commandTupleType
@@ -172,9 +172,7 @@ commandTupleType
 commandTupleType contentTypeHashes = do
   outputCommandType ModernCommandTypeTupleType
   outputDataWord (genericLength contentTypeHashes :: Word64)
-  mapM_ (\(ModernHash contentTypeHash) -> do
-           outputData contentTypeHash)
-        contentTypeHashes
+  mapM_ outputDataHash contentTypeHashes
 
 
 commandUnionType
@@ -184,8 +182,7 @@ commandUnionType
 commandUnionType possibilities = do
   outputCommandType ModernCommandTypeUnionType
   outputDataWord (genericLength possibilities :: Word64)
-  mapM_ (\(ModernHash possibility) -> outputData possibility)
-        possibilities
+  mapM_ outputDataHash possibilities
 
 
 commandStructureType
@@ -195,10 +192,10 @@ commandStructureType
 commandStructureType fields = do
   outputCommandType ModernCommandTypeStructureType
   outputDataWord (genericLength fields :: Word64)
-  mapM_ (\(ModernFieldName fieldName, ModernHash fieldTypeHash) -> do
-           outputData $ BS.concat [fieldName, BS.pack [0x00]]
+  mapM_ (\(ModernFieldName fieldName, fieldTypeHash) -> do
+           outputDataUTF8 fieldName
            outputAlign 8
-           outputData fieldTypeHash)
+           outputDataHash fieldTypeHash)
         fields
 
 
@@ -207,11 +204,11 @@ commandNamedType
   => ModernTypeName
   -> ModernHash
   -> ModernSerialization format ()
-commandNamedType (ModernTypeName name) (ModernHash contentTypeHash) = do
+commandNamedType (ModernTypeName name) contentTypeHash = do
   outputCommandType ModernCommandTypeNamedType
-  outputData $ BS.concat [name, BS.pack [0x00]]
+  outputDataUTF8 name
   outputAlign 8
-  outputData contentTypeHash
+  outputDataHash contentTypeHash
 
 
 runModernSerializationToByteString
