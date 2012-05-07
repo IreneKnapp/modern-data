@@ -16,26 +16,26 @@ module Data.Modern
    -- From Data.Modern.Initial
    Internal.initialContext,
    
-   -- From Data.Modern.Serialization
-   Internal.serializeData,
-   Internal.ensureTypeInContext,
-   runModernSerializationToByteString,
-   runModernSerializationToFile,
-   runModernSerializationToExplicatoryByteString,
-   runModernSerializationToExplicatoryFile,
+   -- From here, wrapping around Data.Modern.Serialization
+   serializeToByteString,
+   serializeToFile,
+   serializeToExplicatoryByteString,
+   serializeToExplicatoryFile,
    
-   -- From Data.Modern.Deserialization
-   Internal.deserializeData,
-   runModernDeserializationFromByteString,
-   runModernDeserializationFromFile,
-   runModernDeserializationFromExplicatoryByteString,
-   runModernDeserializationFromExplicatoryFile,
+   -- From here, wrapping around Data.Modern.Deserialization
+   deserializeFromByteString,
+   deserializeFromFile,
+   deserializeFromExplicatoryByteString,
+   deserializeFromExplicatoryFile,
    
    -- From Data.Modern.Binary
    Internal.FormatBinary(..),
    
-   -- From Data.Modern.Explicatory,
+   -- From Data.Modern.Explicatory
    Internal.FormatExplicatory(..),
+   
+   -- From Data.Modern.Documentation
+   Internal.documentSchema,
    
    -- From BinaryFiles
    SomeSerializationFailure(..),
@@ -50,86 +50,127 @@ import Data.ByteString (ByteString)
 import qualified Data.Modern.Binary as Internal
 import qualified Data.Modern.Explicatory as Internal
 import qualified Data.Modern.Deserialization as Internal
+import qualified Data.Modern.Documentation as Internal
 import qualified Data.Modern.Hash as Internal
 import qualified Data.Modern.Initial as Internal
 import qualified Data.Modern.Serialization as Internal
 import qualified Data.Modern.Types as Internal
 
 
-runModernSerializationToByteString
+serializeToByteString
   :: Internal.ModernContext
-  -> (Internal.ModernSerialization Internal.FormatBinary a)
+  -> Internal.ModernData
   -> Either (Int, [(Int, String)], SomeSerializationFailure)
-            (ByteString, Internal.ModernContext, a)
-runModernSerializationToByteString =
-  Internal.runModernSerializationToByteString
+            (ByteString, Internal.ModernContext)
+serializeToByteString context datum =
+  case Internal.runModernSerializationToByteString
+         context $ do
+           (Internal.serializeData datum
+              :: Internal.ModernSerialization Internal.FormatBinary ()) of 
+    Left failure -> Left failure
+    Right (byteString, newContext, ()) -> Right (byteString, newContext)
 
 
-runModernSerializationToFile
+serializeToFile
   :: Internal.ModernContext
+  -> Internal.ModernData
   -> FilePath
-  -> (Internal.ModernSerialization Internal.FormatBinary a)
   -> IO (Either (Int, [(Int, String)], SomeSerializationFailure)
-                (Internal.ModernContext, a))
-runModernSerializationToFile =
-  Internal.runModernSerializationToFile
+                Internal.ModernContext)
+serializeToFile context datum filePath = do
+  result <-
+    Internal.runModernSerializationToFile
+      context filePath $ do
+        Internal.serializeData datum
+	  :: Internal.ModernSerialization Internal.FormatBinary ()
+  case result of
+    Left failure -> return $ Left failure
+    Right (newContext, ()) -> return $ Right newContext
 
 
-runModernSerializationToExplicatoryByteString
+serializeToExplicatoryByteString
   :: Internal.ModernContext
-  -> (Internal.ModernSerialization Internal.FormatExplicatory a)
+  -> Internal.ModernData
   -> Either (Int, [(Int, String)], SomeSerializationFailure)
-            (ByteString, Internal.ModernContext, a)
-runModernSerializationToExplicatoryByteString =
-  Internal.runModernSerializationToByteString
+            (ByteString, Internal.ModernContext)
+serializeToExplicatoryByteString context datum =
+  case Internal.runModernSerializationToByteString
+         context $ do
+           Internal.serializeData datum
+	     :: Internal.ModernSerialization Internal.FormatExplicatory () of
+    Left failure -> Left failure
+    Right (byteString, newContext, ()) -> Right (byteString, newContext)
 
 
-runModernSerializationToExplicatoryFile
+serializeToExplicatoryFile
   :: Internal.ModernContext
+  -> Internal.ModernData
   -> FilePath
-  -> (Internal.ModernSerialization Internal.FormatExplicatory a)
   -> IO (Either (Int, [(Int, String)], SomeSerializationFailure)
-                (Internal.ModernContext, a))
-runModernSerializationToExplicatoryFile =
-  Internal.runModernSerializationToFile
+                Internal.ModernContext)
+serializeToExplicatoryFile context datum filePath = do
+  result <-
+    Internal.runModernSerializationToFile
+      context filePath $ do
+        Internal.serializeData datum
+	  :: Internal.ModernSerialization Internal.FormatExplicatory ()
+  case result of
+    Left failure -> return $ Left failure
+    Right (newContext, ()) -> return $ Right newContext
 
 
-runModernDeserializationFromByteString
+deserializeFromByteString
   :: Internal.ModernContext
   -> ByteString
-  -> (Internal.ModernDeserialization Internal.FormatBinary a)
   -> Either (Int, [(Int, String)], SomeSerializationFailure)
-            (Internal.ModernContext, a)
-runModernDeserializationFromByteString =
+            (Internal.ModernContext, Internal.ModernData)
+deserializeFromByteString context byteString =
   Internal.runModernDeserializationFromByteString
+    context byteString $ do
+      (Internal.deserializeData
+	 :: Internal.ModernDeserialization
+	     Internal.FormatBinary
+	     Internal.ModernData)
 
 
-runModernDeserializationFromFile
+deserializeFromFile
   :: Internal.ModernContext
   -> FilePath
-  -> (Internal.ModernDeserialization Internal.FormatBinary a)
   -> IO (Either (Int, [(Int, String)], SomeSerializationFailure)
-                (Internal.ModernContext, a))
-runModernDeserializationFromFile =
+                (Internal.ModernContext, Internal.ModernData))
+deserializeFromFile context filePath =
   Internal.runModernDeserializationFromFile
+    context "input.txt" $ do
+      (Internal.deserializeData
+	 :: Internal.ModernDeserialization
+	     Internal.FormatBinary
+	     Internal.ModernData)
 
 
-runModernDeserializationFromExplicatoryByteString
+deserializeFromExplicatoryByteString
   :: Internal.ModernContext
   -> ByteString
-  -> (Internal.ModernDeserialization Internal.FormatExplicatory a)
   -> Either (Int, [(Int, String)], SomeSerializationFailure)
-            (Internal.ModernContext, a)
-runModernDeserializationFromExplicatoryByteString =
+            (Internal.ModernContext, Internal.ModernData)
+deserializeFromExplicatoryByteString context byteString =
   Internal.runModernDeserializationFromByteString
+    context byteString $ do
+      (Internal.deserializeData
+	 :: Internal.ModernDeserialization
+	     Internal.FormatExplicatory
+	     Internal.ModernData)
 
 
-runModernDeserializationFromExplicatoryFile
+deserializeFromExplicatoryFile
   :: Internal.ModernContext
   -> FilePath
-  -> (Internal.ModernDeserialization Internal.FormatExplicatory a)
   -> IO (Either (Int, [(Int, String)], SomeSerializationFailure)
-                (Internal.ModernContext, a))
-runModernDeserializationFromExplicatoryFile =
+                (Internal.ModernContext, Internal.ModernData))
+deserializeFromExplicatoryFile context filePath =
   Internal.runModernDeserializationFromFile
+    context "input.txt" $ do
+      (Internal.deserializeData
+	 :: Internal.ModernDeserialization
+	     Internal.FormatExplicatory
+	     Internal.ModernData)
 

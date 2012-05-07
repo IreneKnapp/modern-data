@@ -32,7 +32,7 @@ data ModernDeserializationContext =
 
 deserializeData
   :: (ModernFormat format)
-  => ModernDeserialization format ([ModernType], [ModernData])
+  => ModernDeserialization format ModernData
 deserializeData = do
   let loop soFar = do
         maybeCommandType <- inputCommandType
@@ -45,8 +45,7 @@ deserializeData = do
   commandTypes <- loop []
   maybeDatas <- mapM deserializeOneCommand commandTypes
   context <- getContext
-  return (Map.elems $ modernContextTypes context,
-          catMaybes maybeDatas)
+  return $ head $ catMaybes $ maybeDatas
 
 
 deserializeOneCommand

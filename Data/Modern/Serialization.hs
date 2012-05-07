@@ -22,11 +22,11 @@ import Data.Modern.Types
 
 serializeData
   :: (ModernFormat format)
-  => [ModernData]
+  => ModernData
   -> ModernSerialization format ()
-serializeData items = do
-  mapM_ ensureTypeInContext $ map dataType items
-  mapM_ commandDatum items
+serializeData item = do
+  ensureTypeInContext $ dataType item
+  commandDatum item
 
 
 ensureTypeInContext

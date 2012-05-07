@@ -21,6 +21,7 @@ Library
   exposed-modules: Data.Modern
   other-modules: Data.Modern.Binary,
                  Data.Modern.Deserialization,
+                 Data.Modern.Documentation,
                  Data.Modern.Explicatory,
                  Data.Modern.Hash,
                  Data.Modern.Initial,
@@ -42,6 +43,7 @@ Executable test
   other-modules: Data.Modern,
                  Data.Modern.Binary,
                  Data.Modern.Deserialization,
+                 Data.Modern.Documentation,
                  Data.Modern.Explicatory,
                  Data.Modern.Hash,
                  Data.Modern.Initial,
