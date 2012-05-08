@@ -99,17 +99,25 @@ documentSchema context =
 	in Node []
 		[SymbolNodePart "union",
 		 BlockNodePart $ map childNodeFor possibilities]
-      nodeFor (ModernStructureType fieldTypes) =
-        -- (Maybe (Array Nat64 (ModernFieldName, ModernType)))
-	Node []
-	     [SymbolNodePart "structure",
-	      BlockNodePart []]
+      nodeFor (ModernStructureType maybeFields) =
+	let fields = maybe [] Array.elems maybeFields
+	in Node []
+	        [SymbolNodePart "structure",
+	         BlockNodePart
+	          $ map (\(ModernFieldName fieldName, fieldType) ->
+			   Node []
+			        ((case childNodeFor fieldType of
+				    Node _ childNodeParts ->
+				      childNodeParts)
+			         ++ [SymbolNodePart
+				      $ UTF8.toString fieldName]))
+		        fields]
       nodeFor (ModernNamedType (ModernTypeName name) contentType) =
 	let (Node childNames childNodeParts) = nodeFor contentType
 	in Node (UTF8.toString name : childNames)
 		(childNodeParts ++ [SymbolNodePart $ UTF8.toString name])
       childNodeFor (ModernNamedType (ModernTypeName name) contentType) =
-	Node [] [SymbolNodePart $ UTF8.toString name]
+	Node [] [SymbolNodePart "see", SymbolNodePart $ UTF8.toString name]
       childNodeFor otherType = nodeFor otherType
       buildLine words = intercalate " " words
       linesForNode (Node _ parts) =
