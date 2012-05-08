@@ -5,18 +5,22 @@ module Data.Modern.Documentation
   where
 
 import qualified Data.ByteString.UTF8 as UTF8
+import Data.Function
 import Data.List
+import Data.Maybe
 import Data.Map (Map)
 import qualified Data.Map as Map
+import qualified Data.Set as Set
 
 import Data.Modern.Context
+import Data.Modern.Hash
 import Data.Modern.Initial
 import Data.Modern.Types
 
 
 data Node =
   Node {
-      nodeName :: Maybe String,
+      nodeNames :: [String],
       nodeType :: Maybe NodeType,
       nodeBody :: Maybe [Node]
     }
@@ -43,17 +47,37 @@ data NodeType
 
 documentSchema :: ModernContext -> String
 documentSchema context =
-  let allNodes = foldl' (\nodesSoFar (theTypeHash, theType) ->
-			   if typeInContext theType initialContext
-			     then nodesSoFar
-			     else Map.insert theTypeHash
-					     (nodeFor theType)
-					     nodesSoFar)
-	                Map.empty
-	                (Map.toList $ modernContextTypes context)
+  let (allNodes, allRedundantTypeHashes) =
+	foldl' (\(nodesSoFar, redundantTypeHashesSoFar)
+		 (theTypeHash, theType) ->
+		   if typeInContext theType initialContext
+		     then (nodesSoFar, redundantTypeHashesSoFar)
+		     else (Map.insert theTypeHash (nodeFor theType) nodesSoFar,
+	                   Set.union (Set.fromList
+				       $ map computeTypeHash
+				       $ catMaybes
+				       $ map (\contentType ->
+					        case contentType of
+					          ModernNamedType _ _ ->
+						   Nothing
+						  _ -> Just contentType)
+				       $ Set.toList
+				       $ typeContentTypes theType)
+				     redundantTypeHashesSoFar))
+	       (Map.empty, Set.empty)
+	       (Map.toList $ modernContextTypes context)
+      interestingNodes =
+	sortBy (on compare nodeNames)
+	       (Map.foldlWithKey (\interestingNodesSoFar typeHash node ->
+			            if Set.member typeHash
+					          allRedundantTypeHashes
+				      then interestingNodesSoFar
+				      else node : interestingNodesSoFar)
+			         []
+				 allNodes)
       primitiveNode theNodeType =
 	Node {
-	    nodeName = Nothing,
+	    nodeNames = [],
 	    nodeType = Just theNodeType,
 	    nodeBody = Nothing
 	  }
@@ -71,63 +95,60 @@ documentSchema context =
       nodeFor ModernBlobType = primitiveNode BlobNodeType
       nodeFor (ModernListType contentType) =
 	Node {
-	    nodeName = Nothing,
+	    nodeNames = [],
 	    nodeType = Just ListNodeType,
 	    nodeBody = Nothing
 	  }
       nodeFor (ModernTupleType contentTypes) =
         -- (Maybe (Array Nat64 ModernType))
 	Node {
-	    nodeName = Nothing,
+	    nodeNames = [],
 	    nodeType = Just TupleNodeType,
 	    nodeBody = Nothing
 	  }
       nodeFor (ModernUnionType possibilities) =
         -- (Maybe (Nat8, (Array Nat64 ModernType)))
         Node {
-            nodeName = Nothing,
+            nodeNames = [],
 	    nodeType = Just UnionNodeType,
 	    nodeBody = Nothing
           }
       nodeFor (ModernStructureType fieldTypes) =
         -- (Maybe (Array Nat64 (ModernFieldName, ModernType)))
         Node {
-            nodeName = Nothing,
+            nodeNames = [],
 	    nodeType = Just StructureNodeType,
             nodeBody = Nothing
           }
       nodeFor (ModernNamedType (ModernTypeName name) contentType) =
-        Node {
-            nodeName = Just $ UTF8.toString name,
-	    nodeType = Nothing,
-	    nodeBody = Nothing
-	  }
+	let childNode = nodeFor contentType
+	in childNode {
+	       nodeNames = UTF8.toString name : nodeNames childNode
+	     }
       outputNodes indentation nodes =
 	intercalate (outputIndentation indentation ++ "\n")
 		    (map (outputNode indentation) nodes)
       outputNode indentation node =
 	let headerItems =
-	      concat [case nodeName node of
-		        Nothing -> []
-		        Just name -> [quoteString name],
-		      case nodeType node of
-		        Nothing -> []
-                        Just Int8NodeType -> ["int8"]
-                        Just Int16NodeType -> ["int16"]
-                        Just Int32NodeType -> ["int32"]
-                        Just Int64NodeType -> ["int64"]
-                        Just Nat8NodeType -> ["nat8"]
-                        Just Nat16NodeType -> ["nat16"]
-                        Just Nat32NodeType -> ["nat32"]
-                        Just Nat64NodeType -> ["nat64"]
-                        Just Float32NodeType -> ["float32"]
-                        Just Float64NodeType -> ["float64"]
-                        Just UTF8NodeType -> ["utf8"]
-                        Just BlobNodeType -> ["blob"]
-                        Just ListNodeType -> ["list"]
-                        Just TupleNodeType -> ["tuple"]
-                        Just UnionNodeType -> ["union"]
-                        Just StructureNodeType -> ["structure"]]
+	      (map quoteString $ nodeNames node)
+	      ++ (case nodeType node of
+		    Nothing -> []
+                    Just Int8NodeType -> ["int8"]
+                    Just Int16NodeType -> ["int16"]
+                    Just Int32NodeType -> ["int32"]
+                    Just Int64NodeType -> ["int64"]
+                    Just Nat8NodeType -> ["nat8"]
+                    Just Nat16NodeType -> ["nat16"]
+                    Just Nat32NodeType -> ["nat32"]
+                    Just Nat64NodeType -> ["nat64"]
+                    Just Float32NodeType -> ["float32"]
+                    Just Float64NodeType -> ["float64"]
+                    Just UTF8NodeType -> ["utf8"]
+                    Just BlobNodeType -> ["blob"]
+                    Just ListNodeType -> ["list"]
+                    Just TupleNodeType -> ["tuple"]
+                    Just UnionNodeType -> ["union"]
+                    Just StructureNodeType -> ["structure"])
 	    header = intercalate " " headerItems
 	 in case nodeBody node of
 	      Nothing ->
@@ -138,7 +159,7 @@ documentSchema context =
 	        ++ outputIndentation indentation ++ "}\n"
       outputIndentation indentation =
 	take (indentation * 4) (repeat ' ')
-  in outputNodes 0 (Map.elems allNodes)
+  in outputNodes 0 interestingNodes
 
 
 quoteString :: String -> String
