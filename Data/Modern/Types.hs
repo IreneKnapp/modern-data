@@ -59,7 +59,7 @@ data ModernType
   | ModernUnionType (Maybe (Word8, (Array Word64 ModernType)))
   | ModernStructureType (Maybe (Array Word64 (ModernFieldName, ModernType)))
   | ModernNamedType ModernTypeName ModernType
-  deriving (Eq, Show)
+  deriving (Eq, Ord, Show)
 
 
 data ModernData

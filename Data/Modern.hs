@@ -16,6 +16,12 @@ module Data.Modern
    -- From Data.Modern.Initial
    Internal.initialContext,
    
+   -- From Data.Modern.Context
+   Internal.typeContentTypes,
+   Internal.typeInContext,
+   Internal.typesNotInContext,
+   Internal.ensureTypesInContext,
+   
    -- From here, wrapping around Data.Modern.Serialization
    serializeToByteString,
    serializeToFile,
@@ -48,9 +54,10 @@ import BinaryFiles
 import Data.ByteString (ByteString)
 
 import qualified Data.Modern.Binary as Internal
-import qualified Data.Modern.Explicatory as Internal
+import qualified Data.Modern.Context as Internal
 import qualified Data.Modern.Deserialization as Internal
 import qualified Data.Modern.Documentation as Internal
+import qualified Data.Modern.Explicatory as Internal
 import qualified Data.Modern.Hash as Internal
 import qualified Data.Modern.Initial as Internal
 import qualified Data.Modern.Serialization as Internal

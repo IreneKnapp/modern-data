@@ -1,6 +1,5 @@
 module Data.Modern.Serialization
   (serializeData,
-   ensureTypeInContext,
    runModernSerializationToByteString,
    runModernSerializationToFile)
   where
@@ -13,8 +12,10 @@ import Data.ByteString (ByteString)
 import qualified Data.ByteString as BS
 import Data.List
 import qualified Data.Map as Map
+import qualified Data.Set as Set
 import Data.Word
 
+import Data.Modern.Context
 import Data.Modern.Hash
 import Data.Modern.Initial
 import Data.Modern.Types
@@ -25,61 +26,56 @@ serializeData
   => ModernData
   -> ModernSerialization format ()
 serializeData item = do
-  ensureTypeInContext $ dataType item
+  addTypeToContext $ dataType item
   commandDatum item
 
 
-ensureTypeInContext
+addTypeToContext
   :: (ModernFormat format)
   => ModernType
   -> ModernSerialization format ()
-ensureTypeInContext theType = do
+addTypeToContext theType = do
   context <- getContext
-  let hash = computeTypeHash theType
-      knownTypes = modernContextTypes context
-  if Map.member hash knownTypes
+  if typeInContext context theType
     then return ()
     else do
-      let newKnownTypes = Map.insert hash theType knownTypes
-          newContext = context {
-                           modernContextTypes = newKnownTypes
-                         }
-      putContext newContext
+      mapM_ addTypeToContext (Set.elems $ typeContentTypes theType)
       case theType of
         ModernListType contentType -> do
-          ensureTypeInContext contentType
-          let contentTypeHash = computeTypeHash contentType
-          commandListType contentTypeHash
+	  let contentTypeHash = computeTypeHash contentType
+          outputCommandType ModernCommandTypeListType
+          outputDataHash contentTypeHash
         ModernTupleType maybeContentTypes -> do
-          contentTypeHashes <-
-            case maybeContentTypes of
-              Nothing -> return []
-              Just contentTypes -> do
-                mapM_ ensureTypeInContext $ Array.elems contentTypes
-                return $ map computeTypeHash $ Array.elems contentTypes
-          commandTupleType contentTypeHashes
-        ModernUnionType maybeContentTypes -> do
-          contentTypeHashes <-
-            case maybeContentTypes of
-              Nothing -> return []
-              Just (_, contentTypes) -> do
-                mapM_ ensureTypeInContext $ Array.elems contentTypes
-                return $ map computeTypeHash $ Array.elems contentTypes
-          commandUnionType contentTypeHashes
+	  let contentTypes = maybe [] Array.elems maybeContentTypes
+	      contentTypeHashes = map computeTypeHash contentTypes
+          outputCommandType ModernCommandTypeTupleType
+          outputDataWord (genericLength contentTypeHashes :: Word64)
+          mapM_ outputDataHash contentTypeHashes
+        ModernUnionType maybePossibilities -> do
+          let possibilities = maybe [] (Array.elems . snd) maybePossibilities
+          outputCommandType ModernCommandTypeUnionType
+          outputDataWord (genericLength possibilities :: Word64)
+          mapM_ (\possibilityType -> do
+                   let possibilityTypeHash = computeTypeHash possibilityType
+                   outputDataHash possibilityTypeHash)
+                possibilities
         ModernStructureType maybeFields -> do
-          fieldTypeHashes <-
-            case maybeFields of
-              Nothing -> return []
-              Just fields -> do
-                mapM_ ensureTypeInContext $ map snd $ Array.elems fields
-                return $ map (\(fieldName, fieldType) ->
-                                 (fieldName, computeTypeHash fieldType))
-                             $ Array.elems fields
-          commandStructureType fieldTypeHashes
-        ModernNamedType name contentType -> do
-          ensureTypeInContext contentType
-          let contentTypeHash = computeTypeHash contentType
-          commandNamedType name contentTypeHash
+	  let fields = maybe [] Array.elems maybeFields
+          outputCommandType ModernCommandTypeStructureType
+          outputDataWord (genericLength fields :: Word64)
+          mapM_ (\(ModernFieldName fieldName, fieldType) -> do
+                   let fieldTypeHash = computeTypeHash fieldType
+                   outputDataUTF8 fieldName
+                   outputAlign 8
+                   outputDataHash fieldTypeHash)
+                fields
+        ModernNamedType (ModernTypeName name) contentType -> do
+	  let contentTypeHash = computeTypeHash contentType
+          outputCommandType ModernCommandTypeNamedType
+          outputDataUTF8 name
+          outputAlign 8
+          outputDataHash contentTypeHash
+        _ -> error "Hm." -- TODO
 
 
 commandDatum
@@ -89,7 +85,6 @@ commandDatum
 commandDatum datum = do
   let theType = dataType datum
       theTypeHash = computeTypeHash theType
-  ensureTypeInContext theType
   outputCommandType ModernCommandTypeDatum
   outputDataHash theTypeHash
   outputSynchronize
@@ -154,61 +149,6 @@ commandDatum datum = do
           ModernDataNamed _ value -> do
             helper value
   helper datum
-
-
-commandListType
-  :: (ModernFormat format)
-  => ModernHash
-  -> ModernSerialization format ()
-commandListType contentTypeHash = do
-  outputCommandType ModernCommandTypeListType
-  outputDataHash contentTypeHash
-
-
-commandTupleType
-  :: (ModernFormat format)
-  => [ModernHash]
-  -> ModernSerialization format ()
-commandTupleType contentTypeHashes = do
-  outputCommandType ModernCommandTypeTupleType
-  outputDataWord (genericLength contentTypeHashes :: Word64)
-  mapM_ outputDataHash contentTypeHashes
-
-
-commandUnionType
-  :: (ModernFormat format)
-  => [ModernHash]
-  -> ModernSerialization format ()
-commandUnionType possibilities = do
-  outputCommandType ModernCommandTypeUnionType
-  outputDataWord (genericLength possibilities :: Word64)
-  mapM_ outputDataHash possibilities
-
-
-commandStructureType
-  :: (ModernFormat format)
-  => [(ModernFieldName, ModernHash)]
-  -> ModernSerialization format ()
-commandStructureType fields = do
-  outputCommandType ModernCommandTypeStructureType
-  outputDataWord (genericLength fields :: Word64)
-  mapM_ (\(ModernFieldName fieldName, fieldTypeHash) -> do
-           outputDataUTF8 fieldName
-           outputAlign 8
-           outputDataHash fieldTypeHash)
-        fields
-
-
-commandNamedType
-  :: (ModernFormat format)
-  => ModernTypeName
-  -> ModernHash
-  -> ModernSerialization format ()
-commandNamedType (ModernTypeName name) contentTypeHash = do
-  outputCommandType ModernCommandTypeNamedType
-  outputDataUTF8 name
-  outputAlign 8
-  outputDataHash contentTypeHash
 
 
 runModernSerializationToByteString
