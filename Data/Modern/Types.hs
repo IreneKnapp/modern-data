@@ -46,12 +46,12 @@ data ModernType
   | ModernInt16Type
   | ModernInt32Type
   | ModernInt64Type
-  | ModernWord8Type
-  | ModernWord16Type
-  | ModernWord32Type
-  | ModernWord64Type
-  | ModernFloatType
-  | ModernDoubleType
+  | ModernNat8Type
+  | ModernNat16Type
+  | ModernNat32Type
+  | ModernNat64Type
+  | ModernFloat32Type
+  | ModernFloat64Type
   | ModernUTF8Type
   | ModernBlobType
   | ModernListType ModernType
@@ -67,12 +67,12 @@ data ModernData
   | ModernDataInt16 Int16
   | ModernDataInt32 Int32
   | ModernDataInt64 Int64
-  | ModernDataWord8 Word8
-  | ModernDataWord16 Word16
-  | ModernDataWord32 Word32
-  | ModernDataWord64 Word64
-  | ModernDataFloat Float
-  | ModernDataDouble Double
+  | ModernDataNat8 Word8
+  | ModernDataNat16 Word16
+  | ModernDataNat32 Word32
+  | ModernDataNat64 Word64
+  | ModernDataFloat32 Float
+  | ModernDataFloat64 Double
   | ModernDataUTF8 ByteString
   | ModernDataBlob ByteString
   | ModernDataList ModernType (Array Int ModernData)
@@ -87,12 +87,12 @@ dataType (ModernDataInt8 _) = ModernInt8Type
 dataType (ModernDataInt16 _) = ModernInt16Type
 dataType (ModernDataInt32 _) = ModernInt32Type
 dataType (ModernDataInt64 _) = ModernInt64Type
-dataType (ModernDataWord8 _) = ModernWord8Type
-dataType (ModernDataWord16 _) = ModernWord16Type
-dataType (ModernDataWord32 _) = ModernWord32Type
-dataType (ModernDataWord64 _) = ModernWord64Type
-dataType (ModernDataFloat _) = ModernFloatType
-dataType (ModernDataDouble _) = ModernDoubleType
+dataType (ModernDataNat8 _) = ModernNat8Type
+dataType (ModernDataNat16 _) = ModernNat16Type
+dataType (ModernDataNat32 _) = ModernNat32Type
+dataType (ModernDataNat64 _) = ModernNat64Type
+dataType (ModernDataFloat32 _) = ModernFloat32Type
+dataType (ModernDataFloat64 _) = ModernFloat64Type
 dataType (ModernDataUTF8 _) = ModernUTF8Type
 dataType (ModernDataBlob _) = ModernBlobType
 dataType (ModernDataList theType _) = theType
@@ -250,7 +250,7 @@ class ModernFormat format where
   outputDataHash :: ModernHash -> ModernSerialization format ()
   outputDataUTF8 :: ByteString -> ModernSerialization format ()
   outputDataBlob :: ByteString -> ModernSerialization format ()
-  outputDataWord
+  outputDataNat
     :: (Bits word, Integral word, Num word)
     => word
     -> ModernSerialization format ()
@@ -266,13 +266,13 @@ class ModernFormat format where
     :: ModernDeserialization format (Maybe ModernCommandType)
   inputDataHash
     :: ModernDeserialization format ModernHash
-  inputDataWord8
+  inputDataNat8
     :: ModernDeserialization format Word8
-  inputDataWord16
+  inputDataNat16
     :: ModernDeserialization format Word16
-  inputDataWord32
+  inputDataNat32
     :: ModernDeserialization format Word32
-  inputDataWord64
+  inputDataNat64
     :: ModernDeserialization format Word64
   inputDataUTF8
     :: ModernDeserialization format ByteString

@@ -76,7 +76,7 @@ instance ModernFormat FormatBinary where
   outputDataHash (ModernHash byteString) = outputDataRaw byteString
   outputDataUTF8 byteString = outputDataRaw $ BS.snoc byteString 0x00
   outputDataBlob byteString = outputDataRaw byteString
-  outputDataWord word = do
+  outputDataNat word = do
     let result = runSerializationToByteString $ withContext LittleEndian
                   $ serializeWord word
     case result of
@@ -191,7 +191,7 @@ instance ModernFormat FormatBinary where
             }
     putDeserializationContext newContext
     return $ ModernHash result
-  inputDataWord8 = do
+  inputDataNat8 = do
     oldContext <- getDeserializationContext
     let oldStartingOffset = deserializationContextStartingOffset oldContext
     result <- MakeModernDeserialization $ lift $ deserializeWord
@@ -202,7 +202,7 @@ instance ModernFormat FormatBinary where
             }
     putDeserializationContext newContext
     return result
-  inputDataWord16 = do
+  inputDataNat16 = do
     oldContext <- getDeserializationContext
     let oldStartingOffset = deserializationContextStartingOffset oldContext
     result <- MakeModernDeserialization $ lift $ deserializeWord
@@ -213,7 +213,7 @@ instance ModernFormat FormatBinary where
             }
     putDeserializationContext newContext
     return result
-  inputDataWord32 = do
+  inputDataNat32 = do
     oldContext <- getDeserializationContext
     let oldStartingOffset = deserializationContextStartingOffset oldContext
     result <- MakeModernDeserialization $ lift $ deserializeWord
@@ -224,7 +224,7 @@ instance ModernFormat FormatBinary where
             }
     putDeserializationContext newContext
     return result
-  inputDataWord64 = do
+  inputDataNat64 = do
     oldContext <- getDeserializationContext
     let oldStartingOffset =
 	  deserializationContextStartingOffset oldContext

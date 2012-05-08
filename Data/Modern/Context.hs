@@ -16,28 +16,6 @@ import Data.Modern.Hash
 import Data.Modern.Types
 
 
-insertType
-  :: ModernType
-  -> ModernContext
-  -> ModernContext
-insertType theType context =
-  insertTypeByHash (computeTypeHash theType) theType context
-
-
-insertTypeByHash
-  :: ModernHash
-  -> ModernType
-  -> ModernContext
-  -> ModernContext
-insertTypeByHash theTypeHash theType oldContext =
-  let oldTypes = modernContextTypes oldContext
-      newTypes = Map.insert theTypeHash theType oldTypes
-      newContext = oldContext {
-		       modernContextTypes = newTypes
-		     }
-  in newContext
-
-
 typeContentTypes
   :: ModernType
   -> Set ModernType
@@ -55,10 +33,10 @@ typeContentTypes _ = Set.empty
 
 
 typeInContext
-  :: ModernContext
-  -> ModernType
+  :: ModernType
+  -> ModernContext
   -> Bool
-typeInContext context theType =
+typeInContext theType context =
   Map.member (computeTypeHash theType) (modernContextTypes context)
 
 
@@ -78,19 +56,26 @@ typesNotInContext context theTypes =
 
 
 ensureTypesInContext
-  :: ModernContext
-  -> Set ModernType
+  :: Set ModernType
   -> ModernContext
-ensureTypesInContext context theTypes =
+  -> ModernContext
+ensureTypesInContext theTypes context =
   let visit context theType =
 	let typeHash = computeTypeHash theType
 	in case Map.lookup typeHash (modernContextTypes context) of
 	     Just _ -> context
 	     Nothing ->
-	       insertTypeByHash typeHash
-				theType
-			        (foldl' visit
-				        context 
-				        (Set.toList $ typeContentTypes theType))
+	       insert typeHash
+		      theType
+		      (foldl' visit
+		              context 
+			      (Set.toList $ typeContentTypes theType))
+      insert theTypeHash theType oldContext =
+        let oldTypes = modernContextTypes oldContext
+            newTypes = Map.insert theTypeHash theType oldTypes
+            newContext = oldContext {
+		             modernContextTypes = newTypes
+		           }
+        in newContext
   in foldl' visit context (Set.toList theTypes)
 

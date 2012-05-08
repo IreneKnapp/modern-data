@@ -73,7 +73,7 @@ deserializeOneCommand commandType = do
       learnType theType
       return Nothing
     ModernCommandTypeTupleType -> do
-      nItems <- inputDataWord64
+      nItems <- inputDataNat64
       let loop soFar i = do
             if i == nItems
               then return soFar
@@ -95,7 +95,7 @@ deserializeOneCommand commandType = do
           learnType theType
       return Nothing
     ModernCommandTypeUnionType -> do
-      nItems <- inputDataWord64
+      nItems <- inputDataNat64
       let loop soFar i = do
             if i == nItems
               then return soFar
@@ -118,7 +118,7 @@ deserializeOneCommand commandType = do
           learnType theType
       return Nothing
     ModernCommandTypeStructureType -> do
-      nFields <- inputDataWord64
+      nFields <- inputDataNat64
       let loop soFar i = do
             if i == nFields
               then return soFar
@@ -175,22 +175,22 @@ deserializeOneDatum theType = do
     ModernInt64Type -> do
       inputAlign 8
       undefined -- TODO
-    ModernWord8Type -> do
+    ModernNat8Type -> do
       inputAlign 1
       undefined -- TODO
-    ModernWord16Type -> do
+    ModernNat16Type -> do
       inputAlign 2
       undefined -- TODO
-    ModernWord32Type -> do
+    ModernNat32Type -> do
       inputAlign 4
       undefined -- TODO
-    ModernWord64Type -> do
+    ModernNat64Type -> do
       inputAlign 8
       undefined -- TODO
-    ModernFloatType -> do
+    ModernFloat32Type -> do
       inputAlign 4
       undefined -- TODO
-    ModernDoubleType -> do
+    ModernFloat64Type -> do
       inputAlign 8
       undefined -- TODO
     ModernUTF8Type -> do

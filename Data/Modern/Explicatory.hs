@@ -51,7 +51,7 @@ instance ModernFormat FormatExplicatory where
     outputDataRaw byteString
   outputDataBlob byteString = do
     outputDataRaw byteString
-  outputDataWord word = do
+  outputDataNat word = do
     let result = runSerializationToByteString $ withContext BigEndian
                   $ serializeWord word
     case result of
@@ -93,10 +93,10 @@ instance ModernFormat FormatExplicatory where
 	  then return $ ModernHash byteString
 	  else error "Hm F." -- TODO
       Nothing -> error "Hm E." -- TODO
-  inputDataWord8 = inputDataWord
-  inputDataWord16 = inputDataWord
-  inputDataWord32 = inputDataWord
-  inputDataWord64 = inputDataWord
+  inputDataNat8 = inputDataNat
+  inputDataNat16 = inputDataNat
+  inputDataNat32 = inputDataNat
+  inputDataNat64 = inputDataNat
   inputDataUTF8 = do
     encoding <- readLine
     case parseBytes encoding of
@@ -120,10 +120,10 @@ outputDataRaw byteString = do
   putSerializationContext newContext
 
 
-inputDataWord
+inputDataNat
   :: (Bits word, Integral word, Num word, ModernFormat format)
   => ModernDeserialization format word
-inputDataWord = do
+inputDataNat = do
   encoding <- readLine
   case parseBytes encoding of
     Just byteString -> do

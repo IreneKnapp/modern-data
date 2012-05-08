@@ -19,12 +19,12 @@ initialTypes =
           ModernInt16Type,
           ModernInt32Type,
           ModernInt64Type,
-          ModernWord8Type,
-          ModernWord16Type,
-          ModernWord32Type,
-          ModernWord64Type,
-          ModernFloatType,
-          ModernDoubleType,
+          ModernNat8Type,
+          ModernNat16Type,
+          ModernNat32Type,
+          ModernNat64Type,
+          ModernFloat32Type,
+          ModernFloat64Type,
           ModernUTF8Type,
           ModernBlobType]
 

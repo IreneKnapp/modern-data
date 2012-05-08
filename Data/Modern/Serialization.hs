@@ -36,7 +36,7 @@ addTypeToContext
   -> ModernSerialization format ()
 addTypeToContext theType = do
   context <- getContext
-  if typeInContext context theType
+  if typeInContext theType context
     then return ()
     else do
       mapM_ addTypeToContext (Set.elems $ typeContentTypes theType)
@@ -49,12 +49,12 @@ addTypeToContext theType = do
 	  let contentTypes = maybe [] Array.elems maybeContentTypes
 	      contentTypeHashes = map computeTypeHash contentTypes
           outputCommandType ModernCommandTypeTupleType
-          outputDataWord (genericLength contentTypeHashes :: Word64)
+          outputDataNat (genericLength contentTypeHashes :: Word64)
           mapM_ outputDataHash contentTypeHashes
         ModernUnionType maybePossibilities -> do
           let possibilities = maybe [] (Array.elems . snd) maybePossibilities
           outputCommandType ModernCommandTypeUnionType
-          outputDataWord (genericLength possibilities :: Word64)
+          outputDataNat (genericLength possibilities :: Word64)
           mapM_ (\possibilityType -> do
                    let possibilityTypeHash = computeTypeHash possibilityType
                    outputDataHash possibilityTypeHash)
@@ -62,7 +62,7 @@ addTypeToContext theType = do
         ModernStructureType maybeFields -> do
 	  let fields = maybe [] Array.elems maybeFields
           outputCommandType ModernCommandTypeStructureType
-          outputDataWord (genericLength fields :: Word64)
+          outputDataNat (genericLength fields :: Word64)
           mapM_ (\(ModernFieldName fieldName, fieldType) -> do
                    let fieldTypeHash = computeTypeHash fieldType
                    outputDataUTF8 fieldName
@@ -92,32 +92,32 @@ commandDatum datum = do
         case datum of
           ModernDataInt8 value -> do
             outputAlign 1
-            outputDataWord (fromIntegral value :: Word8)
+            outputDataNat (fromIntegral value :: Word8)
           ModernDataInt16 value -> do
             outputAlign 2
-            outputDataWord (fromIntegral value :: Word16)
+            outputDataNat (fromIntegral value :: Word16)
           ModernDataInt32 value -> do
             outputAlign 4
-            outputDataWord (fromIntegral value :: Word32)
+            outputDataNat (fromIntegral value :: Word32)
           ModernDataInt64 value -> do
             outputAlign 8
-            outputDataWord (fromIntegral value :: Word64)
-          ModernDataWord8 value -> do
+            outputDataNat (fromIntegral value :: Word64)
+          ModernDataNat8 value -> do
             outputAlign 1
-            outputDataWord value
-          ModernDataWord16 value -> do
+            outputDataNat value
+          ModernDataNat16 value -> do
             outputAlign 2
-            outputDataWord value
-          ModernDataWord32 value -> do
+            outputDataNat value
+          ModernDataNat32 value -> do
             outputAlign 4
-            outputDataWord value
-          ModernDataWord64 value -> do
+            outputDataNat value
+          ModernDataNat64 value -> do
             outputAlign 8
-            outputDataWord value
-          ModernDataFloat value -> do
+            outputDataNat value
+          ModernDataFloat32 value -> do
             outputAlign 4
             undefined
-          ModernDataDouble value -> do
+          ModernDataFloat64 value -> do
             outputAlign 8
             undefined
           ModernDataUTF8 value -> do
@@ -131,7 +131,7 @@ commandDatum datum = do
           ModernDataList _ values -> do
             outputAlign 8
             let (start, end) = Array.bounds values
-            outputDataWord $ end - start + 1
+            outputDataNat $ end - start + 1
             mapM_ helper $ Array.elems values
           ModernDataTuple _ values -> do
             mapM_ helper $ Array.elems values
