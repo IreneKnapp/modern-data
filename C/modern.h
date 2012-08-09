@@ -71,6 +71,10 @@ struct modern_stream {
       (void *processor, void *context, struct modern_hash *field);
     void (*modern_stream_type_definition_structure_end)
       (void *processor, void *context);
+    void (*modern_stream_type_definition_named_is_next)
+      (void *processor, void *context, struct modern_hash *name);
+    void (*modern_stream_type_definition_universe)
+      (void *processor, void *context);
     void (*modern_stream_type)
       (void *processor, void *context, struct modern_hash *type);
     void (*modern_stream_int8)
@@ -116,12 +120,22 @@ struct modern_stream {
       (void *processor, void *context);
     void (*modern_stream_named_value_is_next)
       (void *processor, void *context, struct modern_hash *name);
+    void (*modern_stream_lambda_is_next)
+      (void *processor, void *context);
+    void (*modern_stream_apply_is_next)
+      (void *processor, void *context);
+    void (*modern_stream_type_index_is_next)
+      (void *processor, void *context, uint64_t index);
+    void (*modern_stream_type_family_is_next)
+      (void *processor, void *context, uint64_t n_items);
 };
 
 
 struct modern_vfile {
-    ssize_t (*modern_vfile_read)(void *context, uint8_t *buffer, size_t length);
-    ssize_t (*modern_vfile_write)(void *context, uint8_t *buffer, size_t length);
+    ssize_t (*modern_vfile_read)
+      (void *context, uint8_t *buffer, size_t length);
+    ssize_t (*modern_vfile_write)
+      (void *context, uint8_t *buffer, size_t length);
 };
 
 
@@ -161,6 +175,8 @@ enum modern_node_type {
     structure_type_modern_node_type,
     named_type_modern_node_type,
     universe_type_modern_node_type,
+    lambda_modern_node_type,
+    apply_modern_node_type,
 };
 
 
@@ -230,18 +246,24 @@ extern modern *modern_node_get_union_field_node
   (modern *value, struct modern_hash *field);
 extern modern *modern_node_get_structure_field_node
   (modern *value, struct modern_hash *field);
-extern modern *modern_node_get_named_node(modern *value, struct modern_hash *name);
+extern modern *modern_node_get_named_node
+  (modern *value, struct modern_hash *name);
 extern modern *modern_node_get_array_type_content_type(modern *value);
 extern uint64_t modern_node_get_union_type_n_fields(modern *value);
 extern struct modern_hash *modern_node_get_union_type_field_name
   (modern *value, uint64_t index);
-extern modern *modern_node_get_union_type_field_type(modern *value, uint64_t index);
+extern modern *modern_node_get_union_type_field_type
+  (modern *value, uint64_t index);
 extern uint64_t modern_node_get_structure_type_n_fields(modern *value);
 extern struct modern_hash *modern_node_get_structure_type_field_name
   (modern *value, uint64_t index);
-extern modern *modern_node_get_structure_type_field_type(modern *value, uint64_t index);
+extern modern *modern_node_get_structure_type_field_type
+  (modern *value, uint64_t index);
 extern struct modern_hash *modern_node_get_named_type_name(modern *value);
 extern modern *modern_node_get_named_type_content_type(modern *value);
+extern modern *modern_node_get_lambda_content(modern *value);
+extern modern *modern_node_get_apply_left(modern *value);
+extern modern *modern_node_get_apply_right(modern *value);
 
 extern modern *modern_node_make_int8(int8_t value);
 extern modern *modern_node_make_int16(int16_t value);
@@ -260,7 +282,8 @@ extern modern *modern_node_make_array(uint64_t n_items, modern **values);
 extern modern *modern_node_make_union
   (modern *type, struct modern_hash *field, modern *value);
 extern modern *modern_node_make_structure
-  (modern *type, uint64_t n_items, struct modern_hash **fields, modern **values);
+  (modern *type, uint64_t n_items, struct modern_hash **fields,
+   modern **values);
 extern modern *modern_node_make_named_value(modern *type, modern *value);
 
 extern modern *modern_node_get_int8_type();
@@ -284,19 +307,37 @@ extern modern *modern_node_make_structure_type
 extern modern *modern_node_make_named_type
   (struct modern_hash *name, modern *content_type);
 extern modern *modern_node_get_universe_type();
+extern modern *modern_node_make_lambda(modern *content);
+extern modern *modern_node_make_apply(modern *left, modern *right);
+extern modern *modern_node_make_type_index(uint64_t index);
+extern modern *modern_node_make_type_family(uint64_t n_items, modern **types);
 
-extern uint64_t modern_node_make_union_type_n_fields(modern *value);
-extern struct modern_hash *modern_node_make_union_type_field_name
-  (modern *value, uint64_t index);
-extern modern *modern_node_make_union_type_field_type(modern *value, uint64_t index);
-extern uint64_t modern_node_make_structure_type_n_fields(modern *value);
-extern struct modern_hash *modern_node_make_structure_type_field_name
-  (modern *value, uint64_t index);
-extern modern *modern_node_make_structure_type_field_type(modern *value, uint64_t index);
-extern struct modern_hash *modern_node_make_named_type_name(modern *value);
-extern modern *modern_node_make_named_type_content_type(modern *value);
+extern void modern_node_set_int8(modern *node, int8_t value);
+extern void modern_node_set_int16(modern *node, int16_t value);
+extern void modern_node_set_int32(modern *node, int32_t value);
+extern void modern_node_set_int64(modern *node, int64_t value);
+extern void modern_node_set_nat8(modern *node, uint8_t value);
+extern void modern_node_set_nat16(modern *node, uint16_t value);
+extern void modern_node_set_nat32(modern *node, uint32_t value);
+extern void modern_node_set_nat64(modern *node, uint64_t value);
+extern void modern_node_set_float32(modern *node, float value);
+extern void modern_node_set_float64(modern *node, double value);
+extern void modern_node_set_float128(modern *node, long double value);
+extern void modern_node_set_utf8(modern *node, uint8_t *data);
+extern void modern_node_set_blob(modern *node, uint8_t *data, size_t bytes);
+extern void modern_node_set_array
+  (modern *node, uint64_t n_items, modern **values);
+extern void modern_node_set_union
+  (modern *node, modern *type, struct modern_hash *field, modern *value);
+extern void modern_node_set_structure
+  (modern *node, modern *type, uint64_t n_items, struct modern_hash **fields,
+   modern **values);
+extern void modern_node_set_named_value
+  (modern *node, modern *type, modern *value);
 
-extern void modern_compute_hash(uint8_t *data, size_t length, struct modern_hash *out);
+extern void modern_compute_hash
+  (uint8_t *data, size_t length, struct modern_hash *out);
 
 extern struct modern_stream *modern_get_explicatory_stream();
 extern struct modern_stream *modern_get_documentation_stream();
+

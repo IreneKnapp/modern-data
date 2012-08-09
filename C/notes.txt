@@ -2,6 +2,7 @@ Combinators
 
 (named "K" (lambda (lambda 1)))
 (named "S" (lambda (lambda (lambda (apply (apply 2 0) (apply 1 0))))))
+(named "->" (lambda (lambda (structure ("left" 1) ("right" 0)))))
 
 
 Parametric
@@ -10,7 +11,7 @@ Pair a = Pair a a
 
 (named "Pair"
   (lambda (structure ("field1" 0)
-  				     ("field2" 0))))
+                     ("field2" 0))))
 
 
 Recursion
@@ -18,13 +19,22 @@ Recursion
 Tree = Interior Tree Tree | Leaf Nat64
 
 (named "Tree"
-  (lambda (apply 0 (union ("interior" (structure ("left" 0) ("right" 0)))
-  						  ("
+  (apply "S"
+         (lambda (union ("interior" (structure ("left" 0) ("right" 0)))
+                        ("leaf" nat64)))))
 
 
 Parametric with recursion
 
 Tree a = Interior (Tree a) (Tree a) | Leaf a
+
+(named "Tree"
+  (apply "S"
+    (lambda
+      (lambda
+        (union ("interior" (structure ("left" (apply 1 0))
+                                      ("right" (apply 1 0))))
+               ("leaf" 0))))))
 
 
 Mutual recursion
@@ -32,7 +42,19 @@ Mutual recursion
 Red = Red Black | RedLeaf
 Black = Black Red Red | BlackLeaf
 
+(family 2
+  (named "A"
+    (union ("interior" 0)
+           ("leaf" utf8)))
+  (named "B"
+    (union ("interior" 1)
+           ("leaf" int64))))
+
 
 Application
 
 Foo a = Foo (a Int64)
+
+(named "Foo"
+  (apply "S" (lambda (lambda (apply 0 int64)))))
+
