@@ -1,6 +1,4 @@
-#include <stdint.h>
-#include <stdlib.h>
-#include "hash.h"
+#include "modern.h"
 
 
 __attribute__((always_inline))
@@ -27,11 +25,11 @@ uint64_t fmix(uint64_t k) {
 }
 
 
-void hash(uint8_t *data, size_t length, uint32_t seed, uint64_t *out) {
+void modern_compute_hash(uint8_t *data, size_t length, modern_hash *out) {
     const size_t nblocks = length / 16;
     
-    uint64_t h1 = seed;
-    uint64_t h2 = seed;
+    uint64_t h1 = 0;
+    uint64_t h2 = 0;
     
     const uint64_t c1 = 0x87c37b91114253d5LLU;
     const uint64_t c2 = 0x4cf5ad432745937fLLU;
@@ -88,6 +86,6 @@ void hash(uint8_t *data, size_t length, uint32_t seed, uint64_t *out) {
     h1 += h2;
     h2 += h1;
     
-    out[0] = h1;
-    out[1] = h2;
+    out->a = h1;
+    out->b = h2;
 }
