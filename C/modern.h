@@ -160,6 +160,7 @@ enum modern_node_type {
     union_type_modern_node_type,
     structure_type_modern_node_type,
     named_type_modern_node_type,
+    universe_type_modern_node_type,
 };
 
 
@@ -282,6 +283,7 @@ extern modern *modern_node_make_structure_type
   (uint64_t n_items, struct modern_hash **fields, modern **types);
 extern modern *modern_node_make_named_type
   (struct modern_hash *name, modern *content_type);
+extern modern *modern_node_get_universe_type();
 
 extern uint64_t modern_node_make_union_type_n_fields(modern *value);
 extern struct modern_hash *modern_node_make_union_type_field_name
