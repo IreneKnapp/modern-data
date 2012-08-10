@@ -1,3 +1,4 @@
+#include <string.h>
 #include "modern.h"
 
 
@@ -89,3 +90,21 @@ void modern_compute_hash(uint8_t *data, size_t length, modern_hash *out) {
     out->a = h1;
     out->b = h2;
 }
+
+
+void modern_compute_child_hash
+  (struct modern_hash *parent,
+   uint8_t *data, size_t length, struct modern_hash *out)
+{
+    size_t length_prime = sizeof(uint64_t) * 2 + length;
+    uint8_t *data_prime = malloc(length_prime);
+    
+    ((uint64_t *) data_prime)[0] = parent.a;
+    ((uint64_t *) data_prime)[1] = parent.b;
+    memcpy(data_prime + sizeof(uint64_t) * 2, data, length);
+    
+    modern_compute_hash(data_prime, length_prime, out);
+    
+    free(data_prime);
+}
+
