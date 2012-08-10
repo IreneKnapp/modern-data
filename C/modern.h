@@ -175,9 +175,10 @@ enum modern_node_type {
     float128_type_modern_node_type,
     utf8_type_modern_node_type,
     blob_type_modern_node_type,
-    array_type_modern_node_type,
-    union_type_modern_node_type,
-    structure_type_modern_node_type,
+    sigma_type_modern_node_type, // new
+    array_type_modern_node_type, // goes away
+    union_type_modern_node_type, // goes away
+    structure_type_modern_node_type, // goes away
     named_type_modern_node_type,
     universe_type_modern_node_type,
     lambda_modern_node_type,
@@ -228,6 +229,7 @@ extern void modern_stream_vfile
   (modern_autorelease_pool *pool,
    struct modern_stream *stream, void *stream_state,
    struct modern_vfile *vfile, void *vfile_state);
+// add an output-stream API too
 
 extern void modern_serialize_memory_buffer
   (modern *value, modern_context *context, uint8_t *buffer, size_t *length);
