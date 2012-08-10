@@ -1,0 +1,852 @@
+10:38
+irene-knapp
+okay, so I mentioned my project "Modern Data" on which I'd like design feedback?
+https://github.com/IreneKnapp/modern-data/blob/master/C/modern.h is my draft of the C API for it
+obviously there will be bindings in functional languages, but I'm doing the base in C
+not because it's more suitable; it's not.  just because it's easier to link things against.
+so if anyone is around I can explain this, since I know it's a) opaque and b) dense
+it's just the only part I've got written up so far
+10:42
+aristid
+irene-knapp: looks like a bunch of OO-in-C?
+10:43
+irene-knapp
+pretty much, I'm afraid
+well, so by self-describing data format
+I mean as in XML or JSON
+the "standard" portion will be the format itself; this is just the library for it
+the feature that makes this one interesting (besides that it's binary instead of text, to avoid tempting people to edit it by hand)
+is that it has dependent types
+and parametric types too, of course
+so what I want comments on is the feature set, right
+so the datatypes are a good subset of the features to start by explaining
+oh, so this has both streaming and object-graph-building modes, btw
+analogous to SAX and DOM for XML
+10:49
+aristid
+irene-knapp: why not prototype it in haskell?
+10:49
+irene-knapp
+I did
+10:50
+aristid
+why not show that? :)
+10:50
+irene-knapp
+cause the features have changed, I'm afraid
+the Haskell version is actually no easier to read anyway
+it's pretty dense stuff no matter what language it's in, or maybe I'm just a bad coder :D
+I mean I suppose you can poke through https://github.com/IreneKnapp/modern-data/tree/master/Haskell/Data/Modern
+10:51
+aristid
+looking at https://github.com/IreneKnapp/modern-data/blob/master/Haskell/Data/Modern/Types.hs
+10:51
+irene-knapp
+so this is the gist of it but there have been important changes that were only made in the C version so far
+for example, it has a single "universe" type, right
+because I don't want to implement bignums, so I can't have cumulative universes,
+so I have to figure out what exactly it means.  I think it's its own type.
+10:52
+aristid
+irene-knapp: i wonder if your haskell code would benefit from GADTs and maybe DataKinds
+10:52
+irene-knapp
+oh right, DataKinds
+well, it might at that
+10:53
+aristid
+irene-knapp: ModernData (the type) looks like a GADT with the parameter omitted to me :D
+10:53
+irene-knapp
+well it's pseudo-dynamic, right
+10:53
+aristid
+and then i guess you'd also want an existential for runtime-determined type
+10:53
+irene-knapp
+right
+well, I'll probably take that suggestion when I do the final Haskell version (which will be a binding to the C lib)
+for C, everything is effectively like Data.Dynamic
+10:56
+aristid
+irene-knapp: so i think Data.Modern.Types contains everything important to get an idea for the architecture, right?
+10:56
+irene-knapp
+another feature that's in the C version but not the Haskell is the ability to make combinators
+specifically it has the node types "lambda", "apply", "index" (as in De Bruijn), and "family" (as in inductive type family)
+I think it's a good place to look first, yes
+10:57
+aristid
+irene-knapp: i hate to say it, but i think the code might be a bit more readable as C++ :D
+10:57
+aristid
+the C code
+all the void (*foo)(void *obj, ...) boilerplate is visually distracting
+10:58
+irene-knapp
+sorry, I know lol
+but C++ has a horrible execution model
+I'll write up a nice document so nobody ever has to read this header, right
+10:59
+aristid
+irene-knapp: execution model? how so?
+10:59
+irene-knapp
+but I don't want to do that while there are probably still important things I haven't thought up
+C++ has an actual RTS
+and relies heavily on the platform linker to do the right thing with regard to static initializers and stuff
+10:59
+aristid
+and you want the library to be totally light-weight?
+10:59
+irene-knapp
+yes
+I want it to be easy to bind to it from any language
+10:59
+aristid
+fair enough
+10:59irene-knapp	nods
+10:59
+aristid
+irene-knapp: might be convenient to write some macros to make it nicer for yoruself
+11:00
+irene-knapp
+that's a good thought
+I probably will
+11:00
+aristid
+or maybe just some typedefs
+void (*modern_stream_type_definition_int8)
+      (void *processor, void *context);
+all of these have the same type!
+11:01
+irene-knapp
+no - many of them do
+but many do not
+so what that particular batch of them do is
+they indicate that the streaming parser has encountered the type (not a value) int8
+11:01
+aristid
+they write the type ID?
+11:02
+irene-knapp
+no, actually, they are callbacks invoked when the type ID is /read/
+that's why they're in a struct
+all the functions in that struct are callbacks that are invoked on events that happen during streaming parsing
+for /writing/ there isn't actually a streaming API yet - it wouldn't make sense to have one, because it couldn't ensure that you were writing well-formed data, because it's an object graph and not just a flat tree like XML/JSON.
+(you make graphs by using the same "family" construct that's used for inductive type families, but using it on data instead)
+11:05
+aristid
+a full graph?
+11:05
+irene-knapp
+(or by using lambdas and apply)
+yes
+11:05
+aristid
+that's kinda ambitious
+11:05
+irene-knapp
+thank you
+I thought about that
+11:06
+aristid
+i don't know what's the right name for it, but i'd have thought you'd limit yourself to types without cycles
+11:06
+irene-knapp
+I'm not totally wedded to the graph feature, right
+but I believe I see a simple implementation strategy
+so to make things with cycles, what happens behind the scenes
+well
+it's not behind the scenes when you're doing streaming parsing, but when generating, or when using the object-mode parser, it is
+is that it uses lambdas and applies
+the "prelude" for it has the S and K combinators already defined
+which isn't strictly necessary because you could define them yourself, but I think it's a worthwhile convenience
+so for example
+well, check out https://github.com/IreneKnapp/modern-data/blob/master/C/notes.txt which is just some informal stuff
+this is for types, but the same strategies should work for values
+the Lisp-like syntax there is what I'm thinking the debug format will look like
+to discourage people from writing that format, I'm not implementing a parser for it :)
+but it's for use in, say, standards documents that describe APIs in which the units of data interchange are values in this system
+11:10
+aristid
+*catches up on what irene-knapp wrote*
+11:10
+irene-knapp
+hehe sorry
+so a point I'm not totally sure on is that I /think/ I just need one version of lambda and one version of apply - as opposed to separate type-level and value-level versions
+11:11
+aristid
+irene-knapp: how about first creating a simpler version which exposes the machinery with the lambdas and applies
+irene-knapp: and then on top of that built a graph API
+11:11
+irene-knapp
+well, that's the order in which I do intend to implement this, yes
+hmm
+yes, okay, I can do that
+11:11
+aristid
+right, but also expose it
+11:11
+irene-knapp
+right, okay.  it makes sense to have it exposed, yes.
+11:11
+aristid
+i bet for most types you can't have cycles
+i don't know if there's any overhead involved, but if it's there and not necessary it'd be kinda annoying
+11:12
+irene-knapp
+actually recursive types are defined as cyclic structures as I'm envisioning this
+so any tree-like type for example
+11:12
+aristid
+i'm totally not following :)
+11:12
+irene-knapp
+lol
+so a recursive type is one that reference itself
+to use Haskell notation for a moment
+11:13
+aristid
+ok, but that's on the type level
+11:13
+irene-knapp
+data Tree a = Internal (Tree a) (Tree a) | Leaf a
+oh, certainly
+11:13
+aristid
+you want to use the same machinery for both?
+11:13
+irene-knapp
+but it's dependent, right
+yes, I do
+11:13
+aristid
+dependentness fucks with your head, i say
+11:13
+irene-knapp
+I'm a little shaky on whether doing so is really possible, but I think it makes sense to if it is
+it does doesn't it
+that's why in the C API (and the eventual Haskell API)
+I had to rename the, ahem, type - it's not "ModernData" anymore, it's just "Modern"
+because it can also be a type instead of data!
+there are definite use cases for types-as-data (in addition to data-as-types)
+for example, you could make types that express an API, right
+and then teach that API to a suitable interpreter by passing the types in this format
+11:15
+Ralith [~ralith@216.162.199.202] entered the room.
+11:15
+irene-knapp
+thanks, hi
+so let me see
+maybe I can hpaste a chatlog to get you up to speed
+(Ralith)
+11:16
+aristid
+irene-knapp: you invited Ralith from another channel? :)
+11:16
+irene-knapp
+yes, hehe
+that's okay, I hope? :)
+11:17
+aristid
+irene-knapp: do you also implement the set hierarchy?
+11:17
+irene-knapp
+http://hpaste.org/72892
+11:17
+aristid
+or do you have type-in-type?
+11:17
+irene-knapp
+aristid: ah!  so I called it "universe"
+that's a specific point where I want feedback
+I have type-in-type
+because
+I don't want to implement bignums
+and I think things break if I can overflow a non-bignum, right?
+11:17
+aristid
+irene-knapp: your irc client formats things weird
+11:17
+irene-knapp
+sorry, yes, I know
+it's not even a real IRC client, it's a single-user-chat client being horribly mispurposed
+11:18
+aristid
+heh
+11:18
+aristid
+irene-knapp: huh? overflow a non-bignum is modulo arithmetic i think
+11:18
+irene-knapp
+I didn't call it set because I just never liked that name, it conflicts with the set-meaning-container
+11:18
+aristid
+that's not inconsistent i believe
+11:19
+irene-knapp
+it's not inconsistent for the type of Set65535 to be Set0?
+11:19
+aristid
+oh
+well you'd not overflow but throw an exception "The maximum universe level is 5000"
+11:19
+irene-knapp
+oh, good point
+yeah, I can do that, I have another limit somewhere in there too that isn't coming to mind
+yeah, okay
+so I'm ready to hear arguments for each approach now, in that case
+I kinda don't understand the implications of the different approaches
+I know Idris uses "cumulative universes", which I believe are the Coq style
+11:20
+aristid
+i wish i actually understood these things :D
+11:20
+irene-knapp
+ehehehe
+sorry! :)
+there sure are a lot of people in here lol
+I wish they were talking :D
+okay, so I'll table the universe question for the moment
+11:21
+aristid
+well it's just the place to be. not necessarily the place to talk
+11:21
+irene-knapp
+yes, fair enough
+I used to hang out in #idlerpg and try to tempt people to talk
+11:22
+aristid
+hah
+11:22
+irene-knapp
+I never got anyone so eventually I gave up :)
+okay, other things, let's see here
+I won't make you discuss the parts of this that have more to do with good C practice than with the dependent types stuff
+11:23
+aristid
+so if you have lambdas and application, you have full computation, right?
+11:23
+irene-knapp
+like the use of vfile structures for when you want to read a Modern Data thing that's in a zipfile, right
+wellllll, I suppose you do, at that
+11:24
+augur
+irene-knapp!
+11:24
+irene-knapp
+but it's not clear that you can use it for much
+augur!
+11:24
+augur
+hey :D
+11:24
+irene-knapp
+hey :D read scrollback please, I'm soliciting comments on a thing I'm designing
+I'm not designing it in Agda, but it's highly related nonetheless, so I came here to find people to talk to about it :)
+11:24
+augur
+jesus thats a lot of scrollback
+11:25
+irene-knapp
+isn't it
+11:25
+augur
+irene-knapp: what is modern-data supposed to be
+11:25
+irene-knapp
+so it's a self-describing data format, as in XML or JSON
+11:25
+aristid
+augur: dependently typed serialization IIUC
+11:25
+irene-knapp
+unlike those, it is binary
+11:25
+augur
+dependently typed?
+11:25
+irene-knapp
+to discourage people from playing fast and loose with the syntax
+11:25
+augur
+how the hell
+11:25
+irene-knapp
+and it is dependently typed
+and it can also do full object graphs, not just tree structures
+yes :)
+11:26
+augur
+i have no comment
+11:26
+irene-knapp
+lol
+11:26
+augur
+because i have no idea wtf its supposed to be
+11:26
+irene-knapp
+I have an almost-working implementation in Haskell, right, but I'm throwing it out and implementing in C instead because of linkage concerns
+well
+I mean I could go into the usage scenarios
+11:27
+augur
+ok
+11:27
+irene-knapp
+you could basically use it for anything you presently do with XML or HTML or JSON or whatnot,
+except you can also communicate types across it, so a) schemas are built in (XML schema description is a bugbear that they've had a lot of failed attempts at)
+b) you can "teach" the other end how to at least process your thing, even if it doesn't know your types in advance, by sending a type-as-data across the wire
+c) you can write helper utilities that only understand some of the types and not the rest, to make "map" and other higher-order functions
+11:28
+augur
+oookay
+i have no idea what that is supposed to mean but
+11:29
+irene-knapp
+the original motivator was because I freaking hate using text as the format for shell commands, right
+but I see all sorts of applications
+I think it applies to the functional-database problem too, even
+I see so many applications, in fact, that it worked its way to the top of my project pile, which is why we're discussing it now :D
+in principle you could write webpages in it, although I don't aspire to that
+but you could definitely implement a programming "language" in it, say
+the source code is simply a data structure, instead of being text, see
+and if you like text, you can treat the textual presentation as simply a formatting layer
+once the basic library is working I'm going to make a generic graphical editor for this
+(for the Mac)
+(I have some old code, half of a diagram editor that I worked on for most of a year because I was going to self-market it commercially, that I can repurpose)
+suppose you're designing an SQL database.  you can use an SQL AST in Modern Data to describe it.  then from that same binary file, you can get both diagrams and SQL to generate the schema.  AND you can even store sample values for the schema, because, again, of the dependent-ness.
+there are tools that do that but they are hard to write because they have to parse SQL, which is difficult
+this would make them much easier to write because there's no parsing step
+and you can use it for network protocols, too
+11:34augur	thwaps irene-knapp with a rolled up newspaper
+11:34
+augur
+:|
+11:34
+irene-knapp
+XMPP/Jabber is similar but using XML as the self-describing data format
+what?
+what'd I do?
+11:34
+augur
+you're creating scrollback again
+11:34
+irene-knapp
+hahaha
+I'll sign into WoW in another window, that'll slow down my scrollback
+11:35
+augur
+:P
+11:38
+irene-knapp
+so anyway, aristid, does the general thing seem sane to want to do? :)
+11:38
+aristid
+irene-knapp: oh one comment: i think your type system exposes a lot of very low-level types. do you plan to build more higher-level types on top?
+11:38
+irene-knapp
+yes, exactly
+I was just trying to provide all the primitives
+then I can play around and stuff
+11:38
+aristid
+ok, the idea seems definitely cool
+11:39
+irene-knapp
+I don't plan for the higher-level types to be part of the "standard", because that wouldn't buy anything - they don't need to be agreed upon in advance to use them
+11:39
+aristid
+i don't fully understand the implementation, sorry
+11:39
+irene-knapp
+since the schema is expressible in the system itself
+that's fine!
+I'm relieved to hear it seems cool rather than pointless and/or insane :)
+11:39
+aristid
+i'm a sucker for crazy things :D
+11:39
+irene-knapp
+hehe :D
+oh yes, so let me describe an interesting thing I did
+for aggregate types
+I broke it down like this
+array (one-dimensional, nothing fancy with the indices.  anything more complicated can be built on top of these primitives.)
+(obviously it works by storing an explicit length value)
+union, which assigns a name to each field it may contain, and exactly one of those fields is present in an actual value
+structure, which also assigns a name to each field, but all the fields are present.  structures, notably, do not have field orders - that is, the types (structure ("a" int64) ("b" nat64)) and (structure ("b" nat64) ("a" int64)) are equal
+and the last one is "named"
+you'll notice that in array, union, and structure, I didn't give the aggregate thus defined its own name - only the fields of them
+I separated that capability out, so that you can have anonymous ones
+or named ones, by wrapping them as in (named "a-and-b" (structure ("a" int64) ("b" nat64)))
+oh, and also
+for text I made the type be utf8
+I don't have a character/codepoint type
+I also don't have types for other charsets or encodings
+because f it, haha, I can't be arsed when that's the right one 99% of the time
+and then I have blob too
+so if you need to embed non-Modern data in some known format, you can just make a blob out of it
+okay, so you've given me some useful input and I thank you
+everyone else should also feel free to chime in!  haha
+11:45
+mapreduce
+I guess WoW crashed.
+11:45
+irene-knapp
+lol
+nah, my guild gave up on Dragon Soul for the night
+11:46
+aristid
+irene-knapp: actually i think you could simplify the type system there
+11:46
+irene-knapp
+do tell!
+11:46
+aristid
+irene-knapp: why not just have records and sum types?
+11:46
+aristid
+i.e. algebraic types
+11:47
+irene-knapp
+so the short answer is that you can build those on these but not these on those
+11:47
+aristid
+you don't even need records
+11:47
+irene-knapp
+I think!
+11:47
+aristid
+2-tuples suffice
+you can definitely build arrays on records and sum types
+11:47
+aristid
+irene-knapp: oh, and actually even one type might suffice
+11:47
+aristid
+the almighty Sigma
+11:47
+irene-knapp
+true, hahaha
+well, can you explain that in more detail so I can think about it?
+or a pointer to reading material is fine too
+11:48
+aristid
+irene-knapp: you know agda's Data.Product?
+11:48
+irene-knapp
+no, actually
+11:48
+aristid
+well you should! it's awesome
+wait a second
+11:49
+aristid
+irene-knapp: so this is the type: http://hpaste.org/72893
+irene-knapp: it's basically just a record where the second type depends on the first value
+11:50
+irene-knapp
+so, hm
+let me try to paraphrase this
+11:50
+aristid
+no let me explain
+11:50
+irene-knapp
+oh, okay
+11:50
+aristid
+on this you can build regular tuples (just have the function be constant)
+you can build sum types, by having the first type be an index/tag
+and you can build dependent records FFS
+11:51
+irene-knapp
+why is that FFS haha
+oh I see
+11:51
+aristid
+because it's so awesome! :)
+11:51
+irene-knapp
+I misunderstood that acronym but Urban Dictionary straightened me out lol
+yes :)
+11:51
+aristid
+lol
+11:52
+irene-knapp
+well that does seem nice.  so let me paraphrase the type signature to make sure I understand it?
+sigma takes implicit type parameters a and b, and explicit parameters A and B
+11:52
+aristid
+maybe the real pros like xplat or copumpkin or dolio could tell you an even more abstract and unified thing, tho
+11:52
+irene-knapp
+the type of the constructor is the smallest universe that contains the universes of a and b
+11:52
+aristid
+irene-knapp: no, a and b are not type parameters
+11:53
+aristid
+they are universe elvels
+11:53
+irene-knapp
+well, by all means ping them like you just did, but :)
+oh, gotcha
+11:53
+aristid
+*levels
+11:53
+irene-knapp
+yes I see that now
+so A and B are parameters which are types, but not necessarily at the same level
+11:54
+aristid
+yeah
+11:54
+irene-knapp
+now, it has just one constructor
+which is written as a comma
+11:54
+aristid
+or rather B is a function from A to a type :)
+11:54
+irene-knapp
+right, okay
+that being the dependent-ness
+11:54
+aristid
+yes.
+11:55
+irene-knapp
+so a, b, A, and B are the parameters of the TYPE constructor
+11:55
+aristid
+irene-knapp: i think you might benefit from taking a tour through the agda standard library types for inspiration
+11:55
+irene-knapp
+and comma, the value constructor, has the parameters proj1 and proj2
+probably, yes
+it's hard to understand that stuff without using it and I am kinda hoping people can just teach me what I need to know instead of having to spend weeks doing that haha :)
+11:56
+aristid
+yes proj1 and proj2 are the fields and parameters and accessors
+11:56
+irene-knapp
+…. fields and parameters and accessors ...
+11:57
+aristid
+_,_ has the type (x : A) -> B x -> \Gs A B
+11:57
+irene-knapp
+you mean that they're the names given to the parameters, and that those same names are also used to pull those parameters out of a value of type sigma something something, and furthermore are used in record syntax to construct such a value
+hm
+where did \Gs come from
+11:57
+aristid
+latex syntax for sigma
+11:57
+irene-knapp
+oh, gotcha
+11:57
+aristid
+or agda-mode syntax
+11:57
+irene-knapp
+okay
+right, I see
+11:58
+aristid
+proj1 has type \Gs A B -> A
+11:58
+irene-knapp
+because it's just a getter, not a lens or anything fancy.  that's fine.
+in my thing, I'm not defining functions anyway, I'm just defining structure.
+11:58
+aristid
+proj2 has type (r : \Gs A B) -> B (proj1 r)
+11:59
+irene-knapp
+so there is no getter in my thing, or rather the getter is the generic one that takes a name...
+11:59
+aristid
+irene-knapp: yeah, proj1 and proj2 are just getters
+11:59
+irene-knapp
+right i see
+11:59
+aristid
+you can also use them in agda's record pattern matching thing tho
+11:59
+irene-knapp
+oh, right, of course
+so I think I understand how sigma works and intend to rework my stuff to use it now
+12:00
+Friday, August 10, 2012
+12:00
+irene-knapp
+it's clear then
+12:00
+aristid
+so this is really a simple type, and very powerful, i think
+12:00
+irene-knapp
+that union and structure combine their powers in Captain-Planet-esque fashion to become sigma
+is array also included in that?
+what about named?
+12:00
+aristid
+array is just a list, isn't it?
+12:01
+irene-knapp
+well, yes, but I want it to be represented space-efficiently without having to complicate the mapping from types to representations
+that's why I initially thought it had to be its own thing
+but for example
+if I defined a type, in terms of sigma,
+array : int64 -> sigma blah blah blah
+12:02
+aristid
+perhaps a vector type still makes sense in terms of space efficiency
+12:02
+irene-knapp
+then that would be represented the same way as I have it now - I think
+12:02
+aristid
+but a vector type that takes the length as a type parameter
+12:02
+irene-knapp
+as a type parameter eh
+yes hm
+12:02
+aristid
+you can then use sigma to make a runtime-length vector from that
+12:02
+irene-knapp
+I'm thinking that it's possible to define such a vector type in terms of sigma
+12:02
+aristid
+sure
+but how efficient?
+another thing i'm not sure about is how sane it is to represent sum types with sigma
+12:03
+irene-knapp
+well, I'm not certain.  with my not-yet-fully-implemented representation rules, I think it would actually work out!
+the basic way the representation works, right
+is that it first has to know the type of the value
+and then it just has the value itself
+so you give it whatever information is needed to teach it the type, and then you give it the value, and then that's it
+there might be a constant overhead
+but it would be a few bytes only
+12:04
+aristid
+yeah but the type would blow up if you'd use a huge tuple built with sigma
+12:04
+irene-knapp
+yes, the type would be huge, right
+but the value wouldn't be!
+12:04
+aristid
+i guess if you use a function that generates the type?
+12:04
+irene-knapp
+exactly
+12:04
+aristid
+ok
+12:04
+aristid
+nasty irene-knapp
+12:04
+irene-knapp
+lol
+12:04irene-knapp	licks her lips wickedly
+12:05
+irene-knapp
+sum types = unions, right?
+12:05
+aristid
+damn, 6 am already
+data X = A T | B S
+this, more or less
+12:05
+irene-knapp
+I think sum types work out okay-ish.  I just have to add a rule that allows to represent values of the unit type in zero bytes.
+yes, so unions, then
+6am?  you're on the unfortunate side of the pond, my sympathies
+12:06
+aristid
+lol
+12:06
+irene-knapp
+it's "only" midnight here
+12:06
+aristid
+eastcoast?
+12:06
+irene-knapp
+yepyep
+well, the unfortunate side from the perspective of "zomg this conversation is interesting but I'm tired" lol
+this sigma business, this feels very important
+12:06
+aristid
+i think for the westcoasters it'd be only late evening now
+12:06
+irene-knapp
+I think I have to rework my API to use it instead
+yes, it would be 9pm
+and then try to implement it and see if it runs into snags
+I'm fairly sure this is going to work out :D
+12:07
+aristid
+right, although perhaps on the whole a separate representation for sum types might still make sense
+but you can kill tuples and records with it
+12:07
+irene-knapp
+yes, indeed I can
+well, I didn't have tuples actually
+I figured a tuple was a structure with anonymous fields really
+12:08
+aristid
+not at all?
+12:08
+irene-knapp
+I was looking to make a minimal set of basic compounds, but I didn't know about sigma yet :)
+12:08
+aristid
+well that's how agda implements sigma
+12:08
+irene-knapp
+gotcha
+12:09
+aristid
+irene-knapp: and then there's this book: http://www.cs.kent.ac.uk/people/staff/sjt/TTFP/
+12:09
+irene-knapp
+ah hmm
+a third Simon
+cool, it's free
+12:10
+aristid
+there's no lack of simons
+12:10
+irene-knapp
+indeed
+with my gender transition and all that, I'm vacating the very valuable "Dan" namespace lol.  as copumpkin (also a Dan) pointed out to my great amusement.
+12:11irene-knapp	saves this book to her iCloud reading list for tomorrow's commute
+12:11
+aristid
+ok, good night.
+12:11
+irene-knapp
+yes, goodnight!  and thanks again
+12:12
+aristid
+i don't think you'll be able to read the whole thing in a single commute. i haven't actually finished it (but i also haven't been reading it at all for a few months now)
+12:12
+irene-knapp
+yes, I won't, but hey :)
+I also have to pick a friend up at the airport tomorrow, it'll be good for that too
