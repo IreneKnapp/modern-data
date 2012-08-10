@@ -158,9 +158,7 @@ enum modern_node_type {
     float128_value_modern_node_type,
     utf8_value_modern_node_type,
     blob_value_modern_node_type,
-    array_value_modern_node_type,
-    union_value_modern_node_type,
-    structure_value_modern_node_type,
+    sigma_value_modern_node_type,
     named_value_modern_node_type,
     int8_type_modern_node_type,
     int16_type_modern_node_type,
@@ -175,10 +173,7 @@ enum modern_node_type {
     float128_type_modern_node_type,
     utf8_type_modern_node_type,
     blob_type_modern_node_type,
-    sigma_type_modern_node_type, // new
-    array_type_modern_node_type, // goes away
-    union_type_modern_node_type, // goes away
-    structure_type_modern_node_type, // goes away
+    sigma_type_modern_node_type,
     named_type_modern_node_type,
     universe_type_modern_node_type,
     lambda_modern_node_type,
@@ -253,26 +248,9 @@ extern uint8_t *modern_node_get_utf8_data_piece
 extern size_t modern_node_get_blob_bytes(modern *value);
 extern uint8_t *modern_node_get_blob_data_piece
   (modern *value, size_t offset, size_t bytes);
-extern uint64_t modern_node_get_array_n_items(modern *value);
-extern modern *modern_node_get_array_item_node(modern *value, uint64_t index);
-extern modern *modern_node_get_union_field_name(modern *value);
-extern modern *modern_node_get_union_field_node
-  (modern *value, struct modern_hash *field);
-extern modern *modern_node_get_structure_field_node
-  (modern *value, struct modern_hash *field);
-extern modern *modern_node_get_named_node
-  (modern *value, struct modern_hash *name);
-extern modern *modern_node_get_array_type_content_type(modern *value);
-extern uint64_t modern_node_get_union_type_n_fields(modern *value);
-extern struct modern_hash *modern_node_get_union_type_field_name
-  (modern *value, uint64_t index);
-extern modern *modern_node_get_union_type_field_type
-  (modern *value, uint64_t index);
-extern uint64_t modern_node_get_structure_type_n_fields(modern *value);
-extern struct modern_hash *modern_node_get_structure_type_field_name
-  (modern *value, uint64_t index);
-extern modern *modern_node_get_structure_type_field_type
-  (modern *value, uint64_t index);
+extern struct modern_hash *modern_node_get_sigma_field(modern *value);
+extern struct modern_hash *modern_node_get_sigma_value(modern *value);
+extern modern *modern_node_get_sigma_successor(modern *value);
 extern struct modern_hash *modern_node_get_named_type_name(modern *value);
 extern modern *modern_node_get_named_type_content_type(modern *value);
 extern modern *modern_node_get_lambda_content(modern *value);
