@@ -33,6 +33,8 @@ struct modern_stream {
       ();
     void (*modern_stream_start)
       (void *processor_state, void *stream_state);
+    void (*modern_stream_type_magic_number)
+      (void *processor_state, void *stream_state);
     void (*modern_stream_name_definition)
       (void *processor_state, void *stream_state,
        uint8_t *data, size_t length);
@@ -64,20 +66,10 @@ struct modern_stream {
       (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_blob)
       (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_array_is_next)
+    void (*modern_stream_type_definition_function_is_next)
       (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_union_start)
-      (void *processor_state, void *stream_state, struct modern_hash *name);
-    void (*modern_stream_type_definition_union_field_is_next)
+    void (*modern_stream_type_definition_sigma_is_next)
       (void *processor_state, void *stream_state, struct modern_hash *field);
-    void (*modern_stream_type_definition_union_end)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_structure_start)
-      (void *processor_state, void *stream_state, struct modern_hash *name);
-    void (*modern_stream_type_definition_structure_field_is_next)
-      (void *processor_state, void *stream_state, struct modern_hash *field);
-    void (*modern_stream_type_definition_structure_end)
-      (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_named_is_next)
       (void *processor_state, void *stream_state, struct modern_hash *name);
     void (*modern_stream_type_definition_universe)
@@ -357,22 +349,32 @@ extern void modern_node_set_structure
 extern void modern_node_set_named_value
   (modern *node, modern *type, modern *value);
 
-extern void modern_input_stream_memory
+extern void *modern_input_stream_memory
   (modern_autorelease_pool *pool,
-   struct modern_stream *stream, void *stream_state,
+   struct modern_stream *stream,
    uint8_t *data, size_t length);
-extern void modern_input_stream_file
+extern void *modern_input_stream_file
   (modern_autorelease_pool *pool,
-   struct modern_stream *stream, void *stream_state,
+   struct modern_stream *stream,
    FILE *file);
-extern void modern_input_stream_fd
+extern void *modern_input_stream_fd
   (modern_autorelease_pool *pool,
-   struct modern_stream *stream, void *stream_state,
+   struct modern_stream *stream,
    int fd);
-extern void modern_input_stream_vfile
+extern void *modern_input_stream_vfile
   (modern_autorelease_pool *pool,
-   struct modern_stream *stream, void *stream_state,
+   struct modern_stream *stream,
    struct modern_vfile *vfile, void *vfile_state);
+
+extern void modern_input_stream_step
+  (struct modern_stream *stream, void *processor_state, void **stream_state);
+extern void modern_input_stream_run
+  (struct modern_stream *stream, void *processor_state, void **stream_state);
+extern void modern_input_stream_do_all
+  (struct modern_stream *stream, void *processor_state);
+
+extern void modern_input_stream_finalize
+  (void *processor_state);
 
 extern void *modern_output_stream_memory_buffer
   (modern_autorelease_pool *pool,
