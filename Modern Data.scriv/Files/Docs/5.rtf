@@ -1,0 +1,50 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187
+{\fonttbl\f0\fnil\fcharset0 Cochin;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f0\fs24 \cf0 For C, everything is effectively like Data.Dynamic.  For Haskell there will be a GADT and an existential.\
+\
+Node types \'93lambda\'94, \'93apply\'94, \'93index\'94 (as in De Bruijn), and \'93family\'94 (as in inductive type family).\
+\
+Things like void (*modern_stream_type_definition_int8)(void *processor, void *context) are callbacks invoked when type IDs are read.  All the functions in that struct are callbacks that are invoked on things that happen during streaming parsing.  The API for streaming generation is the same - except the client code is the consumer of the struct and the caller of these functions, rather than the provider of them.  Note that using the streaming API it is possible to construct invalid output; if this is a concern the object-model API should be used instead.\
+\
+To make things with cycles, what happens behind the scenes is\'85  Well, it\'92s not behind the scenes when you\'92re doing streaming mode, but in object-model mode, it uses lambdas and applies.  The \'93prelude\'94 has the S and K combinators already defined, which isn\'92t strictly necessary because you could define them yourself, but it\'92s a convenience.\
+\
+The Lisp-like syntax is the debug format, for use in, say, standards documents that describe APIs in which the units of data interchange are values in Modern Data.\
+\
+So a point I\'92m not totally sure on is that I think I just need one version of lambda and one version of apply - as opposed to one of each for values and another of each for types.\
+\
+Recursive types, such as the simple tree type (in Haskell notation) data Tree = Internal (Tree a) (Tree a) | Leaf a, are defined as cyclic structures.  This avoids the need to refer to anything by name, ever, although the system does in fact support names.\
+\
+This is on the type level but it\'92s dependent, so the machinery is the same for types as for values.\
+\
+I am unclear on whether to implement the set hierarchy, or type-in-type.  I know that I want to call it \'93universe\'94, because \'93set\'94 is a poor name suggestive of set theory rather than type theory.  If I do use the set hierarchy, I expect to have a finite limit, probably 64 bits, on how high one can go.  This is not really any more of a wart than a limit placed on how large an array can be.\
+\
+With both lambdas and applies present, in principle full computation is possible.\
+\
+Some parts of this are simply matters of good C practice than of dependent types.  For example, the use of vfile structures for when you want to read a Modern Data value that\'92s in a zipfile.\
+\
+You can basically use Modern Data for anything you presently do with XML or HTML or JSON or whatnot, except you can also communicate types across it.  So schemas are built in.  XML schema description is a bugbear that they\'92ve had a lot of failed attempts at.  You can \'93teach\'94 the other end how to at least process your thing, even if it doesn\'92t know your types in advance, by sending a type-as-data across the wire.  You can write helper utilities that only understand some of the types and not the rest, to make \'93map\'94 and other higher-order functions.\
+\
+The original motivator was because I hate using text as the format for shell commands.\
+\
+There should be all sorts of applications.  I think it applies to the functional-database problem, too, even.\
+\
+In principle you could write webpages in it.\
+\
+You could implement a programming \'93language\'94 in it.  The source code would be simply a data structure, instead of being text.  If you like text, you can treat the textual presentation as simply a formatting layer.\
+\
+Once the basic library is working I\'92m going to make a generic graphical editor for this, for the Mac.\
+\
+You can use it for network protocols, too; XMPP/Jabber is similar but using XML as the self-describing data format.\
+\
+The type system exposes a lot of very low-level types.  I intend to build more higher-level types on top, but the goal at this stage is to provide all the primitives.  After that, I can play around and stuff.  I don\'92t plan for the higher-level types to be part of the \'93standard\'94, because that wouldn\'92t buy anything - they don\'92t need to be agreed upon in advance to use them, since the schema is expressible in the system itself.\
+\
+For aggregate types, I originally broke it down to array (one-dimensional, nothing fancy with the indices; anything more complicated can be built on top); union, which assigns a name to each field it may contain, and exactly one of those fields is present in an actual value; structure, which also assigns a name to each field, but all the fields are present.  Structures, notably, did not have field orders; that is, two structure types with the same field names and types were equivalent regardless of the order the fields appeared in.  And the last aggregate type is \'93named\'94.  Notice that in array, union, and structure, the aggregate doesn\'92t have its own name, which makes anonymous ones possible.  The capability is separated out.\
+\
+For text the type is UTF-8.  There are no types for other character sets or encodings, because that\'92s the right one 99% of the time.\
+\
+There\'92s blob, too, so if you need to embed non-Modern data in some known format, you can just make a blob out of it.\
+\
+However, the type system has been simplified now - instead of array, union, and structure, there\'92s just sigma.}
