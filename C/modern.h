@@ -249,7 +249,7 @@ extern size_t modern_node_get_blob_bytes(modern *value);
 extern uint8_t *modern_node_get_blob_data_piece
   (modern *value, size_t offset, size_t bytes);
 extern struct modern_hash *modern_node_get_sigma_field(modern *value);
-extern struct modern_hash *modern_node_get_sigma_value(modern *value);
+extern modern *modern_node_get_sigma_value(modern *value);
 extern modern *modern_node_get_sigma_successor(modern *value);
 extern struct modern_hash *modern_node_get_named_type_name(modern *value);
 extern modern *modern_node_get_named_type_content_type(modern *value);
