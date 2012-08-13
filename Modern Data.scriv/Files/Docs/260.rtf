@@ -1,0 +1,14 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187
+{\fonttbl\f0\fnil\fcharset0 Cochin;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li11\fi-1\pardirnatural
+
+\f0\fs24 \cf0 In Modern Data, the fundamental in-memory datatype is the \'93modern node\'94, which is a representation of, loosely, either a value or a type.  If we wish to specify further, we may occasionally refer to a \'93modern type\'94 or \'93modern value\'94, but these concepts do not map to actual host-language datatypes; only \'93modern node\'94 does.\
+\
+The operations on a modern node are serialization and deserialization.  Serialization is of a stream of modern nodes in some \'93modern context\'94, and produces a stream of bytes.  Deserialization is of a stream of bytes in some modern context, and produces a stream of modern nodes.\
+\
+Although simple applications which merely wish to exchange and act on data need never use anything but the default context, it is nonetheless a concept worth understanding.  The context is internally a hash table of modern types (and occasionally modern values).  The hash key is determined in a way that captures the notion of type equality, by placing the modern node in an internal canonical form and computing a hash function of that.  (Specifically, the Murmur 3 hash is used, in its 64-bit-little-endian variant.)  Any modern node which is in the hash table is \'93in scope\'94 in that context.\
+\
+Importantly, a modern type must be in scope in the given context before a value of that type can be serialized or deserialized.  The high-level \'93node-based\'94 portion of the library will check whether a value\'92s type is in context when serializing, and emit additional instructions which bring it into context if it is not, mutating the context object which it is passed to make note of the fact.  Similarly, when deserializing, if a value\'92s type is not in context, an error is produced and processing halts.  (To avoid security holes caused by different implementations responding to errors in different ways, processing is specified to always halt immediately upon the first error encountered.)\
+\
+The low-level \'93stream-based\'94 portion of the library does no such checking, as it tracks very little internal state, leaving that task to the client code.  The client code is thus responsible for ensuring that types are in context before they are used, both when serializing and when deserializing.}

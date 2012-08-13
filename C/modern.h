@@ -87,6 +87,12 @@ struct modern_stream {
       (void *processor_state, void *stream_state, int64_t value);
     void (*modern_stream_nat8)
       (void *processor_state, void *stream_state, uint8_t value);
+    void (*modern_stream_nat16)
+      (void *processor_state, void *stream_state, uint16_t value);
+    void (*modern_stream_nat32)
+      (void *processor_state, void *stream_state, uint32_t value);
+    void (*modern_stream_nat64)
+      (void *processor_state, void *stream_state, uint64_t value);
     void (*modern_stream_float32)
       (void *processor_state, void *stream_state, float value);
     void (*modern_stream_float64)
@@ -193,6 +199,7 @@ extern void modern_autorelease
   (modern_autorelease_pool *pool, void *retainable);
 
 extern modern_context *modern_make_initial_context();
+extern modern_context *modern_copy_context(modern_context *context);
 extern int modern_get_in_context(modern_context *context, modern *node);
 extern void modern_add_to_context(modern_context *context, modern *node);
 extern modern *modern_get_from_context
@@ -249,7 +256,6 @@ extern uint8_t *modern_node_get_utf8_data_piece
 extern size_t modern_node_get_blob_bytes(modern *value);
 extern uint8_t *modern_node_get_blob_data_piece
   (modern *value, size_t offset, size_t bytes);
-extern struct modern_hash *modern_node_get_sigma_field(modern *value);
 extern modern *modern_node_get_sigma_value(modern *value);
 extern modern *modern_node_get_sigma_successor(modern *value);
 extern struct modern_hash *modern_node_get_named_type_name(modern *value);
