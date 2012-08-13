@@ -69,7 +69,8 @@ struct modern_stream {
     void (*modern_stream_type_definition_function_is_next)
       (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_sigma_is_next)
-      (void *processor_state, void *stream_state, struct modern_hash *field);
+      (void *processor_state, void *stream_state,
+       struct modern_hash *a, struct modern_hash *b);
     void (*modern_stream_type_definition_named_is_next)
       (void *processor_state, void *stream_state, struct modern_hash *name);
     void (*modern_stream_type_definition_universe)
