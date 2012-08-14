@@ -12,7 +12,7 @@
             <Title>modern_node_get_int8_type</Title>
             <Text>modern *
 modern_node_get_int8_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="34">
             <Title>modern_stream_type_definition_named_is_next</Title>
@@ -26,7 +26,8 @@ modern_node_get_int8_type
             <Title>modern_node_get_utf8_data_piece</Title>
             <Text>uint8_t *
 modern_node_get_utf8_data_piece
-(modern *value,
+(struct modern_error_handler *error_handler,
+ modern *value,
  size_t offset,
  size_t bytes);</Text>
         </Document>
@@ -74,7 +75,8 @@ modern_get_from_context
             <Title>modern_node_get_blob_bytes</Title>
             <Text>size_t
 modern_node_get_blob_bytes
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="36">
             <Title>modern_stream_type</Title>
@@ -118,7 +120,8 @@ modern_node_get_blob_bytes
             <Title>modern_node_get_blob_data_piece</Title>
             <Text>uint8_t *
 modern_node_get_blob_data_piece
-(modern *value,
+(struct modern_error_handler *error_handler,
+ modern *value,
  size_t offset,
  size_t bytes);</Text>
         </Document>
@@ -149,7 +152,8 @@ modern_get_memory_allocating_vfile
             <Title>modern_node_set_utf8</Title>
             <Text>void
 modern_node_set_utf8
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  uint8_t *data);</Text>
         </Document>
         <Document ID="44">
@@ -206,7 +210,8 @@ modern_get_file_vfile
             <Title>modern_node_set_blob</Title>
             <Text>void
 modern_node_set_blob
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  uint8_t *data,
  size_t bytes);</Text>
         </Document>
@@ -223,7 +228,7 @@ modern_node_set_blob
             <Title>modern_node_get_int16_type</Title>
             <Text>modern *
 modern_node_get_int16_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="51">
             <Title>modern_stream_array_start</Title>
@@ -236,7 +241,8 @@ modern_node_get_int16_type
             <Title>modern_node_get_sigma_value</Title>
             <Text>modern *
 modern_node_get_sigma_value
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="52">
             <Title>modern_stream_array_end</Title>
@@ -294,13 +300,14 @@ modern_node_set_array
             <Title>modern_node_get_int32_type</Title>
             <Text>modern *
 modern_node_get_int32_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="147">
             <Title>modern_node_get_sigma_successor</Title>
             <Text>modern *
 modern_node_get_sigma_successor
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="54">
             <Title>modern_stream_structure_start</Title>
@@ -360,7 +367,7 @@ modern_node_set_union
             <Title>modern_node_get_int64_type</Title>
             <Text>modern *
 modern_node_get_int64_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="61">
             <Title>modern_stream_type_family_is_next</Title>
@@ -374,7 +381,8 @@ modern_node_get_int64_type
             <Title>modern_node_get_named_type_name</Title>
             <Text>struct modern_hash *
 modern_node_get_named_type_name
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="56">
             <Title>modern_stream_structure_end</Title>
@@ -419,7 +427,7 @@ modern_node_set_structure
             <Title>modern_node_get_nat8_type</Title>
             <Text>modern *
 modern_node_get_nat8_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="57">
             <Title>modern_stream_named_value_is_next</Title>
@@ -433,7 +441,8 @@ modern_node_get_nat8_type
             <Title>modern_node_get_named_type_content_type</Title>
             <Text>modern *
 modern_node_get_named_type_content_type
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="63">
             <Title>modern_stream_finalize</Title>
@@ -462,13 +471,20 @@ modern_get_documentation_stream
             <Title>modern_node_set_named_value</Title>
             <Text>void
 modern_node_set_named_value
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  modern *type,
  modern *value);</Text>
         </Document>
         <Document ID="64">
             <Title>Virtual Files</Title>
             <Text>struct modern_vfile {
+    …
+};</Text>
+        </Document>
+        <Document ID="270">
+            <Title>Error handlers</Title>
+            <Text>struct modern_error_handler {
     …
 };</Text>
         </Document>
@@ -483,6 +499,12 @@ modern_node_set_named_value
             <Title>int32_value_modern_node_type</Title>
             <Text>int32_value_modern_node_type = 3,</Text>
         </Document>
+        <Document ID="271">
+            <Title>modern_error_handler_memory</Title>
+            <Text>void
+(*modern_error_handler_memory)
+(size_t requested_size);</Text>
+        </Document>
         <Document ID="65">
             <Title>modern_vfile_read</Title>
             <Text>ssize_t
@@ -493,6 +515,12 @@ modern_node_set_named_value
         </Document>
         <Document ID="246">
             <Title>Types</Title>
+        </Document>
+        <Document ID="272">
+            <Title>modern_error_handler_retain_count_overflow</Title>
+            <Text>void
+(*modern_error_handler_retain_count_overflow)
+(void *retainable);</Text>
         </Document>
         <Document ID="71">
             <Title>int64_value_modern_node_type</Title>
@@ -509,9 +537,29 @@ modern_node_set_named_value
  uint8_t *buffer,
  size_t length);</Text>
         </Document>
+        <Document ID="273">
+            <Title>modern_error_handler_retain_count_underflow</Title>
+            <Text>void
+(*modern_error_handler_retain_count_underflow)
+(void *retainable);</Text>
+        </Document>
+        <Document ID="274">
+            <Title>modern_error_handler_double_autorelease</Title>
+            <Text>void
+(*modern_error_handler_double_autorelease)
+(void *retainable);</Text>
+        </Document>
         <Document ID="72">
             <Title>nat8_value_modern_node_type</Title>
             <Text>nat8_value_modern_node_type = 5,</Text>
+        </Document>
+        <Document ID="275">
+            <Title>modern_error_handler_type_mismatch</Title>
+            <Text>void
+(*modern_error_handler_type_mismatch)
+(modern *expected,
+ modern *actual);
+</Text>
         </Document>
         <Document ID="67">
             <Title>Node Types</Title>
@@ -687,13 +735,16 @@ modern_node_make_structure_type
             <Title>modern_node_make_nat32</Title>
             <Text>modern *
 modern_node_make_nat32
-(uint32_t value);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ uint32_t value);</Text>
         </Document>
         <Document ID="130">
             <Title>modern_node_get_int8</Title>
             <Text>int8_t
 modern_node_get_int8
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="100">
             <Title>apply_modern_node_type</Title>
@@ -703,20 +754,25 @@ modern_node_get_int8
             <Title>modern_node_make_named_type</Title>
             <Text>modern *
 modern_node_make_named_type
-(struct modern_hash *name,
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ struct modern_hash *name,
  modern *content_type);</Text>
         </Document>
         <Document ID="161">
             <Title>modern_node_make_nat64</Title>
             <Text>modern *
 modern_node_make_nat64
-(uint64_t value);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ uint64_t value);</Text>
         </Document>
         <Document ID="131">
             <Title>modern_node_get_int16</Title>
             <Text>int16_t
 modern_node_get_int16
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="101">
             <Title>Memory management</Title>
@@ -724,69 +780,86 @@ modern_node_get_int16
         <Document ID="192">
             <Title>modern_node_get_universe_type</Title>
             <Text>modern *
-modern_node_get_universe_type
-();</Text>
+modern_node_make_universe_type
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ uint64_t level);</Text>
         </Document>
         <Document ID="162">
             <Title>modern_node_make_float32</Title>
             <Text>modern *
 modern_node_make_float32
-(float value);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ float value);</Text>
         </Document>
         <Document ID="132">
             <Title>modern_node_get_int32</Title>
             <Text>int32_t
 modern_node_get_int32
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="102">
             <Title>modern_make_autorelease_pool</Title>
             <Text>modern_autorelease_pool *
 modern_make_autorelease_pool
-(struct modern_allocator *allocator);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator);</Text>
         </Document>
         <Document ID="193">
             <Title>modern_node_make_lambda</Title>
             <Text>modern *
 modern_node_make_lambda
-(modern *content);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ modern *content);</Text>
         </Document>
         <Document ID="163">
             <Title>modern_node_make_float64</Title>
             <Text>modern *
 modern_node_make_float64
-(double value);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ double value);</Text>
         </Document>
         <Document ID="133">
             <Title>modern_node_get_int64</Title>
             <Text>int64_t
 modern_node_get_int64
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="103">
             <Title>modern_autorelease_pool_release</Title>
             <Text>void
 modern_autorelease_pool_release
-(modern_autorelease_pool *pool);</Text>
+(struct modern_error_handler *error_handler,
+ modern_autorelease_pool *pool);</Text>
         </Document>
         <Document ID="194">
             <Title>modern_node_make_apply</Title>
             <Text>modern *
 modern_node_make_apply
-(modern *left,
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ modern *left,
  modern *right);</Text>
         </Document>
         <Document ID="164">
             <Title>modern_node_make_float128</Title>
             <Text>modern *
 modern_node_make_float128
-(long double value);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ long double value);</Text>
         </Document>
         <Document ID="134">
             <Title>modern_node_get_nat8</Title>
             <Text>uint8_t
 modern_node_get_nat8
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="260">
             <Title>Semantics</Title>
@@ -816,7 +889,8 @@ Of course, it is expected that sets of types for some particular purpose will be
             <Title>modern_autorelease_pool_get_allocator</Title>
             <Text>struct modern_allocator *
 modern_autorelease_pool_get_allocator
-(modern_autorelease_pool *pool);</Text>
+(struct modern_error_handler *error_handler,
+ modern_autorelease_pool *pool);</Text>
         </Document>
         <Document ID="230">
             <Title>modern_output_stream_memory_allocating_result</Title>
@@ -829,32 +903,45 @@ modern_output_stream_memory_allocating_result
             <Title>modern_node_make_type_index</Title>
             <Text>modern *
 modern_node_make_type_index
-(uint64_t index);</Text>
+(struct modern_error_handler *error_handler,
+ uint64_t index);</Text>
         </Document>
         <Document ID="200">
             <Title>modern_node_set_int16</Title>
             <Text>void
 modern_node_set_int16
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  int16_t value);</Text>
         </Document>
         <Document ID="165">
             <Title>modern_node_make_utf8</Title>
             <Text>modern *
 modern_node_make_utf8
-(uint8_t *data);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ uint8_t *data);</Text>
         </Document>
         <Document ID="135">
             <Title>modern_node_get_nat16</Title>
             <Text>uint16_t
 modern_node_get_nat16
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
+        </Document>
+        <Document ID="261">
+            <Title>modern_node_make_sigma_type</Title>
+            <Text>modern *
+modern_node_make_sigma_type
+(struct modern_error_handler *error_handler,
+ modern *field_type, modern *successor);</Text>
         </Document>
         <Document ID="105">
             <Title>modern_retain</Title>
             <Text>void
 modern_retain
-(void *retainable);</Text>
+(struct modern_error_handler *error_handler,
+ void *retainable);</Text>
         </Document>
         <Document ID="231">
             <Title>modern_output_stream_file</Title>
@@ -867,34 +954,51 @@ modern_output_stream_file
             <Title>modern_node_make_type_family</Title>
             <Text>modern *
 modern_node_make_type_family
-(uint64_t n_items,
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ uint64_t n_items,
  modern **types);</Text>
         </Document>
         <Document ID="201">
             <Title>modern_node_set_int32</Title>
             <Text>void
 modern_node_set_int32
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  int32_t value);</Text>
         </Document>
         <Document ID="166">
             <Title>modern_node_make_blob</Title>
             <Text>modern *
 modern_node_make_blob
-(uint8_t *data,
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ uint8_t *data,
  size_t bytes);</Text>
         </Document>
         <Document ID="136">
             <Title>modern_node_get_nat32</Title>
             <Text>uint32_t
 modern_node_get_nat32
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
+        </Document>
+        <Document ID="262">
+            <Title>modern_node_make_sigma</Title>
+            <Text>modern *
+modern_node_make_sigma
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ modern *type,
+ modern *field_value,
+ modern *successor_value);</Text>
         </Document>
         <Document ID="106">
             <Title>modern_release</Title>
             <Text>void
 modern_release
-(void *retainable);</Text>
+(struct modern_error_handler *error_handler,
+ void *retainable);</Text>
         </Document>
         <Document ID="232">
             <Title>modern_output_stream_fd</Title>
@@ -910,7 +1014,8 @@ modern_output_stream_fd
             <Title>modern_node_set_int64</Title>
             <Text>void
 modern_node_set_int64
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  int64_t value);</Text>
         </Document>
         <Document ID="167">
@@ -924,13 +1029,22 @@ modern_node_make_array
             <Title>modern_node_get_nat64</Title>
             <Text>uint64_t
 modern_node_get_nat64
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
+        </Document>
+        <Document ID="263">
+            <Title>modern_node_get_universe_type_level</Title>
+            <Text>uint64_t
+modern_node_get_universe_type_level
+(struct modern_error_handler *error_handler,
+ modern *value_in);</Text>
         </Document>
         <Document ID="107">
             <Title>modern_autorelease</Title>
             <Text>void
 modern_autorelease
-(modern_autorelease_pool *pool,
+(struct modern_error_handler *error_handler,
+ modern_autorelease_pool *pool,
  void *retainable);</Text>
         </Document>
         <Document ID="233">
@@ -948,7 +1062,8 @@ modern_output_stream_vfile
             <Title>modern_node_set_nat8</Title>
             <Text>void
 modern_node_set_nat8
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  uint8_t value);</Text>
         </Document>
         <Document ID="168">
@@ -963,7 +1078,11 @@ modern_node_make_union
             <Title>modern_node_get_float32</Title>
             <Text>float
 modern_node_get_float32
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
+        </Document>
+        <Document ID="264">
+            <Title>Library instances</Title>
         </Document>
         <Document ID="108">
             <Title>Contexts</Title>
@@ -975,14 +1094,16 @@ modern_node_get_float32
             <Title>modern_node_set_int8</Title>
             <Text>void
 modern_node_set_int8
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  int8_t value);</Text>
         </Document>
         <Document ID="204">
             <Title>modern_node_set_nat16</Title>
             <Text>void
 modern_node_set_nat16
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  uint16_t value);</Text>
         </Document>
         <Document ID="169">
@@ -998,7 +1119,15 @@ modern_node_make_structure
             <Title>modern_node_get_float64</Title>
             <Text>double
 modern_node_get_float64
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
+        </Document>
+        <Document ID="265">
+            <Title>modern_library_initialize</Title>
+            <Text>modern_library *
+modern_library_initalize
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator);</Text>
         </Document>
         <Document ID="109">
             <Title>modern_make_initial_context</Title>
@@ -1018,8 +1147,15 @@ modern_compute_hash
             <Title>modern_node_set_nat32</Title>
             <Text>void
 modern_node_set_nat32
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  uint32_t value);</Text>
+        </Document>
+        <Document ID="266">
+            <Title>modern_library_get_error_handler</Title>
+            <Text>struct modern_error_handler *
+modern_library_get_error_handler
+(modern_library *library);</Text>
         </Document>
         <Document ID="236">
             <Title>modern_compute_child_hash</Title>
@@ -1034,7 +1170,8 @@ modern_compute_child_hash
             <Title>modern_node_set_nat64</Title>
             <Text>void
 modern_node_set_nat64
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  uint64_t value);</Text>
         </Document>
         <Document ID="3">
@@ -1060,6 +1197,12 @@ Modern Data, unlike other self-describing formats, is capable of representing an
 The Modern Data base library is written in C.  Not because it’s more suitable for the task than other languages would be - it’s not.  Rather, functional languages tend to have runtime systems (largely consisting of garbage collectors) which make the scenario of deploying a library to be linked against from other languages more difficult.  Obviously there will be bindings written in functional languages, as functional programming is the paradigm best equipped to take advantage of Modern Data’s features, but the library will always be in a system language, so that it can easily be linked against from as many other languages as possible.  Care has been taken to play nicely with foreign-function interfaces, which cannot always use the full capabilities of the C ABI.
 
 Please, come on in - and enjoy the type system!</Text>
+        </Document>
+        <Document ID="267">
+            <Title>modern_library_get_allocator</Title>
+            <Text>struct modern_allocator *
+modern_library_get_allocator
+(modern_library *library);</Text>
         </Document>
         <Document ID="5">
             <Title>Scrawlings</Title>
@@ -1119,7 +1262,8 @@ modern_get_initial_namespace_hash
             <Title>modern_node_set_float32</Title>
             <Text>void
 modern_node_set_float32
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  float value);</Text>
         </Document>
         <Document ID="6">
@@ -1144,12 +1288,20 @@ Note that this is true in all the versions of the library for non-functional lan
             <Title>modern_node_set_float64</Title>
             <Text>void
 modern_node_set_float64
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  double value);</Text>
         </Document>
         <Document ID="9">
             <Title>Modern autorelease pools</Title>
             <Text>typedef void modern_autorelease_pool;</Text>
+        </Document>
+        <Document ID="269">
+            <Title>modern_library_finalize</Title>
+            <Text>void
+modern_library_finalize
+(modern_library *library);
+</Text>
         </Document>
         <Document ID="239">
             <Title>modern_get_memory_buffer_vfile</Title>
@@ -1161,20 +1313,22 @@ modern_get_memory_buffer_vfile
             <Title>modern_node_set_float128</Title>
             <Text>void
 modern_node_set_float128
-(modern *node,
+(struct modern_error_handler *error_handler,
+ modern *node,
  long double value);</Text>
         </Document>
         <Document ID="180">
             <Title>modern_node_get_nat16_type</Title>
             <Text>modern *
 modern_node_get_nat16_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="150">
             <Title>modern_node_get_lambda_content</Title>
             <Text>modern *
 modern_node_get_lambda_content
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="120">
             <Title>modern_serialize_memory_buffer</Title>
@@ -1189,13 +1343,14 @@ modern_serialize_memory_buffer
             <Title>modern_node_get_nat32_type</Title>
             <Text>modern *
 modern_node_get_nat32_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="151">
             <Title>modern_node_get_apply_left</Title>
             <Text>modern *
 modern_node_get_apply_left
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="121">
             <Title>modern_serialize_memory_allocating</Title>
@@ -1210,13 +1365,14 @@ modern_serialize_memory_allocating
             <Title>modern_node_get_nat64_type</Title>
             <Text>modern *
 modern_node_get_nat64_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="152">
             <Title>modern_node_get_apply_right</Title>
             <Text>modern *
 modern_node_get_apply_right
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="122">
             <Title>modern_serialize_file</Title>
@@ -1230,7 +1386,7 @@ modern_serialize_file
             <Title>modern_node_get_float32_type</Title>
             <Text>modern *
 modern_node_get_float32_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="153">
             <Title>Construction</Title>
@@ -1247,13 +1403,15 @@ modern_serialize_fd
             <Title>modern_node_get_float64_type</Title>
             <Text>modern *
 modern_node_get_float64_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="154">
             <Title>modern_node_make_int8</Title>
             <Text>modern *
 modern_node_make_int8
-(int8_t value);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ int8_t value);</Text>
         </Document>
         <Document ID="124">
             <Title>modern_serialize_vfile</Title>
@@ -1283,13 +1441,15 @@ modern_input_stream_vfile
             <Title>modern_node_get_float128_type</Title>
             <Text>modern *
 modern_node_get_float128_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="155">
             <Title>modern_node_make_int16</Title>
             <Text>modern *
 modern_node_make_int16
-(int16_t value);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ int16_t value);</Text>
         </Document>
         <Document ID="125">
             <Title>modern_serialize_output_stream</Title>
@@ -1310,13 +1470,15 @@ modern_serialize_output_stream
             <Title>modern_node_get_utf8_type</Title>
             <Text>modern *
 modern_node_get_utf8_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="156">
             <Title>modern_node_make_int32</Title>
             <Text>modern *
 modern_node_make_int32
-(int32_t value);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ int32_t value);</Text>
         </Document>
         <Document ID="126">
             <Title>Node-based object model</Title>
@@ -1339,13 +1501,15 @@ modern_input_stream_step
             <Title>modern_node_get_blob_type</Title>
             <Text>modern *
 modern_node_get_blob_type
-();</Text>
+(struct modern_error_handler *error_handler);</Text>
         </Document>
         <Document ID="157">
             <Title>modern_node_make_int64</Title>
             <Text>modern *
 modern_node_make_int64
-(int64_t value);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ int64_t value);</Text>
         </Document>
         <Document ID="127">
             <Title>Reading</Title>
@@ -1373,13 +1537,16 @@ modern_node_make_array_type
             <Title>modern_node_make_nat8</Title>
             <Text>modern *
 modern_node_make_nat8
-(uint8_t value);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ uint8_t value);</Text>
         </Document>
         <Document ID="128">
             <Title>modern_node_get_node_type</Title>
             <Text>enum modern_node_type
 modern_node_get_node_type
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="254">
             <Title>Predefined Hashes</Title>
@@ -1403,13 +1570,16 @@ modern_node_make_union_type
             <Title>modern_node_make_nat16</Title>
             <Text>modern *
 modern_node_make_nat16
-(uint16_t value);</Text>
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ uint16_t value);</Text>
         </Document>
         <Document ID="129">
             <Title>modern_node_get_value_type</Title>
             <Text>modern *
 modern_node_get_value_type
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="255">
             <Title>Untitled</Title>
@@ -1586,14 +1756,17 @@ modern_output_stream_memory_allocating
             <Title>modern_node_make_named_value</Title>
             <Text>modern *
 modern_node_make_named_value
-(modern *type,
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ modern *type,
  modern *value);</Text>
         </Document>
         <Document ID="140">
             <Title>modern_node_get_float128</Title>
             <Text>long double
 modern_node_get_float128
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="25">
             <Title>modern_stream_type_definition_nat32</Title>
@@ -1637,7 +1810,8 @@ modern_get_in_context
             <Title>modern_node_get_utf8_bytes</Title>
             <Text>size_t
 modern_node_get_utf8_bytes
-(modern *value);</Text>
+(struct modern_error_handler *error_handler,
+ modern *value);</Text>
         </Document>
         <Document ID="27">
             <Title>modern_stream_type_definition_float32</Title>

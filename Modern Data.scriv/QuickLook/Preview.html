@@ -74,6 +74,69 @@ Note that this is true in all the versions of the library for non-functional lan
 };</p>
 </li>
 <li>
+<p class="binderItem"><strong>Library instances</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_library_initialize</strong><br/>modern_library *<br/>
+modern_library_initalize<br/>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_library_get_error_handler</strong><br/>struct modern_error_handler *<br/>
+modern_library_get_error_handler<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_library_get_allocator</strong><br/>struct modern_allocator *<br/>
+modern_library_get_allocator<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_library_finalize</strong><br/>void<br/>
+modern_library_finalize<br/>
+(modern_library *library);</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Error handlers</strong><br/>struct modern_error_handler {<br/>
+    …<br/>
+};</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_error_handler_memory</strong><br/>void<br/>
+(*modern_error_handler_memory)<br/>
+(size_t requested_size);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_error_handler_retain_count_overflow</strong><br/>void<br/>
+(*modern_error_handler_retain_count_overflow)<br/>
+(void *retainable);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_error_handler_retain_count_underflow</strong><br/>void<br/>
+(*modern_error_handler_retain_count_underflow)<br/>
+(void *retainable);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_error_handler_double_autorelease</strong><br/>void<br/>
+(*modern_error_handler_double_autorelease)<br/>
+(void *retainable);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_error_handler_type_mismatch</strong><br/>void<br/>
+(*modern_error_handler_type_mismatch)<br/>
+(modern *expected,<br/>
+ modern *actual);</p>
+</li>
+</ul>
+<hr/>
+<li>
 <p class="binderItem"><strong>Allocators</strong><br/>struct modern_allocator {<br/>
     …<br/>
 };</p>
@@ -612,32 +675,38 @@ Note that this is true in all the versions of the library for non-functional lan
 <li>
 <p class="binderItem"><strong>modern_make_autorelease_pool</strong><br/>modern_autorelease_pool *<br/>
 modern_make_autorelease_pool<br/>
-(struct modern_allocator *allocator);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_autorelease_pool_release</strong><br/>void<br/>
 modern_autorelease_pool_release<br/>
-(modern_autorelease_pool *pool);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern_autorelease_pool *pool);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_autorelease_pool_get_allocator</strong><br/>struct modern_allocator *<br/>
 modern_autorelease_pool_get_allocator<br/>
-(modern_autorelease_pool *pool);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern_autorelease_pool *pool);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_retain</strong><br/>void<br/>
 modern_retain<br/>
-(void *retainable);</p>
+(struct modern_error_handler *error_handler,<br/>
+ void *retainable);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_release</strong><br/>void<br/>
 modern_release<br/>
-(void *retainable);</p>
+(struct modern_error_handler *error_handler,<br/>
+ void *retainable);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_autorelease</strong><br/>void<br/>
 modern_autorelease<br/>
-(modern_autorelease_pool *pool,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern_autorelease_pool *pool,<br/>
  void *retainable);</p>
 </li>
 </ul>
@@ -792,89 +861,106 @@ modern_serialize_output_stream<br/>
 <li>
 <p class="binderItem"><strong>modern_node_get_node_type</strong><br/>enum modern_node_type<br/>
 modern_node_get_node_type<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_value_type</strong><br/>modern *<br/>
 modern_node_get_value_type<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_int8</strong><br/>int8_t<br/>
 modern_node_get_int8<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_int16</strong><br/>int16_t<br/>
 modern_node_get_int16<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_int32</strong><br/>int32_t<br/>
 modern_node_get_int32<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_int64</strong><br/>int64_t<br/>
 modern_node_get_int64<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat8</strong><br/>uint8_t<br/>
 modern_node_get_nat8<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat16</strong><br/>uint16_t<br/>
 modern_node_get_nat16<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat32</strong><br/>uint32_t<br/>
 modern_node_get_nat32<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat64</strong><br/>uint64_t<br/>
 modern_node_get_nat64<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_float32</strong><br/>float<br/>
 modern_node_get_float32<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_float64</strong><br/>double<br/>
 modern_node_get_float64<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_float128</strong><br/>long double<br/>
 modern_node_get_float128<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_utf8_bytes</strong><br/>size_t<br/>
 modern_node_get_utf8_bytes<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_utf8_data_piece</strong><br/>uint8_t *<br/>
 modern_node_get_utf8_data_piece<br/>
-(modern *value,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value,<br/>
  size_t offset,<br/>
  size_t bytes);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_blob_bytes</strong><br/>size_t<br/>
 modern_node_get_blob_bytes<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_blob_data_piece</strong><br/>uint8_t *<br/>
 modern_node_get_blob_data_piece<br/>
-(modern *value,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value,<br/>
  size_t offset,<br/>
  size_t bytes);</p>
 </li>
@@ -888,37 +974,50 @@ modern_node_get_blob_data_piece<br/>
 <li>
 <p class="binderItem"><strong>modern_node_get_sigma_value</strong><br/>modern *<br/>
 modern_node_get_sigma_value<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_sigma_successor</strong><br/>modern *<br/>
 modern_node_get_sigma_successor<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_named_type_name</strong><br/>struct modern_hash *<br/>
 modern_node_get_named_type_name<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_named_type_content_type</strong><br/>modern *<br/>
 modern_node_get_named_type_content_type<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_universe_type_level</strong><br/>uint64_t<br/>
+modern_node_get_universe_type_level<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value_in);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_lambda_content</strong><br/>modern *<br/>
 modern_node_get_lambda_content<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_apply_left</strong><br/>modern *<br/>
 modern_node_get_apply_left<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_apply_right</strong><br/>modern *<br/>
 modern_node_get_apply_right<br/>
-(modern *value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ modern *value);</p>
 </li>
 </ul>
 </ul>
@@ -936,94 +1035,110 @@ modern_node_get_apply_right<br/>
 <li>
 <p class="binderItem"><strong>modern_node_make_int8</strong><br/>modern *<br/>
 modern_node_make_int8<br/>
-(int8_t value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ int8_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_int16</strong><br/>modern *<br/>
 modern_node_make_int16<br/>
-(int16_t value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ int16_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_int32</strong><br/>modern *<br/>
 modern_node_make_int32<br/>
-(int32_t value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ int32_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_int64</strong><br/>modern *<br/>
 modern_node_make_int64<br/>
-(int64_t value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ int64_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat8</strong><br/>modern *<br/>
 modern_node_make_nat8<br/>
-(uint8_t value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ uint8_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat16</strong><br/>modern *<br/>
 modern_node_make_nat16<br/>
-(uint16_t value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ uint16_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat32</strong><br/>modern *<br/>
 modern_node_make_nat32<br/>
-(uint32_t value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ uint32_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat64</strong><br/>modern *<br/>
 modern_node_make_nat64<br/>
-(uint64_t value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ uint64_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_float32</strong><br/>modern *<br/>
 modern_node_make_float32<br/>
-(float value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ float value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_float64</strong><br/>modern *<br/>
 modern_node_make_float64<br/>
-(double value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ double value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_float128</strong><br/>modern *<br/>
 modern_node_make_float128<br/>
-(long double value);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ long double value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_utf8</strong><br/>modern *<br/>
 modern_node_make_utf8<br/>
-(uint8_t *data);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ uint8_t *data);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_blob</strong><br/>modern *<br/>
 modern_node_make_blob<br/>
-(uint8_t *data,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ uint8_t *data,<br/>
  size_t bytes);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_node_make_array</strong><br/>modern *<br/>
-modern_node_make_array<br/>
-(uint64_t n_items,<br/>
- modern **values);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_union</strong><br/>modern *<br/>
-modern_node_make_union<br/>
-(modern *type,<br/>
- struct modern_hash *field,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_structure</strong><br/>modern *<br/>
-modern_node_make_structure<br/>
-(modern *type,<br/>
- uint64_t n_items,<br/>
- struct modern_hash **fields,<br/>
- modern **values);</p>
+<p class="binderItem"><strong>modern_node_make_sigma</strong><br/>modern *<br/>
+modern_node_make_sigma<br/>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ modern *type,<br/>
+ modern *field_value,<br/>
+ modern *successor_value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_named_value</strong><br/>modern *<br/>
 modern_node_make_named_value<br/>
-(modern *type,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ modern *type,<br/>
  modern *value);</p>
 </li>
 </ul>
@@ -1036,118 +1151,116 @@ modern_node_make_named_value<br/>
 <li>
 <p class="binderItem"><strong>modern_node_get_int8_type</strong><br/>modern *<br/>
 modern_node_get_int8_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_int16_type</strong><br/>modern *<br/>
 modern_node_get_int16_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_int32_type</strong><br/>modern *<br/>
 modern_node_get_int32_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_int64_type</strong><br/>modern *<br/>
 modern_node_get_int64_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat8_type</strong><br/>modern *<br/>
 modern_node_get_nat8_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat16_type</strong><br/>modern *<br/>
 modern_node_get_nat16_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat32_type</strong><br/>modern *<br/>
 modern_node_get_nat32_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat64_type</strong><br/>modern *<br/>
 modern_node_get_nat64_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_float32_type</strong><br/>modern *<br/>
 modern_node_get_float32_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_float64_type</strong><br/>modern *<br/>
 modern_node_get_float64_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_float128_type</strong><br/>modern *<br/>
 modern_node_get_float128_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_utf8_type</strong><br/>modern *<br/>
 modern_node_get_utf8_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_blob_type</strong><br/>modern *<br/>
 modern_node_get_blob_type<br/>
-();</p>
+(struct modern_error_handler *error_handler);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_node_make_array_type</strong><br/>modern *<br/>
-modern_node_make_array_type<br/>
-(modern *content_type);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_union_type</strong><br/>modern *<br/>
-modern_node_make_union_type<br/>
-(uint64_t n_items,<br/>
- struct modern_hash **fields,<br/>
- modern **types);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_structure_type</strong><br/>modern *<br/>
-modern_node_make_structure_type<br/>
-(uint64_t n_items,<br/>
- struct modern_hash **fields,<br/>
- modern **types);</p>
+<p class="binderItem"><strong>modern_node_make_sigma_type</strong><br/>modern *<br/>
+modern_node_make_sigma_type<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *field_type, modern *successor);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_named_type</strong><br/>modern *<br/>
 modern_node_make_named_type<br/>
-(struct modern_hash *name,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ struct modern_hash *name,<br/>
  modern *content_type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_universe_type</strong><br/>modern *<br/>
-modern_node_get_universe_type<br/>
-();</p>
+modern_node_make_universe_type<br/>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ uint64_t level);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_lambda</strong><br/>modern *<br/>
 modern_node_make_lambda<br/>
-(modern *content);</p>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ modern *content);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_apply</strong><br/>modern *<br/>
 modern_node_make_apply<br/>
-(modern *left,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ modern *left,<br/>
  modern *right);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_type_index</strong><br/>modern *<br/>
 modern_node_make_type_index<br/>
-(uint64_t index);</p>
+(struct modern_error_handler *error_handler,<br/>
+ uint64_t index);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_type_family</strong><br/>modern *<br/>
 modern_node_make_type_family<br/>
-(uint64_t n_items,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ struct modern_allocator *allocator,<br/>
+ uint64_t n_items,<br/>
  modern **types);</p>
 </li>
 </ul>
@@ -1166,110 +1279,100 @@ modern_node_make_type_family<br/>
 <li>
 <p class="binderItem"><strong>modern_node_set_int8</strong><br/>void<br/>
 modern_node_set_int8<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  int8_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_int16</strong><br/>void<br/>
 modern_node_set_int16<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  int16_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_int32</strong><br/>void<br/>
 modern_node_set_int32<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  int32_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_int64</strong><br/>void<br/>
 modern_node_set_int64<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  int64_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_nat8</strong><br/>void<br/>
 modern_node_set_nat8<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  uint8_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_nat16</strong><br/>void<br/>
 modern_node_set_nat16<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  uint16_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_nat32</strong><br/>void<br/>
 modern_node_set_nat32<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  uint32_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_nat64</strong><br/>void<br/>
 modern_node_set_nat64<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  uint64_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_float32</strong><br/>void<br/>
 modern_node_set_float32<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  float value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_float64</strong><br/>void<br/>
 modern_node_set_float64<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  double value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_float128</strong><br/>void<br/>
 modern_node_set_float128<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  long double value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_utf8</strong><br/>void<br/>
 modern_node_set_utf8<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  uint8_t *data);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_blob</strong><br/>void<br/>
 modern_node_set_blob<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  uint8_t *data,<br/>
  size_t bytes);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_node_set_array</strong><br/>void<br/>
-modern_node_set_array<br/>
-(modern *node,<br/>
- uint64_t n_items,<br/>
- modern **values);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_union</strong><br/>void<br/>
-modern_node_set_union<br/>
-(modern *node,<br/>
- modern *type,<br/>
- struct modern_hash *field,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_structure</strong><br/>void<br/>
-modern_node_set_structure<br/>
-(modern *node,<br/>
- modern *type,<br/>
- uint64_t n_items,<br/>
- struct modern_hash **fields,<br/>
- modern **values);</p>
-</li>
-<li>
 <p class="binderItem"><strong>modern_node_set_named_value</strong><br/>void<br/>
 modern_node_set_named_value<br/>
-(modern *node,<br/>
+(struct modern_error_handler *error_handler,<br/>
+ modern *node,<br/>
  modern *type,<br/>
  modern *value);</p>
 </li>

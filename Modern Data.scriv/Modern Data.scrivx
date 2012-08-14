@@ -97,6 +97,120 @@
                                         <TextSelection>55,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
+                                <BinderItem ID="264" Type="Folder" Created="2012-08-14 16:10:17 -0400" Modified="2012-08-14 16:10:22 -0400">
+                                    <Title>Library instances</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem ID="265" Type="Text" Created="2012-08-14 16:10:25 -0400" Modified="2012-08-14 16:25:14 -0400">
+                                            <Title>modern_library_initialize</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="266" Type="Text" Created="2012-08-14 16:11:35 -0400" Modified="2012-08-14 16:12:06 -0400">
+                                            <Title>modern_library_get_error_handler</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>89,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="267" Type="Text" Created="2012-08-14 16:11:52 -0400" Modified="2012-08-14 16:12:29 -0400">
+                                            <Title>modern_library_get_allocator</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>81,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="269" Type="Text" Created="2012-08-14 16:12:23 -0400" Modified="2012-08-14 16:25:08 -0400">
+                                            <Title>modern_library_finalize</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>56,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
+                                <BinderItem ID="270" Type="Folder" Created="2012-08-14 16:25:37 -0400" Modified="2012-08-14 16:26:38 -0400">
+                                    <Title>Error handlers</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem ID="271" Type="Text" Created="2012-08-14 16:25:52 -0400" Modified="2012-08-14 16:27:51 -0400">
+                                            <Title>modern_error_handler_memory</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>60,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="272" Type="Text" Created="2012-08-14 16:27:43 -0400" Modified="2012-08-14 16:28:18 -0400">
+                                            <Title>modern_error_handler_retain_count_overflow</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>70,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="273" Type="Text" Created="2012-08-14 16:28:01 -0400" Modified="2012-08-14 16:28:18 -0400">
+                                            <Title>modern_error_handler_retain_count_underflow</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>71,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="274" Type="Text" Created="2012-08-14 16:28:16 -0400" Modified="2012-08-14 16:28:45 -0400">
+                                            <Title>modern_error_handler_double_autorelease</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>67,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="275" Type="Text" Created="2012-08-14 16:28:33 -0400" Modified="2012-08-14 16:28:45 -0400">
+                                            <Title>modern_error_handler_type_mismatch</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>80,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
                                 <BinderItem ID="11" Type="Folder" Created="2012-08-13 06:42:45 -0400" Modified="2012-08-13 16:01:05 -0400">
                                     <Title>Allocators</Title>
                                     <MetaData>
@@ -124,7 +238,7 @@
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
                                             <TextSettings>
-                                                <TextSelection>0,0</TextSelection>
+                                                <TextSelection>10,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
                                         <BinderItem ID="250" Type="Text" Created="2012-08-13 07:27:34 -0400" Modified="2012-08-13 16:29:02 -0400">
@@ -1092,7 +1206,7 @@
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
                                             <TextSettings>
-                                                <TextSelection>27,0</TextSelection>
+                                                <TextSelection>28,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
                                     </Children>
@@ -1109,7 +1223,7 @@
                                 <TextSelection>0,0</TextSelection>
                             </TextSettings>
                             <Children>
-                                <BinderItem ID="102" Type="Text" Created="2012-08-13 06:52:42 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                <BinderItem ID="102" Type="Text" Created="2012-08-13 06:52:42 -0400" Modified="2012-08-14 11:47:17 -0400">
                                     <Title>modern_make_autorelease_pool</Title>
                                     <MetaData>
                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1119,7 +1233,7 @@
                                         <TextSelection>100,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
-                                <BinderItem ID="103" Type="Text" Created="2012-08-13 06:52:56 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                <BinderItem ID="103" Type="Text" Created="2012-08-13 06:52:56 -0400" Modified="2012-08-14 11:47:29 -0400">
                                     <Title>modern_autorelease_pool_release</Title>
                                     <MetaData>
                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1129,7 +1243,7 @@
                                         <TextSelection>75,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
-                                <BinderItem ID="104" Type="Text" Created="2012-08-13 06:52:58 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                <BinderItem ID="104" Type="Text" Created="2012-08-13 06:52:58 -0400" Modified="2012-08-14 11:47:29 -0400">
                                     <Title>modern_autorelease_pool_get_allocator</Title>
                                     <MetaData>
                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1139,7 +1253,7 @@
                                         <TextSelection>104,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
-                                <BinderItem ID="105" Type="Text" Created="2012-08-13 06:52:59 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                <BinderItem ID="105" Type="Text" Created="2012-08-13 06:52:59 -0400" Modified="2012-08-14 11:47:42 -0400">
                                     <Title>modern_retain</Title>
                                     <MetaData>
                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1149,7 +1263,7 @@
                                         <TextSelection>44,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
-                                <BinderItem ID="106" Type="Text" Created="2012-08-13 06:53:01 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                <BinderItem ID="106" Type="Text" Created="2012-08-13 06:53:01 -0400" Modified="2012-08-14 11:47:42 -0400">
                                     <Title>modern_release</Title>
                                     <MetaData>
                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1159,7 +1273,7 @@
                                         <TextSelection>45,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
-                                <BinderItem ID="107" Type="Text" Created="2012-08-13 06:53:02 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                <BinderItem ID="107" Type="Text" Created="2012-08-13 06:53:02 -0400" Modified="2012-08-14 11:47:42 -0400">
                                     <Title>modern_autorelease</Title>
                                     <MetaData>
                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1397,28 +1511,158 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                             <Children>
-                                                <BinderItem ID="128" Type="Text" Created="2012-08-13 06:55:04 -0400" Modified="2012-08-13 16:36:14 -0400">
+                                                <BinderItem ID="128" Type="Text" Created="2012-08-13 06:55:04 -0400" Modified="2012-08-14 14:27:38 -0400">
                                                     <Title>modern_node_get_node_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>70,0</TextSelection>
+                                                        <TextSelection>49,45</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="129" Type="Text" Created="2012-08-13 06:55:08 -0400" Modified="2012-08-13 16:36:14 -0400">
+                                                <BinderItem ID="129" Type="Text" Created="2012-08-13 06:55:08 -0400" Modified="2012-08-14 14:27:38 -0400">
                                                     <Title>modern_node_get_value_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>57,0</TextSelection>
+                                                        <TextSelection>82,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="130" Type="Text" Created="2012-08-13 06:55:10 -0400" Modified="2012-08-13 16:37:40 -0400">
+                                                <BinderItem ID="130" Type="Text" Created="2012-08-13 06:55:10 -0400" Modified="2012-08-14 14:27:41 -0400">
                                                     <Title>modern_node_get_int8</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>74,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="131" Type="Text" Created="2012-08-13 06:55:11 -0400" Modified="2012-08-14 14:27:44 -0400">
+                                                    <Title>modern_node_get_int16</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>76,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="132" Type="Text" Created="2012-08-13 06:55:12 -0400" Modified="2012-08-14 14:27:47 -0400">
+                                                    <Title>modern_node_get_int32</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>76,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="133" Type="Text" Created="2012-08-13 06:55:13 -0400" Modified="2012-08-14 14:28:16 -0400">
+                                                    <Title>modern_node_get_int64</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>76,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="134" Type="Text" Created="2012-08-13 06:55:14 -0400" Modified="2012-08-14 14:28:16 -0400">
+                                                    <Title>modern_node_get_nat8</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>75,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="135" Type="Text" Created="2012-08-13 06:55:15 -0400" Modified="2012-08-14 14:28:16 -0400">
+                                                    <Title>modern_node_get_nat16</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>77,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="136" Type="Text" Created="2012-08-13 06:55:16 -0400" Modified="2012-08-14 14:28:16 -0400">
+                                                    <Title>modern_node_get_nat32</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>77,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="137" Type="Text" Created="2012-08-13 06:55:17 -0400" Modified="2012-08-14 14:28:16 -0400">
+                                                    <Title>modern_node_get_nat64</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>77,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="138" Type="Text" Created="2012-08-13 06:55:18 -0400" Modified="2012-08-14 14:28:16 -0400">
+                                                    <Title>modern_node_get_float32</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>91,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="139" Type="Text" Created="2012-08-13 06:55:19 -0400" Modified="2012-08-14 14:28:16 -0400">
+                                                    <Title>modern_node_get_float64</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>77,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="140" Type="Text" Created="2012-08-13 06:55:23 -0400" Modified="2012-08-14 14:28:16 -0400">
+                                                    <Title>modern_node_get_float128</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>83,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="141" Type="Text" Created="2012-08-13 06:55:27 -0400" Modified="2012-08-14 14:28:16 -0400">
+                                                    <Title>modern_node_get_utf8_bytes</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>80,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="142" Type="Text" Created="2012-08-13 06:55:28 -0400" Modified="2012-08-14 14:28:16 -0400">
+                                                    <Title>modern_node_get_utf8_data_piece</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>88,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="143" Type="Text" Created="2012-08-13 06:55:29 -0400" Modified="2012-08-14 14:28:16 -0400">
+                                                    <Title>modern_node_get_blob_bytes</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
@@ -1427,144 +1671,14 @@
                                                         <TextSelection>50,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="131" Type="Text" Created="2012-08-13 06:55:11 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_int16</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>52,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="132" Type="Text" Created="2012-08-13 06:55:12 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_int32</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>52,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="133" Type="Text" Created="2012-08-13 06:55:13 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_int64</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>52,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="134" Type="Text" Created="2012-08-13 06:55:14 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_nat8</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>51,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="135" Type="Text" Created="2012-08-13 06:55:15 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_nat16</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>53,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="136" Type="Text" Created="2012-08-13 06:55:16 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_nat32</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>53,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="137" Type="Text" Created="2012-08-13 06:55:17 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_nat64</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>53,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="138" Type="Text" Created="2012-08-13 06:55:18 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_float32</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>52,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="139" Type="Text" Created="2012-08-13 06:55:19 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_float64</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>53,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="140" Type="Text" Created="2012-08-13 06:55:23 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_float128</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>59,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="141" Type="Text" Created="2012-08-13 06:55:27 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_utf8_bytes</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>56,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="142" Type="Text" Created="2012-08-13 06:55:28 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_utf8_data_piece</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>95,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="143" Type="Text" Created="2012-08-13 06:55:29 -0400" Modified="2012-08-13 16:37:40 -0400">
-                                                    <Title>modern_node_get_blob_bytes</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>56,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="144" Type="Text" Created="2012-08-13 06:55:30 -0400" Modified="2012-08-13 16:37:40 -0400">
+                                                <BinderItem ID="144" Type="Text" Created="2012-08-13 06:55:30 -0400" Modified="2012-08-14 14:28:16 -0400">
                                                     <Title>modern_node_get_blob_data_piece</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>95,0</TextSelection>
+                                                        <TextSelection>88,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
                                             </Children>
@@ -1579,17 +1693,17 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                             <Children>
-                                                <BinderItem ID="146" Type="Text" Created="2012-08-13 06:55:36 -0400" Modified="2012-08-13 16:37:40 -0400">
+                                                <BinderItem ID="146" Type="Text" Created="2012-08-13 06:55:36 -0400" Modified="2012-08-14 14:28:25 -0400">
                                                     <Title>modern_node_get_sigma_value</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>58,0</TextSelection>
+                                                        <TextSelection>83,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="147" Type="Text" Created="2012-08-13 06:55:38 -0400" Modified="2012-08-13 16:37:40 -0400">
+                                                <BinderItem ID="147" Type="Text" Created="2012-08-13 06:55:38 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_sigma_successor</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1599,7 +1713,7 @@
                                                         <TextSelection>62,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="148" Type="Text" Created="2012-08-13 06:55:41 -0400" Modified="2012-08-13 16:37:40 -0400">
+                                                <BinderItem ID="148" Type="Text" Created="2012-08-13 06:55:41 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_named_type_name</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1609,7 +1723,7 @@
                                                         <TextSelection>74,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="149" Type="Text" Created="2012-08-13 06:55:42 -0400" Modified="2012-08-13 16:37:40 -0400">
+                                                <BinderItem ID="149" Type="Text" Created="2012-08-13 06:55:42 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_named_type_content_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1619,7 +1733,17 @@
                                                         <TextSelection>70,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="150" Type="Text" Created="2012-08-13 06:55:43 -0400" Modified="2012-08-13 16:37:40 -0400">
+                                                <BinderItem ID="263" Type="Text" Created="2012-08-13 06:55:42 -0400" Modified="2012-08-14 15:51:59 -0400">
+                                                    <Title>modern_node_get_universe_type_level</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>1,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="150" Type="Text" Created="2012-08-13 06:55:43 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_lambda_content</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1629,7 +1753,7 @@
                                                         <TextSelection>61,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="151" Type="Text" Created="2012-08-13 06:55:44 -0400" Modified="2012-08-13 16:37:40 -0400">
+                                                <BinderItem ID="151" Type="Text" Created="2012-08-13 06:55:44 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_apply_left</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1639,7 +1763,7 @@
                                                         <TextSelection>57,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="152" Type="Text" Created="2012-08-13 06:55:45 -0400" Modified="2012-08-13 16:37:40 -0400">
+                                                <BinderItem ID="152" Type="Text" Created="2012-08-13 06:55:45 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_apply_right</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1673,7 +1797,7 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                             <Children>
-                                                <BinderItem ID="154" Type="Text" Created="2012-08-13 06:55:53 -0400" Modified="2012-08-13 16:37:40 -0400">
+                                                <BinderItem ID="154" Type="Text" Created="2012-08-13 06:55:53 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_int8</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1683,7 +1807,7 @@
                                                         <TextSelection>51,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="155" Type="Text" Created="2012-08-13 06:55:57 -0400" Modified="2012-08-13 16:38:09 -0400">
+                                                <BinderItem ID="155" Type="Text" Created="2012-08-13 06:55:57 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_int16</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1693,7 +1817,7 @@
                                                         <TextSelection>53,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="156" Type="Text" Created="2012-08-13 06:55:58 -0400" Modified="2012-08-13 16:38:09 -0400">
+                                                <BinderItem ID="156" Type="Text" Created="2012-08-13 06:55:58 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_int32</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1703,7 +1827,7 @@
                                                         <TextSelection>53,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="157" Type="Text" Created="2012-08-13 06:56:00 -0400" Modified="2012-08-13 16:38:09 -0400">
+                                                <BinderItem ID="157" Type="Text" Created="2012-08-13 06:56:00 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_int64</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1713,7 +1837,7 @@
                                                         <TextSelection>53,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="158" Type="Text" Created="2012-08-13 06:56:01 -0400" Modified="2012-08-13 16:38:09 -0400">
+                                                <BinderItem ID="158" Type="Text" Created="2012-08-13 06:56:01 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_nat8</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1723,7 +1847,7 @@
                                                         <TextSelection>52,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="159" Type="Text" Created="2012-08-13 06:56:02 -0400" Modified="2012-08-13 16:38:09 -0400">
+                                                <BinderItem ID="159" Type="Text" Created="2012-08-13 06:56:02 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_nat16</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1733,7 +1857,7 @@
                                                         <TextSelection>54,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="160" Type="Text" Created="2012-08-13 06:56:03 -0400" Modified="2012-08-13 16:38:09 -0400">
+                                                <BinderItem ID="160" Type="Text" Created="2012-08-13 06:56:03 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_nat32</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1743,7 +1867,7 @@
                                                         <TextSelection>54,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="161" Type="Text" Created="2012-08-13 06:56:07 -0400" Modified="2012-08-13 16:38:09 -0400">
+                                                <BinderItem ID="161" Type="Text" Created="2012-08-13 06:56:07 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_nat64</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1753,7 +1877,7 @@
                                                         <TextSelection>54,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="162" Type="Text" Created="2012-08-13 06:56:08 -0400" Modified="2012-08-13 16:38:19 -0400">
+                                                <BinderItem ID="162" Type="Text" Created="2012-08-13 06:56:08 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_float32</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1763,7 +1887,7 @@
                                                         <TextSelection>53,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="163" Type="Text" Created="2012-08-13 06:56:09 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="163" Type="Text" Created="2012-08-13 06:56:09 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_float64</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1773,7 +1897,7 @@
                                                         <TextSelection>54,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="164" Type="Text" Created="2012-08-13 06:56:10 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="164" Type="Text" Created="2012-08-13 06:56:10 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_float128</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1783,7 +1907,7 @@
                                                         <TextSelection>60,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="165" Type="Text" Created="2012-08-13 06:56:11 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="165" Type="Text" Created="2012-08-13 06:56:11 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_utf8</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1793,7 +1917,7 @@
                                                         <TextSelection>52,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="166" Type="Text" Created="2012-08-13 06:56:12 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="166" Type="Text" Created="2012-08-13 06:56:12 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_blob</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1803,44 +1927,24 @@
                                                         <TextSelection>66,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="167" Type="Text" Created="2012-08-13 06:56:17 -0400" Modified="2012-08-13 16:42:07 -0400">
-                                                    <Title>modern_node_make_array</Title>
+                                                <BinderItem ID="262" Type="Text" Created="2012-08-13 06:56:24 -0400" Modified="2012-08-14 15:57:09 -0400">
+                                                    <Title>modern_node_make_sigma</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>73,0</TextSelection>
+                                                        <TextSelection>0,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="168" Type="Text" Created="2012-08-13 06:56:19 -0400" Modified="2012-08-13 16:42:07 -0400">
-                                                    <Title>modern_node_make_union</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>97,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="169" Type="Text" Created="2012-08-13 06:56:20 -0400" Modified="2012-08-13 16:42:07 -0400">
-                                                    <Title>modern_node_make_structure</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>126,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="170" Type="Text" Created="2012-08-13 06:56:24 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="170" Type="Text" Created="2012-08-13 06:56:24 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_named_value</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>73,0</TextSelection>
+                                                        <TextSelection>0,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
                                             </Children>
@@ -1855,7 +1959,7 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                             <Children>
-                                                <BinderItem ID="172" Type="Text" Created="2012-08-13 06:58:02 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="172" Type="Text" Created="2012-08-13 06:58:02 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_int8_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1865,7 +1969,7 @@
                                                         <TextSelection>43,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="176" Type="Text" Created="2012-08-13 07:01:33 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="176" Type="Text" Created="2012-08-13 07:01:33 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_int16_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1875,7 +1979,7 @@
                                                         <TextSelection>44,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="177" Type="Text" Created="2012-08-13 07:01:34 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="177" Type="Text" Created="2012-08-13 07:01:34 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_int32_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1885,7 +1989,7 @@
                                                         <TextSelection>44,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="178" Type="Text" Created="2012-08-13 07:01:36 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="178" Type="Text" Created="2012-08-13 07:01:36 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_int64_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1895,7 +1999,7 @@
                                                         <TextSelection>44,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="179" Type="Text" Created="2012-08-13 07:01:37 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="179" Type="Text" Created="2012-08-13 07:01:37 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_nat8_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1905,7 +2009,7 @@
                                                         <TextSelection>43,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="180" Type="Text" Created="2012-08-13 07:01:38 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="180" Type="Text" Created="2012-08-13 07:01:38 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_nat16_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1915,7 +2019,7 @@
                                                         <TextSelection>44,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="181" Type="Text" Created="2012-08-13 07:01:39 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="181" Type="Text" Created="2012-08-13 07:01:39 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_nat32_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1925,7 +2029,7 @@
                                                         <TextSelection>44,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="182" Type="Text" Created="2012-08-13 07:01:40 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="182" Type="Text" Created="2012-08-13 07:01:40 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_nat64_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1935,7 +2039,7 @@
                                                         <TextSelection>44,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="183" Type="Text" Created="2012-08-13 07:01:41 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="183" Type="Text" Created="2012-08-13 07:01:41 -0400" Modified="2012-08-14 14:29:20 -0400">
                                                     <Title>modern_node_get_float32_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1945,7 +2049,7 @@
                                                         <TextSelection>46,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="184" Type="Text" Created="2012-08-13 07:01:42 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="184" Type="Text" Created="2012-08-13 07:01:42 -0400" Modified="2012-08-14 14:29:46 -0400">
                                                     <Title>modern_node_get_float64_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1955,7 +2059,7 @@
                                                         <TextSelection>46,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="185" Type="Text" Created="2012-08-13 07:01:43 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="185" Type="Text" Created="2012-08-13 07:01:43 -0400" Modified="2012-08-14 14:29:46 -0400">
                                                     <Title>modern_node_get_float128_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1965,7 +2069,7 @@
                                                         <TextSelection>47,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="186" Type="Text" Created="2012-08-13 07:01:44 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="186" Type="Text" Created="2012-08-13 07:01:44 -0400" Modified="2012-08-14 14:29:46 -0400">
                                                     <Title>modern_node_get_utf8_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1975,7 +2079,7 @@
                                                         <TextSelection>43,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="187" Type="Text" Created="2012-08-13 07:01:46 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="187" Type="Text" Created="2012-08-13 07:01:46 -0400" Modified="2012-08-14 14:29:46 -0400">
                                                     <Title>modern_node_get_blob_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -1985,47 +2089,27 @@
                                                         <TextSelection>43,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="188" Type="Text" Created="2012-08-13 07:01:47 -0400" Modified="2012-08-13 16:42:07 -0400">
-                                                    <Title>modern_node_make_array_type</Title>
+                                                <BinderItem ID="261" Type="Text" Created="2012-08-13 07:01:51 -0400" Modified="2012-08-14 14:47:43 -0400">
+                                                    <Title>modern_node_make_sigma_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>65,0</TextSelection>
+                                                        <TextSelection>122,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="189" Type="Text" Created="2012-08-13 07:01:48 -0400" Modified="2012-08-13 16:42:07 -0400">
-                                                    <Title>modern_node_make_union_type</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>109,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="190" Type="Text" Created="2012-08-13 07:01:50 -0400" Modified="2012-08-13 16:42:07 -0400">
-                                                    <Title>modern_node_make_structure_type</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>113,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="191" Type="Text" Created="2012-08-13 07:01:51 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="191" Type="Text" Created="2012-08-13 07:01:51 -0400" Modified="2012-08-14 15:57:09 -0400">
                                                     <Title>modern_node_make_named_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>94,0</TextSelection>
+                                                        <TextSelection>0,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="192" Type="Text" Created="2012-08-13 07:01:53 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="192" Type="Text" Created="2012-08-13 07:01:53 -0400" Modified="2012-08-14 15:58:02 -0400">
                                                     <Title>modern_node_get_universe_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2035,7 +2119,7 @@
                                                         <TextSelection>47,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="193" Type="Text" Created="2012-08-13 07:02:00 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="193" Type="Text" Created="2012-08-13 07:02:00 -0400" Modified="2012-08-14 15:58:02 -0400">
                                                     <Title>modern_node_make_lambda</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2045,7 +2129,7 @@
                                                         <TextSelection>56,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="194" Type="Text" Created="2012-08-13 07:02:03 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="194" Type="Text" Created="2012-08-13 07:02:03 -0400" Modified="2012-08-14 15:58:02 -0400">
                                                     <Title>modern_node_make_apply</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2055,7 +2139,7 @@
                                                         <TextSelection>67,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="195" Type="Text" Created="2012-08-13 07:02:05 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="195" Type="Text" Created="2012-08-13 07:02:05 -0400" Modified="2012-08-14 14:29:46 -0400">
                                                     <Title>modern_node_make_type_index</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2065,7 +2149,7 @@
                                                         <TextSelection>59,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="196" Type="Text" Created="2012-08-13 07:02:07 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="196" Type="Text" Created="2012-08-13 07:02:07 -0400" Modified="2012-08-14 15:58:02 -0400">
                                                     <Title>modern_node_make_type_family</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2099,7 +2183,7 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                             <Children>
-                                                <BinderItem ID="199" Type="Text" Created="2012-08-13 07:02:20 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="199" Type="Text" Created="2012-08-13 07:02:20 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_int8</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2109,7 +2193,7 @@
                                                         <TextSelection>61,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="200" Type="Text" Created="2012-08-13 07:02:25 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="200" Type="Text" Created="2012-08-13 07:02:25 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_int16</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2119,7 +2203,7 @@
                                                         <TextSelection>63,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="201" Type="Text" Created="2012-08-13 07:02:26 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="201" Type="Text" Created="2012-08-13 07:02:26 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_int32</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2129,7 +2213,7 @@
                                                         <TextSelection>63,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="202" Type="Text" Created="2012-08-13 07:02:27 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="202" Type="Text" Created="2012-08-13 07:02:27 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_int64</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2139,7 +2223,7 @@
                                                         <TextSelection>63,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="203" Type="Text" Created="2012-08-13 07:02:28 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="203" Type="Text" Created="2012-08-13 07:02:28 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_nat8</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2149,7 +2233,7 @@
                                                         <TextSelection>62,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="204" Type="Text" Created="2012-08-13 07:02:29 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="204" Type="Text" Created="2012-08-13 07:02:29 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_nat16</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2159,7 +2243,7 @@
                                                         <TextSelection>64,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="205" Type="Text" Created="2012-08-13 07:02:30 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="205" Type="Text" Created="2012-08-13 07:02:30 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_nat32</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2169,7 +2253,7 @@
                                                         <TextSelection>64,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="206" Type="Text" Created="2012-08-13 07:02:31 -0400" Modified="2012-08-13 16:42:07 -0400">
+                                                <BinderItem ID="206" Type="Text" Created="2012-08-13 07:02:31 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_nat64</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2179,7 +2263,7 @@
                                                         <TextSelection>64,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="207" Type="Text" Created="2012-08-13 07:02:32 -0400" Modified="2012-08-13 16:42:08 -0400">
+                                                <BinderItem ID="207" Type="Text" Created="2012-08-13 07:02:32 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_float32</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2189,7 +2273,7 @@
                                                         <TextSelection>63,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="208" Type="Text" Created="2012-08-13 07:02:33 -0400" Modified="2012-08-13 16:42:08 -0400">
+                                                <BinderItem ID="208" Type="Text" Created="2012-08-13 07:02:33 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_float64</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2199,7 +2283,7 @@
                                                         <TextSelection>64,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="209" Type="Text" Created="2012-08-13 07:02:34 -0400" Modified="2012-08-13 16:42:08 -0400">
+                                                <BinderItem ID="209" Type="Text" Created="2012-08-13 07:02:34 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_float128</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2209,7 +2293,7 @@
                                                         <TextSelection>70,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="210" Type="Text" Created="2012-08-13 07:02:36 -0400" Modified="2012-08-13 16:42:08 -0400">
+                                                <BinderItem ID="210" Type="Text" Created="2012-08-13 07:02:36 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_utf8</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2219,7 +2303,7 @@
                                                         <TextSelection>62,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="211" Type="Text" Created="2012-08-13 07:02:38 -0400" Modified="2012-08-13 16:42:08 -0400">
+                                                <BinderItem ID="211" Type="Text" Created="2012-08-13 07:02:38 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_blob</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -2229,44 +2313,14 @@
                                                         <TextSelection>76,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="212" Type="Text" Created="2012-08-13 07:02:40 -0400" Modified="2012-08-13 16:42:08 -0400">
-                                                    <Title>modern_node_set_array</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>86,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="213" Type="Text" Created="2012-08-13 07:02:41 -0400" Modified="2012-08-13 16:42:08 -0400">
-                                                    <Title>modern_node_set_union</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>107,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="214" Type="Text" Created="2012-08-13 07:02:43 -0400" Modified="2012-08-13 16:42:08 -0400">
-                                                    <Title>modern_node_set_structure</Title>
-                                                    <MetaData>
-                                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                                    </MetaData>
-                                                    <TextSettings>
-                                                        <TextSelection>136,0</TextSelection>
-                                                    </TextSettings>
-                                                </BinderItem>
-                                                <BinderItem ID="215" Type="Text" Created="2012-08-13 07:02:46 -0400" Modified="2012-08-13 16:42:08 -0400">
+                                                <BinderItem ID="215" Type="Text" Created="2012-08-13 07:02:46 -0400" Modified="2012-08-14 14:30:22 -0400">
                                                     <Title>modern_node_set_named_value</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>86,0</TextSelection>
+                                                        <TextSelection>0,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
                                             </Children>
@@ -2647,6 +2701,106 @@
                         <TextSelection>0,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
+                <BinderItem ID="167" Type="Text" Created="2012-08-13 06:56:17 -0400" Modified="2012-08-13 16:42:07 -0400">
+                    <Title>modern_node_make_array</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="168" Type="Text" Created="2012-08-13 06:56:19 -0400" Modified="2012-08-13 16:42:07 -0400">
+                    <Title>modern_node_make_union</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>97,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="169" Type="Text" Created="2012-08-13 06:56:20 -0400" Modified="2012-08-13 16:42:07 -0400">
+                    <Title>modern_node_make_structure</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>126,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="188" Type="Text" Created="2012-08-13 07:01:47 -0400" Modified="2012-08-13 16:42:07 -0400">
+                    <Title>modern_node_make_array_type</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="189" Type="Text" Created="2012-08-13 07:01:48 -0400" Modified="2012-08-13 16:42:07 -0400">
+                    <Title>modern_node_make_union_type</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>109,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="190" Type="Text" Created="2012-08-13 07:01:50 -0400" Modified="2012-08-13 16:42:07 -0400">
+                    <Title>modern_node_make_structure_type</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>113,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="212" Type="Text" Created="2012-08-13 07:02:40 -0400" Modified="2012-08-13 16:42:08 -0400">
+                    <Title>modern_node_set_array</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="213" Type="Text" Created="2012-08-13 07:02:41 -0400" Modified="2012-08-13 16:42:08 -0400">
+                    <Title>modern_node_set_union</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>107,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="214" Type="Text" Created="2012-08-13 07:02:43 -0400" Modified="2012-08-13 16:42:08 -0400">
+                    <Title>modern_node_set_structure</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>136,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="268" Type="Text" Created="2012-08-14 16:12:00 -0400" Modified="2012-08-14 16:12:00 -0400">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
             </Children>
         </BinderItem>
     </Binder>
@@ -2682,7 +2836,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="455" Characters="2721" Date="2012-08-14 06:50:09 -0400"></PreviousSession>
+        <PreviousSession Words="795" Characters="7660" Date="2012-08-14 11:46:29 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>
