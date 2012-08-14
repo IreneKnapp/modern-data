@@ -26,7 +26,7 @@ uint64_t fmix(uint64_t k) {
 }
 
 
-void modern_compute_hash(uint8_t *data, size_t length, modern_hash *out) {
+void modern_compute_hash(uint8_t *data, size_t length, struct modern_hash *out) {
     const size_t nblocks = length / 16;
     
     uint64_t h1 = 0;
@@ -99,8 +99,8 @@ void modern_compute_child_hash
     size_t length_prime = sizeof(uint64_t) * 2 + length;
     uint8_t *data_prime = malloc(length_prime);
     
-    ((uint64_t *) data_prime)[0] = parent.a;
-    ((uint64_t *) data_prime)[1] = parent.b;
+    ((uint64_t *) data_prime)[0] = parent->a;
+    ((uint64_t *) data_prime)[1] = parent->b;
     memcpy(data_prime + sizeof(uint64_t) * 2, data, length);
     
     modern_compute_hash(data_prime, length_prime, out);
