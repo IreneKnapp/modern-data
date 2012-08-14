@@ -145,6 +145,13 @@ modern_deserialize_memory
 modern_get_memory_allocating_vfile
 ();</Text>
         </Document>
+        <Document ID="210">
+            <Title>modern_node_set_utf8</Title>
+            <Text>void
+modern_node_set_utf8
+(modern *node,
+ uint8_t *data);</Text>
+        </Document>
         <Document ID="44">
             <Title>modern_stream_float128</Title>
             <Text>void
@@ -152,13 +159,6 @@ modern_get_memory_allocating_vfile
 (void *processor_state,
  void *stream_state,
  long double value);</Text>
-        </Document>
-        <Document ID="210">
-            <Title>modern_node_set_utf8</Title>
-            <Text>void
-modern_node_set_utf8
-(modern *node,
- uint8_t *data);</Text>
         </Document>
         <Document ID="39">
             <Title>modern_stream_int32</Title>
@@ -189,17 +189,16 @@ modern_deserialize_file
  modern_context *context,
  FILE *file);</Text>
         </Document>
+        <Document ID="241">
+            <Title>modern_get_file_vfile</Title>
+            <Text>struct modern_vfile *
+modern_get_file_vfile
+();</Text>
+        </Document>
         <Document ID="50">
             <Title>modern_stream_blob_end</Title>
             <Text>void
 (*modern_stream_blob_end)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
-        <Document ID="51">
-            <Title>modern_stream_array_start</Title>
-            <Text>void
-(*modern_stream_array_start)
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
@@ -226,11 +225,12 @@ modern_node_set_blob
 modern_node_get_int16_type
 ();</Text>
         </Document>
-        <Document ID="241">
-            <Title>modern_get_file_vfile</Title>
-            <Text>struct modern_vfile *
-modern_get_file_vfile
-();</Text>
+        <Document ID="51">
+            <Title>modern_stream_array_start</Title>
+            <Text>void
+(*modern_stream_array_start)
+(void *processor_state,
+ void *stream_state);</Text>
         </Document>
         <Document ID="146">
             <Title>modern_node_get_sigma_value</Title>
@@ -353,14 +353,14 @@ modern_node_set_union
  void *stream_state,
  struct modern_hash *field);</Text>
         </Document>
+        <Document ID="243">
+            <Title>Predefined Streams</Title>
+        </Document>
         <Document ID="178">
             <Title>modern_node_get_int64_type</Title>
             <Text>modern *
 modern_node_get_int64_type
 ();</Text>
-        </Document>
-        <Document ID="243">
-            <Title>Predefined Streams</Title>
         </Document>
         <Document ID="61">
             <Title>modern_stream_type_family_is_next</Title>
@@ -792,13 +792,25 @@ modern_node_get_nat8
             <Title>Semantics</Title>
             <Text>In Modern Data, the fundamental in-memory datatype is the “modern node”, which is a representation of, loosely, either a value or a type.  If we wish to specify further, we may occasionally refer to a “modern type” or “modern value”, but these concepts do not map to actual host-language datatypes; only “modern node” does.
 
-The operations on a modern node are serialization and deserialization.  Serialization is of a stream of modern nodes in some “modern context”, and produces a stream of bytes.  Deserialization is of a stream of bytes in some modern context, and produces a stream of modern nodes.
+The operations on a modern node are serialization and deserialization.  Serialization is performed on a stream of modern nodes in some “modern context”, and produces a stream of bytes.  Deserialization is performed on a stream of bytes in some modern context, and produces a stream of modern nodes.
 
-Although simple applications which merely wish to exchange and act on data need never use anything but the default context, it is nonetheless a concept worth understanding.  The context is internally a hash table of modern types (and occasionally modern values).  The hash key is determined in a way that captures the notion of type equality, by placing the modern node in an internal canonical form and computing a hash function of that.  (Specifically, the Murmur 3 hash is used, in its 64-bit-little-endian variant.)  Any modern node which is in the hash table is “in scope” in that context.
+Although simple applications which merely wish to exchange and act on data need never use anything but the default context, it is nonetheless a concept worth understanding.  The context is internally a hash table of modern types (and occasionally modern values).  The hash key is determined in a way that captures the notion of type equality, by placing the modern node in a canonical form and computing a hash function of that.  Any modern node which is in the hash table is “in scope” in that context.
 
-Importantly, a modern type must be in scope in the given context before a value of that type can be serialized or deserialized.  The high-level “node-based” portion of the library will check whether a value’s type is in context when serializing, and emit additional instructions which bring it into context if it is not, mutating the context object which it is passed to make note of the fact.  Similarly, when deserializing, if a value’s type is not in context, an error is produced and processing halts.  (To avoid security holes caused by different implementations responding to errors in different ways, processing is specified to always halt immediately upon the first error encountered.)
+Importantly, a modern type must be in scope in the given context before a value of that type can be serialized or deserialized. The high-level “node-based” portion of the library will check whether a value’s type is in context when serializing, and emit additional instructions which bring it into context if it is not, mutating the context object which it is passed to make note of the fact.  Similarly, when deserializing, if a value’s type is not in context, an error is produced and processing halts.  (To avoid security holes caused by different implementations responding to errors in different ways, processing is specified to always halt immediately upon the first error encountered.)
 
-The low-level “stream-based” portion of the library does no such checking, as it tracks very little internal state, leaving that task to the client code.  The client code is thus responsible for ensuring that types are in context before they are used, both when serializing and when deserializing.</Text>
+The low-level “stream-based” portion of the library does no such checking, as it tracks very little internal state, leaving that task to the client code.  The client code is thus responsible for ensuring that types are in context before they are used, both when serializing and when deserializing.
+
+Cyclic structures, both at the type level and at the value level, can be created with either of two mechanisms: lambda expressions, and inductive families.  The details of how this is done are left to a later chapter; it is enough to know that which mechanism is chosen and the details of how it is used are not part of a modern node's identity; that is, they are all canonicalized to the same form.  As with the scope issue, the node-based portion of the library hides the issue of flattening cyclic structures from the client code, while the stream-based portion exposes it and places the burden on the client.
+
+Note also that the mechanisms of lambda expressions and inductive values are also both available in the node-based way of working; they are never introduced automatically, but are honored when they are introduced manually.  The reason for this half-exposure is to ease construction of cyclic types, as detailed below.
+
+The reader may be confused at this juncture: In other systems, lambda expressions are typically applicable only to values, while inductive families are typically applicable only to types.  In Modern Data, both mechanisms are applicable to both types and values.  This is not actually a necessary consequence of the ability to use types and values interchangeably in other situations, but it is certainly consistent with that design and makes more sense in that light.
+
+Although many functional languages are additionally "purely functional", meaning that their variables are immutable, Modern Data values (but not types) can be mutated in memory in some languages.  This is to make it easier to create cyclic structures, which could not otherwise be done in languages without recursive binding.  The semantics of mutation are that all references to the old node become references to the new node.
+
+The reason for disallowing mutation of nodes which are types is that it would not be possible in general to update preexisting values of that type to conform to the new definition automatically.  One solution which may come to mind is giving type nodes copy-on-write semantics, but this would necessitate large amounts of redundant copying in the case of making changes at several locations within a cyclically-structured type.  So, the burden of breaking cycles in types is placed on the client code.
+
+Of course, it is expected that sets of types for some particular purpose will be constructed in most situations not through imperative code but through the use of an interactive editor having Modern Data as its native format.  The ease with which what would be called a schema in other systems can be serialized and deserialized obviates the need to construct one by hand, most of the time.  As such, the details of cycle-breaking should seldom be an issue.</Text>
         </Document>
         <Document ID="104">
             <Title>modern_autorelease_pool_get_allocator</Title>

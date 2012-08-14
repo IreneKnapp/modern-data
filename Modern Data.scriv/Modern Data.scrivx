@@ -17,14 +17,14 @@
                         <TextSelection>0,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
-                <BinderItem ID="260" Type="Text" Created="2012-08-13 16:44:18 -0400" Modified="2012-08-13 17:08:01 -0400">
+                <BinderItem ID="260" Type="Text" Created="2012-08-13 16:44:18 -0400" Modified="2012-08-14 06:50:19 -0400">
                     <Title>Semantics</Title>
                     <MetaData>
                         <IncludeInCompile>Yes</IncludeInCompile>
                         <NotesTextSelection>0,0</NotesTextSelection>
                     </MetaData>
                     <TextSettings>
-                        <TextSelection>2193,0</TextSelection>
+                        <TextSelection>4914,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
                 <BinderItem ID="5" Type="Text" Created="2012-08-10 16:11:28 -0400" Modified="2012-08-13 15:59:31 -0400">
@@ -2682,7 +2682,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="272" Characters="915" Date="2012-08-13 15:52:26 -0400"></PreviousSession>
+        <PreviousSession Words="455" Characters="2721" Date="2012-08-14 06:50:09 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>
