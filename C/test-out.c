@@ -1,3 +1,4 @@
+#include <string.h>
 #include "modern.h"
 
 
@@ -14,6 +15,7 @@ int main(int argc, char **argv) {
     struct modern_hash initial_namespace_hash;
     modern_get_initial_namespace_hash(&initial_namespace_hash);
 
+	uint8_t *s_combinator_name = (uint8_t *) "S";
     struct modern_hash s_combinator_name_hash;
     modern_compute_child_hash
       (&initial_namespace_hash, (uint8_t *) "S", 1, &s_combinator_name_hash);
@@ -24,19 +26,10 @@ int main(int argc, char **argv) {
     uint8_t *local_namespace = (uint8_t *) "com.ireneknapp.example";
     struct modern_hash local_namespace_hash;
     modern_compute_hash
-      (local_namespace, strlen(local_namespace), &local_namespace_hash);
+      (local_namespace, strlen((char *) local_namespace), &local_namespace_hash);
     
-    uint8_t *left_name = (uint8_t *) "left";
-    struct modern_hash left_name_hash;
-    modern_compute_child_hash
-      (&local_namespace_hash, left_name, strlen(left_name),
-       &left_name_hash);
-    
-    uint8_t *right_name = (uint8_t *) "right";
-    struct modern_hash right_name_hash;
-    modern_compute_child_hash
-      (&local_namespace_hash, right_name, strlen(right_name),
-       &right_name_hash);
+    modern *leaf_type = modern_node_make_type_index(0);
+    modern_autorelease(pool, leaf_type);
     
     modern *tree_subself_type = modern_node_make_type_index(1);
     modern_autorelease(pool, tree_subself_type);
@@ -44,44 +37,30 @@ int main(int argc, char **argv) {
     modern *tree_self_type =
       modern_node_make_apply(tree_subself_type, leaf_type);
     modern_autorelease(pool, tree_self_type);
-
-    modern_hash *interior_name_hashes[2];
-    interior_name_hashes[0] = left_name_hash;
-    interior_name_hashes[1] = right_name_hash;
     
-    modern *interior_types[2];
-    interior_types[0] = tree_self_type;
-    interior_types[1] = tree_self_type;
+    modern *tree_unnamed_type =
+      modern_node_make_apply(s_combinator, tree_self_type);
     
-    modern *interior_type =
-      modern_node_make_structure_type
-        (2, &interior_name_hashes, &interior_types);
+    uint8_t *tree_name = (uint8_t *) "Tree";
+    struct modern_hash tree_name_hash;
+    modern_compute_child_hash
+      (&local_namespace_hash, tree_name, strlen((char *) tree_name), &tree_name_hash);
     
-    modern *leaf_type = modern_node_make_type_index(0);
-    modern_autorelease(pool, leaf_type);
+    modern *tree_type =
+      modern_node_make_named_type(&tree_name_hash, tree_unnamed_type);
     
-    modern_hash *union_name_hashes[2];
-    union_name_hashes[0] = interior_name_hash;
-    union_name_hashes[1] = leaf_name_hash;
-    
-    modern *union_types[2];
-    union_types[0] = interior_type;
-    union_types[1] = leaf_type;
-    
-    modern *exterior_type =
-      modern_node_make_union_type(2, &union_name_hashes, &union_types);
 /*
 (named "Tree"
   (apply "S"
     (lambda
       (lambda
-        (union ("interior" (structure ("left" (apply 1 0))
-                                      ("right" (apply 1 0))))
-               ("leaf" 0))))))
+        (union (structure (apply 1 0) (apply 1 0))
+               0)))))
 */
+    //modern *value = modern_node_make_named_value(tree_type, subvalue);
     
     FILE *file = fopen("output.modern", "wb");
-    modern_serialize_file(value, context, file);
+    modern_serialize_file(tree_type, context, file);
     fclose(file);
     
     return 0;
