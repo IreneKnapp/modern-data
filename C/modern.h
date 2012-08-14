@@ -368,7 +368,7 @@ extern void *modern_output_stream_memory_allocating
   (modern_autorelease_pool *pool,
    size_t *length);
 extern uint8_t *modern_output_stream_memory_allocating_result
-  (void *stream_state, size_t *length)
+  (void *stream_state, size_t *length);
 extern void *modern_output_stream_file
   (modern_autorelease_pool *pool,
    FILE *file);
