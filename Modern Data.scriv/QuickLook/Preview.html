@@ -45,34 +45,10 @@ Node types “lambda”, “apply”, “index” (as in De Bruijn), and “fami
 Things like void (*modern_stream_type_definition_int8)(void *processor, void *context) are callbacks invoked when type IDs are read.  All the functions in that struct are callbacks that are invoked on things that happen during streaming parsing.  The API for streaming generation is the same...</p>
 </li>
 <li>
-<p class="binderItem"><strong>C Library Reference</strong></p>
+<p class="binderItem"><strong>C library reference</strong></p>
 </li>
 <hr/>
 <ul>
-<li>
-<p class="binderItem"><strong>Types</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>The "modern" type</strong><br/>typedef void modern;<br/>
-<br/>
-The “modern” type is a polymorphic node for object-oriented access to both types and values.  Because it is not limited to values, it is not called “modern_data”; it is simply called “modern” and the library user is encouraged to think of it as its own thing.<br/>
-<br/>
-Note that this is true in all the versions of the library for non-functional languages, but in languages which support generalized algebraic datatypes, the situation is more complicated; see for example the Haskell ve...</p>
-</li>
-<li>
-<p class="binderItem"><strong>Modern contexts</strong><br/>typedef void modern_context;</p>
-</li>
-<li>
-<p class="binderItem"><strong>Modern autorelease pools</strong><br/>typedef void modern_autorelease_pool;</p>
-</li>
-<li>
-<p class="binderItem"><strong>Hashes</strong><br/>struct modern_hash {<br/>
-    uint64_t a;<br/>
-    uint64_t b;<br/>
-};</p>
-</li>
 <li>
 <p class="binderItem"><strong>Library instances</strong></p>
 </li>
@@ -157,6 +133,882 @@ modern_library_finalize<br/>
 <p class="binderItem"><strong>modern_allocator_realloc</strong><br/>void *<br/>
 (*modern_allocator_realloc)<br/>
 (void *memory, size_t size);</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Memory management</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Modern autorelease pools</strong><br/>typedef void modern_autorelease_pool;</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_make_autorelease_pool</strong><br/>modern_autorelease_pool *<br/>
+modern_make_autorelease_pool<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_autorelease_pool_release</strong><br/>void<br/>
+modern_autorelease_pool_release<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_retain</strong><br/>void<br/>
+modern_retain<br/>
+(modern_library *library,<br/>
+ void *retainable);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_release</strong><br/>void<br/>
+modern_release<br/>
+(modern_library *library,<br/>
+ void *retainable);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_autorelease</strong><br/>void<br/>
+modern_autorelease<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
+ void *retainable);</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Virtual files</strong><br/>struct modern_vfile {<br/>
+    …<br/>
+};</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_vfile_read</strong><br/>ssize_t<br/>
+(*modern_vfile_read)<br/>
+(void *vfile_state,<br/>
+ uint8_t *buffer,<br/>
+ size_t length);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_vfile_write</strong><br/>ssize_t<br/>
+(*modern_vfile_write)<br/>
+(void *vfile_state,<br/>
+ uint8_t *buffer,<br/>
+ size_t length);</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Hashing</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Hashes</strong><br/>struct modern_hash {<br/>
+    uint64_t a;<br/>
+    uint64_t b;<br/>
+};</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_compute_hash</strong><br/>void<br/>
+modern_compute_hash<br/>
+(uint8_t *data,<br/>
+ size_t length,<br/>
+ struct modern_hash *out);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_compute_child_hash</strong><br/>void<br/>
+modern_compute_child_hash<br/>
+(struct modern_hash *parent,<br/>
+ uint8_t *data,<br/>
+ size_t length,<br/>
+ struct modern_hash *out);</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Node-based object model</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>The "modern" type</strong><br/>typedef void modern;<br/>
+<br/>
+The “modern” type is a polymorphic node for object-oriented access to both types and values.  Because it is not limited to values, it is not called “modern_data”; it is simply called “modern” and the library user is encouraged to think of it as its own thing.<br/>
+<br/>
+Note that this is true in all the versions of the library for non-functional languages, but in languages which support generalized algebraic datatypes, the situation is more complicated; see for example the Haskell ve...</p>
+</li>
+<li>
+<p class="binderItem"><strong>Node Types</strong><br/>enum modern_node_type {<br/>
+    …<br/>
+};</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>int8_value_modern_node_type</strong><br/>int8_value_modern_node_type = 1,</p>
+</li>
+<li>
+<p class="binderItem"><strong>int16_value_modern_node_type</strong><br/>int16_value_modern_node_type = 2,</p>
+</li>
+<li>
+<p class="binderItem"><strong>int32_value_modern_node_type</strong><br/>int32_value_modern_node_type = 3,</p>
+</li>
+<li>
+<p class="binderItem"><strong>int64_value_modern_node_type</strong><br/>int64_value_modern_node_type = 4,</p>
+</li>
+<li>
+<p class="binderItem"><strong>nat8_value_modern_node_type</strong><br/>nat8_value_modern_node_type = 5,</p>
+</li>
+<li>
+<p class="binderItem"><strong>nat16_value_modern_node_type</strong><br/>nat16_value_modern_node_type = 6,</p>
+</li>
+<li>
+<p class="binderItem"><strong>nat32_value_modern_node_type</strong><br/>nat32_value_modern_node_type = 7,</p>
+</li>
+<li>
+<p class="binderItem"><strong>nat64_value_modern_node_type</strong><br/>nat64_value_modern_node_type = 8,</p>
+</li>
+<li>
+<p class="binderItem"><strong>float32_value_modern_node_type</strong><br/>float32_value_modern_node_type = 9,</p>
+</li>
+<li>
+<p class="binderItem"><strong>float64_value_modern_node_type</strong><br/>float64_value_modern_node_type = 10,</p>
+</li>
+<li>
+<p class="binderItem"><strong>float128_value_modern_node_type</strong><br/>float128_value_modern_node_type = 11,</p>
+</li>
+<li>
+<p class="binderItem"><strong>utf8_value_modern_node_type</strong><br/>utf8_value_modern_node_type = 12,</p>
+</li>
+<li>
+<p class="binderItem"><strong>blob_value_modern_node_type</strong><br/>blob_value_modern_node_type = 13,</p>
+</li>
+<li>
+<p class="binderItem"><strong>sigma_value_modern_node_type</strong><br/>sigma_value_modern_node_type = 14,</p>
+</li>
+<li>
+<p class="binderItem"><strong>named_value_modern_node_type</strong><br/>named_value_modern_node_type = 15,</p>
+</li>
+<li>
+<p class="binderItem"><strong>int8_type_modern_node_type</strong><br/>int8_type_modern_node_type = 16,</p>
+</li>
+<li>
+<p class="binderItem"><strong>int16_type_modern_node_type</strong><br/>int16_type_modern_node_type = 17,</p>
+</li>
+<li>
+<p class="binderItem"><strong>int32_type_modern_node_type</strong><br/>int32_type_modern_node_type = 18,</p>
+</li>
+<li>
+<p class="binderItem"><strong>int64_type_modern_node_type</strong><br/>int64_type_modern_node_type = 19,</p>
+</li>
+<li>
+<p class="binderItem"><strong>nat8_type_modern_node_type</strong><br/>nat8_type_modern_node_type = 20,</p>
+</li>
+<li>
+<p class="binderItem"><strong>nat16_type_modern_node_type</strong><br/>nat16_type_modern_node_type = 21,</p>
+</li>
+<li>
+<p class="binderItem"><strong>nat32_type_modern_node_type</strong><br/>nat32_type_modern_node_type = 22,</p>
+</li>
+<li>
+<p class="binderItem"><strong>nat64_type_modern_node_type</strong><br/>nat64_type_modern_node_type = 23,</p>
+</li>
+<li>
+<p class="binderItem"><strong>float32_type_modern_node_type</strong><br/>float32_type_modern_node_type = 24,</p>
+</li>
+<li>
+<p class="binderItem"><strong>float64_type_modern_node_type</strong><br/>float64_type_modern_node_type = 25,</p>
+</li>
+<li>
+<p class="binderItem"><strong>float128_type_modern_node_type</strong><br/>float128_type_modern_node_type = 26,</p>
+</li>
+<li>
+<p class="binderItem"><strong>utf8_type_modern_node_type</strong><br/>utf8_type_modern_node_type = 27,</p>
+</li>
+<li>
+<p class="binderItem"><strong>blob_type_modern_node_type</strong><br/>blob_type_modern_node_type = 28,</p>
+</li>
+<li>
+<p class="binderItem"><strong>sigma_type_modern_node_type</strong><br/>sigma_type_modern_node_type = 29,</p>
+</li>
+<li>
+<p class="binderItem"><strong>named_type_modern_node_type</strong><br/>named_type_modern_node_type = 30,</p>
+</li>
+<li>
+<p class="binderItem"><strong>universe_type_modern_node_type</strong><br/>universe_type_modern_node_type = 31,</p>
+</li>
+<li>
+<p class="binderItem"><strong>lambda_modern_node_type</strong><br/>lambda_modern_node_type = 32,</p>
+</li>
+<li>
+<p class="binderItem"><strong>apply_modern_node_type</strong><br/>apply_modern_node_type = 33,</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Reading</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Values</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_node_get_node_type</strong><br/>enum modern_node_type<br/>
+modern_node_get_node_type<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_value_type</strong><br/>modern *<br/>
+modern_node_get_value_type<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_int8</strong><br/>int8_t<br/>
+modern_node_get_int8<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_int16</strong><br/>int16_t<br/>
+modern_node_get_int16<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_int32</strong><br/>int32_t<br/>
+modern_node_get_int32<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_int64</strong><br/>int64_t<br/>
+modern_node_get_int64<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_nat8</strong><br/>uint8_t<br/>
+modern_node_get_nat8<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_nat16</strong><br/>uint16_t<br/>
+modern_node_get_nat16<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_nat32</strong><br/>uint32_t<br/>
+modern_node_get_nat32<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_nat64</strong><br/>uint64_t<br/>
+modern_node_get_nat64<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_float32</strong><br/>float<br/>
+modern_node_get_float32<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_float64</strong><br/>double<br/>
+modern_node_get_float64<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_float128</strong><br/>long double<br/>
+modern_node_get_float128<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_utf8_bytes</strong><br/>size_t<br/>
+modern_node_get_utf8_bytes<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_utf8_data_piece</strong><br/>uint8_t *<br/>
+modern_node_get_utf8_data_piece<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ size_t offset,<br/>
+ size_t bytes);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_blob_bytes</strong><br/>size_t<br/>
+modern_node_get_blob_bytes<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_blob_data_piece</strong><br/>uint8_t *<br/>
+modern_node_get_blob_data_piece<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ size_t offset,<br/>
+ size_t bytes);</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Types</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_node_get_sigma_value</strong><br/>modern *<br/>
+modern_node_get_sigma_value<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_sigma_successor</strong><br/>modern *<br/>
+modern_node_get_sigma_successor<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_named_type_name</strong><br/>struct modern_hash *<br/>
+modern_node_get_named_type_name<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_named_type_content_type</strong><br/>modern *<br/>
+modern_node_get_named_type_content_type<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_universe_type_level</strong><br/>uint64_t<br/>
+modern_node_get_universe_type_level<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_lambda_content</strong><br/>modern *<br/>
+modern_node_get_lambda_content<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_apply_left</strong><br/>modern *<br/>
+modern_node_get_apply_left<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_get_apply_right</strong><br/>modern *<br/>
+modern_node_get_apply_right<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Construction</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Values</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_node_make_int8</strong><br/>modern *<br/>
+modern_node_make_int8<br/>
+(modern_library *library,<br/>
+ int8_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_int16</strong><br/>modern *<br/>
+modern_node_make_int16<br/>
+(modern_library *library,<br/>
+ int16_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_int32</strong><br/>modern *<br/>
+modern_node_make_int32<br/>
+(modern_library *library,<br/>
+ int32_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_int64</strong><br/>modern *<br/>
+modern_node_make_int64<br/>
+(modern_library *library,<br/>
+ int64_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_nat8</strong><br/>modern *<br/>
+modern_node_make_nat8<br/>
+(modern_library *library,<br/>
+ uint8_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_nat16</strong><br/>modern *<br/>
+modern_node_make_nat16<br/>
+(modern_library *library,<br/>
+ uint16_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_nat32</strong><br/>modern *<br/>
+modern_node_make_nat32<br/>
+(modern_library *library,<br/>
+ uint32_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_nat64</strong><br/>modern *<br/>
+modern_node_make_nat64<br/>
+(modern_library *library,<br/>
+ uint64_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_float32</strong><br/>modern *<br/>
+modern_node_make_float32<br/>
+(modern_library *library,<br/>
+ float value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_float64</strong><br/>modern *<br/>
+modern_node_make_float64<br/>
+(modern_library *library,<br/>
+ double value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_float128</strong><br/>modern *<br/>
+modern_node_make_float128<br/>
+(modern_library *library,<br/>
+ long double value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_utf8</strong><br/>modern *<br/>
+modern_node_make_utf8<br/>
+(modern_library *library,<br/>
+ uint8_t *data);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_blob</strong><br/>modern *<br/>
+modern_node_make_blob<br/>
+(modern_library *library,<br/>
+ uint8_t *data,<br/>
+ size_t bytes);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_sigma</strong><br/>modern *<br/>
+modern_node_make_sigma<br/>
+(modern_library *library,<br/>
+ modern *type,<br/>
+ modern *field_value,<br/>
+ modern *successor_value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_named_value</strong><br/>modern *<br/>
+modern_node_make_named_value<br/>
+(modern_library *library,<br/>
+ modern *type,<br/>
+ modern *value);</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Types</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_node_make_int8_type</strong><br/>modern *<br/>
+modern_node_make_int8_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_int16_type</strong><br/>modern *<br/>
+modern_node_make_int16_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_int32_type</strong><br/>modern *<br/>
+modern_node_make_int32_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_int64_type</strong><br/>modern *<br/>
+modern_node_make_int64_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_nat8_type</strong><br/>modern *<br/>
+modern_node_make_nat8_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_nat16_type</strong><br/>modern *<br/>
+modern_node_make_nat16_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_nat32_type</strong><br/>modern *<br/>
+modern_node_make_nat32_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_nat64_type</strong><br/>modern *<br/>
+modern_node_make_nat64_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_float32_type</strong><br/>modern *<br/>
+modern_node_make_float32_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_float64_type</strong><br/>modern *<br/>
+modern_node_make_float64_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_float128_type</strong><br/>modern *<br/>
+modern_node_make_float128_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_utf8_type</strong><br/>modern *<br/>
+modern_node_make_utf8_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_blob_type</strong><br/>modern *<br/>
+modern_node_make_blob_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_sigma_type</strong><br/>modern *<br/>
+modern_node_make_sigma_type<br/>
+(modern_library *library,<br/>
+ modern *field_type, modern *successor);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_named_type</strong><br/>modern *<br/>
+modern_node_make_named_type<br/>
+(modern_library *library,<br/>
+ struct modern_hash *name,<br/>
+ modern *content_type);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_universe_type</strong><br/>modern *<br/>
+modern_node_make_universe_type<br/>
+(modern_library *library,<br/>
+ uint64_t level);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_lambda</strong><br/>modern *<br/>
+modern_node_make_lambda<br/>
+(modern_library *library,<br/>
+ modern *content);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_apply</strong><br/>modern *<br/>
+modern_node_make_apply<br/>
+(modern_library *library,<br/>
+ modern *left,<br/>
+ modern *right);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_type_index</strong><br/>modern *<br/>
+modern_node_make_type_index<br/>
+(modern_library *library,<br/>
+ uint64_t index);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_type_family</strong><br/>modern *<br/>
+modern_node_make_type_family<br/>
+(modern_library *library,<br/>
+ uint64_t n_items,<br/>
+ modern **types);</p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Mutation</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Values</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_node_set_int8</strong><br/>void<br/>
+modern_node_set_int8<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ int8_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_int16</strong><br/>void<br/>
+modern_node_set_int16<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ int16_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_int32</strong><br/>void<br/>
+modern_node_set_int32<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ int32_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_int64</strong><br/>void<br/>
+modern_node_set_int64<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ int64_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_nat8</strong><br/>void<br/>
+modern_node_set_nat8<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ uint8_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_nat16</strong><br/>void<br/>
+modern_node_set_nat16<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ uint16_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_nat32</strong><br/>void<br/>
+modern_node_set_nat32<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ uint32_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_nat64</strong><br/>void<br/>
+modern_node_set_nat64<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ uint64_t value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_float32</strong><br/>void<br/>
+modern_node_set_float32<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ float value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_float64</strong><br/>void<br/>
+modern_node_set_float64<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ double value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_float128</strong><br/>void<br/>
+modern_node_set_float128<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ long double value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_utf8</strong><br/>void<br/>
+modern_node_set_utf8<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ uint8_t *data);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_blob</strong><br/>void<br/>
+modern_node_set_blob<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ uint8_t *data,<br/>
+ size_t bytes);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_named_value</strong><br/>void<br/>
+modern_node_set_named_value<br/>
+(modern_library *library,<br/>
+ modern *node,<br/>
+ modern *type,<br/>
+ modern *value);</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Types are immutable</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Contexts</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Modern contexts</strong><br/>typedef void modern_context;</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_make_initial_context</strong><br/>modern_context *<br/>
+modern_make_initial_context<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_copy_context</strong><br/>modern_context *<br/>
+modern_copy_context<br/>
+(modern_library *library,<br/>
+ modern_context *context);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_get_in_context</strong><br/>int<br/>
+modern_get_in_context<br/>
+(modern_library *library,<br/>
+ modern_context *context,<br/>
+ modern *node);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_add_to_context</strong><br/>void<br/>
+modern_add_to_context<br/>
+(modern_library *library,<br/>
+ modern_context *context,<br/>
+ modern *node);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_get_from_context</strong><br/>modern *<br/>
+modern_get_from_context<br/>
+(modern_library *library,<br/>
+ modern_context *context,<br/>
+ struct modern_hash *hash);</p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Node-based deserialization</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_deserialize_memory</strong><br/>modern *<br/>
+modern_deserialize_memory<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
+ modern_context *context,<br/>
+ uint8_t *data,<br/>
+ size_t length);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_deserialize_file</strong><br/>modern *<br/>
+modern_deserialize_file<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
+ modern_context *context,<br/>
+ FILE *file);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_deserialize_fd</strong><br/>modern *<br/>
+modern_deserialize_fd<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
+ modern_context *context,<br/>
+ int fd);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_deserialize_vfile</strong><br/>modern *<br/>
+modern_deserialize_vfile<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
+ modern_context *context,<br/>
+ struct modern_vfile *vfile,<br/>
+ void *vfile_state);</p>
+</li>
+<li>
+<p class="binderItem"><strong>moden_deserialize_input_stream</strong><br/>modern *<br/>
+modern_deserialize_input_stream<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
+ modern_context *context,<br/>
+ void *processor_state,<br/>
+ void *stream_state);</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Node-based serialization</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_serialize_memory_buffer</strong><br/>void<br/>
+modern_serialize_memory_buffer<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern_context *context,<br/>
+ uint8_t *buffer,<br/>
+ size_t *length);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_serialize_memory_allocating</strong><br/>uint8_t *<br/>
+modern_serialize_memory_allocating<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern_context *context,<br/>
+ size_t *length);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_serialize_file</strong><br/>void<br/>
+modern_serialize_file<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern_context *context,<br/>
+ FILE *file);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_serialize_fd</strong><br/>void<br/>
+modern_serialize_fd<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern_context *context,<br/>
+ int fd);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_serialize_vfile</strong><br/>void<br/>
+modern_serialize_vfile<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern_context *context,<br/>
+ struct modern_vfile *vfile,<br/>
+ void *vfile_state);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_serialize_output_stream</strong><br/>modern *<br/>
+modern_serialize_output_stream<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern_context *context,<br/>
+ struct modern_stream *stream);</p>
 </li>
 </ul>
 <hr/>
@@ -536,856 +1388,7 @@ modern_library_finalize<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Virtual Files</strong><br/>struct modern_vfile {<br/>
-    …<br/>
-};</p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_vfile_read</strong><br/>ssize_t<br/>
-(*modern_vfile_read)<br/>
-(void *vfile_state,<br/>
- uint8_t *buffer,<br/>
- size_t length);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_vfile_write</strong><br/>ssize_t<br/>
-(*modern_vfile_write)<br/>
-(void *vfile_state,<br/>
- uint8_t *buffer,<br/>
- size_t length);</p>
-</li>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Node Types</strong><br/>enum modern_node_type {<br/>
-    …<br/>
-};</p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>int8_value_modern_node_type</strong><br/>int8_value_modern_node_type = 1,</p>
-</li>
-<li>
-<p class="binderItem"><strong>int16_value_modern_node_type</strong><br/>int16_value_modern_node_type = 2,</p>
-</li>
-<li>
-<p class="binderItem"><strong>int32_value_modern_node_type</strong><br/>int32_value_modern_node_type = 3,</p>
-</li>
-<li>
-<p class="binderItem"><strong>int64_value_modern_node_type</strong><br/>int64_value_modern_node_type = 4,</p>
-</li>
-<li>
-<p class="binderItem"><strong>nat8_value_modern_node_type</strong><br/>nat8_value_modern_node_type = 5,</p>
-</li>
-<li>
-<p class="binderItem"><strong>nat16_value_modern_node_type</strong><br/>nat16_value_modern_node_type = 6,</p>
-</li>
-<li>
-<p class="binderItem"><strong>nat32_value_modern_node_type</strong><br/>nat32_value_modern_node_type = 7,</p>
-</li>
-<li>
-<p class="binderItem"><strong>nat64_value_modern_node_type</strong><br/>nat64_value_modern_node_type = 8,</p>
-</li>
-<li>
-<p class="binderItem"><strong>float32_value_modern_node_type</strong><br/>float32_value_modern_node_type = 9,</p>
-</li>
-<li>
-<p class="binderItem"><strong>float64_value_modern_node_type</strong><br/>float64_value_modern_node_type = 10,</p>
-</li>
-<li>
-<p class="binderItem"><strong>float128_value_modern_node_type</strong><br/>float128_value_modern_node_type = 11,</p>
-</li>
-<li>
-<p class="binderItem"><strong>utf8_value_modern_node_type</strong><br/>utf8_value_modern_node_type = 12,</p>
-</li>
-<li>
-<p class="binderItem"><strong>blob_value_modern_node_type</strong><br/>blob_value_modern_node_type = 13,</p>
-</li>
-<li>
-<p class="binderItem"><strong>sigma_value_modern_node_type</strong><br/>sigma_value_modern_node_type = 14,</p>
-</li>
-<li>
-<p class="binderItem"><strong>named_value_modern_node_type</strong><br/>named_value_modern_node_type = 15,</p>
-</li>
-<li>
-<p class="binderItem"><strong>int8_type_modern_node_type</strong><br/>int8_type_modern_node_type = 16,</p>
-</li>
-<li>
-<p class="binderItem"><strong>int16_type_modern_node_type</strong><br/>int16_type_modern_node_type = 17,</p>
-</li>
-<li>
-<p class="binderItem"><strong>int32_type_modern_node_type</strong><br/>int32_type_modern_node_type = 18,</p>
-</li>
-<li>
-<p class="binderItem"><strong>int64_type_modern_node_type</strong><br/>int64_type_modern_node_type = 19,</p>
-</li>
-<li>
-<p class="binderItem"><strong>nat8_type_modern_node_type</strong><br/>nat8_type_modern_node_type = 20,</p>
-</li>
-<li>
-<p class="binderItem"><strong>nat16_type_modern_node_type</strong><br/>nat16_type_modern_node_type = 21,</p>
-</li>
-<li>
-<p class="binderItem"><strong>nat32_type_modern_node_type</strong><br/>nat32_type_modern_node_type = 22,</p>
-</li>
-<li>
-<p class="binderItem"><strong>nat64_type_modern_node_type</strong><br/>nat64_type_modern_node_type = 23,</p>
-</li>
-<li>
-<p class="binderItem"><strong>float32_type_modern_node_type</strong><br/>float32_type_modern_node_type = 24,</p>
-</li>
-<li>
-<p class="binderItem"><strong>float64_type_modern_node_type</strong><br/>float64_type_modern_node_type = 25,</p>
-</li>
-<li>
-<p class="binderItem"><strong>float128_type_modern_node_type</strong><br/>float128_type_modern_node_type = 26,</p>
-</li>
-<li>
-<p class="binderItem"><strong>utf8_type_modern_node_type</strong><br/>utf8_type_modern_node_type = 27,</p>
-</li>
-<li>
-<p class="binderItem"><strong>blob_type_modern_node_type</strong><br/>blob_type_modern_node_type = 28,</p>
-</li>
-<li>
-<p class="binderItem"><strong>sigma_type_modern_node_type</strong><br/>sigma_type_modern_node_type = 29,</p>
-</li>
-<li>
-<p class="binderItem"><strong>named_type_modern_node_type</strong><br/>named_type_modern_node_type = 30,</p>
-</li>
-<li>
-<p class="binderItem"><strong>universe_type_modern_node_type</strong><br/>universe_type_modern_node_type = 31,</p>
-</li>
-<li>
-<p class="binderItem"><strong>lambda_modern_node_type</strong><br/>lambda_modern_node_type = 32,</p>
-</li>
-<li>
-<p class="binderItem"><strong>apply_modern_node_type</strong><br/>apply_modern_node_type = 33,</p>
-</li>
-</ul>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Memory management</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_make_autorelease_pool</strong><br/>modern_autorelease_pool *<br/>
-modern_make_autorelease_pool<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_autorelease_pool_release</strong><br/>void<br/>
-modern_autorelease_pool_release<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern_autorelease_pool *pool);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_autorelease_pool_get_allocator</strong><br/>struct modern_allocator *<br/>
-modern_autorelease_pool_get_allocator<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern_autorelease_pool *pool);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_retain</strong><br/>void<br/>
-modern_retain<br/>
-(struct modern_error_handler *error_handler,<br/>
- void *retainable);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_release</strong><br/>void<br/>
-modern_release<br/>
-(struct modern_error_handler *error_handler,<br/>
- void *retainable);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_autorelease</strong><br/>void<br/>
-modern_autorelease<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern_autorelease_pool *pool,<br/>
- void *retainable);</p>
-</li>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Contexts</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_make_initial_context</strong><br/>modern_context *<br/>
-modern_make_initial_context<br/>
-();</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_copy_context</strong><br/>modern_context *<br/>
-modern_copy_context<br/>
-(modern_context *context);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_get_in_context</strong><br/>int<br/>
-modern_get_in_context<br/>
-(modern_context *context,<br/>
- modern *node);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_add_to_context</strong><br/>void<br/>
-modern_add_to_context<br/>
-(modern_context *context,<br/>
- modern *node);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_get_from_context</strong><br/>modern *<br/>
-modern_get_from_context<br/>
-(modern_context *context,<br/>
- struct modern_hash *hash);</p>
-</li>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Node-based deserialization</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_deserialize_memory</strong><br/>modern *<br/>
-modern_deserialize_memory<br/>
-(modern_autorelease_pool *pool,<br/>
- modern_context *context,<br/>
- uint8_t *data,<br/>
- size_t length);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_deserialize_file</strong><br/>modern *<br/>
-modern_deserialize_file<br/>
-(modern_autorelease_pool *pool,<br/>
- modern_context *context,<br/>
- FILE *file);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_deserialize_fd</strong><br/>modern *<br/>
-modern_deserialize_fd<br/>
-(modern_autorelease_pool *pool,<br/>
- modern_context *context,<br/>
- int fd);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_deserialize_vfile</strong><br/>modern *<br/>
-modern_deserialize_vfile<br/>
-(modern_autorelease_pool *pool,<br/>
- modern_context *context,<br/>
- struct modern_vfile *vfile,<br/>
- void *vfile_state);</p>
-</li>
-<li>
-<p class="binderItem"><strong>moden_deserialize_input_stream</strong><br/>modern *<br/>
-modern_deserialize_input_stream<br/>
-(modern_autorelease_pool *pool,<br/>
- modern_context *context,<br/>
- void *processor_state,<br/>
- void *stream_state);</p>
-</li>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Node-based serialization</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_serialize_memory_buffer</strong><br/>void<br/>
-modern_serialize_memory_buffer<br/>
-(modern *value,<br/>
- modern_context *context,<br/>
- uint8_t *buffer,<br/>
- size_t *length);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_serialize_memory_allocating</strong><br/>uint8_t *<br/>
-modern_serialize_memory_allocating<br/>
-(modern *value,<br/>
- modern_context *context,<br/>
- struct modern_allocator *allocator,<br/>
- size_t *length);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_serialize_file</strong><br/>void<br/>
-modern_serialize_file<br/>
-(modern *value,<br/>
- modern_context *context,<br/>
- FILE *file);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_serialize_fd</strong><br/>void<br/>
-modern_serialize_fd<br/>
-(modern *value,<br/>
- modern_context *context,<br/>
- int fd);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_serialize_vfile</strong><br/>void<br/>
-modern_serialize_vfile<br/>
-(modern *value,<br/>
- modern_context *context,<br/>
- struct modern_vfile *vfile,<br/>
- void *vfile_state);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_serialize_output_stream</strong><br/>modern *<br/>
-modern_serialize_output_stream<br/>
-(modern *value,<br/>
- modern_context *context,<br/>
- struct modern_stream *stream);</p>
-</li>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Node-based object model</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>Reading</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>Values</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_node_get_node_type</strong><br/>enum modern_node_type<br/>
-modern_node_get_node_type<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_value_type</strong><br/>modern *<br/>
-modern_node_get_value_type<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_int8</strong><br/>int8_t<br/>
-modern_node_get_int8<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_int16</strong><br/>int16_t<br/>
-modern_node_get_int16<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_int32</strong><br/>int32_t<br/>
-modern_node_get_int32<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_int64</strong><br/>int64_t<br/>
-modern_node_get_int64<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_nat8</strong><br/>uint8_t<br/>
-modern_node_get_nat8<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_nat16</strong><br/>uint16_t<br/>
-modern_node_get_nat16<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_nat32</strong><br/>uint32_t<br/>
-modern_node_get_nat32<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_nat64</strong><br/>uint64_t<br/>
-modern_node_get_nat64<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_float32</strong><br/>float<br/>
-modern_node_get_float32<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_float64</strong><br/>double<br/>
-modern_node_get_float64<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_float128</strong><br/>long double<br/>
-modern_node_get_float128<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_utf8_bytes</strong><br/>size_t<br/>
-modern_node_get_utf8_bytes<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_utf8_data_piece</strong><br/>uint8_t *<br/>
-modern_node_get_utf8_data_piece<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value,<br/>
- size_t offset,<br/>
- size_t bytes);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_blob_bytes</strong><br/>size_t<br/>
-modern_node_get_blob_bytes<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_blob_data_piece</strong><br/>uint8_t *<br/>
-modern_node_get_blob_data_piece<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value,<br/>
- size_t offset,<br/>
- size_t bytes);</p>
-</li>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Types</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_node_get_sigma_value</strong><br/>modern *<br/>
-modern_node_get_sigma_value<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_sigma_successor</strong><br/>modern *<br/>
-modern_node_get_sigma_successor<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_named_type_name</strong><br/>struct modern_hash *<br/>
-modern_node_get_named_type_name<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_named_type_content_type</strong><br/>modern *<br/>
-modern_node_get_named_type_content_type<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_universe_type_level</strong><br/>uint64_t<br/>
-modern_node_get_universe_type_level<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value_in);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_lambda_content</strong><br/>modern *<br/>
-modern_node_get_lambda_content<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_apply_left</strong><br/>modern *<br/>
-modern_node_get_apply_left<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_apply_right</strong><br/>modern *<br/>
-modern_node_get_apply_right<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *value);</p>
-</li>
-</ul>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Construction</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>Values</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_node_make_int8</strong><br/>modern *<br/>
-modern_node_make_int8<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- int8_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_int16</strong><br/>modern *<br/>
-modern_node_make_int16<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- int16_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_int32</strong><br/>modern *<br/>
-modern_node_make_int32<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- int32_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_int64</strong><br/>modern *<br/>
-modern_node_make_int64<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- int64_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_nat8</strong><br/>modern *<br/>
-modern_node_make_nat8<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- uint8_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_nat16</strong><br/>modern *<br/>
-modern_node_make_nat16<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- uint16_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_nat32</strong><br/>modern *<br/>
-modern_node_make_nat32<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- uint32_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_nat64</strong><br/>modern *<br/>
-modern_node_make_nat64<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- uint64_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_float32</strong><br/>modern *<br/>
-modern_node_make_float32<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- float value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_float64</strong><br/>modern *<br/>
-modern_node_make_float64<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- double value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_float128</strong><br/>modern *<br/>
-modern_node_make_float128<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- long double value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_utf8</strong><br/>modern *<br/>
-modern_node_make_utf8<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- uint8_t *data);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_blob</strong><br/>modern *<br/>
-modern_node_make_blob<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- uint8_t *data,<br/>
- size_t bytes);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_sigma</strong><br/>modern *<br/>
-modern_node_make_sigma<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- modern *type,<br/>
- modern *field_value,<br/>
- modern *successor_value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_named_value</strong><br/>modern *<br/>
-modern_node_make_named_value<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- modern *type,<br/>
- modern *value);</p>
-</li>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Types</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_node_get_int8_type</strong><br/>modern *<br/>
-modern_node_get_int8_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_int16_type</strong><br/>modern *<br/>
-modern_node_get_int16_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_int32_type</strong><br/>modern *<br/>
-modern_node_get_int32_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_int64_type</strong><br/>modern *<br/>
-modern_node_get_int64_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_nat8_type</strong><br/>modern *<br/>
-modern_node_get_nat8_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_nat16_type</strong><br/>modern *<br/>
-modern_node_get_nat16_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_nat32_type</strong><br/>modern *<br/>
-modern_node_get_nat32_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_nat64_type</strong><br/>modern *<br/>
-modern_node_get_nat64_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_float32_type</strong><br/>modern *<br/>
-modern_node_get_float32_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_float64_type</strong><br/>modern *<br/>
-modern_node_get_float64_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_float128_type</strong><br/>modern *<br/>
-modern_node_get_float128_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_utf8_type</strong><br/>modern *<br/>
-modern_node_get_utf8_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_blob_type</strong><br/>modern *<br/>
-modern_node_get_blob_type<br/>
-(struct modern_error_handler *error_handler);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_sigma_type</strong><br/>modern *<br/>
-modern_node_make_sigma_type<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *field_type, modern *successor);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_named_type</strong><br/>modern *<br/>
-modern_node_make_named_type<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- struct modern_hash *name,<br/>
- modern *content_type);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_universe_type</strong><br/>modern *<br/>
-modern_node_make_universe_type<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- uint64_t level);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_lambda</strong><br/>modern *<br/>
-modern_node_make_lambda<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- modern *content);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_apply</strong><br/>modern *<br/>
-modern_node_make_apply<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- modern *left,<br/>
- modern *right);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_type_index</strong><br/>modern *<br/>
-modern_node_make_type_index<br/>
-(struct modern_error_handler *error_handler,<br/>
- uint64_t index);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_make_type_family</strong><br/>modern *<br/>
-modern_node_make_type_family<br/>
-(struct modern_error_handler *error_handler,<br/>
- struct modern_allocator *allocator,<br/>
- uint64_t n_items,<br/>
- modern **types);</p>
-</li>
-</ul>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Mutation</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>Values</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_node_set_int8</strong><br/>void<br/>
-modern_node_set_int8<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- int8_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_int16</strong><br/>void<br/>
-modern_node_set_int16<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- int16_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_int32</strong><br/>void<br/>
-modern_node_set_int32<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- int32_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_int64</strong><br/>void<br/>
-modern_node_set_int64<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- int64_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_nat8</strong><br/>void<br/>
-modern_node_set_nat8<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- uint8_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_nat16</strong><br/>void<br/>
-modern_node_set_nat16<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- uint16_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_nat32</strong><br/>void<br/>
-modern_node_set_nat32<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- uint32_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_nat64</strong><br/>void<br/>
-modern_node_set_nat64<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- uint64_t value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_float32</strong><br/>void<br/>
-modern_node_set_float32<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- float value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_float64</strong><br/>void<br/>
-modern_node_set_float64<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- double value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_float128</strong><br/>void<br/>
-modern_node_set_float128<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- long double value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_utf8</strong><br/>void<br/>
-modern_node_set_utf8<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- uint8_t *data);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_blob</strong><br/>void<br/>
-modern_node_set_blob<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- uint8_t *data,<br/>
- size_t bytes);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_named_value</strong><br/>void<br/>
-modern_node_set_named_value<br/>
-(struct modern_error_handler *error_handler,<br/>
- modern *node,<br/>
- modern *type,<br/>
- modern *value);</p>
-</li>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Types are immutable</strong></p>
-</li>
-</ul>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Streaming Input </strong></p>
+<p class="binderItem"><strong>Stream-based deserialization </strong></p>
 </li>
 <hr/>
 <ul>
@@ -1397,7 +1400,8 @@ modern_node_set_named_value<br/>
 <li>
 <p class="binderItem"><strong>modern_input_stream_memory</strong><br/>void *<br/>
 modern_input_stream_memory<br/>
-(modern_autorelease_pool *pool,<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  struct modern_stream *stream,<br/>
  uint8_t *data,<br/>
  size_t length);</p>
@@ -1405,21 +1409,24 @@ modern_input_stream_memory<br/>
 <li>
 <p class="binderItem"><strong>modern_input_stream_file</strong><br/>void *<br/>
 modern_input_stream_file<br/>
-(modern_autorelease_pool *pool,<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  struct modern_stream *stream,<br/>
  FILE *file);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_input_stream_fd</strong><br/>void *<br/>
 modern_input_stream_fd<br/>
-(modern_autorelease_pool *pool,<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  struct modern_stream *stream,<br/>
  int fd);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_input_stream_vfile</strong><br/>void *<br/>
 modern_input_stream_vfile<br/>
-(modern_autorelease_pool *pool,<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  struct modern_stream *stream,<br/>
  struct modern_vfile *vfile,<br/>
  void *vfile_state);</p>
@@ -1427,7 +1434,8 @@ modern_input_stream_vfile<br/>
 <li>
 <p class="binderItem"><strong>modern_input_stream_finalize</strong><br/>void<br/>
 modern_input_stream_finalize<br/>
-(void *processor_state);</p>
+(modern_library *library,<br/>
+ void *processor_state);</p>
 </li>
 </ul>
 <hr/>
@@ -1439,146 +1447,133 @@ modern_input_stream_finalize<br/>
 <li>
 <p class="binderItem"><strong>modern_input_stream_step</strong><br/>void<br/>
 modern_input_stream_step<br/>
-(struct modern_stream *stream,<br/>
+(modern_library *library,<br/>
+ struct modern_stream *stream,<br/>
  void *processor_state,<br/>
  void **stream_state);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_input_stream_run</strong><br/>void<br/>
 modern_input_stream_run<br/>
-(struct modern_stream *stream,<br/>
+(modern_library *library,<br/>
+ struct modern_stream *stream,<br/>
  void *processor_state,<br/>
  void **stream_state);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_input_stream_do_all</strong><br/>void<br/>
 modern_input_stream_do_all<br/>
-(struct modern_stream *stream,<br/>
+(modern_library *library,<br/>
+ struct modern_stream *stream,<br/>
  void *processor_state);</p>
 </li>
 </ul>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Streaming Output</strong></p>
+<p class="binderItem"><strong>Stream-based serialization</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_output_stream_memory_buffer</strong><br/>void *<br/>
 modern_output_stream_memory_buffer<br/>
-(modern_autorelease_pool *pool,<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  uint8_t *buffer,<br/>
  size_t *length);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_output_stream_memory_allocating</strong><br/>void *<br/>
 modern_output_stream_memory_allocating<br/>
-(modern_autorelease_pool *pool,<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  size_t *length);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_output_stream_memory_allocating_result</strong><br/>uint8_t *<br/>
 modern_output_stream_memory_allocating_result<br/>
-(void *stream_state,<br/>
+(modern_library *library,<br/>
+ void *stream_state,<br/>
  size_t *length)</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_output_stream_file</strong><br/>void *<br/>
 modern_output_stream_file<br/>
-(modern_autorelease_pool *pool,<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  FILE *file);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_output_stream_fd</strong><br/>void *<br/>
 modern_output_stream_fd<br/>
-(modern_autorelease_pool *pool,<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  int fd);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_output_stream_vfile</strong><br/>void *<br/>
 modern_output_stream_vfile<br/>
-(modern_autorelease_pool *pool,<br/>
+(modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  struct modern_vfile *vfile,<br/>
  void *vfile_state);</p>
 </li>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Hashing</strong></p>
+<p class="binderItem"><strong>Predefined hashes</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_compute_hash</strong><br/>void<br/>
-modern_compute_hash<br/>
-(uint8_t *data,<br/>
- size_t length,<br/>
- struct modern_hash *out);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_compute_child_hash</strong><br/>void<br/>
-modern_compute_child_hash<br/>
-(struct modern_hash *parent,<br/>
- uint8_t *data,<br/>
- size_t length,<br/>
- struct modern_hash *out);</p>
-</li>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>Predefined Hashes</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_get_initial_namespace_hash</strong><br/>void<br/>
-modern_get_initial_namespace_hash<br/>
+<p class="binderItem"><strong>modern_compute_initial_namespace_hash</strong><br/>void<br/>
+modern_compute_initial_namespace_hash<br/>
 (struct modern_hash *out);</p>
 </li>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Predefined Virtual Files</strong></p>
+<p class="binderItem"><strong>Predefined virtual files</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_get_memory_buffer_vfile</strong><br/>struct modern_vfile *<br/>
-modern_get_memory_buffer_vfile<br/>
-();</p>
+<p class="binderItem"><strong>modern_make_memory_buffer_vfile</strong><br/>struct modern_vfile *<br/>
+modern_make_memory_buffer_vfile<br/>
+(modern_library *library);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_get_memory_allocating_vfile</strong><br/>struct modern_vfile *<br/>
-modern_get_memory_allocating_vfile<br/>
-();</p>
+<p class="binderItem"><strong>modern_make_memory_allocating_vfile</strong><br/>struct modern_vfile *<br/>
+modern_make_memory_allocating_vfile<br/>
+(modern_library *library);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_get_file_vfile</strong><br/>struct modern_vfile *<br/>
-modern_get_file_vfile<br/>
-();</p>
+<p class="binderItem"><strong>modern_make_file_vfile</strong><br/>struct modern_vfile *<br/>
+modern_make_file_vfile<br/>
+(modern_library *library);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_get_fd_vfile</strong><br/>struct modern_vfile *<br/>
-modern_get_fd_vfile<br/>
-();</p>
+<p class="binderItem"><strong>modern_make_fd_vfile</strong><br/>struct modern_vfile *<br/>
+modern_make_fd_vfile<br/>
+(modern_library *library);</p>
 </li>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Predefined Streams</strong></p>
+<p class="binderItem"><strong>Predefined streams</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_get_explicatory_stream</strong><br/>struct modern_stream *<br/>
-modern_get_explicatory_stream<br/>
-();</p>
+<p class="binderItem"><strong>modern_make_explicatory_stream</strong><br/>struct modern_stream *<br/>
+modern_make_explicatory_stream<br/>
+(modern_library *library);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_get_documentation_stream</strong><br/>struct modern_stream *<br/>
-modern_get_documentation_stream<br/>
-();</p>
+<p class="binderItem"><strong>modern_make_documentation_stream</strong><br/>struct modern_stream *<br/>
+modern_make_documentation_stream<br/>
+(modern_library *library);</p>
 </li>
 </ul>
 </ul>

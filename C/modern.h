@@ -21,6 +21,7 @@ struct modern_error_handler {
     void (*modern_error_handler_retain_count_underflow)(void *retainable);
     void (*modern_error_handler_double_autorelease)(void *retainable);
     void (*modern_error_handler_type_mismatch)(modern *expected, modern *actual);
+    void (*modern_error_handler_universe_level_overflow)();
 };
 
 
@@ -185,7 +186,7 @@ enum modern_node_type {
 };
 
 
-extern modern_library *modern_library_initalize
+extern modern_library *modern_library_initialize
   (struct modern_error_handler *error_handler,
    struct modern_allocator *allocator);
 extern struct modern_error_handler *modern_library_get_error_handler
@@ -194,345 +195,349 @@ extern struct modern_allocator *modern_library_get_allocator
   (modern_library *library);
 extern void modern_library_finalize(modern_library *library);
 
-// TODO everything below here should take a library as needed
-
 extern modern_autorelease_pool *modern_make_autorelease_pool
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator);
+  (modern_library *library);
 extern void modern_autorelease_pool_release
-  (struct modern_error_handler *error_handler,
-   modern_autorelease_pool *pool);
-extern struct modern_allocator *modern_autorelease_pool_get_allocator
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern_autorelease_pool *pool);
 extern void modern_retain
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    void *retainable);
 extern void modern_release
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    void *retainable);
 extern void modern_autorelease
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern_autorelease_pool *pool,
    void *retainable);
 
-extern modern_context *modern_make_initial_context();
-extern modern_context *modern_copy_context(modern_context *context);
-extern int modern_get_in_context(modern_context *context, modern *node);
-extern void modern_add_to_context(modern_context *context, modern *node);
+extern modern_context *modern_make_initial_context
+  (modern_library *library);
+extern modern_context *modern_copy_context
+  (modern_library *library,
+   modern_context *context);
+extern int modern_get_in_context
+  (modern_library *library,
+   modern_context *context, modern *node);
+extern void modern_add_to_context
+  (modern_library *library,
+   modern_context *context, modern *node);
 extern modern *modern_get_from_context
-  (modern_context *context, struct modern_hash *hash);
+  (modern_library *library,
+   modern_context *context, struct modern_hash *hash);
 
 extern modern *modern_deserialize_memory
-  (modern_autorelease_pool *pool, modern_context *context,
+  (modern_library *library,
+   modern_autorelease_pool *pool, modern_context *context,
    uint8_t *data, size_t length);
 extern modern *modern_deserialize_file
-  (modern_autorelease_pool *pool, modern_context *context,
+  (modern_library *library,
+   modern_autorelease_pool *pool, modern_context *context,
    FILE *file);
 extern modern *modern_deserialize_fd
-  (modern_autorelease_pool *pool, modern_context *context,
+  (modern_library *library,
+   modern_autorelease_pool *pool, modern_context *context,
    int fd);
 extern modern *modern_deserialize_vfile
-  (modern_autorelease_pool *pool, modern_context *context,
+  (modern_library *library,
+   modern_autorelease_pool *pool, modern_context *context,
    struct modern_vfile *vfile, void *vfile_state);
 extern modern *modern_deserialize_input_stream
-  (modern_autorelease_pool *pool, modern_context *context,
+  (modern_library *library,
+   modern_autorelease_pool *pool, modern_context *context,
    void *processor_state, void *stream_state);
 
 extern void modern_serialize_memory_buffer
-  (modern *value, modern_context *context, uint8_t *buffer, size_t *length);
+  (modern_library *library,
+   modern *value, modern_context *context, uint8_t *buffer, size_t *length);
 extern uint8_t *modern_serialize_memory_allocating
-  (modern *value, modern_context *context,
-   struct modern_allocator *allocator, size_t *length);
+  (modern_library *library,
+   modern *value, modern_context *context, size_t *length);
 extern void modern_serialize_file
-  (modern *value, modern_context *context, FILE *file);
+  (modern_library *library,
+   modern *value, modern_context *context, FILE *file);
 extern void modern_serialize_fd
-  (modern *value, modern_context *context, int fd);
+  (modern_library *library,
+   modern *value, modern_context *context, int fd);
 extern void modern_serialize_vfile
-  (modern *value, modern_context *context,
+  (modern_library *library,
+   modern *value, modern_context *context,
    struct modern_vfile *vfile, void *vfile_state);
 extern modern *modern_serialize_output_stream
-  (modern *value, modern_context *context,
+  (modern_library *library,
+   modern *value, modern_context *context,
    struct modern_stream *stream);
 
 extern enum modern_node_type modern_node_get_node_type
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern modern *modern_node_get_value_type
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern int8_t modern_node_get_int8
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern int16_t modern_node_get_int16
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern int32_t modern_node_get_int32
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern int64_t modern_node_get_int64
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern uint8_t modern_node_get_nat8
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern uint16_t modern_node_get_nat16
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern uint32_t modern_node_get_nat32
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern uint64_t modern_node_get_nat64
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern float modern_node_get_float32
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern double modern_node_get_float64
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern long double modern_node_get_float128
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern size_t modern_node_get_utf8_bytes
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern uint8_t *modern_node_get_utf8_data_piece
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value, size_t offset, size_t bytes);
 extern size_t modern_node_get_blob_bytes
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern uint8_t *modern_node_get_blob_data_piece
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value, size_t offset, size_t bytes);
 extern modern *modern_node_get_sigma_value
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern modern *modern_node_get_sigma_successor
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern struct modern_hash *modern_node_get_named_type_name
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern modern *modern_node_get_named_type_content_type
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern uint64_t modern_node_get_universe_type_level
-  (struct modern_error_handler *error_handler,
-   modern *value_in)
+  (modern_library *library,
+   modern *value);
 extern modern *modern_node_get_lambda_content
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern modern *modern_node_get_apply_left
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 extern modern *modern_node_get_apply_right
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *value);
 
 extern modern *modern_node_make_int8
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    int8_t value);
 extern modern *modern_node_make_int16
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    int16_t value);
 extern modern *modern_node_make_int32
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    int32_t value);
 extern modern *modern_node_make_int64
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    int64_t value);
 extern modern *modern_node_make_nat8
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    uint8_t value);
 extern modern *modern_node_make_nat16
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    uint16_t value);
 extern modern *modern_node_make_nat32
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    uint32_t value);
 extern modern *modern_node_make_nat64
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    uint64_t value);
 extern modern *modern_node_make_float32
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    float value);
 extern modern *modern_node_make_float64
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    double value);
 extern modern *modern_node_make_float128
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    long double value);
 extern modern *modern_node_make_utf8
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    uint8_t *data);
 extern modern *modern_node_make_blob
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    uint8_t *data, size_t bytes);
 extern modern *modern_node_make_sigma
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    modern *type, modern *field_value, modern *successor_value);
 extern modern *modern_node_make_named_value
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    modern *type, modern *value);
 
-extern modern *modern_node_get_int8_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_int16_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_int32_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_int64_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_nat8_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_nat16_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_nat32_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_nat64_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_float32_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_float64_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_float128_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_utf8_type
-  (struct modern_error_handler *error_handler);
-extern modern *modern_node_get_blob_type
-  (struct modern_error_handler *error_handler);
+extern modern *modern_node_make_int8_type
+  (modern_library *library);
+extern modern *modern_node_make_int16_type
+  (modern_library *library);
+extern modern *modern_node_make_int32_type
+  (modern_library *library);
+extern modern *modern_node_make_int64_type
+  (modern_library *library);
+extern modern *modern_node_make_nat8_type
+  (modern_library *library);
+extern modern *modern_node_make_nat16_type
+  (modern_library *library);
+extern modern *modern_node_make_nat32_type
+  (modern_library *library);
+extern modern *modern_node_make_nat64_type
+  (modern_library *library);
+extern modern *modern_node_make_float32_type
+  (modern_library *library);
+extern modern *modern_node_make_float64_type
+  (modern_library *library);
+extern modern *modern_node_make_float128_type
+  (modern_library *library);
+extern modern *modern_node_make_utf8_type
+  (modern_library *library);
+extern modern *modern_node_make_blob_type
+  (modern_library *library);
 extern modern *modern_node_make_sigma_type
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    modern *field_type, modern *successor);
 extern modern *modern_node_make_named_type
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    struct modern_hash *name, modern *content_type);
 extern modern *modern_node_make_universe_type
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    uint64_t level);
 extern modern *modern_node_make_lambda
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    modern *content);
 extern modern *modern_node_make_apply
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    modern *left, modern *right);
 extern modern *modern_node_make_type_index
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    uint64_t index);
 extern modern *modern_node_make_type_family
-  (struct modern_error_handler *error_handler,
-   struct modern_allocator *allocator,
+  (modern_library *library,
    uint64_t n_items, modern **types);
 
 extern void modern_node_set_int8
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, int8_t value);
 extern void modern_node_set_int16
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, int16_t value);
 extern void modern_node_set_int32
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, int32_t value);
 extern void modern_node_set_int64
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, int64_t value);
 extern void modern_node_set_nat8
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, uint8_t value);
 extern void modern_node_set_nat16
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, uint16_t value);
 extern void modern_node_set_nat32
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, uint32_t value);
 extern void modern_node_set_nat64
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, uint64_t value);
 extern void modern_node_set_float32
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, float value);
 extern void modern_node_set_float64
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, double value);
 extern void modern_node_set_float128
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, long double value);
 extern void modern_node_set_utf8
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, uint8_t *data);
 extern void modern_node_set_blob
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, uint8_t *data, size_t bytes);
 extern void modern_node_set_named_value
-  (struct modern_error_handler *error_handler,
+  (modern_library *library,
    modern *node, modern *type, modern *value);
 
 extern void *modern_input_stream_memory
-  (modern_autorelease_pool *pool,
+  (modern_library *library,
+   modern_autorelease_pool *pool,
    struct modern_stream *stream,
    uint8_t *data, size_t length);
 extern void *modern_input_stream_file
-  (modern_autorelease_pool *pool,
+  (modern_library *library,
+   modern_autorelease_pool *pool,
    struct modern_stream *stream,
    FILE *file);
 extern void *modern_input_stream_fd
-  (modern_autorelease_pool *pool,
+  (modern_library *library,
+   modern_autorelease_pool *pool,
    struct modern_stream *stream,
    int fd);
 extern void *modern_input_stream_vfile
-  (modern_autorelease_pool *pool,
+  (modern_library *library,
+   modern_autorelease_pool *pool,
    struct modern_stream *stream,
    struct modern_vfile *vfile, void *vfile_state);
 
 extern void modern_input_stream_step
-  (struct modern_stream *stream, void *processor_state, void **stream_state);
+  (modern_library *library,
+   struct modern_stream *stream, void *processor_state, void **stream_state);
 extern void modern_input_stream_run
-  (struct modern_stream *stream, void *processor_state, void **stream_state);
+  (modern_library *library,
+   struct modern_stream *stream, void *processor_state, void **stream_state);
 extern void modern_input_stream_do_all
-  (struct modern_stream *stream, void *processor_state);
+  (modern_library *library,
+   struct modern_stream *stream, void *processor_state);
 
 extern void modern_input_stream_finalize
-  (void *processor_state);
+  (modern_library *library,
+   void *processor_state);
 
 extern void *modern_output_stream_memory_buffer
-  (modern_autorelease_pool *pool,
+  (modern_library *library,
+   modern_autorelease_pool *pool,
    uint8_t *buffer, size_t *length);
 extern void *modern_output_stream_memory_allocating
-  (modern_autorelease_pool *pool,
+  (modern_library *library,
+   modern_autorelease_pool *pool,
    size_t *length);
 extern uint8_t *modern_output_stream_memory_allocating_result
-  (void *stream_state, size_t *length);
+  (modern_library *library,
+   void *stream_state, size_t *length);
 extern void *modern_output_stream_file
-  (modern_autorelease_pool *pool,
+  (modern_library *library,
+   modern_autorelease_pool *pool,
    FILE *file);
 extern void *modern_output_stream_fd
-  (modern_autorelease_pool *pool,
+  (modern_library *library,
+   modern_autorelease_pool *pool,
    int fd);
 extern void *modern_output_stream_vfile
-  (modern_autorelease_pool *pool,
+  (modern_library *library,
+   modern_autorelease_pool *pool,
    struct modern_vfile *vfile, void *vfile_state);
 
 extern void modern_compute_hash
@@ -540,12 +545,18 @@ extern void modern_compute_hash
 extern void modern_compute_child_hash
   (struct modern_hash *parent,
    uint8_t *data, size_t length, struct modern_hash *out);
-extern void modern_get_initial_namespace_hash(struct modern_hash *out);
+extern void modern_compute_initial_namespace_hash(struct modern_hash *out);
 
-extern struct modern_vfile *modern_get_memory_buffer_vfile();
-extern struct modern_vfile *modern_get_memory_allocating_vfile();
-extern struct modern_vfile *modern_get_file_vfile();
-extern struct modern_vfile *modern_get_fd_vfile();
+extern struct modern_vfile *modern_make_memory_buffer_vfile
+  (modern_library *library);
+extern struct modern_vfile *modern_make_memory_allocating_vfile
+  (modern_library *library);
+extern struct modern_vfile *modern_make_file_vfile
+  (modern_library *library);
+extern struct modern_vfile *modern_make_fd_vfile
+  (modern_library *library);
 
-extern struct modern_stream *modern_get_explicatory_stream();
-extern struct modern_stream *modern_get_documentation_stream();
+extern struct modern_stream *modern_make_explicatory_stream
+  (modern_library *library);
+extern struct modern_stream *modern_make_documentation_stream
+  (modern_library *library);

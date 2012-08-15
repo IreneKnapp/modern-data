@@ -108,3 +108,12 @@ void modern_compute_child_hash
     free(data_prime);
 }
 
+
+extern void modern_compute_initial_namespace_hash
+    (struct modern_hash *out)
+{
+    uint8_t *initial_namespace = (uint8_t *) "com.ireneknapp.data.modern";
+    modern_compute_hash
+      (initial_namespace, strlen((char *) initial_namespace),
+       out);
+}
