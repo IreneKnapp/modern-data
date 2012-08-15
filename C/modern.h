@@ -6,11 +6,21 @@
 typedef void modern;
 typedef void modern_context;
 typedef void modern_autorelease_pool;
+typedef void modern_library;
 
 
 struct modern_hash {
     uint64_t a;
     uint64_t b;
+};
+
+
+struct modern_error_handler {
+    void (*modern_error_handler_memory)(size_t requested_size);
+    void (*modern_error_handler_retain_count_overflow)(void *retainable);
+    void (*modern_error_handler_retain_count_underflow)(void *retainable);
+    void (*modern_error_handler_double_autorelease)(void *retainable);
+    void (*modern_error_handler_type_mismatch)(modern *expected, modern *actual);
 };
 
 
@@ -113,19 +123,6 @@ struct modern_stream {
        uint8_t *data, size_t length);
     void (*modern_stream_blob_end)
       (void *processor_state, void *stream_state);
-    void (*modern_stream_array_start)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_array_end)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_union_field)
-      (void *processor_state, void *stream_state,
-       struct modern_hash *type, struct modern_hash *field);
-    void (*modern_stream_structure_start)
-      (void *processor_state, void *stream_state, struct modern_hash *type);
-    void (*modern_stream_structure_field)
-      (void *processor_state, void *stream_state, struct modern_hash *field);
-    void (*modern_stream_structure_end)
-      (void *processor_state, void *stream_state);
     void (*modern_stream_named_value_is_next)
       (void *processor_state, void *stream_state, struct modern_hash *name);
     void (*modern_stream_lambda_is_next)
@@ -188,15 +185,36 @@ enum modern_node_type {
 };
 
 
+extern modern_library *modern_library_initalize
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator);
+extern struct modern_error_handler *modern_library_get_error_handler
+  (modern_library *library);
+extern struct modern_allocator *modern_library_get_allocator
+  (modern_library *library);
+extern void modern_library_finalize(modern_library *library);
+
+// TODO everything below here should take a library as needed
+
 extern modern_autorelease_pool *modern_make_autorelease_pool
-  (struct modern_allocator *allocator);
-extern void modern_autorelease_pool_release(modern_autorelease_pool *pool);
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator);
+extern void modern_autorelease_pool_release
+  (struct modern_error_handler *error_handler,
+   modern_autorelease_pool *pool);
 extern struct modern_allocator *modern_autorelease_pool_get_allocator
-  (modern_autorelease_pool *pool);
-extern void modern_retain(void *retainable);
-extern void modern_release(void *retainable);
+  (struct modern_error_handler *error_handler,
+   modern_autorelease_pool *pool);
+extern void modern_retain
+  (struct modern_error_handler *error_handler,
+   void *retainable);
+extern void modern_release
+  (struct modern_error_handler *error_handler,
+   void *retainable);
 extern void modern_autorelease
-  (modern_autorelease_pool *pool, void *retainable);
+  (struct modern_error_handler *error_handler,
+   modern_autorelease_pool *pool,
+   void *retainable);
 
 extern modern_context *modern_make_initial_context();
 extern modern_context *modern_copy_context(modern_context *context);
@@ -237,102 +255,240 @@ extern modern *modern_serialize_output_stream
   (modern *value, modern_context *context,
    struct modern_stream *stream);
 
-extern enum modern_node_type modern_node_get_node_type(modern *value);
-extern modern *modern_node_get_value_type(modern *value);
-extern int8_t modern_node_get_int8(modern *value);
-extern int16_t modern_node_get_int16(modern *value);
-extern int32_t modern_node_get_int32(modern *value);
-extern int64_t modern_node_get_int64(modern *value);
-extern uint8_t modern_node_get_nat8(modern *value);
-extern uint16_t modern_node_get_nat16(modern *value);
-extern uint32_t modern_node_get_nat32(modern *value);
-extern uint64_t modern_node_get_nat64(modern *value);
-extern float modern_node_get_float32(modern *value);
-extern double modern_node_get_float64(modern *value);
-extern long double modern_node_get_float128(modern *value);
-extern size_t modern_node_get_utf8_bytes(modern *value);
+extern enum modern_node_type modern_node_get_node_type
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern modern *modern_node_get_value_type
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern int8_t modern_node_get_int8
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern int16_t modern_node_get_int16
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern int32_t modern_node_get_int32
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern int64_t modern_node_get_int64
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern uint8_t modern_node_get_nat8
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern uint16_t modern_node_get_nat16
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern uint32_t modern_node_get_nat32
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern uint64_t modern_node_get_nat64
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern float modern_node_get_float32
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern double modern_node_get_float64
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern long double modern_node_get_float128
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern size_t modern_node_get_utf8_bytes
+  (struct modern_error_handler *error_handler,
+   modern *value);
 extern uint8_t *modern_node_get_utf8_data_piece
-  (modern *value, size_t offset, size_t bytes);
-extern size_t modern_node_get_blob_bytes(modern *value);
+  (struct modern_error_handler *error_handler,
+   modern *value, size_t offset, size_t bytes);
+extern size_t modern_node_get_blob_bytes
+  (struct modern_error_handler *error_handler,
+   modern *value);
 extern uint8_t *modern_node_get_blob_data_piece
-  (modern *value, size_t offset, size_t bytes);
-extern modern *modern_node_get_sigma_value(modern *value);
-extern modern *modern_node_get_sigma_successor(modern *value);
-extern struct modern_hash *modern_node_get_named_type_name(modern *value);
-extern modern *modern_node_get_named_type_content_type(modern *value);
-extern modern *modern_node_get_lambda_content(modern *value);
-extern modern *modern_node_get_apply_left(modern *value);
-extern modern *modern_node_get_apply_right(modern *value);
+  (struct modern_error_handler *error_handler,
+   modern *value, size_t offset, size_t bytes);
+extern modern *modern_node_get_sigma_value
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern modern *modern_node_get_sigma_successor
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern struct modern_hash *modern_node_get_named_type_name
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern modern *modern_node_get_named_type_content_type
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern uint64_t modern_node_get_universe_type_level
+  (struct modern_error_handler *error_handler,
+   modern *value_in)
+extern modern *modern_node_get_lambda_content
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern modern *modern_node_get_apply_left
+  (struct modern_error_handler *error_handler,
+   modern *value);
+extern modern *modern_node_get_apply_right
+  (struct modern_error_handler *error_handler,
+   modern *value);
 
-extern modern *modern_node_make_int8(int8_t value);
-extern modern *modern_node_make_int16(int16_t value);
-extern modern *modern_node_make_int32(int32_t value);
-extern modern *modern_node_make_int64(int64_t value);
-extern modern *modern_node_make_nat8(uint8_t value);
-extern modern *modern_node_make_nat16(uint16_t value);
-extern modern *modern_node_make_nat32(uint32_t value);
-extern modern *modern_node_make_nat64(uint64_t value);
-extern modern *modern_node_make_float32(float value);
-extern modern *modern_node_make_float64(double value);
-extern modern *modern_node_make_float128(long double value);
-extern modern *modern_node_make_utf8(uint8_t *data);
-extern modern *modern_node_make_blob(uint8_t *data, size_t bytes);
-extern modern *modern_node_make_array(uint64_t n_items, modern **values);
-extern modern *modern_node_make_union
-  (modern *type, struct modern_hash *field, modern *value);
-extern modern *modern_node_make_structure
-  (modern *type, uint64_t n_items, struct modern_hash **fields,
-   modern **values);
-extern modern *modern_node_make_named_value(modern *type, modern *value);
+extern modern *modern_node_make_int8
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   int8_t value);
+extern modern *modern_node_make_int16
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   int16_t value);
+extern modern *modern_node_make_int32
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   int32_t value);
+extern modern *modern_node_make_int64
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   int64_t value);
+extern modern *modern_node_make_nat8
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   uint8_t value);
+extern modern *modern_node_make_nat16
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   uint16_t value);
+extern modern *modern_node_make_nat32
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   uint32_t value);
+extern modern *modern_node_make_nat64
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   uint64_t value);
+extern modern *modern_node_make_float32
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   float value);
+extern modern *modern_node_make_float64
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   double value);
+extern modern *modern_node_make_float128
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   long double value);
+extern modern *modern_node_make_utf8
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   uint8_t *data);
+extern modern *modern_node_make_blob
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   uint8_t *data, size_t bytes);
+extern modern *modern_node_make_sigma
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   modern *type, modern *field_value, modern *successor_value);
+extern modern *modern_node_make_named_value
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   modern *type, modern *value);
 
-extern modern *modern_node_get_int8_type();
-extern modern *modern_node_get_int16_type();
-extern modern *modern_node_get_int32_type();
-extern modern *modern_node_get_int64_type();
-extern modern *modern_node_get_nat8_type();
-extern modern *modern_node_get_nat16_type();
-extern modern *modern_node_get_nat32_type();
-extern modern *modern_node_get_nat64_type();
-extern modern *modern_node_get_float32_type();
-extern modern *modern_node_get_float64_type();
-extern modern *modern_node_get_float128_type();
-extern modern *modern_node_get_utf8_type();
-extern modern *modern_node_get_blob_type();
-extern modern *modern_node_make_array_type(modern *content_type);
-extern modern *modern_node_make_union_type
-  (uint64_t n_items, struct modern_hash **fields, modern **types);
-extern modern *modern_node_make_structure_type
-  (uint64_t n_items, struct modern_hash **fields, modern **types);
+extern modern *modern_node_get_int8_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_int16_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_int32_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_int64_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_nat8_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_nat16_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_nat32_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_nat64_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_float32_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_float64_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_float128_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_utf8_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_get_blob_type
+  (struct modern_error_handler *error_handler);
+extern modern *modern_node_make_sigma_type
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   modern *field_type, modern *successor);
 extern modern *modern_node_make_named_type
-  (struct modern_hash *name, modern *content_type);
-extern modern *modern_node_get_universe_type();
-extern modern *modern_node_make_lambda(modern *content);
-extern modern *modern_node_make_apply(modern *left, modern *right);
-extern modern *modern_node_make_type_index(uint64_t index);
-extern modern *modern_node_make_type_family(uint64_t n_items, modern **types);
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   struct modern_hash *name, modern *content_type);
+extern modern *modern_node_make_universe_type
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   uint64_t level);
+extern modern *modern_node_make_lambda
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   modern *content);
+extern modern *modern_node_make_apply
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   modern *left, modern *right);
+extern modern *modern_node_make_type_index
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   uint64_t index);
+extern modern *modern_node_make_type_family
+  (struct modern_error_handler *error_handler,
+   struct modern_allocator *allocator,
+   uint64_t n_items, modern **types);
 
-extern void modern_node_set_int8(modern *node, int8_t value);
-extern void modern_node_set_int16(modern *node, int16_t value);
-extern void modern_node_set_int32(modern *node, int32_t value);
-extern void modern_node_set_int64(modern *node, int64_t value);
-extern void modern_node_set_nat8(modern *node, uint8_t value);
-extern void modern_node_set_nat16(modern *node, uint16_t value);
-extern void modern_node_set_nat32(modern *node, uint32_t value);
-extern void modern_node_set_nat64(modern *node, uint64_t value);
-extern void modern_node_set_float32(modern *node, float value);
-extern void modern_node_set_float64(modern *node, double value);
-extern void modern_node_set_float128(modern *node, long double value);
-extern void modern_node_set_utf8(modern *node, uint8_t *data);
-extern void modern_node_set_blob(modern *node, uint8_t *data, size_t bytes);
-extern void modern_node_set_array
-  (modern *node, uint64_t n_items, modern **values);
-extern void modern_node_set_union
-  (modern *node, modern *type, struct modern_hash *field, modern *value);
-extern void modern_node_set_structure
-  (modern *node, modern *type, uint64_t n_items, struct modern_hash **fields,
-   modern **values);
+extern void modern_node_set_int8
+  (struct modern_error_handler *error_handler,
+   modern *node, int8_t value);
+extern void modern_node_set_int16
+  (struct modern_error_handler *error_handler,
+   modern *node, int16_t value);
+extern void modern_node_set_int32
+  (struct modern_error_handler *error_handler,
+   modern *node, int32_t value);
+extern void modern_node_set_int64
+  (struct modern_error_handler *error_handler,
+   modern *node, int64_t value);
+extern void modern_node_set_nat8
+  (struct modern_error_handler *error_handler,
+   modern *node, uint8_t value);
+extern void modern_node_set_nat16
+  (struct modern_error_handler *error_handler,
+   modern *node, uint16_t value);
+extern void modern_node_set_nat32
+  (struct modern_error_handler *error_handler,
+   modern *node, uint32_t value);
+extern void modern_node_set_nat64
+  (struct modern_error_handler *error_handler,
+   modern *node, uint64_t value);
+extern void modern_node_set_float32
+  (struct modern_error_handler *error_handler,
+   modern *node, float value);
+extern void modern_node_set_float64
+  (struct modern_error_handler *error_handler,
+   modern *node, double value);
+extern void modern_node_set_float128
+  (struct modern_error_handler *error_handler,
+   modern *node, long double value);
+extern void modern_node_set_utf8
+  (struct modern_error_handler *error_handler,
+   modern *node, uint8_t *data);
+extern void modern_node_set_blob
+  (struct modern_error_handler *error_handler,
+   modern *node, uint8_t *data, size_t bytes);
 extern void modern_node_set_named_value
-  (modern *node, modern *type, modern *value);
+  (struct modern_error_handler *error_handler,
+   modern *node, modern *type, modern *value);
 
 extern void *modern_input_stream_memory
   (modern_autorelease_pool *pool,
