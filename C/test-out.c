@@ -8,6 +8,7 @@ static void error_retain_count_underflow(void *retainable);
 static void error_double_autorelease(void *retainable);
 static void error_type_mismatch(modern *expected, modern *actual);
 static void error_universe_level_overflow();
+static void error_buffer_index();
 
 
 int main(int argc, char **argv) {
@@ -18,6 +19,7 @@ int main(int argc, char **argv) {
     error_handler.modern_error_handler_double_autorelease = error_double_autorelease;
     error_handler.modern_error_handler_type_mismatch = error_type_mismatch;
     error_handler.modern_error_handler_universe_level_overflow = error_universe_level_overflow;
+    error_handler.modern_error_handler_buffer_index = error_buffer_index;
     
     struct modern_allocator allocator;
     allocator.modern_allocator_alloc = malloc;
@@ -124,5 +126,11 @@ static void error_type_mismatch(modern *expected, modern *actual) {
 
 static void error_universe_level_overflow() {
     fprintf(stderr, "Universe level overflow.\n");
+    exit(1);
+}
+
+
+static void error_buffer_index() {
+    fprintf(stderr, "Buffer index out of range.\n");
     exit(1);
 }

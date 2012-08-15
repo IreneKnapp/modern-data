@@ -292,7 +292,7 @@
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
                                     <TextSettings>
-                                        <TextSelection>91,0</TextSelection>
+                                        <TextSelection>0,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
                                 <BinderItem ID="66" Type="Text" Created="2012-08-13 06:50:47 -0400" Modified="2012-08-13 16:35:42 -0400">
@@ -738,7 +738,7 @@
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>49,45</TextSelection>
+                                                        <TextSelection>0,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
                                                 <BinderItem ID="129" Type="Text" Created="2012-08-13 06:55:08 -0400" Modified="2012-08-15 13:22:06 -0400">
@@ -901,18 +901,6 @@
                                                         <TextSelection>88,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                            </Children>
-                                        </BinderItem>
-                                        <BinderItem ID="145" Type="Folder" Created="2012-08-13 06:55:32 -0400" Modified="2012-08-13 06:59:12 -0400">
-                                            <Title>Types</Title>
-                                            <MetaData>
-                                                <IncludeInCompile>Yes</IncludeInCompile>
-                                                <NotesTextSelection>0,0</NotesTextSelection>
-                                            </MetaData>
-                                            <TextSettings>
-                                                <TextSelection>0,0</TextSelection>
-                                            </TextSettings>
-                                            <Children>
                                                 <BinderItem ID="146" Type="Text" Created="2012-08-13 06:55:36 -0400" Modified="2012-08-15 13:22:06 -0400">
                                                     <Title>modern_node_get_sigma_value</Title>
                                                     <MetaData>
@@ -920,7 +908,7 @@
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>83,0</TextSelection>
+                                                        <TextSelection>0,79</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
                                                 <BinderItem ID="147" Type="Text" Created="2012-08-13 06:55:38 -0400" Modified="2012-08-15 13:22:06 -0400">
@@ -933,6 +921,28 @@
                                                         <TextSelection>62,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
+                                                <BinderItem ID="278" Type="Text" Created="2012-08-15 16:52:41 -0400" Modified="2012-08-15 16:54:36 -0400">
+                                                    <Title>modern_node_get_named_value</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>8,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                            </Children>
+                                        </BinderItem>
+                                        <BinderItem ID="145" Type="Folder" Created="2012-08-13 06:55:32 -0400" Modified="2012-08-13 06:59:12 -0400">
+                                            <Title>Types</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                            <Children>
                                                 <BinderItem ID="148" Type="Text" Created="2012-08-13 06:55:41 -0400" Modified="2012-08-15 13:22:06 -0400">
                                                     <Title>modern_node_get_named_type_name</Title>
                                                     <MetaData>
@@ -2819,6 +2829,46 @@
                         <TextSelection>0,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
+                <BinderItem ID="279" Type="Text" Created="2012-08-15 16:52:58 -0400" Modified="2012-08-15 16:53:02 -0400">
+                    <Title>modern_node_get_sigma_su</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="281" Type="Text" Created="2012-08-15 16:53:49 -0400" Modified="2012-08-15 16:53:49 -0400">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="280" Type="Text" Created="2012-08-15 16:53:37 -0400" Modified="2012-08-15 16:53:45 -0400">
+                    <Title>modern_node_get_sigma_type_</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="282" Type="Text" Created="2012-08-15 16:54:11 -0400" Modified="2012-08-15 16:54:15 -0400">
+                    <Title>modern_node_get_sigma_</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
             </Children>
         </BinderItem>
     </Binder>
@@ -2854,7 +2904,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="-74" Characters="-1400" Date="2012-08-15 12:42:28 -0400"></PreviousSession>
+        <PreviousSession Words="-68" Characters="-1321" Date="2012-08-15 14:55:26 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>

@@ -14,6 +14,7 @@ modern *modern_node_get_value_type
     (modern_library *library_in,
      modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
     
     if(value->value_type) return value->value_type;
@@ -133,84 +134,108 @@ modern *modern_node_get_value_type
 int8_t modern_node_get_int8
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.int8_value;
 }
 
 
 int16_t modern_node_get_int16
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.int16_value;
 }
 
 
 int32_t modern_node_get_int32
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.int32_value;
 }
 
 
 int64_t modern_node_get_int64
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.int64_value;
 }
 
 
 uint8_t modern_node_get_nat8
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.nat8_value;
 }
 
 
 uint16_t modern_node_get_nat16
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.nat16_value;
 }
 
 
 uint32_t modern_node_get_nat32
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.nat32_value;
 }
 
 
 uint64_t modern_node_get_nat64
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.nat64_value;
 }
 
 
 float modern_node_get_float32
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.float32_value;
 }
 
 
 double modern_node_get_float64
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.float64_value;
 }
 
 
 long double modern_node_get_float128
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.float128_value;
 }
 
 
 size_t modern_node_get_utf8_bytes
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.utf8_value.bytes;
 }
 
 
@@ -218,14 +243,23 @@ uint8_t *modern_node_get_utf8_data_piece
   (modern_library *library_in, modern *value_in,
    size_t offset, size_t bytes)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    if(offset + bytes < value->specifics.utf8_value.bytes) {
+        return value->specifics.utf8_value.data + offset;
+    } else {
+        library->error_handler->modern_error_handler_buffer_index();
+        return NULL;
+    }
 }
 
 
 size_t modern_node_get_blob_bytes
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.blob_value.bytes;
 }
 
 
@@ -233,61 +267,94 @@ uint8_t *modern_node_get_blob_data_piece
   (modern_library *library_in, modern *value_in,
    size_t offset, size_t bytes)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    if(offset + bytes < value->specifics.blob_value.bytes) {
+        return value->specifics.blob_value.data + offset;
+    } else {
+        library->error_handler->modern_error_handler_buffer_index();
+        return NULL;
+    }
 }
 
 
 modern *modern_node_get_sigma_value
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.sigma_value.field_value;
 }
 
 
 modern *modern_node_get_sigma_successor
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.sigma_value.successor;
+}
+
+
+modern *modern_node_get_named_value
+    (modern_library *library_in,
+     modern *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.named_value.value;
 }
 
 
 struct modern_hash *modern_node_get_named_type_name
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return &value->specifics.named_type.name;
 }
 
 
 modern *modern_node_get_named_type_content_type
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.named_type.content_type;
 }
 
 
 uint64_t modern_node_get_universe_type_level
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.universe_type.level;
 }
 
 
 modern *modern_node_get_lambda_content
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.lambda.content;
 }
 
 
 modern *modern_node_get_apply_left
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.apply.left;
 }
 
 
 modern *modern_node_get_apply_right
     (modern_library *library_in, modern *value_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
+    return value->specifics.apply.right;
 }

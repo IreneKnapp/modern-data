@@ -22,6 +22,7 @@ struct modern_error_handler {
     void (*modern_error_handler_double_autorelease)(void *retainable);
     void (*modern_error_handler_type_mismatch)(modern *expected, modern *actual);
     void (*modern_error_handler_universe_level_overflow)();
+    void (*modern_error_handler_buffer_index)();
 };
 
 
@@ -323,6 +324,9 @@ extern modern *modern_node_get_sigma_value
   (modern_library *library,
    modern *value);
 extern modern *modern_node_get_sigma_successor
+  (modern_library *library,
+   modern *value);
+extern modern *modern_node_get_named_value
   (modern_library *library,
    modern *value);
 extern struct modern_hash *modern_node_get_named_type_name
