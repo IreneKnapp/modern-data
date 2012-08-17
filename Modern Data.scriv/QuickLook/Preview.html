@@ -746,7 +746,8 @@ modern_node_make_type_index<br/>
 modern_node_make_type_family<br/>
 (modern_library *library,<br/>
  uint64_t n_items,<br/>
- modern **types);</p>
+ modern **types,<br/>
+ Modern *content);</p>
 </li>
 </ul>
 </ul>
@@ -865,6 +866,20 @@ modern_node_set_named_value<br/>
 <hr/>
 <li>
 <p class="binderItem"><strong>Types are immutable</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Canonical form</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_node_canonical</strong><br/>void<br/>
+modern_node_canonical_hash<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ struct modern_hash *out);</p>
 </li>
 </ul>
 <hr/>

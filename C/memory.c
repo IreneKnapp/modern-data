@@ -67,7 +67,8 @@ void modern_release
 	if(memory->retain_count == 0) {
 		library->error_handler->modern_error_handler_retain_count_underflow(retainable);
 	} else if(memory->retain_count == 1) {
-		library->allocator->modern_allocator_free(retainable);
+	    if(memory->finalizer) memory->finalizer(library_in, retainable);
+	    else library->allocator->modern_allocator_free(retainable);
 	} else {
 		memory->retain_count--;
 	}

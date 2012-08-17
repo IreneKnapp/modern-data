@@ -411,24 +411,24 @@ modern *modern_node_make_int8_type
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
-    if(0) {
-    } else {
-        size_t result_size = sizeof(struct modern);
-        struct modern *result =
-            library->allocator->modern_allocator_alloc(result_size);
-        if(!result) {
-            library->error_handler->modern_error_handler_memory(result_size);
-            return NULL;
-        }
-        
-        result->memory.retain_count = 1;
-        result->memory.is_autoreleased = 0;
-        
-        result->node_type = int8_type_modern_node_type;
-        result->value_type = NULL;
-        
-        return (modern *) result;
+    if(library->cache_context) {
     }
+    
+    size_t result_size = sizeof(struct modern);
+    struct modern *result =
+        library->allocator->modern_allocator_alloc(result_size);
+    if(!result) {
+        library->error_handler->modern_error_handler_memory(result_size);
+        return NULL;
+    }
+    
+    result->memory.retain_count = 1;
+    result->memory.is_autoreleased = 0;
+    
+    result->node_type = int8_type_modern_node_type;
+    result->value_type = NULL;
+    
+    return (modern *) result;
 }
 
 

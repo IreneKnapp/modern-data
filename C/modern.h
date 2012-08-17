@@ -184,6 +184,7 @@ enum modern_node_type {
     universe_type_modern_node_type,
     lambda_modern_node_type,
     apply_modern_node_type,
+    family_modern_node_type,
 };
 
 
@@ -440,7 +441,7 @@ extern modern *modern_node_make_type_index
    uint64_t index);
 extern modern *modern_node_make_type_family
   (modern_library *library,
-   uint64_t n_items, modern **types);
+   uint64_t n_items, modern **types, modern *content);
 
 extern void modern_node_set_int8
   (modern_library *library,
@@ -484,6 +485,11 @@ extern void modern_node_set_blob
 extern void modern_node_set_named_value
   (modern_library *library,
    modern *node, modern *type, modern *value);
+
+extern void modern_node_canonical_hash
+  (modern_library *library,
+   modern *value,
+   struct modern_hash *out);
 
 extern void *modern_input_stream_memory
   (modern_library *library,
