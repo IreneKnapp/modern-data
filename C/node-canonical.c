@@ -83,7 +83,8 @@ HELPER int helper_visit_node
    struct helper_node_buffer *top_level_nodes,
    struct helper_node_cons **visit_stack,
    struct helper_node_cons **evaluation_stack,
-   struct modern *node);
+   struct modern *node,
+   struct helper_byte_buffer **out);
 
 
 HELPER int helper_byte_buffer_alloc
@@ -130,7 +131,7 @@ HELPER int helper_byte_buffer_append
     while(buffer->count + length >= buffer->capacity) {
         buffer->capacity *= 2;
         size_t data_size = sizeof(uint8_t) * buffer->capacity;
-        struct modern **new_data =
+        uint8_t *new_data =
             library->allocator->modern_allocator_realloc
                 (buffer->data, data_size);
         if(!new_data) {
@@ -159,12 +160,12 @@ HELPER int helper_byte_buffer_buffer_alloc
     buffer->count = 0;
     buffer->capacity = 8;
     size_t byte_buffers_size =
-        (sizeof(struct byte_buffer *) * buffer->capacity);
+        (sizeof(struct helper_byte_buffer *) * buffer->capacity);
     buffer->byte_buffers =
-        library->allocator->modern_allocator_alloc(byte_buffer_size);
+        library->allocator->modern_allocator_alloc(byte_buffers_size);
     if(!buffer->byte_buffers) {
         library->allocator->modern_allocator_free(buffer);
-        library->error_handler->modern_error_handler_memory(byte_buffer_size);
+        library->error_handler->modern_error_handler_memory(byte_buffers_size);
         return 0;
     }
     *out = buffer;
@@ -198,8 +199,8 @@ HELPER int helper_byte_buffer_buffer_append
     while(buffer->count + 1 >= buffer->capacity) {
         buffer->capacity *= 2;
         size_t byte_buffers_size =
-            sizeof(struct byte_buffer *) * buffer->capacity;
-        struct modern **new_byte_buffers =
+            sizeof(struct helper_byte_buffer *) * buffer->capacity;
+        struct helper_byte_buffer **new_byte_buffers =
             library->allocator->modern_allocator_realloc
                 (buffer->byte_buffers, byte_buffers_size);
         if(!new_byte_buffers) {
@@ -331,7 +332,7 @@ HELPER int helper_visit_node
    struct helper_node_cons **visit_stack,
    struct helper_node_cons **evaluation_stack,
    struct modern *node,
-   struct byte_buffer **out)
+   struct helper_byte_buffer **out)
 {
     size_t visited_nodes_index;
     for(visited_nodes_index = 0;
@@ -347,17 +348,17 @@ HELPER int helper_visit_node
     if(!helper_node_buffer_append(library, visited_nodes, node))
         return 0;
     
-    struct byte_buffer *canonical_form = NULL;
+    struct helper_byte_buffer *canonical_form = NULL;
     if(!helper_byte_buffer_alloc(library, &canonical_form))
         return 0;
     
-    switch(value->node_type) {
+    switch(node->node_type) {
     case int8_value_modern_node_type:
     {
         uint8_t temporary[2];
         
         temporary[0] = int8_value_modern_node_type;
-        temporary[1] = value->specifics.int8_value;
+        temporary[1] = node->specifics.int8_value;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -373,8 +374,8 @@ HELPER int helper_visit_node
         uint8_t temporary[3];
         
         temporary[0] = int16_value_modern_node_type;
-        temporary[1] = ((value->specifics.int16_value >> 0) & 0xFF);
-        temporary[2] = ((value->specifics.int16_value >> 8) & 0xFF);
+        temporary[1] = ((node->specifics.int16_value >> 0) & 0xFF);
+        temporary[2] = ((node->specifics.int16_value >> 8) & 0xFF);
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -390,10 +391,10 @@ HELPER int helper_visit_node
         uint8_t temporary[5];
         
         temporary[0] = int32_value_modern_node_type;
-        temporary[1] = ((value->specifics.int32_value >> 0) & 0xFF);
-        temporary[2] = ((value->specifics.int32_value >> 8) & 0xFF);
-        temporary[3] = ((value->specifics.int32_value >> 16) & 0xFF);
-        temporary[4] = ((value->specifics.int32_value >> 24) & 0xFF);
+        temporary[1] = ((node->specifics.int32_value >> 0) & 0xFF);
+        temporary[2] = ((node->specifics.int32_value >> 8) & 0xFF);
+        temporary[3] = ((node->specifics.int32_value >> 16) & 0xFF);
+        temporary[4] = ((node->specifics.int32_value >> 24) & 0xFF);
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -409,14 +410,14 @@ HELPER int helper_visit_node
         uint8_t temporary[9];
         
         temporary[0] = int64_value_modern_node_type;
-        temporary[1] = ((value->specifics.int64_value >> 0) & 0xFF);
-        temporary[2] = ((value->specifics.int64_value >> 8) & 0xFF);
-        temporary[3] = ((value->specifics.int64_value >> 16) & 0xFF);
-        temporary[4] = ((value->specifics.int64_value >> 24) & 0xFF);
-        temporary[1] = ((value->specifics.int64_value >> 32) & 0xFF);
-        temporary[2] = ((value->specifics.int64_value >> 40) & 0xFF);
-        temporary[3] = ((value->specifics.int64_value >> 48) & 0xFF);
-        temporary[4] = ((value->specifics.int64_value >> 56) & 0xFF);
+        temporary[1] = ((node->specifics.int64_value >> 0) & 0xFF);
+        temporary[2] = ((node->specifics.int64_value >> 8) & 0xFF);
+        temporary[3] = ((node->specifics.int64_value >> 16) & 0xFF);
+        temporary[4] = ((node->specifics.int64_value >> 24) & 0xFF);
+        temporary[1] = ((node->specifics.int64_value >> 32) & 0xFF);
+        temporary[2] = ((node->specifics.int64_value >> 40) & 0xFF);
+        temporary[3] = ((node->specifics.int64_value >> 48) & 0xFF);
+        temporary[4] = ((node->specifics.int64_value >> 56) & 0xFF);
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -432,7 +433,7 @@ HELPER int helper_visit_node
         uint8_t temporary[2];
         
         temporary[0] = nat8_value_modern_node_type;
-        temporary[1] = value->specifics.nat8_value;
+        temporary[1] = node->specifics.nat8_value;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -448,8 +449,8 @@ HELPER int helper_visit_node
         uint8_t temporary[3];
         
         temporary[0] = nat16_value_modern_node_type;
-        temporary[1] = ((value->specifics.nat16_value >> 0) & 0xFF);
-        temporary[2] = ((value->specifics.nat16_value >> 8) & 0xFF);
+        temporary[1] = ((node->specifics.nat16_value >> 0) & 0xFF);
+        temporary[2] = ((node->specifics.nat16_value >> 8) & 0xFF);
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -465,10 +466,10 @@ HELPER int helper_visit_node
         uint8_t temporary[5];
         
         temporary[0] = nat32_value_modern_node_type;
-        temporary[1] = ((value->specifics.nat32_value >> 0) & 0xFF);
-        temporary[2] = ((value->specifics.nat32_value >> 8) & 0xFF);
-        temporary[3] = ((value->specifics.nat32_value >> 16) & 0xFF);
-        temporary[4] = ((value->specifics.nat32_value >> 24) & 0xFF);
+        temporary[1] = ((node->specifics.nat32_value >> 0) & 0xFF);
+        temporary[2] = ((node->specifics.nat32_value >> 8) & 0xFF);
+        temporary[3] = ((node->specifics.nat32_value >> 16) & 0xFF);
+        temporary[4] = ((node->specifics.nat32_value >> 24) & 0xFF);
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -484,14 +485,14 @@ HELPER int helper_visit_node
         uint8_t temporary[9];
         
         temporary[0] = nat64_value_modern_node_type;
-        temporary[1] = ((value->specifics.nat64_value >> 0) & 0xFF);
-        temporary[2] = ((value->specifics.nat64_value >> 8) & 0xFF);
-        temporary[3] = ((value->specifics.nat64_value >> 16) & 0xFF);
-        temporary[4] = ((value->specifics.nat64_value >> 24) & 0xFF);
-        temporary[5] = ((value->specifics.nat64_value >> 32) & 0xFF);
-        temporary[6] = ((value->specifics.nat64_value >> 40) & 0xFF);
-        temporary[7] = ((value->specifics.nat64_value >> 48) & 0xFF);
-        temporary[8] = ((value->specifics.nat64_value >> 56) & 0xFF);
+        temporary[1] = ((node->specifics.nat64_value >> 0) & 0xFF);
+        temporary[2] = ((node->specifics.nat64_value >> 8) & 0xFF);
+        temporary[3] = ((node->specifics.nat64_value >> 16) & 0xFF);
+        temporary[4] = ((node->specifics.nat64_value >> 24) & 0xFF);
+        temporary[5] = ((node->specifics.nat64_value >> 32) & 0xFF);
+        temporary[6] = ((node->specifics.nat64_value >> 40) & 0xFF);
+        temporary[7] = ((node->specifics.nat64_value >> 48) & 0xFF);
+        temporary[8] = ((node->specifics.nat64_value >> 56) & 0xFF);
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -512,7 +513,7 @@ HELPER int helper_visit_node
         temporary[3] = 0x00;
         temporary[4] = 0x00;
         
-        switch(fpclassify(value->specifics.float32_value)) {
+        switch(fpclassify(node->specifics.float32_value)) {
         case FP_INFINITE:
         case FP_NAN:
         case FP_ZERO:
@@ -520,11 +521,11 @@ HELPER int helper_visit_node
         case FP_NORMAL:
         case FP_SUBNORMAL:
         {
-            if(signbit(value->specifics.float32_value)) {
+            if(signbit(node->specifics.float32_value)) {
                 temporary[1] |= 0x80;
             }
             int exponent;
-            float mantissa = frexp(value->specifics.float32_value, &exponent);
+            float mantissa = frexp(node->specifics.float32_value, &exponent);
             temporary[1] |= ((exponent >> 4) & 0x07F);
             temporary[2] |= ((exponent & 0x00F) << 4);
             temporary[2] |= ((((uint32_t) mantissa) >> 16) & 0x0000F);
@@ -962,7 +963,7 @@ void modern_node_canonical_hash
         return;
     }
     
-    struct byte_buffer_buffer *canonical_forms = NULL;
+    struct helper_byte_buffer_buffer *canonical_forms = NULL;
     if(!helper_byte_buffer_buffer_alloc(library, &canonical_forms))
     {
         helper_node_buffer_free(library, visited_nodes);
@@ -979,7 +980,7 @@ void modern_node_canonical_hash
     struct helper_node_cons *visit_stack = NULL;
     struct helper_node_cons *evaluation_stack = NULL;
     
-    struct byte_buffer *canonical_form = NULL;
+    struct helper_byte_buffer *canonical_form = NULL;
     
     if(!helper_visit_node(library, visited_nodes, canonical_forms,
                           top_level_nodes, &visit_stack, &evaluation_stack,
