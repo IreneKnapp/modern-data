@@ -524,13 +524,15 @@ HELPER int helper_visit_node
             if(signbit(node->specifics.float32_value)) {
                 temporary[1] |= 0x80;
             }
+            float value = node->specifics.float32_value;
             int exponent;
-            float mantissa = frexp(node->specifics.float32_value, &exponent);
-            temporary[1] |= ((exponent >> 4) & 0x07F);
-            temporary[2] |= ((exponent & 0x00F) << 4);
-            temporary[2] |= ((((uint32_t) mantissa) >> 16) & 0x0000F);
-            temporary[3] |= ((((uint32_t) mantissa) >> 8) & 0x000FF);
-            temporary[4] |= ((((uint32_t) mantissa) >> 0) & 0x000FF);
+            float mantissa = fabsf(frexpf(value, &exponent));
+            exponent += 126;
+            temporary[1] |= ((exponent >> 1) & 0x7F);
+            temporary[2] |= ((exponent << 7) & 0x80);
+            temporary[2] |= ((uint8_t) (mantissa * (1 << 8)) & 0x7F);
+            temporary[3] |= (uint8_t) (mantissa * (1 << 16));
+            temporary[4] |= (uint8_t) (mantissa * (1 << 24));
             break;
         }
         }
@@ -993,6 +995,11 @@ void modern_node_canonical_hash
         helper_node_buffer_free(library, visited_nodes);
         return;
     }
+    
+    for(size_t i = 0; i < canonical_form->count; i++) {
+    	printf(" %02x", canonical_form->data[i]);
+    }
+    printf("\n");
     
     modern_compute_hash(canonical_form->data, canonical_form->count, out);
     

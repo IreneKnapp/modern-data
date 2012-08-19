@@ -3,6 +3,11 @@
 #include "internal.h"
 
 
+INTERNAL void internal_context_finalizer
+  (struct modern_library *library,
+   void *context);
+
+
 modern_context *modern_make_initial_context
   (modern_library *library_in)
 {
@@ -26,8 +31,9 @@ modern_context *modern_make_initial_context
 
 INTERNAL void internal_context_finalizer
   (struct modern_library *library,
-   struct modern_context *context)
+   void *context_in)
 {
+	struct modern_context *context = (struct modern_context *) context_in;
     library->allocator->modern_allocator_free(context->hash);
     library->allocator->modern_allocator_free(context);
 }

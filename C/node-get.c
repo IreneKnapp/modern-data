@@ -127,6 +127,10 @@ modern *modern_node_get_value_type
     case apply_modern_node_type:
         // TODO
         break;
+    
+    case family_modern_node_type:
+    	// TODO
+    	break;
     }
 }
 

@@ -22,20 +22,21 @@ struct modern_error_handler *modern_library_get_error_handler
   (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
-    return library_in->error_handler;
+    return library->error_handler;
 }
 
 
 struct modern_allocator *modern_library_get_allocator
-  (modern_library *library)
+  (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
-    return library_in->allocator;
+    return library->allocator;
 }
 
 
-void modern_library_finalize(modern_library *library)
+void modern_library_finalize(modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
-    return library_in->error_handler;
+    modern_release(library, library->cache_context);
+    library->allocator->modern_allocator_free(library);
 }

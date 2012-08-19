@@ -584,7 +584,7 @@ modern *modern_node_make_type_index
 
 modern *modern_node_make_type_family
     (modern_library *library_in,
-     uint64_t n_items, modern **types_in)
+     uint64_t n_items, modern **types_in, modern *content_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
