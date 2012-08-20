@@ -366,6 +366,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -383,6 +384,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -402,6 +404,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -425,6 +428,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -441,6 +445,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -458,6 +463,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -477,6 +483,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -500,6 +507,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -530,9 +538,9 @@ HELPER int helper_visit_node
             exponent += 126;
             temporary[1] |= ((exponent >> 1) & 0x7F);
             temporary[2] |= ((exponent << 7) & 0x80);
-            temporary[2] |= ((uint8_t) (mantissa * (1 << 8)) & 0x7F);
-            temporary[3] |= (uint8_t) (mantissa * (1 << 16));
-            temporary[4] |= (uint8_t) (mantissa * (1 << 24));
+            temporary[2] |= (((uint8_t) fmodf(ldexpf(mantissa, 8), 256.0)) & 0x7F);
+            temporary[3] |= (uint8_t) fmodf(ldexpf(mantissa, 16), 256.0);
+            temporary[4] |= (uint8_t) fmodf(ldexpf(mantissa, 24), 256.0);
             break;
         }
         }
@@ -543,15 +551,51 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
     case float64_value_modern_node_type:
     {
-        uint8_t temporary[2];
+        uint8_t temporary[9];
         
-        temporary[0] = int8_value_modern_node_type;
-        // TODO
+        temporary[0] = float64_value_modern_node_type;
+        temporary[1] = 0x00;
+        temporary[2] = 0x00;
+        temporary[3] = 0x00;
+        temporary[4] = 0x00;
+        temporary[5] = 0x00;
+        temporary[6] = 0x00;
+        temporary[7] = 0x00;
+        temporary[8] = 0x00;
+        
+        switch(fpclassify(node->specifics.float64_value)) {
+        case FP_INFINITE:
+        case FP_NAN:
+        case FP_ZERO:
+            break;
+        case FP_NORMAL:
+        case FP_SUBNORMAL:
+        {
+            if(signbit(node->specifics.float64_value)) {
+                temporary[1] |= 0x80;
+            }
+            double value = node->specifics.float64_value;
+            int exponent;
+            double mantissa = fabs(frexp(value, &exponent));
+            exponent += 1022;
+            temporary[1] |= ((exponent >> 4) & 0x7F);
+            temporary[2] |= ((exponent << 4) & 0xF0);
+            temporary[2] |= (((uint8_t) ldexp(mantissa, 5)) & 0x0F);
+            temporary[3] |= (uint8_t) fmod(ldexp(mantissa, 13), 256.0);
+            temporary[4] |= (uint8_t) fmod(ldexp(mantissa, 21), 256.0);
+            temporary[5] |= (uint8_t) fmod(ldexp(mantissa, 29), 256.0);
+            temporary[6] |= (uint8_t) fmod(ldexp(mantissa, 37), 256.0);
+            temporary[7] |= (uint8_t) fmod(ldexp(mantissa, 45), 256.0);
+            temporary[8] |= (uint8_t) fmod(ldexp(mantissa, 52), 256.0);
+            break;
+        }
+        }
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -559,15 +603,67 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
     case float128_value_modern_node_type:
     {
-        uint8_t temporary[2];
+        uint8_t temporary[17];
         
-        temporary[0] = int8_value_modern_node_type;
-        // TODO
+        temporary[0] = float128_value_modern_node_type;
+        temporary[1] = 0x00;
+        temporary[2] = 0x00;
+        temporary[3] = 0x00;
+        temporary[4] = 0x00;
+        temporary[5] = 0x00;
+        temporary[6] = 0x00;
+        temporary[7] = 0x00;
+        temporary[8] = 0x00;
+        temporary[9] = 0x00;
+        temporary[10] = 0x00;
+        temporary[11] = 0x00;
+        temporary[12] = 0x00;
+        temporary[13] = 0x00;
+        temporary[14] = 0x00;
+        temporary[15] = 0x00;
+        temporary[16] = 0x00;
+        
+        switch(fpclassify(node->specifics.float128_value)) {
+        case FP_INFINITE:
+        case FP_NAN:
+        case FP_ZERO:
+            break;
+        case FP_NORMAL:
+        case FP_SUBNORMAL:
+        {
+            if(signbit(node->specifics.float128_value)) {
+                temporary[1] |= 0x80;
+            }
+            modern_float128 value = node->specifics.float128_value;
+            int exponent;
+            modern_float128 mantissa = fabsq(frexpq(value, &exponent));
+            exponent += 1022;
+            temporary[1] |= ((exponent >> 11) & 0x7F);
+            temporary[2] |= ((exponent << 0) & 0xFF);
+            temporary[3] |= (uint8_t) fmodq(ldexpq(mantissa, 9), 256.0);
+            temporary[3] |= (uint8_t) fmodq(ldexpq(mantissa, 17), 256.0);
+            temporary[4] |= (uint8_t) fmodq(ldexpq(mantissa, 25), 256.0);
+            temporary[5] |= (uint8_t) fmodq(ldexpq(mantissa, 33), 256.0);
+            temporary[6] |= (uint8_t) fmodq(ldexpq(mantissa, 41), 256.0);
+            temporary[7] |= (uint8_t) fmodq(ldexpq(mantissa, 49), 256.0);
+            temporary[8] |= (uint8_t) fmodq(ldexpq(mantissa, 57), 256.0);
+            temporary[9] |= (uint8_t) fmodq(ldexpq(mantissa, 65), 256.0);
+            temporary[10] |= (uint8_t) fmodq(ldexpq(mantissa, 73), 256.0);
+            temporary[11] |= (uint8_t) fmodq(ldexpq(mantissa, 81), 256.0);
+            temporary[12] |= (uint8_t) fmodq(ldexpq(mantissa, 89), 256.0);
+            temporary[13] |= (uint8_t) fmodq(ldexpq(mantissa, 97), 256.0);
+            temporary[14] |= (uint8_t) fmodq(ldexpq(mantissa, 105), 256.0);
+            temporary[15] |= (uint8_t) fmodq(ldexpq(mantissa, 113), 256.0);
+            temporary[16] |= (uint8_t) fmodq(ldexpq(mantissa, 121), 256.0);
+            break;
+        }
+        }
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -575,15 +671,15 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
     case utf8_value_modern_node_type:
     {
-        uint8_t temporary[2];
+        uint8_t temporary[1];
         
-        temporary[0] = int8_value_modern_node_type;
-        // TODO
+        temporary[0] = utf8_value_modern_node_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -591,15 +687,23 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
+        if(!helper_byte_buffer_append(library, canonical_form,
+                                      node->specifics.utf8_value.data,
+                                      node->specifics.utf8_value.bytes))
+        {
+            helper_byte_buffer_free(library, canonical_form);
+            return 0;
+        }
+        
         break;
     }
     
     case blob_value_modern_node_type:
     {
-        uint8_t temporary[2];
+        uint8_t temporary[1];
         
-        temporary[0] = int8_value_modern_node_type;
-        // TODO
+        temporary[0] = blob_value_modern_node_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -607,15 +711,23 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
+        if(!helper_byte_buffer_append(library, canonical_form,
+                                      node->specifics.blob_value.data,
+                                      node->specifics.blob_value.bytes))
+        {
+            helper_byte_buffer_free(library, canonical_form);
+            return 0;
+        }
+        
         break;
     }
     
     case sigma_value_modern_node_type:
     {
-        uint8_t temporary[2];
+        uint8_t temporary[1];
         
-        temporary[0] = int8_value_modern_node_type;
-        // TODO
+        temporary[0] = sigma_value_modern_node_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -623,6 +735,28 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
+        // IAK
+        struct helper_byte_buffer *type_canonical_form;
+        if(!helper_visit_node(library, visited_nodes, canonical_forms,
+                              top_level_nodes, &visit_stack, &evaluation_stack,
+                              value, &type_canonical_form))
+        {
+            helper_byte_buffer_free(library, canonical_form);
+            return 0;
+        }
+        
+        if(!helper_byte_buffer_append(library, canonical_form,
+                                      type_canonical_form->data,
+                                      type_canonical_form->count))
+        {
+            helper_byte_buffer_free(library, type_canonical_form);
+            helper_byte_buffer_free(library, canonical_form);
+            return 0;
+        }
+        
+        helper_byte_buffer_free(library, type_canonical_form);
+        
         break;
     }
     
@@ -639,6 +773,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -655,6 +790,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -671,6 +807,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -687,6 +824,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -703,6 +841,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -719,6 +858,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -735,6 +875,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -767,6 +908,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -783,6 +925,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -799,6 +942,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -815,6 +959,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -831,6 +976,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -847,6 +993,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -863,6 +1010,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -879,6 +1027,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -895,6 +1044,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -911,6 +1061,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -927,6 +1078,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     
@@ -943,6 +1095,7 @@ HELPER int helper_visit_node
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
+        
         break;
     }
     }

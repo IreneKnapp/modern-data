@@ -45,6 +45,35 @@ Node types “lambda”, “apply”, “index” (as in De Bruijn), and “fami
 Things like void (*modern_stream_type_definition_int8)(void *processor, void *context) are callbacks invoked when type IDs are read.  All the functions in that struct are callbacks that are invoked on things that happen during streaming parsing.  The API for streaming generation is the same...</p>
 </li>
 <li>
+<p class="binderItem"><strong>Primitive values</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Integers</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Natural numbers</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Floating-point numbers</strong><br/>The floating-point datatypes used by Modern Data are a subset of the “interchange formats” defined by IEEE 754-2008.</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libr...</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Text</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Binary large objects</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
 <p class="binderItem"><strong>C library reference</strong></p>
 </li>
 <hr/>
@@ -199,6 +228,11 @@ modern_autorelease<br/>
 </li>
 </ul>
 <hr/>
+<li>
+<p class="binderItem"><strong>Numeric values</strong><br/>typedef float modern_float32;<br/>
+typedef double modern_float64;<br/>
+typedef long double modern_float128;</p>
+</li>
 <li>
 <p class="binderItem"><strong>Hashing</strong></p>
 </li>
@@ -1597,6 +1631,16 @@ modern_make_documentation_stream<br/>
 (modern_library *library);</p>
 </li>
 </ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Normative references</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>IEEE 754-2008</strong></p>
+</li>
 </ul>
 </ul>
 

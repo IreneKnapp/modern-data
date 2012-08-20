@@ -1,6 +1,12 @@
 #define INTERNAL __attribute__ ((visibility ("hidden")))
 #define HELPER static
 
+#define fabsq fabsl
+#define frexpq frexpl
+#define fmodq fmodl
+#define ldexpq ldexpl
+
+
 struct modern_library {
     struct modern_error_handler *error_handler;
     struct modern_allocator *allocator;

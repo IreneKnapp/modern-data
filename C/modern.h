@@ -7,6 +7,9 @@ typedef void modern;
 typedef void modern_context;
 typedef void modern_autorelease_pool;
 typedef void modern_library;
+typedef float modern_float32;
+typedef double modern_float64;
+typedef long double modern_float128;
 
 
 struct modern_hash {
@@ -106,11 +109,11 @@ struct modern_stream {
     void (*modern_stream_nat64)
       (void *processor_state, void *stream_state, uint64_t value);
     void (*modern_stream_float32)
-      (void *processor_state, void *stream_state, float value);
+      (void *processor_state, void *stream_state, modern_float32 value);
     void (*modern_stream_float64)
-      (void *processor_state, void *stream_state, double value);
+      (void *processor_state, void *stream_state, modern_float64 value);
     void (*modern_stream_float128)
-      (void *processor_state, void *stream_state, long double value);
+      (void *processor_state, void *stream_state, modern_float128 value);
     void (*modern_stream_utf8_start)
       (void *processor_state, void *stream_state);
     void (*modern_stream_utf8_data)
@@ -300,13 +303,13 @@ extern uint32_t modern_node_get_nat32
 extern uint64_t modern_node_get_nat64
   (modern_library *library,
    modern *value);
-extern float modern_node_get_float32
+extern modern_float32 modern_node_get_float32
   (modern_library *library,
    modern *value);
-extern double modern_node_get_float64
+extern modern_float64 modern_node_get_float64
   (modern_library *library,
    modern *value);
-extern long double modern_node_get_float128
+extern modern_float128 modern_node_get_float128
   (modern_library *library,
    modern *value);
 extern size_t modern_node_get_utf8_bytes
@@ -375,13 +378,13 @@ extern modern *modern_node_make_nat64
    uint64_t value);
 extern modern *modern_node_make_float32
   (modern_library *library,
-   float value);
+   modern_float32 value);
 extern modern *modern_node_make_float64
   (modern_library *library,
-   double value);
+   modern_float64 value);
 extern modern *modern_node_make_float128
   (modern_library *library,
-   long double value);
+   modern_float128 value);
 extern modern *modern_node_make_utf8
   (modern_library *library,
    uint8_t *data);
@@ -469,13 +472,13 @@ extern void modern_node_set_nat64
    modern *node, uint64_t value);
 extern void modern_node_set_float32
   (modern_library *library,
-   modern *node, float value);
+   modern *node, modern_float32 value);
 extern void modern_node_set_float64
   (modern_library *library,
-   modern *node, double value);
+   modern *node, modern_float64 value);
 extern void modern_node_set_float128
   (modern_library *library,
-   modern *node, long double value);
+   modern *node, modern_float128 value);
 extern void modern_node_set_utf8
   (modern_library *library,
    modern *node, uint8_t *data);

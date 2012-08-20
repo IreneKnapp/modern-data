@@ -868,6 +868,10 @@ modern_node_make_float128
 (modern_library *library,
  long double value);</Text>
         </Document>
+        <Document ID="290">
+            <Title>Floating-point numbers</Title>
+            <Text>The floating-point datatypes used by Modern Data are a subset of the “interchange formats” defined by IEEE 754-2008.</Text>
+        </Document>
         <Document ID="134">
             <Title>modern_node_get_nat8</Title>
             <Text>uint8_t
@@ -936,6 +940,9 @@ modern_node_make_utf8
 (modern_library *library,
  uint8_t *data);</Text>
         </Document>
+        <Document ID="291">
+            <Title>Integers</Title>
+        </Document>
         <Document ID="135">
             <Title>modern_node_get_nat16</Title>
             <Text>uint16_t
@@ -989,6 +996,9 @@ modern_node_make_blob
 (modern_library *library,
  uint8_t *data,
  size_t bytes);</Text>
+        </Document>
+        <Document ID="292">
+            <Title>Natural numbers</Title>
         </Document>
         <Document ID="136">
             <Title>modern_node_get_nat32</Title>
@@ -1089,6 +1099,9 @@ modern_node_make_union
  struct modern_hash *field,
  modern *value);</Text>
         </Document>
+        <Document ID="294">
+            <Title>Text</Title>
+        </Document>
         <Document ID="138">
             <Title>modern_node_get_float32</Title>
             <Text>float
@@ -1130,6 +1143,9 @@ modern_node_make_structure
  struct modern_hash **fields,
  modern **values);</Text>
         </Document>
+        <Document ID="295">
+            <Title>Binary large objects</Title>
+        </Document>
         <Document ID="139">
             <Title>modern_node_get_float64</Title>
             <Text>double
@@ -1165,6 +1181,12 @@ modern_node_set_nat32
 (modern_library *library,
  modern *node,
  uint32_t value);</Text>
+        </Document>
+        <Document ID="296">
+            <Title>128-bit values</Title>
+            <Text>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libraries simply use the platform’s largest available floating-point type, which is usually 80 bits, for all function parameters and return values, while converting these to and from 128-bit representations for interchange.
+
+Should 128-bit floats become practical on the key platforms where Modern Data is supported, it is expected that the API will be changed to use these types, breaking linking compatibility but retaining source and over-the-wire compatibility.  Hence, code linked against present versions of the library will interoperate with future systems which use 128-bit floats natively, but will never be able to directly use more precision than the system has available.</Text>
         </Document>
         <Document ID="266">
             <Title>modern_library_get_error_handler</Title>
@@ -1612,6 +1634,12 @@ modern_node_make_nat16
 (modern_library *library,
  uint16_t value);</Text>
         </Document>
+        <Document ID="285">
+            <Title>Numeric values</Title>
+            <Text>typedef float modern_float32;
+typedef double modern_float64;
+typedef long double modern_float128;</Text>
+        </Document>
         <Document ID="129">
             <Title>modern_node_get_value_type</Title>
             <Text>modern *
@@ -1629,6 +1657,10 @@ modern_input_stream_finalize
 (modern_library *library,
  void *processor_state);</Text>
         </Document>
+        <Document ID="286">
+            <Title>The floating-point datatypes used by Modern Data are</Title>
+            <Text>The floating-point datatypes used by Modern Data are defined by IEEE 754-2008</Text>
+        </Document>
         <Document ID="256">
             <Title>modern_stream_nat16</Title>
             <Text>void
@@ -1640,6 +1672,9 @@ modern_input_stream_finalize
         <Document ID="226">
             <Title>General</Title>
         </Document>
+        <Document ID="287">
+            <Title>Normative references</Title>
+        </Document>
         <Document ID="257">
             <Title>modern_stream_nat32</Title>
             <Text>void
@@ -1650,6 +1685,9 @@ modern_input_stream_finalize
         </Document>
         <Document ID="227">
             <Title>Stream-based serialization</Title>
+        </Document>
+        <Document ID="288">
+            <Title>IEEE 754-2008</Title>
         </Document>
         <Document ID="258">
             <Title>modern_stream_nat64</Title>
@@ -1667,6 +1705,9 @@ modern_output_stream_memory_buffer
  modern_autorelease_pool *pool,
  uint8_t *buffer,
  size_t *length);</Text>
+        </Document>
+        <Document ID="289">
+            <Title>Primitive values</Title>
         </Document>
         <Document ID="259">
             <Title>modern_copy_context</Title>
