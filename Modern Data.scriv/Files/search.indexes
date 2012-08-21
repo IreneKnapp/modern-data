@@ -1174,6 +1174,9 @@ modern_compute_hash
  size_t length,
  struct modern_hash *out);</Text>
         </Document>
+        <Document ID="300">
+            <Title>Flattening</Title>
+        </Document>
         <Document ID="205">
             <Title>modern_node_set_nat32</Title>
             <Text>void
@@ -1234,6 +1237,22 @@ Modern Data, unlike other self-describing formats, is capable of representing an
 The Modern Data base library is written in C.  Not because it’s more suitable for the task than other languages would be - it’s not.  Rather, functional languages tend to have runtime systems (largely consisting of garbage collectors) which make the scenario of deploying a library to be linked against from other languages more difficult.  Obviously there will be bindings written in functional languages, as functional programming is the paradigm best equipped to take advantage of Modern Data’s features, but the library will always be in a system language, so that it can easily be linked against from as many other languages as possible.  Care has been taken to play nicely with foreign-function interfaces, which cannot always use the full capabilities of the C ABI.
 
 Please, come on in - and enjoy the type system!</Text>
+        </Document>
+        <Document ID="297">
+            <Title>Canonical form</Title>
+            <Text>Modern Data contexts are essentially hash tables containing modern nodes as their elements.  The hash key used for indexing them is based on the “canonical form” of the modern node.  This section discusses what that canonical form means and how it is computed.  Though client code need never be aware of what are essentially implementation details such as these, independent implementations of the library do need to know them.
+
+It is important to note that each node, independently, has its own canonical form.  It is not meaningful to speak of the canonical form of a document as a whole.
+
+The canonical form is computed in the following steps, performed sequentially:
+
+1) Compute the flattened representation of the document as viewed from the node being considered, as described below.
+
+2) Do a pre-order traversal of the reachable parts of the document starting from the node being considered, outputting modern-stream events constructing each traversed node in turn to an “imagined” accumulator of bytes.
+
+3) Compute the hash of all the bytes that were output to the accumulator.
+
+For ease of implementation and on the general principle of consistency, the format of the accumulator is the same as the format of a modern stream.  However, to compute the accumulator, it is not sufficient simply to output a document and record what has been output; the flattening stage must be done first, to break cycles.  Furthermore, because the exact sequence of bytes changes with the exact sequence of events generated, the events must come from a pre-order traversal as described above.  The flattening stage will have ensured that the pre-order traversal only needs to output value and type events, as well as a single family event at the top-level.  The pre-order traversal will not output any lambda or apply events, nor will it output family events other than the single top-level one.</Text>
         </Document>
         <Document ID="267">
             <Title>modern_library_get_allocator</Title>

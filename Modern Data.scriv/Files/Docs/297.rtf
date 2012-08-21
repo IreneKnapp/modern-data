@@ -1,0 +1,18 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187
+{\fonttbl\f0\fnil\fcharset0 Cochin;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li11\fi-1\pardirnatural
+
+\f0\fs24 \cf0 Modern Data contexts are essentially hash tables containing modern nodes as their elements.  The hash key used for indexing them is based on the \'93canonical form\'94 of the modern node.  This section discusses what that canonical form means and how it is computed.  Though client code need never be aware of what are essentially implementation details such as these, independent implementations of the library do need to know them.\
+\
+It is important to note that each node, independently, has its own canonical form.  It is not meaningful to speak of the canonical form of a document as a whole.\
+\
+The canonical form is computed in the following steps, performed sequentially:\
+\
+1) Compute the flattened representation of the document as viewed from the node being considered, as described below.\
+\
+2) Do a pre-order traversal of the reachable parts of the document starting from the node being considered, outputting modern-stream events constructing each traversed node in turn to an \'93imagined\'94 accumulator of bytes.\
+\
+3) Compute the hash of all the bytes that were output to the accumulator.\
+\
+For ease of implementation and on the general principle of consistency, the format of the accumulator is the same as the format of a modern stream.  However, to compute the accumulator, it is not sufficient simply to output a document and record what has been output; the flattening stage must be done first, to break cycles.  Furthermore, because the exact sequence of bytes changes with the exact sequence of events generated, the events must come from a pre-order traversal as described above.  The flattening stage will have ensured that the pre-order traversal only needs to output value and type events, as well as a single family event at the top-level.  The pre-order traversal will not output any lambda or apply events, nor will it output family events other than the single top-level one.}

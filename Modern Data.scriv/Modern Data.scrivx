@@ -24,7 +24,7 @@
                         <NotesTextSelection>0,0</NotesTextSelection>
                     </MetaData>
                     <TextSettings>
-                        <TextSelection>4914,0</TextSelection>
+                        <TextSelection>827,4</TextSelection>
                     </TextSettings>
                 </BinderItem>
                 <BinderItem ID="5" Type="Text" Created="2012-08-10 16:11:28 -0400" Modified="2012-08-13 15:59:31 -0400">
@@ -36,6 +36,28 @@
                     <TextSettings>
                         <TextSelection>208,0</TextSelection>
                     </TextSettings>
+                </BinderItem>
+                <BinderItem ID="297" Type="Text" Created="2012-08-21 15:49:26 -0400" Modified="2012-08-21 16:43:11 -0400">
+                    <Title>Canonical form</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>1886,0</TextSelection>
+                    </TextSettings>
+                    <Children>
+                        <BinderItem ID="300" Type="Text" Created="2012-08-21 16:28:01 -0400" Modified="2012-08-21 16:28:19 -0400">
+                            <Title>Flattening</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                                <NotesTextSelection>0,0</NotesTextSelection>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                    </Children>
                 </BinderItem>
                 <BinderItem ID="289" Type="Folder" Created="2012-08-20 13:45:40 -0400" Modified="2012-08-20 14:37:34 -0400">
                     <Title>Primitive values</Title>
@@ -3020,6 +3042,26 @@
                         <TextSelection>77,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
+                <BinderItem ID="298" Type="Text" Created="2012-08-21 16:01:50 -0400" Modified="2012-08-21 16:01:50 -0400">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="299" Type="Text" Created="2012-08-21 16:24:38 -0400" Modified="2012-08-21 16:24:41 -0400">
+                    <Title></Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
             </Children>
         </BinderItem>
     </Binder>
@@ -3055,7 +3097,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="234" Characters="1469" Date="2012-08-20 13:41:23 -0400"></PreviousSession>
+        <PreviousSession Words="315" Characters="1886" Date="2012-08-21 16:02:10 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>
