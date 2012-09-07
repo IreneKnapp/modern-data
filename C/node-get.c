@@ -21,64 +21,58 @@ modern *modern_node_get_value_type
     
     switch(value->node_type) {
     case int8_value_modern_node_type:
-        return modern_node_make_int8_type(library_in);
+        value->value_type = modern_node_make_int8_type(library_in);
+        break;
     
     case int16_value_modern_node_type:
-        return modern_node_make_int16_type(library_in);
+        value->value_type = modern_node_make_int16_type(library_in);
+        break;
     
     case int32_value_modern_node_type:
-        return modern_node_make_int32_type(library_in);
+        value->value_type = modern_node_make_int32_type(library_in);
+        break;
     
     case int64_value_modern_node_type:
-        return modern_node_make_int64_type(library_in);
+        value->value_type = modern_node_make_int64_type(library_in);
+        break;
     
     case nat8_value_modern_node_type:
-        return modern_node_make_nat8_type(library_in);
+        value->value_type = modern_node_make_nat8_type(library_in);
+        break;
     
     case nat16_value_modern_node_type:
-        return modern_node_make_nat16_type(library_in);
+        value->value_type = modern_node_make_nat16_type(library_in);
+        break;
     
     case nat32_value_modern_node_type:
-        return modern_node_make_nat32_type(library_in);
+        value->value_type = modern_node_make_nat32_type(library_in);
+        break;
     
     case nat64_value_modern_node_type:
-        return modern_node_make_nat64_type(library_in);
+        value->value_type = modern_node_make_nat64_type(library_in);
+        break;
     
     case float32_value_modern_node_type:
-        return modern_node_make_float32_type(library_in);
+        value->value_type = modern_node_make_float32_type(library_in);
+        break;
     
     case float64_value_modern_node_type:
-        return modern_node_make_float64_type(library_in);
+        value->value_type = modern_node_make_float64_type(library_in);
+        break;
     
     case utf8_value_modern_node_type:
-        return modern_node_make_utf8_type(library_in);
+        value->value_type = modern_node_make_utf8_type(library_in);
+        break;
     
     case blob_value_modern_node_type:
-        return modern_node_make_blob_type(library_in);
+        value->value_type = modern_node_make_blob_type(library_in);
+        break;
     
     case sigma_value_modern_node_type:
-    {
-        modern *sigma_field_value =
-            (modern *) value->specifics.sigma_value.field_value;
-        
-        modern *sigma_field_type = modern_node_get_value_type
-            (library_in, (modern *) sigma_field_value);
-        if(!sigma_field_type) return NULL;
-        
-        struct modern *sigma_successor =
-            value->specifics.sigma_value.successor;
-        
-        modern *sigma_type = modern_node_make_sigma_type
-            (library_in, sigma_field_type, sigma_successor);
-        if(!sigma_type) return NULL;
-        
-        value->value_type = sigma_type;
-        
-        return sigma_type;
-    }
+        break;
     
     case named_value_modern_node_type:
-        return NULL;
+        break;
     
     case int8_type_modern_node_type:
     case int16_type_modern_node_type:
@@ -92,10 +86,11 @@ modern *modern_node_get_value_type
     case float64_type_modern_node_type:
     case utf8_type_modern_node_type:
     case blob_type_modern_node_type:
+    case function_type_modern_node_type:
     case sigma_type_modern_node_type:
     case named_type_modern_node_type:
-        return modern_node_make_universe_type
-            (library_in, 0);
+        value->value_type = modern_node_make_universe_type(library_in, 0);
+        break;
     
     case universe_type_modern_node_type:
     {
@@ -103,31 +98,46 @@ modern *modern_node_get_value_type
             (library_in, value_in);
         if(level == UINT64_MAX) {
             library->error_handler->
-                modern_error_handler_universe_level_overflow();
-            return NULL;
+                modern_error_handler_universe_level_overflow
+                    (library->client_state);
         } else {
             modern *universe_type =
                 modern_node_make_universe_type(library_in, level + 1);
             if(!universe_type) return NULL;
             
             value->value_type = universe_type;
-            
-            return universe_type;
         }
+        
+        break;
     }
     
     case lambda_modern_node_type:
-        // TODO
         break;
     
     case apply_modern_node_type:
-        // TODO
         break;
     
-    case family_modern_node_type:
-    	// TODO
+    case type_family_modern_node_type:
+        library->error_handler->modern_error_handler_not_applicable
+            (library->client_state);
     	break;
+    
+    case let_modern_node_type:
+        break;
+    
+    case backreference_modern_node_type:
+        break;
+    
+    case builtin_modern_node_type:
+        switch(value->specifics.builtin) {
+        case plus_int8_modern_builtin_identifier:
+            // TODO
+            break;
+        default: break;
+        }
     }
+    
+    return value->value_type;
 }
 
 
@@ -239,7 +249,8 @@ uint8_t *modern_node_get_utf8_data_piece
     if(offset + bytes < value->specifics.utf8_value.bytes) {
         return value->specifics.utf8_value.data + offset;
     } else {
-        library->error_handler->modern_error_handler_buffer_index();
+        library->error_handler->modern_error_handler_buffer_index
+            (library->client_state);
         return NULL;
     }
 }
@@ -263,13 +274,14 @@ uint8_t *modern_node_get_blob_data_piece
     if(offset + bytes < value->specifics.blob_value.bytes) {
         return value->specifics.blob_value.data + offset;
     } else {
-        library->error_handler->modern_error_handler_buffer_index();
+        library->error_handler->modern_error_handler_buffer_index
+            (library->client_state);
         return NULL;
     }
 }
 
 
-modern *modern_node_get_sigma_value
+modern *modern_node_get_sigma_field_value
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -294,6 +306,44 @@ modern *modern_node_get_named_value
     struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
     return value->specifics.named_value.value;
+}
+
+
+modern *modern_node_get_function_type_left
+  (modern_library *library_in,
+   modern *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.function_type.left;
+}
+
+
+modern *modern_node_get_function_type_right
+  (modern_library *library_in,
+   modern *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.function_type.right;
+}
+
+
+modern *modern_node_get_sigma_type_field_type
+    (modern_library *library_in, modern *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.sigma_type.field_type;
+}
+
+
+modern *modern_node_get_sigma_type_successor
+    (modern_library *library_in, modern *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.sigma_type.successor;
 }
 
 
@@ -348,4 +398,64 @@ modern *modern_node_get_apply_right
     struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
     return value->specifics.apply.right;
+}
+
+
+uint64_t modern_node_get_type_family_count
+  (modern_library *library_in,
+   modern *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.type_family.n_items;
+}
+
+
+modern *modern_node_get_type_family_item
+  (modern_library *library_in,
+   modern *value_in, uint64_t index)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.type_family.members[index];
+}
+
+
+uint64_t modern_node_get_let_count
+  (modern_library *library_in,
+   modern *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.let.n_items;
+}
+
+
+modern *modern_node_get_let_item
+  (modern_library *library_in,
+   modern *value_in, uint64_t index)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.let.members[index];
+}
+
+
+modern *modern_node_get_let_content
+  (modern_library *library_in,
+   modern *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.let.content;
+}
+
+
+uint16_t modern_node_get_builtin_identifier
+  (modern_library *library_in,
+   modern *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.builtin;
 }

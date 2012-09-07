@@ -1,11 +1,14 @@
 #include <math.h>
 #include <string.h>
 #include "modern.h"
+#include "test.h"
 
-#define powq powl
 
-
-void test_main(modern_library *library, modern_autorelease_pool *pool, modern_context *context) {
+void test_main(struct test_suite *test_suite, modern_library *library) {
+    modern_autorelease_pool *pool = modern_make_autorelease_pool(library);
+    
+    modern_context *context = modern_make_initial_context(library);
+    
     modern_float32 value_float32s[] = {
     	0.0, -0.0,
     	1.0 / 0.0, -1.0 / 0.0,

@@ -93,18 +93,23 @@ HELPER int helper_byte_buffer_alloc
 {
     size_t buffer_size = sizeof(struct helper_byte_buffer);
     struct helper_byte_buffer *buffer;
-    buffer = library->allocator->modern_allocator_alloc(buffer_size);
+    buffer = library->allocator->modern_allocator_alloc
+        (library->client_state, buffer_size);
     if(!buffer) {
-        library->error_handler->modern_error_handler_memory(buffer_size);
+        library->error_handler->modern_error_handler_memory
+            (library->client_state, buffer_size);
         return 0;
     }
     buffer->count = 0;
     buffer->capacity = 8;
     size_t data_size = (sizeof(uint8_t) * buffer->capacity);
-    buffer->data = library->allocator->modern_allocator_alloc(data_size);
+    buffer->data = library->allocator->modern_allocator_alloc
+        (library->client_state, data_size);
     if(!buffer->data) {
-        library->allocator->modern_allocator_free(buffer);
-        library->error_handler->modern_error_handler_memory(data_size);
+        library->allocator->modern_allocator_free
+            (library->client_state, buffer);
+        library->error_handler->modern_error_handler_memory
+            (library->client_state, data_size);
         return 0;
     }
     *out = buffer;
@@ -116,8 +121,10 @@ HELPER int helper_byte_buffer_free
   (struct modern_library *library,
    struct helper_byte_buffer *buffer)
 {
-    library->allocator->modern_allocator_free(buffer->data);
-    library->allocator->modern_allocator_free(buffer);
+    library->allocator->modern_allocator_free
+        (library->client_state, buffer->data);
+    library->allocator->modern_allocator_free
+        (library->client_state, buffer);
     return 1;
 }
 
@@ -133,9 +140,10 @@ HELPER int helper_byte_buffer_append
         size_t data_size = sizeof(uint8_t) * buffer->capacity;
         uint8_t *new_data =
             library->allocator->modern_allocator_realloc
-                (buffer->data, data_size);
+                (library->client_state, buffer->data, data_size);
         if(!new_data) {
-            library->error_handler->modern_error_handler_memory(data_size);
+            library->error_handler->modern_error_handler_memory
+                (library->client_state, data_size);
             return 0;
         }
         buffer->data = new_data;
@@ -152,9 +160,11 @@ HELPER int helper_byte_buffer_buffer_alloc
 {
     size_t buffer_size = sizeof(struct helper_byte_buffer_buffer);
     struct helper_byte_buffer_buffer *buffer;
-    buffer = library->allocator->modern_allocator_alloc(buffer_size);
+    buffer = library->allocator->modern_allocator_alloc
+        (library->client_state, buffer_size);
     if(!buffer) {
-        library->error_handler->modern_error_handler_memory(buffer_size);
+        library->error_handler->modern_error_handler_memory
+            (library->client_state, buffer_size);
         return 0;
     }
     buffer->count = 0;
@@ -162,10 +172,13 @@ HELPER int helper_byte_buffer_buffer_alloc
     size_t byte_buffers_size =
         (sizeof(struct helper_byte_buffer *) * buffer->capacity);
     buffer->byte_buffers =
-        library->allocator->modern_allocator_alloc(byte_buffers_size);
+        library->allocator->modern_allocator_alloc
+            (library->client_state, byte_buffers_size);
     if(!buffer->byte_buffers) {
-        library->allocator->modern_allocator_free(buffer);
-        library->error_handler->modern_error_handler_memory(byte_buffers_size);
+        library->allocator->modern_allocator_free
+            (library->client_state, buffer);
+        library->error_handler->modern_error_handler_memory
+            (library->client_state, byte_buffers_size);
         return 0;
     }
     *out = buffer;
@@ -184,8 +197,10 @@ HELPER int helper_byte_buffer_buffer_free
             result = 0;
     }
     
-    library->allocator->modern_allocator_free(buffer->byte_buffers);
-    library->allocator->modern_allocator_free(buffer);
+    library->allocator->modern_allocator_free
+        (library->client_state, buffer->byte_buffers);
+    library->allocator->modern_allocator_free
+        (library->client_state, buffer);
     
     return result;
 }
@@ -202,10 +217,11 @@ HELPER int helper_byte_buffer_buffer_append
             sizeof(struct helper_byte_buffer *) * buffer->capacity;
         struct helper_byte_buffer **new_byte_buffers =
             library->allocator->modern_allocator_realloc
-                (buffer->byte_buffers, byte_buffers_size);
+                (library->client_state,
+                 buffer->byte_buffers, byte_buffers_size);
         if(!new_byte_buffers) {
             library->error_handler->modern_error_handler_memory
-                (byte_buffers_size);
+                (library->client_state, byte_buffers_size);
             return 0;
         }
         buffer->byte_buffers = new_byte_buffers;
@@ -222,18 +238,23 @@ HELPER int helper_node_buffer_alloc
 {
     size_t buffer_size = sizeof(struct helper_node_buffer);
     struct helper_node_buffer *buffer;
-    buffer = library->allocator->modern_allocator_alloc(buffer_size);
+    buffer = library->allocator->modern_allocator_alloc
+        (library->client_state, buffer_size);
     if(!buffer) {
-        library->error_handler->modern_error_handler_memory(buffer_size);
+        library->error_handler->modern_error_handler_memory
+            (library->client_state, buffer_size);
         return 0;
     }
     buffer->count = 0;
     buffer->capacity = 128;
     size_t nodes_size = (sizeof(struct modern *) * buffer->capacity);
-    buffer->nodes = library->allocator->modern_allocator_alloc(nodes_size);
+    buffer->nodes = library->allocator->modern_allocator_alloc
+        (library->client_state, nodes_size);
     if(!buffer->nodes) {
-        library->allocator->modern_allocator_free(buffer);
-        library->error_handler->modern_error_handler_memory(nodes_size);
+        library->allocator->modern_allocator_free
+            (library->client_state, buffer);
+        library->error_handler->modern_error_handler_memory
+            (library->client_state, nodes_size);
         return 0;
     }
     *out = buffer;
@@ -245,8 +266,10 @@ HELPER int helper_node_buffer_free
   (struct modern_library *library,
    struct helper_node_buffer *buffer)
 {
-    library->allocator->modern_allocator_free(buffer->nodes);
-    library->allocator->modern_allocator_free(buffer);
+    library->allocator->modern_allocator_free
+        (library->client_state, buffer->nodes);
+    library->allocator->modern_allocator_free
+        (library->client_state, buffer);
     return 1;
 }
 
@@ -262,9 +285,10 @@ HELPER int helper_node_buffer_append
             sizeof(struct modern *) * buffer->capacity;
         struct modern **new_nodes =
             library->allocator->modern_allocator_realloc
-                (buffer->nodes, nodes_size);
+                (library->client_state, buffer->nodes, nodes_size);
         if(!new_nodes) {
-            library->error_handler->modern_error_handler_memory(nodes_size);
+            library->error_handler->modern_error_handler_memory
+                (library->client_state, nodes_size);
             return 0;
         }
         buffer->nodes = new_nodes;
@@ -282,7 +306,8 @@ HELPER int helper_node_list_free
     int result = 1;
     if(*cons) {
         if(!helper_node_list_free(library, &(*cons)->next)) result = 0;
-        library->allocator->modern_allocator_free(*cons);
+        library->allocator->modern_allocator_free
+            (library->client_state, *cons);
         *cons = NULL;
     }
     return result;
@@ -296,9 +321,11 @@ HELPER int helper_node_list_push
 {
     size_t cons_size = sizeof(struct helper_node_cons);
     struct helper_node_cons *new_head =
-        library->allocator->modern_allocator_alloc(cons_size);
+        library->allocator->modern_allocator_alloc
+            (library->client_state, cons_size);
     if(!new_head) {
-        library->error_handler->modern_error_handler_memory(cons_size);
+        library->error_handler->modern_error_handler_memory
+            (library->client_state, cons_size);
         return 0;
     }
     new_head->node = node;
@@ -317,7 +344,8 @@ HELPER int helper_node_list_pop
     struct helper_node_cons *old_head = *list;
     if(old_head) {
         struct helper_node_cons *new_head = old_head->next;
-        library->allocator->modern_allocator_free(old_head);
+        library->allocator->modern_allocator_free
+            (library->client_state, old_head);
         *list = new_head;
     }
     return 1;
@@ -914,6 +942,23 @@ HELPER int helper_visit_node
         break;
     }
     
+    case function_type_modern_node_type:
+    {
+        uint8_t temporary[2];
+        
+        temporary[0] = int8_value_modern_node_type;
+        // TODO
+        
+        if(!helper_byte_buffer_append(library, canonical_form, temporary,
+                                      sizeof(temporary)))
+        {
+            helper_byte_buffer_free(library, canonical_form);
+            return 0;
+        }
+        
+        break;
+    }
+    
     case sigma_type_modern_node_type:
     {
         uint8_t temporary[2];
@@ -999,7 +1044,58 @@ HELPER int helper_visit_node
         break;
     }
     
-    case family_modern_node_type:
+    case type_family_modern_node_type:
+    {
+        uint8_t temporary[2];
+        
+        temporary[0] = int8_value_modern_node_type;
+        // TODO
+        
+        if(!helper_byte_buffer_append(library, canonical_form, temporary,
+                                      sizeof(temporary)))
+        {
+            helper_byte_buffer_free(library, canonical_form);
+            return 0;
+        }
+        
+        break;
+    }
+    
+    case let_modern_node_type:
+    {
+        uint8_t temporary[2];
+        
+        temporary[0] = int8_value_modern_node_type;
+        // TODO
+        
+        if(!helper_byte_buffer_append(library, canonical_form, temporary,
+                                      sizeof(temporary)))
+        {
+            helper_byte_buffer_free(library, canonical_form);
+            return 0;
+        }
+        
+        break;
+    }
+        
+    case backreference_modern_node_type:
+    {
+        uint8_t temporary[2];
+        
+        temporary[0] = int8_value_modern_node_type;
+        // TODO
+        
+        if(!helper_byte_buffer_append(library, canonical_form, temporary,
+                                      sizeof(temporary)))
+        {
+            helper_byte_buffer_free(library, canonical_form);
+            return 0;
+        }
+        
+        break;
+    }
+    
+    case builtin_modern_node_type:
     {
         uint8_t temporary[2];
         

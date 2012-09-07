@@ -1,16 +1,12 @@
 #define INTERNAL __attribute__ ((visibility ("hidden")))
 #define HELPER static
 
-#define fabsq fabsl
-#define frexpq frexpl
-#define fmodq fmodl
-#define ldexpq ldexpl
-
 
 struct modern_library {
     struct modern_error_handler *error_handler;
     struct modern_allocator *allocator;
-    struct modern_context *cache_context;
+    void (*finalizer)(void *client_state);
+    void *client_state;
 };
 
 
@@ -52,8 +48,17 @@ struct modern {
             struct modern *successor;
         } sigma_value;
         struct {
+            struct modern *type;
             struct modern *value;
         } named_value;
+        struct {
+            struct modern *left;
+            struct modern *right;
+        } function_type;
+        struct {
+            struct modern *field_type;
+            struct modern *successor;
+        } sigma_type;
         struct {
             struct modern_hash name;
             struct modern *content_type;
@@ -69,10 +74,16 @@ struct modern {
             struct modern *right;
         } apply;
         struct {
-            size_t count;
+            size_t n_items;
+            struct modern **members;
+        } type_family;
+        struct {
+            size_t n_items;
             struct modern **members;
             struct modern *content;
-        } family;
+        } let;
+        uint64_t backreference;
+        uint16_t builtin;
     } specifics;
 };
 

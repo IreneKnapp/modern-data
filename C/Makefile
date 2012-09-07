@@ -1,54 +1,61 @@
 CC=clang
+CFLAGS=-g -O0
 OBJECTS=context.o \
+        evaluation.o \
 		hash.o \
 		library.o \
 		memory.o \
 		node-canonical.o \
 		node-get.o \
-		node-make.o \
-		node-set.o
+		node-make.o
 INCLUDES=modern.h internal.h
 
-default: test-canonical
-all: test-canonical test-out
+default: test-node
+all: test-node test-canonical test-out
 
 context.o: context.c ${INCLUDES}
-	${CC} -c context.c -o context.o
+	${CC} ${CFLAGS} -c context.c -o context.o
+
+evaluation.o: evaluation.c ${INCLUDES}
+	${CC} ${CFLAGS} -c evaluation.c -o evaluation.o
 
 hash.o: hash.c ${INCLUDES}
-	${CC} -c hash.c -o hash.o
+	${CC} ${CFLAGS} -c hash.c -o hash.o
 
 library.o: library.c ${INCLUDES}
-	${CC} -c library.c -o library.o
+	${CC} ${CFLAGS} -c library.c -o library.o
 
 memory.o: memory.c ${INCLUDES}
-	${CC} -c memory.c -o memory.o
+	${CC} ${CFLAGS} -c memory.c -o memory.o
 
 node-canonical.o: node-canonical.c ${INCLUDES}
-	${CC} -c node-canonical.c -o node-canonical.o
+	${CC} ${CFLAGS} -c node-canonical.c -o node-canonical.o
 
 node-get.o: node-get.c ${INCLUDES}
-	${CC} -c node-get.c -o node-get.o
+	${CC} ${CFLAGS} -c node-get.c -o node-get.o
 
 node-make.o: node-make.c ${INCLUDES}
-	${CC} -c node-make.c -o node-make.o
-
-node-set.o: node-set.c ${INCLUDES}
-	${CC} -c node-set.c -o node-set.o
+	${CC} ${CFLAGS} -c node-make.c -o node-make.o
 
 test-canonical.o: test-canonical.c ${INCLUDES}
-	${CC} -c test-canonical.c -o test-canonical.o
+	${CC} ${CFLAGS} -c test-canonical.c -o test-canonical.o
 
 test-main.o: test-main.c ${INCLUDES}
-	${CC} -c test-main.c -o test-main.o
+	${CC} ${CFLAGS} -c test-main.c -o test-main.o
+
+test-node.o: test-node.c ${INCLUDES}
+	${CC} ${CFLAGS} -c test-node.c -o test-node.o
 
 test-out.o: test-out.c ${INCLUDES}
-	${CC} -c test-out.c -o test-out.o
+	${CC} ${CFLAGS} -c test-out.c -o test-out.o
 
 test-canonical: ${OBJECTS} test-main.o test-canonical.o
-	${CC} ${OBJECTS} test-main.o test-canonical.o -o test-canonical
+	${CC} ${CFLAGS} ${OBJECTS} test-main.o test-canonical.o -o test-canonical
+
+test-node: ${OBJECTS} test-main.o test-node.o
+	${CC} ${CFLAGS} ${OBJECTS} test-main.o test-node.o -o test-node
 
 test-out: ${OBJECTS} test-main.o test-out.o
-	${CC} ${OBJECTS} test-main.o test-out.o -o test-out
+	${CC} ${CFLAGS} ${OBJECTS} test-main.o test-out.o -o test-out
 
 .dummy: default all
