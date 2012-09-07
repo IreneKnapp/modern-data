@@ -50,9 +50,6 @@ modern *modern_node_get_value_type
     case float64_value_modern_node_type:
         return modern_node_make_float64_type(library_in);
     
-    case float128_value_modern_node_type:
-        return modern_node_make_float128_type(library_in);
-    
     case utf8_value_modern_node_type:
         return modern_node_make_utf8_type(library_in);
     
@@ -93,7 +90,6 @@ modern *modern_node_get_value_type
     case nat64_type_modern_node_type:
     case float32_type_modern_node_type:
     case float64_type_modern_node_type:
-    case float128_type_modern_node_type:
     case utf8_type_modern_node_type:
     case blob_type_modern_node_type:
     case sigma_type_modern_node_type:
@@ -222,15 +218,6 @@ double modern_node_get_float64
     struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
     return value->specifics.float64_value;
-}
-
-
-long double modern_node_get_float128
-    (modern_library *library_in, modern *value_in)
-{
-    struct modern_library *library = (struct modern_library *) library_in;
-    struct modern *value = (struct modern *) value_in;
-    return value->specifics.float128_value;
 }
 
 

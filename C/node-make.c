@@ -253,31 +253,6 @@ modern *modern_node_make_float64
 }
 
 
-modern *modern_node_make_float128
-    (modern_library *library_in,
-     long double value)
-{
-    struct modern_library *library = (struct modern_library *) library_in;
-    
-    size_t result_size = sizeof(struct modern);
-    struct modern *result =
-        library->allocator->modern_allocator_alloc(result_size);
-    if(!result) {
-        library->error_handler->modern_error_handler_memory(result_size);
-        return NULL;
-    }
-    
-    result->memory.retain_count = 1;
-    result->memory.is_autoreleased = 0;
-    
-    result->node_type = float128_value_modern_node_type;
-    result->value_type = NULL;
-    result->specifics.float128_value = value;
-    
-    return (modern *) result;
-}
-
-
 modern *modern_node_make_utf8
     (modern_library *library_in,
      uint8_t *data)
@@ -497,14 +472,6 @@ modern *modern_node_make_float32_type
 
 
 modern *modern_node_make_float64_type
-    (modern_library *library_in)
-{
-    struct modern_library *library = (struct modern_library *) library_in;
-    
-}
-
-
-modern *modern_node_make_float128_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;

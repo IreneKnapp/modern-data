@@ -9,7 +9,6 @@ typedef void modern_autorelease_pool;
 typedef void modern_library;
 typedef float modern_float32;
 typedef double modern_float64;
-typedef long double modern_float128;
 
 
 struct modern_hash {
@@ -75,8 +74,6 @@ struct modern_stream {
       (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_float64)
       (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_float128)
-      (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_utf8)
       (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_blob)
@@ -112,8 +109,6 @@ struct modern_stream {
       (void *processor_state, void *stream_state, modern_float32 value);
     void (*modern_stream_float64)
       (void *processor_state, void *stream_state, modern_float64 value);
-    void (*modern_stream_float128)
-      (void *processor_state, void *stream_state, modern_float128 value);
     void (*modern_stream_utf8_start)
       (void *processor_state, void *stream_state);
     void (*modern_stream_utf8_data)
@@ -164,7 +159,6 @@ enum modern_node_type {
     nat64_value_modern_node_type,
     float32_value_modern_node_type,
     float64_value_modern_node_type,
-    float128_value_modern_node_type,
     utf8_value_modern_node_type,
     blob_value_modern_node_type,
     sigma_value_modern_node_type,
@@ -179,7 +173,6 @@ enum modern_node_type {
     nat64_type_modern_node_type,
     float32_type_modern_node_type,
     float64_type_modern_node_type,
-    float128_type_modern_node_type,
     utf8_type_modern_node_type,
     blob_type_modern_node_type,
     sigma_type_modern_node_type,
@@ -309,9 +302,6 @@ extern modern_float32 modern_node_get_float32
 extern modern_float64 modern_node_get_float64
   (modern_library *library,
    modern *value);
-extern modern_float128 modern_node_get_float128
-  (modern_library *library,
-   modern *value);
 extern size_t modern_node_get_utf8_bytes
   (modern_library *library,
    modern *value);
@@ -382,9 +372,6 @@ extern modern *modern_node_make_float32
 extern modern *modern_node_make_float64
   (modern_library *library,
    modern_float64 value);
-extern modern *modern_node_make_float128
-  (modern_library *library,
-   modern_float128 value);
 extern modern *modern_node_make_utf8
   (modern_library *library,
    uint8_t *data);
@@ -417,8 +404,6 @@ extern modern *modern_node_make_nat64_type
 extern modern *modern_node_make_float32_type
   (modern_library *library);
 extern modern *modern_node_make_float64_type
-  (modern_library *library);
-extern modern *modern_node_make_float128_type
   (modern_library *library);
 extern modern *modern_node_make_utf8_type
   (modern_library *library);
@@ -476,9 +461,6 @@ extern void modern_node_set_float32
 extern void modern_node_set_float64
   (modern_library *library,
    modern *node, modern_float64 value);
-extern void modern_node_set_float128
-  (modern_library *library,
-   modern *node, modern_float128 value);
 extern void modern_node_set_utf8
   (modern_library *library,
    modern *node, uint8_t *data);

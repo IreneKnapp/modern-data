@@ -72,13 +72,6 @@ void modern_node_set_float64
 }
 
 
-void modern_node_set_float128
-    (modern_library *library,
-     modern *node_in, long double value)
-{
-}
-
-
 void modern_node_set_utf8
     (modern_library *library,
      modern *node_in, uint8_t *data)

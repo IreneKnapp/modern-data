@@ -50,6 +50,7 @@ void test_main(modern_library *library, modern_autorelease_pool *pool, modern_co
 		modern_release(library, value);
 	}
 
+    /*
     modern_float128 value_float128s[] = {
     	0.0L, -0.0L,
     	1.0L / 0.0L, -1.0L / 0.0L,
@@ -74,4 +75,5 @@ void test_main(modern_library *library, modern_autorelease_pool *pool, modern_co
 		
 		modern_release(library, value);
 	}
+	*/
 }
