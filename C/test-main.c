@@ -986,12 +986,16 @@ static int callback_should_succeed
         struct callback_invocation_pattern *expected =
             test_suite->expected_callbacks.patterns[expectation_index];
         
+        int should_succeed = expected->should_succeed;
+        
         if(!expected->sticky) {
             remove_callback_invocation_pattern_from_buffer
                 (&test_suite->expected_callbacks, expected);
+            finalize_callback_invocation_pattern(expected);
+            actually_free(expected);
         }
         
-        return expected->should_succeed;
+        return should_succeed;
     } else {
         if(test_suite->output_on_header_line) {
             printf("\n");
