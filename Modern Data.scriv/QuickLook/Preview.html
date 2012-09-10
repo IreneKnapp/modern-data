@@ -1281,13 +1281,6 @@ modern_serialize_output_stream<br/>
  size_t length);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_stream_type_definition_is_next</strong><br/>void<br/>
-(*modern_stream_type_definition_is_next)<br/>
-(void *processor_state,<br/>
- void *stream_state,<br/>
- struct modern_hash *type);</p>
-</li>
-<li>
 <p class="binderItem"><strong>modern_stream_type_definition_int8</strong><br/>void<br/>
 (*modern_stream_type_definition_int8)<br/>
 (void *processor_state,<br/>
@@ -1385,13 +1378,6 @@ modern_serialize_output_stream<br/>
 (*modern_stream_type_definition_universe)<br/>
 (void *processor_state,<br/>
  void *stream_state);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_stream_type</strong><br/>void<br/>
-(*modern_stream_type)<br/>
-(void *processor_state,<br/>
- void *stream_state,<br/>
- struct modern_hash *type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_stream_int8</strong><br/>void<br/>
@@ -1589,6 +1575,13 @@ modern_serialize_output_stream<br/>
 (void *processor_state,<br/>
  void *stream_state,<br/>
  uint16_t identifier);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_stream_type_as_value_is_next</strong><br/>void<br/>
+(*modern_stream_type_as_value_is_next)<br/>
+(void *processor_state,<br/>
+ void *stream_state,<br/>
+ struct modern_hash *type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_stream_end</strong><br/>void<br/>
