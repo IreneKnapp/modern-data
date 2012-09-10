@@ -63,8 +63,6 @@ struct modern_stream {
     void (*modern_stream_name_definition)
       (void *processor_state, void *stream_state,
        uint8_t *data, size_t length);
-    void (*modern_stream_type_definition_is_next)
-      (void *processor_state, void *stream_state, struct modern_hash *type);
     void (*modern_stream_type_definition_int8)
       (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_int16)
@@ -98,8 +96,6 @@ struct modern_stream {
       (void *processor_state, void *stream_state, struct modern_hash *name);
     void (*modern_stream_type_definition_universe)
       (void *processor_state, void *stream_state);
-    void (*modern_stream_type)
-      (void *processor_state, void *stream_state, struct modern_hash *type);
     void (*modern_stream_int8)
       (void *processor_state, void *stream_state, int8_t value);
     void (*modern_stream_int16)
@@ -148,6 +144,8 @@ struct modern_stream {
       (void *processor_state, void *stream_state, uint64_t index);
     void (*modern_stream_builtin_is_next)
       (void *processor_state, void *stream_state, uint16_t identifier);
+    void (*modern_stream_type_as_value_is_next)
+      (void *processor_state, void *stream_state, struct modern_hash *type);
     void (*modern_stream_end)
       (void *processor_state, void *stream_state);
     void (*modern_stream_finalize)
