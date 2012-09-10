@@ -515,7 +515,7 @@ static int test_float64_node_create_and_readback
     int succeeded = modern_node_get_float64(library, node) == value;
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    //modern_release(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;

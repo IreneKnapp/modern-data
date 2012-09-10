@@ -4,6 +4,20 @@
 #include "modern.h"
 #include "test.h"
 
+
+struct allocated_data {
+    void *data;
+    size_t size;
+};
+
+
+struct allocated_data_buffer {
+    size_t count;
+    size_t capacity;
+    struct allocated_data **allocated_data;
+};
+
+
 enum callback_identifier {
     allocator_malloc_callback_identifier = 1,
     allocator_free_callback_identifier,
@@ -135,6 +149,7 @@ struct test_case {
     jmp_buf jmp_buf;
     struct callback_invocation_buffer actual_callbacks;
     struct callback_invocation_pattern_buffer normal_callback_pattern;
+    struct allocated_data_buffer allocations;
 };
 
 
@@ -150,6 +165,7 @@ struct fixtures {
     unsigned succeeded : 1;
     jmp_buf jmp_buf;
     struct callback_invocation_buffer actual_callbacks;
+    struct allocated_data_buffer allocations;
 };
 
 
@@ -164,6 +180,7 @@ struct test_suite {
     struct fixtures fixtures;
     struct callback_invocation_buffer actual_callbacks;
     struct callback_invocation_pattern_buffer expected_callbacks;
+    struct allocated_data_buffer allocations;
     unsigned output_on_header_line : 1;
 };
 
@@ -174,6 +191,21 @@ extern void test_main
 static void *actually_malloc(size_t size);
 static void actually_free(void *data);
 static void *actually_realloc(void *data, size_t new_size);
+
+static void initialize_allocated_data
+  (struct allocated_data *allocated_data);
+static void finalize_allocated_data
+  (struct allocated_data *allocated_data);
+
+static void initialize_allocated_data_buffer
+  (struct allocated_data_buffer *buffer);
+static void finalize_allocated_data_buffer
+  (struct allocated_data_buffer *buffer);
+static struct allocated_data *make_allocated_data_in_buffer
+  (struct allocated_data_buffer *buffer);
+static void remove_allocated_data_from_buffer
+  (struct allocated_data_buffer *buffer,
+   struct allocated_data *allocation);
 
 static void initialize_test_suite
   (struct test_suite *test_suite);
@@ -236,6 +268,12 @@ static void print_callback_invocation
 
 static void print_callback_invocation_buffer
   (struct callback_invocation_buffer *buffer);
+
+static void fail
+  (struct test_suite *test_suite);
+
+static void check_for_memory_leaks
+  (struct test_suite *test_suite);
 
 static void *allocator_malloc
   (struct test_suite *test_suite, size_t size);
@@ -583,6 +621,88 @@ static void *actually_realloc(void *data, size_t new_size) {
 }
 
 
+static void initialize_allocated_data
+  (struct allocated_data *allocated_data)
+{
+    allocated_data->data = NULL;
+    allocated_data->size = 0;
+}
+
+
+static void finalize_allocated_data
+  (struct allocated_data *allocated_data)
+{
+    if(allocated_data->data) {
+        actually_free(allocated_data->data);
+        allocated_data->data = NULL;            
+    }
+}
+
+
+static void initialize_allocated_data_buffer
+  (struct allocated_data_buffer *buffer)
+{
+    buffer->count = 0;
+    buffer->capacity = 4;
+    buffer->allocated_data = actually_malloc
+        (sizeof(struct allocated_data *) * buffer->capacity);
+}
+
+
+static void finalize_allocated_data_buffer
+  (struct allocated_data_buffer *buffer)
+{
+    for(size_t i = 0; i < buffer->count; i++) {
+        finalize_allocated_data(buffer->allocated_data[i]);
+        actually_free(buffer->allocated_data[i]);
+    }
+    actually_free(buffer->allocated_data);
+}
+
+
+static struct allocated_data *make_allocated_data_in_buffer
+  (struct allocated_data_buffer *buffer)
+{
+    size_t original_capacity = buffer->capacity;
+    while(buffer->count + 1 >= buffer->capacity) {
+        buffer->capacity *= 2;
+    }
+    if(buffer->capacity != original_capacity) {
+        buffer->allocated_data = actually_realloc
+            (buffer->allocated_data,
+             sizeof(struct allocated_data *) * buffer->capacity);
+    }
+    
+    struct allocated_data *result =
+        actually_malloc(sizeof(struct allocated_data));
+    buffer->allocated_data[buffer->count] = result;
+    
+    buffer->count++;
+    
+    initialize_allocated_data(result);
+    
+    return result;
+}
+
+
+static void remove_allocated_data_from_buffer
+  (struct allocated_data_buffer *buffer,
+   struct allocated_data *allocation)
+{
+    size_t i;
+    for(i = 0; i < buffer->count; i++) {
+        if(buffer->allocated_data[i] == allocation) break;
+    }
+    if(i < buffer->count) {
+        memmove(buffer->allocated_data + i,
+                buffer->allocated_data + i + 1,
+                sizeof(struct allocated_data *)
+                * (buffer->count - (i + 1)));
+        buffer->count--;
+    }
+}
+
+
 static void initialize_test_suite
   (struct test_suite *test_suite)
 {
@@ -594,6 +714,7 @@ static void initialize_test_suite
     initialize_callback_invocation_buffer(&test_suite->actual_callbacks);
     initialize_callback_invocation_pattern_buffer
         (&test_suite->expected_callbacks);
+    initialize_allocated_data_buffer(&test_suite->allocations);
     test_suite->output_on_header_line = 0;
 }
 
@@ -606,6 +727,7 @@ static void finalize_test_suite
     finalize_callback_invocation_buffer(&test_suite->actual_callbacks);
     finalize_callback_invocation_pattern_buffer
         (&test_suite->expected_callbacks);
+    finalize_allocated_data_buffer(&test_suite->allocations);
 }
 
 
@@ -620,6 +742,7 @@ static void initialize_test_case
     initialize_callback_invocation_buffer(&test_case->actual_callbacks);
     initialize_callback_invocation_pattern_buffer
         (&test_case->normal_callback_pattern);
+    initialize_allocated_data_buffer(&test_case->allocations);
 }
 
 
@@ -630,6 +753,7 @@ static void finalize_test_case
     finalize_callback_invocation_buffer(&test_case->actual_callbacks);
     finalize_callback_invocation_pattern_buffer
         (&test_case->normal_callback_pattern);
+    finalize_allocated_data_buffer(&test_case->allocations);
 }
 
 
@@ -684,6 +808,7 @@ static void initialize_fixtures
     fixtures->prepared = 0;
     fixtures->succeeded = 1;
     initialize_callback_invocation_buffer(&fixtures->actual_callbacks);
+    initialize_allocated_data_buffer(&fixtures->allocations);
 }
 
 
@@ -691,6 +816,7 @@ static void finalize_fixtures
   (struct fixtures *fixtures)
 {
     finalize_callback_invocation_buffer(&fixtures->actual_callbacks);
+    finalize_allocated_data_buffer(&fixtures->allocations);
 }
 
 
@@ -1004,15 +1130,62 @@ static int callback_should_succeed
         printf("  Unexpected: ");
         print_callback_invocation(actual);
         
-        if(test_suite->current_test_case) {
-            test_suite->current_test_case->succeeded = 0;
-            longjmp(test_suite->current_test_case->jmp_buf, 1);
-        } else if(test_suite->current_fixtures) {
-            test_suite->current_fixtures->succeeded = 0;
-            longjmp(test_suite->current_fixtures->jmp_buf, 1);
-        } else {
-            longjmp(test_suite->jmp_buf, 1);
+        fail(test_suite); // Never returns.
+        return 0;
+    }
+}
+
+
+static void fail
+  (struct test_suite *test_suite)
+{
+    if(test_suite->current_test_case) {
+        test_suite->current_test_case->succeeded = 0;
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    } else if(test_suite->current_fixtures) {
+        test_suite->current_fixtures->succeeded = 0;
+        longjmp(test_suite->current_fixtures->jmp_buf, 1);
+    } else {
+        longjmp(test_suite->jmp_buf, 1);
+    }
+}
+
+
+static void check_for_memory_leaks
+  (struct test_suite *test_suite)
+{
+    struct allocated_data_buffer *buffer;
+    if(test_suite->current_test_case) {
+        buffer = &test_suite->current_test_case->allocations;
+    } else if(test_suite->current_fixtures) {
+        buffer = &test_suite->current_fixtures->allocations;
+    } else {
+        buffer = &test_suite->allocations;
+    }
+    
+    if(buffer->count > 0) {
+        size_t leak_count = 0;
+        size_t leak_size = 0;
+        
+        for(size_t i = 0; i < buffer->count; i++) {
+            struct allocated_data *allocation = buffer->allocated_data[i];
+            
+            leak_count++;
+            leak_size += allocation->size;
+            
+            finalize_allocated_data(allocation);
+            actually_free(allocation);
         }
+        
+        buffer->count = 0;
+        
+        if(test_suite->output_on_header_line) {
+            printf("\n");
+            test_suite->output_on_header_line = 0;
+        }
+        printf("  Memory leak: %llu bytes in %llu items\n",
+               (unsigned long long) leak_size,
+               (unsigned long long) leak_count);
     }
 }
 
@@ -1024,8 +1197,28 @@ static void *allocator_malloc(struct test_suite *test_suite, size_t size) {
     invocation->succeeded = 0;
     invocation->specifics.allocator_malloc.size = size;
     
-    if(callback_should_succeed(test_suite)) return actually_malloc(size);
-    else return NULL;
+    if(callback_should_succeed(test_suite)) {
+        void *data = actually_malloc(size);
+                
+        struct allocated_data *allocation;
+        if(test_suite->current_test_case) {
+            allocation = make_allocated_data_in_buffer
+                (&test_suite->current_test_case->allocations);
+        } else if(test_suite->current_fixtures) {
+            allocation = make_allocated_data_in_buffer
+                (&test_suite->current_fixtures->allocations);
+        } else {
+            allocation = make_allocated_data_in_buffer
+                (&test_suite->allocations);
+        }
+        
+        allocation->data = data;
+        allocation->size = size;
+        
+        return data;
+    } else {
+        return NULL;
+    }
 }
 
 
@@ -1036,7 +1229,38 @@ static void allocator_free(struct test_suite *test_suite, void *data) {
     invocation->succeeded = 0;
     invocation->specifics.allocator_free.data = data;
     
-    if(callback_should_succeed(test_suite)) actually_free(data);
+    if(callback_should_succeed(test_suite)) {
+        struct allocated_data_buffer *buffer;
+        if(test_suite->current_test_case) {
+            buffer = &test_suite->current_test_case->allocations;
+        } else if(test_suite->current_fixtures) {
+            buffer = &test_suite->current_fixtures->allocations;
+        } else {
+            buffer = &test_suite->allocations;
+        }
+        
+        struct allocated_data *allocation = NULL;
+        for(size_t i = 0; i < buffer->count; i++) {
+            if(buffer->allocated_data[i]->data == data) {
+                allocation = buffer->allocated_data[i];
+                break;
+            }
+        }
+        
+        if(!allocation) {
+            if(test_suite->output_on_header_line) {
+                printf("\n");
+                test_suite->output_on_header_line = 0;
+            }
+            printf("  Deallocation in wrong context.\n");
+            
+            fail(test_suite); // Never returns.
+        } else {
+            remove_allocated_data_from_buffer(buffer, allocation);
+            finalize_allocated_data(allocation);
+            actually_free(allocation);
+        }
+    }
 }
 
 
