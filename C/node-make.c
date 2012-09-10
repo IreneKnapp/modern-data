@@ -1,3 +1,4 @@
+#include <math.h>
 #include <string.h>
 #include "modern.h"
 #include "internal.h"
@@ -257,6 +258,22 @@ modern *modern_node_make_float32
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
+    switch(fpclassify(value)) {
+    case FP_NORMAL:
+    case FP_ZERO:
+        break;
+    case FP_SUBNORMAL:
+    {
+        float mantissa;
+        int exponent;
+        mantissa = frexpf(value, &exponent);
+        value = scalbnf(mantissa, exponent);
+        break;
+    }
+    default:
+        return NULL;
+    }
+    
     size_t result_size = sizeof(struct modern);
     struct modern *result =
         library->allocator->modern_allocator_alloc
@@ -284,6 +301,22 @@ modern *modern_node_make_float64
      double value)
 {
     struct modern_library *library = (struct modern_library *) library_in;
+    
+    switch(fpclassify(value)) {
+    case FP_NORMAL:
+    case FP_ZERO:
+        break;
+    case FP_SUBNORMAL:
+    {
+        double mantissa;
+        int exponent;
+        mantissa = frexp(value, &exponent);
+        value = scalbn(mantissa, exponent);
+        break;
+    }
+    default:
+        return NULL;
+    }
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
