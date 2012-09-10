@@ -31,9 +31,17 @@ static int test_float32_node_create_and_readback
   (void *test_context);
 static int test_float32_node_create_and_readback_negative_zero
   (void *test_context);
+static int test_float32_node_create_expecting_error
+  (void *test_context);
+static int test_float32_node_create_expecting_error_helper
+  (void *test_context);
 static int test_float64_node_create_and_readback
   (void *test_context);
 static int test_float64_node_create_and_readback_negative_zero
+  (void *test_context);
+static int test_float64_node_create_expecting_error
+  (void *test_context);
+static int test_float64_node_create_expecting_error_helper
   (void *test_context);
 
 
@@ -232,6 +240,25 @@ void test_main(test_suite *test_suite, modern_library *library) {
          "float32 node create-and-readback special case for negative zero");
     
     {
+        modern_float32 values[3] = {
+            1.0 / 0.0,
+            -1.0 / 0.0,
+            0.0 /  0.0,
+        };
+        
+        for(int i = 0; i < 3; i++) {
+            modern_float32 value = values[i];
+            test_context.value = &value;
+            begin_test_case
+                (test_suite,
+                 test_float32_node_create_expecting_error,
+                 (void *) &test_context,
+                 "float32 node create expecting error with value %f",
+                 value);
+        }
+    }
+        
+    {
         modern_float64 values[21] = {
           0.0,
           1.0 / 0.0, -1.0 / 0.0,
@@ -264,6 +291,25 @@ void test_main(test_suite *test_suite, modern_library *library) {
          test_float64_node_create_and_readback_negative_zero,
          (void *) &test_context,
          "float64 node create-and-readback special case for negative zero");
+    
+    {
+        modern_float64 values[3] = {
+            1.0 / 0.0,
+            -1.0 / 0.0,
+            0.0 /  0.0,
+        };
+        
+        for(int i = 0; i < 3; i++) {
+            modern_float64 value = values[i];
+            test_context.value = &value;
+            begin_test_case
+                (test_suite,
+                 test_float64_node_create_expecting_error,
+                 (void *) &test_context,
+                 "float32 node create expecting error with value %f",
+                 value);
+        }
+    }
 }
 
 
@@ -279,6 +325,8 @@ static int test_int8_node_create_and_readback
     allow_allocation(test_suite);
     modern *node = modern_node_make_int8(library, value);
     disallow_allocation(test_suite);
+    
+    if(!node) return 0;
     
     int succeeded = modern_node_get_int8(library, node) == value;
     
@@ -303,6 +351,8 @@ static int test_int16_node_create_and_readback
     modern *node = modern_node_make_int16(library, value);
     disallow_allocation(test_suite);
     
+    if(!node) return 0;
+    
     int succeeded = modern_node_get_int16(library, node) == value;
     
     allow_deallocation(test_suite);
@@ -325,6 +375,8 @@ static int test_int32_node_create_and_readback
     allow_allocation(test_suite);
     modern *node = modern_node_make_int32(library, value);
     disallow_allocation(test_suite);
+    
+    if(!node) return 0;
     
     int succeeded = modern_node_get_int32(library, node) == value;
     
@@ -349,6 +401,8 @@ static int test_int64_node_create_and_readback
     modern *node = modern_node_make_int64(library, value);
     disallow_allocation(test_suite);
     
+    if(!node) return 0;
+    
     int succeeded = modern_node_get_int64(library, node) == value;
     
     allow_deallocation(test_suite);
@@ -371,6 +425,8 @@ static int test_nat8_node_create_and_readback
     allow_allocation(test_suite);
     modern *node = modern_node_make_nat8(library, value);
     disallow_allocation(test_suite);
+    
+    if(!node) return 0;
     
     int succeeded = modern_node_get_nat8(library, node) == value;
     
@@ -395,6 +451,8 @@ static int test_nat16_node_create_and_readback
     modern *node = modern_node_make_nat16(library, value);
     disallow_allocation(test_suite);
     
+    if(!node) return 0;
+    
     int succeeded = modern_node_get_nat16(library, node) == value;
     
     allow_deallocation(test_suite);
@@ -417,6 +475,8 @@ static int test_nat32_node_create_and_readback
     allow_allocation(test_suite);
     modern *node = modern_node_make_nat32(library, value);
     disallow_allocation(test_suite);
+    
+    if(!node) return 0;
     
     int succeeded = modern_node_get_nat32(library, node) == value;
     
@@ -441,6 +501,8 @@ static int test_nat64_node_create_and_readback
     modern *node = modern_node_make_int64(library, value);
     disallow_allocation(test_suite);
     
+    if(!node) return 0;
+    
     int succeeded = modern_node_get_int64(library, node) == value;
     
     allow_deallocation(test_suite);
@@ -463,6 +525,8 @@ static int test_float32_node_create_and_readback
     allow_allocation(test_suite);
     modern *node = modern_node_make_float32(library, value);
     disallow_allocation(test_suite);
+    
+    if(!node) return 0;
     
     int succeeded = modern_node_get_float32(library, node) == value;
     
@@ -489,13 +553,46 @@ static int test_float32_node_create_and_readback_negative_zero
     modern *node = modern_node_make_float32(library, value_in);
     disallow_allocation(test_suite);
     
-    int succeeded = modern_node_get_float32(library, node) == value_out;
+    if(!node) return 0;
+    
+    modern_float32 actual_out = modern_node_get_float32(library, node);
+    int succeeded = (actual_out == value_out) && (isnormal(actual_out));
     
     allow_deallocation(test_suite);
     modern_release(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
+}
+
+
+static int test_float32_node_create_expecting_error
+  (void *test_context_in)
+{
+    struct test_context *test_context =
+        (struct test_context *) test_context_in;
+    test_suite *test_suite = test_context->test_suite;
+    
+    expect_error_non_numeric_float
+        (test_suite,
+         test_float32_node_create_expecting_error_helper,
+         test_context_in); // Never returns.
+    return 0;
+}
+
+
+static int test_float32_node_create_expecting_error_helper
+  (void *test_context_in)
+{
+    struct test_context *test_context =
+        (struct test_context *) test_context_in;
+    test_suite *test_suite = test_context->test_suite;
+    modern_library *library = test_context->library;    
+    modern_float32 value_in = *(modern_float32 *) test_context->value;
+    
+    modern *node = modern_node_make_float32(library, value_in);
+    
+    return !node;
 }
 
 
@@ -512,10 +609,12 @@ static int test_float64_node_create_and_readback
     modern *node = modern_node_make_float64(library, value);
     disallow_allocation(test_suite);
     
+    if(!node) return 0;
+    
     int succeeded = modern_node_get_float64(library, node) == value;
     
     allow_deallocation(test_suite);
-    //modern_release(library, node);
+    modern_release(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -537,11 +636,47 @@ static int test_float64_node_create_and_readback_negative_zero
     modern *node = modern_node_make_float64(library, value_in);
     disallow_allocation(test_suite);
     
-    int succeeded = modern_node_get_float64(library, node) == value_out;
+    if(!node) return 0;
+    
+    modern_float32 actual_out = modern_node_get_float64(library, node);
+    int classification = fpclassify(actual_out);
+    int succeeded =
+        (actual_out == value_out)
+        && (classification == FP_NORMAL || classification == FP_ZERO);
     
     allow_deallocation(test_suite);
     modern_release(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
+}
+
+
+static int test_float64_node_create_expecting_error
+  (void *test_context_in)
+{
+    struct test_context *test_context =
+        (struct test_context *) test_context_in;
+    test_suite *test_suite = test_context->test_suite;
+    
+    expect_error_non_numeric_float
+        (test_suite,
+         test_float64_node_create_expecting_error_helper,
+         test_context_in); // Never returns.
+    return 0;
+}
+
+
+static int test_float64_node_create_expecting_error_helper
+  (void *test_context_in)
+{
+    struct test_context *test_context =
+        (struct test_context *) test_context_in;
+    test_suite *test_suite = test_context->test_suite;
+    modern_library *library = test_context->library;    
+    modern_float64 value_in = *(modern_float64 *) test_context->value;
+    
+    modern *node = modern_node_make_float64(library, value_in);
+    
+    return !node;
 }

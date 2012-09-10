@@ -175,6 +175,7 @@ struct test_suite {
     struct callback_invocation *current_callback;
     struct callback_invocation_pattern *allocation_invocation;
     struct callback_invocation_pattern *deallocation_invocation;
+    struct callback_invocation_pattern *error_invocation;
     jmp_buf jmp_buf;
     struct test_case_buffer test_cases;
     struct fixtures fixtures;
@@ -365,9 +366,12 @@ int main(int argc, char **argv) {
             
             if(!setjmp(test_suite->jmp_buf)) {
                 reset_allowances(test_suite);
+                
                 allow_deallocation(test_suite);
                 modern_library_finalize(library);
                 disallow_deallocation(test_suite);
+                
+                check_for_memory_leaks(test_suite);
             } else {
                 printf("\n\n"
                        "*** Unexpected behavior during library finalize.\n");
@@ -497,22 +501,34 @@ void begin_test_case
         test_suite->current_test_case = NULL;
         printf(" skip\n");
         test_suite->output_on_header_line = 0;
-    } else if(!setjmp(test_suite->current_test_case->jmp_buf)) {
-        reset_allowances(test_suite);
-        int succeeded = test_case(test_context);
+    } else {
+        int jmp_result = setjmp(test_suite->current_test_case->jmp_buf);
         
-        test_suite->current_test_case->completed = 1;
+        if(!jmp_result) {
+            reset_allowances(test_suite);
+            int succeeded = test_case(test_context);
+            
+            test_suite->current_test_case->completed = 1;
+            test_suite->current_test_case->succeeded = succeeded;
+            
+            check_for_memory_leaks(test_suite);
+        } else if(jmp_result == 2) {
+            test_suite->current_test_case->completed = 1;
+            test_suite->current_test_case->succeeded = 1;
+            
+            check_for_memory_leaks(test_suite);
+        } else {
+            test_suite->current_test_case->completed = 1;
+            test_suite->current_test_case->succeeded = 0;
+        }
         
         if(test_suite->current_test_case->succeeded) {
-            test_suite->current_test_case->succeeded = succeeded;
             printf(" pass\n");
         } else {
             printf(" fail\n");
         }
         test_suite->output_on_header_line = 0;
         
-        test_suite->current_test_case = NULL;
-    } else {
         test_suite->current_test_case = NULL;
     }
 }
@@ -587,6 +603,339 @@ void disallow_deallocation(test_suite test_suite_in) {
     actually_free(invocation);
     
     test_suite->deallocation_invocation = NULL;
+}
+
+
+void expect_error_memory
+  (test_suite test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer
+            (&test_suite->expected_callbacks);
+    invocation->identifier = error_memory_callback_identifier;
+    invocation->parameters_relevant = 0;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+void expect_error_retain_count_overflow
+  (test_suite test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer
+            (&test_suite->expected_callbacks);
+    invocation->identifier = error_retain_count_overflow_callback_identifier;
+    invocation->parameters_relevant = 0;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+void expect_error_retain_count_underflow
+  (test_suite test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer
+            (&test_suite->expected_callbacks);
+    invocation->identifier = error_retain_count_underflow_callback_identifier;
+    invocation->parameters_relevant = 0;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+void expect_error_double_autorelease
+  (test_suite test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer
+            (&test_suite->expected_callbacks);
+    invocation->identifier = error_double_autorelease_callback_identifier;
+    invocation->parameters_relevant = 0;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+void expect_error_type_mismatch
+  (test_suite test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer
+            (&test_suite->expected_callbacks);
+    invocation->identifier = error_type_mismatch_callback_identifier;
+    invocation->parameters_relevant = 0;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+void expect_error_universe_level_overflow
+  (test_suite test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer
+            (&test_suite->expected_callbacks);
+    invocation->identifier = error_universe_level_overflow_callback_identifier;
+    invocation->parameters_relevant = 0;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+void expect_error_buffer_index
+  (test_suite test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer
+            (&test_suite->expected_callbacks);
+    invocation->identifier = error_buffer_index_callback_identifier;
+    invocation->parameters_relevant = 0;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+void expect_error_not_applicable
+  (test_suite test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer
+            (&test_suite->expected_callbacks);
+    invocation->identifier = error_not_applicable_callback_identifier;
+    invocation->parameters_relevant = 0;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+void expect_error_non_numeric_float
+  (test_suite test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer
+            (&test_suite->expected_callbacks);
+    invocation->identifier = error_non_numeric_float_callback_identifier;
+    invocation->parameters_relevant = 0;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
 }
 
 
@@ -709,6 +1058,7 @@ static void initialize_test_suite
     test_suite->current_test_case = NULL;
     test_suite->allocation_invocation = NULL;
     test_suite->deallocation_invocation = NULL;
+    test_suite->error_invocation = NULL;
     initialize_test_case_buffer(&test_suite->test_cases);
     initialize_fixtures(&test_suite->fixtures);
     initialize_callback_invocation_buffer(&test_suite->actual_callbacks);
@@ -1186,6 +1536,8 @@ static void check_for_memory_leaks
         printf("  Memory leak: %llu bytes in %llu items\n",
                (unsigned long long) leak_size,
                (unsigned long long) leak_count);
+        
+        fail(test_suite); // Never returns.
     }
 }
 

@@ -20,3 +20,40 @@ extern void disallow_allocation(test_suite test_suite);
 
 extern void allow_deallocation(test_suite test_suite);
 extern void disallow_deallocation(test_suite test_suite);
+
+extern void expect_error_memory
+  (test_suite test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context);
+extern void expect_error_retain_count_overflow
+  (test_suite test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context);
+extern void expect_error_retain_count_underflow
+  (test_suite test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context);
+extern void expect_error_double_autorelease
+  (test_suite test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context);
+extern void expect_error_type_mismatch
+  (test_suite test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context);
+extern void expect_error_universe_level_overflow
+  (test_suite test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context);
+extern void expect_error_buffer_index
+  (test_suite test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context);
+extern void expect_error_not_applicable
+  (test_suite test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context);
+extern void expect_error_non_numeric_float
+  (test_suite test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context);
