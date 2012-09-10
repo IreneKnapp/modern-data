@@ -80,7 +80,7 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libr...</p>
+<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not.  This is, not least, because there are no standardized names for the functions - though GNU libquadmath uses the “q” suffix on the ISO C99 base names.  The C type which would be the most likely candidate to be a 128-bit float, long double, is actually an 80-bit float on most Intel-related platforms, while non-Intel platforms seldom suppo...</p>
 </li>
 </ul>
 <hr/>
@@ -189,6 +189,12 @@ modern_library_finalize<br/>
 <p class="binderItem"><strong>modern_error_handler_non_numeric_float</strong><br/>void<br/>
 (*modern_error_handler_non_numeric_float)<br/>
 (void *client_state);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_error_handler_immutable</strong><br/>void<br/>
+(*modern_error_handler_immutable)<br/>
+(void *client_state,<br/>
+ modern *node);</p>
 </li>
 </ul>
 <hr/>
@@ -475,7 +481,7 @@ Note that this is true in all the versions of the library for non-functional lan
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Values</strong></p>
+<p class="binderItem"><strong>General</strong></p>
 </li>
 <hr/>
 <ul>
@@ -491,6 +497,19 @@ modern_node_get_value_type<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
+<li>
+<p class="binderItem"><strong>modern_node_get_mutable</strong><br/>int<br/>
+modern_node_get_mutable<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Values</strong></p>
+</li>
+<hr/>
+<ul>
 <li>
 <p class="binderItem"><strong>modern_node_get_int8</strong><br/>int8_t<br/>
 modern_node_get_int8<br/>
@@ -954,10 +973,23 @@ modern_node_make_builtin<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Mutation</strong><br/>TODO Finish, revise, and check this section.</p>
+<p class="binderItem"><strong>Mutation</strong></p>
 </li>
 <hr/>
 <ul>
+<li>
+<p class="binderItem"><strong>General</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_node_set_immutable</strong><br/>void<br/>
+modern_node_set_immutable<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+</ul>
+<hr/>
 <li>
 <p class="binderItem"><strong>Values</strong></p>
 </li>
@@ -1034,19 +1066,38 @@ modern_node_set_float64<br/>
  double value);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_node_set_utf8</strong><br/>void<br/>
-modern_node_set_utf8<br/>
+<p class="binderItem"><strong>modern_node_set_utf8_data_piece</strong><br/>void<br/>
+modern_node_set_utf8_data_piece<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
- uint8_t *data);</p>
+ modern *value,<br/>
+ uint8_t *data,<br/>
+ size_t offset,<br/>
+ size_t old_bytes,<br/>
+ size_t new_bytes);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_node_set_blob</strong><br/>void<br/>
-modern_node_set_blob<br/>
+<p class="binderItem"><strong>modern_node_set_blob_data_piece</strong><br/>void<br/>
+modern_node_set_blob_data_piece<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
+ modern *value,<br/>
  uint8_t *data,<br/>
- size_t bytes);</p>
+ size_t offset,<br/>
+ size_t old_bytes,<br/>
+ size_t new_bytes);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_sigma_field_value</strong><br/>void<br/>
+modern_node_set_sigma_field_value<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *field_value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_sigma_successor</strong><br/>void<br/>
+modern_node_set_sigma_successor<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *successor);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_named_value</strong><br/>void<br/>
@@ -1061,6 +1112,130 @@ modern_node_set_named_value<br/>
 <li>
 <p class="binderItem"><strong>Types</strong></p>
 </li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_node_set_function_type_left</strong><br/>void<br/>
+modern_node_set_function_type_left<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *left);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_function_type_right</strong><br/>void<br/>
+modern_node_set_function_type_right<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *right);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_sigma_type_field_type</strong><br/>void<br/>
+modern_node_set_sigma_type_field_type<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *field_type);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_sigma_type_successor</strong><br/>void<br/>
+modern_node_set_sigma_type_successor<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *successor);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_named_type_name</strong><br/>void<br/>
+modern_node_set_named_type_name<br/>
+(modern_library *library,<br/>
+ modern *value<br/>
+ struct modern_hash *name);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_named_type_content_type</strong><br/>void<br/>
+modern_node_set_named_type_content_type<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *content_type);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_universe_type_level</strong><br/>void<br/>
+modern_node_set_universe_type_level<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ uint64_t level);</p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Combinators</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_node_set_lambda_content</strong><br/>void<br/>
+modern_node_set_lambda_content<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *content);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_apply_left</strong><br/>void<br/>
+modern_node_set_apply_left<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *left);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_apply_right</strong><br/>void<br/>
+modern_node_set_apply_right<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *right);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_type_family_add_item</strong><br/>void<br/>
+modern_node_set_type_family_add_item<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *item,<br/>
+ uint64_t index);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_type_family_remove_item</strong><br/>void<br/>
+modern_node_set_type_family_remove_item<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ uint64_t index);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_let_add_item</strong><br/>void<br/>
+modern_node_set_let_add_item<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *item,<br/>
+ uint64_t index);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_let_remove_item</strong><br/>void<br/>
+modern_node_set_let_remove_item<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ uint64_t index);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_let_content</strong><br/>void<br/>
+modern_node_set_let_content<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *content);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_builtin_identifier</strong><br/>void<br/>
+modern_node_set_builtin_identifier<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ uint16_t identifier);</p>
+</li>
+</ul>
 </ul>
 <hr/>
 <li>
