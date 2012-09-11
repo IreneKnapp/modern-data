@@ -148,6 +148,7 @@
                 <BinderItem ID="6" Type="Folder" Created="2012-08-13 06:40:27 -0400" Modified="2012-08-15 12:52:11 -0400">
                     <Title>C library reference</Title>
                     <MetaData>
+                        <PageBreakBefore>Yes</PageBreakBefore>
                         <IncludeInCompile>Yes</IncludeInCompile>
                         <NotesTextSelection>0,0</NotesTextSelection>
                     </MetaData>
@@ -220,6 +221,7 @@
                         <BinderItem ID="270" Type="Folder" Created="2012-08-14 16:25:37 -0400" Modified="2012-08-14 16:26:38 -0400">
                             <Title>Error handlers</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -332,6 +334,7 @@
                         <BinderItem ID="11" Type="Folder" Created="2012-08-13 06:42:45 -0400" Modified="2012-08-13 16:01:05 -0400">
                             <Title>Allocators</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -374,6 +377,7 @@
                         <BinderItem ID="101" Type="Folder" Created="2012-08-13 06:52:06 -0400" Modified="2012-08-13 09:00:20 -0400">
                             <Title>Memory management</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -446,6 +450,7 @@
                         <BinderItem ID="64" Type="Folder" Created="2012-08-13 06:50:41 -0400" Modified="2012-08-15 12:52:02 -0400">
                             <Title>Virtual files</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -478,6 +483,7 @@
                         <BinderItem ID="285" Type="Folder" Created="2012-08-20 13:41:35 -0400" Modified="2012-08-20 14:40:01 -0400">
                             <Title>Numeric values</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -488,6 +494,7 @@
                         <BinderItem ID="234" Type="Folder" Created="2012-08-13 07:05:48 -0400" Modified="2012-08-13 07:06:08 -0400">
                             <Title>Hashing</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -530,6 +537,7 @@
                         <BinderItem ID="302" Type="Folder" Created="2012-09-10 12:46:03 -0400" Modified="2012-09-10 12:46:06 -0400">
                             <Title>Evaluation</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -552,6 +560,7 @@
                         <BinderItem ID="126" Type="Folder" Created="2012-08-13 06:54:53 -0400" Modified="2012-08-13 07:12:25 -0400">
                             <Title>Node-based object model</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -575,6 +584,7 @@
                                 <BinderItem ID="67" Type="Folder" Created="2012-08-13 06:50:49 -0400" Modified="2012-08-13 16:12:55 -0400">
                                     <Title>Node Types</Title>
                                     <MetaData>
+                                        <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
@@ -947,6 +957,7 @@
                                 <BinderItem ID="318" Type="Folder" Created="2012-08-13 06:50:49 -0400" Modified="2012-09-10 13:57:44 -0400">
                                     <Title>Builtin Identifiers</Title>
                                     <MetaData>
+                                        <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
@@ -969,6 +980,7 @@
                                 <BinderItem ID="127" Type="Folder" Created="2012-08-13 06:55:00 -0400" Modified="2012-08-13 06:58:32 -0400">
                                     <Title>Reading</Title>
                                     <MetaData>
+                                        <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
@@ -1021,6 +1033,7 @@
                                         <BinderItem ID="174" Type="Folder" Created="2012-08-13 06:58:23 -0400" Modified="2012-08-13 06:58:32 -0400">
                                             <Title>Values</Title>
                                             <MetaData>
+                                                <PageBreakBefore>Yes</PageBreakBefore>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -1203,6 +1216,7 @@
                                         <BinderItem ID="145" Type="Folder" Created="2012-08-13 06:55:32 -0400" Modified="2012-08-13 06:59:12 -0400">
                                             <Title>Types</Title>
                                             <MetaData>
+                                                <PageBreakBefore>Yes</PageBreakBefore>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -1285,6 +1299,7 @@
                                         <BinderItem ID="360" Type="Folder" Created="2012-09-10 14:17:33 -0400" Modified="2012-09-10 14:17:36 -0400">
                                             <Title>Combinators</Title>
                                             <MetaData>
+                                                <PageBreakBefore>Yes</PageBreakBefore>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -1389,6 +1404,7 @@
                                 <BinderItem ID="153" Type="Folder" Created="2012-08-13 06:55:51 -0400" Modified="2012-08-13 06:58:26 -0400">
                                     <Title>Construction</Title>
                                     <MetaData>
+                                        <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
@@ -1551,6 +1567,7 @@
                                         <BinderItem ID="171" Type="Folder" Created="2012-08-13 06:58:00 -0400" Modified="2012-08-13 06:58:06 -0400">
                                             <Title>Types</Title>
                                             <MetaData>
+                                                <PageBreakBefore>Yes</PageBreakBefore>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -1723,6 +1740,7 @@
                                         <BinderItem ID="367" Type="Folder" Created="2012-09-10 14:22:17 -0400" Modified="2012-09-10 14:22:19 -0400">
                                             <Title>Combinators</Title>
                                             <MetaData>
+                                                <PageBreakBefore>Yes</PageBreakBefore>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -1797,6 +1815,7 @@
                                 <BinderItem ID="197" Type="Folder" Created="2012-08-13 07:02:12 -0400" Modified="2012-09-10 17:36:52 -0400">
                                     <Title>Mutation</Title>
                                     <MetaData>
+                                        <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
@@ -1829,6 +1848,7 @@
                                         <BinderItem ID="198" Type="Folder" Created="2012-08-13 07:02:17 -0400" Modified="2012-09-10 12:51:17 -0400">
                                             <Title>Values</Title>
                                             <MetaData>
+                                                <PageBreakBefore>Yes</PageBreakBefore>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -1994,6 +2014,7 @@
                                         <BinderItem ID="304" Type="Folder" Created="2012-09-10 12:50:28 -0400" Modified="2012-09-10 17:37:11 -0400">
                                             <Title>Types</Title>
                                             <MetaData>
+                                                <PageBreakBefore>Yes</PageBreakBefore>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -2076,6 +2097,7 @@
                                         <BinderItem ID="374" Type="Folder" Created="2012-09-10 17:02:16 -0400" Modified="2012-09-10 17:37:11 -0400">
                                             <Title>Combinators</Title>
                                             <MetaData>
+                                                <PageBreakBefore>Yes</PageBreakBefore>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -2180,6 +2202,7 @@
                                 <BinderItem ID="283" Type="Folder" Created="2012-08-17 13:54:30 -0400" Modified="2012-08-17 13:54:32 -0400">
                                     <Title>Canonical form</Title>
                                     <MetaData>
+                                        <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
@@ -2202,6 +2225,7 @@
                                 <BinderItem ID="108" Type="Folder" Created="2012-08-13 06:53:28 -0400" Modified="2012-08-13 06:54:02 -0400">
                                     <Title>Contexts</Title>
                                     <MetaData>
+                                        <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
@@ -2276,6 +2300,7 @@
                         <BinderItem ID="113" Type="Folder" Created="2012-08-13 06:54:06 -0400" Modified="2012-08-13 07:11:52 -0400">
                             <Title>Node-based deserialization</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -2338,6 +2363,7 @@
                         <BinderItem ID="119" Type="Folder" Created="2012-08-13 06:54:22 -0400" Modified="2012-08-13 07:12:05 -0400">
                             <Title>Node-based serialization</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -2410,6 +2436,7 @@
                         <BinderItem ID="12" Type="Folder" Created="2012-08-13 06:42:50 -0400" Modified="2012-08-13 16:01:05 -0400">
                             <Title>Processors</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -2452,6 +2479,7 @@
                         <BinderItem ID="13" Type="Folder" Created="2012-08-13 06:43:18 -0400" Modified="2012-08-13 16:01:05 -0400">
                             <Title>Streams</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -2984,6 +3012,7 @@
                         <BinderItem ID="216" Type="Folder" Created="2012-08-13 07:02:57 -0400" Modified="2012-08-15 13:19:39 -0400">
                             <Title>Stream-based deserialization </Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -3056,6 +3085,7 @@
                                 <BinderItem ID="221" Type="Folder" Created="2012-08-13 07:03:39 -0400" Modified="2012-08-13 07:03:50 -0400">
                                     <Title>Customization</Title>
                                     <MetaData>
+                                        <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
@@ -3100,6 +3130,7 @@
                         <BinderItem ID="227" Type="Folder" Created="2012-08-13 07:04:55 -0400" Modified="2012-08-15 13:19:50 -0400">
                             <Title>Stream-based serialization</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -3172,6 +3203,7 @@
                         <BinderItem ID="254" Type="Folder" Created="2012-08-13 09:00:01 -0400" Modified="2012-08-15 12:51:54 -0400">
                             <Title>Predefined hashes</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -3194,6 +3226,7 @@
                         <BinderItem ID="238" Type="Folder" Created="2012-08-13 07:06:15 -0400" Modified="2012-08-15 12:51:47 -0400">
                             <Title>Predefined virtual files</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -3246,6 +3279,7 @@
                         <BinderItem ID="243" Type="Folder" Created="2012-08-13 07:06:51 -0400" Modified="2012-08-15 12:51:51 -0400">
                             <Title>Predefined streams</Title>
                             <MetaData>
+                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -3280,6 +3314,7 @@
                 <BinderItem ID="287" Type="Folder" Created="2012-08-20 13:43:58 -0400" Modified="2012-08-20 13:44:05 -0400">
                     <Title>Normative references</Title>
                     <MetaData>
+                        <PageBreakBefore>Yes</PageBreakBefore>
                         <IncludeInCompile>Yes</IncludeInCompile>
                         <NotesTextSelection>0,0</NotesTextSelection>
                     </MetaData>
@@ -4122,7 +4157,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="232" Characters="1584" Date="2012-09-10 17:00:23 -0400"></PreviousSession>
+        <PreviousSession Words="232" Characters="1584" Date="2012-09-10 21:09:37 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>

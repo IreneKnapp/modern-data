@@ -1,0 +1,1861 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>Modern Data</title>
+  <meta name="Author" content="Irene Knapp">
+  <meta name="CreationTime" content="2012-09-11T01:42:09Z">
+  <meta name="ModificationTime" content="2012-09-11T01:42:09Z">
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1187">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Cochin}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.6px; text-indent: -0.1px; font: 12.0px Cochin}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.6px; text-indent: -0.1px; font: 12.0px Cochin; min-height: 14.0px}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Cochin}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 16.0px Cochin; min-height: 18.0px}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Cochin; min-height: 17.0px}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.6px; text-indent: -0.1px; font: 14.0px 'Courier New'}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.6px; text-indent: -0.1px; font: 14.0px 'Courier New'; min-height: 16.0px}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Courier New'}
+    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px 'Courier New'; min-height: 16.0px}
+    p.p11 {margin: 0.0px 0.0px 0.0px 0.6px; text-indent: -0.1px; font: 12.0px 'Courier New'}
+    p.p12 {margin: 0.0px 0.0px 0.0px 0.6px; text-indent: -0.1px; font: 12.0px 'Courier New'; min-height: 14.0px}
+    span.s1 {font: 12.0px 'Courier New'}
+  </style>
+</head>
+<body>
+<p class="p1"><b><a id="doc3"></a>Introduction</b></p>
+<p class="p2">Modern Data is a compact, binary, dependently-typed, self-describing data format for object graphs, and also a library.</p>
+<p class="p3"><br></p>
+<p class="p2">A self-describing data format is a format like XML, JSON, or Common Lisp’s s-expressions, which can be processed at a superficial level without knowledge of the specific type of data it contains.<span class="Apple-converted-space">  </span>The typical purpose of such formats is interchange across diverse software tools; for example, many tools for working with databases can produce output or accept input in XML.<span class="Apple-converted-space">  </span>They can also be useful intermediate representations for transformations on data structures, as with XSLT.<span class="Apple-converted-space">  </span>They can even be used for network protocols, as with XMPP/Jabber.<span class="Apple-converted-space">  </span>Modern Data is at least as suitable for these tasks as any existing format.</p>
+<p class="p3"><br></p>
+<p class="p2">Unlike the above-mentioned alternatives, Modern Data is exclusively a binary format, not a textual one.<span class="Apple-converted-space">  </span>This is because textual formats can be written directly by humans, who can make mistakes, which software tools must then cope with, which can be quite difficult and lead to unexpected behavior and, when processing is done inconsistently by different implementations, even to security holes.<span class="Apple-converted-space">  </span>A binary format can be written only by the use of assistive software which understands the format, so it is not subject to this problem.</p>
+<p class="p3"><br></p>
+<p class="p2">Although not the primary motivation for the choice, a benefit of being a binary format is a certain compactness.<span class="Apple-converted-space">  </span>Care has been taken to ensure that the format can in principle be used by database engines and the like as a native format - perhaps slightly larger than non-self-describing forms, but not enormously so as a textual format would be, and without needing a parse phase to perform simple actions such as scanning through it.<span class="Apple-converted-space">  </span>Specifically, the format does not use offset-based pointers, so it is suitable for embedding in other formats that do their own space allocation.</p>
+<p class="p3"><br></p>
+<p class="p2">It would be difficult to discuss the specifics of Modern Data with no notation for it at all; therefore, there are in fact textual notations for it.<span class="Apple-converted-space">  </span>But parsers for these notations are not part of the library - only generators.<span class="Apple-converted-space">  </span>This should hopefully remove the temptation to use them for any purpose but documentation and standardization.</p>
+<p class="p3"><br></p>
+<p class="p2">The above benefits are substantial, but the most distinctive attribute of Modern Data compared to existing formats is that it is dependently typed.<span class="Apple-converted-space">  </span>In a formal sense, this means that types and values are intermixable.<span class="Apple-converted-space">  </span>Thus the schema for a Modern Data document is itself potentially a Modern Data document, using a type as a value.<span class="Apple-converted-space">  </span>Furthermore, bounds-checked arrays, dimensioned quantities, and the like can all be expressed through values used within types, in ways that will be familiar to programmers who have used theorem-proving languages such as Agda, Coq, Epigram, and Idris.</p>
+<p class="p3"><br></p>
+<p class="p2">Another benefit that is a prerequisite of dependent typing but will not be obvious to programmers who are unfamiliar with Hindley-Milner-style type systems is that types are parametric; this means, for example, that it is possible to write the incomplete type “balanced binary tree containing leaf nodes of some particular type”, without specifying the content type at the time that the tree type is defined; the type parameter can be filled in to instantiate that tree for any desired content type, thus obtaining a complete type, which can actually be instantiated.<span class="Apple-converted-space">  </span>This will be familiar to Haskell and ML programmers; it is also reminiscent of C++ and Java templates, but the meaning of it has been more rigorously formalized.</p>
+<p class="p3"><br></p>
+<p class="p2">Furthermore, code can be written using the library which operates on a parametric type such as our binary tree example, generically to its specific parameters - thus code can be written which rebalances a tree after an update, without knowing the type of the contents.<span class="Apple-converted-space">  </span>The library is written such that these operations can be efficiently performed without the need to convert Modern Data to a separate in-memory representation.</p>
+<p class="p3"><br></p>
+<p class="p2">Modern Data, unlike other self-describing formats, is capable of representing an arbitrary object graph - not merely one that has obvious linear structure.<span class="Apple-converted-space">  </span>This is accomplished without pointers or globally-scoped identifiers of any kind, and therefore does not impede use embedded within other formats, as mentioned above.<span class="Apple-converted-space">  </span>The benefit is that arbitrary data structures can be represented directly, including ones which would have cyclic pointers in their traditional in-memory representations.</p>
+<p class="p3"><br></p>
+<p class="p2">The Modern Data base library is written in C.<span class="Apple-converted-space">  </span>Not because it’s more suitable for the task than other languages would be - it’s not.<span class="Apple-converted-space">  </span>Rather, functional languages tend to have runtime systems (largely consisting of garbage collectors) which make the scenario of deploying a library to be linked against from other languages more difficult.<span class="Apple-converted-space">  </span>Obviously there will be bindings written in functional languages, as functional programming is the paradigm best equipped to take advantage of Modern Data’s features, but the library will always be in a system language, so that it can easily be linked against from as many other languages as possible.<span class="Apple-converted-space">  </span>Care has been taken to play nicely with foreign-function interfaces, which cannot always use the full capabilities of the C ABI.</p>
+<p class="p3"><br></p>
+<p class="p2">Please, come on in - and enjoy the type system!</p>
+<p class="p3"><br></p>
+<p class="p1"><b><a id="doc260"></a>Semantics</b></p>
+<p class="p2">In Modern Data, the fundamental in-memory datatype is the “modern node”, which is a representation of, loosely, either a value or a type.<span class="Apple-converted-space">  </span>If we wish to specify further, we may occasionally refer to a “modern type” or “modern value”, but these concepts do not map to actual host-language datatypes; only “modern node” does.</p>
+<p class="p3"><br></p>
+<p class="p2">The operations on a modern node are serialization and deserialization.<span class="Apple-converted-space">  </span>Serialization is performed on a stream of modern nodes in some “modern context”, and produces a stream of bytes.<span class="Apple-converted-space">  </span>Deserialization is performed on a stream of bytes in some modern context, and produces a stream of modern nodes.</p>
+<p class="p3"><br></p>
+<p class="p2">Although simple applications which merely wish to exchange and act on data need never use anything but the default context, it is nonetheless a concept worth understanding.<span class="Apple-converted-space">  </span>The context is internally a hash table of modern types (and occasionally modern values, used as parts of dependent types).<span class="Apple-converted-space">  </span>The hash key is determined in a way that captures the notion of type equality, by placing the modern node in a canonical form and computing a hash function of that.<span class="Apple-converted-space">  </span>Any modern node which is in the hash table is “in scope” in that context.</p>
+<p class="p3"><br></p>
+<p class="p1"><b><a id="doc301"></a>Caveats</b></p>
+<p class="p2">Importantly, a modern type must be in scope in the given context before a value of that type can be serialized or deserialized. The high-level “node-based” portion of the library will check whether a value’s type is in context when serializing, and emit additional instructions which bring it into context if it is not, mutating the context object which it is passed to make note of the fact.<span class="Apple-converted-space">  </span>Similarly, when deserializing, if a value’s type is not in context, an error is produced and processing halts.<span class="Apple-converted-space">  </span>(To avoid security holes caused by different implementations responding to errors in different ways, processing is specified to always halt immediately upon the first error encountered.)</p>
+<p class="p3"><br></p>
+<p class="p2">The low-level “stream-based” portion of the library does no such checking, as it tracks very little internal state, leaving that task to the client code.<span class="Apple-converted-space">  </span>The client code is thus responsible for ensuring that types are in context before they are used, both when serializing and when deserializing.</p>
+<p class="p3"><br></p>
+<p class="p2">Cyclic structures, both at the type level and at the value level, can be created with inductive families and recursive lets - these two mechanisms are similar to each other, with the one being for types and the other for values.<span class="Apple-converted-space">  </span>The details of how this is done are left to a later chapter.<span class="Apple-converted-space">  </span>It is enough to know that the details of how these mechanisms are used do in fact become part of a modern node’s identity.<span class="Apple-converted-space">  </span>That is, they affect how types are canonicalized, which means that you have a different type if you insert the inductive family into the structure at a different place.<span class="Apple-converted-space">  </span>Canonicalization does not apply to values (except for values which are part of types), so the fact that the details of a recursive let also affect the node’s identity is not important in most situations.</p>
+<p class="p3"><br></p>
+<p class="p2">As with the scope issue, the node-based portion of the library hides the issue of flattening cyclic structures from the client code, while the stream-based portion exposes it and places the burden on the client.<span class="Apple-converted-space">  </span>However, this hiding cannot be complete, so it is important to be aware of its semantics.</p>
+<p class="p3"><br></p>
+<p class="p2">Cycles will be automatically broken by introducing the appropriate constructs at the time that they need to be serialized, if they have not already been; cycle-breaking can also be introduced manually.<span class="Apple-converted-space">  </span>Thus users can build up cyclic structures through mutation and expect serialization and deserialization of them to “just work”, or they can use inductive families and recursive lets directly, and that will also work.</p>
+<p class="p3"><br></p>
+<p class="p2">When inspecting a node-based structure in memory, there are two versions of each library call which returns a related node.<span class="Apple-converted-space">  </span>The version for general use processes indirect references transparently, following them repeatedly until arriving at a node which is not an indirection.<span class="Apple-converted-space">  </span>The version for special-purpose use does no such processing, instead returning the indirection node itself.<span class="Apple-converted-space">  </span>This is analogous to the way that Unix-like operating systems handle symbolic links in their filesystems.</p>
+<p class="p3"><br></p>
+<p class="p2">It’s worth noting in passing that it is bad style but technically possible in some situations to use an inductive family in defining values, and to use a recursive let in defining types.<span class="Apple-converted-space">  </span>This is not actually a necessary consequence of the ability to use types and values interchangeably in other situations, but it is certainly consistent with that design and makes more sense in that light.</p>
+<p class="p3"><br></p>
+<p class="p2">Although many functional languages are additionally "purely functional", meaning that their variables are immutable, nodes can be mutated in memory in some languages.<span class="Apple-converted-space">  </span>This is to make it easier to create cyclic structures, which could not otherwise be done in languages without recursive binding.<span class="Apple-converted-space">  </span>The semantics of mutation are that all references to the old node become references to the new node.<span class="Apple-converted-space">  </span>Mutation is possible on all nodes, with the provision that nodes being modified have never been in scope in any context.<span class="Apple-converted-space">  </span>In other words, once a node has become part of a schema of types and and thus potentially has extant nodes which are values of it, it can no longer be modified.<span class="Apple-converted-space">  </span>This is, of course, to avoid the scenario of a value node being inconsistent in structure with the type node that corresponds to it.</p>
+<p class="p3"><br></p>
+<p class="p2">Of course, it is expected that sets of types for some particular purpose will be constructed in most situations not through imperative code but through the use of an interactive editor having Modern Data as its native format.<span class="Apple-converted-space">  </span>The ease with which what would be called a schema in other systems can be serialized and deserialized obviates the need to construct one by hand, most of the time.<span class="Apple-converted-space">  </span>As such, the details discussed above should seldom be an issue.</p>
+<p class="p3"><br></p>
+<p class="p1"><b><a id="doc5"></a>Scrawlings</b></p>
+<p class="p2">For C, everything is effectively like Data.Dynamic.<span class="Apple-converted-space">  </span>For Haskell there will be a GADT and an existential.</p>
+<p class="p3"><br></p>
+<p class="p2">Node types “lambda”, “apply”, “index” (as in De Bruijn), and “family” (as in inductive type family).</p>
+<p class="p3"><br></p>
+<p class="p2">Things like void (*modern_stream_type_definition_int8)(void *processor, void *context) are callbacks invoked when type IDs are read.<span class="Apple-converted-space">  </span>All the functions in that struct are callbacks that are invoked on things that happen during streaming parsing.<span class="Apple-converted-space">  </span>The API for streaming generation is the same - except the client code is the consumer of the struct and the caller of these functions, rather than the provider of them.<span class="Apple-converted-space">  </span>Note that using the streaming API it is possible to construct invalid output; if this is a concern the object-model API should be used instead.</p>
+<p class="p3"><br></p>
+<p class="p2">To make things with cycles, what happens behind the scenes is…<span class="Apple-converted-space">  </span>Well, it’s not behind the scenes when you’re doing streaming mode, but in object-model mode, it uses lambdas and applies.<span class="Apple-converted-space">  </span>The “prelude” has the S and K combinators already defined, which isn’t strictly necessary because you could define them yourself, but it’s a convenience.</p>
+<p class="p3"><br></p>
+<p class="p2">The Lisp-like syntax is the debug format, for use in, say, standards documents that describe APIs in which the units of data interchange are values in Modern Data.</p>
+<p class="p3"><br></p>
+<p class="p2">So a point I’m not totally sure on is that I think I just need one version of lambda and one version of apply - as opposed to one of each for values and another of each for types.</p>
+<p class="p3"><br></p>
+<p class="p2">Recursive types, such as the simple tree type (in Haskell notation) data Tree = Internal (Tree a) (Tree a) | Leaf a, are defined as cyclic structures.<span class="Apple-converted-space">  </span>This avoids the need to refer to anything by name, ever, although the system does in fact support names.</p>
+<p class="p3"><br></p>
+<p class="p2">This is on the type level but it’s dependent, so the machinery is the same for types as for values.</p>
+<p class="p3"><br></p>
+<p class="p2">I am unclear on whether to implement the set hierarchy, or type-in-type.<span class="Apple-converted-space">  </span>I know that I want to call it “universe”, because “set” is a poor name suggestive of set theory rather than type theory.<span class="Apple-converted-space">  </span>If I do use the set hierarchy, I expect to have a finite limit, probably 64 bits, on how high one can go.<span class="Apple-converted-space">  </span>This is not really any more of a wart than a limit placed on how large an array can be.</p>
+<p class="p3"><br></p>
+<p class="p2">With both lambdas and applies present, in principle full computation is possible.</p>
+<p class="p3"><br></p>
+<p class="p2">Some parts of this are simply matters of good C practice than of dependent types.<span class="Apple-converted-space">  </span>For example, the use of vfile structures for when you want to read a Modern Data value that’s in a zipfile.</p>
+<p class="p3"><br></p>
+<p class="p2">You can basically use Modern Data for anything you presently do with XML or HTML or JSON or whatnot, except you can also communicate types across it.<span class="Apple-converted-space">  </span>So schemas are built in.<span class="Apple-converted-space">  </span>XML schema description is a bugbear that they’ve had a lot of failed attempts at.<span class="Apple-converted-space">  </span>You can “teach” the other end how to at least process your thing, even if it doesn’t know your types in advance, by sending a type-as-data across the wire.<span class="Apple-converted-space">  </span>You can write helper utilities that only understand some of the types and not the rest, to make “map” and other higher-order functions.</p>
+<p class="p3"><br></p>
+<p class="p2">The original motivator was because I hate using text as the format for shell commands.</p>
+<p class="p3"><br></p>
+<p class="p2">There should be all sorts of applications.<span class="Apple-converted-space">  </span>I think it applies to the functional-database problem, too, even.</p>
+<p class="p3"><br></p>
+<p class="p2">In principle you could write webpages in it.</p>
+<p class="p3"><br></p>
+<p class="p2">You could implement a programming “language” in it.<span class="Apple-converted-space">  </span>The source code would be simply a data structure, instead of being text.<span class="Apple-converted-space">  </span>If you like text, you can treat the textual presentation as simply a formatting layer.</p>
+<p class="p3"><br></p>
+<p class="p2">Once the basic library is working I’m going to make a generic graphical editor for this, for the Mac.</p>
+<p class="p3"><br></p>
+<p class="p2">You can use it for network protocols, too; XMPP/Jabber is similar but using XML as the self-describing data format.</p>
+<p class="p3"><br></p>
+<p class="p2">The type system exposes a lot of very low-level types.<span class="Apple-converted-space">  </span>I intend to build more higher-level types on top, but the goal at this stage is to provide all the primitives.<span class="Apple-converted-space">  </span>After that, I can play around and stuff.<span class="Apple-converted-space">  </span>I don’t plan for the higher-level types to be part of the “standard”, because that wouldn’t buy anything - they don’t need to be agreed upon in advance to use them, since the schema is expressible in the system itself.</p>
+<p class="p3"><br></p>
+<p class="p2">For aggregate types, I originally broke it down to array (one-dimensional, nothing fancy with the indices; anything more complicated can be built on top); union, which assigns a name to each field it may contain, and exactly one of those fields is present in an actual value; structure, which also assigns a name to each field, but all the fields are present.<span class="Apple-converted-space">  </span>Structures, notably, did not have field orders; that is, two structure types with the same field names and types were equivalent regardless of the order the fields appeared in.<span class="Apple-converted-space">  </span>And the last aggregate type is “named”.<span class="Apple-converted-space">  </span>Notice that in array, union, and structure, the aggregate doesn’t have its own name, which makes anonymous ones possible.<span class="Apple-converted-space">  </span>The capability is separated out.</p>
+<p class="p3"><br></p>
+<p class="p2">For text the type is UTF-8.<span class="Apple-converted-space">  </span>There are no types for other character sets or encodings, because that’s the right one 99% of the time.</p>
+<p class="p3"><br></p>
+<p class="p2">There’s blob, too, so if you need to embed non-Modern data in some known format, you can just make a blob out of it.</p>
+<p class="p3"><br></p>
+<p class="p2">However, the type system has been simplified now - instead of array, union, and structure, there’s just sigma.</p>
+<p class="p3"><br></p>
+<p class="p1"><b><a id="doc297"></a>Canonical form</b></p>
+<p class="p2">Modern Data contexts are essentially hash tables containing modern nodes as their elements.<span class="Apple-converted-space">  </span>The hash key used for indexing them is based on the “canonical form” of the modern node.<span class="Apple-converted-space">  </span>This section discusses what that canonical form means and how it is computed.<span class="Apple-converted-space">  </span>Though client code need never be aware of what are essentially implementation details such as these, independent implementations of the library do need to know them.</p>
+<p class="p3"><br></p>
+<p class="p2">It is important to note that each node, independently, has its own canonical form.<span class="Apple-converted-space">  </span>It is not meaningful to speak of the canonical form of a document as a whole.</p>
+<p class="p3"><br></p>
+<p class="p2">The canonical form is computed in the following steps, performed sequentially:</p>
+<p class="p3"><br></p>
+<p class="p2">1) Compute the flattened representation of the document as viewed from the node being considered, as described below.</p>
+<p class="p3"><br></p>
+<p class="p2">2) Do a pre-order traversal of the reachable parts of the document starting from the node being considered, outputting modern-stream events constructing each traversed node in turn to an “imagined” accumulator of bytes.</p>
+<p class="p3"><br></p>
+<p class="p2">3) Compute the hash of all the bytes that were output to the accumulator.</p>
+<p class="p3"><br></p>
+<p class="p2">For ease of implementation and on the general principle of consistency, the format of the accumulator is the same as the format of a modern stream.<span class="Apple-converted-space">  </span>However, to compute the accumulator, it is not sufficient simply to output a document and record what has been output; the flattening stage must be done first, to break cycles.<span class="Apple-converted-space">  </span>Furthermore, because the exact sequence of bytes changes with the exact sequence of events generated, the events must come from a pre-order traversal as described above.<span class="Apple-converted-space">  </span>The flattening stage will have ensured that the pre-order traversal only needs to output value and type events, as well as a single family event at the top-level.<span class="Apple-converted-space">  </span>The pre-order traversal will not output any lambda or apply events, nor will it output family events other than the single top-level one.</p>
+<p class="p3"><br></p>
+<p class="p1"><b><a id="doc300"></a>Flattening</b></p>
+<hr>
+<p class="p4"><b><a id="doc289"></a>Primitive values</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc291"></a>Integers</b></p>
+<p class="p6"><br></p>
+<p class="p1"><b><a id="doc292"></a>Natural numbers</b></p>
+<p class="p6"><br></p>
+<p class="p1"><b><a id="doc290"></a>Floating-point numbers</b></p>
+<p class="p2">The floating-point datatypes used by Modern Data are a subset of the “interchange formats” defined by <a href="#doc288">IEEE 754-2008</a>.</p>
+<p class="p3"><br></p>
+<p class="p1"><b><a id="doc296"></a>80-bit and 128-bit values</b></p>
+<p class="p2">It is worth noting that, while many platforms support 128-bit float values, many others do not.<span class="Apple-converted-space">  </span>Even when the compiler does, often the system library does not.<span class="Apple-converted-space">  </span>This is, not least, because there are no standardized names for the functions - though GNU libquadmath uses the “q” suffix on the ISO C99 base names.<span class="Apple-converted-space">  </span>The C type which would be the most likely candidate to be a 128-bit float, long double, is actually an 80-bit float on most Intel-related platforms, while non-Intel platforms seldom support anything longer than 64-bit floats.</p>
+<p class="p3"><br></p>
+<p class="p2">This creates a situation where there is no one agreed-upon format for very large floating-point numbers, and it is a significant portability burden to write code which uses either, let alone both.<span class="Apple-converted-space">  </span>Modern Data’s purpose is to be an interchange format and lingua franca; therefore, it leaves out support for these types entirely.<span class="Apple-converted-space">  </span>It is expected that, should a standard emerge, Modern Data will be duly extended in some future revision.</p>
+<p class="p3"><br></p>
+<p class="p2">This decision was not made casually; in fact, an early version of the design featured a 128-bit float.<span class="Apple-converted-space">  </span>The only way to reconcile this design decision with the portability constraints Modern Data aspires to was to use the largest available floating-point type on any given platform for all function parameters and return values, while converting these to and from 128-bit representations for interchange.<span class="Apple-converted-space">  </span>This was actually implemented at one point, but was removed for the above reasons.<span class="Apple-converted-space">  </span>A type which cannot be used is - axiomatically! - of no use to anyone.</p>
+<p class="p3"><br></p>
+<p class="p3"><br></p>
+<p class="p1"><b><a id="doc294"></a>Text</b></p>
+<p class="p6"><br></p>
+<p class="p1"><b><a id="doc295"></a>Binary large objects</b></p>
+<hr>
+<p class="p4"><b><a id="doc6"></a>C library reference</b></p>
+<p class="p5"><br></p>
+<p class="p4"><b><a id="doc264"></a>Library instances</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc265"></a>modern_library_initialize</b></p>
+<p class="p7">modern_library *</p>
+<p class="p7">modern_library_initalize</p>
+<p class="p7">(struct modern_error_handler *error_handler,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_allocator *allocator,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void (*finalizer)(void *client_state),</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *client_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc266"></a>modern_library_get_error_handler</b></p>
+<p class="p7">struct modern_error_handler *</p>
+<p class="p7">modern_library_get_error_handler</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc267"></a>modern_library_get_allocator</b></p>
+<p class="p7">struct modern_allocator *</p>
+<p class="p7">modern_library_get_allocator</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc355"></a>modern_library_get_client_state</b></p>
+<p class="p7">void *</p>
+<p class="p7">modern_library_get_client_state</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc269"></a>modern_library_finalize</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_library_finalize</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<hr>
+<p class="p4"><b><a id="doc270"></a>Error handlers</b></p>
+<p class="p7">struct modern_error_handler {</p>
+<p class="p9"><span class="Apple-converted-space">    </span>…</p>
+<p class="p9">};</p>
+<p class="p10"><br></p>
+<p class="p1"><b><a id="doc271"></a>modern_error_handler_memory</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_error_handler_memory)</p>
+<p class="p7">(void *client_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t requested_size);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc272"></a>modern_error_handler_retain_count_overflow</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_error_handler_retain_count_overflow)</p>
+<p class="p7">(void *client_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *retainable);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc273"></a>modern_error_handler_retain_count_underflow</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_error_handler_retain_count_underflow)</p>
+<p class="p7">(void *client_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *retainable);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc274"></a>modern_error_handler_double_autorelease</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_error_handler_double_autorelease)</p>
+<p class="p7">(void *client_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *retainable);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc275"></a>modern_error_handler_type_mismatch</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_error_handler_type_mismatch)</p>
+<p class="p7">(void *client_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *expected,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *actual);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc305"></a>modern_error_handler_universe_level_overflow</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_error_handler_universe_level_overflow)</p>
+<p class="p7">(void *client_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc306"></a>modern_error_handler_buffer_index</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_error_handler_buffer_index)</p>
+<p class="p7">(void *client_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc307"></a>modern_error_handler_not_applicable</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_error_handler_not_applicable)</p>
+<p class="p7">(void *client_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc308"></a>modern_error_handler_non_numeric_float</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_error_handler_non_numeric_float)</p>
+<p class="p7">(void *client_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc399"></a>modern_error_handler_immutable</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_error_handler_immutable)</p>
+<p class="p7">(void *client_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node);</p>
+<hr>
+<p class="p4"><b><a id="doc11"></a>Allocators</b></p>
+<p class="p7">struct modern_allocator {</p>
+<p class="p7"><span class="Apple-converted-space">    </span>…</p>
+<p class="p7">};</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc248"></a>modern_allocator_alloc</b></p>
+<p class="p7">void *</p>
+<p class="p7">(*modern_allocator_alloc)</p>
+<p class="p7">(void *client_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t size);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc249"></a>modern_allocator_free</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_allocator_free)</p>
+<p class="p7">(void *client_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *memory);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc250"></a>modern_allocator_realloc</b></p>
+<p class="p7">void *</p>
+<p class="p7">(*modern_allocator_realloc)</p>
+<p class="p7">(void *client_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *memory, size_t size);</p>
+<hr>
+<p class="p4"><b><a id="doc101"></a>Memory management</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc9"></a>Modern autorelease pools</b></p>
+<p class="p7">typedef void modern_autorelease_pool;</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc102"></a>modern_make_autorelease_pool</b></p>
+<p class="p7">modern_autorelease_pool *</p>
+<p class="p7">modern_make_autorelease_pool</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc103"></a>modern_autorelease_pool_release</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_autorelease_pool_release</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc105"></a>modern_retain</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_retain</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *retainable);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc106"></a>modern_release</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_release</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *retainable);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc107"></a>modern_autorelease</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_autorelease</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *retainable);</p>
+<hr>
+<p class="p4"><b><a id="doc64"></a>Virtual files</b></p>
+<p class="p7">struct modern_vfile {</p>
+<p class="p7"><span class="Apple-converted-space">    </span>…</p>
+<p class="p7">};</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc65"></a>modern_vfile_read</b></p>
+<p class="p7">ssize_t</p>
+<p class="p7">(*modern_vfile_read)</p>
+<p class="p7">(void *vfile_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *buffer,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t length);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc66"></a>modern_vfile_write</b></p>
+<p class="p7">ssize_t</p>
+<p class="p7">(*modern_vfile_write)</p>
+<p class="p7">(void *vfile_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *buffer,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t length);</p>
+<hr>
+<p class="p4"><b><a id="doc285"></a>Numeric values</b></p>
+<p class="p7">typedef float modern_float32;</p>
+<p class="p7">typedef double modern_float64;</p>
+<p class="p7">typedef long double modern_float128;</p>
+<hr>
+<p class="p4"><b><a id="doc234"></a>Hashing</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc10"></a>Hashes</b></p>
+<p class="p7">struct modern_hash {</p>
+<p class="p7"><span class="Apple-converted-space">    </span>uint64_t a;</p>
+<p class="p7"><span class="Apple-converted-space">    </span>uint64_t b;</p>
+<p class="p7">};</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc235"></a>modern_compute_hash</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_compute_hash</p>
+<p class="p7">(uint8_t *data,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t length,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *out);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc236"></a>modern_compute_child_hash</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_compute_child_hash</p>
+<p class="p7">(struct modern_hash *parent,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *data,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t length,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *out);</p>
+<hr>
+<p class="p4"><b><a id="doc302"></a>Evaluation</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc303"></a>modern_evaluate</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_evaluate</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node);</p>
+<hr>
+<p class="p4"><b><a id="doc126"></a>Node-based object model</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc7"></a>The "modern" type</b></p>
+<p class="p11">typedef void modern;</p>
+<p class="p12"><br></p>
+<p class="p2">The “modern” type is a polymorphic node for object-oriented access to both types and values.<span class="Apple-converted-space">  </span>Because it is not limited to values, it is not called “<span class="s1">modern_data</span>”; it is simply called “<span class="s1">modern</span>” and the library user is encouraged to think of it as its own thing.</p>
+<p class="p3"><br></p>
+<p class="p2">Note that this is true in all the versions of the library for non-functional languages, but in languages which support generalized algebraic datatypes, the situation is more complicated; see for example the Haskell version.</p>
+<hr>
+<p class="p4"><b><a id="doc67"></a>Node Types</b></p>
+<p class="p7">enum modern_node_type {</p>
+<p class="p7"><span class="Apple-converted-space">    </span>…</p>
+<p class="p7">};</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc68"></a>int8_value_modern_node_type</b></p>
+<p class="p7">int8_value_modern_node_type = 1,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc69"></a>int16_value_modern_node_type</b></p>
+<p class="p7">int16_value_modern_node_type = 2,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc70"></a>int32_value_modern_node_type</b></p>
+<p class="p7">int32_value_modern_node_type = 3,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc71"></a>int64_value_modern_node_type</b></p>
+<p class="p7">int64_value_modern_node_type = 4,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc72"></a>nat8_value_modern_node_type</b></p>
+<p class="p7">nat8_value_modern_node_type = 5,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc73"></a>nat16_value_modern_node_type</b></p>
+<p class="p7">nat16_value_modern_node_type = 6,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc74"></a>nat32_value_modern_node_type</b></p>
+<p class="p7">nat32_value_modern_node_type = 7,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc75"></a>nat64_value_modern_node_type</b></p>
+<p class="p7">nat64_value_modern_node_type = 8,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc76"></a>float32_value_modern_node_type</b></p>
+<p class="p7">float32_value_modern_node_type = 9,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc77"></a>float64_value_modern_node_type</b></p>
+<p class="p7">float64_value_modern_node_type = 10,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc79"></a>utf8_value_modern_node_type</b></p>
+<p class="p7">utf8_value_modern_node_type = 11,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc80"></a>blob_value_modern_node_type</b></p>
+<p class="p7">blob_value_modern_node_type = 12,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc81"></a>sigma_value_modern_node_type</b></p>
+<p class="p7">sigma_value_modern_node_type = 13,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc82"></a>named_value_modern_node_type</b></p>
+<p class="p7">named_value_modern_node_type = 14,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc83"></a>int8_type_modern_node_type</b></p>
+<p class="p7">int8_type_modern_node_type = 15,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc84"></a>int16_type_modern_node_type</b></p>
+<p class="p7">int16_type_modern_node_type = 16,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc85"></a>int32_type_modern_node_type</b></p>
+<p class="p7">int32_type_modern_node_type = 17,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc86"></a>int64_type_modern_node_type</b></p>
+<p class="p7">int64_type_modern_node_type = 18,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc87"></a>nat8_type_modern_node_type</b></p>
+<p class="p7">nat8_type_modern_node_type = 19,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc88"></a>nat16_type_modern_node_type</b></p>
+<p class="p7">nat16_type_modern_node_type = 20,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc89"></a>nat32_type_modern_node_type</b></p>
+<p class="p7">nat32_type_modern_node_type = 21,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc90"></a>nat64_type_modern_node_type</b></p>
+<p class="p7">nat64_type_modern_node_type = 22,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc91"></a>float32_type_modern_node_type</b></p>
+<p class="p7">float32_type_modern_node_type = 23,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc92"></a>float64_type_modern_node_type</b></p>
+<p class="p7">float64_type_modern_node_type = 24,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc94"></a>utf8_type_modern_node_type</b></p>
+<p class="p7">utf8_type_modern_node_type = 25,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc95"></a>blob_type_modern_node_type</b></p>
+<p class="p7">blob_type_modern_node_type = 26,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc313"></a>function_type_modern_node_type</b></p>
+<p class="p7">blob_type_modern_node_type = 27,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc96"></a>sigma_type_modern_node_type</b></p>
+<p class="p7">sigma_type_modern_node_type = 28,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc97"></a>named_type_modern_node_type</b></p>
+<p class="p7">named_type_modern_node_type = 29,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc98"></a>universe_type_modern_node_type</b></p>
+<p class="p7">universe_type_modern_node_type = 30,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc99"></a>lambda_modern_node_type</b></p>
+<p class="p7">lambda_modern_node_type = 31,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc100"></a>apply_modern_node_type</b></p>
+<p class="p7">apply_modern_node_type = 32,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc314"></a>type_family_modern_node_type</b></p>
+<p class="p7">type_family_modern_node_type = 33,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc315"></a>let_modern_node_type</b></p>
+<p class="p7">let_modern_node_type = 34,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc316"></a>backreference_modern_node_type</b></p>
+<p class="p7">backreference_modern_node_type = 35,</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc317"></a>builtin_modern_node_type</b></p>
+<p class="p7">builtin_modern_node_type = 36,</p>
+<hr>
+<p class="p4"><b><a id="doc318"></a>Builtin Identifiers</b></p>
+<p class="p7">enum modern_builtin_identifier {</p>
+<p class="p7"><span class="Apple-converted-space">    </span>…</p>
+<p class="p7">};</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc319"></a>int8_value_modern_node_type</b></p>
+<p class="p7">plus_int8_modern_builtin_identifier = 1,</p>
+<hr>
+<p class="p4"><b><a id="doc127"></a>Reading</b></p>
+<p class="p5"><br></p>
+<p class="p4"><b><a id="doc396"></a>General</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc128"></a>modern_node_get_node_type</b></p>
+<p class="p7">enum modern_node_type</p>
+<p class="p7">modern_node_get_node_type</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc129"></a>modern_node_get_value_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_value_type</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc395"></a>modern_node_get_mutable</b></p>
+<p class="p7">int</p>
+<p class="p7">modern_node_get_mutable</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<hr>
+<p class="p4"><b><a id="doc174"></a>Values</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc130"></a>modern_node_get_int8</b></p>
+<p class="p7">int8_t</p>
+<p class="p7">modern_node_get_int8</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc131"></a>modern_node_get_int16</b></p>
+<p class="p7">int16_t</p>
+<p class="p7">modern_node_get_int16</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc132"></a>modern_node_get_int32</b></p>
+<p class="p7">int32_t</p>
+<p class="p7">modern_node_get_int32</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc133"></a>modern_node_get_int64</b></p>
+<p class="p7">int64_t</p>
+<p class="p7">modern_node_get_int64</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc134"></a>modern_node_get_nat8</b></p>
+<p class="p7">uint8_t</p>
+<p class="p7">modern_node_get_nat8</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc135"></a>modern_node_get_nat16</b></p>
+<p class="p7">uint16_t</p>
+<p class="p7">modern_node_get_nat16</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc136"></a>modern_node_get_nat32</b></p>
+<p class="p7">uint32_t</p>
+<p class="p7">modern_node_get_nat32</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc137"></a>modern_node_get_nat64</b></p>
+<p class="p7">uint64_t</p>
+<p class="p7">modern_node_get_nat64</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc138"></a>modern_node_get_float32</b></p>
+<p class="p7">float</p>
+<p class="p7">modern_node_get_float32</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc139"></a>modern_node_get_float64</b></p>
+<p class="p7">double</p>
+<p class="p7">modern_node_get_float64</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc141"></a>modern_node_get_utf8_bytes</b></p>
+<p class="p7">size_t</p>
+<p class="p7">modern_node_get_utf8_bytes</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc142"></a>modern_node_get_utf8_data_piece</b></p>
+<p class="p7">uint8_t *</p>
+<p class="p7">modern_node_get_utf8_data_piece</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t offset,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t bytes);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc143"></a>modern_node_get_blob_bytes</b></p>
+<p class="p7">size_t</p>
+<p class="p7">modern_node_get_blob_bytes</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc144"></a>modern_node_get_blob_data_piece</b></p>
+<p class="p7">uint8_t *</p>
+<p class="p7">modern_node_get_blob_data_piece</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t offset,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t bytes);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc146"></a>modern_node_get_sigma_field_value</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_sigma_field_value</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc147"></a>modern_node_get_sigma_successor</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_sigma_successor</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc278"></a>modern_node_get_named_value</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_named_value</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<hr>
+<p class="p4"><b><a id="doc145"></a>Types</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc356"></a>modern_node_get_function_type_left</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_function_type_left</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc357"></a>modern_node_get_function_type_right</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_function_type_right</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc358"></a>modern_node_get_sigma_type_field_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_sigma_type_field_type</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc359"></a>modern_node_get_sigma_type_successor</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_sigma_type_successor</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc148"></a>modern_node_get_named_type_name</b></p>
+<p class="p7">struct modern_hash *</p>
+<p class="p7">modern_node_get_named_type_name</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc149"></a>modern_node_get_named_type_content_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_named_type_content_type</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc263"></a>modern_node_get_universe_type_level</b></p>
+<p class="p7">uint64_t</p>
+<p class="p7">modern_node_get_universe_type_level</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<hr>
+<p class="p4"><b><a id="doc360"></a>Combinators</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc150"></a>modern_node_get_lambda_content</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_lambda_content</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc151"></a>modern_node_get_apply_left</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_apply_left</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc152"></a>modern_node_get_apply_right</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_apply_right</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc364"></a>modern_node_get_type_family_count</b></p>
+<p class="p7">uint64_t</p>
+<p class="p7">modern_node_get_type_family_count</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc365"></a>modern_node_get_type_family_item</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_type_family_item</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t index);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc361"></a>modern_node_get_let_count</b></p>
+<p class="p7">uint64_t</p>
+<p class="p7">modern_node_get_let_count</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc362"></a>modern_node_get_let_item</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_let_item</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t index);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc363"></a>modern_node_get_let_content</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_get_let_content</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc366"></a>modern_node_get_builtin_identifier</b></p>
+<p class="p7">uint16_t</p>
+<p class="p7">modern_node_get_builtin_identifier</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<hr>
+<p class="p4"><b><a id="doc153"></a>Construction</b></p>
+<p class="p5"><br></p>
+<p class="p4"><b><a id="doc173"></a>Values</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc154"></a>modern_node_make_int8</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_int8</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int8_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc155"></a>modern_node_make_int16</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_int16</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int16_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc156"></a>modern_node_make_int32</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_int32</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int32_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc157"></a>modern_node_make_int64</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_int64</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int64_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc158"></a>modern_node_make_nat8</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_nat8</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc159"></a>modern_node_make_nat16</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_nat16</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint16_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc160"></a>modern_node_make_nat32</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_nat32</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint32_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc161"></a>modern_node_make_nat64</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_nat64</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc162"></a>modern_node_make_float32</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_float32</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>float value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc163"></a>modern_node_make_float64</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_float64</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>double value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc165"></a>modern_node_make_utf8</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_utf8</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *data);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc166"></a>modern_node_make_blob</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_blob</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *data,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t bytes);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc262"></a>modern_node_make_sigma</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_sigma</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *type,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *field_value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *successor_value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc170"></a>modern_node_make_named_value</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_named_value</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *type,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<hr>
+<p class="p4"><b><a id="doc171"></a>Types</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc172"></a>modern_node_make_int8_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_int8_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc176"></a>modern_node_make_int16_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_int16_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc177"></a>modern_node_make_int32_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_int32_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc178"></a>modern_node_make_int64_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_int64_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc179"></a>modern_node_make_nat8_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_nat8_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc180"></a>modern_node_make_nat16_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_nat16_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc181"></a>modern_node_make_nat32_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_nat32_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc182"></a>modern_node_make_nat64_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_nat64_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc183"></a>modern_node_make_float32_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_float32_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc184"></a>modern_node_make_float64_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_float64_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc186"></a>modern_node_make_utf8_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_utf8_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc187"></a>modern_node_make_blob_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_blob_type</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc368"></a>modern_node_make_function_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_function_type</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *left,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *right);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc261"></a>modern_node_make_sigma_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_sigma_type</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *field_type, modern *successor);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc191"></a>modern_node_make_named_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_named_type</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *name,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *content_type);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc192"></a>modern_node_make_universe_type</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_universe_type</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t level);</p>
+<hr>
+<p class="p4"><b><a id="doc367"></a>Combinators</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc193"></a>modern_node_make_lambda</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_lambda</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *content);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc194"></a>modern_node_make_apply</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_apply</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *left,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *right);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc196"></a>modern_node_make_type_family</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_type_family</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t n_items,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern **types);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc369"></a>modern_node_make_let</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_let</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t n_items,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern **types,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *content);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc370"></a>modern_node_make_backreference</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_backreference</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t index);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc371"></a>modern_node_make_builtin</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_node_make_builtin</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint16_t identifier);</p>
+<hr>
+<p class="p4"><b><a id="doc197"></a>Mutation</b></p>
+<p class="p5"><br></p>
+<p class="p4"><b><a id="doc397"></a>General</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc398"></a>modern_node_set_immutable</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_immutable</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<hr>
+<p class="p4"><b><a id="doc198"></a>Values</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc199"></a>modern_node_set_int8</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_int8</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int8_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc200"></a>modern_node_set_int16</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_int16</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int16_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc201"></a>modern_node_set_int32</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_int32</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int32_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc202"></a>modern_node_set_int64</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_int64</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int64_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc203"></a>modern_node_set_nat8</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_nat8</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc204"></a>modern_node_set_nat16</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_nat16</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint16_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc205"></a>modern_node_set_nat32</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_nat32</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint32_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc206"></a>modern_node_set_nat64</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_nat64</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc207"></a>modern_node_set_float32</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_float32</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>float value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc208"></a>modern_node_set_float64</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_float64</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>double value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc375"></a>modern_node_set_utf8_data_piece</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_utf8_data_piece</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *data,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t offset,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t old_bytes,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t new_bytes);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc376"></a>modern_node_set_blob_data_piece</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_blob_data_piece</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *data,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t offset,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t old_bytes,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t new_bytes);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc377"></a>modern_node_set_sigma_field_value</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_sigma_field_value</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *field_value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc378"></a>modern_node_set_sigma_successor</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_sigma_successor</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *successor);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc215"></a>modern_node_set_named_value</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_named_value</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *type,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value);</p>
+<hr>
+<p class="p4"><b><a id="doc304"></a>Types</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc379"></a>modern_node_set_function_type_left</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_function_type_left</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *left);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc380"></a>modern_node_set_function_type_right</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_function_type_right</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *right);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc381"></a>modern_node_set_sigma_type_field_type</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_sigma_type_field_type</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *field_type);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc382"></a>modern_node_set_sigma_type_successor</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_sigma_type_successor</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *successor);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc383"></a>modern_node_set_named_type_name</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_named_type_name</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *name);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc384"></a>modern_node_set_named_type_content_type</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_named_type_content_type</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *content_type);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc385"></a>modern_node_set_universe_type_level</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_universe_type_level</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t level);</p>
+<hr>
+<p class="p4"><b><a id="doc374"></a>Combinators</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc386"></a>modern_node_set_lambda_content</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_lambda_content</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *content);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc387"></a>modern_node_set_apply_left</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_apply_left</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *left);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc388"></a>modern_node_set_apply_right</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_apply_right</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *right);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc390"></a>modern_node_set_type_family_add_item</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_type_family_add_item</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *item,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t index);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc389"></a>modern_node_set_type_family_remove_item</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_type_family_remove_item</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t index);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc392"></a>modern_node_set_let_add_item</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_let_add_item</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *item,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t index);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc391"></a>modern_node_set_let_remove_item</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_let_remove_item</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t index);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc393"></a>modern_node_set_let_content</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_let_content</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *content);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc394"></a>modern_node_set_builtin_identifier</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_set_builtin_identifier</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint16_t identifier);</p>
+<hr>
+<p class="p4"><b><a id="doc283"></a>Canonical form</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc284"></a>modern_node_canonical</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_node_canonical_hash</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *out);</p>
+<hr>
+<p class="p4"><b><a id="doc108"></a>Contexts</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc8"></a>Modern contexts</b></p>
+<p class="p7">typedef void modern_context;</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc109"></a>modern_make_initial_context</b></p>
+<p class="p7">modern_context *</p>
+<p class="p7">modern_make_initial_context</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc259"></a>modern_copy_context</b></p>
+<p class="p7">modern_context *</p>
+<p class="p7">modern_copy_context</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc110"></a>modern_get_in_context</b></p>
+<p class="p7">int</p>
+<p class="p7">modern_get_in_context</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc111"></a>modern_add_to_context</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_add_to_context</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *node);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc112"></a>modern_get_from_context</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_get_from_context</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *hash);</p>
+<hr>
+<p class="p4"><b><a id="doc113"></a>Node-based deserialization</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc114"></a>modern_deserialize_memory</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_deserialize_memory</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *data,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t length);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc115"></a>modern_deserialize_file</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_deserialize_file</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>FILE *file);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc116"></a>modern_deserialize_fd</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_deserialize_fd</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int fd);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc117"></a>modern_deserialize_vfile</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_deserialize_vfile</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_vfile *vfile,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *vfile_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc118"></a>moden_deserialize_input_stream</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_deserialize_input_stream</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<hr>
+<p class="p4"><b><a id="doc119"></a>Node-based serialization</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc120"></a>modern_serialize_memory_buffer</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_serialize_memory_buffer</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *buffer,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t *length);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc121"></a>modern_serialize_memory_allocating</b></p>
+<p class="p7">uint8_t *</p>
+<p class="p7">modern_serialize_memory_allocating</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t *length);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc122"></a>modern_serialize_file</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_serialize_file</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>FILE *file);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc123"></a>modern_serialize_fd</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_serialize_fd</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int fd);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc124"></a>modern_serialize_vfile</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_serialize_vfile</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_vfile *vfile,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *vfile_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc125"></a>modern_serialize_output_stream</b></p>
+<p class="p7">modern *</p>
+<p class="p7">modern_serialize_output_stream</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern *value,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_context *context,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_stream *stream);</p>
+<hr>
+<p class="p4"><b><a id="doc12"></a>Processors</b></p>
+<p class="p7">struct modern_processor {</p>
+<p class="p7"><span class="Apple-converted-space">    </span>…</p>
+<p class="p7">};</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc251"></a>pool</b></p>
+<p class="p7">modern_autorelease_pool *pool;</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc252"></a>modern_processor_abort</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_processor_abort)</p>
+<p class="p7">(void *processor_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc253"></a>modern_processor_flush</b></p>
+<p class="p7">void (*modern_processor_flush)</p>
+<p class="p7"><span class="Apple-converted-space">  </span>(void *processor_state);</p>
+<hr>
+<p class="p4"><b><a id="doc13"></a>Streams</b></p>
+<p class="p7">struct modern_stream {</p>
+<p class="p7"><span class="Apple-converted-space">    </span>…</p>
+<p class="p7">};</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc14"></a>modern_stream_initialize</b></p>
+<p class="p7">void *</p>
+<p class="p7">(*modern_stream_initialize)</p>
+<p class="p7">();</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc15"></a>modern_stream_start</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_start)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc16"></a>modern_stream_type_magic_number</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_magic_number)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc17"></a>modern_stream_name_definition</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_name_definition)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *data,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t length);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc19"></a>modern_stream_type_definition_int8</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_int8)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc20"></a>modern_stream_type_definition_int16</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_int16)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc21"></a>modern_stream_type_definition_int32</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_int32)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc22"></a>modern_stream_type_definition_int64</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_int64)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc23"></a>modern_stream_type_definition_nat8</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_nat8)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc24"></a>modern_stream_type_definition_nat16</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_nat16)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc25"></a>modern_stream_type_definition_nat32</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_nat32)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc26"></a>modern_stream_type_definition_nat64</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_nat64)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc27"></a>modern_stream_type_definition_float32</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_float32)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc28"></a>modern_stream_type_definition_float64</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_float64)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc30"></a>modern_stream_type_definition_utf8</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_utf8)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc31"></a>modern_stream_type_definition_blob</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_blob)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc32"></a>modern_stream_type_definition_function_is_next</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_function_is_next)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc33"></a>modern_stream_type_definition_sigma_is_next</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_sigma_is_next)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *a,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *b);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc34"></a>modern_stream_type_definition_named_is_next</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_named_is_next)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *name);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc35"></a>modern_stream_type_definition_universe</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_definition_universe)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc37"></a>modern_stream_int8</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_int8)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int8_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc38"></a>modern_stream_int16</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_int16)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int16_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc39"></a>modern_stream_int32</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_int32)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int32_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc40"></a>modern_stream_int64</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_int64)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int64_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc41"></a>modern_stream_nat8</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_nat8)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc256"></a>modern_stream_nat16</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_nat16)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint16_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc257"></a>modern_stream_nat32</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_nat32)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint32_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc258"></a>modern_stream_nat64</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_nat64)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc42"></a>modern_stream_float32</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_float32)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>float value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc43"></a>modern_stream_float64</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_float64)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>double value);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc45"></a>modern_stream_utf8_start</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_utf8_start)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc46"></a>modern_stream_utf8_data</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_utf8_data)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *data,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t length);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc47"></a>modern_stream_utf8_end</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_utf8_end)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc48"></a>modern_stream_blob_start</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_blob_start)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc49"></a>modern_stream_blob_data</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_blob_data)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *data,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t length);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc50"></a>modern_stream_blob_end</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_blob_end)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc51"></a>modern_stream_array_start</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_array_start)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc52"></a>modern_stream_array_end</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_array_end)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc53"></a>modern_stream_union_field</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_union_field)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *type,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *field);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc54"></a>modern_stream_structure_start</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_structure_start)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *type);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc55"></a>modern_stream_structure_field</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_structure_field)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *field);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc56"></a>modern_stream_structure_end</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_structure_end)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc57"></a>modern_stream_named_value_is_next</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_named_value_is_next)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *name);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc58"></a>modern_stream_lambda_is_next</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_lambda_is_next)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc59"></a>modern_stream_apply_is_next</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_apply_is_next)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc61"></a>modern_stream_type_family_is_next</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_family_is_next)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t n_items);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc310"></a>modern_stream_let_is_next</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_let_is_next)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t n_items);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc311"></a>modern_stream_backreference_is_next</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_backreference_is_next)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint64_t index);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc312"></a>modern_stream_builtin_is_next</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_builtin_is_next)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint16_t identifier);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc372"></a>modern_stream_type_as_value_is_next</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_type_as_value_is_next)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_hash *type);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc62"></a>modern_stream_end</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_end)</p>
+<p class="p7">(void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc63"></a>modern_stream_finalize</b></p>
+<p class="p7">void</p>
+<p class="p7">(*modern_stream_finalize)</p>
+<p class="p7">(void *stream_state);</p>
+<hr>
+<p class="p4"><b><a id="doc216"></a>Stream-based deserialization<span class="Apple-converted-space"> </span></b></p>
+<p class="p5"><br></p>
+<p class="p4"><b><a id="doc226"></a>General</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc217"></a>modern_input_stream_memory</b></p>
+<p class="p7">void *</p>
+<p class="p7">modern_input_stream_memory</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_stream *stream,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *data,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t length);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc218"></a>modern_input_stream_file</b></p>
+<p class="p7">void *</p>
+<p class="p7">modern_input_stream_file</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_stream *stream,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>FILE *file);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc219"></a>modern_input_stream_fd</b></p>
+<p class="p7">void *</p>
+<p class="p7">modern_input_stream_fd</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_stream *stream,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int fd);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc220"></a>modern_input_stream_vfile</b></p>
+<p class="p7">void *</p>
+<p class="p7">modern_input_stream_vfile</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_stream *stream,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_vfile *vfile,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *vfile_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc225"></a>modern_input_stream_finalize</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_input_stream_finalize</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *processor_state);</p>
+<hr>
+<p class="p4"><b><a id="doc221"></a>Customization</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc222"></a>modern_input_stream_step</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_input_stream_step</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_stream *stream,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void **stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc223"></a>modern_input_stream_run</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_input_stream_run</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_stream *stream,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *processor_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void **stream_state);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc224"></a>modern_input_stream_do_all</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_input_stream_do_all</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_stream *stream,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *processor_state);</p>
+<hr>
+<p class="p4"><b><a id="doc227"></a>Stream-based serialization</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc228"></a>modern_output_stream_memory_buffer</b></p>
+<p class="p7">void *</p>
+<p class="p7">modern_output_stream_memory_buffer</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>uint8_t *buffer,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t *length);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc229"></a>modern_output_stream_memory_allocating</b></p>
+<p class="p7">void *</p>
+<p class="p7">modern_output_stream_memory_allocating</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t *length);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc230"></a>modern_output_stream_memory_allocating_result</b></p>
+<p class="p7">uint8_t *</p>
+<p class="p7">modern_output_stream_memory_allocating_result</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *stream_state,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>size_t *length)</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc231"></a>modern_output_stream_file</b></p>
+<p class="p7">void *</p>
+<p class="p7">modern_output_stream_file</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>FILE *file);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc232"></a>modern_output_stream_fd</b></p>
+<p class="p7">void *</p>
+<p class="p7">modern_output_stream_fd</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>int fd);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc233"></a>modern_output_stream_vfile</b></p>
+<p class="p7">void *</p>
+<p class="p7">modern_output_stream_vfile</p>
+<p class="p7">(modern_library *library,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>modern_autorelease_pool *pool,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>struct modern_vfile *vfile,</p>
+<p class="p7"><span class="Apple-converted-space"> </span>void *vfile_state);</p>
+<hr>
+<p class="p4"><b><a id="doc254"></a>Predefined hashes</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc237"></a>modern_compute_initial_namespace_hash</b></p>
+<p class="p7">void</p>
+<p class="p7">modern_compute_initial_namespace_hash</p>
+<p class="p7">(struct modern_hash *out);</p>
+<hr>
+<p class="p4"><b><a id="doc238"></a>Predefined virtual files</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc239"></a>modern_make_memory_buffer_vfile</b></p>
+<p class="p7">struct modern_vfile *</p>
+<p class="p7">modern_make_memory_buffer_vfile</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc240"></a>modern_make_memory_allocating_vfile</b></p>
+<p class="p7">struct modern_vfile *</p>
+<p class="p7">modern_make_memory_allocating_vfile</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc241"></a>modern_make_file_vfile</b></p>
+<p class="p7">struct modern_vfile *</p>
+<p class="p7">modern_make_file_vfile</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc242"></a>modern_make_fd_vfile</b></p>
+<p class="p7">struct modern_vfile *</p>
+<p class="p7">modern_make_fd_vfile</p>
+<p class="p7">(modern_library *library);</p>
+<hr>
+<p class="p4"><b><a id="doc243"></a>Predefined streams</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc244"></a>modern_make_explicatory_stream</b></p>
+<p class="p7">struct modern_stream *</p>
+<p class="p7">modern_make_explicatory_stream</p>
+<p class="p7">(modern_library *library);</p>
+<p class="p8"><br></p>
+<p class="p1"><b><a id="doc245"></a>modern_make_documentation_stream</b></p>
+<p class="p7">struct modern_stream *</p>
+<p class="p7">modern_make_documentation_stream</p>
+<p class="p7">(modern_library *library);</p>
+<hr>
+<p class="p4"><b><a id="doc287"></a>Normative references</b></p>
+<p class="p5"><br></p>
+<p class="p1"><b><a id="doc288"></a>IEEE 754-2008</b></p>
+</body>
+</html>
