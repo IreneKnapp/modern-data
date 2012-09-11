@@ -1275,8 +1275,8 @@ modern_node_set_type_family_add_item
         <Document ID="108">
             <Title>Contexts</Title>
         </Document>
-        <Document ID="234">
-            <Title>Hashing</Title>
+        <Document ID="360">
+            <Title>Combinators</Title>
         </Document>
         <Document ID="199">
             <Title>modern_node_set_int8</Title>
@@ -1286,9 +1286,13 @@ modern_node_set_int8
  modern *node,
  int8_t value);</Text>
         </Document>
-        <Document ID="330">
-            <Title>blob_value_modern_node_type</Title>
-            <Text>blob_value_modern_node_type = 12,</Text>
+        <Document ID="204">
+            <Title>modern_node_set_nat16</Title>
+            <Text>void
+modern_node_set_nat16
+(modern_library *library,
+ modern *node,
+ uint16_t value);</Text>
         </Document>
         <Document ID="169">
             <Title>modern_node_make_structure</Title>
@@ -1302,38 +1306,30 @@ modern_node_make_structure
         <Document ID="295">
             <Title>Binary large objects</Title>
         </Document>
+        <Document ID="139">
+            <Title>modern_node_get_float64</Title>
+            <Text>double
+modern_node_get_float64
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
         <Document ID="300">
             <Title>Flattening</Title>
         </Document>
-        <Document ID="265">
-            <Title>modern_library_initialize</Title>
-            <Text>modern_library *
-modern_library_initalize
-(struct modern_error_handler *error_handler,
- struct modern_allocator *allocator,
- void (*finalizer)(void *client_state),
- void *client_state);</Text>
+        <Document ID="234">
+            <Title>Hashing</Title>
         </Document>
-        <Document ID="204">
-            <Title>modern_node_set_nat16</Title>
+        <Document ID="235">
+            <Title>modern_compute_hash</Title>
             <Text>void
-modern_node_set_nat16
-(modern_library *library,
- modern *node,
- uint16_t value);</Text>
+modern_compute_hash
+(uint8_t *data,
+ size_t length,
+ struct modern_hash *out);</Text>
         </Document>
-        <Document ID="109">
-            <Title>modern_make_initial_context</Title>
-            <Text>modern_context *
-modern_make_initial_context
-(modern_library *library);</Text>
-        </Document>
-        <Document ID="361">
-            <Title>modern_node_get_let_count</Title>
-            <Text>uint64_t
-modern_node_get_let_count
-(modern_library *library,
- modern *value);</Text>
+        <Document ID="330">
+            <Title>blob_value_modern_node_type</Title>
+            <Text>blob_value_modern_node_type = 12,</Text>
         </Document>
         <Document ID="205">
             <Title>modern_node_set_nat32</Title>
@@ -1347,8 +1343,11 @@ modern_node_set_nat32
             <Title>sigma_value_modern_node_type</Title>
             <Text>sigma_value_modern_node_type = 13,</Text>
         </Document>
-        <Document ID="360">
-            <Title>Combinators</Title>
+        <Document ID="109">
+            <Title>modern_make_initial_context</Title>
+            <Text>modern_context *
+modern_make_initial_context
+(modern_library *library);</Text>
         </Document>
         <Document ID="301">
             <Title>Caveats</Title>
@@ -1382,13 +1381,12 @@ Should 128-bit floats become practical on the key platforms where Modern Data is
 modern_library_get_error_handler
 (modern_library *library);</Text>
         </Document>
-        <Document ID="235">
-            <Title>modern_compute_hash</Title>
-            <Text>void
-modern_compute_hash
-(uint8_t *data,
- size_t length,
- struct modern_hash *out);</Text>
+        <Document ID="361">
+            <Title>modern_node_get_let_count</Title>
+            <Text>uint64_t
+modern_node_get_let_count
+(modern_library *library,
+ modern *value);</Text>
         </Document>
         <Document ID="236">
             <Title>modern_compute_child_hash</Title>
@@ -1468,12 +1466,14 @@ For ease of implementation and on the general principle of consistency, the form
 modern_library_get_allocator
 (modern_library *library);</Text>
         </Document>
-        <Document ID="139">
-            <Title>modern_node_get_float64</Title>
-            <Text>double
-modern_node_get_float64
-(modern_library *library,
- modern *value);</Text>
+        <Document ID="265">
+            <Title>modern_library_initialize</Title>
+            <Text>modern_library *
+modern_library_initalize
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ void (*finalizer)(void *client_state),
+ void *client_state);</Text>
         </Document>
         <Document ID="237">
             <Title>modern_compute_initial_namespace_hash</Title>

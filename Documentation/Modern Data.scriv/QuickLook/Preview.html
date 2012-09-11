@@ -80,7 +80,7 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not.  This is, not least, because there are no standardized names for the functions - though GNU libquadmath uses the “q” suffix on the ISO C99 base names.  The C type which would be the most likely candidate to be a 128-bit float, long double, is actually an 80-bit float on most Intel-related platforms, while non-Intel platforms seldom suppo...</p>
+<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libr...</p>
 </li>
 </ul>
 <hr/>
