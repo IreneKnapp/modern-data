@@ -393,6 +393,22 @@ int main(int argc, char **argv) {
         exit(1);
     }
     
+    size_t pass_count = 0;
+    size_t fail_count = 0;
+    size_t skip_count = 0;
+    for(size_t i = 0; i < test_suite->test_cases.count; i++) {
+        struct test_case *test_case = test_suite->test_cases.test_cases[i];
+        if(test_case->completed) {
+            if(test_case->succeeded) pass_count++;
+            else fail_count++;
+        } else skip_count++;
+    }
+    
+    printf("Passed %llu.  Failed %llu.  Skipped %llu.\n",
+           (unsigned long long) pass_count,
+           (unsigned long long) fail_count,
+           (unsigned long long) skip_count);
+    
     finalize_test_suite(test_suite);
     actually_free(test_suite);
     
@@ -1635,77 +1651,240 @@ static void *allocator_realloc
 static void error_memory
   (struct test_suite *test_suite, size_t requested_size)
 {
-    fprintf(stderr, "Unable to allocate %llu bytes.\n",
-            (unsigned long long) requested_size);
-    exit(1);
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_memory_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.error_memory.requested_size = requested_size;
+    
+    if(callback_should_succeed(test_suite)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
 }
 
 
 static void error_retain_count_overflow
   (struct test_suite *test_suite, void *retainable)
 {
-    fprintf(stderr, "Retain count overflow on object at 0x%llx.\n",
-            (unsigned long long) retainable);
-    exit(1);
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_retain_count_overflow_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.error_retain_count_overflow.retainable = retainable;
+    
+    if(callback_should_succeed(test_suite)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
 }
 
 
 static void error_retain_count_underflow
   (struct test_suite *test_suite, void *retainable)
 {
-    fprintf(stderr, "Retain count underflow on object at 0x%llx.\n",
-            (unsigned long long) retainable);
-    exit(1);
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_retain_count_underflow_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.error_retain_count_underflow.retainable = retainable;
+    
+    if(callback_should_succeed(test_suite)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
 }
 
 
 static void error_double_autorelease
   (struct test_suite *test_suite, void *retainable)
 {
-    fprintf(stderr, "Double autorelease on object at 0x%llx.\n",
-            (unsigned long long) retainable);
-    exit(1);
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_double_autorelease_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.error_double_autorelease.retainable = retainable;
+    
+    if(callback_should_succeed(test_suite)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
 }
 
 
 static void error_type_mismatch
   (struct test_suite *test_suite, modern *expected, modern *actual)
 {
-    fprintf(stderr, "Type mismatch.  Expected 0x%llx; got 0x%llx.\n",
-            (unsigned long long) expected, (unsigned long long) actual);
-    exit(1);
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_type_mismatch_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.error_type_mismatch.expected = expected;
+    invocation->specifics.error_type_mismatch.actual = actual;
+    
+    if(callback_should_succeed(test_suite)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
 }
 
 
 static void error_universe_level_overflow
   (struct test_suite *test_suite)
 {
-    fprintf(stderr, "Universe level overflow.\n");
-    exit(1);
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_universe_level_overflow_callback_identifier;
+    invocation->succeeded = 0;
+    
+    if(callback_should_succeed(test_suite)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
 }
 
 
 static void error_buffer_index
   (struct test_suite *test_suite)
 {
-    fprintf(stderr, "Buffer index out of range.\n");
-    exit(1);
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_buffer_index_callback_identifier;
+    invocation->succeeded = 0;
+    
+    if(callback_should_succeed(test_suite)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
 }
 
 
 static void error_not_applicable
   (struct test_suite *test_suite)
 {
-    fprintf(stderr, "Not applicable.\n");
-    exit(1);
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_not_applicable_callback_identifier;
+    invocation->succeeded = 0;
+    
+    if(callback_should_succeed(test_suite)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
 }
 
 
 static void error_non_numeric_float
   (struct test_suite *test_suite)
 {
-    fprintf(stderr, "Non-numeric float.\n");
-    exit(1);
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_non_numeric_float_callback_identifier;
+    invocation->succeeded = 0;
+    
+    if(callback_should_succeed(test_suite)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
 }
 
 
