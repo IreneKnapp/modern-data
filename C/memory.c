@@ -77,7 +77,8 @@ void modern_release
 		    (library->client_state, retainable);
 	} else if(memory->retain_count == 1) {
 	    if(memory->finalizer) memory->finalizer(library_in, retainable);
-	    else library->allocator->modern_allocator_free
+	    
+	    library->allocator->modern_allocator_free
 	        (library->client_state, retainable);
 	} else {
 		memory->retain_count--;
