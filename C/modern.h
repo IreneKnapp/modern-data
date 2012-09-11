@@ -68,6 +68,8 @@ struct modern_stream {
     void (*modern_stream_name_definition)
       (void *processor_state, void *stream_state,
        uint8_t *data, size_t length);
+    void (*modern_stream_type_definition_bool)
+      (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_int8)
       (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_int16)
@@ -100,6 +102,10 @@ struct modern_stream {
     void (*modern_stream_type_definition_named_is_next)
       (void *processor_state, void *stream_state, struct modern_hash *name);
     void (*modern_stream_type_definition_universe)
+      (void *processor_state, void *stream_state);
+    void (*modern_stream_false)
+      (void *processor_state, void *stream_state);
+    void (*modern_stream_true)
       (void *processor_state, void *stream_state);
     void (*modern_stream_int8)
       (void *processor_state, void *stream_state, int8_t value);
@@ -167,7 +173,9 @@ struct modern_vfile {
 
 
 enum modern_node_type {
-    int8_value_modern_node_type = 1,
+    bool_value_false_modern_node_type = 1,
+    bool_value_true_modern_node_type,
+    int8_value_modern_node_type,
     int16_value_modern_node_type,
     int32_value_modern_node_type,
     int64_value_modern_node_type,
@@ -181,6 +189,7 @@ enum modern_node_type {
     blob_value_modern_node_type,
     sigma_value_modern_node_type,
     named_value_modern_node_type,
+    bool_type_modern_node_type,
     int8_type_modern_node_type,
     int16_type_modern_node_type,
     int32_type_modern_node_type,
@@ -207,7 +216,145 @@ enum modern_node_type {
 
 
 enum modern_builtin_identifier {
-    plus_int8_modern_builtin_identifier = 1,
+    if_bool_modern_builtin_identifier = 1,
+    and_bool_modern_builtin_identifier,
+    or_bool_modern_builtin_identifier,
+    not_bool_modern_builtin_identifier,
+    equal_to_bool_modern_builtin_identifier,
+    equal_to_int8_modern_builtin_identifier,
+    equal_to_int16_modern_builtin_identifier,
+    equal_to_int32_modern_builtin_identifier,
+    equal_to_int64_modern_builtin_identifier,
+    equal_to_nat8_modern_builtin_identifier,
+    equal_to_nat16_modern_builtin_identifier,
+    equal_to_nat32_modern_builtin_identifier,
+    equal_to_nat64_modern_builtin_identifier,
+    equal_to_float32_modern_builtin_identifier,
+    equal_to_float64_modern_builtin_identifier,
+    less_than_int8_modern_builtin_identifier,
+    less_than_int16_modern_builtin_identifier,
+    less_than_int32_modern_builtin_identifier,
+    less_than_int64_modern_builtin_identifier,
+    less_than_nat8_modern_builtin_identifier,
+    less_than_nat16_modern_builtin_identifier,
+    less_than_nat32_modern_builtin_identifier,
+    less_than_nat64_modern_builtin_identifier,
+    less_than_float32_modern_builtin_identifier,
+    less_than_float64_modern_builtin_identifier,
+    add_int8_modern_builtin_identifier,
+    add_int16_modern_builtin_identifier,
+    add_int32_modern_builtin_identifier,
+    add_int64_modern_builtin_identifier,
+    add_nat8_modern_builtin_identifier,
+    add_nat16_modern_builtin_identifier,
+    add_nat32_modern_builtin_identifier,
+    add_nat64_modern_builtin_identifier,
+    add_float32_modern_builtin_identifier,
+    add_float64_modern_builtin_identifier,
+    subtract_int8_modern_builtin_identifier,
+    subtract_int16_modern_builtin_identifier,
+    subtract_int32_modern_builtin_identifier,
+    subtract_int64_modern_builtin_identifier,
+    subtract_nat8_modern_builtin_identifier,
+    subtract_nat16_modern_builtin_identifier,
+    subtract_nat32_modern_builtin_identifier,
+    subtract_nat64_modern_builtin_identifier,
+    subtract_float32_modern_builtin_identifier,
+    subtract_float64_modern_builtin_identifier,
+    multiply_int8_modern_builtin_identifier,
+    multiply_int16_modern_builtin_identifier,
+    multiply_int32_modern_builtin_identifier,
+    multiply_int64_modern_builtin_identifier,
+    multiply_nat8_modern_builtin_identifier,
+    multiply_nat16_modern_builtin_identifier,
+    multiply_nat32_modern_builtin_identifier,
+    multiply_nat64_modern_builtin_identifier,
+    multiply_float32_modern_builtin_identifier,
+    multiply_float64_modern_builtin_identifier,
+    divide_int8_modern_builtin_identifier,
+    divide_int16_modern_builtin_identifier,
+    divide_int32_modern_builtin_identifier,
+    divide_int64_modern_builtin_identifier,
+    divide_nat8_modern_builtin_identifier,
+    divide_nat16_modern_builtin_identifier,
+    divide_nat32_modern_builtin_identifier,
+    divide_nat64_modern_builtin_identifier,
+    divide_float32_modern_builtin_identifier,
+    divide_float64_modern_builtin_identifier,
+    modulus_int8_modern_builtin_identifier,
+    modulus_int16_modern_builtin_identifier,
+    modulus_int32_modern_builtin_identifier,
+    modulus_int64_modern_builtin_identifier,
+    modulus_nat8_modern_builtin_identifier,
+    modulus_nat16_modern_builtin_identifier,
+    modulus_nat32_modern_builtin_identifier,
+    modulus_nat64_modern_builtin_identifier,
+    modulus_float32_modern_builtin_identifier,
+    modulus_float64_modern_builtin_identifier,
+    shift_left_int8_modern_builtin_identifier,
+    shift_left_int16_modern_builtin_identifier,
+    shift_left_int32_modern_builtin_identifier,
+    shift_left_int64_modern_builtin_identifier,
+    shift_left_nat8_modern_builtin_identifier,
+    shift_left_nat16_modern_builtin_identifier,
+    shift_left_nat32_modern_builtin_identifier,
+    shift_left_nat64_modern_builtin_identifier,
+    shift_right_int8_modern_builtin_identifier,
+    shift_right_int16_modern_builtin_identifier,
+    shift_right_int32_modern_builtin_identifier,
+    shift_right_int64_modern_builtin_identifier,
+    shift_right_nat8_modern_builtin_identifier,
+    shift_right_nat16_modern_builtin_identifier,
+    shift_right_nat32_modern_builtin_identifier,
+    shift_right_nat64_modern_builtin_identifier,
+    rotate_left_int8_modern_builtin_identifier,
+    rotate_left_int16_modern_builtin_identifier,
+    rotate_left_int32_modern_builtin_identifier,
+    rotate_left_int64_modern_builtin_identifier,
+    rotate_left_nat8_modern_builtin_identifier,
+    rotate_left_nat16_modern_builtin_identifier,
+    rotate_left_nat32_modern_builtin_identifier,
+    rotate_left_nat64_modern_builtin_identifier,
+    rotate_right_int8_modern_builtin_identifier,
+    rotate_right_int16_modern_builtin_identifier,
+    rotate_right_int32_modern_builtin_identifier,
+    rotate_right_int64_modern_builtin_identifier,
+    rotate_right_nat8_modern_builtin_identifier,
+    rotate_right_nat16_modern_builtin_identifier,
+    rotate_right_nat32_modern_builtin_identifier,
+    rotate_right_nat64_modern_builtin_identifier,
+    bit_and_int8_modern_builtin_identifier,
+    bit_and_int16_modern_builtin_identifier,
+    bit_and_int32_modern_builtin_identifier,
+    bit_and_int64_modern_builtin_identifier,
+    bit_and_nat8_modern_builtin_identifier,
+    bit_and_nat16_modern_builtin_identifier,
+    bit_and_nat32_modern_builtin_identifier,
+    bit_and_nat64_modern_builtin_identifier,
+    bit_or_int8_modern_builtin_identifier,
+    bit_or_int16_modern_builtin_identifier,
+    bit_or_int32_modern_builtin_identifier,
+    bit_or_int64_modern_builtin_identifier,
+    bit_or_nat8_modern_builtin_identifier,
+    bit_or_nat16_modern_builtin_identifier,
+    bit_or_nat32_modern_builtin_identifier,
+    bit_or_nat64_modern_builtin_identifier,
+    bit_xor_int8_modern_builtin_identifier,
+    bit_xor_int16_modern_builtin_identifier,
+    bit_xor_int32_modern_builtin_identifier,
+    bit_xor_int64_modern_builtin_identifier,
+    bit_xor_nat8_modern_builtin_identifier,
+    bit_xor_nat16_modern_builtin_identifier,
+    bit_xor_nat32_modern_builtin_identifier,
+    bit_xor_nat64_modern_builtin_identifier,
+    bit_not_int8_modern_builtin_identifier,
+    bit_not_int16_modern_builtin_identifier,
+    bit_not_int32_modern_builtin_identifier,
+    bit_not_int64_modern_builtin_identifier,
+    bit_not_nat8_modern_builtin_identifier,
+    bit_not_nat16_modern_builtin_identifier,
+    bit_not_nat32_modern_builtin_identifier,
+    bit_not_nat64_modern_builtin_identifier,
 };
 
 
@@ -407,6 +554,10 @@ extern uint16_t modern_node_get_builtin_identifier
   (modern_library *library,
    modern *value);
 
+extern modern *modern_node_make_bool_false
+  (modern_library *library);
+extern modern *modern_node_make_bool_true
+  (modern_library *library);
 extern modern *modern_node_make_int8
   (modern_library *library,
    int8_t value);
@@ -450,6 +601,8 @@ extern modern *modern_node_make_named_value
   (modern_library *library,
    modern *type, modern *value);
 
+extern modern *modern_node_make_bool_type
+  (modern_library *library);
 extern modern *modern_node_make_int8_type
   (modern_library *library);
 extern modern *modern_node_make_int16_type

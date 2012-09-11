@@ -1,50 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SearchIndexes Version="1.0">
     <Documents>
-        <Document ID="28">
-            <Title>modern_stream_type_definition_float64</Title>
-            <Text>void
-(*modern_stream_type_definition_float64)
-(void *processor_state,
- void *stream_state);</Text>
+        <Document ID="330">
+            <Title>blob_value_modern_node_type</Title>
+            <Text>blob_value_modern_node_type = 12,</Text>
         </Document>
-        <Document ID="172">
-            <Title>modern_node_make_int8_type</Title>
-            <Text>modern *
-modern_node_make_int8_type
-(modern_library *library);</Text>
+        <Document ID="331">
+            <Title>sigma_value_modern_node_type</Title>
+            <Text>sigma_value_modern_node_type = 13,</Text>
         </Document>
-        <Document ID="34">
-            <Title>modern_stream_type_definition_named_is_next</Title>
-            <Text>void
-(*modern_stream_type_definition_named_is_next)
-(void *processor_state,
- void *stream_state,
- struct modern_hash *name);</Text>
-        </Document>
-        <Document ID="142">
-            <Title>modern_node_get_utf8_data_piece</Title>
-            <Text>uint8_t *
-modern_node_get_utf8_data_piece
+        <Document ID="220">
+            <Title>modern_input_stream_vfile</Title>
+            <Text>void *
+modern_input_stream_vfile
 (modern_library *library,
- modern *value,
- size_t offset,
- size_t bytes);</Text>
+ modern_autorelease_pool *pool,
+ struct modern_stream *stream,
+ struct modern_vfile *vfile,
+ void *vfile_state);</Text>
         </Document>
-        <Document ID="29">
-            <Title>modern_stream_type_definition_float128</Title>
-            <Text>void
-(*modern_stream_type_definition_float128)
-(void *processor_state,
- void *stream_state);</Text>
+        <Document ID="332">
+            <Title>named_value_modern_node_type</Title>
+            <Text>named_value_modern_node_type = 14,</Text>
         </Document>
-        <Document ID="40">
-            <Title>modern_stream_int64</Title>
+        <Document ID="221">
+            <Title>Customization</Title>
+        </Document>
+        <Document ID="110">
+            <Title>modern_get_in_context</Title>
+            <Text>int
+modern_get_in_context
+(modern_library *library,
+ modern_context *context,
+ modern *node);</Text>
+        </Document>
+        <Document ID="333">
+            <Title>int8_type_modern_node_type</Title>
+            <Text>int8_type_modern_node_type = 15,</Text>
+        </Document>
+        <Document ID="222">
+            <Title>modern_input_stream_step</Title>
             <Text>void
-(*modern_stream_int64)
-(void *processor_state,
- void *stream_state,
- int64_t value);</Text>
+modern_input_stream_step
+(modern_library *library,
+ struct modern_stream *stream,
+ void *processor_state,
+ void **stream_state);</Text>
+        </Document>
+        <Document ID="111">
+            <Title>modern_add_to_context</Title>
+            <Text>void
+modern_add_to_context
+(modern_library *library,
+ modern_context *context,
+ modern *node);</Text>
         </Document>
         <Document ID="112">
             <Title>modern_get_from_context</Title>
@@ -54,85 +63,53 @@ modern_get_from_context
  modern_context *context,
  struct modern_hash *hash);</Text>
         </Document>
-        <Document ID="35">
-            <Title>modern_stream_type_definition_universe</Title>
+        <Document ID="334">
+            <Title>int16_type_modern_node_type</Title>
+            <Text>int16_type_modern_node_type = 16,</Text>
+        </Document>
+        <Document ID="223">
+            <Title>modern_input_stream_run</Title>
             <Text>void
-(*modern_stream_type_definition_universe)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
-        <Document ID="173">
-            <Title>Values</Title>
-        </Document>
-        <Document ID="41">
-            <Title>modern_stream_nat8</Title>
-            <Text>void
-(*modern_stream_nat8)
-(void *processor_state,
- void *stream_state,
- uint8_t value);</Text>
-        </Document>
-        <Document ID="143">
-            <Title>modern_node_get_blob_bytes</Title>
-            <Text>size_t
-modern_node_get_blob_bytes
+modern_input_stream_run
 (modern_library *library,
- modern *value);</Text>
+ struct modern_stream *stream,
+ void *processor_state,
+ void **stream_state);</Text>
         </Document>
-        <Document ID="36">
-            <Title>modern_stream_type</Title>
-            <Text>void
-(*modern_stream_type)
-(void *processor_state,
- void *stream_state,
- struct modern_hash *type);</Text>
+        <Document ID="190">
+            <Title>modern_node_make_structure_type</Title>
+            <Text>modern *
+modern_node_make_structure_type
+(uint64_t n_items,
+ struct modern_hash **fields,
+ modern **types);</Text>
         </Document>
         <Document ID="113">
             <Title>Node-based deserialization</Title>
         </Document>
-        <Document ID="42">
-            <Title>modern_stream_float32</Title>
+        <Document ID="335">
+            <Title>int32_type_modern_node_type</Title>
+            <Text>int32_type_modern_node_type = 17,</Text>
+        </Document>
+        <Document ID="224">
+            <Title>modern_input_stream_do_all</Title>
             <Text>void
-(*modern_stream_float32)
-(void *processor_state,
- void *stream_state,
- float value);</Text>
-        </Document>
-        <Document ID="37">
-            <Title>modern_stream_int8</Title>
-            <Text>void
-(*modern_stream_int8)
-(void *processor_state,
- void *stream_state,
- int8_t value);</Text>
-        </Document>
-        <Document ID="174">
-            <Title>Values</Title>
-        </Document>
-        <Document ID="43">
-            <Title>modern_stream_float64</Title>
-            <Text>void
-(*modern_stream_float64)
-(void *processor_state,
- void *stream_state,
- double value);</Text>
-        </Document>
-        <Document ID="144">
-            <Title>modern_node_get_blob_data_piece</Title>
-            <Text>uint8_t *
-modern_node_get_blob_data_piece
+modern_input_stream_do_all
 (modern_library *library,
- modern *value,
- size_t offset,
- size_t bytes);</Text>
+ struct modern_stream *stream,
+ void *processor_state);</Text>
         </Document>
-        <Document ID="38">
-            <Title>modern_stream_int16</Title>
-            <Text>void
-(*modern_stream_int16)
-(void *processor_state,
- void *stream_state,
- int16_t value);</Text>
+        <Document ID="80">
+            <Title>blob_value_modern_node_type</Title>
+            <Text>blob_value_modern_node_type = 14,</Text>
+        </Document>
+        <Document ID="191">
+            <Title>modern_node_make_named_type</Title>
+            <Text>modern *
+modern_node_make_named_type
+(modern_library *library,
+ struct modern_hash *name,
+ modern *content_type);</Text>
         </Document>
         <Document ID="114">
             <Title>modern_deserialize_memory</Title>
@@ -144,51 +121,31 @@ modern_deserialize_memory
  uint8_t *data,
  size_t length);</Text>
         </Document>
-        <Document ID="240">
-            <Title>modern_make_memory_allocating_vfile</Title>
-            <Text>struct modern_vfile *
-modern_make_memory_allocating_vfile
-(modern_library *library);</Text>
+        <Document ID="336">
+            <Title>int64_type_modern_node_type</Title>
+            <Text>int64_type_modern_node_type = 18,</Text>
         </Document>
-        <Document ID="210">
-            <Title>modern_node_set_utf8</Title>
+        <Document ID="225">
+            <Title>modern_input_stream_finalize</Title>
             <Text>void
-modern_node_set_utf8
+modern_input_stream_finalize
 (modern_library *library,
- modern *node,
- uint8_t *data);</Text>
+ void *processor_state);</Text>
         </Document>
-        <Document ID="44">
-            <Title>modern_stream_float128</Title>
-            <Text>void
-(*modern_stream_float128)
-(void *processor_state,
- void *stream_state,
- long double value);</Text>
+        <Document ID="81">
+            <Title>sigma_value_modern_node_type</Title>
+            <Text>sigma_value_modern_node_type = 15,</Text>
         </Document>
-        <Document ID="39">
-            <Title>modern_stream_int32</Title>
-            <Text>void
-(*modern_stream_int32)
-(void *processor_state,
- void *stream_state,
- int32_t value);</Text>
+        <Document ID="192">
+            <Title>modern_node_make_universe_type</Title>
+            <Text>modern *
+modern_node_make_universe_type
+(modern_library *library,
+ uint64_t level);</Text>
         </Document>
-        <Document ID="270">
-            <Title>Error handlers</Title>
-            <Text>struct modern_error_handler {
-    …
-};</Text>
-        </Document>
-        <Document ID="145">
-            <Title>Types</Title>
-        </Document>
-        <Document ID="45">
-            <Title>modern_stream_utf8_start</Title>
-            <Text>void
-(*modern_stream_utf8_start)
-(void *processor_state,
- void *stream_state);</Text>
+        <Document ID="82">
+            <Title>named_value_modern_node_type</Title>
+            <Text>named_value_modern_node_type = 16,</Text>
         </Document>
         <Document ID="115">
             <Title>modern_deserialize_file</Title>
@@ -199,66 +156,23 @@ modern_deserialize_file
  modern_context *context,
  FILE *file);</Text>
         </Document>
-        <Document ID="241">
-            <Title>modern_make_file_vfile</Title>
-            <Text>struct modern_vfile *
-modern_make_file_vfile
-(modern_library *library);</Text>
+        <Document ID="337">
+            <Title>nat8_type_modern_node_type</Title>
+            <Text>nat8_type_modern_node_type = 19,</Text>
         </Document>
-        <Document ID="271">
-            <Title>modern_error_handler_memory</Title>
-            <Text>void
-(*modern_error_handler_memory)
-(void *client_state,
- size_t requested_size);</Text>
+        <Document ID="226">
+            <Title>General</Title>
         </Document>
-        <Document ID="211">
-            <Title>modern_node_set_blob</Title>
-            <Text>void
-modern_node_set_blob
-(modern_library *library,
- modern *node,
- uint8_t *data,
- size_t bytes);</Text>
+        <Document ID="83">
+            <Title>int8_type_modern_node_type</Title>
+            <Text>int8_type_modern_node_type = 18,</Text>
         </Document>
-        <Document ID="46">
-            <Title>modern_stream_utf8_data</Title>
-            <Text>void
-(*modern_stream_utf8_data)
-(void *processor_state,
- void *stream_state,
- uint8_t *data,
- size_t length);</Text>
-        </Document>
-        <Document ID="175">
-            <Title>modern_node_get_sigma_field</Title>
-        </Document>
-        <Document ID="176">
-            <Title>modern_node_make_int16_type</Title>
+        <Document ID="193">
+            <Title>modern_node_make_lambda</Title>
             <Text>modern *
-modern_node_make_int16_type
-(modern_library *library);</Text>
-        </Document>
-        <Document ID="146">
-            <Title>modern_node_get_sigma_field_value</Title>
-            <Text>modern *
-modern_node_get_sigma_field_value
+modern_node_make_lambda
 (modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="272">
-            <Title>modern_error_handler_retain_count_overflow</Title>
-            <Text>void
-(*modern_error_handler_retain_count_overflow)
-(void *client_state,
- void *retainable);</Text>
-        </Document>
-        <Document ID="47">
-            <Title>modern_stream_utf8_end</Title>
-            <Text>void
-(*modern_stream_utf8_end)
-(void *processor_state,
- void *stream_state);</Text>
+ modern *content);</Text>
         </Document>
         <Document ID="116">
             <Title>modern_deserialize_fd</Title>
@@ -269,56 +183,28 @@ modern_deserialize_fd
  modern_context *context,
  int fd);</Text>
         </Document>
-        <Document ID="242">
-            <Title>modern_make_fd_vfile</Title>
-            <Text>struct modern_vfile *
-modern_make_fd_vfile
-(modern_library *library);</Text>
+        <Document ID="84">
+            <Title>int16_type_modern_node_type</Title>
+            <Text>int16_type_modern_node_type = 19,</Text>
         </Document>
-        <Document ID="53">
-            <Title>modern_stream_union_field</Title>
-            <Text>void
-(*modern_stream_union_field)
-(void *processor_state,
- void *stream_state,
- struct modern_hash *type,
- struct modern_hash *field);</Text>
+        <Document ID="338">
+            <Title>nat16_type_modern_node_type</Title>
+            <Text>nat16_type_modern_node_type = 20,</Text>
         </Document>
-        <Document ID="212">
-            <Title>modern_node_set_array</Title>
-            <Text>void
-modern_node_set_array
-(modern *node,
- uint64_t n_items,
- modern **values);</Text>
+        <Document ID="227">
+            <Title>Stream-based serialization</Title>
         </Document>
-        <Document ID="48">
-            <Title>modern_stream_blob_start</Title>
-            <Text>void
-(*modern_stream_blob_start)
-(void *processor_state,
- void *stream_state);</Text>
+        <Document ID="85">
+            <Title>int32_type_modern_node_type</Title>
+            <Text>int32_type_modern_node_type = 20,</Text>
         </Document>
-        <Document ID="177">
-            <Title>modern_node_make_int32_type</Title>
+        <Document ID="194">
+            <Title>modern_node_make_apply</Title>
             <Text>modern *
-modern_node_make_int32_type
-(modern_library *library);</Text>
-        </Document>
-        <Document ID="147">
-            <Title>modern_node_get_sigma_successor</Title>
-            <Text>modern *
-modern_node_get_sigma_successor
+modern_node_make_apply
 (modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="54">
-            <Title>modern_stream_structure_start</Title>
-            <Text>void
-(*modern_stream_structure_start)
-(void *processor_state,
- void *stream_state,
- struct modern_hash *type);</Text>
+ modern *left,
+ modern *right);</Text>
         </Document>
         <Document ID="117">
             <Title>modern_deserialize_vfile</Title>
@@ -330,71 +216,33 @@ modern_deserialize_vfile
  struct modern_vfile *vfile,
  void *vfile_state);</Text>
         </Document>
-        <Document ID="49">
-            <Title>modern_stream_blob_data</Title>
-            <Text>void
-(*modern_stream_blob_data)
-(void *processor_state,
- void *stream_state,
- uint8_t *data,
- size_t length);</Text>
+        <Document ID="86">
+            <Title>int64_type_modern_node_type</Title>
+            <Text>int64_type_modern_node_type = 21,</Text>
         </Document>
-        <Document ID="60">
-            <Title>modern_stream_type_index_is_next</Title>
-            <Text>void
-(*modern_stream_type_index_is_next)
-(void *processor_state,
- void *stream_state,
- uint64_t index);</Text>
+        <Document ID="339">
+            <Title>nat32_type_modern_node_type</Title>
+            <Text>nat32_type_modern_node_type = 21,</Text>
         </Document>
-        <Document ID="213">
-            <Title>modern_node_set_union</Title>
-            <Text>void
-modern_node_set_union
-(modern *node,
- modern *type,
- struct modern_hash *field,
- modern *value);</Text>
-        </Document>
-        <Document ID="55">
-            <Title>modern_stream_structure_field</Title>
-            <Text>void
-(*modern_stream_structure_field)
-(void *processor_state,
- void *stream_state,
- struct modern_hash *field);</Text>
-        </Document>
-        <Document ID="243">
-            <Title>Predefined streams</Title>
-        </Document>
-        <Document ID="273">
-            <Title>modern_error_handler_retain_count_underflow</Title>
-            <Text>void
-(*modern_error_handler_retain_count_underflow)
-(void *client_state,
- void *retainable);</Text>
-        </Document>
-        <Document ID="61">
-            <Title>modern_stream_type_family_is_next</Title>
-            <Text>void
-(*modern_stream_type_family_is_next)
-(void *processor_state,
- void *stream_state,
- uint64_t n_items);</Text>
-        </Document>
-        <Document ID="148">
-            <Title>modern_node_get_named_type_name</Title>
-            <Text>struct modern_hash *
-modern_node_get_named_type_name
+        <Document ID="228">
+            <Title>modern_output_stream_memory_buffer</Title>
+            <Text>void *
+modern_output_stream_memory_buffer
 (modern_library *library,
- modern *value);</Text>
+ modern_autorelease_pool *pool,
+ uint8_t *buffer,
+ size_t *length);</Text>
         </Document>
-        <Document ID="56">
-            <Title>modern_stream_structure_end</Title>
-            <Text>void
-(*modern_stream_structure_end)
-(void *processor_state,
- void *stream_state);</Text>
+        <Document ID="87">
+            <Title>nat8_type_modern_node_type</Title>
+            <Text>nat8_type_modern_node_type = 22,</Text>
+        </Document>
+        <Document ID="195">
+            <Title>modern_node_make_type_index</Title>
+            <Text>modern *
+modern_node_make_type_index
+(modern_library *library,
+ uint64_t index);</Text>
         </Document>
         <Document ID="118">
             <Title>moden_deserialize_input_stream</Title>
@@ -406,34 +254,926 @@ modern_deserialize_input_stream
  void *processor_state,
  void *stream_state);</Text>
         </Document>
+        <Document ID="229">
+            <Title>modern_output_stream_memory_allocating</Title>
+            <Text>void *
+modern_output_stream_memory_allocating
+(modern_library *library,
+ modern_autorelease_pool *pool,
+ size_t *length);</Text>
+        </Document>
+        <Document ID="88">
+            <Title>nat16_type_modern_node_type</Title>
+            <Text>nat16_type_modern_node_type = 23,</Text>
+        </Document>
+        <Document ID="89">
+            <Title>nat32_type_modern_node_type</Title>
+            <Text>nat32_type_modern_node_type = 24,</Text>
+        </Document>
+        <Document ID="196">
+            <Title>modern_node_make_type_family</Title>
+            <Text>modern *
+modern_node_make_type_family
+(modern_library *library,
+ uint64_t n_items,
+ modern **types);</Text>
+        </Document>
+        <Document ID="119">
+            <Title>Node-based serialization</Title>
+        </Document>
+        <Document ID="197">
+            <Title>Mutation</Title>
+        </Document>
+        <Document ID="198">
+            <Title>Values</Title>
+        </Document>
+        <Document ID="199">
+            <Title>modern_node_set_int8</Title>
+            <Text>void
+modern_node_set_int8
+(modern_library *library,
+ modern *node,
+ int8_t value);</Text>
+        </Document>
+        <Document ID="340">
+            <Title>nat64_type_modern_node_type</Title>
+            <Text>nat64_type_modern_node_type = 22,</Text>
+        </Document>
+        <Document ID="341">
+            <Title>float32_type_modern_node_type</Title>
+            <Text>float32_type_modern_node_type = 23,</Text>
+        </Document>
+        <Document ID="230">
+            <Title>modern_output_stream_memory_allocating_result</Title>
+            <Text>uint8_t *
+modern_output_stream_memory_allocating_result
+(modern_library *library,
+ void *stream_state,
+ size_t *length)</Text>
+        </Document>
+        <Document ID="30">
+            <Title>modern_stream_type_definition_utf8</Title>
+            <Text>void
+(*modern_stream_type_definition_utf8)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="31">
+            <Title>modern_stream_type_definition_blob</Title>
+            <Text>void
+(*modern_stream_type_definition_blob)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="342">
+            <Title>float64_type_modern_node_type</Title>
+            <Text>float64_type_modern_node_type = 24,</Text>
+        </Document>
+        <Document ID="231">
+            <Title>modern_output_stream_file</Title>
+            <Text>void *
+modern_output_stream_file
+(modern_library *library,
+ modern_autorelease_pool *pool,
+ FILE *file);</Text>
+        </Document>
+        <Document ID="120">
+            <Title>modern_serialize_memory_buffer</Title>
+            <Text>void
+modern_serialize_memory_buffer
+(modern_library *library,
+ modern *value,
+ modern_context *context,
+ uint8_t *buffer,
+ size_t *length);</Text>
+        </Document>
+        <Document ID="32">
+            <Title>modern_stream_type_definition_function_is_next</Title>
+            <Text>void
+(*modern_stream_type_definition_function_is_next)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="33">
+            <Title>modern_stream_type_definition_sigma_is_next</Title>
+            <Text>void
+(*modern_stream_type_definition_sigma_is_next)
+(void *processor_state,
+ void *stream_state
+ struct modern_hash *a,
+ struct modern_hash *b);</Text>
+        </Document>
+        <Document ID="343">
+            <Title>utf8_type_modern_node_type</Title>
+            <Text>utf8_type_modern_node_type = 25,</Text>
+        </Document>
+        <Document ID="232">
+            <Title>modern_output_stream_fd</Title>
+            <Text>void *
+modern_output_stream_fd
+(modern_library *library,
+ modern_autorelease_pool *pool,
+ int fd);</Text>
+        </Document>
+        <Document ID="121">
+            <Title>modern_serialize_memory_allocating</Title>
+            <Text>uint8_t *
+modern_serialize_memory_allocating
+(modern_library *library,
+ modern *value,
+ modern_context *context,
+ size_t *length);</Text>
+        </Document>
+        <Document ID="34">
+            <Title>modern_stream_type_definition_named_is_next</Title>
+            <Text>void
+(*modern_stream_type_definition_named_is_next)
+(void *processor_state,
+ void *stream_state,
+ struct modern_hash *name);</Text>
+        </Document>
+        <Document ID="35">
+            <Title>modern_stream_type_definition_universe</Title>
+            <Text>void
+(*modern_stream_type_definition_universe)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="344">
+            <Title>blob_type_modern_node_type</Title>
+            <Text>blob_type_modern_node_type = 26,</Text>
+        </Document>
+        <Document ID="233">
+            <Title>modern_output_stream_vfile</Title>
+            <Text>void *
+modern_output_stream_vfile
+(modern_library *library,
+ modern_autorelease_pool *pool,
+ struct modern_vfile *vfile,
+ void *vfile_state);</Text>
+        </Document>
+        <Document ID="122">
+            <Title>modern_serialize_file</Title>
+            <Text>void
+modern_serialize_file
+(modern_library *library,
+ modern *value,
+ modern_context *context,
+ FILE *file);</Text>
+        </Document>
+        <Document ID="36">
+            <Title>modern_stream_type</Title>
+            <Text>void
+(*modern_stream_type)
+(void *processor_state,
+ void *stream_state,
+ struct modern_hash *type);</Text>
+        </Document>
+        <Document ID="37">
+            <Title>modern_stream_int8</Title>
+            <Text>void
+(*modern_stream_int8)
+(void *processor_state,
+ void *stream_state,
+ int8_t value);</Text>
+        </Document>
+        <Document ID="345">
+            <Title>function_type_modern_node_type</Title>
+            <Text>blob_type_modern_node_type = 27,</Text>
+        </Document>
+        <Document ID="234">
+            <Title>Hashing</Title>
+        </Document>
+        <Document ID="123">
+            <Title>modern_serialize_fd</Title>
+            <Text>void
+modern_serialize_fd
+(modern_library *library,
+ modern *value,
+ modern_context *context,
+ int fd);</Text>
+        </Document>
+        <Document ID="38">
+            <Title>modern_stream_int16</Title>
+            <Text>void
+(*modern_stream_int16)
+(void *processor_state,
+ void *stream_state,
+ int16_t value);</Text>
+        </Document>
+        <Document ID="346">
+            <Title>sigma_type_modern_node_type</Title>
+            <Text>sigma_type_modern_node_type = 28,</Text>
+        </Document>
+        <Document ID="39">
+            <Title>modern_stream_int32</Title>
+            <Text>void
+(*modern_stream_int32)
+(void *processor_state,
+ void *stream_state,
+ int32_t value);</Text>
+        </Document>
+        <Document ID="235">
+            <Title>modern_compute_hash</Title>
+            <Text>void
+modern_compute_hash
+(uint8_t *data,
+ size_t length,
+ struct modern_hash *out);</Text>
+        </Document>
+        <Document ID="124">
+            <Title>modern_serialize_vfile</Title>
+            <Text>void
+modern_serialize_vfile
+(modern_library *library,
+ modern *value,
+ modern_context *context,
+ struct modern_vfile *vfile,
+ void *vfile_state);</Text>
+        </Document>
+        <Document ID="347">
+            <Title>named_type_modern_node_type</Title>
+            <Text>named_type_modern_node_type = 29,</Text>
+        </Document>
+        <Document ID="236">
+            <Title>modern_compute_child_hash</Title>
+            <Text>void
+modern_compute_child_hash
+(struct modern_hash *parent,
+ uint8_t *data,
+ size_t length,
+ struct modern_hash *out);</Text>
+        </Document>
+        <Document ID="125">
+            <Title>modern_serialize_output_stream</Title>
+            <Text>modern *
+modern_serialize_output_stream
+(modern_library *library,
+ modern *value,
+ modern_context *context,
+ struct modern_stream *stream);</Text>
+        </Document>
+        <Document ID="348">
+            <Title>universe_type_modern_node_type</Title>
+            <Text>universe_type_modern_node_type = 30,</Text>
+        </Document>
+        <Document ID="237">
+            <Title>modern_compute_initial_namespace_hash</Title>
+            <Text>void
+modern_compute_initial_namespace_hash
+(struct modern_hash *out);</Text>
+        </Document>
+        <Document ID="126">
+            <Title>Node-based object model</Title>
+        </Document>
+        <Document ID="349">
+            <Title>lambda_modern_node_type</Title>
+            <Text>lambda_modern_node_type = 31,</Text>
+        </Document>
+        <Document ID="238">
+            <Title>Predefined virtual files</Title>
+        </Document>
+        <Document ID="127">
+            <Title>Reading</Title>
+        </Document>
+        <Document ID="239">
+            <Title>modern_make_memory_buffer_vfile</Title>
+            <Text>struct modern_vfile *
+modern_make_memory_buffer_vfile
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="128">
+            <Title>modern_node_get_node_type</Title>
+            <Text>enum modern_node_type
+modern_node_get_node_type
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="129">
+            <Title>modern_node_get_value_type</Title>
+            <Text>modern *
+modern_node_get_value_type
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="90">
+            <Title>nat64_type_modern_node_type</Title>
+            <Text>nat64_type_modern_node_type = 25,</Text>
+        </Document>
+        <Document ID="91">
+            <Title>float32_type_modern_node_type</Title>
+            <Text>float32_type_modern_node_type = 26,</Text>
+        </Document>
+        <Document ID="92">
+            <Title>float64_type_modern_node_type</Title>
+            <Text>float64_type_modern_node_type = 27,</Text>
+        </Document>
+        <Document ID="93">
+            <Title>float128_type_modern_node_type</Title>
+            <Text>float128_type_modern_node_type = 26,</Text>
+        </Document>
+        <Document ID="94">
+            <Title>utf8_type_modern_node_type</Title>
+            <Text>utf8_type_modern_node_type = 28,</Text>
+        </Document>
+        <Document ID="95">
+            <Title>blob_type_modern_node_type</Title>
+            <Text>blob_type_modern_node_type = 29,</Text>
+        </Document>
+        <Document ID="350">
+            <Title>apply_modern_node_type</Title>
+            <Text>apply_modern_node_type = 32,</Text>
+        </Document>
+        <Document ID="96">
+            <Title>sigma_type_modern_node_type</Title>
+            <Text>sigma_type_modern_node_type = 31,</Text>
+        </Document>
+        <Document ID="97">
+            <Title>named_type_modern_node_type</Title>
+            <Text>named_type_modern_node_type = 32,</Text>
+        </Document>
+        <Document ID="240">
+            <Title>modern_make_memory_allocating_vfile</Title>
+            <Text>struct modern_vfile *
+modern_make_memory_allocating_vfile
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="351">
+            <Title>type_family_modern_node_type</Title>
+            <Text>type_family_modern_node_type = 33,</Text>
+        </Document>
+        <Document ID="98">
+            <Title>universe_type_modern_node_type</Title>
+            <Text>universe_type_modern_node_type = 33,</Text>
+        </Document>
+        <Document ID="99">
+            <Title>lambda_modern_node_type</Title>
+            <Text>lambda_modern_node_type = 34,</Text>
+        </Document>
+        <Document ID="241">
+            <Title>modern_make_file_vfile</Title>
+            <Text>struct modern_vfile *
+modern_make_file_vfile
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="130">
+            <Title>modern_node_get_int8</Title>
+            <Text>int8_t
+modern_node_get_int8
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="352">
+            <Title>let_modern_node_type</Title>
+            <Text>let_modern_node_type = 34,</Text>
+        </Document>
+        <Document ID="242">
+            <Title>modern_make_fd_vfile</Title>
+            <Text>struct modern_vfile *
+modern_make_fd_vfile
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="131">
+            <Title>modern_node_get_int16</Title>
+            <Text>int16_t
+modern_node_get_int16
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="353">
+            <Title>backreference_modern_node_type</Title>
+            <Text>backreference_modern_node_type = 35,</Text>
+        </Document>
+        <Document ID="243">
+            <Title>Predefined streams</Title>
+        </Document>
+        <Document ID="132">
+            <Title>modern_node_get_int32</Title>
+            <Text>int32_t
+modern_node_get_int32
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="354">
+            <Title>builtin_modern_node_type</Title>
+            <Text>builtin_modern_node_type = 36,</Text>
+        </Document>
         <Document ID="244">
             <Title>modern_make_explicatory_stream</Title>
             <Text>struct modern_stream *
 modern_make_explicatory_stream
 (modern_library *library);</Text>
         </Document>
-        <Document ID="62">
-            <Title>modern_stream_end</Title>
+        <Document ID="133">
+            <Title>modern_node_get_int64</Title>
+            <Text>int64_t
+modern_node_get_int64
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="355">
+            <Title>modern_library_get_client_state</Title>
+            <Text>void *
+modern_library_get_client_state
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="245">
+            <Title>modern_make_documentation_stream</Title>
+            <Text>struct modern_stream *
+modern_make_documentation_stream
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="134">
+            <Title>modern_node_get_nat8</Title>
+            <Text>uint8_t
+modern_node_get_nat8
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="356">
+            <Title>modern_node_get_function_type_left</Title>
+            <Text>modern *
+modern_node_get_function_type_left
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="246">
+            <Title>Types</Title>
+        </Document>
+        <Document ID="135">
+            <Title>modern_node_get_nat16</Title>
+            <Text>uint16_t
+modern_node_get_nat16
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="357">
+            <Title>modern_node_get_function_type_right</Title>
+            <Text>modern *
+modern_node_get_function_type_right
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="40">
+            <Title>modern_stream_int64</Title>
             <Text>void
-(*modern_stream_end)
+(*modern_stream_int64)
+(void *processor_state,
+ void *stream_state,
+ int64_t value);</Text>
+        </Document>
+        <Document ID="136">
+            <Title>modern_node_get_nat32</Title>
+            <Text>uint32_t
+modern_node_get_nat32
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="358">
+            <Title>modern_node_get_sigma_type_field_type</Title>
+            <Text>modern *
+modern_node_get_sigma_type_field_type
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="41">
+            <Title>modern_stream_nat8</Title>
+            <Text>void
+(*modern_stream_nat8)
+(void *processor_state,
+ void *stream_state,
+ uint8_t value);</Text>
+        </Document>
+        <Document ID="42">
+            <Title>modern_stream_float32</Title>
+            <Text>void
+(*modern_stream_float32)
+(void *processor_state,
+ void *stream_state,
+ float value);</Text>
+        </Document>
+        <Document ID="248">
+            <Title>modern_allocator_alloc</Title>
+            <Text>void *
+(*modern_allocator_alloc)
+(void *client_state,
+ size_t size);</Text>
+        </Document>
+        <Document ID="137">
+            <Title>modern_node_get_nat64</Title>
+            <Text>uint64_t
+modern_node_get_nat64
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="359">
+            <Title>modern_node_get_sigma_type_successor</Title>
+            <Text>modern *
+modern_node_get_sigma_type_successor
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="43">
+            <Title>modern_stream_float64</Title>
+            <Text>void
+(*modern_stream_float64)
+(void *processor_state,
+ void *stream_state,
+ double value);</Text>
+        </Document>
+        <Document ID="44">
+            <Title>modern_stream_float128</Title>
+            <Text>void
+(*modern_stream_float128)
+(void *processor_state,
+ void *stream_state,
+ long double value);</Text>
+        </Document>
+        <Document ID="249">
+            <Title>modern_allocator_free</Title>
+            <Text>void
+(*modern_allocator_free)
+(void *client_state,
+ void *memory);</Text>
+        </Document>
+        <Document ID="138">
+            <Title>modern_node_get_float32</Title>
+            <Text>float
+modern_node_get_float32
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="45">
+            <Title>modern_stream_utf8_start</Title>
+            <Text>void
+(*modern_stream_utf8_start)
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
-        <Document ID="214">
-            <Title>modern_node_set_structure</Title>
+        <Document ID="46">
+            <Title>modern_stream_utf8_data</Title>
             <Text>void
-modern_node_set_structure
-(modern *node,
- modern *type,
- uint64_t n_items,
- struct modern_hash **fields,
- modern **values);</Text>
+(*modern_stream_utf8_data)
+(void *processor_state,
+ void *stream_state,
+ uint8_t *data,
+ size_t length);</Text>
         </Document>
-        <Document ID="179">
-            <Title>modern_node_make_nat8_type</Title>
+        <Document ID="139">
+            <Title>modern_node_get_float64</Title>
+            <Text>double
+modern_node_get_float64
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="47">
+            <Title>modern_stream_utf8_end</Title>
+            <Text>void
+(*modern_stream_utf8_end)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="48">
+            <Title>modern_stream_blob_start</Title>
+            <Text>void
+(*modern_stream_blob_start)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="49">
+            <Title>modern_stream_blob_data</Title>
+            <Text>void
+(*modern_stream_blob_data)
+(void *processor_state,
+ void *stream_state,
+ uint8_t *data,
+ size_t length);</Text>
+        </Document>
+        <Document ID="360">
+            <Title>Combinators</Title>
+        </Document>
+        <Document ID="361">
+            <Title>modern_node_get_let_count</Title>
+            <Text>uint64_t
+modern_node_get_let_count
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="250">
+            <Title>modern_allocator_realloc</Title>
+            <Text>void *
+(*modern_allocator_realloc)
+(void *client_state,
+ void *memory, size_t size);</Text>
+        </Document>
+        <Document ID="362">
+            <Title>modern_node_get_let_item</Title>
             <Text>modern *
-modern_node_make_nat8_type
-(modern_library *library);</Text>
+modern_node_get_let_item
+(modern_library *library,
+ modern *value,
+ uint64_t index);</Text>
+        </Document>
+        <Document ID="251">
+            <Title>pool</Title>
+            <Text>modern_autorelease_pool *pool;</Text>
+        </Document>
+        <Document ID="140">
+            <Title>modern_node_get_float128</Title>
+            <Text>long double
+modern_node_get_float128
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="363">
+            <Title>modern_node_get_let_content</Title>
+            <Text>modern *
+modern_node_get_let_content
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="252">
+            <Title>modern_processor_abort</Title>
+            <Text>void
+(*modern_processor_abort)
+(void *processor_state);</Text>
+        </Document>
+        <Document ID="141">
+            <Title>modern_node_get_utf8_bytes</Title>
+            <Text>size_t
+modern_node_get_utf8_bytes
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="142">
+            <Title>modern_node_get_utf8_data_piece</Title>
+            <Text>uint8_t *
+modern_node_get_utf8_data_piece
+(modern_library *library,
+ modern *value,
+ size_t offset,
+ size_t bytes);</Text>
+        </Document>
+        <Document ID="364">
+            <Title>modern_node_get_type_family_count</Title>
+            <Text>uint64_t
+modern_node_get_type_family_count
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="253">
+            <Title>modern_processor_flush</Title>
+            <Text>void (*modern_processor_flush)
+  (void *processor_state);</Text>
+        </Document>
+        <Document ID="143">
+            <Title>modern_node_get_blob_bytes</Title>
+            <Text>size_t
+modern_node_get_blob_bytes
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="365">
+            <Title>modern_node_get_type_family_item</Title>
+            <Text>modern *
+modern_node_get_type_family_item
+(modern_library *library,
+ modern *value,
+ uint64_t index);</Text>
+        </Document>
+        <Document ID="254">
+            <Title>Predefined hashes</Title>
+        </Document>
+        <Document ID="144">
+            <Title>modern_node_get_blob_data_piece</Title>
+            <Text>uint8_t *
+modern_node_get_blob_data_piece
+(modern_library *library,
+ modern *value,
+ size_t offset,
+ size_t bytes);</Text>
+        </Document>
+        <Document ID="366">
+            <Title>modern_node_get_builtin_identifier</Title>
+            <Text>uint16_t
+modern_node_get_builtin_identifier
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="255">
+            <Title>Untitled</Title>
+        </Document>
+        <Document ID="145">
+            <Title>Types</Title>
+        </Document>
+        <Document ID="367">
+            <Title>Combinators</Title>
+        </Document>
+        <Document ID="256">
+            <Title>modern_stream_nat16</Title>
+            <Text>void
+(*modern_stream_nat16)
+(void *processor_state,
+ void *stream_state,
+ uint16_t value);</Text>
+        </Document>
+        <Document ID="146">
+            <Title>modern_node_get_sigma_field_value</Title>
+            <Text>modern *
+modern_node_get_sigma_field_value
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="368">
+            <Title>modern_node_make_function_type</Title>
+            <Text>modern *
+modern_node_make_function_type
+(modern_library *library,
+ modern *left,
+ modern *right);</Text>
+        </Document>
+        <Document ID="257">
+            <Title>modern_stream_nat32</Title>
+            <Text>void
+(*modern_stream_nat32)
+(void *processor_state,
+ void *stream_state,
+ uint32_t value);</Text>
+        </Document>
+        <Document ID="147">
+            <Title>modern_node_get_sigma_successor</Title>
+            <Text>modern *
+modern_node_get_sigma_successor
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="369">
+            <Title>modern_node_make_let</Title>
+            <Text>modern *
+modern_node_make_let
+(modern_library *library,
+ uint64_t n_items,
+ modern **types,
+ modern *content);</Text>
+        </Document>
+        <Document ID="258">
+            <Title>modern_stream_nat64</Title>
+            <Text>void
+(*modern_stream_nat64)
+(void *processor_state,
+ void *stream_state,
+ uint64_t value);</Text>
+        </Document>
+        <Document ID="148">
+            <Title>modern_node_get_named_type_name</Title>
+            <Text>struct modern_hash *
+modern_node_get_named_type_name
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="259">
+            <Title>modern_copy_context</Title>
+            <Text>modern_context *
+modern_copy_context
+(modern_library *library,
+ modern_context *context);</Text>
+        </Document>
+        <Document ID="149">
+            <Title>modern_node_get_named_type_content_type</Title>
+            <Text>modern *
+modern_node_get_named_type_content_type
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="401">
+            <Title>modern_stream_type_definition_bool</Title>
+            <Text>void
+(*modern_stream_type_definition_bool)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="402">
+            <Title>modern_stream_false</Title>
+            <Text>void
+(*modern_stream_false)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="50">
+            <Title>modern_stream_blob_end</Title>
+            <Text>void
+(*modern_stream_blob_end)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="403">
+            <Title>modern_stream_true</Title>
+            <Text>void
+(*modern_stream_true)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="51">
+            <Title>modern_stream_array_start</Title>
+            <Text>void
+(*modern_stream_array_start)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="52">
+            <Title>modern_stream_array_end</Title>
+            <Text>void
+(*modern_stream_array_end)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="370">
+            <Title>modern_node_make_backreference</Title>
+            <Text>modern *
+modern_node_make_backreference
+(modern_library *library,
+ uint64_t index);</Text>
+        </Document>
+        <Document ID="404">
+            <Title>bool_value_false_modern_node_type</Title>
+            <Text>bool_value_false_modern_node_type = 1,</Text>
+        </Document>
+        <Document ID="53">
+            <Title>modern_stream_union_field</Title>
+            <Text>void
+(*modern_stream_union_field)
+(void *processor_state,
+ void *stream_state,
+ struct modern_hash *type,
+ struct modern_hash *field);</Text>
+        </Document>
+        <Document ID="54">
+            <Title>modern_stream_structure_start</Title>
+            <Text>void
+(*modern_stream_structure_start)
+(void *processor_state,
+ void *stream_state,
+ struct modern_hash *type);</Text>
+        </Document>
+        <Document ID="371">
+            <Title>modern_node_make_builtin</Title>
+            <Text>modern *
+modern_node_make_builtin
+(modern_library *library,
+ uint16_t identifier);</Text>
+        </Document>
+        <Document ID="260">
+            <Title>Semantics</Title>
+            <Text>In Modern Data, the fundamental in-memory datatype is the “modern node”, which is a representation of, loosely, either a value or a type.  If we wish to specify further, we may occasionally refer to a “modern type” or “modern value”, but these concepts do not map to actual host-language datatypes; only “modern node” does.
+
+The operations on a modern node are serialization and deserialization.  Serialization is performed on a stream of modern nodes in some “modern context”, and produces a stream of bytes.  Deserialization is performed on a stream of bytes in some modern context, and produces a stream of modern nodes.
+
+Although simple applications which merely wish to exchange and act on data need never use anything but the default context, it is nonetheless a concept worth understanding.  The context is internally a hash table of modern types (and occasionally modern values, used as parts of dependent types).  The hash key is determined in a way that captures the notion of type equality, by placing the modern node in a canonical form and computing a hash function of that.  Any modern node which is in the hash table is “in scope” in that context.</Text>
+        </Document>
+        <Document ID="405">
+            <Title>bool_value_true_modern_node_type</Title>
+            <Text>bool_value_true_modern_node_type = 2,</Text>
+        </Document>
+        <Document ID="55">
+            <Title>modern_stream_structure_field</Title>
+            <Text>void
+(*modern_stream_structure_field)
+(void *processor_state,
+ void *stream_state,
+ struct modern_hash *field);</Text>
+        </Document>
+        <Document ID="372">
+            <Title>modern_stream_type_as_value_is_next</Title>
+            <Text>void
+(*modern_stream_type_as_value_is_next)
+(void *processor_state,
+ void *stream_state,
+ struct modern_hash *type);</Text>
+        </Document>
+        <Document ID="56">
+            <Title>modern_stream_structure_end</Title>
+            <Text>void
+(*modern_stream_structure_end)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="261">
+            <Title>modern_node_make_sigma_type</Title>
+            <Text>modern *
+modern_node_make_sigma_type
+(modern_library *library,
+ modern *field_type, modern *successor);</Text>
+        </Document>
+        <Document ID="150">
+            <Title>modern_node_get_lambda_content</Title>
+            <Text>modern *
+modern_node_get_lambda_content
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="406">
+            <Title>bool_type_modern_node_type</Title>
+            <Text>bool_type_modern_node_type = 17,</Text>
         </Document>
         <Document ID="57">
             <Title>modern_stream_named_value_is_next</Title>
@@ -443,22 +1183,21 @@ modern_node_make_nat8_type
  void *stream_state,
  struct modern_hash *name);</Text>
         </Document>
-        <Document ID="310">
-            <Title>modern_stream_let_is_next</Title>
-            <Text>void
-(*modern_stream_type_let_is_next)
-(void *processor_state,
- void *stream_state,
- uint64_t n_items);</Text>
+        <Document ID="262">
+            <Title>modern_node_make_sigma</Title>
+            <Text>modern *
+modern_node_make_sigma
+(modern_library *library,
+ modern *type,
+ modern *field_value,
+ modern *successor_value);</Text>
         </Document>
-        <Document ID="63">
-            <Title>modern_stream_finalize</Title>
-            <Text>void
-(*modern_stream_finalize)
-(void *stream_state);</Text>
-        </Document>
-        <Document ID="119">
-            <Title>Node-based serialization</Title>
+        <Document ID="151">
+            <Title>modern_node_get_apply_left</Title>
+            <Text>modern *
+modern_node_get_apply_left
+(modern_library *library,
+ modern *value);</Text>
         </Document>
         <Document ID="58">
             <Title>modern_stream_lambda_is_next</Title>
@@ -467,28 +1206,11 @@ modern_node_make_nat8_type
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
-        <Document ID="340">
-            <Title>nat64_type_modern_node_type</Title>
-            <Text>nat64_type_modern_node_type = 22,</Text>
-        </Document>
-        <Document ID="215">
-            <Title>modern_node_set_named_value</Title>
-            <Text>void
-modern_node_set_named_value
-(modern_library *library,
- modern *node,
- modern *type,
- modern *value);</Text>
-        </Document>
-        <Document ID="64">
-            <Title>Virtual files</Title>
-            <Text>struct modern_vfile {
-    …
-};</Text>
-        </Document>
-        <Document ID="341">
-            <Title>float32_type_modern_node_type</Title>
-            <Text>float32_type_modern_node_type = 23,</Text>
+        <Document ID="407">
+            <Title>modern_node_make_bool_false</Title>
+            <Text>modern *
+modern_node_make_bool_false
+(modern_library *library);</Text>
         </Document>
         <Document ID="59">
             <Title>modern_stream_apply_is_next</Title>
@@ -497,160 +1219,28 @@ modern_node_set_named_value
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
-        <Document ID="70">
-            <Title>int32_value_modern_node_type</Title>
-            <Text>int32_value_modern_node_type = 3,</Text>
-        </Document>
-        <Document ID="276">
-            <Title>Untitled</Title>
-        </Document>
-        <Document ID="65">
-            <Title>modern_vfile_read</Title>
-            <Text>ssize_t
-(*modern_vfile_read)
-(void *vfile_state,
- uint8_t *buffer,
- size_t length);</Text>
-        </Document>
-        <Document ID="311">
-            <Title>modern_stream_backreference_is_next</Title>
-            <Text>void
-(*modern_stream_backreference_is_next)
-(void *processor_state,
- void *stream_state,
- uint64_t index);</Text>
-        </Document>
-        <Document ID="245">
-            <Title>modern_make_documentation_stream</Title>
-            <Text>struct modern_stream *
-modern_make_documentation_stream
-(modern_library *library);</Text>
-        </Document>
-        <Document ID="71">
-            <Title>int64_value_modern_node_type</Title>
-            <Text>int64_value_modern_node_type = 4,</Text>
-        </Document>
-        <Document ID="216">
-            <Title>Stream-based deserialization </Title>
-        </Document>
-        <Document ID="66">
-            <Title>modern_vfile_write</Title>
-            <Text>ssize_t
-(*modern_vfile_write)
-(void *vfile_state,
- uint8_t *buffer,
- size_t length);</Text>
-        </Document>
-        <Document ID="312">
-            <Title>modern_stream_builtin_is_next</Title>
-            <Text>void
-(*modern_stream_builtin_is_next)
-(void *processor_state,
- void *stream_state,
- uint16_t identifier);</Text>
-        </Document>
-        <Document ID="342">
-            <Title>float64_type_modern_node_type</Title>
-            <Text>float64_type_modern_node_type = 24,</Text>
-        </Document>
-        <Document ID="277">
-            <Title>Untitled</Title>
-        </Document>
-        <Document ID="72">
-            <Title>nat8_value_modern_node_type</Title>
-            <Text>nat8_value_modern_node_type = 5,</Text>
-        </Document>
-        <Document ID="67">
-            <Title>Node Types</Title>
-            <Text>enum modern_node_type {
-    …
-};</Text>
-        </Document>
-        <Document ID="246">
-            <Title>Types</Title>
-        </Document>
-        <Document ID="217">
-            <Title>modern_input_stream_memory</Title>
-            <Text>void *
-modern_input_stream_memory
-(modern_library *library,
- modern_autorelease_pool *pool,
- struct modern_stream *stream,
- uint8_t *data,
- size_t length);</Text>
-        </Document>
-        <Document ID="73">
-            <Title>nat16_value_modern_node_type</Title>
-            <Text>nat16_value_modern_node_type = 6,</Text>
-        </Document>
-        <Document ID="343">
-            <Title>utf8_type_modern_node_type</Title>
-            <Text>utf8_type_modern_node_type = 25,</Text>
-        </Document>
-        <Document ID="68">
-            <Title>int8_value_modern_node_type</Title>
-            <Text>int8_value_modern_node_type = 1,</Text>
-        </Document>
-        <Document ID="313">
-            <Title>function_type_modern_node_type</Title>
-            <Text>blob_type_modern_node_type = 27,</Text>
-        </Document>
-        <Document ID="278">
-            <Title>modern_node_get_named_value</Title>
-            <Text>modern *
-modern_node_get_named_value
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="74">
-            <Title>nat32_value_modern_node_type</Title>
-            <Text>nat32_value_modern_node_type = 7,</Text>
-        </Document>
-        <Document ID="149">
-            <Title>modern_node_get_named_type_content_type</Title>
-            <Text>modern *
-modern_node_get_named_type_content_type
-(modern_library *library,
- modern *value);</Text>
-        </Document>
         <Document ID="374">
             <Title>Combinators</Title>
         </Document>
-        <Document ID="80">
-            <Title>blob_value_modern_node_type</Title>
-            <Text>blob_value_modern_node_type = 12,</Text>
-        </Document>
-        <Document ID="69">
-            <Title>int16_value_modern_node_type</Title>
-            <Text>int16_value_modern_node_type = 2,</Text>
-        </Document>
-        <Document ID="75">
-            <Title>nat64_value_modern_node_type</Title>
-            <Text>nat64_value_modern_node_type = 8,</Text>
-        </Document>
-        <Document ID="314">
-            <Title>type_family_modern_node_type</Title>
-            <Text>type_family_modern_node_type = 33,</Text>
-        </Document>
-        <Document ID="218">
-            <Title>modern_input_stream_file</Title>
-            <Text>void *
-modern_input_stream_file
+        <Document ID="263">
+            <Title>modern_node_get_universe_type_level</Title>
+            <Text>uint64_t
+modern_node_get_universe_type_level
 (modern_library *library,
- modern_autorelease_pool *pool,
- struct modern_stream *stream,
- FILE *file);</Text>
+ modern *value);</Text>
         </Document>
-        <Document ID="81">
-            <Title>sigma_value_modern_node_type</Title>
-            <Text>sigma_value_modern_node_type = 13,</Text>
+        <Document ID="152">
+            <Title>modern_node_get_apply_right</Title>
+            <Text>modern *
+modern_node_get_apply_right
+(modern_library *library,
+ modern *value);</Text>
         </Document>
-        <Document ID="279">
-            <Title>modern_node_get_sigma_su</Title>
-        </Document>
-        <Document ID="76">
-            <Title>float32_value_modern_node_type</Title>
-            <Text>float32_value_modern_node_type = 9,</Text>
+        <Document ID="408">
+            <Title>modern_node_make_bool_true</Title>
+            <Text>modern *
+modern_node_make_bool_true
+(modern_library *library);</Text>
         </Document>
         <Document ID="375">
             <Title>modern_node_set_utf8_data_piece</Title>
@@ -663,45 +1253,17 @@ modern_node_set_utf8_data_piece
  size_t old_bytes,
  size_t new_bytes);</Text>
         </Document>
-        <Document ID="219">
-            <Title>modern_input_stream_fd</Title>
-            <Text>void *
-modern_input_stream_fd
-(modern_library *library,
- modern_autorelease_pool *pool,
- struct modern_stream *stream,
- int fd);</Text>
+        <Document ID="264">
+            <Title>Library instances</Title>
         </Document>
-        <Document ID="82">
-            <Title>named_value_modern_node_type</Title>
-            <Text>named_value_modern_node_type = 14,</Text>
+        <Document ID="153">
+            <Title>Construction</Title>
         </Document>
-        <Document ID="344">
-            <Title>blob_type_modern_node_type</Title>
-            <Text>blob_type_modern_node_type = 26,</Text>
-        </Document>
-        <Document ID="77">
-            <Title>float64_value_modern_node_type</Title>
-            <Text>float64_value_modern_node_type = 10,</Text>
-        </Document>
-        <Document ID="315">
-            <Title>let_modern_node_type</Title>
-            <Text>let_modern_node_type = 34,</Text>
-        </Document>
-        <Document ID="345">
-            <Title>function_type_modern_node_type</Title>
-            <Text>blob_type_modern_node_type = 27,</Text>
-        </Document>
-        <Document ID="83">
-            <Title>int8_type_modern_node_type</Title>
-            <Text>int8_type_modern_node_type = 15,</Text>
-        </Document>
-        <Document ID="370">
-            <Title>modern_node_make_backreference</Title>
+        <Document ID="409">
+            <Title>modern_node_make_bool_type</Title>
             <Text>modern *
-modern_node_make_backreference
-(modern_library *library,
- uint64_t index);</Text>
+modern_node_make_bool_type
+(modern_library *library);</Text>
         </Document>
         <Document ID="376">
             <Title>modern_node_set_blob_data_piece</Title>
@@ -714,40 +1276,21 @@ modern_node_set_blob_data_piece
  size_t old_bytes,
  size_t new_bytes);</Text>
         </Document>
-        <Document ID="78">
-            <Title>float128_value_modern_node_type</Title>
-            <Text>float128_value_modern_node_type = 11,</Text>
+        <Document ID="265">
+            <Title>modern_library_initialize</Title>
+            <Text>modern_library *
+modern_library_initalize
+(struct modern_error_handler *error_handler,
+ struct modern_allocator *allocator,
+ void (*finalizer)(void *client_state),
+ void *client_state);</Text>
         </Document>
-        <Document ID="248">
-            <Title>modern_allocator_alloc</Title>
-            <Text>void *
-(*modern_allocator_alloc)
-(void *client_state,
- size_t size);</Text>
-        </Document>
-        <Document ID="84">
-            <Title>int16_type_modern_node_type</Title>
-            <Text>int16_type_modern_node_type = 16,</Text>
-        </Document>
-        <Document ID="316">
-            <Title>backreference_modern_node_type</Title>
-            <Text>backreference_modern_node_type = 35,</Text>
-        </Document>
-        <Document ID="79">
-            <Title>utf8_value_modern_node_type</Title>
-            <Text>utf8_value_modern_node_type = 11,</Text>
-        </Document>
-        <Document ID="90">
-            <Title>nat64_type_modern_node_type</Title>
-            <Text>nat64_type_modern_node_type = 22,</Text>
-        </Document>
-        <Document ID="346">
-            <Title>sigma_type_modern_node_type</Title>
-            <Text>sigma_type_modern_node_type = 28,</Text>
-        </Document>
-        <Document ID="85">
-            <Title>int32_type_modern_node_type</Title>
-            <Text>int32_type_modern_node_type = 17,</Text>
+        <Document ID="154">
+            <Title>modern_node_make_int8</Title>
+            <Text>modern *
+modern_node_make_int8
+(modern_library *library,
+ int8_t value);</Text>
         </Document>
         <Document ID="377">
             <Title>modern_node_set_sigma_field_value</Title>
@@ -757,53 +1300,18 @@ modern_node_set_sigma_field_value
  modern *value,
  modern *field_value);</Text>
         </Document>
-        <Document ID="371">
-            <Title>modern_node_make_builtin</Title>
+        <Document ID="266">
+            <Title>modern_library_get_error_handler</Title>
+            <Text>struct modern_error_handler *
+modern_library_get_error_handler
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="155">
+            <Title>modern_node_make_int16</Title>
             <Text>modern *
-modern_node_make_builtin
+modern_node_make_int16
 (modern_library *library,
- uint16_t identifier);</Text>
-        </Document>
-        <Document ID="91">
-            <Title>float32_type_modern_node_type</Title>
-            <Text>float32_type_modern_node_type = 23,</Text>
-        </Document>
-        <Document ID="249">
-            <Title>modern_allocator_free</Title>
-            <Text>void
-(*modern_allocator_free)
-(void *client_state,
- void *memory);</Text>
-        </Document>
-        <Document ID="86">
-            <Title>int64_type_modern_node_type</Title>
-            <Text>int64_type_modern_node_type = 18,</Text>
-        </Document>
-        <Document ID="317">
-            <Title>builtin_modern_node_type</Title>
-            <Text>builtin_modern_node_type = 36,</Text>
-        </Document>
-        <Document ID="274">
-            <Title>modern_error_handler_double_autorelease</Title>
-            <Text>void
-(*modern_error_handler_double_autorelease)
-(void *client_state,
- void *retainable);</Text>
-        </Document>
-        <Document ID="92">
-            <Title>float64_type_modern_node_type</Title>
-            <Text>float64_type_modern_node_type = 24,</Text>
-        </Document>
-        <Document ID="50">
-            <Title>modern_stream_blob_end</Title>
-            <Text>void
-(*modern_stream_blob_end)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
-        <Document ID="87">
-            <Title>nat8_type_modern_node_type</Title>
-            <Text>nat8_type_modern_node_type = 19,</Text>
+ int16_t value);</Text>
         </Document>
         <Document ID="378">
             <Title>modern_node_set_sigma_successor</Title>
@@ -813,38 +1321,18 @@ modern_node_set_sigma_successor
  modern *value,
  modern *successor);</Text>
         </Document>
-        <Document ID="348">
-            <Title>universe_type_modern_node_type</Title>
-            <Text>universe_type_modern_node_type = 30,</Text>
+        <Document ID="267">
+            <Title>modern_library_get_allocator</Title>
+            <Text>struct modern_allocator *
+modern_library_get_allocator
+(modern_library *library);</Text>
         </Document>
-        <Document ID="93">
-            <Title>float128_type_modern_node_type</Title>
-            <Text>float128_type_modern_node_type = 26,</Text>
-        </Document>
-        <Document ID="318">
-            <Title>Builtin Identifiers</Title>
-            <Text>enum modern_builtin_identifier {
-    …
-};</Text>
-        </Document>
-        <Document ID="88">
-            <Title>nat16_type_modern_node_type</Title>
-            <Text>nat16_type_modern_node_type = 20,</Text>
-        </Document>
-        <Document ID="51">
-            <Title>modern_stream_array_start</Title>
-            <Text>void
-(*modern_stream_array_start)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
-        <Document ID="347">
-            <Title>named_type_modern_node_type</Title>
-            <Text>named_type_modern_node_type = 29,</Text>
-        </Document>
-        <Document ID="94">
-            <Title>utf8_type_modern_node_type</Title>
-            <Text>utf8_type_modern_node_type = 25,</Text>
+        <Document ID="156">
+            <Title>modern_node_make_int32</Title>
+            <Text>modern *
+modern_node_make_int32
+(modern_library *library,
+ int32_t value);</Text>
         </Document>
         <Document ID="379">
             <Title>modern_node_set_function_type_left</Title>
@@ -854,500 +1342,39 @@ modern_node_set_function_type_left
  modern *value,
  modern *left);</Text>
         </Document>
-        <Document ID="89">
-            <Title>nat32_type_modern_node_type</Title>
-            <Text>nat32_type_modern_node_type = 21,</Text>
+        <Document ID="268">
+            <Title>Untitled</Title>
         </Document>
-        <Document ID="349">
-            <Title>lambda_modern_node_type</Title>
-            <Text>lambda_modern_node_type = 31,</Text>
-        </Document>
-        <Document ID="372">
-            <Title>modern_stream_type_as_value_is_next</Title>
-            <Text>void
-(*modern_stream_type_as_value_is_next)
-(void *processor_state,
- void *stream_state,
- struct modern_hash *type);</Text>
-        </Document>
-        <Document ID="95">
-            <Title>blob_type_modern_node_type</Title>
-            <Text>blob_type_modern_node_type = 26,</Text>
-        </Document>
-        <Document ID="319">
-            <Title>int8_value_modern_node_type</Title>
-            <Text>plus_int8_modern_builtin_identifier = 1,</Text>
-        </Document>
-        <Document ID="275">
-            <Title>modern_error_handler_type_mismatch</Title>
-            <Text>void
-(*modern_error_handler_type_mismatch)
-(void *client_state,
- modern *expected,
- modern *actual);</Text>
-        </Document>
-        <Document ID="52">
-            <Title>modern_stream_array_end</Title>
-            <Text>void
-(*modern_stream_array_end)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
-        <Document ID="178">
-            <Title>modern_node_make_int64_type</Title>
+        <Document ID="157">
+            <Title>modern_node_make_int64</Title>
             <Text>modern *
-modern_node_make_int64_type
-(modern_library *library);</Text>
-        </Document>
-        <Document ID="96">
-            <Title>sigma_type_modern_node_type</Title>
-            <Text>sigma_type_modern_node_type = 28,</Text>
-        </Document>
-        <Document ID="97">
-            <Title>named_type_modern_node_type</Title>
-            <Text>named_type_modern_node_type = 29,</Text>
-        </Document>
-        <Document ID="98">
-            <Title>universe_type_modern_node_type</Title>
-            <Text>universe_type_modern_node_type = 30,</Text>
-        </Document>
-        <Document ID="99">
-            <Title>lambda_modern_node_type</Title>
-            <Text>lambda_modern_node_type = 31,</Text>
-        </Document>
-        <Document ID="190">
-            <Title>modern_node_make_structure_type</Title>
-            <Text>modern *
-modern_node_make_structure_type
-(uint64_t n_items,
- struct modern_hash **fields,
- modern **types);</Text>
-        </Document>
-        <Document ID="160">
-            <Title>modern_node_make_nat32</Title>
-            <Text>modern *
-modern_node_make_nat32
+modern_node_make_int64
 (modern_library *library,
- uint32_t value);</Text>
-        </Document>
-        <Document ID="130">
-            <Title>modern_node_get_int8</Title>
-            <Text>int8_t
-modern_node_get_int8
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="100">
-            <Title>apply_modern_node_type</Title>
-            <Text>apply_modern_node_type = 32,</Text>
-        </Document>
-        <Document ID="191">
-            <Title>modern_node_make_named_type</Title>
-            <Text>modern *
-modern_node_make_named_type
-(modern_library *library,
- struct modern_hash *name,
- modern *content_type);</Text>
-        </Document>
-        <Document ID="161">
-            <Title>modern_node_make_nat64</Title>
-            <Text>modern *
-modern_node_make_nat64
-(modern_library *library,
- uint64_t value);</Text>
-        </Document>
-        <Document ID="131">
-            <Title>modern_node_get_int16</Title>
-            <Text>int16_t
-modern_node_get_int16
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="101">
-            <Title>Memory management</Title>
-        </Document>
-        <Document ID="192">
-            <Title>modern_node_make_universe_type</Title>
-            <Text>modern *
-modern_node_make_universe_type
-(modern_library *library,
- uint64_t level);</Text>
-        </Document>
-        <Document ID="162">
-            <Title>modern_node_make_float32</Title>
-            <Text>modern *
-modern_node_make_float32
-(modern_library *library,
- float value);</Text>
-        </Document>
-        <Document ID="132">
-            <Title>modern_node_get_int32</Title>
-            <Text>int32_t
-modern_node_get_int32
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="102">
-            <Title>modern_make_autorelease_pool</Title>
-            <Text>modern_autorelease_pool *
-modern_make_autorelease_pool
-(modern_library *library);</Text>
-        </Document>
-        <Document ID="193">
-            <Title>modern_node_make_lambda</Title>
-            <Text>modern *
-modern_node_make_lambda
-(modern_library *library,
- modern *content);</Text>
-        </Document>
-        <Document ID="163">
-            <Title>modern_node_make_float64</Title>
-            <Text>modern *
-modern_node_make_float64
-(modern_library *library,
- double value);</Text>
-        </Document>
-        <Document ID="133">
-            <Title>modern_node_get_int64</Title>
-            <Text>int64_t
-modern_node_get_int64
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="103">
-            <Title>modern_autorelease_pool_release</Title>
-            <Text>void
-modern_autorelease_pool_release
-(modern_library *library,
- modern_autorelease_pool *pool);</Text>
-        </Document>
-        <Document ID="194">
-            <Title>modern_node_make_apply</Title>
-            <Text>modern *
-modern_node_make_apply
-(modern_library *library,
- modern *left,
- modern *right);</Text>
-        </Document>
-        <Document ID="164">
-            <Title>modern_node_make_float128</Title>
-            <Text>modern *
-modern_node_make_float128
-(modern_library *library,
- long double value);</Text>
-        </Document>
-        <Document ID="290">
-            <Title>Floating-point numbers</Title>
-            <Text>The floating-point datatypes used by Modern Data are a subset of the “interchange formats” defined by IEEE 754-2008.</Text>
-        </Document>
-        <Document ID="134">
-            <Title>modern_node_get_nat8</Title>
-            <Text>uint8_t
-modern_node_get_nat8
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="260">
-            <Title>Semantics</Title>
-            <Text>In Modern Data, the fundamental in-memory datatype is the “modern node”, which is a representation of, loosely, either a value or a type.  If we wish to specify further, we may occasionally refer to a “modern type” or “modern value”, but these concepts do not map to actual host-language datatypes; only “modern node” does.
-
-The operations on a modern node are serialization and deserialization.  Serialization is performed on a stream of modern nodes in some “modern context”, and produces a stream of bytes.  Deserialization is performed on a stream of bytes in some modern context, and produces a stream of modern nodes.
-
-Although simple applications which merely wish to exchange and act on data need never use anything but the default context, it is nonetheless a concept worth understanding.  The context is internally a hash table of modern types (and occasionally modern values, used as parts of dependent types).  The hash key is determined in a way that captures the notion of type equality, by placing the modern node in a canonical form and computing a hash function of that.  Any modern node which is in the hash table is “in scope” in that context.</Text>
-        </Document>
-        <Document ID="104">
-            <Title>modern_autorelease_pool_get_allocator</Title>
-            <Text>struct modern_allocator *
-modern_autorelease_pool_get_allocator
-(modern_library *library,
- modern_autorelease_pool *pool);</Text>
-        </Document>
-        <Document ID="230">
-            <Title>modern_output_stream_memory_allocating_result</Title>
-            <Text>uint8_t *
-modern_output_stream_memory_allocating_result
-(modern_library *library,
- void *stream_state,
- size_t *length)</Text>
-        </Document>
-        <Document ID="195">
-            <Title>modern_node_make_type_index</Title>
-            <Text>modern *
-modern_node_make_type_index
-(modern_library *library,
- uint64_t index);</Text>
-        </Document>
-        <Document ID="200">
-            <Title>modern_node_set_int16</Title>
-            <Text>void
-modern_node_set_int16
-(modern_library *library,
- modern *node,
- int16_t value);</Text>
-        </Document>
-        <Document ID="165">
-            <Title>modern_node_make_utf8</Title>
-            <Text>modern *
-modern_node_make_utf8
-(modern_library *library,
- uint8_t *data);</Text>
-        </Document>
-        <Document ID="291">
-            <Title>Integers</Title>
-        </Document>
-        <Document ID="135">
-            <Title>modern_node_get_nat16</Title>
-            <Text>uint16_t
-modern_node_get_nat16
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="261">
-            <Title>modern_node_make_sigma_type</Title>
-            <Text>modern *
-modern_node_make_sigma_type
-(modern_library *library,
- modern *field_type, modern *successor);</Text>
-        </Document>
-        <Document ID="105">
-            <Title>modern_retain</Title>
-            <Text>void
-modern_retain
-(modern_library *library,
- void *retainable);</Text>
-        </Document>
-        <Document ID="231">
-            <Title>modern_output_stream_file</Title>
-            <Text>void *
-modern_output_stream_file
-(modern_library *library,
- modern_autorelease_pool *pool,
- FILE *file);</Text>
-        </Document>
-        <Document ID="196">
-            <Title>modern_node_make_type_family</Title>
-            <Text>modern *
-modern_node_make_type_family
-(modern_library *library,
- uint64_t n_items,
- modern **types);</Text>
-        </Document>
-        <Document ID="201">
-            <Title>modern_node_set_int32</Title>
-            <Text>void
-modern_node_set_int32
-(modern_library *library,
- modern *node,
- int32_t value);</Text>
-        </Document>
-        <Document ID="166">
-            <Title>modern_node_make_blob</Title>
-            <Text>modern *
-modern_node_make_blob
-(modern_library *library,
- uint8_t *data,
- size_t bytes);</Text>
-        </Document>
-        <Document ID="292">
-            <Title>Natural numbers</Title>
-        </Document>
-        <Document ID="136">
-            <Title>modern_node_get_nat32</Title>
-            <Text>uint32_t
-modern_node_get_nat32
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="262">
-            <Title>modern_node_make_sigma</Title>
-            <Text>modern *
-modern_node_make_sigma
-(modern_library *library,
- modern *type,
- modern *field_value,
- modern *successor_value);</Text>
-        </Document>
-        <Document ID="106">
-            <Title>modern_release</Title>
-            <Text>void
-modern_release
-(modern_library *library,
- void *retainable);</Text>
-        </Document>
-        <Document ID="232">
-            <Title>modern_output_stream_fd</Title>
-            <Text>void *
-modern_output_stream_fd
-(modern_library *library,
- modern_autorelease_pool *pool,
- int fd);</Text>
-        </Document>
-        <Document ID="197">
-            <Title>Mutation</Title>
-        </Document>
-        <Document ID="202">
-            <Title>modern_node_set_int64</Title>
-            <Text>void
-modern_node_set_int64
-(modern_library *library,
- modern *node,
  int64_t value);</Text>
         </Document>
-        <Document ID="167">
-            <Title>modern_node_make_array</Title>
+        <Document ID="269">
+            <Title>modern_library_finalize</Title>
+            <Text>void
+modern_library_finalize
+(modern_library *library);
+</Text>
+        </Document>
+        <Document ID="158">
+            <Title>modern_node_make_nat8</Title>
             <Text>modern *
-modern_node_make_array
-(uint64_t n_items,
- modern **values);</Text>
-        </Document>
-        <Document ID="137">
-            <Title>modern_node_get_nat64</Title>
-            <Text>uint64_t
-modern_node_get_nat64
+modern_node_make_nat8
 (modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="263">
-            <Title>modern_node_get_universe_type_level</Title>
-            <Text>uint64_t
-modern_node_get_universe_type_level
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="107">
-            <Title>modern_autorelease</Title>
-            <Text>void
-modern_autorelease
-(modern_library *library,
- modern_autorelease_pool *pool,
- void *retainable);</Text>
-        </Document>
-        <Document ID="233">
-            <Title>modern_output_stream_vfile</Title>
-            <Text>void *
-modern_output_stream_vfile
-(modern_library *library,
- modern_autorelease_pool *pool,
- struct modern_vfile *vfile,
- void *vfile_state);</Text>
-        </Document>
-        <Document ID="198">
-            <Title>Values</Title>
-        </Document>
-        <Document ID="203">
-            <Title>modern_node_set_nat8</Title>
-            <Text>void
-modern_node_set_nat8
-(modern_library *library,
- modern *node,
  uint8_t value);</Text>
         </Document>
-        <Document ID="168">
-            <Title>modern_node_make_union</Title>
+        <Document ID="159">
+            <Title>modern_node_make_nat16</Title>
             <Text>modern *
-modern_node_make_union
-(modern *type,
- struct modern_hash *field,
- modern *value);</Text>
-        </Document>
-        <Document ID="294">
-            <Title>Text</Title>
-        </Document>
-        <Document ID="138">
-            <Title>modern_node_get_float32</Title>
-            <Text>float
-modern_node_get_float32
+modern_node_make_nat16
 (modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="264">
-            <Title>Library instances</Title>
-        </Document>
-        <Document ID="390">
-            <Title>modern_node_set_type_family_add_item</Title>
-            <Text>void
-modern_node_set_type_family_add_item
-(modern_library *library,
- modern *value,
- modern *item,
- uint64_t index);</Text>
-        </Document>
-        <Document ID="108">
-            <Title>Contexts</Title>
-        </Document>
-        <Document ID="360">
-            <Title>Combinators</Title>
-        </Document>
-        <Document ID="199">
-            <Title>modern_node_set_int8</Title>
-            <Text>void
-modern_node_set_int8
-(modern_library *library,
- modern *node,
- int8_t value);</Text>
-        </Document>
-        <Document ID="204">
-            <Title>modern_node_set_nat16</Title>
-            <Text>void
-modern_node_set_nat16
-(modern_library *library,
- modern *node,
  uint16_t value);</Text>
-        </Document>
-        <Document ID="169">
-            <Title>modern_node_make_structure</Title>
-            <Text>modern *
-modern_node_make_structure
-(modern *type,
- uint64_t n_items,
- struct modern_hash **fields,
- modern **values);</Text>
-        </Document>
-        <Document ID="295">
-            <Title>Binary large objects</Title>
-        </Document>
-        <Document ID="139">
-            <Title>modern_node_get_float64</Title>
-            <Text>double
-modern_node_get_float64
-(modern_library *library,
- modern *value);</Text>
         </Document>
         <Document ID="300">
             <Title>Flattening</Title>
-        </Document>
-        <Document ID="234">
-            <Title>Hashing</Title>
-        </Document>
-        <Document ID="235">
-            <Title>modern_compute_hash</Title>
-            <Text>void
-modern_compute_hash
-(uint8_t *data,
- size_t length,
- struct modern_hash *out);</Text>
-        </Document>
-        <Document ID="330">
-            <Title>blob_value_modern_node_type</Title>
-            <Text>blob_value_modern_node_type = 12,</Text>
-        </Document>
-        <Document ID="205">
-            <Title>modern_node_set_nat32</Title>
-            <Text>void
-modern_node_set_nat32
-(modern_library *library,
- modern *node,
- uint32_t value);</Text>
-        </Document>
-        <Document ID="331">
-            <Title>sigma_value_modern_node_type</Title>
-            <Text>sigma_value_modern_node_type = 13,</Text>
-        </Document>
-        <Document ID="109">
-            <Title>modern_make_initial_context</Title>
-            <Text>modern_context *
-modern_make_initial_context
-(modern_library *library);</Text>
         </Document>
         <Document ID="301">
             <Title>Caveats</Title>
@@ -1369,41 +1396,514 @@ Although many functional languages are additionally "purely functional", meaning
 
 Of course, it is expected that sets of types for some particular purpose will be constructed in most situations not through imperative code but through the use of an interactive editor having Modern Data as its native format.  The ease with which what would be called a schema in other systems can be serialized and deserialized obviates the need to construct one by hand, most of the time.  As such, the details discussed above should seldom be an issue.</Text>
         </Document>
-        <Document ID="296">
-            <Title>128-bit values</Title>
-            <Text>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libraries simply use the platform’s largest available floating-point type, which is usually 80 bits, for all function parameters and return values, while converting these to and from 128-bit representations for interchange.
-
-Should 128-bit floats become practical on the key platforms where Modern Data is supported, it is expected that the API will be changed to use these types, breaking linking compatibility but retaining source and over-the-wire compatibility.  Hence, code linked against present versions of the library will interoperate with future systems which use 128-bit floats natively, but will never be able to directly use more precision than the system has available.</Text>
+        <Document ID="302">
+            <Title>Evaluation</Title>
         </Document>
-        <Document ID="266">
-            <Title>modern_library_get_error_handler</Title>
-            <Text>struct modern_error_handler *
-modern_library_get_error_handler
-(modern_library *library);</Text>
+        <Document ID="380">
+            <Title>modern_node_set_function_type_right</Title>
+            <Text>void
+modern_node_set_function_type_right
+(modern_library *library,
+ modern *value,
+ modern *right);</Text>
         </Document>
-        <Document ID="361">
-            <Title>modern_node_get_let_count</Title>
-            <Text>uint64_t
-modern_node_get_let_count
+        <Document ID="303">
+            <Title>modern_evaluate</Title>
+            <Text>modern *
+modern_evaluate
+(modern_library *library,
+ modern *node);</Text>
+        </Document>
+        <Document ID="270">
+            <Title>Error handlers</Title>
+            <Text>struct modern_error_handler {
+    …
+};</Text>
+        </Document>
+        <Document ID="381">
+            <Title>modern_node_set_sigma_type_field_type</Title>
+            <Text>void
+modern_node_set_sigma_type_field_type
+(modern_library *library,
+ modern *value,
+ modern *field_type);</Text>
+        </Document>
+        <Document ID="304">
+            <Title>Types</Title>
+        </Document>
+        <Document ID="271">
+            <Title>modern_error_handler_memory</Title>
+            <Text>void
+(*modern_error_handler_memory)
+(void *client_state,
+ size_t requested_size);</Text>
+        </Document>
+        <Document ID="160">
+            <Title>modern_node_make_nat32</Title>
+            <Text>modern *
+modern_node_make_nat32
+(modern_library *library,
+ uint32_t value);</Text>
+        </Document>
+        <Document ID="305">
+            <Title>modern_error_handler_universe_level_overflow</Title>
+            <Text>void
+(*modern_error_handler_universe_level_overflow)
+(void *client_state);</Text>
+        </Document>
+        <Document ID="382">
+            <Title>modern_node_set_sigma_type_successor</Title>
+            <Text>void
+modern_node_set_sigma_type_successor
+(modern_library *library,
+ modern *value,
+ modern *successor);</Text>
+        </Document>
+        <Document ID="272">
+            <Title>modern_error_handler_retain_count_overflow</Title>
+            <Text>void
+(*modern_error_handler_retain_count_overflow)
+(void *client_state,
+ void *retainable);</Text>
+        </Document>
+        <Document ID="161">
+            <Title>modern_node_make_nat64</Title>
+            <Text>modern *
+modern_node_make_nat64
+(modern_library *library,
+ uint64_t value);</Text>
+        </Document>
+        <Document ID="306">
+            <Title>modern_error_handler_buffer_index</Title>
+            <Text>void
+(*modern_error_handler_buffer_index)
+(void *client_state);</Text>
+        </Document>
+        <Document ID="383">
+            <Title>modern_node_set_named_type_name</Title>
+            <Text>void
+modern_node_set_named_type_name
+(modern_library *library,
+ modern *value,
+ struct modern_hash *name);</Text>
+        </Document>
+        <Document ID="273">
+            <Title>modern_error_handler_retain_count_underflow</Title>
+            <Text>void
+(*modern_error_handler_retain_count_underflow)
+(void *client_state,
+ void *retainable);</Text>
+        </Document>
+        <Document ID="162">
+            <Title>modern_node_make_float32</Title>
+            <Text>modern *
+modern_node_make_float32
+(modern_library *library,
+ float value);</Text>
+        </Document>
+        <Document ID="307">
+            <Title>modern_error_handler_not_applicable</Title>
+            <Text>void
+(*modern_error_handler_not_applicable)
+(void *client_state);</Text>
+        </Document>
+        <Document ID="384">
+            <Title>modern_node_set_named_type_content_type</Title>
+            <Text>void
+modern_node_set_named_type_content_type
+(modern_library *library,
+ modern *value,
+ modern *content_type);</Text>
+        </Document>
+        <Document ID="274">
+            <Title>modern_error_handler_double_autorelease</Title>
+            <Text>void
+(*modern_error_handler_double_autorelease)
+(void *client_state,
+ void *retainable);</Text>
+        </Document>
+        <Document ID="163">
+            <Title>modern_node_make_float64</Title>
+            <Text>modern *
+modern_node_make_float64
+(modern_library *library,
+ double value);</Text>
+        </Document>
+        <Document ID="308">
+            <Title>modern_error_handler_non_numeric_float</Title>
+            <Text>void
+(*modern_error_handler_non_numeric_float)
+(void *client_state);</Text>
+        </Document>
+        <Document ID="60">
+            <Title>modern_stream_type_index_is_next</Title>
+            <Text>void
+(*modern_stream_type_index_is_next)
+(void *processor_state,
+ void *stream_state,
+ uint64_t index);</Text>
+        </Document>
+        <Document ID="385">
+            <Title>modern_node_set_universe_type_level</Title>
+            <Text>void
+modern_node_set_universe_type_level
+(modern_library *library,
+ modern *value,
+ uint64_t level);</Text>
+        </Document>
+        <Document ID="61">
+            <Title>modern_stream_type_family_is_next</Title>
+            <Text>void
+(*modern_stream_type_family_is_next)
+(void *processor_state,
+ void *stream_state,
+ uint64_t n_items);</Text>
+        </Document>
+        <Document ID="275">
+            <Title>modern_error_handler_type_mismatch</Title>
+            <Text>void
+(*modern_error_handler_type_mismatch)
+(void *client_state,
+ modern *expected,
+ modern *actual);</Text>
+        </Document>
+        <Document ID="164">
+            <Title>modern_node_make_float128</Title>
+            <Text>modern *
+modern_node_make_float128
+(modern_library *library,
+ long double value);</Text>
+        </Document>
+        <Document ID="386">
+            <Title>modern_node_set_lambda_content</Title>
+            <Text>void
+modern_node_set_lambda_content
+(modern_library *library,
+ modern *value,
+ modern *content);</Text>
+        </Document>
+        <Document ID="62">
+            <Title>modern_stream_end</Title>
+            <Text>void
+(*modern_stream_end)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="63">
+            <Title>modern_stream_finalize</Title>
+            <Text>void
+(*modern_stream_finalize)
+(void *stream_state);</Text>
+        </Document>
+        <Document ID="276">
+            <Title>Untitled</Title>
+        </Document>
+        <Document ID="165">
+            <Title>modern_node_make_utf8</Title>
+            <Text>modern *
+modern_node_make_utf8
+(modern_library *library,
+ uint8_t *data);</Text>
+        </Document>
+        <Document ID="387">
+            <Title>modern_node_set_apply_left</Title>
+            <Text>void
+modern_node_set_apply_left
+(modern_library *library,
+ modern *value,
+ modern *left);</Text>
+        </Document>
+        <Document ID="64">
+            <Title>Virtual files</Title>
+            <Text>struct modern_vfile {
+    …
+};</Text>
+        </Document>
+        <Document ID="277">
+            <Title>Untitled</Title>
+        </Document>
+        <Document ID="65">
+            <Title>modern_vfile_read</Title>
+            <Text>ssize_t
+(*modern_vfile_read)
+(void *vfile_state,
+ uint8_t *buffer,
+ size_t length);</Text>
+        </Document>
+        <Document ID="166">
+            <Title>modern_node_make_blob</Title>
+            <Text>modern *
+modern_node_make_blob
+(modern_library *library,
+ uint8_t *data,
+ size_t bytes);</Text>
+        </Document>
+        <Document ID="388">
+            <Title>modern_node_set_apply_right</Title>
+            <Text>void
+modern_node_set_apply_right
+(modern_library *library,
+ modern *value,
+ modern *right);</Text>
+        </Document>
+        <Document ID="66">
+            <Title>modern_vfile_write</Title>
+            <Text>ssize_t
+(*modern_vfile_write)
+(void *vfile_state,
+ uint8_t *buffer,
+ size_t length);</Text>
+        </Document>
+        <Document ID="278">
+            <Title>modern_node_get_named_value</Title>
+            <Text>modern *
+modern_node_get_named_value
 (modern_library *library,
  modern *value);</Text>
         </Document>
-        <Document ID="236">
-            <Title>modern_compute_child_hash</Title>
-            <Text>void
-modern_compute_child_hash
-(struct modern_hash *parent,
- uint8_t *data,
- size_t length,
- struct modern_hash *out);</Text>
-        </Document>
-        <Document ID="362">
-            <Title>modern_node_get_let_item</Title>
+        <Document ID="167">
+            <Title>modern_node_make_array</Title>
             <Text>modern *
-modern_node_get_let_item
+modern_node_make_array
+(uint64_t n_items,
+ modern **values);</Text>
+        </Document>
+        <Document ID="67">
+            <Title>Node Types</Title>
+            <Text>enum modern_node_type {
+    …
+};</Text>
+        </Document>
+        <Document ID="389">
+            <Title>modern_node_set_type_family_remove_item</Title>
+            <Text>void
+modern_node_set_type_family_remove_item
 (modern_library *library,
  modern *value,
  uint64_t index);</Text>
+        </Document>
+        <Document ID="68">
+            <Title>int8_value_modern_node_type</Title>
+            <Text>int8_value_modern_node_type = 3,</Text>
+        </Document>
+        <Document ID="279">
+            <Title>modern_node_get_sigma_su</Title>
+        </Document>
+        <Document ID="168">
+            <Title>modern_node_make_union</Title>
+            <Text>modern *
+modern_node_make_union
+(modern *type,
+ struct modern_hash *field,
+ modern *value);</Text>
+        </Document>
+        <Document ID="69">
+            <Title>int16_value_modern_node_type</Title>
+            <Text>int16_value_modern_node_type = 4,</Text>
+        </Document>
+        <Document ID="169">
+            <Title>modern_node_make_structure</Title>
+            <Text>modern *
+modern_node_make_structure
+(modern *type,
+ uint64_t n_items,
+ struct modern_hash **fields,
+ modern **values);</Text>
+        </Document>
+        <Document ID="310">
+            <Title>modern_stream_let_is_next</Title>
+            <Text>void
+(*modern_stream_type_let_is_next)
+(void *processor_state,
+ void *stream_state,
+ uint64_t n_items);</Text>
+        </Document>
+        <Document ID="311">
+            <Title>modern_stream_backreference_is_next</Title>
+            <Text>void
+(*modern_stream_backreference_is_next)
+(void *processor_state,
+ void *stream_state,
+ uint64_t index);</Text>
+        </Document>
+        <Document ID="200">
+            <Title>modern_node_set_int16</Title>
+            <Text>void
+modern_node_set_int16
+(modern_library *library,
+ modern *node,
+ int16_t value);</Text>
+        </Document>
+        <Document ID="312">
+            <Title>modern_stream_builtin_is_next</Title>
+            <Text>void
+(*modern_stream_builtin_is_next)
+(void *processor_state,
+ void *stream_state,
+ uint16_t identifier);</Text>
+        </Document>
+        <Document ID="201">
+            <Title>modern_node_set_int32</Title>
+            <Text>void
+modern_node_set_int32
+(modern_library *library,
+ modern *node,
+ int32_t value);</Text>
+        </Document>
+        <Document ID="390">
+            <Title>modern_node_set_type_family_add_item</Title>
+            <Text>void
+modern_node_set_type_family_add_item
+(modern_library *library,
+ modern *value,
+ modern *item,
+ uint64_t index);</Text>
+        </Document>
+        <Document ID="313">
+            <Title>function_type_modern_node_type</Title>
+            <Text>blob_type_modern_node_type = 30,</Text>
+        </Document>
+        <Document ID="202">
+            <Title>modern_node_set_int64</Title>
+            <Text>void
+modern_node_set_int64
+(modern_library *library,
+ modern *node,
+ int64_t value);</Text>
+        </Document>
+        <Document ID="10">
+            <Title>Hashes</Title>
+            <Text>struct modern_hash {
+    uint64_t a;
+    uint64_t b;
+};</Text>
+        </Document>
+        <Document ID="391">
+            <Title>modern_node_set_let_remove_item</Title>
+            <Text>void
+modern_node_set_let_remove_item
+(modern_library *library,
+ modern *value,
+ uint64_t index);</Text>
+        </Document>
+        <Document ID="280">
+            <Title>modern_node_get_sigma_type_</Title>
+        </Document>
+        <Document ID="314">
+            <Title>type_family_modern_node_type</Title>
+            <Text>type_family_modern_node_type = 36,</Text>
+        </Document>
+        <Document ID="203">
+            <Title>modern_node_set_nat8</Title>
+            <Text>void
+modern_node_set_nat8
+(modern_library *library,
+ modern *node,
+ uint8_t value);</Text>
+        </Document>
+        <Document ID="11">
+            <Title>Allocators</Title>
+            <Text>struct modern_allocator {
+    …
+};</Text>
+        </Document>
+        <Document ID="12">
+            <Title>Processors</Title>
+            <Text>struct modern_processor {
+    …
+};</Text>
+        </Document>
+        <Document ID="392">
+            <Title>modern_node_set_let_add_item</Title>
+            <Text>void
+modern_node_set_let_add_item
+(modern_library *library,
+ modern *value,
+ modern *item,
+ uint64_t index);</Text>
+        </Document>
+        <Document ID="170">
+            <Title>modern_node_make_named_value</Title>
+            <Text>modern *
+modern_node_make_named_value
+(modern_library *library,
+ modern *type,
+ modern *value);</Text>
+        </Document>
+        <Document ID="315">
+            <Title>let_modern_node_type</Title>
+            <Text>let_modern_node_type = 37,</Text>
+        </Document>
+        <Document ID="204">
+            <Title>modern_node_set_nat16</Title>
+            <Text>void
+modern_node_set_nat16
+(modern_library *library,
+ modern *node,
+ uint16_t value);</Text>
+        </Document>
+        <Document ID="13">
+            <Title>Streams</Title>
+            <Text>struct modern_stream {
+    …
+};</Text>
+        </Document>
+        <Document ID="14">
+            <Title>modern_stream_initialize</Title>
+            <Text>void *
+(*modern_stream_initialize)
+();</Text>
+        </Document>
+        <Document ID="393">
+            <Title>modern_node_set_let_content</Title>
+            <Text>void
+modern_node_set_let_content
+(modern_library *library,
+ modern *value,
+ modern *content);</Text>
+        </Document>
+        <Document ID="282">
+            <Title>modern_node_get_sigma_</Title>
+        </Document>
+        <Document ID="316">
+            <Title>backreference_modern_node_type</Title>
+            <Text>backreference_modern_node_type = 38,</Text>
+        </Document>
+        <Document ID="205">
+            <Title>modern_node_set_nat32</Title>
+            <Text>void
+modern_node_set_nat32
+(modern_library *library,
+ modern *node,
+ uint32_t value);</Text>
+        </Document>
+        <Document ID="15">
+            <Title>modern_stream_start</Title>
+            <Text>void
+(*modern_stream_start)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="171">
+            <Title>Types</Title>
+        </Document>
+        <Document ID="172">
+            <Title>modern_node_make_int8_type</Title>
+            <Text>modern *
+modern_node_make_int8_type
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="394">
+            <Title>modern_node_set_builtin_identifier</Title>
+            <Text>void
+modern_node_set_builtin_identifier
+(modern_library *library,
+ modern *value,
+ uint16_t identifier);</Text>
+        </Document>
+        <Document ID="317">
+            <Title>builtin_modern_node_type</Title>
+            <Text>builtin_modern_node_type = 39,</Text>
         </Document>
         <Document ID="206">
             <Title>modern_node_set_nat64</Title>
@@ -1413,9 +1913,150 @@ modern_node_set_nat64
  modern *node,
  uint64_t value);</Text>
         </Document>
-        <Document ID="332">
-            <Title>named_value_modern_node_type</Title>
-            <Text>named_value_modern_node_type = 14,</Text>
+        <Document ID="283">
+            <Title>Canonical form</Title>
+        </Document>
+        <Document ID="16">
+            <Title>modern_stream_type_magic_number</Title>
+            <Text>void
+(*modern_stream_type_magic_number)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="17">
+            <Title>modern_stream_name_definition</Title>
+            <Text>void
+(*modern_stream_name_definition)
+(void *processor_state,
+ void *stream_state,
+ uint8_t *data,
+ size_t length);</Text>
+        </Document>
+        <Document ID="173">
+            <Title>Values</Title>
+        </Document>
+        <Document ID="395">
+            <Title>modern_node_get_mutable</Title>
+            <Text>int
+modern_node_get_mutable
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="318">
+            <Title>Builtin Identifiers</Title>
+            <Text>enum modern_builtin_identifier {
+    …
+};</Text>
+        </Document>
+        <Document ID="207">
+            <Title>modern_node_set_float32</Title>
+            <Text>void
+modern_node_set_float32
+(modern_library *library,
+ modern *node,
+ float value);</Text>
+        </Document>
+        <Document ID="284">
+            <Title>modern_node_canonical</Title>
+            <Text>void
+modern_node_canonical_hash
+(modern_library *library,
+ modern *value,
+ struct modern_hash *out);</Text>
+        </Document>
+        <Document ID="18">
+            <Title>modern_stream_type_definition_is_next</Title>
+            <Text>void
+(*modern_stream_type_definition_is_next)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="19">
+            <Title>modern_stream_type_definition_int8</Title>
+            <Text>void
+(*modern_stream_type_definition_int8)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="174">
+            <Title>Values</Title>
+        </Document>
+        <Document ID="396">
+            <Title>General</Title>
+        </Document>
+        <Document ID="319">
+            <Title>int8_value_modern_node_type</Title>
+            <Text>plus_int8_modern_builtin_identifier = 1,</Text>
+        </Document>
+        <Document ID="208">
+            <Title>modern_node_set_float64</Title>
+            <Text>void
+modern_node_set_float64
+(modern_library *library,
+ modern *node,
+ double value);</Text>
+        </Document>
+        <Document ID="285">
+            <Title>Numeric values</Title>
+            <Text>typedef float modern_float32;
+typedef double modern_float64;
+typedef long double modern_float128;</Text>
+        </Document>
+        <Document ID="175">
+            <Title>modern_node_get_sigma_field</Title>
+        </Document>
+        <Document ID="397">
+            <Title>General</Title>
+        </Document>
+        <Document ID="209">
+            <Title>modern_node_set_float128</Title>
+            <Text>void
+modern_node_set_float128
+(modern_library *library,
+ modern *node,
+ long double value);</Text>
+        </Document>
+        <Document ID="286">
+            <Title>The floating-point datatypes used by Modern Data are</Title>
+            <Text>The floating-point datatypes used by Modern Data are defined by IEEE 754-2008</Text>
+        </Document>
+        <Document ID="176">
+            <Title>modern_node_make_int16_type</Title>
+            <Text>modern *
+modern_node_make_int16_type
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="398">
+            <Title>modern_node_set_immutable</Title>
+            <Text>void
+modern_node_set_immutable
+(modern_library *library,
+ modern *value);</Text>
+        </Document>
+        <Document ID="287">
+            <Title>Normative references</Title>
+        </Document>
+        <Document ID="177">
+            <Title>modern_node_make_int32_type</Title>
+            <Text>modern *
+modern_node_make_int32_type
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="399">
+            <Title>modern_error_handler_immutable</Title>
+            <Text>void
+(*modern_error_handler_immutable)
+(void *client_state,
+ modern *node);</Text>
+        </Document>
+        <Document ID="288">
+            <Title>IEEE 754-2008</Title>
+        </Document>
+        <Document ID="178">
+            <Title>modern_node_make_int64_type</Title>
+            <Text>modern *
+modern_node_make_int64_type
+(modern_library *library);</Text>
         </Document>
         <Document ID="3">
             <Title>Introduction</Title>
@@ -1441,64 +2082,8 @@ The Modern Data base library is written in C.  Not because it’s more suitable 
 
 Please, come on in - and enjoy the type system!</Text>
         </Document>
-        <Document ID="302">
-            <Title>Evaluation</Title>
-        </Document>
-        <Document ID="297">
-            <Title>Canonical form</Title>
-            <Text>Modern Data contexts are essentially hash tables containing modern nodes as their elements.  The hash key used for indexing them is based on the “canonical form” of the modern node.  This section discusses what that canonical form means and how it is computed.  Though client code need never be aware of what are essentially implementation details such as these, independent implementations of the library do need to know them.
-
-It is important to note that each node, independently, has its own canonical form.  It is not meaningful to speak of the canonical form of a document as a whole.
-
-The canonical form is computed in the following steps, performed sequentially:
-
-1) Compute the flattened representation of the document as viewed from the node being considered, as described below.
-
-2) Do a pre-order traversal of the reachable parts of the document starting from the node being considered, outputting modern-stream events constructing each traversed node in turn to an “imagined” accumulator of bytes.
-
-3) Compute the hash of all the bytes that were output to the accumulator.
-
-For ease of implementation and on the general principle of consistency, the format of the accumulator is the same as the format of a modern stream.  However, to compute the accumulator, it is not sufficient simply to output a document and record what has been output; the flattening stage must be done first, to break cycles.  Furthermore, because the exact sequence of bytes changes with the exact sequence of events generated, the events must come from a pre-order traversal as described above.  The flattening stage will have ensured that the pre-order traversal only needs to output value and type events, as well as a single family event at the top-level.  The pre-order traversal will not output any lambda or apply events, nor will it output family events other than the single top-level one.</Text>
-        </Document>
-        <Document ID="267">
-            <Title>modern_library_get_allocator</Title>
-            <Text>struct modern_allocator *
-modern_library_get_allocator
-(modern_library *library);</Text>
-        </Document>
-        <Document ID="265">
-            <Title>modern_library_initialize</Title>
-            <Text>modern_library *
-modern_library_initalize
-(struct modern_error_handler *error_handler,
- struct modern_allocator *allocator,
- void (*finalizer)(void *client_state),
- void *client_state);</Text>
-        </Document>
-        <Document ID="237">
-            <Title>modern_compute_initial_namespace_hash</Title>
-            <Text>void
-modern_compute_initial_namespace_hash
-(struct modern_hash *out);</Text>
-        </Document>
-        <Document ID="363">
-            <Title>modern_node_get_let_content</Title>
-            <Text>modern *
-modern_node_get_let_content
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="207">
-            <Title>modern_node_set_float32</Title>
-            <Text>void
-modern_node_set_float32
-(modern_library *library,
- modern *node,
- float value);</Text>
-        </Document>
-        <Document ID="333">
-            <Title>int8_type_modern_node_type</Title>
-            <Text>int8_type_modern_node_type = 15,</Text>
+        <Document ID="289">
+            <Title>Primitive values</Title>
         </Document>
         <Document ID="5">
             <Title>Scrawlings</Title>
@@ -1548,18 +2133,14 @@ There’s blob, too, so if you need to embed non-Modern data in some known forma
 
 However, the type system has been simplified now - instead of array, union, and structure, there’s just sigma.</Text>
         </Document>
-        <Document ID="303">
-            <Title>modern_evaluate</Title>
+        <Document ID="179">
+            <Title>modern_node_make_nat8_type</Title>
             <Text>modern *
-modern_evaluate
-(modern_library *library,
- modern *node);</Text>
+modern_node_make_nat8_type
+(modern_library *library);</Text>
         </Document>
         <Document ID="6">
             <Title>C library reference</Title>
-        </Document>
-        <Document ID="268">
-            <Title>Untitled</Title>
         </Document>
         <Document ID="7">
             <Title>The "modern" type</Title>
@@ -1569,198 +2150,127 @@ The “modern” type is a polymorphic node for object-oriented access to both t
 
 Note that this is true in all the versions of the library for non-functional languages, but in languages which support generalized algebraic datatypes, the situation is more complicated; see for example the Haskell version.</Text>
         </Document>
-        <Document ID="238">
-            <Title>Predefined virtual files</Title>
-        </Document>
-        <Document ID="364">
-            <Title>modern_node_get_type_family_count</Title>
-            <Text>uint64_t
-modern_node_get_type_family_count
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="208">
-            <Title>modern_node_set_float64</Title>
-            <Text>void
-modern_node_set_float64
-(modern_library *library,
- modern *node,
- double value);</Text>
-        </Document>
-        <Document ID="334">
-            <Title>int16_type_modern_node_type</Title>
-            <Text>int16_type_modern_node_type = 16,</Text>
-        </Document>
         <Document ID="8">
             <Title>Modern contexts</Title>
             <Text>typedef void modern_context;</Text>
         </Document>
-        <Document ID="304">
-            <Title>Types</Title>
+        <Document ID="70">
+            <Title>int32_value_modern_node_type</Title>
+            <Text>int32_value_modern_node_type = 5,</Text>
         </Document>
         <Document ID="9">
             <Title>Modern autorelease pools</Title>
             <Text>typedef void modern_autorelease_pool;</Text>
         </Document>
-        <Document ID="269">
-            <Title>modern_library_finalize</Title>
+        <Document ID="71">
+            <Title>int64_value_modern_node_type</Title>
+            <Text>int64_value_modern_node_type = 6,</Text>
+        </Document>
+        <Document ID="320">
+            <Title>int16_value_modern_node_type</Title>
+            <Text>int16_value_modern_node_type = 2,</Text>
+        </Document>
+        <Document ID="72">
+            <Title>nat8_value_modern_node_type</Title>
+            <Text>nat8_value_modern_node_type = 7,</Text>
+        </Document>
+        <Document ID="73">
+            <Title>nat16_value_modern_node_type</Title>
+            <Text>nat16_value_modern_node_type = 8,</Text>
+        </Document>
+        <Document ID="210">
+            <Title>modern_node_set_utf8</Title>
             <Text>void
-modern_library_finalize
-(modern_library *library);
-</Text>
-        </Document>
-        <Document ID="391">
-            <Title>modern_node_set_let_remove_item</Title>
-            <Text>void
-modern_node_set_let_remove_item
-(modern_library *library,
- modern *value,
- uint64_t index);</Text>
-        </Document>
-        <Document ID="239">
-            <Title>modern_make_memory_buffer_vfile</Title>
-            <Text>struct modern_vfile *
-modern_make_memory_buffer_vfile
-(modern_library *library);</Text>
-        </Document>
-        <Document ID="365">
-            <Title>modern_node_get_type_family_item</Title>
-            <Text>modern *
-modern_node_get_type_family_item
-(modern_library *library,
- modern *value,
- uint64_t index);</Text>
-        </Document>
-        <Document ID="209">
-            <Title>modern_node_set_float128</Title>
-            <Text>void
-modern_node_set_float128
+modern_node_set_utf8
 (modern_library *library,
  modern *node,
- long double value);</Text>
+ uint8_t *data);</Text>
         </Document>
-        <Document ID="335">
-            <Title>int32_type_modern_node_type</Title>
-            <Text>int32_type_modern_node_type = 17,</Text>
+        <Document ID="321">
+            <Title>int32_value_modern_node_type</Title>
+            <Text>int32_value_modern_node_type = 3,</Text>
         </Document>
-        <Document ID="392">
-            <Title>modern_node_set_let_add_item</Title>
+        <Document ID="74">
+            <Title>nat32_value_modern_node_type</Title>
+            <Text>nat32_value_modern_node_type = 9,</Text>
+        </Document>
+        <Document ID="211">
+            <Title>modern_node_set_blob</Title>
             <Text>void
-modern_node_set_let_add_item
+modern_node_set_blob
 (modern_library *library,
- modern *value,
- modern *item,
- uint64_t index);</Text>
+ modern *node,
+ uint8_t *data,
+ size_t bytes);</Text>
         </Document>
-        <Document ID="305">
-            <Title>modern_error_handler_universe_level_overflow</Title>
+        <Document ID="75">
+            <Title>nat64_value_modern_node_type</Title>
+            <Text>nat64_value_modern_node_type = 10,</Text>
+        </Document>
+        <Document ID="100">
+            <Title>apply_modern_node_type</Title>
+            <Text>apply_modern_node_type = 35,</Text>
+        </Document>
+        <Document ID="322">
+            <Title>int64_value_modern_node_type</Title>
+            <Text>int64_value_modern_node_type = 4,</Text>
+        </Document>
+        <Document ID="76">
+            <Title>float32_value_modern_node_type</Title>
+            <Text>float32_value_modern_node_type = 11,</Text>
+        </Document>
+        <Document ID="212">
+            <Title>modern_node_set_array</Title>
             <Text>void
-(*modern_error_handler_universe_level_overflow)
-(void *client_state);</Text>
-        </Document>
-        <Document ID="393">
-            <Title>modern_node_set_let_content</Title>
-            <Text>void
-modern_node_set_let_content
-(modern_library *library,
- modern *value,
- modern *content);</Text>
-        </Document>
-        <Document ID="394">
-            <Title>modern_node_set_builtin_identifier</Title>
-            <Text>void
-modern_node_set_builtin_identifier
-(modern_library *library,
- modern *value,
- uint16_t identifier);</Text>
-        </Document>
-        <Document ID="395">
-            <Title>modern_node_get_mutable</Title>
-            <Text>int
-modern_node_get_mutable
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="396">
-            <Title>General</Title>
-        </Document>
-        <Document ID="366">
-            <Title>modern_node_get_builtin_identifier</Title>
-            <Text>uint16_t
-modern_node_get_builtin_identifier
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="336">
-            <Title>int64_type_modern_node_type</Title>
-            <Text>int64_type_modern_node_type = 18,</Text>
-        </Document>
-        <Document ID="306">
-            <Title>modern_error_handler_buffer_index</Title>
-            <Text>void
-(*modern_error_handler_buffer_index)
-(void *client_state);</Text>
-        </Document>
-        <Document ID="397">
-            <Title>General</Title>
-        </Document>
-        <Document ID="367">
-            <Title>Combinators</Title>
-        </Document>
-        <Document ID="337">
-            <Title>nat8_type_modern_node_type</Title>
-            <Text>nat8_type_modern_node_type = 19,</Text>
-        </Document>
-        <Document ID="307">
-            <Title>modern_error_handler_not_applicable</Title>
-            <Text>void
-(*modern_error_handler_not_applicable)
-(void *client_state);</Text>
-        </Document>
-        <Document ID="398">
-            <Title>modern_node_set_immutable</Title>
-            <Text>void
-modern_node_set_immutable
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="368">
-            <Title>modern_node_make_function_type</Title>
-            <Text>modern *
-modern_node_make_function_type
-(modern_library *library,
- modern *left,
- modern *right);</Text>
-        </Document>
-        <Document ID="338">
-            <Title>nat16_type_modern_node_type</Title>
-            <Text>nat16_type_modern_node_type = 20,</Text>
-        </Document>
-        <Document ID="308">
-            <Title>modern_error_handler_non_numeric_float</Title>
-            <Text>void
-(*modern_error_handler_non_numeric_float)
-(void *client_state);</Text>
-        </Document>
-        <Document ID="399">
-            <Title>modern_error_handler_immutable</Title>
-            <Text>void
-(*modern_error_handler_immutable)
-(void *client_state,
- modern *node);</Text>
-        </Document>
-        <Document ID="369">
-            <Title>modern_node_make_let</Title>
-            <Text>modern *
-modern_node_make_let
-(modern_library *library,
+modern_node_set_array
+(modern *node,
  uint64_t n_items,
- modern **types,
- modern *content);</Text>
+ modern **values);</Text>
         </Document>
-        <Document ID="339">
-            <Title>nat32_type_modern_node_type</Title>
-            <Text>nat32_type_modern_node_type = 21,</Text>
+        <Document ID="77">
+            <Title>float64_value_modern_node_type</Title>
+            <Text>float64_value_modern_node_type = 12,</Text>
+        </Document>
+        <Document ID="101">
+            <Title>Memory management</Title>
+        </Document>
+        <Document ID="323">
+            <Title>nat8_value_modern_node_type</Title>
+            <Text>nat8_value_modern_node_type = 5,</Text>
+        </Document>
+        <Document ID="78">
+            <Title>float128_value_modern_node_type</Title>
+            <Text>float128_value_modern_node_type = 11,</Text>
+        </Document>
+        <Document ID="290">
+            <Title>Floating-point numbers</Title>
+            <Text>The floating-point datatypes used by Modern Data are a subset of the “interchange formats” defined by IEEE 754-2008.</Text>
+        </Document>
+        <Document ID="213">
+            <Title>modern_node_set_union</Title>
+            <Text>void
+modern_node_set_union
+(modern *node,
+ modern *type,
+ struct modern_hash *field,
+ modern *value);</Text>
+        </Document>
+        <Document ID="102">
+            <Title>modern_make_autorelease_pool</Title>
+            <Text>modern_autorelease_pool *
+modern_make_autorelease_pool
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="79">
+            <Title>utf8_value_modern_node_type</Title>
+            <Text>utf8_value_modern_node_type = 13,</Text>
+        </Document>
+        <Document ID="324">
+            <Title>nat16_value_modern_node_type</Title>
+            <Text>nat16_value_modern_node_type = 6,</Text>
+        </Document>
+        <Document ID="291">
+            <Title>Integers</Title>
         </Document>
         <Document ID="180">
             <Title>modern_node_make_nat16_type</Title>
@@ -1768,22 +2278,29 @@ modern_node_make_let
 modern_node_make_nat16_type
 (modern_library *library);</Text>
         </Document>
-        <Document ID="150">
-            <Title>modern_node_get_lambda_content</Title>
-            <Text>modern *
-modern_node_get_lambda_content
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="120">
-            <Title>modern_serialize_memory_buffer</Title>
+        <Document ID="214">
+            <Title>modern_node_set_structure</Title>
             <Text>void
-modern_serialize_memory_buffer
+modern_node_set_structure
+(modern *node,
+ modern *type,
+ uint64_t n_items,
+ struct modern_hash **fields,
+ modern **values);</Text>
+        </Document>
+        <Document ID="103">
+            <Title>modern_autorelease_pool_release</Title>
+            <Text>void
+modern_autorelease_pool_release
 (modern_library *library,
- modern *value,
- modern_context *context,
- uint8_t *buffer,
- size_t *length);</Text>
+ modern_autorelease_pool *pool);</Text>
+        </Document>
+        <Document ID="325">
+            <Title>nat32_value_modern_node_type</Title>
+            <Text>nat32_value_modern_node_type = 7,</Text>
+        </Document>
+        <Document ID="292">
+            <Title>Natural numbers</Title>
         </Document>
         <Document ID="181">
             <Title>modern_node_make_nat32_type</Title>
@@ -1791,21 +2308,25 @@ modern_serialize_memory_buffer
 modern_node_make_nat32_type
 (modern_library *library);</Text>
         </Document>
-        <Document ID="151">
-            <Title>modern_node_get_apply_left</Title>
-            <Text>modern *
-modern_node_get_apply_left
+        <Document ID="215">
+            <Title>modern_node_set_named_value</Title>
+            <Text>void
+modern_node_set_named_value
 (modern_library *library,
+ modern *node,
+ modern *type,
  modern *value);</Text>
         </Document>
-        <Document ID="121">
-            <Title>modern_serialize_memory_allocating</Title>
-            <Text>uint8_t *
-modern_serialize_memory_allocating
+        <Document ID="104">
+            <Title>modern_autorelease_pool_get_allocator</Title>
+            <Text>struct modern_allocator *
+modern_autorelease_pool_get_allocator
 (modern_library *library,
- modern *value,
- modern_context *context,
- size_t *length);</Text>
+ modern_autorelease_pool *pool);</Text>
+        </Document>
+        <Document ID="326">
+            <Title>nat64_value_modern_node_type</Title>
+            <Text>nat64_value_modern_node_type = 8,</Text>
         </Document>
         <Document ID="182">
             <Title>modern_node_make_nat64_type</Title>
@@ -1813,21 +2334,22 @@ modern_serialize_memory_allocating
 modern_node_make_nat64_type
 (modern_library *library);</Text>
         </Document>
-        <Document ID="152">
-            <Title>modern_node_get_apply_right</Title>
-            <Text>modern *
-modern_node_get_apply_right
-(modern_library *library,
- modern *value);</Text>
+        <Document ID="216">
+            <Title>Stream-based deserialization </Title>
         </Document>
-        <Document ID="122">
-            <Title>modern_serialize_file</Title>
+        <Document ID="105">
+            <Title>modern_retain</Title>
             <Text>void
-modern_serialize_file
+modern_retain
 (modern_library *library,
- modern *value,
- modern_context *context,
- FILE *file);</Text>
+ void *retainable);</Text>
+        </Document>
+        <Document ID="327">
+            <Title>float32_value_modern_node_type</Title>
+            <Text>float32_value_modern_node_type = 9,</Text>
+        </Document>
+        <Document ID="294">
+            <Title>Text</Title>
         </Document>
         <Document ID="183">
             <Title>modern_node_make_float32_type</Title>
@@ -1835,17 +2357,29 @@ modern_serialize_file
 modern_node_make_float32_type
 (modern_library *library);</Text>
         </Document>
-        <Document ID="153">
-            <Title>Construction</Title>
-        </Document>
-        <Document ID="123">
-            <Title>modern_serialize_fd</Title>
-            <Text>void
-modern_serialize_fd
+        <Document ID="217">
+            <Title>modern_input_stream_memory</Title>
+            <Text>void *
+modern_input_stream_memory
 (modern_library *library,
- modern *value,
- modern_context *context,
- int fd);</Text>
+ modern_autorelease_pool *pool,
+ struct modern_stream *stream,
+ uint8_t *data,
+ size_t length);</Text>
+        </Document>
+        <Document ID="106">
+            <Title>modern_release</Title>
+            <Text>void
+modern_release
+(modern_library *library,
+ void *retainable);</Text>
+        </Document>
+        <Document ID="328">
+            <Title>float64_value_modern_node_type</Title>
+            <Text>float64_value_modern_node_type = 10,</Text>
+        </Document>
+        <Document ID="295">
+            <Title>Binary large objects</Title>
         </Document>
         <Document ID="184">
             <Title>modern_node_make_float64_type</Title>
@@ -1853,42 +2387,32 @@ modern_serialize_fd
 modern_node_make_float64_type
 (modern_library *library);</Text>
         </Document>
-        <Document ID="154">
-            <Title>modern_node_make_int8</Title>
-            <Text>modern *
-modern_node_make_int8
-(modern_library *library,
- int8_t value);</Text>
-        </Document>
-        <Document ID="280">
-            <Title>modern_node_get_sigma_type_</Title>
-        </Document>
-        <Document ID="124">
-            <Title>modern_serialize_vfile</Title>
-            <Text>void
-modern_serialize_vfile
-(modern_library *library,
- modern *value,
- modern_context *context,
- struct modern_vfile *vfile,
- void *vfile_state);</Text>
-        </Document>
-        <Document ID="250">
-            <Title>modern_allocator_realloc</Title>
+        <Document ID="218">
+            <Title>modern_input_stream_file</Title>
             <Text>void *
-(*modern_allocator_realloc)
-(void *client_state,
- void *memory, size_t size);</Text>
-        </Document>
-        <Document ID="220">
-            <Title>modern_input_stream_vfile</Title>
-            <Text>void *
-modern_input_stream_vfile
+modern_input_stream_file
 (modern_library *library,
  modern_autorelease_pool *pool,
  struct modern_stream *stream,
- struct modern_vfile *vfile,
- void *vfile_state);</Text>
+ FILE *file);</Text>
+        </Document>
+        <Document ID="107">
+            <Title>modern_autorelease</Title>
+            <Text>void
+modern_autorelease
+(modern_library *library,
+ modern_autorelease_pool *pool,
+ void *retainable);</Text>
+        </Document>
+        <Document ID="329">
+            <Title>utf8_value_modern_node_type</Title>
+            <Text>utf8_value_modern_node_type = 11,</Text>
+        </Document>
+        <Document ID="296">
+            <Title>128-bit values</Title>
+            <Text>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libraries simply use the platform’s largest available floating-point type, which is usually 80 bits, for all function parameters and return values, while converting these to and from 128-bit representations for interchange.
+
+Should 128-bit floats become practical on the key platforms where Modern Data is supported, it is expected that the API will be changed to use these types, breaking linking compatibility but retaining source and over-the-wire compatibility.  Hence, code linked against present versions of the library will interoperate with future systems which use 128-bit floats natively, but will never be able to directly use more precision than the system has available.</Text>
         </Document>
         <Document ID="185">
             <Title>modern_node_make_float128_type</Title>
@@ -1896,456 +2420,22 @@ modern_input_stream_vfile
 modern_node_make_float128_type
 (modern_library *library);</Text>
         </Document>
-        <Document ID="155">
-            <Title>modern_node_make_int16</Title>
-            <Text>modern *
-modern_node_make_int16
-(modern_library *library,
- int16_t value);</Text>
-        </Document>
-        <Document ID="125">
-            <Title>modern_serialize_output_stream</Title>
-            <Text>modern *
-modern_serialize_output_stream
-(modern_library *library,
- modern *value,
- modern_context *context,
- struct modern_stream *stream);</Text>
-        </Document>
-        <Document ID="251">
-            <Title>pool</Title>
-            <Text>modern_autorelease_pool *pool;</Text>
-        </Document>
-        <Document ID="221">
-            <Title>Customization</Title>
-        </Document>
-        <Document ID="186">
-            <Title>modern_node_make_utf8_type</Title>
-            <Text>modern *
-modern_node_make_utf8_type
-(modern_library *library);</Text>
-        </Document>
-        <Document ID="156">
-            <Title>modern_node_make_int32</Title>
-            <Text>modern *
-modern_node_make_int32
-(modern_library *library,
- int32_t value);</Text>
-        </Document>
-        <Document ID="282">
-            <Title>modern_node_get_sigma_</Title>
-        </Document>
-        <Document ID="126">
-            <Title>Node-based object model</Title>
-        </Document>
-        <Document ID="252">
-            <Title>modern_processor_abort</Title>
-            <Text>void
-(*modern_processor_abort)
-(void *processor_state);</Text>
-        </Document>
-        <Document ID="222">
-            <Title>modern_input_stream_step</Title>
-            <Text>void
-modern_input_stream_step
-(modern_library *library,
- struct modern_stream *stream,
- void *processor_state,
- void **stream_state);</Text>
-        </Document>
-        <Document ID="187">
-            <Title>modern_node_make_blob_type</Title>
-            <Text>modern *
-modern_node_make_blob_type
-(modern_library *library);</Text>
-        </Document>
-        <Document ID="157">
-            <Title>modern_node_make_int64</Title>
-            <Text>modern *
-modern_node_make_int64
-(modern_library *library,
- int64_t value);</Text>
-        </Document>
-        <Document ID="283">
-            <Title>Canonical form</Title>
-        </Document>
-        <Document ID="127">
-            <Title>Reading</Title>
-        </Document>
-        <Document ID="253">
-            <Title>modern_processor_flush</Title>
-            <Text>void (*modern_processor_flush)
-  (void *processor_state);</Text>
-        </Document>
-        <Document ID="223">
-            <Title>modern_input_stream_run</Title>
-            <Text>void
-modern_input_stream_run
-(modern_library *library,
- struct modern_stream *stream,
- void *processor_state,
- void **stream_state);</Text>
-        </Document>
-        <Document ID="188">
-            <Title>modern_node_make_array_type</Title>
-            <Text>modern *
-modern_node_make_array_type
-(modern *content_type);</Text>
-        </Document>
-        <Document ID="158">
-            <Title>modern_node_make_nat8</Title>
-            <Text>modern *
-modern_node_make_nat8
-(modern_library *library,
- uint8_t value);</Text>
-        </Document>
-        <Document ID="284">
-            <Title>modern_node_canonical</Title>
-            <Text>void
-modern_node_canonical_hash
-(modern_library *library,
- modern *value,
- struct modern_hash *out);</Text>
-        </Document>
-        <Document ID="128">
-            <Title>modern_node_get_node_type</Title>
-            <Text>enum modern_node_type
-modern_node_get_node_type
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="254">
-            <Title>Predefined hashes</Title>
-        </Document>
-        <Document ID="380">
-            <Title>modern_node_set_function_type_right</Title>
-            <Text>void
-modern_node_set_function_type_right
-(modern_library *library,
- modern *value,
- modern *right);</Text>
-        </Document>
-        <Document ID="224">
-            <Title>modern_input_stream_do_all</Title>
-            <Text>void
-modern_input_stream_do_all
-(modern_library *library,
- struct modern_stream *stream,
- void *processor_state);</Text>
-        </Document>
-        <Document ID="350">
-            <Title>apply_modern_node_type</Title>
-            <Text>apply_modern_node_type = 32,</Text>
-        </Document>
-        <Document ID="189">
-            <Title>modern_node_make_union_type</Title>
-            <Text>modern *
-modern_node_make_union_type
-(uint64_t n_items,
- struct modern_hash **fields,
- modern **types);</Text>
-        </Document>
-        <Document ID="320">
-            <Title>int16_value_modern_node_type</Title>
-            <Text>int16_value_modern_node_type = 2,</Text>
-        </Document>
-        <Document ID="159">
-            <Title>modern_node_make_nat16</Title>
-            <Text>modern *
-modern_node_make_nat16
-(modern_library *library,
- uint16_t value);</Text>
-        </Document>
-        <Document ID="285">
-            <Title>Numeric values</Title>
-            <Text>typedef float modern_float32;
-typedef double modern_float64;
-typedef long double modern_float128;</Text>
-        </Document>
-        <Document ID="129">
-            <Title>modern_node_get_value_type</Title>
-            <Text>modern *
-modern_node_get_value_type
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="255">
-            <Title>Untitled</Title>
-        </Document>
-        <Document ID="381">
-            <Title>modern_node_set_sigma_type_field_type</Title>
-            <Text>void
-modern_node_set_sigma_type_field_type
-(modern_library *library,
- modern *value,
- modern *field_type);</Text>
-        </Document>
-        <Document ID="225">
-            <Title>modern_input_stream_finalize</Title>
-            <Text>void
-modern_input_stream_finalize
-(modern_library *library,
- void *processor_state);</Text>
-        </Document>
-        <Document ID="351">
-            <Title>type_family_modern_node_type</Title>
-            <Text>type_family_modern_node_type = 33,</Text>
-        </Document>
-        <Document ID="321">
-            <Title>int32_value_modern_node_type</Title>
-            <Text>int32_value_modern_node_type = 3,</Text>
-        </Document>
-        <Document ID="286">
-            <Title>The floating-point datatypes used by Modern Data are</Title>
-            <Text>The floating-point datatypes used by Modern Data are defined by IEEE 754-2008</Text>
-        </Document>
-        <Document ID="256">
-            <Title>modern_stream_nat16</Title>
-            <Text>void
-(*modern_stream_nat16)
-(void *processor_state,
- void *stream_state,
- uint16_t value);</Text>
-        </Document>
-        <Document ID="382">
-            <Title>modern_node_set_sigma_type_successor</Title>
-            <Text>void
-modern_node_set_sigma_type_successor
-(modern_library *library,
- modern *value,
- modern *successor);</Text>
-        </Document>
-        <Document ID="226">
-            <Title>General</Title>
-        </Document>
-        <Document ID="352">
-            <Title>let_modern_node_type</Title>
-            <Text>let_modern_node_type = 34,</Text>
-        </Document>
-        <Document ID="322">
-            <Title>int64_value_modern_node_type</Title>
-            <Text>int64_value_modern_node_type = 4,</Text>
-        </Document>
-        <Document ID="287">
-            <Title>Normative references</Title>
-        </Document>
-        <Document ID="257">
-            <Title>modern_stream_nat32</Title>
-            <Text>void
-(*modern_stream_nat32)
-(void *processor_state,
- void *stream_state,
- uint32_t value);</Text>
-        </Document>
-        <Document ID="383">
-            <Title>modern_node_set_named_type_name</Title>
-            <Text>void
-modern_node_set_named_type_name
-(modern_library *library,
- modern *value,
- struct modern_hash *name);</Text>
-        </Document>
-        <Document ID="227">
-            <Title>Stream-based serialization</Title>
-        </Document>
-        <Document ID="353">
-            <Title>backreference_modern_node_type</Title>
-            <Text>backreference_modern_node_type = 35,</Text>
-        </Document>
-        <Document ID="323">
-            <Title>nat8_value_modern_node_type</Title>
-            <Text>nat8_value_modern_node_type = 5,</Text>
-        </Document>
-        <Document ID="288">
-            <Title>IEEE 754-2008</Title>
-        </Document>
-        <Document ID="258">
-            <Title>modern_stream_nat64</Title>
-            <Text>void
-(*modern_stream_nat64)
-(void *processor_state,
- void *stream_state,
- uint64_t value);</Text>
-        </Document>
-        <Document ID="384">
-            <Title>modern_node_set_named_type_content_type</Title>
-            <Text>void
-modern_node_set_named_type_content_type
-(modern_library *library,
- modern *value,
- modern *content_type);</Text>
-        </Document>
-        <Document ID="228">
-            <Title>modern_output_stream_memory_buffer</Title>
+        <Document ID="219">
+            <Title>modern_input_stream_fd</Title>
             <Text>void *
-modern_output_stream_memory_buffer
+modern_input_stream_fd
 (modern_library *library,
  modern_autorelease_pool *pool,
- uint8_t *buffer,
- size_t *length);</Text>
+ struct modern_stream *stream,
+ int fd);</Text>
         </Document>
-        <Document ID="354">
-            <Title>builtin_modern_node_type</Title>
-            <Text>builtin_modern_node_type = 36,</Text>
-        </Document>
-        <Document ID="324">
-            <Title>nat16_value_modern_node_type</Title>
-            <Text>nat16_value_modern_node_type = 6,</Text>
-        </Document>
-        <Document ID="289">
-            <Title>Primitive values</Title>
-        </Document>
-        <Document ID="259">
-            <Title>modern_copy_context</Title>
-            <Text>modern_context *
-modern_copy_context
-(modern_library *library,
- modern_context *context);</Text>
-        </Document>
-        <Document ID="385">
-            <Title>modern_node_set_universe_type_level</Title>
-            <Text>void
-modern_node_set_universe_type_level
-(modern_library *library,
- modern *value,
- uint64_t level);</Text>
-        </Document>
-        <Document ID="229">
-            <Title>modern_output_stream_memory_allocating</Title>
-            <Text>void *
-modern_output_stream_memory_allocating
-(modern_library *library,
- modern_autorelease_pool *pool,
- size_t *length);</Text>
-        </Document>
-        <Document ID="355">
-            <Title>modern_library_get_client_state</Title>
-            <Text>void *
-modern_library_get_client_state
-(modern_library *library);</Text>
-        </Document>
-        <Document ID="325">
-            <Title>nat32_value_modern_node_type</Title>
-            <Text>nat32_value_modern_node_type = 7,</Text>
-        </Document>
-        <Document ID="386">
-            <Title>modern_node_set_lambda_content</Title>
-            <Text>void
-modern_node_set_lambda_content
-(modern_library *library,
- modern *value,
- modern *content);</Text>
-        </Document>
-        <Document ID="356">
-            <Title>modern_node_get_function_type_left</Title>
-            <Text>modern *
-modern_node_get_function_type_left
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="326">
-            <Title>nat64_value_modern_node_type</Title>
-            <Text>nat64_value_modern_node_type = 8,</Text>
-        </Document>
-        <Document ID="387">
-            <Title>modern_node_set_apply_left</Title>
-            <Text>void
-modern_node_set_apply_left
-(modern_library *library,
- modern *value,
- modern *left);</Text>
-        </Document>
-        <Document ID="357">
-            <Title>modern_node_get_function_type_right</Title>
-            <Text>modern *
-modern_node_get_function_type_right
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="327">
-            <Title>float32_value_modern_node_type</Title>
-            <Text>float32_value_modern_node_type = 9,</Text>
-        </Document>
-        <Document ID="388">
-            <Title>modern_node_set_apply_right</Title>
-            <Text>void
-modern_node_set_apply_right
-(modern_library *library,
- modern *value,
- modern *right);</Text>
-        </Document>
-        <Document ID="358">
-            <Title>modern_node_get_sigma_type_field_type</Title>
-            <Text>modern *
-modern_node_get_sigma_type_field_type
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="328">
-            <Title>float64_value_modern_node_type</Title>
-            <Text>float64_value_modern_node_type = 10,</Text>
-        </Document>
-        <Document ID="389">
-            <Title>modern_node_set_type_family_remove_item</Title>
-            <Text>void
-modern_node_set_type_family_remove_item
-(modern_library *library,
- modern *value,
- uint64_t index);</Text>
-        </Document>
-        <Document ID="359">
-            <Title>modern_node_get_sigma_type_successor</Title>
-            <Text>modern *
-modern_node_get_sigma_type_successor
-(modern_library *library,
- modern *value);</Text>
-        </Document>
-        <Document ID="329">
-            <Title>utf8_value_modern_node_type</Title>
-            <Text>utf8_value_modern_node_type = 11,</Text>
-        </Document>
-        <Document ID="10">
-            <Title>Hashes</Title>
-            <Text>struct modern_hash {
-    uint64_t a;
-    uint64_t b;
-};</Text>
-        </Document>
-        <Document ID="11">
-            <Title>Allocators</Title>
-            <Text>struct modern_allocator {
-    …
-};</Text>
-        </Document>
-        <Document ID="12">
-            <Title>Processors</Title>
-            <Text>struct modern_processor {
-    …
-};</Text>
-        </Document>
-        <Document ID="13">
-            <Title>Streams</Title>
-            <Text>struct modern_stream {
-    …
-};</Text>
-        </Document>
-        <Document ID="14">
-            <Title>modern_stream_initialize</Title>
-            <Text>void *
-(*modern_stream_initialize)
-();</Text>
+        <Document ID="108">
+            <Title>Contexts</Title>
         </Document>
         <Document ID="20">
             <Title>modern_stream_type_definition_int16</Title>
             <Text>void
 (*modern_stream_type_definition_int16)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
-        <Document ID="15">
-            <Title>modern_stream_start</Title>
-            <Text>void
-(*modern_stream_start)
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
@@ -2356,12 +2446,33 @@ modern_node_get_sigma_type_successor
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
-        <Document ID="16">
-            <Title>modern_stream_type_magic_number</Title>
-            <Text>void
-(*modern_stream_type_magic_number)
-(void *processor_state,
- void *stream_state);</Text>
+        <Document ID="297">
+            <Title>Canonical form</Title>
+            <Text>Modern Data contexts are essentially hash tables containing modern nodes as their elements.  The hash key used for indexing them is based on the “canonical form” of the modern node.  This section discusses what that canonical form means and how it is computed.  Though client code need never be aware of what are essentially implementation details such as these, independent implementations of the library do need to know them.
+
+It is important to note that each node, independently, has its own canonical form.  It is not meaningful to speak of the canonical form of a document as a whole.
+
+The canonical form is computed in the following steps, performed sequentially:
+
+1) Compute the flattened representation of the document as viewed from the node being considered, as described below.
+
+2) Do a pre-order traversal of the reachable parts of the document starting from the node being considered, outputting modern-stream events constructing each traversed node in turn to an “imagined” accumulator of bytes.
+
+3) Compute the hash of all the bytes that were output to the accumulator.
+
+For ease of implementation and on the general principle of consistency, the format of the accumulator is the same as the format of a modern stream.  However, to compute the accumulator, it is not sufficient simply to output a document and record what has been output; the flattening stage must be done first, to break cycles.  Furthermore, because the exact sequence of bytes changes with the exact sequence of events generated, the events must come from a pre-order traversal as described above.  The flattening stage will have ensured that the pre-order traversal only needs to output value and type events, as well as a single family event at the top-level.  The pre-order traversal will not output any lambda or apply events, nor will it output family events other than the single top-level one.</Text>
+        </Document>
+        <Document ID="186">
+            <Title>modern_node_make_utf8_type</Title>
+            <Text>modern *
+modern_node_make_utf8_type
+(modern_library *library);</Text>
+        </Document>
+        <Document ID="109">
+            <Title>modern_make_initial_context</Title>
+            <Text>modern_context *
+modern_make_initial_context
+(modern_library *library);</Text>
         </Document>
         <Document ID="22">
             <Title>modern_stream_type_definition_int64</Title>
@@ -2370,15 +2481,6 @@ modern_node_get_sigma_type_successor
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
-        <Document ID="17">
-            <Title>modern_stream_name_definition</Title>
-            <Text>void
-(*modern_stream_name_definition)
-(void *processor_state,
- void *stream_state,
- uint8_t *data,
- size_t length);</Text>
-        </Document>
         <Document ID="23">
             <Title>modern_stream_type_definition_nat8</Title>
             <Text>void
@@ -2386,12 +2488,11 @@ modern_node_get_sigma_type_successor
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
-        <Document ID="18">
-            <Title>modern_stream_type_definition_is_next</Title>
-            <Text>void
-(*modern_stream_type_definition_is_next)
-(void *processor_state,
- void *stream_state);</Text>
+        <Document ID="187">
+            <Title>modern_node_make_blob_type</Title>
+            <Text>modern *
+modern_node_make_blob_type
+(modern_library *library);</Text>
         </Document>
         <Document ID="24">
             <Title>modern_stream_type_definition_nat16</Title>
@@ -2400,54 +2501,16 @@ modern_node_get_sigma_type_successor
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
-        <Document ID="19">
-            <Title>modern_stream_type_definition_int8</Title>
-            <Text>void
-(*modern_stream_type_definition_int8)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
-        <Document ID="30">
-            <Title>modern_stream_type_definition_utf8</Title>
-            <Text>void
-(*modern_stream_type_definition_utf8)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
-        <Document ID="170">
-            <Title>modern_node_make_named_value</Title>
+        <Document ID="188">
+            <Title>modern_node_make_array_type</Title>
             <Text>modern *
-modern_node_make_named_value
-(modern_library *library,
- modern *type,
- modern *value);</Text>
-        </Document>
-        <Document ID="140">
-            <Title>modern_node_get_float128</Title>
-            <Text>long double
-modern_node_get_float128
-(modern_library *library,
- modern *value);</Text>
+modern_node_make_array_type
+(modern *content_type);</Text>
         </Document>
         <Document ID="25">
             <Title>modern_stream_type_definition_nat32</Title>
             <Text>void
 (*modern_stream_type_definition_nat32)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
-        <Document ID="110">
-            <Title>modern_get_in_context</Title>
-            <Text>int
-modern_get_in_context
-(modern_library *library,
- modern_context *context,
- modern *node);</Text>
-        </Document>
-        <Document ID="31">
-            <Title>modern_stream_type_definition_blob</Title>
-            <Text>void
-(*modern_stream_type_definition_blob)
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
@@ -2458,22 +2521,13 @@ modern_get_in_context
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
-        <Document ID="171">
-            <Title>Types</Title>
-        </Document>
-        <Document ID="32">
-            <Title>modern_stream_type_definition_function_is_next</Title>
-            <Text>void
-(*modern_stream_type_definition_function_is_next)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
-        <Document ID="141">
-            <Title>modern_node_get_utf8_bytes</Title>
-            <Text>size_t
-modern_node_get_utf8_bytes
-(modern_library *library,
- modern *value);</Text>
+        <Document ID="189">
+            <Title>modern_node_make_union_type</Title>
+            <Text>modern *
+modern_node_make_union_type
+(uint64_t n_items,
+ struct modern_hash **fields,
+ modern **types);</Text>
         </Document>
         <Document ID="27">
             <Title>modern_stream_type_definition_float32</Title>
@@ -2482,22 +2536,19 @@ modern_node_get_utf8_bytes
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
-        <Document ID="111">
-            <Title>modern_add_to_context</Title>
+        <Document ID="28">
+            <Title>modern_stream_type_definition_float64</Title>
             <Text>void
-modern_add_to_context
-(modern_library *library,
- modern_context *context,
- modern *node);</Text>
-        </Document>
-        <Document ID="33">
-            <Title>modern_stream_type_definition_sigma_is_next</Title>
-            <Text>void
-(*modern_stream_type_definition_sigma_is_next)
+(*modern_stream_type_definition_float64)
 (void *processor_state,
- void *stream_state
- struct modern_hash *a,
- struct modern_hash *b);</Text>
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="29">
+            <Title>modern_stream_type_definition_float128</Title>
+            <Text>void
+(*modern_stream_type_definition_float128)
+(void *processor_state,
+ void *stream_state);</Text>
         </Document>
     </Documents>
 </SearchIndexes>
