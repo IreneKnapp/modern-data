@@ -2062,14 +2062,14 @@
                                                         <TextSelection>74,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="383" Type="Text" Created="2012-08-13 06:55:41 -0400" Modified="2012-09-10 17:37:11 -0400">
+                                                <BinderItem ID="383" Type="Text" Created="2012-08-13 06:55:41 -0400" Modified="2012-09-11 09:38:47 -0400">
                                                     <Title>modern_node_set_named_type_name</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>74,0</TextSelection>
+                                                        <TextSelection>106,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
                                                 <BinderItem ID="384" Type="Text" Created="2012-08-13 06:55:42 -0400" Modified="2012-09-10 17:37:11 -0400">
@@ -4157,7 +4157,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="207" Characters="1424" Date="2012-09-10 23:23:50 -0400"></PreviousSession>
+        <PreviousSession Words="0" Characters="1" Date="2012-09-11 09:38:36 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>

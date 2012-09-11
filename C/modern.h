@@ -596,7 +596,7 @@ extern void modern_node_set_sigma_type_successor
    modern *successor);
 extern void modern_node_set_named_type_name
   (modern_library *library,
-   modern *value
+   modern *value,
    struct modern_hash *name);
 extern void modern_node_set_named_type_content_type
   (modern_library *library,
