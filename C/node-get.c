@@ -246,7 +246,7 @@ uint8_t *modern_node_get_utf8_data_piece
 {
     struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
-    if(offset + bytes < value->specifics.utf8_value.bytes) {
+    if(offset + bytes <= value->specifics.utf8_value.bytes) {
         return value->specifics.utf8_value.data + offset;
     } else {
         library->error_handler->modern_error_handler_buffer_index
@@ -271,7 +271,7 @@ uint8_t *modern_node_get_blob_data_piece
 {
     struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
-    if(offset + bytes < value->specifics.blob_value.bytes) {
+    if(offset + bytes <= value->specifics.blob_value.bytes) {
         return value->specifics.blob_value.data + offset;
     } else {
         library->error_handler->modern_error_handler_buffer_index
