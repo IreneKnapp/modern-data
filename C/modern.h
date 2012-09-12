@@ -38,6 +38,8 @@ struct modern_error_handler {
       (void *client_state);
     void (*modern_error_handler_immutable)
       (void *client_state, modern *node);
+    void (*modern_error_handler_builtin_identifier)
+      (void *client_state, uint16_t identifier);
  };
 
 
