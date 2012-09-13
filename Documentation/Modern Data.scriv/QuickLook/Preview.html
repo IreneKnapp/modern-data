@@ -35,7 +35,7 @@ A self-describing data format is a format like XML, JSON, or Common Lisp’s s-e
 <li>
 <p class="binderItem"><strong>Semantics</strong><br/>In Modern Data, the fundamental in-memory datatype is the “modern node”, which is a representation of, loosely, either a value or a type.  If we wish to specify further, we may occasionally refer to a “modern type” or “modern value”, but these concepts do not map to actual host-language datatypes; only “modern node” does.<br/>
 <br/>
-The operations on a modern node are serialization, deserialization, and evaluation.  Serialization is performed on a modern node in some “modern context”, and produces a strea...</p>
+The operations on a modern node are serialization and deserialization.  Serialization is performed on a stream of modern nodes in some “modern context”, and produces a stream ...</p>
 </li>
 <hr/>
 <ul>
@@ -72,6 +72,12 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
+<p class="binderItem"><strong>Booleans</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Maybes</strong></p>
+</li>
+<li>
 <p class="binderItem"><strong>Integers</strong></p>
 </li>
 <li>
@@ -83,7 +89,7 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not.  This is, not least, because there are no standardized names for the functions - though GNU libquadmath uses the “q” suffix on the ISO C99 base names.  The C type which would be the most likely candidate to be a 128-bit float, long double, is actually an 80-bit float on most Intel-related platforms, while non-Intel platforms seldom suppo...</p>
+<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libr...</p>
 </li>
 </ul>
 <hr/>
@@ -752,6 +758,12 @@ modern_node_get_let_content<br/>
  modern *value);</p>
 </li>
 <li>
+<p class="binderItem"><strong>modern_node_get_backreference_index</strong><br/>uint64_t<br/>
+modern_node_get_backreference_index<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
 <p class="binderItem"><strong>modern_node_get_builtin_identifier</strong><br/>uint16_t<br/>
 modern_node_get_builtin_identifier<br/>
 (modern_library *library,<br/>
@@ -1316,6 +1328,13 @@ modern_node_set_let_content<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *content);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_backreference_index</strong><br/>void<br/>
+modern_node_set_backreference_index<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ uint64_t index);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_builtin_identifier</strong><br/>void<br/>

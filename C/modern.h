@@ -889,6 +889,9 @@ extern modern *modern_node_get_let_item
 extern modern *modern_node_get_let_content
   (modern_library *library,
    modern *value);
+extern uint64_t modern_node_get_backreference_index
+  (modern_library *library,
+   modern *value);
 extern uint16_t modern_node_get_builtin_identifier
   (modern_library *library,
    modern *value);
@@ -1157,6 +1160,10 @@ extern void modern_node_set_let_content
   (modern_library *library,
    modern *value,
    modern *content);
+extern void modern_node_set_backreference_index
+  (modern_library *library,
+   modern *value,
+   uint64_t index);
 extern void modern_node_set_builtin_identifier
   (modern_library *library,
    modern *value,
