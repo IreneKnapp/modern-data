@@ -790,6 +790,9 @@ extern modern *modern_node_copy
 extern modern *modern_node_get_maybe_just_content
   (modern_library *library,
    modern *value);
+extern modern *modern_node_get_maybe_just_content_link
+  (modern_library *library,
+   modern *value);
 extern int8_t modern_node_get_int8
   (modern_library *library,
    modern *value);
@@ -835,25 +838,49 @@ extern uint8_t *modern_node_get_blob_data_piece
 extern modern *modern_node_get_sigma_field_value
   (modern_library *library,
    modern *value);
+extern modern *modern_node_get_sigma_field_value_link
+  (modern_library *library,
+   modern *value);
 extern modern *modern_node_get_sigma_successor
+  (modern_library *library,
+   modern *value);
+extern modern *modern_node_get_sigma_successor_link
   (modern_library *library,
    modern *value);
 extern modern *modern_node_get_named_value
   (modern_library *library,
    modern *value);
+extern modern *modern_node_get_named_value_link
+  (modern_library *library,
+   modern *value);
 extern modern *modern_node_get_maybe_type_content_type
+  (modern_library *library,
+   modern *value);
+extern modern *modern_node_get_maybe_type_content_type_link
   (modern_library *library,
    modern *value);
 extern modern *modern_node_get_function_type_left
   (modern_library *library,
    modern *value);
+extern modern *modern_node_get_function_type_left_link
+  (modern_library *library,
+   modern *value);
 extern modern *modern_node_get_function_type_right
+  (modern_library *library,
+   modern *value);
+extern modern *modern_node_get_function_type_right_link
   (modern_library *library,
    modern *value);
 extern modern *modern_node_get_sigma_type_field_type
   (modern_library *library,
    modern *value);
+extern modern *modern_node_get_sigma_type_field_type_link
+  (modern_library *library,
+   modern *value);
 extern modern *modern_node_get_sigma_type_successor
+  (modern_library *library,
+   modern *value);
+extern modern *modern_node_get_sigma_type_successor_link
   (modern_library *library,
    modern *value);
 extern struct modern_hash *modern_node_get_named_type_name
@@ -862,16 +889,28 @@ extern struct modern_hash *modern_node_get_named_type_name
 extern modern *modern_node_get_named_type_content_type
   (modern_library *library,
    modern *value);
+extern modern *modern_node_get_named_type_content_type_link
+  (modern_library *library,
+   modern *value);
 extern uint64_t modern_node_get_universe_type_level
   (modern_library *library,
    modern *value);
 extern modern *modern_node_get_lambda_content
   (modern_library *library,
    modern *value);
+extern modern *modern_node_get_lambda_content_link
+  (modern_library *library,
+   modern *value);
 extern modern *modern_node_get_apply_left
   (modern_library *library,
    modern *value);
+extern modern *modern_node_get_apply_left_link
+  (modern_library *library,
+   modern *value);
 extern modern *modern_node_get_apply_right
+  (modern_library *library,
+   modern *value);
+extern modern *modern_node_get_apply_right_link
   (modern_library *library,
    modern *value);
 extern uint64_t modern_node_get_type_family_count
@@ -880,13 +919,22 @@ extern uint64_t modern_node_get_type_family_count
 extern modern *modern_node_get_type_family_item
   (modern_library *library,
    modern *value, uint64_t index);
+extern modern *modern_node_get_type_family_item_link
+  (modern_library *library,
+   modern *value, uint64_t index);
 extern uint64_t modern_node_get_let_count
   (modern_library *library,
    modern *value);
 extern modern *modern_node_get_let_item
   (modern_library *library,
    modern *value, uint64_t index);
+extern modern *modern_node_get_let_item_link
+  (modern_library *library,
+   modern *value, uint64_t index);
 extern modern *modern_node_get_let_content
+  (modern_library *library,
+   modern *value);
+extern modern *modern_node_get_let_content_link
   (modern_library *library,
    modern *value);
 extern uint64_t modern_node_get_backreference_index
