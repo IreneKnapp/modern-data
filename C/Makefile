@@ -10,8 +10,8 @@ OBJECTS=context.o \
 		node-make.o
 INCLUDES=modern.h internal.h
 
-default: test-node
-all: test-node test-canonical test-out
+default: example-canonical
+all: test-node test-canonical test-out example-canonical
 
 context.o: context.c ${INCLUDES}
 	${CC} ${CFLAGS} -c context.c -o context.o
@@ -57,5 +57,11 @@ test-node: ${OBJECTS} test-main.o test-node.o
 
 test-out: ${OBJECTS} test-main.o test-out.o
 	${CC} ${CFLAGS} ${OBJECTS} test-main.o test-out.o -o test-out
+
+example-canonical.o: example-canonical.c ${INCLUDES}
+	${CC} ${CFLAGS} -c example-canonical.c -o example-canonical.o
+
+example-canonical: ${OBJECTS} example-canonical.o
+	${CC} ${CFLAGS} ${OBJECTS} example-canonical.o -o example-canonical
 
 .dummy: default all

@@ -4,10 +4,13 @@
 #include "test.h"
 
 
-void test_main(struct test_suite *test_suite, modern_library *library) {
+void test_main(test_suite *test_suite, modern_library *library) {
+    if(!begin_fixtures(test_suite)) return;
+    allow_allocation(test_suite);
     modern_autorelease_pool *pool = modern_make_autorelease_pool(library);
-    
     modern_context *context = modern_make_initial_context(library);
+    disallow_allocation(test_suite);
+    end_fixtures(test_suite);
     
     modern_float32 value_float32s[] = {
     	0.0, -0.0,
@@ -52,31 +55,4 @@ void test_main(struct test_suite *test_suite, modern_library *library) {
 		
 		modern_release(library, value);
 	}
-
-    /*
-    modern_float128 value_float128s[] = {
-    	0.0L, -0.0L,
-    	1.0L / 0.0L, -1.0L / 0.0L,
-    	1.0L, -1.0L,
-    	0.5L, -0.5L,
-    	0.25L, -0.25L,
-    	0.125L, -0.125L,
-    	1.0L - 0.5L, -1.0L + 0.5L,
-    	1.0L - 0.25L, -1.0L + 0.25L,
-    	1.0L - 0.125L, -1.0L + 0.125L,
-    	1.0L - powq(2.0L, -50.0L), -1.0L + powq(2.0L, -50.0L),
-    	1.0L - powq(2.0L, -51.0L), -1.0L + powq(2.0L, -51.0L),
-    	1.0L - powq(2.0L, -110.0L), -1.0L + powq(2.0L, -110.0L),
-    	1.0L - powq(2.0L, -111.0L), -1.0L + powq(2.0L, -111.0L),
-    };
-    for(int i = 0; i < 26; i++) {
-		printf("%.20Lf", value_float128s[i]);
-		modern *value = modern_node_make_float128(library, value_float128s[i]);
-		
-		struct modern_hash hash;
-		modern_node_canonical_hash(library, value, &hash);
-		
-		modern_release(library, value);
-	}
-	*/
 }

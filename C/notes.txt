@@ -1,60 +1,45 @@
-Combinators
+eval (apply (apply (+) 4) 5)                                            {}
+  apply (apply (+) 4) 5                                                 []
+    expect 1
+    apply (+) 4                                                         [5]
+      expect 2
+      result 9
+      return 2
+    result 9
+    return 1
+  result 9
+  return success
 
-(named "K" (lambda (lambda 1)))
-(named "S" (lambda (lambda (lambda (apply (apply 2 0) (apply 1 0))))))
-(named "->" (lambda (lambda (structure ("left" 1) ("right" 0)))))
-
-
-Parametric
-
-Pair a = Pair a a
-
-(named "Pair"
-  (lambda (structure ("field1" 0)
-                     ("field2" 0))))
-
-
-Recursion
-
-Tree = Interior Tree Tree | Leaf Nat64
-
-(named "Tree"
-  (apply "S"
-         (lambda (union ("interior" (structure ("left" 0) ("right" 0)))
-                        ("leaf" nat64)))))
-
-
-Parametric with recursion
-
-Tree a = Interior (Tree a) (Tree a) | Leaf a
-
-(named "Tree"
-  (apply "S"
-    (lambda
-      (lambda
-        (union ("interior" (structure ("left" (apply 1 0))
-                                      ("right" (apply 1 0))))
-               ("leaf" 0))))))
-
-
-Mutual recursion
-
-Red = Red Black | RedLeaf
-Black = Black Red Red | BlackLeaf
-
-(family 2
-  (named "A"
-    (union ("interior" 0)
-           ("leaf" utf8)))
-  (named "B"
-    (union ("interior" 1)
-           ("leaf" int64))))
+eval (apply (apply (\foo -> (\bar -> (apply (apply (+) foo) bar)) 4) 5) {}
+  apply (apply (\foo -> (\bar -> (apply (apply (+) foo) bar))) 4) 5     []
+    expect 1
+    apply (\foo -> (\bar -> (apply (apply (+) foo) bar))) 4             [5]
+      expect 2
+      eval (\bar -> (apply (apply (+) foo) bar))                        {foo: 4}
+        result (\bar -> (apply (apply (+) 4) bar))
+        return success
+      result (\bar -> (apply (apply (+) 4) bar))
+      ... now we have consumed only 1 parameter!
+      return 1
+    apply (\bar -> (apply (apply (+) 4) bar)) 5                         []
+      expect 1
+      eval (apply (apply (+) 4) bar)                                    {bar: 5}
+        apply (apply (+) 4) 5                                           []
+          expect 1
+          apply (+) 4                                                   [5]
+            expect 2
+            result 9
+            return 2
+          result 9
+          return 1
+        result 9
+        return success
+      result 9
+      return 1
+    result 9
+    return 1
+  result 9
+  return success
 
 
-Application
-
-Foo a = Foo (a Int64)
-
-(named "Foo"
-  (apply "S" (lambda (lambda (apply 0 int64)))))
-
+So, under-consumption is possible (since we are type-safe) only in the presence of

@@ -24,6 +24,9 @@ struct modern {
     struct modern *value_type;
     struct modern_hash canonical_hash;
     union {
+        struct {
+            struct modern *content_value;
+        } maybe_value;
         int8_t int8_value;
         int16_t int16_value;
         int32_t int32_value;
@@ -48,7 +51,9 @@ struct modern {
             struct modern *successor;
         } sigma_value;
         struct {
-            struct modern *type;
+            struct modern_hash hash;
+        } name_value;
+        struct {
             struct modern *value;
         } named_value;
         struct {

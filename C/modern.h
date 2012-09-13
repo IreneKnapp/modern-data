@@ -106,9 +106,9 @@ struct modern_stream {
       (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_sigma_is_next)
       (void *processor_state, void *stream_state,
-       struct modern_hash *a, struct modern_hash *b);
+       struct modern_hash a, struct modern_hash b);
     void (*modern_stream_type_definition_named_is_next)
-      (void *processor_state, void *stream_state, struct modern_hash *name);
+      (void *processor_state, void *stream_state, struct modern_hash name);
     void (*modern_stream_type_definition_universe)
       (void *processor_state, void *stream_state);
     void (*modern_stream_false)
@@ -154,7 +154,7 @@ struct modern_stream {
     void (*modern_stream_blob_end)
       (void *processor_state, void *stream_state);
     void (*modern_stream_named_value_is_next)
-      (void *processor_state, void *stream_state, struct modern_hash *name);
+      (void *processor_state, void *stream_state, struct modern_hash name);
     void (*modern_stream_lambda_is_next)
       (void *processor_state, void *stream_state);
     void (*modern_stream_apply_is_next)
@@ -168,7 +168,7 @@ struct modern_stream {
     void (*modern_stream_builtin_is_next)
       (void *processor_state, void *stream_state, uint16_t identifier);
     void (*modern_stream_item_from_context_is_next)
-      (void *processor_state, void *stream_state, struct modern_hash *type);
+      (void *processor_state, void *stream_state, struct modern_hash type);
     void (*modern_stream_end)
       (void *processor_state, void *stream_state);
     void (*modern_stream_finalize)
@@ -251,16 +251,16 @@ enum modern_builtin_identifier {
     equal_to_name_modern_builtin_identifier = 139,
     equal_to_utf8_modern_builtin_identifier = 140,
     equal_to_blob_modern_builtin_identifier = 150,
-    less_than_int8_modern_builtin_identifier = 160,
-    less_than_int16_modern_builtin_identifier = 161,
-    less_than_int32_modern_builtin_identifier = 162,
-    less_than_int64_modern_builtin_identifier = 163,
-    less_than_nat8_modern_builtin_identifier = 164,
-    less_than_nat16_modern_builtin_identifier = 165,
-    less_than_nat32_modern_builtin_identifier = 166,
-    less_than_nat64_modern_builtin_identifier = 167,
-    less_than_float32_modern_builtin_identifier = 168,
-    less_than_float64_modern_builtin_identifier = 169,
+    compare_int8_modern_builtin_identifier = 160,
+    compare_int16_modern_builtin_identifier = 161,
+    compare_int32_modern_builtin_identifier = 162,
+    compare_int64_modern_builtin_identifier = 163,
+    compare_nat8_modern_builtin_identifier = 164,
+    compare_nat16_modern_builtin_identifier = 165,
+    compare_nat32_modern_builtin_identifier = 166,
+    compare_nat64_modern_builtin_identifier = 167,
+    compare_float32_modern_builtin_identifier = 168,
+    compare_float64_modern_builtin_identifier = 169,
     add_int8_modern_builtin_identifier = 192,
     add_int16_modern_builtin_identifier = 193,
     add_int32_modern_builtin_identifier = 194,
@@ -732,7 +732,7 @@ extern void modern_add_to_context
    modern_context *context, modern *node);
 extern modern *modern_get_from_context
   (modern_library *library,
-   modern_context *context, struct modern_hash *hash);
+   modern_context *context, struct modern_hash hash);
 
 extern modern *modern_deserialize_memory
   (modern_library *library,
@@ -849,6 +849,9 @@ extern modern *modern_node_get_sigma_successor
 extern modern *modern_node_get_sigma_successor_link
   (modern_library *library,
    modern *value);
+extern struct modern_hash modern_node_get_name_hash
+  (modern_library *library,
+   modern *value);
 extern modern *modern_node_get_named_value
   (modern_library *library,
    modern *value);
@@ -885,7 +888,7 @@ extern modern *modern_node_get_sigma_type_successor
 extern modern *modern_node_get_sigma_type_successor_link
   (modern_library *library,
    modern *value);
-extern struct modern_hash *modern_node_get_named_type_name
+extern struct modern_hash modern_node_get_named_type_name
   (modern_library *library,
    modern *value);
 extern modern *modern_node_get_named_type_content_type
@@ -1001,7 +1004,7 @@ extern modern *modern_node_make_sigma
    modern *type, modern *field_value, modern *successor_value);
 extern modern *modern_node_make_name
   (modern_library *library,
-   struct modern_hash *name);
+   struct modern_hash name);
 extern modern *modern_node_make_named_value
   (modern_library *library,
    modern *type, modern *value);
@@ -1045,7 +1048,7 @@ extern modern *modern_node_make_name_type
   (modern_library *library);
 extern modern *modern_node_make_named_type
   (modern_library *library,
-   struct modern_hash *name, modern *content_type);
+   struct modern_hash name, modern *content_type);
 extern modern *modern_node_make_universe_type
   (modern_library *library,
    uint64_t level);
@@ -1169,7 +1172,7 @@ extern void modern_node_set_sigma_type_successor
 extern void modern_node_set_named_type_name
   (modern_library *library,
    modern *value,
-   struct modern_hash *name);
+   struct modern_hash name);
 extern void modern_node_set_named_type_content_type
   (modern_library *library,
    modern *value,
@@ -1226,7 +1229,7 @@ extern void modern_node_set_builtin_identifier
    modern *value,
    uint16_t identifier);
 
-extern void modern_node_canonical_hash
+extern int modern_node_canonical_hash
   (modern_library *library,
    modern *value,
    struct modern_hash *out);

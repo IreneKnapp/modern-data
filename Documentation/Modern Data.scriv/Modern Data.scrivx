@@ -27,14 +27,44 @@
                         <TextSelection>1939,0</TextSelection>
                     </TextSettings>
                     <Children>
-                        <BinderItem ID="301" Type="Text" Created="2012-09-10 12:42:55 -0400" Modified="2012-09-12 15:56:51 -0400">
-                            <Title>Caveats</Title>
+                        <BinderItem ID="301" Type="Text" Created="2012-09-10 12:42:55 -0400" Modified="2012-09-13 16:11:33 -0400">
+                            <Title>Scoping</Title>
                             <MetaData>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
                             <TextSettings>
-                                <TextSelection>4299,0</TextSelection>
+                                <TextSelection>991,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem ID="947" Type="Text" Created="2012-09-13 16:11:22 -0400" Modified="2012-09-13 16:11:59 -0400">
+                            <Title>Cyclic structures</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                                <NotesTextSelection>0,0</NotesTextSelection>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>2403,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem ID="948" Type="Text" Created="2012-09-13 16:11:48 -0400" Modified="2012-09-13 16:11:59 -0400">
+                            <Title>Mutation</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                                <NotesTextSelection>0,0</NotesTextSelection>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>1358,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem ID="949" Type="Text" Created="2012-09-13 16:12:26 -0400" Modified="2012-09-13 17:08:17 -0400">
+                            <Title>Evaluation</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                                <NotesTextSelection>0,0</NotesTextSelection>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>980,0</TextSelection>
                             </TextSettings>
                         </BinderItem>
                     </Children>
@@ -366,7 +396,7 @@
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
                                     <TextSettings>
-                                        <TextSelection>1,0</TextSelection>
+                                        <TextSelection>56,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
                             </Children>
@@ -592,14 +622,15 @@
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
                                     <TextSettings>
-                                        <TextSelection>72,0</TextSelection>
+                                        <TextSelection>0,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
                             </Children>
                         </BinderItem>
-                        <BinderItem ID="126" Type="Folder" Created="2012-08-13 06:54:53 -0400" Modified="2012-08-13 07:12:25 -0400">
+                        <BinderItem ID="126" Type="Folder" Created="2012-08-13 06:54:53 -0400" Modified="2012-09-13 15:36:19 -0400">
                             <Title>Node-based object model</Title>
                             <MetaData>
+                                <StatusID>0</StatusID>
                                 <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -1347,6 +1378,16 @@
                                                     </MetaData>
                                                     <TextSettings>
                                                         <TextSelection>62,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="946" Type="Text" Created="2012-08-15 16:52:41 -0400" Modified="2012-09-13 13:49:36 -0400">
+                                                    <Title>modern_node_get_name_hash</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>0,89</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
                                                 <BinderItem ID="278" Type="Text" Created="2012-08-15 16:52:41 -0400" Modified="2012-08-15 16:54:36 -0400">
@@ -2651,14 +2692,14 @@
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
                                     <Children>
-                                        <BinderItem ID="284" Type="Text" Created="2012-08-17 13:54:36 -0400" Modified="2012-08-17 14:16:32 -0400">
+                                        <BinderItem ID="284" Type="Text" Created="2012-08-17 13:54:36 -0400" Modified="2012-09-13 11:46:53 -0400">
                                             <Title>modern_node_canonical</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
                                             <TextSettings>
-                                                <TextSelection>19,0</TextSelection>
+                                                <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
                                     </Children>
@@ -4057,8 +4098,8 @@
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
                                     <Children>
-                                        <BinderItem ID="429" Type="Text" Created="2012-09-12 13:49:23 -0400" Modified="2012-09-12 15:20:02 -0400">
-                                            <Title>less_than_int8_modern_builtin_identifier</Title>
+                                        <BinderItem ID="429" Type="Text" Created="2012-09-12 13:49:23 -0400" Modified="2012-09-13 14:02:27 -0400">
+                                            <Title>compare_int8_modern_builtin_identifier</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -4067,8 +4108,8 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="430" Type="Text" Created="2012-09-12 13:49:24 -0400" Modified="2012-09-12 15:20:02 -0400">
-                                            <Title>less_than_int16_modern_builtin_identifier</Title>
+                                        <BinderItem ID="430" Type="Text" Created="2012-09-12 13:49:24 -0400" Modified="2012-09-13 14:02:27 -0400">
+                                            <Title>compare_int16_modern_builtin_identifier</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -4077,8 +4118,8 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="431" Type="Text" Created="2012-09-12 13:49:30 -0400" Modified="2012-09-12 15:20:02 -0400">
-                                            <Title>less_than_int32_modern_builtin_identifier</Title>
+                                        <BinderItem ID="431" Type="Text" Created="2012-09-12 13:49:30 -0400" Modified="2012-09-13 14:02:27 -0400">
+                                            <Title>compare_int32_modern_builtin_identifier</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -4087,8 +4128,8 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="432" Type="Text" Created="2012-09-12 13:49:32 -0400" Modified="2012-09-12 15:20:02 -0400">
-                                            <Title>less_than_int64_modern_builtin_identifier</Title>
+                                        <BinderItem ID="432" Type="Text" Created="2012-09-12 13:49:32 -0400" Modified="2012-09-13 14:02:27 -0400">
+                                            <Title>compare_int64_modern_builtin_identifier</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -4097,8 +4138,8 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="433" Type="Text" Created="2012-09-12 13:49:33 -0400" Modified="2012-09-12 15:20:02 -0400">
-                                            <Title>less_than_nat8_modern_builtin_identifier</Title>
+                                        <BinderItem ID="433" Type="Text" Created="2012-09-12 13:49:33 -0400" Modified="2012-09-13 14:02:27 -0400">
+                                            <Title>compare_nat8_modern_builtin_identifier</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -4107,8 +4148,8 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="434" Type="Text" Created="2012-09-12 13:49:34 -0400" Modified="2012-09-12 15:20:02 -0400">
-                                            <Title>less_than_nat16_modern_builtin_identifier</Title>
+                                        <BinderItem ID="434" Type="Text" Created="2012-09-12 13:49:34 -0400" Modified="2012-09-13 14:02:27 -0400">
+                                            <Title>compare_nat16_modern_builtin_identifier</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -4117,8 +4158,8 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="435" Type="Text" Created="2012-09-12 13:49:36 -0400" Modified="2012-09-12 15:20:02 -0400">
-                                            <Title>less_than_nat32_modern_builtin_identifier</Title>
+                                        <BinderItem ID="435" Type="Text" Created="2012-09-12 13:49:36 -0400" Modified="2012-09-13 14:02:27 -0400">
+                                            <Title>compare_nat32_modern_builtin_identifier</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -4127,8 +4168,8 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="436" Type="Text" Created="2012-09-12 13:49:37 -0400" Modified="2012-09-12 15:20:02 -0400">
-                                            <Title>less_than_nat64_modern_builtin_identifier</Title>
+                                        <BinderItem ID="436" Type="Text" Created="2012-09-12 13:49:37 -0400" Modified="2012-09-13 14:02:27 -0400">
+                                            <Title>compare_nat64_modern_builtin_identifier</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -4137,8 +4178,8 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="437" Type="Text" Created="2012-09-12 13:49:37 -0400" Modified="2012-09-12 15:20:02 -0400">
-                                            <Title>less_than_float32_modern_builtin_identifier</Title>
+                                        <BinderItem ID="437" Type="Text" Created="2012-09-12 13:49:37 -0400" Modified="2012-09-13 14:02:27 -0400">
+                                            <Title>compare_float32_modern_builtin_identifier</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -4147,8 +4188,8 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="438" Type="Text" Created="2012-09-12 13:49:38 -0400" Modified="2012-09-12 15:20:02 -0400">
-                                            <Title>less_than_float64_modern_builtin_identifier</Title>
+                                        <BinderItem ID="438" Type="Text" Created="2012-09-12 13:49:38 -0400" Modified="2012-09-13 14:02:27 -0400">
+                                            <Title>compare_float64_modern_builtin_identifier</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -9653,7 +9694,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="1" Characters="29" Date="2012-09-13 11:11:46 -0400"></PreviousSession>
+        <PreviousSession Words="666" Characters="3844" Date="2012-09-13 11:11:46 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>

@@ -365,12 +365,12 @@ modern *modern_node_get_sigma_type_successor
 }
 
 
-struct modern_hash *modern_node_get_named_type_name
+struct modern_hash modern_node_get_named_type_name
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
-    return &value->specifics.named_type.name;
+    return value->specifics.named_type.name;
 }
 
 

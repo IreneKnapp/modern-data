@@ -680,8 +680,7 @@ modern *modern_node_make_named_value
     result->memory.finalizer = helper_finalize_named_value;
     
     result->node_type = named_value_modern_node_type;
-    result->value_type = NULL;
-    result->specifics.named_value.type = type;
+    result->value_type = type;
     result->specifics.named_value.value = value;
     
     modern_retain(library_in, type_in);
@@ -696,7 +695,6 @@ HELPER void helper_finalize_named_value
 {
     struct modern *node = (struct modern *) retainable;
     
-    modern_release(library, node->specifics.named_value.type);
     modern_release(library, node->specifics.named_value.value);
     
     if(node->value_type) modern_release(library, node->value_type);
@@ -1333,7 +1331,7 @@ HELPER void helper_finalize_name_type
 
 modern *modern_node_make_named_type
     (modern_library *library_in,
-     struct modern_hash *name, modern *content_type)
+     struct modern_hash name, modern *content_type)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
@@ -1353,7 +1351,7 @@ modern *modern_node_make_named_type
     
     result->node_type = named_type_modern_node_type;
     result->value_type = NULL;
-    result->specifics.named_type.name = *name;
+    result->specifics.named_type.name = name;
     result->specifics.named_type.content_type = content_type;
     
     return (modern *) result;

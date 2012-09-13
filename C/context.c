@@ -70,7 +70,7 @@ void modern_add_to_context
 
 modern *modern_get_from_context
   (modern_library *library,
-   modern_context *context, struct modern_hash *hash)
+   modern_context *context, struct modern_hash hash)
 {
     // TODO
     return NULL;
