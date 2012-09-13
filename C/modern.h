@@ -940,6 +940,9 @@ extern modern *modern_node_get_let_content_link
 extern uint64_t modern_node_get_backreference_index
   (modern_library *library,
    modern *value);
+extern modern *modern_node_get_backreference_link
+  (modern_library *library,
+   modern *value);
 extern uint16_t modern_node_get_builtin_identifier
   (modern_library *library,
    modern *value);
@@ -1060,7 +1063,8 @@ extern modern *modern_node_make_let
    uint64_t n_items, modern **values, modern *content);
 extern modern *modern_node_make_backreference
   (modern_library *library,
-   uint64_t index);
+   uint64_t index,
+   modern *link);
 extern modern *modern_node_make_builtin
   (modern_library *library,
    uint16_t identifier);
@@ -1212,6 +1216,10 @@ extern void modern_node_set_backreference_index
   (modern_library *library,
    modern *value,
    uint64_t index);
+extern void modern_node_set_backreference_link
+  (modern_library *library,
+   modern *value,
+   modern *link);
 extern void modern_node_set_builtin_identifier
   (modern_library *library,
    modern *value,

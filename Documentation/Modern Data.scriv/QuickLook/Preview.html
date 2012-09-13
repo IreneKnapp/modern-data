@@ -862,6 +862,12 @@ modern_node_get_backreference_index<br/>
  modern *value);</p>
 </li>
 <li>
+<p class="binderItem"><strong>modern_node_get_backreference_link</strong><br/>modern *<br/>
+modern_node_get_backreference_link<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
 <p class="binderItem"><strong>modern_node_get_builtin_identifier</strong><br/>uint16_t<br/>
 modern_node_get_builtin_identifier<br/>
 (modern_library *library,<br/>
@@ -1146,7 +1152,15 @@ modern_node_make_let<br/>
 <p class="binderItem"><strong>modern_node_make_backreference</strong><br/>modern *<br/>
 modern_node_make_backreference<br/>
 (modern_library *library,<br/>
- uint64_t index);</p>
+ uint64_t index,<br/>
+ modern *link);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_backreference_with_link</strong><br/>modern *<br/>
+modern_node_make_backreference_with_link<br/>
+(modern_library *library,<br/>
+ uint64_t index,<br/>
+ modern *link);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_builtin</strong><br/>modern *<br/>
@@ -1433,6 +1447,13 @@ modern_node_set_backreference_index<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  uint64_t index);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_set_backreference_link</strong><br/>void<br/>
+modern_node_set_backreference_link<br/>
+(modern_library *library,<br/>
+ modern *value,<br/>
+ modern *link);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_builtin_identifier</strong><br/>void<br/>
