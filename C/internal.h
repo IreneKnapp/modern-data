@@ -52,6 +52,9 @@ struct modern {
             struct modern *value;
         } named_value;
         struct {
+            struct modern *content_type;
+        } maybe_type;
+        struct {
             struct modern *left;
             struct modern *right;
         } function_type;
@@ -82,7 +85,10 @@ struct modern {
             struct modern **members;
             struct modern *content;
         } let;
-        uint64_t backreference;
+        struct {
+            uint64_t index;
+            struct modern *link;
+        } backreference;
         uint16_t builtin;
     } specifics;
 };

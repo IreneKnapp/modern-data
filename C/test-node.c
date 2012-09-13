@@ -1,3 +1,4 @@
+#include <string.h>
 #include <math.h>
 #include "modern.h"
 #include "test.h"
@@ -1357,7 +1358,7 @@ static int test_utf8_node_create_and_readback
         uint8_t *actual_value =
             modern_node_get_utf8_data_piece(library, node, 0, actual_bytes);
         if(value == actual_value) succeeded = 0;
-        if(strcmp(value, actual_value)) succeeded = 0;
+        if(strcmp((char *) value, (char *) actual_value)) succeeded = 0;
     }
     
     modern *type = NULL;

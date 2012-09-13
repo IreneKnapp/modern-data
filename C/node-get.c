@@ -20,6 +20,20 @@ modern *modern_node_get_value_type
     if(value->value_type) return value->value_type;
     
     switch(value->node_type) {
+    case bool_value_false_modern_node_type:
+        value->value_type = modern_node_make_bool_type(library_in);
+        break;
+    
+    case bool_value_true_modern_node_type:
+        value->value_type = modern_node_make_bool_type(library_in);
+        break;
+    
+    case maybe_value_nothing_modern_node_type:
+        break;
+    
+    case maybe_value_just_modern_node_type:
+        break;
+    
     case int8_value_modern_node_type:
         value->value_type = modern_node_make_int8_type(library_in);
         break;
@@ -71,9 +85,14 @@ modern *modern_node_get_value_type
     case sigma_value_modern_node_type:
         break;
     
+    case name_value_modern_node_type:
+        value->value_type = modern_node_make_name_type(library_in);
+    
     case named_value_modern_node_type:
         break;
     
+    case bool_type_modern_node_type:
+    case maybe_type_modern_node_type:
     case int8_type_modern_node_type:
     case int16_type_modern_node_type:
     case int32_type_modern_node_type:
@@ -88,6 +107,7 @@ modern *modern_node_get_value_type
     case blob_type_modern_node_type:
     case function_type_modern_node_type:
     case sigma_type_modern_node_type:
+    case name_type_modern_node_type:
     case named_type_modern_node_type:
         value->value_type = modern_node_make_universe_type(library_in, 0);
         break;
@@ -130,9 +150,7 @@ modern *modern_node_get_value_type
     
     case builtin_modern_node_type:
         switch(value->specifics.builtin) {
-        case plus_int8_modern_builtin_identifier:
             // TODO
-            break;
         default: break;
         }
     }

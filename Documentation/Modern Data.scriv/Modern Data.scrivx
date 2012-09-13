@@ -359,6 +359,16 @@
                                         <TextSelection>75,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
+                                <BinderItem ID="945" Type="Text" Created="2012-09-13 11:23:05 -0400" Modified="2012-09-13 11:23:40 -0400">
+                                    <Title>modern_error_handler_usage</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>1,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
                             </Children>
                         </BinderItem>
                         <BinderItem ID="11" Type="Folder" Created="2012-08-13 06:42:45 -0400" Modified="2012-08-13 16:01:05 -0400">
@@ -1943,7 +1953,7 @@
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>0,0</TextSelection>
+                                                        <TextSelection>0,62</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
                                                 <BinderItem ID="907" Type="Text" Created="2012-08-13 07:01:46 -0400" Modified="2012-09-12 16:09:37 -0400">
@@ -1953,7 +1963,7 @@
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>0,86</TextSelection>
+                                                        <TextSelection>86,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
                                                 <BinderItem ID="172" Type="Text" Created="2012-08-13 06:58:02 -0400" Modified="2012-08-15 13:31:40 -0400">
@@ -2096,14 +2106,14 @@
                                                         <TextSelection>0,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
-                                                <BinderItem ID="413" Type="Text" Created="2012-08-13 07:01:51 -0400" Modified="2012-09-12 11:32:43 -0400">
+                                                <BinderItem ID="413" Type="Text" Created="2012-08-13 07:01:51 -0400" Modified="2012-09-13 11:15:04 -0400">
                                                     <Title>modern_node_make_name_type</Title>
                                                     <MetaData>
                                                         <IncludeInCompile>Yes</IncludeInCompile>
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>89,0</TextSelection>
+                                                        <TextSelection>60,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
                                                 <BinderItem ID="191" Type="Text" Created="2012-08-13 07:01:51 -0400" Modified="2012-08-15 13:22:06 -0400">
@@ -9643,7 +9653,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="12" Characters="216" Date="2012-09-12 22:00:21 -0400"></PreviousSession>
+        <PreviousSession Words="1" Characters="29" Date="2012-09-13 11:11:46 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>

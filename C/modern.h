@@ -40,6 +40,8 @@ struct modern_error_handler {
       (void *client_state, modern *node);
     void (*modern_error_handler_builtin_identifier)
       (void *client_state, uint16_t identifier);
+    void (*modern_error_handler_usage)
+      (void *client_state);
  };
 
 
@@ -1040,8 +1042,7 @@ extern modern *modern_node_make_sigma_type
   (modern_library *library,
    modern *field_type, modern *successor);
 extern modern *modern_node_make_name_type
-  (modern_library *library,
-   struct modern_hash *name);
+  (modern_library *library);
 extern modern *modern_node_make_named_type
   (modern_library *library,
    struct modern_hash *name, modern *content_type);
