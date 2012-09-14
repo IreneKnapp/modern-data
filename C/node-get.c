@@ -28,6 +28,18 @@ modern *modern_node_get_value_type
         value->value_type = modern_node_make_bool_type(library_in);
         break;
     
+    case ordering_value_less_modern_node_type:
+        value->value_type = modern_node_make_ordering_type(library_in);
+        break;
+    
+    case ordering_value_equal_modern_node_type:
+        value->value_type = modern_node_make_ordering_type(library_in);
+        break;
+    
+    case ordering_value_greater_modern_node_type:
+        value->value_type = modern_node_make_ordering_type(library_in);
+        break;
+    
     case maybe_value_nothing_modern_node_type:
         break;
     
@@ -92,6 +104,7 @@ modern *modern_node_get_value_type
         break;
     
     case bool_type_modern_node_type:
+    case ordering_type_modern_node_type:
     case maybe_type_modern_node_type:
     case int8_type_modern_node_type:
     case int16_type_modern_node_type:

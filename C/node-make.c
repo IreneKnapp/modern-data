@@ -36,6 +36,8 @@ HELPER void helper_finalize_named_value
   (struct modern_library *library, void *retainable);
 HELPER void helper_finalize_bool_type
   (struct modern_library *library, void *retainable);
+HELPER void helper_finalize_ordering_type
+  (struct modern_library *library, void *retainable);
 HELPER void helper_finalize_maybe_type
   (struct modern_library *library, void *retainable);
 HELPER void helper_finalize_int8_type
@@ -728,6 +730,41 @@ modern *modern_node_make_bool_type
 
 
 HELPER void helper_finalize_bool_type
+  (struct modern_library *library, void *retainable)
+{
+    struct modern *node = (struct modern *) retainable;
+    
+    if(node->value_type) modern_release(library, node->value_type);
+}
+
+
+modern *modern_node_make_ordering_type
+    (modern_library *library_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    
+    size_t result_size = sizeof(struct modern);
+    struct modern *result =
+        library->allocator->modern_allocator_alloc
+            (library->client_state, result_size);
+    if(!result) {
+        library->error_handler->modern_error_handler_memory
+            (library->client_state, result_size);
+        return NULL;
+    }
+    
+    result->memory.retain_count = 1;
+    result->memory.is_autoreleased = 0;
+    result->memory.finalizer = helper_finalize_ordering_type;
+    
+    result->node_type = ordering_type_modern_node_type;
+    result->value_type = NULL;
+    
+    return (modern *) result;
+}
+
+
+HELPER void helper_finalize_ordering_type
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1618,8 +1655,7 @@ HELPER void helper_finalize_let
 
 modern *modern_node_make_backreference
     (modern_library *library_in,
-     uint64_t index,
-     modern *link)
+     uint64_t index)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
@@ -1633,10 +1669,6 @@ modern *modern_node_make_backreference
         return NULL;
     }
     
-    if(link) {
-        modern_retain(library, link);
-    }
-    
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
     result->memory.finalizer = helper_finalize_backreference;
@@ -1644,7 +1676,6 @@ modern *modern_node_make_backreference
     result->node_type = backreference_modern_node_type;
     result->value_type = NULL;
     result->specifics.backreference.index = index;
-    result->specifics.backreference.link = link;
     
     return (modern *) result;
 }
@@ -1656,9 +1687,6 @@ HELPER void helper_finalize_backreference
     struct modern *node = (struct modern *) retainable;
     
     if(node->value_type) modern_release(library, node->value_type);
-    
-    if(node->specifics.backreference.link)
-        modern_release(library, node->specifics.backreference.link);
 }
 
 

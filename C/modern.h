@@ -76,6 +76,8 @@ struct modern_stream {
       (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_bool)
       (void *processor_state, void *stream_state);
+    void (*modern_stream_type_definition_ordering)
+      (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_maybe_is_next)
       (void *processor_state, void *stream_state);
     void (*modern_stream_type_definition_int8)
@@ -111,13 +113,19 @@ struct modern_stream {
       (void *processor_state, void *stream_state, struct modern_hash name);
     void (*modern_stream_type_definition_universe)
       (void *processor_state, void *stream_state);
-    void (*modern_stream_false)
+    void (*modern_stream_bool_false)
       (void *processor_state, void *stream_state);
-    void (*modern_stream_true)
+    void (*modern_stream_bool_true)
       (void *processor_state, void *stream_state);
-    void (*modern_stream_nothing)
+    void (*modern_stream_ordering_less)
       (void *processor_state, void *stream_state);
-    void (*modern_stream_just_is_next)
+    void (*modern_stream_ordering_equal)
+      (void *processor_state, void *stream_state);
+    void (*modern_stream_ordering_greater)
+      (void *processor_state, void *stream_state);
+    void (*modern_stream_maybe_nothing)
+      (void *processor_state, void *stream_state);
+    void (*modern_stream_maybe_just_is_next)
       (void *processor_state, void *stream_state);
     void (*modern_stream_int8)
       (void *processor_state, void *stream_state, int8_t value);
@@ -186,49 +194,53 @@ struct modern_vfile {
 
 enum modern_node_type {
     bool_value_false_modern_node_type = 1,
-    bool_value_true_modern_node_type,
-    maybe_value_nothing_modern_node_type,
-    maybe_value_just_modern_node_type,
-    int8_value_modern_node_type,
-    int16_value_modern_node_type,
-    int32_value_modern_node_type,
-    int64_value_modern_node_type,
-    nat8_value_modern_node_type,
-    nat16_value_modern_node_type,
-    nat32_value_modern_node_type,
-    nat64_value_modern_node_type,
-    float32_value_modern_node_type,
-    float64_value_modern_node_type,
-    utf8_value_modern_node_type,
-    blob_value_modern_node_type,
-    sigma_value_modern_node_type,
-    name_value_modern_node_type,
-    named_value_modern_node_type,
-    bool_type_modern_node_type,
-    maybe_type_modern_node_type,
-    int8_type_modern_node_type,
-    int16_type_modern_node_type,
-    int32_type_modern_node_type,
-    int64_type_modern_node_type,
-    nat8_type_modern_node_type,
-    nat16_type_modern_node_type,
-    nat32_type_modern_node_type,
-    nat64_type_modern_node_type,
-    float32_type_modern_node_type,
-    float64_type_modern_node_type,
-    utf8_type_modern_node_type,
-    blob_type_modern_node_type,
-    function_type_modern_node_type,
-    sigma_type_modern_node_type,
-    name_type_modern_node_type,
-    named_type_modern_node_type,
-    universe_type_modern_node_type,
-    lambda_modern_node_type,
-    apply_modern_node_type,
-    type_family_modern_node_type,
-    let_modern_node_type,
-    backreference_modern_node_type,
-    builtin_modern_node_type,
+    bool_value_true_modern_node_type = 2,
+    ordering_value_less_modern_node_type = 3,
+    ordering_value_equal_modern_node_type = 4,
+    ordering_value_greater_modern_node_type = 5,
+    maybe_value_nothing_modern_node_type = 6,
+    maybe_value_just_modern_node_type = 7,
+    int8_value_modern_node_type = 8,
+    int16_value_modern_node_type = 9,
+    int32_value_modern_node_type = 10,
+    int64_value_modern_node_type = 11,
+    nat8_value_modern_node_type = 12,
+    nat16_value_modern_node_type = 13,
+    nat32_value_modern_node_type = 14,
+    nat64_value_modern_node_type = 15,
+    float32_value_modern_node_type = 16,
+    float64_value_modern_node_type = 17,
+    utf8_value_modern_node_type = 18,
+    blob_value_modern_node_type = 19,
+    sigma_value_modern_node_type = 20,
+    name_value_modern_node_type = 21,
+    named_value_modern_node_type = 22,
+    bool_type_modern_node_type = 23,
+    ordering_type_modern_node_type = 24,
+    maybe_type_modern_node_type = 25,
+    int8_type_modern_node_type = 26,
+    int16_type_modern_node_type = 27,
+    int32_type_modern_node_type = 28,
+    int64_type_modern_node_type = 29,
+    nat8_type_modern_node_type = 30,
+    nat16_type_modern_node_type = 31,
+    nat32_type_modern_node_type = 32,
+    nat64_type_modern_node_type = 33,
+    float32_type_modern_node_type = 34,
+    float64_type_modern_node_type = 35,
+    utf8_type_modern_node_type = 36,
+    blob_type_modern_node_type = 37,
+    function_type_modern_node_type = 38,
+    sigma_type_modern_node_type = 39,
+    name_type_modern_node_type = 40,
+    named_type_modern_node_type = 41,
+    universe_type_modern_node_type = 42,
+    lambda_modern_node_type = 43,
+    apply_modern_node_type = 44,
+    type_family_modern_node_type = 45,
+    let_modern_node_type = 46,
+    backreference_modern_node_type = 47,
+    builtin_modern_node_type = 48,
 };
 
 
@@ -251,6 +263,7 @@ enum modern_builtin_identifier {
     equal_to_name_modern_builtin_identifier = 139,
     equal_to_utf8_modern_builtin_identifier = 140,
     equal_to_blob_modern_builtin_identifier = 150,
+    equal_to_ordering_modern_builtin_identifier = 151,
     compare_int8_modern_builtin_identifier = 160,
     compare_int16_modern_builtin_identifier = 161,
     compare_int32_modern_builtin_identifier = 162,
@@ -945,9 +958,6 @@ extern modern *modern_node_get_let_content_link
 extern uint64_t modern_node_get_backreference_index
   (modern_library *library,
    modern *value);
-extern modern *modern_node_get_backreference_link
-  (modern_library *library,
-   modern *value);
 extern uint16_t modern_node_get_builtin_identifier
   (modern_library *library,
    modern *value);
@@ -955,6 +965,12 @@ extern uint16_t modern_node_get_builtin_identifier
 extern modern *modern_node_make_bool_false
   (modern_library *library);
 extern modern *modern_node_make_bool_true
+  (modern_library *library);
+extern modern *modern_node_make_ordering_less
+  (modern_library *library);
+extern modern *modern_node_make_ordering_equal
+  (modern_library *library);
+extern modern *modern_node_make_ordering_greater
   (modern_library *library);
 extern modern *modern_node_make_maybe_nothing
   (modern_library *library,
@@ -1010,6 +1026,8 @@ extern modern *modern_node_make_named_value
    modern *type, modern *value);
 
 extern modern *modern_node_make_bool_type
+  (modern_library *library);
+extern modern *modern_node_make_ordering_type
   (modern_library *library);
 extern modern *modern_node_make_maybe_type
   (modern_library *library,
@@ -1067,8 +1085,7 @@ extern modern *modern_node_make_let
    uint64_t n_items, modern **values, modern *content);
 extern modern *modern_node_make_backreference
   (modern_library *library,
-   uint64_t index,
-   modern *link);
+   uint64_t index);
 extern modern *modern_node_make_builtin
   (modern_library *library,
    uint16_t identifier);
@@ -1135,13 +1152,10 @@ extern void modern_node_set_blob_data_piece
    size_t offset,
    size_t old_bytes,
    size_t new_bytes);
-extern void modern_node_set_sigma_field_value
+extern void modern_node_set_sigma
   (modern_library *library,
    modern *value,
-   modern *field_value);
-extern void modern_node_set_sigma_successor
-  (modern_library *library,
-   modern *value,
+   modern *field_value,
    modern *successor);
 extern void modern_node_set_named_value
   (modern_library *library,
@@ -1220,10 +1234,6 @@ extern void modern_node_set_backreference_index
   (modern_library *library,
    modern *value,
    uint64_t index);
-extern void modern_node_set_backreference_link
-  (modern_library *library,
-   modern *value,
-   modern *link);
 extern void modern_node_set_builtin_identifier
   (modern_library *library,
    modern *value,
@@ -1294,6 +1304,8 @@ extern void *modern_output_stream_vfile
    struct modern_vfile *vfile, void *vfile_state);
 
 extern modern *modern_evaluate
+  (modern_library *library, modern *node);
+extern modern *modern_resolve_backreferences
   (modern_library *library, modern *node);
 
 extern void modern_compute_hash

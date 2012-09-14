@@ -132,6 +132,45 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
+    case ordering_value_less_modern_node_type:
+    {
+        uint8_t temporary[1];
+        
+        temporary[0] = ordering_value_less_modern_node_type;
+        
+        if(!helper_byte_buffer_append(library, canonical_form, temporary,
+                                      sizeof(temporary)))
+            return 0;
+        
+        return 1;
+    }
+    
+    case ordering_value_equal_modern_node_type:
+    {
+        uint8_t temporary[1];
+        
+        temporary[0] = ordering_value_equal_modern_node_type;
+        
+        if(!helper_byte_buffer_append(library, canonical_form, temporary,
+                                      sizeof(temporary)))
+            return 0;
+        
+        return 1;
+    }
+    
+    case ordering_value_greater_modern_node_type:
+    {
+        uint8_t temporary[1];
+        
+        temporary[0] = ordering_value_greater_modern_node_type;
+        
+        if(!helper_byte_buffer_append(library, canonical_form, temporary,
+                                      sizeof(temporary)))
+            return 0;
+        
+        return 1;
+    }
+    
     case maybe_value_nothing_modern_node_type:
     {
         uint8_t temporary[1];
@@ -510,6 +549,19 @@ HELPER int helper_visit_node_top_level
         uint8_t temporary[1];
         
         temporary[0] = bool_type_modern_node_type;
+        
+        if(!helper_byte_buffer_append(library, canonical_form, temporary,
+                                      sizeof(temporary)))
+            return 0;
+        
+        return 1;
+    }
+    
+    case ordering_type_modern_node_type:
+    {
+        uint8_t temporary[1];
+        
+        temporary[0] = ordering_type_modern_node_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))

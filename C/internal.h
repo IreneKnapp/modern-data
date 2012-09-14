@@ -92,7 +92,6 @@ struct modern {
         } let;
         struct {
             uint64_t index;
-            struct modern *link;
         } backreference;
         uint16_t builtin;
     } specifics;

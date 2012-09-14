@@ -35,7 +35,7 @@ A self-describing data format is a format like XML, JSON, or Common Lisp’s s-e
 <li>
 <p class="binderItem"><strong>Semantics</strong><br/>In Modern Data, the fundamental in-memory datatype is the “modern node”, which is a representation of, loosely, either a value or a type.  If we wish to specify further, we may occasionally refer to a “modern type” or “modern value”, but these concepts do not map to actual host-language datatypes; only “modern node” does.<br/>
 <br/>
-The operations on a modern node are serialization, deserialization, and evaluation.  Serialization is performed on a modern node in some “modern context”, and produces a strea...</p>
+The operations on a modern node are serialization and deserialization.  Serialization is performed on a stream of modern nodes in some “modern context”, and produces a stream ...</p>
 </li>
 <hr/>
 <ul>
@@ -100,7 +100,7 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not.  This is, not least, because there are no standardized names for the functions - though GNU libquadmath uses the “q” suffix on the ISO C99 base names.  The C type which would be the most likely candidate to be a 128-bit float, long double, is actually an 80-bit float on most Intel-related platforms, while non-Intel platforms seldom suppo...</p>
+<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libr...</p>
 </li>
 </ul>
 <hr/>
@@ -347,19 +347,6 @@ modern_compute_child_hash<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Evaluation</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>modern_evaluate</strong><br/>modern *<br/>
-modern_evaluate<br/>
-(modern_library *library,<br/>
- modern *node);</p>
-</li>
-</ul>
-<hr/>
-<li>
 <p class="binderItem"><strong>Node-based object model</strong><br/>Take out backreference links after all.<br/>
 <br/>
 Add orderings.</p>
@@ -383,130 +370,142 @@ Add orderings.</p>
 <p class="binderItem"><strong>bool_value_true_modern_node_type</strong><br/>bool_value_true_modern_node_type = 2</p>
 </li>
 <li>
-<p class="binderItem"><strong>maybe_value_nothing_modern_node_type</strong><br/>maybe_value_nothing_modern_node_type = 3</p>
+<p class="binderItem"><strong>ordering_value_less_modern_node_type</strong><br/>ordering_value_less_modern_node_type = 3</p>
 </li>
 <li>
-<p class="binderItem"><strong>maybe_value_just_modern_node_type</strong><br/>maybe_value_just_modern_node_type = 4</p>
+<p class="binderItem"><strong>ordering_value_equal_modern_node_type</strong><br/>ordering_value_equal_modern_node_type = 4</p>
 </li>
 <li>
-<p class="binderItem"><strong>int8_value_modern_node_type</strong><br/>int8_value_modern_node_type = 5</p>
+<p class="binderItem"><strong>ordering_value_greater_modern_node_type</strong><br/>ordering_value_greater_modern_node_type = 5</p>
 </li>
 <li>
-<p class="binderItem"><strong>int16_value_modern_node_type</strong><br/>int16_value_modern_node_type = 6</p>
+<p class="binderItem"><strong>maybe_value_nothing_modern_node_type</strong><br/>maybe_value_nothing_modern_node_type = 6</p>
 </li>
 <li>
-<p class="binderItem"><strong>int32_value_modern_node_type</strong><br/>int32_value_modern_node_type = 7</p>
+<p class="binderItem"><strong>maybe_value_just_modern_node_type</strong><br/>maybe_value_just_modern_node_type = 7</p>
 </li>
 <li>
-<p class="binderItem"><strong>int64_value_modern_node_type</strong><br/>int64_value_modern_node_type = 8</p>
+<p class="binderItem"><strong>int8_value_modern_node_type</strong><br/>int8_value_modern_node_type = 8</p>
 </li>
 <li>
-<p class="binderItem"><strong>nat8_value_modern_node_type</strong><br/>nat8_value_modern_node_type = 9</p>
+<p class="binderItem"><strong>int16_value_modern_node_type</strong><br/>int16_value_modern_node_type = 9</p>
 </li>
 <li>
-<p class="binderItem"><strong>nat16_value_modern_node_type</strong><br/>nat16_value_modern_node_type = 10</p>
+<p class="binderItem"><strong>int32_value_modern_node_type</strong><br/>int32_value_modern_node_type = 10</p>
 </li>
 <li>
-<p class="binderItem"><strong>nat32_value_modern_node_type</strong><br/>nat32_value_modern_node_type = 11</p>
+<p class="binderItem"><strong>int64_value_modern_node_type</strong><br/>int64_value_modern_node_type = 11</p>
 </li>
 <li>
-<p class="binderItem"><strong>nat64_value_modern_node_type</strong><br/>nat64_value_modern_node_type = 12</p>
+<p class="binderItem"><strong>nat8_value_modern_node_type</strong><br/>nat8_value_modern_node_type = 12</p>
 </li>
 <li>
-<p class="binderItem"><strong>float32_value_modern_node_type</strong><br/>float32_value_modern_node_type = 13</p>
+<p class="binderItem"><strong>nat16_value_modern_node_type</strong><br/>nat16_value_modern_node_type = 13</p>
 </li>
 <li>
-<p class="binderItem"><strong>float64_value_modern_node_type</strong><br/>float64_value_modern_node_type = 14</p>
+<p class="binderItem"><strong>nat32_value_modern_node_type</strong><br/>nat32_value_modern_node_type = 14</p>
 </li>
 <li>
-<p class="binderItem"><strong>utf8_value_modern_node_type</strong><br/>utf8_value_modern_node_type = 15</p>
+<p class="binderItem"><strong>nat64_value_modern_node_type</strong><br/>nat64_value_modern_node_type = 15</p>
 </li>
 <li>
-<p class="binderItem"><strong>blob_value_modern_node_type</strong><br/>blob_value_modern_node_type = 16</p>
+<p class="binderItem"><strong>float32_value_modern_node_type</strong><br/>float32_value_modern_node_type = 16</p>
 </li>
 <li>
-<p class="binderItem"><strong>sigma_value_modern_node_type</strong><br/>sigma_value_modern_node_type = 17</p>
+<p class="binderItem"><strong>float64_value_modern_node_type</strong><br/>float64_value_modern_node_type = 17</p>
 </li>
 <li>
-<p class="binderItem"><strong>name_value_modern_node_type</strong><br/>named_value_modern_node_type = 18</p>
+<p class="binderItem"><strong>utf8_value_modern_node_type</strong><br/>utf8_value_modern_node_type = 18</p>
 </li>
 <li>
-<p class="binderItem"><strong>named_value_modern_node_type</strong><br/>named_value_modern_node_type = 19</p>
+<p class="binderItem"><strong>blob_value_modern_node_type</strong><br/>blob_value_modern_node_type = 19</p>
 </li>
 <li>
-<p class="binderItem"><strong>bool_type_modern_node_type</strong><br/>bool_type_modern_node_type = 20</p>
+<p class="binderItem"><strong>sigma_value_modern_node_type</strong><br/>sigma_value_modern_node_type = 20</p>
 </li>
 <li>
-<p class="binderItem"><strong>maybe_type_modern_node_type</strong><br/>maybe_type_modern_node_type = 21</p>
+<p class="binderItem"><strong>name_value_modern_node_type</strong><br/>named_value_modern_node_type = 21</p>
 </li>
 <li>
-<p class="binderItem"><strong>int8_type_modern_node_type</strong><br/>int8_type_modern_node_type = 22</p>
+<p class="binderItem"><strong>named_value_modern_node_type</strong><br/>named_value_modern_node_type = 22</p>
 </li>
 <li>
-<p class="binderItem"><strong>int16_type_modern_node_type</strong><br/>int16_type_modern_node_type = 23</p>
+<p class="binderItem"><strong>bool_type_modern_node_type</strong><br/>bool_type_modern_node_type = 23</p>
 </li>
 <li>
-<p class="binderItem"><strong>int32_type_modern_node_type</strong><br/>int32_type_modern_node_type = 24</p>
+<p class="binderItem"><strong>ordering_type_modern_node_type</strong><br/>bool_type_modern_node_type = 24</p>
 </li>
 <li>
-<p class="binderItem"><strong>int64_type_modern_node_type</strong><br/>int64_type_modern_node_type = 25</p>
+<p class="binderItem"><strong>maybe_type_modern_node_type</strong><br/>maybe_type_modern_node_type = 25</p>
 </li>
 <li>
-<p class="binderItem"><strong>nat8_type_modern_node_type</strong><br/>nat8_type_modern_node_type = 26</p>
+<p class="binderItem"><strong>int8_type_modern_node_type</strong><br/>int8_type_modern_node_type = 26</p>
 </li>
 <li>
-<p class="binderItem"><strong>nat16_type_modern_node_type</strong><br/>nat16_type_modern_node_type = 27</p>
+<p class="binderItem"><strong>int16_type_modern_node_type</strong><br/>int16_type_modern_node_type = 27</p>
 </li>
 <li>
-<p class="binderItem"><strong>nat32_type_modern_node_type</strong><br/>nat32_type_modern_node_type = 28</p>
+<p class="binderItem"><strong>int32_type_modern_node_type</strong><br/>int32_type_modern_node_type = 28</p>
 </li>
 <li>
-<p class="binderItem"><strong>nat64_type_modern_node_type</strong><br/>nat64_type_modern_node_type = 29</p>
+<p class="binderItem"><strong>int64_type_modern_node_type</strong><br/>int64_type_modern_node_type = 29</p>
 </li>
 <li>
-<p class="binderItem"><strong>float32_type_modern_node_type</strong><br/>float32_type_modern_node_type = 30</p>
+<p class="binderItem"><strong>nat8_type_modern_node_type</strong><br/>nat8_type_modern_node_type = 30</p>
 </li>
 <li>
-<p class="binderItem"><strong>float64_type_modern_node_type</strong><br/>float64_type_modern_node_type = 31</p>
+<p class="binderItem"><strong>nat16_type_modern_node_type</strong><br/>nat16_type_modern_node_type = 31</p>
 </li>
 <li>
-<p class="binderItem"><strong>utf8_type_modern_node_type</strong><br/>utf8_type_modern_node_type = 32</p>
+<p class="binderItem"><strong>nat32_type_modern_node_type</strong><br/>nat32_type_modern_node_type = 32</p>
 </li>
 <li>
-<p class="binderItem"><strong>blob_type_modern_node_type</strong><br/>blob_type_modern_node_type = 33</p>
+<p class="binderItem"><strong>nat64_type_modern_node_type</strong><br/>nat64_type_modern_node_type = 33</p>
 </li>
 <li>
-<p class="binderItem"><strong>function_type_modern_node_type</strong><br/>blob_type_modern_node_type = 34</p>
+<p class="binderItem"><strong>float32_type_modern_node_type</strong><br/>float32_type_modern_node_type = 34</p>
 </li>
 <li>
-<p class="binderItem"><strong>sigma_type_modern_node_type</strong><br/>sigma_type_modern_node_type = 35</p>
+<p class="binderItem"><strong>float64_type_modern_node_type</strong><br/>float64_type_modern_node_type = 35</p>
 </li>
 <li>
-<p class="binderItem"><strong>name_type_modern_node_type</strong><br/>name_type_modern_node_type = 36</p>
+<p class="binderItem"><strong>utf8_type_modern_node_type</strong><br/>utf8_type_modern_node_type = 36</p>
 </li>
 <li>
-<p class="binderItem"><strong>named_type_modern_node_type</strong><br/>named_type_modern_node_type = 37</p>
+<p class="binderItem"><strong>blob_type_modern_node_type</strong><br/>blob_type_modern_node_type = 37</p>
 </li>
 <li>
-<p class="binderItem"><strong>universe_type_modern_node_type</strong><br/>universe_type_modern_node_type = 38</p>
+<p class="binderItem"><strong>function_type_modern_node_type</strong><br/>blob_type_modern_node_type = 38</p>
 </li>
 <li>
-<p class="binderItem"><strong>lambda_modern_node_type</strong><br/>lambda_modern_node_type = 39</p>
+<p class="binderItem"><strong>sigma_type_modern_node_type</strong><br/>sigma_type_modern_node_type = 39</p>
 </li>
 <li>
-<p class="binderItem"><strong>apply_modern_node_type</strong><br/>apply_modern_node_type = 40</p>
+<p class="binderItem"><strong>name_type_modern_node_type</strong><br/>name_type_modern_node_type = 40</p>
 </li>
 <li>
-<p class="binderItem"><strong>type_family_modern_node_type</strong><br/>type_family_modern_node_type = 41</p>
+<p class="binderItem"><strong>named_type_modern_node_type</strong><br/>named_type_modern_node_type = 41</p>
 </li>
 <li>
-<p class="binderItem"><strong>let_modern_node_type</strong><br/>let_modern_node_type = 42</p>
+<p class="binderItem"><strong>universe_type_modern_node_type</strong><br/>universe_type_modern_node_type = 42</p>
 </li>
 <li>
-<p class="binderItem"><strong>backreference_modern_node_type</strong><br/>backreference_modern_node_type = 43</p>
+<p class="binderItem"><strong>lambda_modern_node_type</strong><br/>lambda_modern_node_type = 43</p>
 </li>
 <li>
-<p class="binderItem"><strong>builtin_modern_node_type</strong><br/>builtin_modern_node_type = 44</p>
+<p class="binderItem"><strong>apply_modern_node_type</strong><br/>apply_modern_node_type = 44</p>
+</li>
+<li>
+<p class="binderItem"><strong>type_family_modern_node_type</strong><br/>type_family_modern_node_type = 45</p>
+</li>
+<li>
+<p class="binderItem"><strong>let_modern_node_type</strong><br/>let_modern_node_type = 46</p>
+</li>
+<li>
+<p class="binderItem"><strong>backreference_modern_node_type</strong><br/>backreference_modern_node_type = 47</p>
+</li>
+<li>
+<p class="binderItem"><strong>builtin_modern_node_type</strong><br/>builtin_modern_node_type = 48</p>
 </li>
 </ul>
 <hr/>
@@ -886,12 +885,6 @@ modern_node_get_backreference_index<br/>
  modern *value);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_node_get_backreference_link</strong><br/>modern *<br/>
-modern_node_get_backreference_link<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
 <p class="binderItem"><strong>modern_node_get_builtin_identifier</strong><br/>uint16_t<br/>
 modern_node_get_builtin_identifier<br/>
 (modern_library *library,<br/>
@@ -918,6 +911,21 @@ modern_node_make_bool_false<br/>
 <li>
 <p class="binderItem"><strong>modern_node_make_bool_true</strong><br/>modern *<br/>
 modern_node_make_bool_true<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_ordering_less</strong><br/>modern *<br/>
+modern_node_make_ordering_less<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_ordering_equal</strong><br/>modern *<br/>
+modern_node_make_ordering_equal<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_ordering_greater</strong><br/>modern *<br/>
+modern_node_make_ordering_greater<br/>
 (modern_library *library);</p>
 </li>
 <li>
@@ -1037,6 +1045,11 @@ modern_node_make_named_value<br/>
 <li>
 <p class="binderItem"><strong>modern_node_make_bool_type</strong><br/>modern *<br/>
 modern_node_make_bool_type<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_node_make_ordering_type</strong><br/>modern *<br/>
+modern_node_make_ordering_type<br/>
 (modern_library *library);</p>
 </li>
 <li>
@@ -1175,8 +1188,7 @@ modern_node_make_let<br/>
 <p class="binderItem"><strong>modern_node_make_backreference</strong><br/>modern *<br/>
 modern_node_make_backreference<br/>
 (modern_library *library,<br/>
- uint64_t index,<br/>
- modern *link);</p>
+ uint64_t index);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_builtin</strong><br/>modern *<br/>
@@ -1308,17 +1320,11 @@ modern_node_set_blob_data_piece<br/>
  size_t new_bytes);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_node_set_sigma_field_value</strong><br/>void<br/>
-modern_node_set_sigma_field_value<br/>
+<p class="binderItem"><strong>modern_node_set_sigma</strong><br/>void<br/>
+modern_node_set_sigma<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
- modern *field_value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_set_sigma_successor</strong><br/>void<br/>
-modern_node_set_sigma_successor<br/>
-(modern_library *library,<br/>
- modern *value,<br/>
+ modern *field_value,<br/>
  modern *successor);</p>
 </li>
 <li>
@@ -1465,13 +1471,6 @@ modern_node_set_backreference_index<br/>
  uint64_t index);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_node_set_backreference_link</strong><br/>void<br/>
-modern_node_set_backreference_link<br/>
-(modern_library *library,<br/>
- modern *value,<br/>
- modern *link);</p>
-</li>
-<li>
 <p class="binderItem"><strong>modern_node_set_builtin_identifier</strong><br/>void<br/>
 modern_node_set_builtin_identifier<br/>
 (modern_library *library,<br/>
@@ -1536,10 +1535,28 @@ modern_get_from_context<br/>
  struct modern_hash *hash);</p>
 </li>
 </ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Evaluation</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_evaluate</strong><br/>modern *<br/>
+modern_evaluate<br/>
+(modern_library *library,<br/>
+ modern *node);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_resolve_backreferences</strong><br/>modern *<br/>
+modern_resolve_backreferences<br/>
+(modern_library *library,<br/>
+ modern *node);</p>
+</li>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Node-based deserialization</strong></p>
+<p class="binderItem"><strong>Deserialization</strong></p>
 </li>
 <hr/>
 <ul>
@@ -1589,7 +1606,7 @@ modern_deserialize_input_stream<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Node-based serialization</strong></p>
+<p class="binderItem"><strong>Serialization</strong></p>
 </li>
 <hr/>
 <ul>
@@ -1643,6 +1660,7 @@ modern_serialize_output_stream<br/>
  modern_context *context,<br/>
  struct modern_stream *stream);</p>
 </li>
+</ul>
 </ul>
 <hr/>
 <li>
@@ -1707,6 +1725,12 @@ modern_serialize_output_stream<br/>
 <li>
 <p class="binderItem"><strong>modern_stream_type_definition_bool</strong><br/>void<br/>
 (*modern_stream_type_definition_bool)<br/>
+(void *processor_state,<br/>
+ void *stream_state);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_stream_type_definition_ordering</strong><br/>void<br/>
+(*modern_stream_type_definition_ordering)<br/>
 (void *processor_state,<br/>
  void *stream_state);</p>
 </li>
@@ -1816,26 +1840,44 @@ modern_serialize_output_stream<br/>
  void *stream_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_stream_false</strong><br/>void<br/>
-(*modern_stream_false)<br/>
+<p class="binderItem"><strong>modern_stream_bool_false</strong><br/>void<br/>
+(*modern_stream_bool_false)<br/>
 (void *processor_state,<br/>
  void *stream_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_stream_true</strong><br/>void<br/>
-(*modern_stream_true)<br/>
+<p class="binderItem"><strong>modern_stream_bool_true</strong><br/>void<br/>
+(*modern_stream_bool_true)<br/>
 (void *processor_state,<br/>
  void *stream_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_stream_nothing</strong><br/>void<br/>
-(*modern_stream_nothing)<br/>
+<p class="binderItem"><strong>modern_stream_ordering_less</strong><br/>void<br/>
+(*modern_stream_ordering_less)<br/>
 (void *processor_state,<br/>
  void *stream_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>modern_stream_just_is_next</strong><br/>void<br/>
-(*modern_stream_just_is_next)<br/>
+<p class="binderItem"><strong>modern_stream_ordering_equal</strong><br/>void<br/>
+(*modern_stream_ordering_equal)<br/>
+(void *processor_state,<br/>
+ void *stream_state);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_stream_ordering_greater</strong><br/>void<br/>
+(*modern_stream_ordering_greater)<br/>
+(void *processor_state,<br/>
+ void *stream_state);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_stream_maybe_nothing</strong><br/>void<br/>
+(*modern_stream_maybe_nothing)<br/>
+(void *processor_state,<br/>
+ void *stream_state);</p>
+</li>
+<li>
+<p class="binderItem"><strong>modern_stream_maybe_just_is_next</strong><br/>void<br/>
+(*modern_stream_maybe_just_is_next)<br/>
 (void *processor_state,<br/>
  void *stream_state);</p>
 </li>
@@ -2325,6 +2367,9 @@ modern_make_documentation_stream<br/>
 </li>
 <li>
 <p class="binderItem"><strong>equal_to_blob_modern_builtin_identifier</strong><br/>equal_to_blob_modern_builtin_identifier = 150</p>
+</li>
+<li>
+<p class="binderItem"><strong>equal_to_ordering_modern_builtin_identifier</strong><br/>equal_to_ordering_modern_builtin_identifier = 151</p>
 </li>
 </ul>
 <hr/>

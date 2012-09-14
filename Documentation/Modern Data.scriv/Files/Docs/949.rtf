@@ -25,16 +25,21 @@ To apply a node (also called the left node), given a target stack and a paramete
 \
 1) Initialize the intermediate result to the left node, and the remaining-parameter stack to a copy of the parameter stack.  Proceed to step 2.\
 \
-2) If the intermediate result is a lambda node, go to step 8.  Otherwise, proceed to step 3.\
+2) If the intermediate result is a lambda node and the remaining-parameter stack is nonempty, go to step 8.  Otherwise, proceed to step 3.\
 \
-3) If the intermediate result is not a builtin node, go to step 5.  Otherwise, proceed to step 4.\
+3) If the intermediate result is an apply node, go to step 9.  Otherwise, proceed to step 4.\
 \
-4) If the intermediate result, which is a builtin node, has static arity N, and there are at least N items on the parameter stack, go to step 7.  Otherwise, proceed to step 5.\
+4) If the intermediate result is not a builtin node, go to step 6.  Otherwise, proceed to step 5.\
 \
-5) If the parameter stack is empty, return the intermediate result.  Otherwise, proceed to step 6.\
+5) If the intermediate result, which is a builtin node, has static arity N, and there are at least N items on the parameter stack, go to step 10.  Otherwise, proceed to step 6.\
 \
-6) Pop a value from the remaining-parameter stack.  Replace the intermediate result with an application node with the former value of the intermediate result as its left field, and the popped value as its right field.  Go to step 5.\
+6) If the parameter stack is empty, return the intermediate result.  Otherwise, proceed to step 7.\
 \
-7) The intermediate result is a builtin node.  Let the builtin be the function or computed value denoted by its value, and N be its static arity.  Pop N nodes from the parameter stack, and perform the builtin on these parameters, giving them in order starting with the one which was at the end of the parameter stack.  Replace the intermediate result with the node produced by performing the builtin.  Go to step 2.\
+7) Pop a value from the remaining-parameter stack.  Replace the intermediate result with an application node with the former value of the intermediate result as its left field, and the popped value as its right field.  Go to step 6.\
 \
-8) Pop a node from the remaining-parameter stack; call it the \'93right node\'94.  Construct a copy of the target stack.  Onto this copy, push the right node.  Compute the result of evaluating the left node, with the copied target stack.  Replace the intermediate result with the result of this computation.  Go to step 2.}
+8) The intermediate result is a lambda node.  Pop a node from the remaining-parameter stack; compute the result of evaluating it with the current target stack, and call this result the \'93right node\'94.  Construct a copy of the target stack.  Onto this copy, push the right node.  Compute the result of evaluating the left node, with the copied target stack.  Replace the intermediate result with the result of this computation.  Go to step 2.\
+\
+9) The intermediate result is an apply node.  Push the intermediate result onto the remaining-parameter stack.  Replace the intermediate result with its left field.  Go to step 2.\
+\
+10) The intermediate result is a builtin node.  Let the builtin be the function or computed value denoted by its value, and N be its static arity.  Pop N nodes from the parameter stack, and perform the builtin on these parameters, giving them in order starting with the one which was at the end of the parameter stack.  Replace the intermediate result with the node produced by performing the builtin.  Go to step 2.\
+}
