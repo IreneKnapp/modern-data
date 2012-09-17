@@ -192,7 +192,7 @@ modern_deserialize_fd
             <Text>nat16_type_modern_node_type = 20,</Text>
         </Document>
         <Document ID="227">
-            <Title>Stream-based serialization</Title>
+            <Title>Serialization</Title>
         </Document>
         <Document ID="85">
             <Title>int32_type_modern_node_type</Title>
@@ -1139,23 +1139,16 @@ modern_node_get_named_type_content_type
 modern_node_make_ordering_equal
 (modern_library *library);</Text>
         </Document>
-        <Document ID="401">
-            <Title>modern_stream_type_definition_bool</Title>
-            <Text>void
-(*modern_stream_type_definition_bool)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
         <Document ID="956">
             <Title>modern_node_make_ordering_greater</Title>
             <Text>modern *
 modern_node_make_ordering_greater
 (modern_library *library);</Text>
         </Document>
-        <Document ID="402">
-            <Title>modern_stream_bool_false</Title>
+        <Document ID="401">
+            <Title>modern_stream_type_definition_bool</Title>
             <Text>void
-(*modern_stream_bool_false)
+(*modern_stream_type_definition_bool)
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
@@ -1165,10 +1158,28 @@ modern_node_make_ordering_greater
 modern_node_make_ordering_type
 (modern_library *library);</Text>
         </Document>
+        <Document ID="402">
+            <Title>modern_stream_bool_false</Title>
+            <Text>void
+(*modern_stream_bool_false)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
         <Document ID="50">
             <Title>modern_stream_blob_end</Title>
             <Text>void
 (*modern_stream_blob_end)
+(void *processor_state,
+ void *stream_state);</Text>
+        </Document>
+        <Document ID="958">
+            <Title>equal_to_ordering_modern_builtin_identifier</Title>
+            <Text>equal_to_ordering_modern_builtin_identifier = 151</Text>
+        </Document>
+        <Document ID="51">
+            <Title>modern_stream_array_start</Title>
+            <Text>void
+(*modern_stream_array_start)
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
@@ -1178,17 +1189,6 @@ modern_node_make_ordering_type
 (*modern_stream_bool_true)
 (void *processor_state,
  void *stream_state);</Text>
-        </Document>
-        <Document ID="51">
-            <Title>modern_stream_array_start</Title>
-            <Text>void
-(*modern_stream_array_start)
-(void *processor_state,
- void *stream_state);</Text>
-        </Document>
-        <Document ID="958">
-            <Title>equal_to_ordering_modern_builtin_identifier</Title>
-            <Text>equal_to_ordering_modern_builtin_identifier = 151</Text>
         </Document>
         <Document ID="52">
             <Title>modern_stream_array_end</Title>
@@ -1204,13 +1204,13 @@ modern_node_make_backreference
 (modern_library *library,
  uint64_t index);</Text>
         </Document>
-        <Document ID="404">
-            <Title>bool_value_false_modern_node_type</Title>
-            <Text>bool_value_false_modern_node_type = 1,</Text>
-        </Document>
         <Document ID="959">
             <Title>ordering_value_less_modern_node_type</Title>
             <Text>ordering_value_less_modern_node_type = 3</Text>
+        </Document>
+        <Document ID="404">
+            <Title>bool_value_false_modern_node_type</Title>
+            <Text>bool_value_false_modern_node_type = 1,</Text>
         </Document>
         <Document ID="53">
             <Title>modern_stream_union_field</Title>
@@ -1500,6 +1500,28 @@ modern_node_make_nat8
 (modern_library *library,
  uint8_t value);</Text>
         </Document>
+        <Document ID="964">
+            <Title>Streaming model</Title>
+            <Synopsis>TODO
+
+Mention and explain vfiles.
+
+Eliminate autorelease pools.
+
+Rename the functions for the special output streams.
+
+Actually make the diagram.</Synopsis>
+            <Text>A “stream” is an interface across which events describing a Modern Data document are passed.  A “processor” is an abstraction representing the loop which passes events between external storage and a stream.  Both streams and processors have both opaque parts, represented as void pointers, and transparent parts, represented respectively as structs modern_processor and modern_stream, containing callback pointers.
+
+To perform input - deserialization - client code fills out the callback fields in an instance of struct modern_stream, then obtains a processor created by the system by a call to one of the modern_input_stream_*() functions.  The processor is then normally run by a call to modern_input_stream_do_all(), although that is a convenience function the task of which can also be done manually.
+
+To perform output - serialization - client code creates a processor by encapsulating any state it needs into a void pointer, which it, and also obtains a stream created by the system by a call to one of the modern_output_stream_*() functions.  The client code then invokes the stream’s callbacks, which were provided by the system, until the data it wishes to serialize is complete.
+
+There are also explicatory and documentation streams, provided by the system for special-purpose output.  Other than using the modern_make_*_stream() functions instead of the modern_output_stream_*() ones, these are used in the same fashion as ordinary output streams.
+
+There is an important concept here:  Streams and processors are created on opposite sides of the client/system divide, though each may be on either side of it in different situations.  The diagram below summarizes the situation.
+</Text>
+        </Document>
         <Document ID="159">
             <Title>modern_node_make_nat16</Title>
             <Text>modern *
@@ -1511,12 +1533,12 @@ modern_node_make_nat16
             <Title>name_value_modern_node_type</Title>
             <Text>named_value_modern_node_type = 21</Text>
         </Document>
-        <Document ID="300">
-            <Title>Flattening</Title>
-        </Document>
         <Document ID="411">
             <Title>name_type_modern_node_type</Title>
             <Text>name_type_modern_node_type = 40</Text>
+        </Document>
+        <Document ID="300">
+            <Title>Flattening</Title>
         </Document>
         <Document ID="301">
             <Title>Caveats</Title>
@@ -2068,7 +2090,7 @@ modern_node_set_nat64
         <Document ID="16">
             <Title>modern_stream_type_magic_number</Title>
             <Text>void
-(*modern_stream_type_magic_number)
+(*modern_stream_magic_number)
 (void *processor_state,
  void *stream_state);</Text>
         </Document>
@@ -2496,7 +2518,7 @@ modern_node_make_nat64_type
 (modern_library *library);</Text>
         </Document>
         <Document ID="216">
-            <Title>Stream-based deserialization </Title>
+            <Title>Deserialization </Title>
         </Document>
         <Document ID="105">
             <Title>modern_retain</Title>

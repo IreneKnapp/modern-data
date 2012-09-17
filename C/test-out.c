@@ -12,7 +12,7 @@ void test_main(modern_library *library, modern_autorelease_pool *pool, modern_co
       (&initial_namespace_hash, (uint8_t *) "S", 1, &s_combinator_name_hash);
     
     modern *s_combinator =
-      modern_get_from_context(library, context, &s_combinator_name_hash);
+      modern_get_from_context(library, context, s_combinator_name_hash);
     
     uint8_t *local_namespace = (uint8_t *) "com.ireneknapp.example";
     struct modern_hash local_namespace_hash;
@@ -20,10 +20,10 @@ void test_main(modern_library *library, modern_autorelease_pool *pool, modern_co
       (local_namespace, strlen((char *) local_namespace),
        &local_namespace_hash);
     
-    modern *leaf_type = modern_node_make_type_index(library, 0);
+    modern *leaf_type = modern_node_make_backreference(library, 0);
     modern_autorelease(library, pool, leaf_type);
     
-    modern *tree_subself_type = modern_node_make_type_index(library, 1);
+    modern *tree_subself_type = modern_node_make_backreference(library, 1);
     modern_autorelease(library, pool, tree_subself_type);
     
     modern *tree_self_type =
@@ -40,7 +40,7 @@ void test_main(modern_library *library, modern_autorelease_pool *pool, modern_co
        tree_name, strlen((char *) tree_name), &tree_name_hash);
     
     modern *tree_type =
-      modern_node_make_named_type(library, &tree_name_hash, tree_unnamed_type);
+      modern_node_make_named_type(library, tree_name_hash, tree_unnamed_type);
     
 /*
 (named "Tree"

@@ -1,0 +1,9 @@
+TODO
+
+Mention and explain vfiles.
+
+Eliminate autorelease pools.
+
+Rename the functions for the special output streams.
+
+Actually make the diagram.

@@ -2975,10 +2975,9 @@
                                 </BinderItem>
                             </Children>
                         </BinderItem>
-                        <BinderItem ID="12" Type="Folder" Created="2012-08-13 06:42:50 -0400" Modified="2012-08-13 16:01:05 -0400">
-                            <Title>Processors</Title>
+                        <BinderItem ID="964" Type="Folder" Created="2012-09-17 16:41:22 -0400" Modified="2012-09-17 17:05:24 -0400">
+                            <Title>Streaming model</Title>
                             <MetaData>
-                                <PageBreakBefore>Yes</PageBreakBefore>
                                 <IncludeInCompile>Yes</IncludeInCompile>
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
@@ -2986,756 +2985,8 @@
                                 <TextSelection>0,0</TextSelection>
                             </TextSettings>
                             <Children>
-                                <BinderItem ID="251" Type="Text" Created="2012-08-13 07:27:57 -0400" Modified="2012-08-13 16:01:05 -0400">
-                                    <Title>pool</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="252" Type="Text" Created="2012-08-13 07:27:59 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_processor_abort</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="253" Type="Text" Created="2012-08-13 07:28:04 -0400" Modified="2012-08-13 16:01:05 -0400">
-                                    <Title>modern_processor_flush</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                            </Children>
-                        </BinderItem>
-                        <BinderItem ID="13" Type="Folder" Created="2012-08-13 06:43:18 -0400" Modified="2012-08-13 16:01:05 -0400">
-                            <Title>Streams</Title>
-                            <MetaData>
-                                <PageBreakBefore>Yes</PageBreakBefore>
-                                <IncludeInCompile>Yes</IncludeInCompile>
-                                <NotesTextSelection>0,0</NotesTextSelection>
-                            </MetaData>
-                            <TextSettings>
-                                <TextSelection>0,0</TextSelection>
-                            </TextSettings>
-                            <Children>
-                                <BinderItem ID="14" Type="Text" Created="2012-08-13 06:44:03 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_stream_initialize</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="15" Type="Text" Created="2012-08-13 06:44:21 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_stream_start</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>82,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="16" Type="Text" Created="2012-08-13 06:44:23 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_stream_type_magic_number</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>94,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="17" Type="Text" Created="2012-08-13 06:44:25 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_stream_name_definition</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="880" Type="Text" Created="2012-09-12 15:39:19 -0400" Modified="2012-09-12 15:40:09 -0400">
-                                    <Title>modern_stream_value_definition_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>92,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="401" Type="Text" Created="2012-08-13 06:44:29 -0400" Modified="2012-09-13 05:22:24 -0400">
-                                    <Title>modern_stream_type_definition_bool</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,88</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="953" Type="Text" Created="2012-08-13 06:44:29 -0400" Modified="2012-09-14 11:53:49 -0400">
-                                    <Title>modern_stream_type_definition_ordering</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>92,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="901" Type="Text" Created="2012-09-12 16:01:57 -0400" Modified="2012-09-12 16:02:19 -0400">
-                                    <Title>modern_stream_type_definition_maybe_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>97,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="19" Type="Text" Created="2012-08-13 06:44:29 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_stream_type_definition_int8</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="20" Type="Text" Created="2012-08-13 06:44:30 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_stream_type_definition_int16</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>98,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="21" Type="Text" Created="2012-08-13 06:44:31 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_stream_type_definition_int32</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>98,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="22" Type="Text" Created="2012-08-13 06:44:33 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_stream_type_definition_int64</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>98,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="23" Type="Text" Created="2012-08-13 06:44:34 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_stream_type_definition_nat8</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>97,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="24" Type="Text" Created="2012-08-13 06:44:35 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_stream_type_definition_nat16</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>98,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="25" Type="Text" Created="2012-08-13 06:44:36 -0400" Modified="2012-08-13 16:29:02 -0400">
-                                    <Title>modern_stream_type_definition_nat32</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>98,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="26" Type="Text" Created="2012-08-13 06:44:37 -0400" Modified="2012-08-13 16:30:27 -0400">
-                                    <Title>modern_stream_type_definition_nat64</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>98,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="27" Type="Text" Created="2012-08-13 06:44:39 -0400" Modified="2012-08-13 16:30:27 -0400">
-                                    <Title>modern_stream_type_definition_float32</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>100,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="28" Type="Text" Created="2012-08-13 06:44:40 -0400" Modified="2012-08-13 16:30:27 -0400">
-                                    <Title>modern_stream_type_definition_float64</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="30" Type="Text" Created="2012-08-13 06:44:43 -0400" Modified="2012-08-13 16:30:27 -0400">
-                                    <Title>modern_stream_type_definition_utf8</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="31" Type="Text" Created="2012-08-13 06:44:44 -0400" Modified="2012-08-13 16:30:27 -0400">
-                                    <Title>modern_stream_type_definition_blob</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>97,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="32" Type="Text" Created="2012-08-13 06:44:46 -0400" Modified="2012-08-13 16:30:27 -0400">
-                                    <Title>modern_stream_type_definition_function_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>109,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="33" Type="Text" Created="2012-08-13 06:44:49 -0400" Modified="2012-08-13 16:30:27 -0400">
-                                    <Title>modern_stream_type_definition_sigma_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>158,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="34" Type="Text" Created="2012-08-13 06:49:35 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_type_definition_named_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>132,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="35" Type="Text" Created="2012-08-13 06:49:37 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_type_definition_universe</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="402" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-09-14 11:53:19 -0400">
-                                    <Title>modern_stream_bool_false</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>26,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="403" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-09-14 11:53:19 -0400">
-                                    <Title>modern_stream_bool_true</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>26,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="950" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-09-14 11:53:19 -0400">
-                                    <Title>modern_stream_ordering_less</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>34,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="951" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-09-14 11:53:19 -0400">
-                                    <Title>modern_stream_ordering_equal</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>35,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="952" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-09-14 11:53:19 -0400">
-                                    <Title>modern_stream_ordering_greater</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>37,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="899" Type="Text" Created="2012-09-12 16:00:31 -0400" Modified="2012-09-14 11:53:19 -0400">
-                                    <Title>modern_stream_maybe_nothing</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>27,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="900" Type="Text" Created="2012-09-12 16:01:03 -0400" Modified="2012-09-14 11:53:19 -0400">
-                                    <Title>modern_stream_maybe_just_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>27,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="37" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_int8</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="38" Type="Text" Created="2012-08-13 06:49:41 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_int16</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>97,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="39" Type="Text" Created="2012-08-13 06:49:43 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_int32</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>97,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="40" Type="Text" Created="2012-08-13 06:49:53 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_int64</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>97,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="41" Type="Text" Created="2012-08-13 06:49:54 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_nat8</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="256" Type="Text" Created="2012-08-13 06:49:54 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_nat16</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>86,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="257" Type="Text" Created="2012-08-13 06:49:54 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_nat32</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>86,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="258" Type="Text" Created="2012-08-13 06:49:54 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_nat64</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>86,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="42" Type="Text" Created="2012-08-13 06:49:56 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_float32</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>97,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="43" Type="Text" Created="2012-08-13 06:49:58 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_float64</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>98,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="45" Type="Text" Created="2012-08-13 06:50:00 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_utf8_start</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="46" Type="Text" Created="2012-08-13 06:50:01 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_utf8_data</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>123,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="47" Type="Text" Created="2012-08-13 06:50:03 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_utf8_end</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>85,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="48" Type="Text" Created="2012-08-13 06:50:04 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_blob_start</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>87,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="49" Type="Text" Created="2012-08-13 06:50:05 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_blob_data</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>123,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="50" Type="Text" Created="2012-08-13 06:50:07 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_blob_end</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>85,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="51" Type="Text" Created="2012-08-13 06:50:09 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_array_start</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>88,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="52" Type="Text" Created="2012-08-13 06:50:10 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_array_end</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>86,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="53" Type="Text" Created="2012-08-13 06:50:11 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_union_field</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>148,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="54" Type="Text" Created="2012-08-13 06:50:12 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_structure_start</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>118,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="55" Type="Text" Created="2012-08-13 06:50:14 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_structure_field</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>119,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="56" Type="Text" Created="2012-08-13 06:50:15 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_structure_end</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>90,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="57" Type="Text" Created="2012-08-13 06:50:25 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_named_value_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="58" Type="Text" Created="2012-08-13 06:50:26 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_lambda_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="59" Type="Text" Created="2012-08-13 06:50:28 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_apply_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="61" Type="Text" Created="2012-08-13 06:50:31 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_type_family_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="310" Type="Text" Created="2012-08-13 06:50:31 -0400" Modified="2012-09-10 13:52:12 -0400">
-                                    <Title>modern_stream_let_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="311" Type="Text" Created="2012-08-13 06:50:31 -0400" Modified="2012-09-10 13:52:50 -0400">
-                                    <Title>modern_stream_backreference_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>104,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="312" Type="Text" Created="2012-08-13 06:50:31 -0400" Modified="2012-09-10 13:53:19 -0400">
-                                    <Title>modern_stream_builtin_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>36,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="372" Type="Text" Created="2012-08-13 06:50:31 -0400" Modified="2012-09-12 15:36:03 -0400">
-                                    <Title>modern_stream_item_from_context_is_next</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="62" Type="Text" Created="2012-08-13 06:50:32 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_end</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="63" Type="Text" Created="2012-08-13 06:50:34 -0400" Modified="2012-08-13 16:35:42 -0400">
-                                    <Title>modern_stream_finalize</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                            </Children>
-                        </BinderItem>
-                        <BinderItem ID="216" Type="Folder" Created="2012-08-13 07:02:57 -0400" Modified="2012-08-15 13:19:39 -0400">
-                            <Title>Stream-based deserialization </Title>
-                            <MetaData>
-                                <PageBreakBefore>Yes</PageBreakBefore>
-                                <IncludeInCompile>Yes</IncludeInCompile>
-                                <NotesTextSelection>0,0</NotesTextSelection>
-                            </MetaData>
-                            <TextSettings>
-                                <TextSelection>0,0</TextSelection>
-                            </TextSettings>
-                            <Children>
-                                <BinderItem ID="226" Type="Folder" Created="2012-08-13 07:04:44 -0400" Modified="2012-08-13 07:04:52 -0400">
-                                    <Title>General</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                    <Children>
-                                        <BinderItem ID="217" Type="Text" Created="2012-08-13 07:03:00 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                            <Title>modern_input_stream_memory</Title>
-                                            <MetaData>
-                                                <IncludeInCompile>Yes</IncludeInCompile>
-                                                <NotesTextSelection>0,0</NotesTextSelection>
-                                            </MetaData>
-                                            <TextSettings>
-                                                <TextSelection>0,0</TextSelection>
-                                            </TextSettings>
-                                        </BinderItem>
-                                        <BinderItem ID="218" Type="Text" Created="2012-08-13 07:03:16 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                            <Title>modern_input_stream_file</Title>
-                                            <MetaData>
-                                                <IncludeInCompile>Yes</IncludeInCompile>
-                                                <NotesTextSelection>0,0</NotesTextSelection>
-                                            </MetaData>
-                                            <TextSettings>
-                                                <TextSelection>0,0</TextSelection>
-                                            </TextSettings>
-                                        </BinderItem>
-                                        <BinderItem ID="219" Type="Text" Created="2012-08-13 07:03:17 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                            <Title>modern_input_stream_fd</Title>
-                                            <MetaData>
-                                                <IncludeInCompile>Yes</IncludeInCompile>
-                                                <NotesTextSelection>0,0</NotesTextSelection>
-                                            </MetaData>
-                                            <TextSettings>
-                                                <TextSelection>0,0</TextSelection>
-                                            </TextSettings>
-                                        </BinderItem>
-                                        <BinderItem ID="220" Type="Text" Created="2012-08-13 07:03:19 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                            <Title>modern_input_stream_vfile</Title>
-                                            <MetaData>
-                                                <IncludeInCompile>Yes</IncludeInCompile>
-                                                <NotesTextSelection>0,0</NotesTextSelection>
-                                            </MetaData>
-                                            <TextSettings>
-                                                <TextSelection>0,0</TextSelection>
-                                            </TextSettings>
-                                        </BinderItem>
-                                        <BinderItem ID="225" Type="Text" Created="2012-08-13 07:04:25 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                            <Title>modern_input_stream_finalize</Title>
-                                            <MetaData>
-                                                <IncludeInCompile>Yes</IncludeInCompile>
-                                                <NotesTextSelection>0,0</NotesTextSelection>
-                                            </MetaData>
-                                            <TextSettings>
-                                                <TextSelection>0,0</TextSelection>
-                                            </TextSettings>
-                                        </BinderItem>
-                                    </Children>
-                                </BinderItem>
-                                <BinderItem ID="221" Type="Folder" Created="2012-08-13 07:03:39 -0400" Modified="2012-08-13 07:03:50 -0400">
-                                    <Title>Customization</Title>
+                                <BinderItem ID="12" Type="Folder" Created="2012-08-13 06:42:50 -0400" Modified="2012-09-17 16:43:59 -0400">
+                                    <Title>Processors</Title>
                                     <MetaData>
                                         <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
@@ -3745,8 +2996,8 @@
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
                                     <Children>
-                                        <BinderItem ID="222" Type="Text" Created="2012-08-13 07:03:42 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                            <Title>modern_input_stream_step</Title>
+                                        <BinderItem ID="251" Type="Text" Created="2012-08-13 07:27:57 -0400" Modified="2012-08-13 16:01:05 -0400">
+                                            <Title>pool</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -3755,8 +3006,8 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="223" Type="Text" Created="2012-08-13 07:03:45 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                            <Title>modern_input_stream_run</Title>
+                                        <BinderItem ID="252" Type="Text" Created="2012-08-13 07:27:59 -0400" Modified="2012-08-13 16:29:02 -0400">
+                                            <Title>modern_processor_abort</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -3765,8 +3016,8 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="224" Type="Text" Created="2012-08-13 07:03:47 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                            <Title>modern_input_stream_do_all</Title>
+                                        <BinderItem ID="253" Type="Text" Created="2012-08-13 07:28:04 -0400" Modified="2012-08-13 16:01:05 -0400">
+                                            <Title>modern_processor_flush</Title>
                                             <MetaData>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
@@ -3777,78 +3028,839 @@
                                         </BinderItem>
                                     </Children>
                                 </BinderItem>
-                            </Children>
-                        </BinderItem>
-                        <BinderItem ID="227" Type="Folder" Created="2012-08-13 07:04:55 -0400" Modified="2012-08-15 13:19:50 -0400">
-                            <Title>Stream-based serialization</Title>
-                            <MetaData>
-                                <PageBreakBefore>Yes</PageBreakBefore>
-                                <IncludeInCompile>Yes</IncludeInCompile>
-                                <NotesTextSelection>0,0</NotesTextSelection>
-                            </MetaData>
-                            <TextSettings>
-                                <TextSelection>0,0</TextSelection>
-                            </TextSettings>
-                            <Children>
-                                <BinderItem ID="228" Type="Text" Created="2012-08-13 07:05:30 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                    <Title>modern_output_stream_memory_buffer</Title>
+                                <BinderItem ID="13" Type="Folder" Created="2012-08-13 06:43:18 -0400" Modified="2012-08-13 16:01:05 -0400">
+                                    <Title>Streams</Title>
                                     <MetaData>
+                                        <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
                                     <TextSettings>
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
+                                    <Children>
+                                        <BinderItem ID="14" Type="Text" Created="2012-08-13 06:44:03 -0400" Modified="2012-08-13 16:29:02 -0400">
+                                            <Title>modern_stream_initialize</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="15" Type="Text" Created="2012-08-13 06:44:21 -0400" Modified="2012-08-13 16:29:02 -0400">
+                                            <Title>modern_stream_start</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>82,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="16" Type="Text" Created="2012-08-13 06:44:23 -0400" Modified="2012-09-17 16:22:25 -0400">
+                                            <Title>modern_stream_type_magic_number</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>94,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="17" Type="Text" Created="2012-08-13 06:44:25 -0400" Modified="2012-08-13 16:29:02 -0400">
+                                            <Title>modern_stream_name_definition</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="880" Type="Text" Created="2012-09-12 15:39:19 -0400" Modified="2012-09-12 15:40:09 -0400">
+                                            <Title>modern_stream_value_definition_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>92,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="401" Type="Text" Created="2012-08-13 06:44:29 -0400" Modified="2012-09-13 05:22:24 -0400">
+                                            <Title>modern_stream_type_definition_bool</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,88</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="953" Type="Text" Created="2012-08-13 06:44:29 -0400" Modified="2012-09-14 11:53:49 -0400">
+                                            <Title>modern_stream_type_definition_ordering</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>92,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="901" Type="Text" Created="2012-09-12 16:01:57 -0400" Modified="2012-09-12 16:02:19 -0400">
+                                            <Title>modern_stream_type_definition_maybe_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>97,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="19" Type="Text" Created="2012-08-13 06:44:29 -0400" Modified="2012-08-13 16:29:02 -0400">
+                                            <Title>modern_stream_type_definition_int8</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="20" Type="Text" Created="2012-08-13 06:44:30 -0400" Modified="2012-08-13 16:29:02 -0400">
+                                            <Title>modern_stream_type_definition_int16</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>98,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="21" Type="Text" Created="2012-08-13 06:44:31 -0400" Modified="2012-08-13 16:29:02 -0400">
+                                            <Title>modern_stream_type_definition_int32</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>98,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="22" Type="Text" Created="2012-08-13 06:44:33 -0400" Modified="2012-08-13 16:29:02 -0400">
+                                            <Title>modern_stream_type_definition_int64</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>98,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="23" Type="Text" Created="2012-08-13 06:44:34 -0400" Modified="2012-08-13 16:29:02 -0400">
+                                            <Title>modern_stream_type_definition_nat8</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>97,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="24" Type="Text" Created="2012-08-13 06:44:35 -0400" Modified="2012-08-13 16:29:02 -0400">
+                                            <Title>modern_stream_type_definition_nat16</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>98,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="25" Type="Text" Created="2012-08-13 06:44:36 -0400" Modified="2012-08-13 16:29:02 -0400">
+                                            <Title>modern_stream_type_definition_nat32</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>98,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="26" Type="Text" Created="2012-08-13 06:44:37 -0400" Modified="2012-08-13 16:30:27 -0400">
+                                            <Title>modern_stream_type_definition_nat64</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>98,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="27" Type="Text" Created="2012-08-13 06:44:39 -0400" Modified="2012-08-13 16:30:27 -0400">
+                                            <Title>modern_stream_type_definition_float32</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>100,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="28" Type="Text" Created="2012-08-13 06:44:40 -0400" Modified="2012-08-13 16:30:27 -0400">
+                                            <Title>modern_stream_type_definition_float64</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="30" Type="Text" Created="2012-08-13 06:44:43 -0400" Modified="2012-08-13 16:30:27 -0400">
+                                            <Title>modern_stream_type_definition_utf8</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="31" Type="Text" Created="2012-08-13 06:44:44 -0400" Modified="2012-08-13 16:30:27 -0400">
+                                            <Title>modern_stream_type_definition_blob</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>97,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="32" Type="Text" Created="2012-08-13 06:44:46 -0400" Modified="2012-08-13 16:30:27 -0400">
+                                            <Title>modern_stream_type_definition_function_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>109,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="33" Type="Text" Created="2012-08-13 06:44:49 -0400" Modified="2012-08-13 16:30:27 -0400">
+                                            <Title>modern_stream_type_definition_sigma_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>158,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="34" Type="Text" Created="2012-08-13 06:49:35 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_type_definition_named_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>132,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="35" Type="Text" Created="2012-08-13 06:49:37 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_type_definition_universe</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="402" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-09-14 11:53:19 -0400">
+                                            <Title>modern_stream_bool_false</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>26,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="403" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-09-14 11:53:19 -0400">
+                                            <Title>modern_stream_bool_true</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>26,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="950" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-09-14 11:53:19 -0400">
+                                            <Title>modern_stream_ordering_less</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>34,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="951" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-09-14 11:53:19 -0400">
+                                            <Title>modern_stream_ordering_equal</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>35,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="952" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-09-14 11:53:19 -0400">
+                                            <Title>modern_stream_ordering_greater</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>37,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="899" Type="Text" Created="2012-09-12 16:00:31 -0400" Modified="2012-09-14 11:53:19 -0400">
+                                            <Title>modern_stream_maybe_nothing</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>27,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="900" Type="Text" Created="2012-09-12 16:01:03 -0400" Modified="2012-09-14 11:53:19 -0400">
+                                            <Title>modern_stream_maybe_just_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>27,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="37" Type="Text" Created="2012-08-13 06:49:40 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_int8</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="38" Type="Text" Created="2012-08-13 06:49:41 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_int16</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>97,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="39" Type="Text" Created="2012-08-13 06:49:43 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_int32</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>97,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="40" Type="Text" Created="2012-08-13 06:49:53 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_int64</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>97,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="41" Type="Text" Created="2012-08-13 06:49:54 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_nat8</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="256" Type="Text" Created="2012-08-13 06:49:54 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_nat16</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>86,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="257" Type="Text" Created="2012-08-13 06:49:54 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_nat32</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>86,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="258" Type="Text" Created="2012-08-13 06:49:54 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_nat64</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>86,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="42" Type="Text" Created="2012-08-13 06:49:56 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_float32</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>97,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="43" Type="Text" Created="2012-08-13 06:49:58 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_float64</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>98,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="45" Type="Text" Created="2012-08-13 06:50:00 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_utf8_start</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="46" Type="Text" Created="2012-08-13 06:50:01 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_utf8_data</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>123,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="47" Type="Text" Created="2012-08-13 06:50:03 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_utf8_end</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>85,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="48" Type="Text" Created="2012-08-13 06:50:04 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_blob_start</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>87,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="49" Type="Text" Created="2012-08-13 06:50:05 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_blob_data</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>123,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="50" Type="Text" Created="2012-08-13 06:50:07 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_blob_end</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>85,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="51" Type="Text" Created="2012-08-13 06:50:09 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_array_start</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>88,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="52" Type="Text" Created="2012-08-13 06:50:10 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_array_end</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>86,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="53" Type="Text" Created="2012-08-13 06:50:11 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_union_field</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>148,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="54" Type="Text" Created="2012-08-13 06:50:12 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_structure_start</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>118,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="55" Type="Text" Created="2012-08-13 06:50:14 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_structure_field</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>119,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="56" Type="Text" Created="2012-08-13 06:50:15 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_structure_end</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>90,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="57" Type="Text" Created="2012-08-13 06:50:25 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_named_value_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="58" Type="Text" Created="2012-08-13 06:50:26 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_lambda_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="59" Type="Text" Created="2012-08-13 06:50:28 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_apply_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="61" Type="Text" Created="2012-08-13 06:50:31 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_type_family_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="310" Type="Text" Created="2012-08-13 06:50:31 -0400" Modified="2012-09-10 13:52:12 -0400">
+                                            <Title>modern_stream_let_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="311" Type="Text" Created="2012-08-13 06:50:31 -0400" Modified="2012-09-10 13:52:50 -0400">
+                                            <Title>modern_stream_backreference_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>104,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="312" Type="Text" Created="2012-08-13 06:50:31 -0400" Modified="2012-09-10 13:53:19 -0400">
+                                            <Title>modern_stream_builtin_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>36,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="372" Type="Text" Created="2012-08-13 06:50:31 -0400" Modified="2012-09-12 15:36:03 -0400">
+                                            <Title>modern_stream_item_from_context_is_next</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="62" Type="Text" Created="2012-08-13 06:50:32 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_end</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="63" Type="Text" Created="2012-08-13 06:50:34 -0400" Modified="2012-08-13 16:35:42 -0400">
+                                            <Title>modern_stream_finalize</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
                                 </BinderItem>
-                                <BinderItem ID="229" Type="Text" Created="2012-08-13 07:05:35 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                    <Title>modern_output_stream_memory_allocating</Title>
+                                <BinderItem ID="216" Type="Folder" Created="2012-08-13 07:02:57 -0400" Modified="2012-09-17 16:41:13 -0400">
+                                    <Title>Deserialization </Title>
                                     <MetaData>
+                                        <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
                                     <TextSettings>
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
+                                    <Children>
+                                        <BinderItem ID="226" Type="Folder" Created="2012-08-13 07:04:44 -0400" Modified="2012-08-13 07:04:52 -0400">
+                                            <Title>General</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                            <Children>
+                                                <BinderItem ID="217" Type="Text" Created="2012-08-13 07:03:00 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                                    <Title>modern_input_stream_memory</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>0,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="218" Type="Text" Created="2012-08-13 07:03:16 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                                    <Title>modern_input_stream_file</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>0,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="219" Type="Text" Created="2012-08-13 07:03:17 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                                    <Title>modern_input_stream_fd</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>0,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="220" Type="Text" Created="2012-08-13 07:03:19 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                                    <Title>modern_input_stream_vfile</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>0,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="225" Type="Text" Created="2012-08-13 07:04:25 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                                    <Title>modern_input_stream_finalize</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>0,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                            </Children>
+                                        </BinderItem>
+                                        <BinderItem ID="221" Type="Folder" Created="2012-08-13 07:03:39 -0400" Modified="2012-08-13 07:03:50 -0400">
+                                            <Title>Customization</Title>
+                                            <MetaData>
+                                                <PageBreakBefore>Yes</PageBreakBefore>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                            <Children>
+                                                <BinderItem ID="222" Type="Text" Created="2012-08-13 07:03:42 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                                    <Title>modern_input_stream_step</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>0,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="223" Type="Text" Created="2012-08-13 07:03:45 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                                    <Title>modern_input_stream_run</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>0,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="224" Type="Text" Created="2012-08-13 07:03:47 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                                    <Title>modern_input_stream_do_all</Title>
+                                                    <MetaData>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>0,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                            </Children>
+                                        </BinderItem>
+                                    </Children>
                                 </BinderItem>
-                                <BinderItem ID="230" Type="Text" Created="2012-08-13 07:05:36 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                    <Title>modern_output_stream_memory_allocating_result</Title>
+                                <BinderItem ID="227" Type="Folder" Created="2012-08-13 07:04:55 -0400" Modified="2012-09-17 16:41:16 -0400">
+                                    <Title>Serialization</Title>
                                     <MetaData>
+                                        <PageBreakBefore>Yes</PageBreakBefore>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
                                     <TextSettings>
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="231" Type="Text" Created="2012-08-13 07:05:39 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                    <Title>modern_output_stream_file</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="232" Type="Text" Created="2012-08-13 07:05:40 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                    <Title>modern_output_stream_fd</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
-                                </BinderItem>
-                                <BinderItem ID="233" Type="Text" Created="2012-08-13 07:05:41 -0400" Modified="2012-08-15 13:25:56 -0400">
-                                    <Title>modern_output_stream_vfile</Title>
-                                    <MetaData>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
-                                        <NotesTextSelection>0,0</NotesTextSelection>
-                                    </MetaData>
-                                    <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
-                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem ID="228" Type="Text" Created="2012-08-13 07:05:30 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                            <Title>modern_output_stream_memory_buffer</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="229" Type="Text" Created="2012-08-13 07:05:35 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                            <Title>modern_output_stream_memory_allocating</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="230" Type="Text" Created="2012-08-13 07:05:36 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                            <Title>modern_output_stream_memory_allocating_result</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="231" Type="Text" Created="2012-08-13 07:05:39 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                            <Title>modern_output_stream_file</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="232" Type="Text" Created="2012-08-13 07:05:40 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                            <Title>modern_output_stream_fd</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="233" Type="Text" Created="2012-08-13 07:05:41 -0400" Modified="2012-08-15 13:25:56 -0400">
+                                            <Title>modern_output_stream_vfile</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
                                 </BinderItem>
                             </Children>
                         </BinderItem>
@@ -9834,7 +9846,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="76" Characters="599" Date="2012-09-14 11:46:04 -0400"></PreviousSession>
+        <PreviousSession Words="254" Characters="1684" Date="2012-09-17 16:22:11 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>

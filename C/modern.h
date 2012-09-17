@@ -67,7 +67,7 @@ struct modern_stream {
       ();
     void (*modern_stream_start)
       (void *processor_state, void *stream_state);
-    void (*modern_stream_type_magic_number)
+    void (*modern_stream_magic_number)
       (void *processor_state, void *stream_state);
     void (*modern_stream_name_definition)
       (void *processor_state, void *stream_state,

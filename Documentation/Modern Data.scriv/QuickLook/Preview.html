@@ -35,7 +35,7 @@ A self-describing data format is a format like XML, JSON, or Common Lisp’s s-e
 <li>
 <p class="binderItem"><strong>Semantics</strong><br/>In Modern Data, the fundamental in-memory datatype is the “modern node”, which is a representation of, loosely, either a value or a type.  If we wish to specify further, we may occasionally refer to a “modern type” or “modern value”, but these concepts do not map to actual host-language datatypes; only “modern node” does.<br/>
 <br/>
-The operations on a modern node are serialization and deserialization.  Serialization is performed on a stream of modern nodes in some “modern context”, and produces a stream ...</p>
+The operations on a modern node are serialization, deserialization, and evaluation.  Serialization is performed on a modern node in some “modern context”, and produces a strea...</p>
 </li>
 <hr/>
 <ul>
@@ -43,10 +43,10 @@ The operations on a modern node are serialization and deserialization.  Serializ
 <p class="binderItem"><strong>Scoping</strong><br/>Importantly, a modern type must be in scope in the given context before a value of that type can be serialized or deserialized. The high-level “node-based” portion of the library will check whether a value’s type is in context when serializing, and emit additional instructions which bring it into context if it is not, mutating the context object which it is passed to make note of the fact.  Similarly, when deserializing, if a value’s type is not in context, an error is produced and processing ha...</p>
 </li>
 <li>
-<p class="binderItem"><strong>Cyclic structures</strong><br/>Cyclic structures, both at the type level and at the value level, can be created with inductive families and recursive lets - these two mechanisms are similar to each other, with the one being for types and the other for values.  The details of how this is done are left to a later chapter.  It is enough to know that the details of how these mechanisms are used do in fact become part of a modern node’s identity.  That is, they affect how types are canonicalized, which means that you have a differ...</p>
+<p class="binderItem"><strong>Cyclic structures</strong></p>
 </li>
 <li>
-<p class="binderItem"><strong>Mutation</strong><br/>Although many functional languages are additionally "purely functional", meaning that their variables are immutable, nodes can be mutated in memory in some languages.  This is to make it easier to create cyclic structures, which could not otherwise be done in languages without recursive binding.  The semantics of mutation are that all references to the old node become references to the new node.  Mutation is possible on all nodes, with the provision that nodes being modified have never been in s...</p>
+<p class="binderItem"><strong>Mutation</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Evaluation</strong><br/>It has been mentioned that Modern Data’s type system is dependent; that is, the type of a value that comes later on is allowed to depend upon the actual value of an earlier one.  It is necessary for the infrastructure to know what these dependent types evaluate to, which means that there must be an evaluator - a means of actually executing the function that computes each dependent type and determining its results.<br/>
@@ -1664,6 +1664,19 @@ modern_serialize_output_stream<br/>
 </ul>
 <hr/>
 <li>
+<p class="binderItem"><strong>Streaming model</strong><br/>TODO<br/>
+<br/>
+Mention and explain vfiles.<br/>
+<br/>
+Eliminate autorelease pools.<br/>
+<br/>
+Rename the functions for the special output streams.<br/>
+<br/>
+Actually make the diagram.</p>
+</li>
+<hr/>
+<ul>
+<li>
 <p class="binderItem"><strong>Processors</strong><br/>struct modern_processor {<br/>
     …<br/>
 };</p>
@@ -1704,7 +1717,7 @@ modern_serialize_output_stream<br/>
 </li>
 <li>
 <p class="binderItem"><strong>modern_stream_type_magic_number</strong><br/>void<br/>
-(*modern_stream_type_magic_number)<br/>
+(*modern_stream_magic_number)<br/>
 (void *processor_state,<br/>
  void *stream_state);</p>
 </li>
@@ -2099,7 +2112,7 @@ modern_serialize_output_stream<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Stream-based deserialization </strong></p>
+<p class="binderItem"><strong>Deserialization </strong></p>
 </li>
 <hr/>
 <ul>
@@ -2182,7 +2195,7 @@ modern_input_stream_do_all<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Stream-based serialization</strong></p>
+<p class="binderItem"><strong>Serialization</strong></p>
 </li>
 <hr/>
 <ul>
@@ -2230,6 +2243,7 @@ modern_output_stream_vfile<br/>
  struct modern_vfile *vfile,<br/>
  void *vfile_state);</p>
 </li>
+</ul>
 </ul>
 <hr/>
 <li>
