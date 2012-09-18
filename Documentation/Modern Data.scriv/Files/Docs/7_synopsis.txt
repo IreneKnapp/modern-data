@@ -1,1 +1,0 @@
-This note should probably be moved elsewhere, like out of the C section.

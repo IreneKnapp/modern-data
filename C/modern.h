@@ -5,10 +5,7 @@
 
 typedef void modern;
 typedef void modern_context;
-typedef void modern_autorelease_pool;
 typedef void modern_library;
-typedef float modern_float32;
-typedef double modern_float64;
 
 
 struct modern_hash {
@@ -56,7 +53,16 @@ struct modern_allocator {
 
 
 struct modern_processor {
-    modern_autorelease_pool *pool;
+    void *(*modern_processor_initialize)();
+    void (*modern_processor_finalize)(void *processor_state);
+    void (*modern_processor_step)
+      (void *processor_state,
+       struct modern_stream *stream, void *stream_state,
+       struct modern_vfile *vfile, void *vfile_state);
+    void (*modern_processor_run)
+      (void *processor_state,
+       struct modern_stream *stream, void *stream_state,
+       struct modern_vfile *vfile, void *vfile_state);
     void (*modern_processor_abort)(void *processor_state);
     void (*modern_processor_flush)(void *processor_state);
 };
@@ -65,122 +71,192 @@ struct modern_processor {
 struct modern_stream {
     void *(*modern_stream_initialize)
       ();
-    void (*modern_stream_start)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_magic_number)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_name_definition)
-      (void *processor_state, void *stream_state,
-       uint8_t *data, size_t length);
-    void (*modern_stream_value_definition_is_next)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_bool)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_ordering)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_maybe_is_next)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_int8)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_int16)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_int32)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_int64)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_nat8)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_nat16)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_nat32)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_nat64)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_float32)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_float64)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_utf8)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_blob)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_function_is_next)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_definition_sigma_is_next)
-      (void *processor_state, void *stream_state,
-       struct modern_hash a, struct modern_hash b);
-    void (*modern_stream_type_definition_named_is_next)
-      (void *processor_state, void *stream_state, struct modern_hash name);
-    void (*modern_stream_type_definition_universe)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_bool_false)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_bool_true)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_ordering_less)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_ordering_equal)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_ordering_greater)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_maybe_nothing)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_maybe_just_is_next)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_int8)
-      (void *processor_state, void *stream_state, int8_t value);
-    void (*modern_stream_int16)
-      (void *processor_state, void *stream_state, int16_t value);
-    void (*modern_stream_int32)
-      (void *processor_state, void *stream_state, int32_t value);
-    void (*modern_stream_int64)
-      (void *processor_state, void *stream_state, int64_t value);
-    void (*modern_stream_nat8)
-      (void *processor_state, void *stream_state, uint8_t value);
-    void (*modern_stream_nat16)
-      (void *processor_state, void *stream_state, uint16_t value);
-    void (*modern_stream_nat32)
-      (void *processor_state, void *stream_state, uint32_t value);
-    void (*modern_stream_nat64)
-      (void *processor_state, void *stream_state, uint64_t value);
-    void (*modern_stream_float32)
-      (void *processor_state, void *stream_state, modern_float32 value);
-    void (*modern_stream_float64)
-      (void *processor_state, void *stream_state, modern_float64 value);
-    void (*modern_stream_utf8_start)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_utf8_data)
-      (void *processor_state, void *stream_state,
-       uint8_t *data, size_t length);
-    void (*modern_stream_utf8_end)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_blob_start)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_blob_data)
-      (void *processor_state, void *stream_state,
-       uint8_t *data, size_t length);
-    void (*modern_stream_blob_end)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_named_value_is_next)
-      (void *processor_state, void *stream_state, struct modern_hash name);
-    void (*modern_stream_lambda_is_next)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_apply_is_next)
-      (void *processor_state, void *stream_state);
-    void (*modern_stream_type_family_is_next)
-      (void *processor_state, void *stream_state, uint64_t n_items);
-    void (*modern_stream_let_is_next)
-      (void *processor_state, void *stream_state, uint64_t n_items);
-    void (*modern_stream_backreference_is_next)
-      (void *processor_state, void *stream_state, uint64_t index);
-    void (*modern_stream_builtin_is_next)
-      (void *processor_state, void *stream_state, uint16_t identifier);
-    void (*modern_stream_item_from_context_is_next)
-      (void *processor_state, void *stream_state, struct modern_hash type);
-    void (*modern_stream_end)
-      (void *processor_state, void *stream_state);
     void (*modern_stream_finalize)
       (void *stream_state);
+    void (*modern_stream_start)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_magic_number)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_name_definition)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       uint8_t *data, size_t length);
+    void (*modern_stream_value_definition_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_bool)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_ordering)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_maybe_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_int8)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_int16)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_int32)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_int64)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_nat8)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_nat16)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_nat32)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_nat64)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_float32)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_float64)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_utf8)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_blob)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_function_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_definition_sigma_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       struct modern_hash a, struct modern_hash b);
+    void (*modern_stream_type_definition_named_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       struct modern_hash name);
+    void (*modern_stream_type_definition_universe)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_bool_false)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_bool_true)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_ordering_less)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_ordering_equal)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_ordering_greater)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_maybe_nothing)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_maybe_just_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_int8)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       int8_t value);
+    void (*modern_stream_int16)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       int16_t value);
+    void (*modern_stream_int32)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       int32_t value);
+    void (*modern_stream_int64)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       int64_t value);
+    void (*modern_stream_nat8)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       uint8_t value);
+    void (*modern_stream_nat16)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       uint16_t value);
+    void (*modern_stream_nat32)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       uint32_t value);
+    void (*modern_stream_nat64)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       uint64_t value);
+    void (*modern_stream_float32)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       float value);
+    void (*modern_stream_float64)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       double value);
+    void (*modern_stream_utf8_start)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_utf8_data)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       uint8_t *data, size_t length);
+    void (*modern_stream_utf8_end)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_blob_start)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_blob_data)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       uint8_t *data, size_t length);
+    void (*modern_stream_blob_end)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_sigma_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state,
+       struct modern_hash *type);
+    void (*modern_stream_named_value_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state, struct modern_hash name);
+    void (*modern_stream_lambda_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_apply_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
+    void (*modern_stream_type_family_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state, uint64_t n_items);
+    void (*modern_stream_let_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state, uint64_t n_items);
+    void (*modern_stream_backreference_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state, uint64_t index);
+    void (*modern_stream_builtin_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state, uint16_t identifier);
+    void (*modern_stream_item_from_context_is_next)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state, struct modern_hash type);
+    void (*modern_stream_end)
+      (struct modern_processor *processor, void *processor_state,
+       void *stream_state);
 };
 
 
@@ -193,513 +269,1096 @@ struct modern_vfile {
 
 
 enum modern_node_type {
-    bool_value_false_modern_node_type = 1,
-    bool_value_true_modern_node_type = 2,
-    ordering_value_less_modern_node_type = 3,
-    ordering_value_equal_modern_node_type = 4,
-    ordering_value_greater_modern_node_type = 5,
-    maybe_value_nothing_modern_node_type = 6,
-    maybe_value_just_modern_node_type = 7,
-    int8_value_modern_node_type = 8,
-    int16_value_modern_node_type = 9,
-    int32_value_modern_node_type = 10,
-    int64_value_modern_node_type = 11,
-    nat8_value_modern_node_type = 12,
-    nat16_value_modern_node_type = 13,
-    nat32_value_modern_node_type = 14,
-    nat64_value_modern_node_type = 15,
-    float32_value_modern_node_type = 16,
-    float64_value_modern_node_type = 17,
-    utf8_value_modern_node_type = 18,
-    blob_value_modern_node_type = 19,
-    sigma_value_modern_node_type = 20,
-    name_value_modern_node_type = 21,
-    named_value_modern_node_type = 22,
-    bool_type_modern_node_type = 23,
-    ordering_type_modern_node_type = 24,
-    maybe_type_modern_node_type = 25,
-    int8_type_modern_node_type = 26,
-    int16_type_modern_node_type = 27,
-    int32_type_modern_node_type = 28,
-    int64_type_modern_node_type = 29,
-    nat8_type_modern_node_type = 30,
-    nat16_type_modern_node_type = 31,
-    nat32_type_modern_node_type = 32,
-    nat64_type_modern_node_type = 33,
-    float32_type_modern_node_type = 34,
-    float64_type_modern_node_type = 35,
-    utf8_type_modern_node_type = 36,
-    blob_type_modern_node_type = 37,
-    function_type_modern_node_type = 38,
-    sigma_type_modern_node_type = 39,
-    name_type_modern_node_type = 40,
-    named_type_modern_node_type = 41,
-    universe_type_modern_node_type = 42,
-    lambda_modern_node_type = 43,
-    apply_modern_node_type = 44,
-    type_family_modern_node_type = 45,
-    let_modern_node_type = 46,
-    backreference_modern_node_type = 47,
-    builtin_modern_node_type = 48,
+    modern_node_type_bool_value_false = 1,
+    modern_node_type_bool_value_true = 2,
+    modern_node_type_ordering_value_less = 3,
+    modern_node_type_ordering_value_equal = 4,
+    modern_node_type_ordering_value_greater = 5,
+    modern_node_type_maybe_value_nothing = 6,
+    modern_node_type_maybe_value_just = 7,
+    modern_node_type_int8_value = 8,
+    modern_node_type_int16_value = 9,
+    modern_node_type_int32_value = 10,
+    modern_node_type_int64_value = 11,
+    modern_node_type_nat8_value = 12,
+    modern_node_type_nat16_value = 13,
+    modern_node_type_nat32_value = 14,
+    modern_node_type_nat64_value = 15,
+    modern_node_type_float32_value = 16,
+    modern_node_type_float64_value = 17,
+    modern_node_type_utf8_value = 18,
+    modern_node_type_blob_value = 19,
+    modern_node_type_sigma_value = 20,
+    modern_node_type_name_value = 21,
+    modern_node_type_named_value = 22,
+    modern_node_type_bool_type = 23,
+    modern_node_type_ordering_type = 24,
+    modern_node_type_maybe_type = 25,
+    modern_node_type_int8_type = 26,
+    modern_node_type_int16_type = 27,
+    modern_node_type_int32_type = 28,
+    modern_node_type_int64_type = 29,
+    modern_node_type_nat8_type = 30,
+    modern_node_type_nat16_type = 31,
+    modern_node_type_nat32_type = 32,
+    modern_node_type_nat64_type = 33,
+    modern_node_type_float32_type = 34,
+    modern_node_type_float64_type = 35,
+    modern_node_type_utf8_type = 36,
+    modern_node_type_blob_type = 37,
+    modern_node_type_function_type = 38,
+    modern_node_type_sigma_type = 39,
+    modern_node_type_name_type = 40,
+    modern_node_type_named_type = 41,
+    modern_node_type_universe_type = 42,
+    modern_node_type_lambda = 43,
+    modern_node_type_apply = 44,
+    modern_node_type_type_family = 45,
+    modern_node_type_let = 46,
+    modern_node_type_backreference = 47,
+    modern_node_type_builtin = 48,
 };
 
 
 enum modern_builtin_identifier {
-    if_bool_modern_builtin_identifier = 0,
-    and_bool_modern_builtin_identifier = 32,
-    or_bool_modern_builtin_identifier = 64,
-    not_bool_modern_builtin_identifier = 96,
-    equal_to_bool_modern_builtin_identifier = 128,
-    equal_to_int8_modern_builtin_identifier = 129,
-    equal_to_int16_modern_builtin_identifier = 130,
-    equal_to_int32_modern_builtin_identifier = 131,
-    equal_to_int64_modern_builtin_identifier = 132,
-    equal_to_nat8_modern_builtin_identifier = 133,
-    equal_to_nat16_modern_builtin_identifier = 134,
-    equal_to_nat32_modern_builtin_identifier = 135,
-    equal_to_nat64_modern_builtin_identifier = 136,
-    equal_to_float32_modern_builtin_identifier = 137,
-    equal_to_float64_modern_builtin_identifier = 138,
-    equal_to_name_modern_builtin_identifier = 139,
-    equal_to_utf8_modern_builtin_identifier = 140,
-    equal_to_blob_modern_builtin_identifier = 150,
-    equal_to_ordering_modern_builtin_identifier = 151,
-    compare_int8_modern_builtin_identifier = 160,
-    compare_int16_modern_builtin_identifier = 161,
-    compare_int32_modern_builtin_identifier = 162,
-    compare_int64_modern_builtin_identifier = 163,
-    compare_nat8_modern_builtin_identifier = 164,
-    compare_nat16_modern_builtin_identifier = 165,
-    compare_nat32_modern_builtin_identifier = 166,
-    compare_nat64_modern_builtin_identifier = 167,
-    compare_float32_modern_builtin_identifier = 168,
-    compare_float64_modern_builtin_identifier = 169,
-    add_int8_modern_builtin_identifier = 192,
-    add_int16_modern_builtin_identifier = 193,
-    add_int32_modern_builtin_identifier = 194,
-    add_int64_modern_builtin_identifier = 195,
-    add_nat8_modern_builtin_identifier = 196,
-    add_nat16_modern_builtin_identifier = 197,
-    add_nat32_modern_builtin_identifier = 198,
-    add_nat64_modern_builtin_identifier = 199,
-    add_float32_modern_builtin_identifier = 200,
-    add_float64_modern_builtin_identifier = 201,
-    subtract_int8_modern_builtin_identifier = 224,
-    subtract_int16_modern_builtin_identifier = 225,
-    subtract_int32_modern_builtin_identifier = 226,
-    subtract_int64_modern_builtin_identifier = 227,
-    subtract_nat8_modern_builtin_identifier = 228,
-    subtract_nat16_modern_builtin_identifier = 229,
-    subtract_nat32_modern_builtin_identifier = 230,
-    subtract_nat64_modern_builtin_identifier = 231,
-    subtract_float32_modern_builtin_identifier = 232,
-    subtract_float64_modern_builtin_identifier = 233,
-    multiply_int8_modern_builtin_identifier = 256,
-    multiply_int16_modern_builtin_identifier = 257,
-    multiply_int32_modern_builtin_identifier = 258,
-    multiply_int64_modern_builtin_identifier = 259,
-    multiply_nat8_modern_builtin_identifier = 260,
-    multiply_nat16_modern_builtin_identifier = 261,
-    multiply_nat32_modern_builtin_identifier = 262,
-    multiply_nat64_modern_builtin_identifier = 263,
-    multiply_float32_modern_builtin_identifier = 264,
-    multiply_float64_modern_builtin_identifier = 265,
-    divide_towards_zero_int8_modern_builtin_identifier = 288,
-    divide_towards_zero_int16_modern_builtin_identifier = 289,
-    divide_towards_zero_int32_modern_builtin_identifier = 290,
-    divide_towards_zero_int64_modern_builtin_identifier = 291,
-    divide_towards_zero_nat8_modern_builtin_identifier = 292,
-    divide_towards_zero_nat16_modern_builtin_identifier = 293,
-    divide_towards_zero_nat32_modern_builtin_identifier = 294,
-    divide_towards_zero_nat64_modern_builtin_identifier = 295,
-    divide_towards_negative_infinity_int8_modern_builtin_identifier = 320,
-    divide_towards_negative_infinity_int16_modern_builtin_identifier = 321,
-    divide_towards_negative_infinity_int32_modern_builtin_identifier = 322,
-    divide_towards_negative_infinity_int64_modern_builtin_identifier = 323,
-    divide_towards_negative_infinity_nat8_modern_builtin_identifier = 324,
-    divide_towards_negative_infinity_nat16_modern_builtin_identifier = 325,
-    divide_towards_negative_infinity_nat32_modern_builtin_identifier = 326,
-    divide_towards_negative_infinity_nat64_modern_builtin_identifier = 327,
-    divide_float32_modern_builtin_identifier = 352,
-    divide_float64_modern_builtin_identifier = 353,
-    modulus_towards_zero_int8_modern_builtin_identifier = 384,
-    modulus_towards_zero_int16_modern_builtin_identifier = 385,
-    modulus_towards_zero_int32_modern_builtin_identifier = 386,
-    modulus_towards_zero_int64_modern_builtin_identifier = 387,
-    modulus_towards_zero_nat8_modern_builtin_identifier = 388,
-    modulus_towards_zero_nat16_modern_builtin_identifier = 389,
-    modulus_towards_zero_nat32_modern_builtin_identifier = 390,
-    modulus_towards_zero_nat64_modern_builtin_identifier = 391,
-    modulus_towards_negative_infinity_int8_modern_builtin_identifier = 416,
-    modulus_towards_negative_infinity_int16_modern_builtin_identifier = 417,
-    modulus_towards_negative_infinity_int32_modern_builtin_identifier = 418,
-    modulus_towards_negative_infinity_int64_modern_builtin_identifier = 419,
-    modulus_towards_negative_infinity_nat8_modern_builtin_identifier = 420,
-    modulus_towards_negative_infinity_nat16_modern_builtin_identifier = 421,
-    modulus_towards_negative_infinity_nat32_modern_builtin_identifier = 422,
-    modulus_towards_negative_infinity_nat64_modern_builtin_identifier = 423,
-    negate_int8_modern_builtin_identifier = 448,
-    negate_int16_modern_builtin_identifier = 449,
-    negate_int32_modern_builtin_identifier = 450,
-    negate_int64_modern_builtin_identifier = 451,
-    negate_float32_modern_builtin_identifier = 452,
-    negate_float64_modern_builtin_identifier = 453,
-    absolute_value_int8_modern_builtin_identifier = 480,
-    absolute_value_int16_modern_builtin_identifier = 481,
-    absolute_value_int32_modern_builtin_identifier = 482,
-    absolute_value_int64_modern_builtin_identifier = 483,
-    absolute_value_float32_modern_builtin_identifier = 484,
-    absolute_value_float64_modern_builtin_identifier = 485,
-    sign_int8_modern_builtin_identifier = 512,
-    sign_int16_modern_builtin_identifier = 513,
-    sign_int32_modern_builtin_identifier = 514,
-    sign_int64_modern_builtin_identifier = 515,
-    sign_float32_modern_builtin_identifier = 516,
-    sign_float64_modern_builtin_identifier = 517,
-    pi_float32_modern_builtin_identifier = 544,
-    pi_float64_modern_builtin_identifier = 545,
-    square_root_float32_modern_builtin_identifier = 576,
-    square_root_float64_modern_builtin_identifier = 577,
-    natural_logarithm_float32_modern_builtin_identifier = 608,
-    natural_logarithm_float64_modern_builtin_identifier = 609,
-    e_to_the_x_float32_modern_builtin_identifier = 640,
-    e_to_the_x_float64_modern_builtin_identifier = 641,
-    two_to_the_x_float32_modern_builtin_identifier = 672,
-    two_to_the_x_float64_modern_builtin_identifier = 673,
-    x_to_the_y_float32_modern_builtin_identifier = 704,
-    x_to_the_y_float64_modern_builtin_identifier = 705,
-    logarithm_base_x_float32_modern_builtin_identifier = 736,
-    logarithm_base_x_float64_modern_builtin_identifier = 737,
-    sine_float32_modern_builtin_identifier = 768,
-    sine_float64_modern_builtin_identifier = 769,
-    cosine_float32_modern_builtin_identifier = 800,
-    cosine_float64_modern_builtin_identifier = 801,
-    tangent_float32_modern_builtin_identifier = 832,
-    tangent_float64_modern_builtin_identifier = 833,
-    arcsine_float32_modern_builtin_identifier = 864,
-    arcsine_float64_modern_builtin_identifier = 865,
-    arccosine_float32_modern_builtin_identifier = 896,
-    arccosine_float64_modern_builtin_identifier = 897,
-    arctangent_float32_modern_builtin_identifier = 928,
-    arctangent_float64_modern_builtin_identifier = 929,
-    arctangent_fraction_float32_modern_builtin_identifier = 960,
-    arctangent_fraction_float64_modern_builtin_identifier = 961,
-    hyperbolic_sine_float32_modern_builtin_identifier = 992,
-    hyperbolic_sine_float64_modern_builtin_identifier = 993,
-    hyperbolic_cosine_float32_modern_builtin_identifier = 1024,
-    hyperbolic_cosine_float64_modern_builtin_identifier = 1025,
-    hyperbolic_tangent_float32_modern_builtin_identifier = 1056,
-    hyperbolic_tangent_float64_modern_builtin_identifier = 1057,
-    hyperbolic_arcsine_float32_modern_builtin_identifier = 1088,
-    hyperbolic_arcsine_float64_modern_builtin_identifier = 1089,
-    hyperbolic_arccosine_float32_modern_builtin_identifier = 1120,
-    hyperbolic_arccosine_float64_modern_builtin_identifier = 1121,
-    hyperbolic_arctangent_float32_modern_builtin_identifier = 1152,
-    hyperbolic_arctangent_float64_modern_builtin_identifier = 1153,
-    round_towards_zero_float32_int8_modern_builtin_identifier = 1184,
-    round_towards_zero_float64_int8_modern_builtin_identifier = 1185,
-    round_towards_zero_float32_int16_modern_builtin_identifier = 1186,
-    round_towards_zero_float64_int16_modern_builtin_identifier = 1187,
-    round_towards_zero_float32_int32_modern_builtin_identifier = 1188,
-    round_towards_zero_float64_int32_modern_builtin_identifier = 1189,
-    round_towards_zero_float32_int64_modern_builtin_identifier = 1190,
-    round_towards_zero_float64_int64_modern_builtin_identifier = 1191,
-    round_towards_zero_float32_nat8_modern_builtin_identifier = 1192,
-    round_towards_zero_float64_nat8_modern_builtin_identifier = 1193,
-    round_towards_zero_float32_nat16_modern_builtin_identifier = 1194,
-    round_towards_zero_float64_nat16_modern_builtin_identifier = 1195,
-    round_towards_zero_float32_nat32_modern_builtin_identifier = 1196,
-    round_towards_zero_float64_nat32_modern_builtin_identifier = 1197,
-    round_towards_zero_float32_nat64_modern_builtin_identifier = 1198,
-    round_towards_zero_float64_nat64_modern_builtin_identifier = 1199,
-    round_towards_zero_float32_float32_modern_builtin_identifier = 1200,
-    round_towards_zero_float64_float64_modern_builtin_identifier = 1201,
-    round_away_from_zero_float32_int8_modern_builtin_identifier = 1216,
-    round_away_from_zero_float64_int8_modern_builtin_identifier = 1217,
-    round_away_from_zero_float32_int16_modern_builtin_identifier = 1218,
-    round_away_from_zero_float64_int16_modern_builtin_identifier = 1219,
-    round_away_from_zero_float32_int32_modern_builtin_identifier = 1220,
-    round_away_from_zero_float64_int32_modern_builtin_identifier = 1221,
-    round_away_from_zero_float32_int64_modern_builtin_identifier = 1222,
-    round_away_from_zero_float64_int64_modern_builtin_identifier = 1223,
-    round_away_from_zero_float32_nat8_modern_builtin_identifier = 1224,
-    round_away_from_zero_float64_nat8_modern_builtin_identifier = 1225,
-    round_away_from_zero_float32_nat16_modern_builtin_identifier = 1226,
-    round_away_from_zero_float64_nat16_modern_builtin_identifier = 1227,
-    round_away_from_zero_float32_nat32_modern_builtin_identifier = 1228,
-    round_away_from_zero_float64_nat32_modern_builtin_identifier = 1229,
-    round_away_from_zero_float32_nat64_modern_builtin_identifier = 1230,
-    round_away_from_zero_float64_nat64_modern_builtin_identifier = 1231,
-    round_away_from_zero_float32_float32_modern_builtin_identifier = 1232,
-    round_away_from_zero_float64_float64_modern_builtin_identifier = 1233,
-    round_towards_even_float32_int8_modern_builtin_identifier = 1248,
-    round_towards_even_float64_int8_modern_builtin_identifier = 1249,
-    round_towards_even_float32_int16_modern_builtin_identifier = 1250,
-    round_towards_even_float64_int16_modern_builtin_identifier = 1251,
-    round_towards_even_float32_int32_modern_builtin_identifier = 1252,
-    round_towards_even_float64_int32_modern_builtin_identifier = 1253,
-    round_towards_even_float32_int64_modern_builtin_identifier = 1254,
-    round_towards_even_float64_int64_modern_builtin_identifier = 1255,
-    round_towards_even_float32_nat8_modern_builtin_identifier = 1256,
-    round_towards_even_float64_nat8_modern_builtin_identifier = 1257,
-    round_towards_even_float32_nat16_modern_builtin_identifier = 1258,
-    round_towards_even_float64_nat16_modern_builtin_identifier = 1259,
-    round_towards_even_float32_nat32_modern_builtin_identifier = 1260,
-    round_towards_even_float64_nat32_modern_builtin_identifier = 1261,
-    round_towards_even_float32_nat64_modern_builtin_identifier = 1262,
-    round_towards_even_float64_nat64_modern_builtin_identifier = 1263,
-    round_towards_even_float32_float32_modern_builtin_identifier = 1264,
-    round_towards_even_float64_float64_modern_builtin_identifier = 1265,
-    round_towards_odd_float32_int8_modern_builtin_identifier = 1280,
-    round_towards_odd_float64_int8_modern_builtin_identifier = 1281,
-    round_towards_odd_float32_int16_modern_builtin_identifier = 1282,
-    round_towards_odd_float64_int16_modern_builtin_identifier = 1283,
-    round_towards_odd_float32_int32_modern_builtin_identifier = 1284,
-    round_towards_odd_float64_int32_modern_builtin_identifier = 1285,
-    round_towards_odd_float32_int64_modern_builtin_identifier = 1286,
-    round_towards_odd_float64_int64_modern_builtin_identifier = 1287,
-    round_towards_odd_float32_nat8_modern_builtin_identifier = 1288,
-    round_towards_odd_float64_nat8_modern_builtin_identifier = 1289,
-    round_towards_odd_float32_nat16_modern_builtin_identifier = 1290,
-    round_towards_odd_float64_nat16_modern_builtin_identifier = 1291,
-    round_towards_odd_float32_nat32_modern_builtin_identifier = 1292,
-    round_towards_odd_float64_nat32_modern_builtin_identifier = 1293,
-    round_towards_odd_float32_nat64_modern_builtin_identifier = 1294,
-    round_towards_odd_float64_nat64_modern_builtin_identifier = 1295,
-    round_towards_odd_float32_float32_modern_builtin_identifier = 1296,
-    round_towards_odd_float64_float64_modern_builtin_identifier = 1297,
-    ceiling_float32_int8_modern_builtin_identifier = 1312,
-    ceiling_float64_int8_modern_builtin_identifier = 1313,
-    ceiling_float32_int16_modern_builtin_identifier = 1314,
-    ceiling_float64_int16_modern_builtin_identifier = 1315,
-    ceiling_float32_int32_modern_builtin_identifier = 1316,
-    ceiling_float64_int32_modern_builtin_identifier = 1317,
-    ceiling_float32_int64_modern_builtin_identifier = 1318,
-    ceiling_float64_int64_modern_builtin_identifier = 1319,
-    ceiling_float32_nat8_modern_builtin_identifier = 1320,
-    ceiling_float64_nat8_modern_builtin_identifier = 1321,
-    ceiling_float32_nat16_modern_builtin_identifier = 1322,
-    ceiling_float64_nat16_modern_builtin_identifier = 1323,
-    ceiling_float32_nat32_modern_builtin_identifier = 1324,
-    ceiling_float64_nat32_modern_builtin_identifier = 1325,
-    ceiling_float32_nat64_modern_builtin_identifier = 1326,
-    ceiling_float64_nat64_modern_builtin_identifier = 1327,
-    ceiling_float32_float32_modern_builtin_identifier = 1328,
-    ceiling_float64_float64_modern_builtin_identifier = 1329,
-    floor_float32_int8_modern_builtin_identifier = 1344,
-    floor_float64_int8_modern_builtin_identifier = 1345,
-    floor_float32_int16_modern_builtin_identifier = 1346,
-    floor_float64_int16_modern_builtin_identifier = 1347,
-    floor_float32_int32_modern_builtin_identifier = 1348,
-    floor_float64_int32_modern_builtin_identifier = 1349,
-    floor_float32_int64_modern_builtin_identifier = 1350,
-    floor_float64_int64_modern_builtin_identifier = 1351,
-    floor_float32_nat8_modern_builtin_identifier = 1352,
-    floor_float64_nat8_modern_builtin_identifier = 1353,
-    floor_float32_nat16_modern_builtin_identifier = 1354,
-    floor_float64_nat16_modern_builtin_identifier = 1355,
-    floor_float32_nat32_modern_builtin_identifier = 1356,
-    floor_float64_nat32_modern_builtin_identifier = 1357,
-    floor_float32_nat64_modern_builtin_identifier = 1358,
-    floor_float64_nat64_modern_builtin_identifier = 1359,
-    floor_float32_float32_modern_builtin_identifier = 1360,
-    floor_float64_float64_modern_builtin_identifier = 1361,
-    minimum_bound_int8_modern_builtin_identifier = 1376,
-    minimum_bound_int16_modern_builtin_identifier = 1377,
-    minimum_bound_int32_modern_builtin_identifier = 1378,
-    minimum_bound_int64_modern_builtin_identifier = 1379,
-    minimum_bound_nat8_modern_builtin_identifier = 1380,
-    minimum_bound_nat16_modern_builtin_identifier = 1381,
-    minimum_bound_nat32_modern_builtin_identifier = 1382,
-    minimum_bound_nat64_modern_builtin_identifier = 1383,
-    maximum_bound_int8_modern_builtin_identifier = 1408,
-    maximum_bound_int16_modern_builtin_identifier = 1409,
-    maximum_bound_int32_modern_builtin_identifier = 1410,
-    maximum_bound_int64_modern_builtin_identifier = 1411,
-    maximum_bound_nat8_modern_builtin_identifier = 1412,
-    maximum_bound_nat16_modern_builtin_identifier = 1413,
-    maximum_bound_nat32_modern_builtin_identifier = 1414,
-    maximum_bound_nat64_modern_builtin_identifier = 1415,
-    shift_left_int8_modern_builtin_identifier = 1440,
-    shift_left_int16_modern_builtin_identifier = 1441,
-    shift_left_int32_modern_builtin_identifier = 1442,
-    shift_left_int64_modern_builtin_identifier = 1443,
-    shift_left_nat8_modern_builtin_identifier = 1444,
-    shift_left_nat16_modern_builtin_identifier = 1445,
-    shift_left_nat32_modern_builtin_identifier = 1456,
-    shift_left_nat64_modern_builtin_identifier = 1457,
-    shift_right_int8_modern_builtin_identifier = 1472,
-    shift_right_int16_modern_builtin_identifier = 1473,
-    shift_right_int32_modern_builtin_identifier = 1474,
-    shift_right_int64_modern_builtin_identifier = 1475,
-    shift_right_nat8_modern_builtin_identifier = 1476,
-    shift_right_nat16_modern_builtin_identifier = 1477,
-    shift_right_nat32_modern_builtin_identifier = 1478,
-    shift_right_nat64_modern_builtin_identifier = 1479,
-    rotate_left_int8_modern_builtin_identifier = 1504,
-    rotate_left_int16_modern_builtin_identifier = 1505,
-    rotate_left_int32_modern_builtin_identifier = 1506,
-    rotate_left_int64_modern_builtin_identifier = 1507,
-    rotate_left_nat8_modern_builtin_identifier = 1508,
-    rotate_left_nat16_modern_builtin_identifier = 1509,
-    rotate_left_nat32_modern_builtin_identifier = 1510,
-    rotate_left_nat64_modern_builtin_identifier = 1511,
-    rotate_right_int8_modern_builtin_identifier = 1536,
-    rotate_right_int16_modern_builtin_identifier = 1537,
-    rotate_right_int32_modern_builtin_identifier = 1538,
-    rotate_right_int64_modern_builtin_identifier = 1539,
-    rotate_right_nat8_modern_builtin_identifier = 1540,
-    rotate_right_nat16_modern_builtin_identifier = 1541,
-    rotate_right_nat32_modern_builtin_identifier = 1542,
-    rotate_right_nat64_modern_builtin_identifier = 1543,
-    bit_and_int8_modern_builtin_identifier = 1568,
-    bit_and_int16_modern_builtin_identifier = 1569,
-    bit_and_int32_modern_builtin_identifier = 1570,
-    bit_and_int64_modern_builtin_identifier = 1571,
-    bit_and_nat8_modern_builtin_identifier = 1572,
-    bit_and_nat16_modern_builtin_identifier = 1573,
-    bit_and_nat32_modern_builtin_identifier = 1574,
-    bit_and_nat64_modern_builtin_identifier = 1575,
-    bit_or_int8_modern_builtin_identifier = 1600,
-    bit_or_int16_modern_builtin_identifier = 1601,
-    bit_or_int32_modern_builtin_identifier = 1602,
-    bit_or_int64_modern_builtin_identifier = 1603,
-    bit_or_nat8_modern_builtin_identifier = 1604,
-    bit_or_nat16_modern_builtin_identifier = 1605,
-    bit_or_nat32_modern_builtin_identifier = 1606,
-    bit_or_nat64_modern_builtin_identifier = 1607,
-    bit_xor_int8_modern_builtin_identifier = 1632,
-    bit_xor_int16_modern_builtin_identifier = 1633,
-    bit_xor_int32_modern_builtin_identifier = 1634,
-    bit_xor_int64_modern_builtin_identifier = 1635,
-    bit_xor_nat8_modern_builtin_identifier = 1636,
-    bit_xor_nat16_modern_builtin_identifier = 1637,
-    bit_xor_nat32_modern_builtin_identifier = 1638,
-    bit_xor_nat64_modern_builtin_identifier = 1639,
-    bit_not_int8_modern_builtin_identifier = 1664,
-    bit_not_int16_modern_builtin_identifier = 1665,
-    bit_not_int32_modern_builtin_identifier = 1666,
-    bit_not_int64_modern_builtin_identifier = 1667,
-    bit_not_nat8_modern_builtin_identifier = 1668,
-    bit_not_nat16_modern_builtin_identifier = 1669,
-    bit_not_nat32_modern_builtin_identifier = 1670,
-    bit_not_nat64_modern_builtin_identifier = 1671,
-    decode_utf8_modern_builtin_identifier = 1696,
-    encode_utf8_modern_builtin_identifier = 1728,
-    character_offset_to_byte_offset_utf8_modern_builtin_identifier = 1760,
-    length_bytes_utf8_modern_builtin_identifier = 1792,
-    length_bytes_blob_modern_builtin_identifier = 1793,
-    get_byte_blob_modern_builtin_identifier = 1824,
-    replace_byte_blob_modern_builtin_identifier = 1856,
-    get_data_piece_utf8_modern_builtin_identifier = 1888,
-    get_data_piece_blob_modern_builtin_identifier = 1889,
-    replace_data_piece_utf8_modern_builtin_identifier = 1920,
-    replace_data_piece_blob_modern_builtin_identifier = 1921,
-    empty_utf8_modern_builtin_identifier = 1952,
-    empty_blob_modern_builtin_identifier = 1953,
-    get_sigma_field_value_modern_builtin_identifier = 1984,
-    get_sigma_successor_modern_builtin_identifier = 2016,
-    get_named_value_modern_builtin_identifier = 2048,
-    get_function_type_left_modern_builtin_identifier = 2080,
-    get_function_type_right_modern_builtin_identifier = 2112,
-    get_sigma_type_field_type_modern_builtin_identifier = 2144,
-    get_sigma_type_successor_modern_builtin_identifier = 2176,
-    get_named_type_content_type_modern_builtin_identifier = 2208,
-    get_universe_type_level_modern_builtin_identifier = 2240,
-    make_sigma_modern_builtin_identifier = 2272,
-    make_name_modern_builtin_identifier = 2304,
-    make_named_value_modern_builtin_identifier = 2336,
-    make_function_type_modern_builtin_identifier = 2368,
-    make_sigma_type_modern_builtin_identifier = 2400,
-    make_named_type_modern_builtin_identifier = 2432,
-    make_universe_type_modern_builtin_identifier = 2464,
-    make_maybe_type_modern_builtin_identifier = 2496,
-    get_maybe_type_content_type_modern_builtin_identifier = 2528,
-    maybe_is_just_modern_builtin_identifier = 2560,
-    fmap_maybe_modern_builtin_identifier = 2592,
-    from_maybe_modern_builtin_identifier = 2624,
-    cast_int8_int16_modern_builtin_identifier = 10240,
-    cast_int8_int32_modern_builtin_identifier = 10241,
-    cast_int8_int64_modern_builtin_identifier = 10242,
-    cast_int8_nat8_modern_builtin_identifier = 10243,
-    cast_int8_nat16_modern_builtin_identifier = 10244,
-    cast_int8_nat32_modern_builtin_identifier = 10245,
-    cast_int8_nat64_modern_builtin_identifier = 10246,
-    cast_int16_int8_modern_builtin_identifier = 10247,
-    cast_int16_int32_modern_builtin_identifier = 10248,
-    cast_int16_int64_modern_builtin_identifier = 10249,
-    cast_int16_nat8_modern_builtin_identifier = 10250,
-    cast_int16_nat16_modern_builtin_identifier = 10251,
-    cast_int16_nat32_modern_builtin_identifier = 10252,
-    cast_int16_nat64_modern_builtin_identifier = 10253,
-    cast_int32_int8_modern_builtin_identifier = 10254,
-    cast_int32_int16_modern_builtin_identifier = 10255,
-    cast_int32_int64_modern_builtin_identifier = 10256,
-    cast_int32_nat8_modern_builtin_identifier = 10257,
-    cast_int32_nat16_modern_builtin_identifier = 10258,
-    cast_int32_nat32_modern_builtin_identifier = 10259,
-    cast_int32_nat64_modern_builtin_identifier = 10260,
-    cast_int64_int8_modern_builtin_identifier = 10261,
-    cast_int64_int16_modern_builtin_identifier = 10262,
-    cast_int64_int32_modern_builtin_identifier = 10263,
-    cast_int64_nat8_modern_builtin_identifier = 10264,
-    cast_int64_nat16_modern_builtin_identifier = 10265,
-    cast_int64_nat32_modern_builtin_identifier = 10266,
-    cast_int64_nat64_modern_builtin_identifier = 10267,
-    cast_nat8_int8_modern_builtin_identifier = 10268,
-    cast_nat8_int16_modern_builtin_identifier = 10269,
-    cast_nat8_int32_modern_builtin_identifier = 10270,
-    cast_nat8_int64_modern_builtin_identifier = 10271,
-    cast_nat8_nat16_modern_builtin_identifier = 10272,
-    cast_nat8_nat32_modern_builtin_identifier = 10273,
-    cast_nat8_nat64_modern_builtin_identifier = 10274,
-    cast_nat16_int8_modern_builtin_identifier = 10275,
-    cast_nat16_int16_modern_builtin_identifier = 10276,
-    cast_nat16_int32_modern_builtin_identifier = 10277,
-    cast_nat16_int64_modern_builtin_identifier = 10278,
-    cast_nat16_nat8_modern_builtin_identifier = 10279,
-    cast_nat16_nat32_modern_builtin_identifier = 10280,
-    cast_nat16_nat64_modern_builtin_identifier = 10281,
-    cast_nat32_int8_modern_builtin_identifier = 10282,
-    cast_nat32_int16_modern_builtin_identifier = 10283,
-    cast_nat32_int32_modern_builtin_identifier = 10284,
-    cast_nat32_int64_modern_builtin_identifier = 10285,
-    cast_nat32_nat8_modern_builtin_identifier = 10286,
-    cast_nat32_nat16_modern_builtin_identifier = 10287,
-    cast_nat32_nat64_modern_builtin_identifier = 10288,
-    cast_nat64_int8_modern_builtin_identifier = 10289,
-    cast_nat64_int16_modern_builtin_identifier = 10290,
-    cast_nat64_int32_modern_builtin_identifier = 10291,
-    cast_nat64_int64_modern_builtin_identifier = 10292,
-    cast_nat64_nat8_modern_builtin_identifier = 10293,
-    cast_nat64_nat16_modern_builtin_identifier = 10294,
-    cast_nat64_nat32_modern_builtin_identifier = 10295,
-    cast_utf8_blob_modern_builtin_identifier = 10296,
-    cast_blob_utf8_modern_builtin_identifier = 10297,
-    cast_name_blob_modern_builtin_identifier = 10298,
-    cast_blob_name_modern_builtin_identifier = 10299,
-    cast_float32_float64_modern_builtin_identifier = 10300,
-    cast_float64_float32_modern_builtin_identifier = 10301,
-    cast_blob_int8_modern_builtin_identifier = 10302,
-    cast_blob_int16_modern_builtin_identifier = 10303,
-    cast_blob_int32_modern_builtin_identifier = 10304,
-    cast_blob_int64_modern_builtin_identifier = 10305,
-    cast_blob_nat8_modern_builtin_identifier = 10306,
-    cast_blob_nat16_modern_builtin_identifier = 10307,
-    cast_blob_nat32_modern_builtin_identifier = 10308,
-    cast_blob_nat64_modern_builtin_identifier = 10309,
-    cast_blob_float32_modern_builtin_identifier = 10310,
-    cast_blob_float64_modern_builtin_identifier = 10311,
-    cast_int8_blob_modern_builtin_identifier = 10312,
-    cast_int16_blob_modern_builtin_identifier = 10313,
-    cast_int32_blob_modern_builtin_identifier = 10314,
-    cast_int64_blob_modern_builtin_identifier = 10315,
-    cast_nat8_blob_modern_builtin_identifier = 10316,
-    cast_nat16_blob_modern_builtin_identifier = 10317,
-    cast_nat32_blob_modern_builtin_identifier = 10318,
-    cast_nat64_blob_modern_builtin_identifier = 10319,
-    cast_float32_blob_modern_builtin_identifier = 10320,
-    cast_float64_blob_modern_builtin_identifier = 10321,
+    modern_builtin_identifier_if_bool = 0,
+    modern_builtin_identifier_and_bool = 32,
+    modern_builtin_identifier_or_bool = 64,
+    modern_builtin_identifier_not_bool = 96,
+    modern_builtin_identifier_equal_to_bool = 128,
+    modern_builtin_identifier_equal_to_int8 = 129,
+    modern_builtin_identifier_equal_to_int16 = 130,
+    modern_builtin_identifier_equal_to_int32 = 131,
+    modern_builtin_identifier_equal_to_int64 = 132,
+    modern_builtin_identifier_equal_to_nat8 = 133,
+    modern_builtin_identifier_equal_to_nat16 = 134,
+    modern_builtin_identifier_equal_to_nat32 = 135,
+    modern_builtin_identifier_equal_to_nat64 = 136,
+    modern_builtin_identifier_equal_to_float32 = 137,
+    modern_builtin_identifier_equal_to_float64 = 138,
+    modern_builtin_identifier_equal_to_name = 139,
+    modern_builtin_identifier_equal_to_utf8 = 140,
+    modern_builtin_identifier_equal_to_blob = 150,
+    modern_builtin_identifier_equal_to_ordering = 151,
+    modern_builtin_identifier_compare_int8 = 160,
+    modern_builtin_identifier_compare_int16 = 161,
+    modern_builtin_identifier_compare_int32 = 162,
+    modern_builtin_identifier_compare_int64 = 163,
+    modern_builtin_identifier_compare_nat8 = 164,
+    modern_builtin_identifier_compare_nat16 = 165,
+    modern_builtin_identifier_compare_nat32 = 166,
+    modern_builtin_identifier_compare_nat64 = 167,
+    modern_builtin_identifier_compare_float32 = 168,
+    modern_builtin_identifier_compare_float64 = 169,
+    modern_builtin_identifier_add_int8 = 192,
+    modern_builtin_identifier_add_int16 = 193,
+    modern_builtin_identifier_add_int32 = 194,
+    modern_builtin_identifier_add_int64 = 195,
+    modern_builtin_identifier_add_nat8 = 196,
+    modern_builtin_identifier_add_nat16 = 197,
+    modern_builtin_identifier_add_nat32 = 198,
+    modern_builtin_identifier_add_nat64 = 199,
+    modern_builtin_identifier_add_float32 = 200,
+    modern_builtin_identifier_add_float64 = 201,
+    modern_builtin_identifier_subtract_int8 = 224,
+    modern_builtin_identifier_subtract_int16 = 225,
+    modern_builtin_identifier_subtract_int32 = 226,
+    modern_builtin_identifier_subtract_int64 = 227,
+    modern_builtin_identifier_subtract_nat8 = 228,
+    modern_builtin_identifier_subtract_nat16 = 229,
+    modern_builtin_identifier_subtract_nat32 = 230,
+    modern_builtin_identifier_subtract_nat64 = 231,
+    modern_builtin_identifier_subtract_float32 = 232,
+    modern_builtin_identifier_subtract_float64 = 233,
+    modern_builtin_identifier_multiply_int8 = 256,
+    modern_builtin_identifier_multiply_int16 = 257,
+    modern_builtin_identifier_multiply_int32 = 258,
+    modern_builtin_identifier_multiply_int64 = 259,
+    modern_builtin_identifier_multiply_nat8 = 260,
+    modern_builtin_identifier_multiply_nat16 = 261,
+    modern_builtin_identifier_multiply_nat32 = 262,
+    modern_builtin_identifier_multiply_nat64 = 263,
+    modern_builtin_identifier_multiply_float32 = 264,
+    modern_builtin_identifier_multiply_float64 = 265,
+    modern_builtin_identifier_divide_towards_zero_int8 = 288,
+    modern_builtin_identifier_divide_towards_zero_int16 = 289,
+    modern_builtin_identifier_divide_towards_zero_int32 = 290,
+    modern_builtin_identifier_divide_towards_zero_int64 = 291,
+    modern_builtin_identifier_divide_towards_zero_nat8 = 292,
+    modern_builtin_identifier_divide_towards_zero_nat16 = 293,
+    modern_builtin_identifier_divide_towards_zero_nat32 = 294,
+    modern_builtin_identifier_divide_towards_zero_nat64 = 295,
+    modern_builtin_identifier_divide_towards_negative_infinity_int8 = 320,
+    modern_builtin_identifier_divide_towards_negative_infinity_int16 = 321,
+    modern_builtin_identifier_divide_towards_negative_infinity_int32 = 322,
+    modern_builtin_identifier_divide_towards_negative_infinity_int64 = 323,
+    modern_builtin_identifier_divide_towards_negative_infinity_nat8 = 324,
+    modern_builtin_identifier_divide_towards_negative_infinity_nat16 = 325,
+    modern_builtin_identifier_divide_towards_negative_infinity_nat32 = 326,
+    modern_builtin_identifier_divide_towards_negative_infinity_nat64 = 327,
+    modern_builtin_identifier_divide_float32 = 352,
+    modern_builtin_identifier_divide_float64 = 353,
+    modern_builtin_identifier_modulus_towards_zero_int8 = 384,
+    modern_builtin_identifier_modulus_towards_zero_int16 = 385,
+    modern_builtin_identifier_modulus_towards_zero_int32 = 386,
+    modern_builtin_identifier_modulus_towards_zero_int64 = 387,
+    modern_builtin_identifier_modulus_towards_zero_nat8 = 388,
+    modern_builtin_identifier_modulus_towards_zero_nat16 = 389,
+    modern_builtin_identifier_modulus_towards_zero_nat32 = 390,
+    modern_builtin_identifier_modulus_towards_zero_nat64 = 391,
+    modern_builtin_identifier_modulus_towards_negative_infinity_int8 = 416,
+    modern_builtin_identifier_modulus_towards_negative_infinity_int16 = 417,
+    modern_builtin_identifier_modulus_towards_negative_infinity_int32 = 418,
+    modern_builtin_identifier_modulus_towards_negative_infinity_int64 = 419,
+    modern_builtin_identifier_modulus_towards_negative_infinity_nat8 = 420,
+    modern_builtin_identifier_modulus_towards_negative_infinity_nat16 = 421,
+    modern_builtin_identifier_modulus_towards_negative_infinity_nat32 = 422,
+    modern_builtin_identifier_modulus_towards_negative_infinity_nat64 = 423,
+    modern_builtin_identifier_negate_int8 = 448,
+    modern_builtin_identifier_negate_int16 = 449,
+    modern_builtin_identifier_negate_int32 = 450,
+    modern_builtin_identifier_negate_int64 = 451,
+    modern_builtin_identifier_negate_float32 = 452,
+    modern_builtin_identifier_negate_float64 = 453,
+    modern_builtin_identifier_absolute_value_int8 = 480,
+    modern_builtin_identifier_absolute_value_int16 = 481,
+    modern_builtin_identifier_absolute_value_int32 = 482,
+    modern_builtin_identifier_absolute_value_int64 = 483,
+    modern_builtin_identifier_absolute_value_float32 = 484,
+    modern_builtin_identifier_absolute_value_float64 = 485,
+    modern_builtin_identifier_sign_int8 = 512,
+    modern_builtin_identifier_sign_int16 = 513,
+    modern_builtin_identifier_sign_int32 = 514,
+    modern_builtin_identifier_sign_int64 = 515,
+    modern_builtin_identifier_sign_float32 = 516,
+    modern_builtin_identifier_sign_float64 = 517,
+    modern_builtin_identifier_pi_float32 = 544,
+    modern_builtin_identifier_pi_float64 = 545,
+    modern_builtin_identifier_square_root_float32 = 576,
+    modern_builtin_identifier_square_root_float64 = 577,
+    modern_builtin_identifier_natural_logarithm_float32 = 608,
+    modern_builtin_identifier_natural_logarithm_float64 = 609,
+    modern_builtin_identifier_e_to_the_x_float32 = 640,
+    modern_builtin_identifier_e_to_the_x_float64 = 641,
+    modern_builtin_identifier_two_to_the_x_float32 = 672,
+    modern_builtin_identifier_two_to_the_x_float64 = 673,
+    modern_builtin_identifier_x_to_the_y_float32 = 704,
+    modern_builtin_identifier_x_to_the_y_float64 = 705,
+    modern_builtin_identifier_logarithm_base_x_float32 = 736,
+    modern_builtin_identifier_logarithm_base_x_float64 = 737,
+    modern_builtin_identifier_sine_float32 = 768,
+    modern_builtin_identifier_sine_float64 = 769,
+    modern_builtin_identifier_cosine_float32 = 800,
+    modern_builtin_identifier_cosine_float64 = 801,
+    modern_builtin_identifier_tangent_float32 = 832,
+    modern_builtin_identifier_tangent_float64 = 833,
+    modern_builtin_identifier_arcsine_float32 = 864,
+    modern_builtin_identifier_arcsine_float64 = 865,
+    modern_builtin_identifier_arccosine_float32 = 896,
+    modern_builtin_identifier_arccosine_float64 = 897,
+    modern_builtin_identifier_arctangent_float32 = 928,
+    modern_builtin_identifier_arctangent_float64 = 929,
+    modern_builtin_identifier_arctangent_fraction_float32 = 960,
+    modern_builtin_identifier_arctangent_fraction_float64 = 961,
+    modern_builtin_identifier_hyperbolic_sine_float32 = 992,
+    modern_builtin_identifier_hyperbolic_sine_float64 = 993,
+    modern_builtin_identifier_hyperbolic_cosine_float32 = 1024,
+    modern_builtin_identifier_hyperbolic_cosine_float64 = 1025,
+    modern_builtin_identifier_hyperbolic_tangent_float32 = 1056,
+    modern_builtin_identifier_hyperbolic_tangent_float64 = 1057,
+    modern_builtin_identifier_hyperbolic_arcsine_float32 = 1088,
+    modern_builtin_identifier_hyperbolic_arcsine_float64 = 1089,
+    modern_builtin_identifier_hyperbolic_arccosine_float32 = 1120,
+    modern_builtin_identifier_hyperbolic_arccosine_float64 = 1121,
+    modern_builtin_identifier_hyperbolic_arctangent_float32 = 1152,
+    modern_builtin_identifier_hyperbolic_arctangent_float64 = 1153,
+    modern_builtin_identifier_round_towards_zero_float32_int8 = 1184,
+    modern_builtin_identifier_round_towards_zero_float64_int8 = 1185,
+    modern_builtin_identifier_round_towards_zero_float32_int16 = 1186,
+    modern_builtin_identifier_round_towards_zero_float64_int16 = 1187,
+    modern_builtin_identifier_round_towards_zero_float32_int32 = 1188,
+    modern_builtin_identifier_round_towards_zero_float64_int32 = 1189,
+    modern_builtin_identifier_round_towards_zero_float32_int64 = 1190,
+    modern_builtin_identifier_round_towards_zero_float64_int64 = 1191,
+    modern_builtin_identifier_round_towards_zero_float32_nat8 = 1192,
+    modern_builtin_identifier_round_towards_zero_float64_nat8 = 1193,
+    modern_builtin_identifier_round_towards_zero_float32_nat16 = 1194,
+    modern_builtin_identifier_round_towards_zero_float64_nat16 = 1195,
+    modern_builtin_identifier_round_towards_zero_float32_nat32 = 1196,
+    modern_builtin_identifier_round_towards_zero_float64_nat32 = 1197,
+    modern_builtin_identifier_round_towards_zero_float32_nat64 = 1198,
+    modern_builtin_identifier_round_towards_zero_float64_nat64 = 1199,
+    modern_builtin_identifier_round_towards_zero_float32_float32 = 1200,
+    modern_builtin_identifier_round_towards_zero_float64_float64 = 1201,
+    modern_builtin_identifier_round_away_from_zero_float32_int8 = 1216,
+    modern_builtin_identifier_round_away_from_zero_float64_int8 = 1217,
+    modern_builtin_identifier_round_away_from_zero_float32_int16 = 1218,
+    modern_builtin_identifier_round_away_from_zero_float64_int16 = 1219,
+    modern_builtin_identifier_round_away_from_zero_float32_int32 = 1220,
+    modern_builtin_identifier_round_away_from_zero_float64_int32 = 1221,
+    modern_builtin_identifier_round_away_from_zero_float32_int64 = 1222,
+    modern_builtin_identifier_round_away_from_zero_float64_int64 = 1223,
+    modern_builtin_identifier_round_away_from_zero_float32_nat8 = 1224,
+    modern_builtin_identifier_round_away_from_zero_float64_nat8 = 1225,
+    modern_builtin_identifier_round_away_from_zero_float32_nat16 = 1226,
+    modern_builtin_identifier_round_away_from_zero_float64_nat16 = 1227,
+    modern_builtin_identifier_round_away_from_zero_float32_nat32 = 1228,
+    modern_builtin_identifier_round_away_from_zero_float64_nat32 = 1229,
+    modern_builtin_identifier_round_away_from_zero_float32_nat64 = 1230,
+    modern_builtin_identifier_round_away_from_zero_float64_nat64 = 1231,
+    modern_builtin_identifier_round_away_from_zero_float32_float32 = 1232,
+    modern_builtin_identifier_round_away_from_zero_float64_float64 = 1233,
+    modern_builtin_identifier_round_towards_even_float32_int8 = 1248,
+    modern_builtin_identifier_round_towards_even_float64_int8 = 1249,
+    modern_builtin_identifier_round_towards_even_float32_int16 = 1250,
+    modern_builtin_identifier_round_towards_even_float64_int16 = 1251,
+    modern_builtin_identifier_round_towards_even_float32_int32 = 1252,
+    modern_builtin_identifier_round_towards_even_float64_int32 = 1253,
+    modern_builtin_identifier_round_towards_even_float32_int64 = 1254,
+    modern_builtin_identifier_round_towards_even_float64_int64 = 1255,
+    modern_builtin_identifier_round_towards_even_float32_nat8 = 1256,
+    modern_builtin_identifier_round_towards_even_float64_nat8 = 1257,
+    modern_builtin_identifier_round_towards_even_float32_nat16 = 1258,
+    modern_builtin_identifier_round_towards_even_float64_nat16 = 1259,
+    modern_builtin_identifier_round_towards_even_float32_nat32 = 1260,
+    modern_builtin_identifier_round_towards_even_float64_nat32 = 1261,
+    modern_builtin_identifier_round_towards_even_float32_nat64 = 1262,
+    modern_builtin_identifier_round_towards_even_float64_nat64 = 1263,
+    modern_builtin_identifier_round_towards_even_float32_float32 = 1264,
+    modern_builtin_identifier_round_towards_even_float64_float64 = 1265,
+    modern_builtin_identifier_round_towards_odd_float32_int8 = 1280,
+    modern_builtin_identifier_round_towards_odd_float64_int8 = 1281,
+    modern_builtin_identifier_round_towards_odd_float32_int16 = 1282,
+    modern_builtin_identifier_round_towards_odd_float64_int16 = 1283,
+    modern_builtin_identifier_round_towards_odd_float32_int32 = 1284,
+    modern_builtin_identifier_round_towards_odd_float64_int32 = 1285,
+    modern_builtin_identifier_round_towards_odd_float32_int64 = 1286,
+    modern_builtin_identifier_round_towards_odd_float64_int64 = 1287,
+    modern_builtin_identifier_round_towards_odd_float32_nat8 = 1288,
+    modern_builtin_identifier_round_towards_odd_float64_nat8 = 1289,
+    modern_builtin_identifier_round_towards_odd_float32_nat16 = 1290,
+    modern_builtin_identifier_round_towards_odd_float64_nat16 = 1291,
+    modern_builtin_identifier_round_towards_odd_float32_nat32 = 1292,
+    modern_builtin_identifier_round_towards_odd_float64_nat32 = 1293,
+    modern_builtin_identifier_round_towards_odd_float32_nat64 = 1294,
+    modern_builtin_identifier_round_towards_odd_float64_nat64 = 1295,
+    modern_builtin_identifier_round_towards_odd_float32_float32 = 1296,
+    modern_builtin_identifier_round_towards_odd_float64_float64 = 1297,
+    modern_builtin_identifier_ceiling_float32_int8 = 1312,
+    modern_builtin_identifier_ceiling_float64_int8 = 1313,
+    modern_builtin_identifier_ceiling_float32_int16 = 1314,
+    modern_builtin_identifier_ceiling_float64_int16 = 1315,
+    modern_builtin_identifier_ceiling_float32_int32 = 1316,
+    modern_builtin_identifier_ceiling_float64_int32 = 1317,
+    modern_builtin_identifier_ceiling_float32_int64 = 1318,
+    modern_builtin_identifier_ceiling_float64_int64 = 1319,
+    modern_builtin_identifier_ceiling_float32_nat8 = 1320,
+    modern_builtin_identifier_ceiling_float64_nat8 = 1321,
+    modern_builtin_identifier_ceiling_float32_nat16 = 1322,
+    modern_builtin_identifier_ceiling_float64_nat16 = 1323,
+    modern_builtin_identifier_ceiling_float32_nat32 = 1324,
+    modern_builtin_identifier_ceiling_float64_nat32 = 1325,
+    modern_builtin_identifier_ceiling_float32_nat64 = 1326,
+    modern_builtin_identifier_ceiling_float64_nat64 = 1327,
+    modern_builtin_identifier_ceiling_float32_float32 = 1328,
+    modern_builtin_identifier_ceiling_float64_float64 = 1329,
+    modern_builtin_identifier_floor_float32_int8 = 1344,
+    modern_builtin_identifier_floor_float64_int8 = 1345,
+    modern_builtin_identifier_floor_float32_int16 = 1346,
+    modern_builtin_identifier_floor_float64_int16 = 1347,
+    modern_builtin_identifier_floor_float32_int32 = 1348,
+    modern_builtin_identifier_floor_float64_int32 = 1349,
+    modern_builtin_identifier_floor_float32_int64 = 1350,
+    modern_builtin_identifier_floor_float64_int64 = 1351,
+    modern_builtin_identifier_floor_float32_nat8 = 1352,
+    modern_builtin_identifier_floor_float64_nat8 = 1353,
+    modern_builtin_identifier_floor_float32_nat16 = 1354,
+    modern_builtin_identifier_floor_float64_nat16 = 1355,
+    modern_builtin_identifier_floor_float32_nat32 = 1356,
+    modern_builtin_identifier_floor_float64_nat32 = 1357,
+    modern_builtin_identifier_floor_float32_nat64 = 1358,
+    modern_builtin_identifier_floor_float64_nat64 = 1359,
+    modern_builtin_identifier_floor_float32_float32 = 1360,
+    modern_builtin_identifier_floor_float64_float64 = 1361,
+    modern_builtin_identifier_minimum_bound_int8 = 1376,
+    modern_builtin_identifier_minimum_bound_int16 = 1377,
+    modern_builtin_identifier_minimum_bound_int32 = 1378,
+    modern_builtin_identifier_minimum_bound_int64 = 1379,
+    modern_builtin_identifier_minimum_bound_nat8 = 1380,
+    modern_builtin_identifier_minimum_bound_nat16 = 1381,
+    modern_builtin_identifier_minimum_bound_nat32 = 1382,
+    modern_builtin_identifier_minimum_bound_nat64 = 1383,
+    modern_builtin_identifier_maximum_bound_int8 = 1408,
+    modern_builtin_identifier_maximum_bound_int16 = 1409,
+    modern_builtin_identifier_maximum_bound_int32 = 1410,
+    modern_builtin_identifier_maximum_bound_int64 = 1411,
+    modern_builtin_identifier_maximum_bound_nat8 = 1412,
+    modern_builtin_identifier_maximum_bound_nat16 = 1413,
+    modern_builtin_identifier_maximum_bound_nat32 = 1414,
+    modern_builtin_identifier_maximum_bound_nat64 = 1415,
+    modern_builtin_identifier_shift_left_int8 = 1440,
+    modern_builtin_identifier_shift_left_int16 = 1441,
+    modern_builtin_identifier_shift_left_int32 = 1442,
+    modern_builtin_identifier_shift_left_int64 = 1443,
+    modern_builtin_identifier_shift_left_nat8 = 1444,
+    modern_builtin_identifier_shift_left_nat16 = 1445,
+    modern_builtin_identifier_shift_left_nat32 = 1456,
+    modern_builtin_identifier_shift_left_nat64 = 1457,
+    modern_builtin_identifier_shift_right_int8 = 1472,
+    modern_builtin_identifier_shift_right_int16 = 1473,
+    modern_builtin_identifier_shift_right_int32 = 1474,
+    modern_builtin_identifier_shift_right_int64 = 1475,
+    modern_builtin_identifier_shift_right_nat8 = 1476,
+    modern_builtin_identifier_shift_right_nat16 = 1477,
+    modern_builtin_identifier_shift_right_nat32 = 1478,
+    modern_builtin_identifier_shift_right_nat64 = 1479,
+    modern_builtin_identifier_rotate_left_int8 = 1504,
+    modern_builtin_identifier_rotate_left_int16 = 1505,
+    modern_builtin_identifier_rotate_left_int32 = 1506,
+    modern_builtin_identifier_rotate_left_int64 = 1507,
+    modern_builtin_identifier_rotate_left_nat8 = 1508,
+    modern_builtin_identifier_rotate_left_nat16 = 1509,
+    modern_builtin_identifier_rotate_left_nat32 = 1510,
+    modern_builtin_identifier_rotate_left_nat64 = 1511,
+    modern_builtin_identifier_rotate_right_int8 = 1536,
+    modern_builtin_identifier_rotate_right_int16 = 1537,
+    modern_builtin_identifier_rotate_right_int32 = 1538,
+    modern_builtin_identifier_rotate_right_int64 = 1539,
+    modern_builtin_identifier_rotate_right_nat8 = 1540,
+    modern_builtin_identifier_rotate_right_nat16 = 1541,
+    modern_builtin_identifier_rotate_right_nat32 = 1542,
+    modern_builtin_identifier_rotate_right_nat64 = 1543,
+    modern_builtin_identifier_bit_and_int8 = 1568,
+    modern_builtin_identifier_bit_and_int16 = 1569,
+    modern_builtin_identifier_bit_and_int32 = 1570,
+    modern_builtin_identifier_bit_and_int64 = 1571,
+    modern_builtin_identifier_bit_and_nat8 = 1572,
+    modern_builtin_identifier_bit_and_nat16 = 1573,
+    modern_builtin_identifier_bit_and_nat32 = 1574,
+    modern_builtin_identifier_bit_and_nat64 = 1575,
+    modern_builtin_identifier_bit_or_int8 = 1600,
+    modern_builtin_identifier_bit_or_int16 = 1601,
+    modern_builtin_identifier_bit_or_int32 = 1602,
+    modern_builtin_identifier_bit_or_int64 = 1603,
+    modern_builtin_identifier_bit_or_nat8 = 1604,
+    modern_builtin_identifier_bit_or_nat16 = 1605,
+    modern_builtin_identifier_bit_or_nat32 = 1606,
+    modern_builtin_identifier_bit_or_nat64 = 1607,
+    modern_builtin_identifier_bit_xor_int8 = 1632,
+    modern_builtin_identifier_bit_xor_int16 = 1633,
+    modern_builtin_identifier_bit_xor_int32 = 1634,
+    modern_builtin_identifier_bit_xor_int64 = 1635,
+    modern_builtin_identifier_bit_xor_nat8 = 1636,
+    modern_builtin_identifier_bit_xor_nat16 = 1637,
+    modern_builtin_identifier_bit_xor_nat32 = 1638,
+    modern_builtin_identifier_bit_xor_nat64 = 1639,
+    modern_builtin_identifier_bit_not_int8 = 1664,
+    modern_builtin_identifier_bit_not_int16 = 1665,
+    modern_builtin_identifier_bit_not_int32 = 1666,
+    modern_builtin_identifier_bit_not_int64 = 1667,
+    modern_builtin_identifier_bit_not_nat8 = 1668,
+    modern_builtin_identifier_bit_not_nat16 = 1669,
+    modern_builtin_identifier_bit_not_nat32 = 1670,
+    modern_builtin_identifier_bit_not_nat64 = 1671,
+    modern_builtin_identifier_decode_utf8 = 1696,
+    modern_builtin_identifier_encode_utf8 = 1728,
+    modern_builtin_identifier_character_offset_to_byte_offset_utf8 = 1760,
+    modern_builtin_identifier_length_bytes_utf8 = 1792,
+    modern_builtin_identifier_length_bytes_blob = 1793,
+    modern_builtin_identifier_get_byte_blob = 1824,
+    modern_builtin_identifier_replace_byte_blob = 1856,
+    modern_builtin_identifier_get_data_piece_utf8 = 1888,
+    modern_builtin_identifier_get_data_piece_blob = 1889,
+    modern_builtin_identifier_replace_data_piece_utf8 = 1920,
+    modern_builtin_identifier_replace_data_piece_blob = 1921,
+    modern_builtin_identifier_empty_utf8 = 1952,
+    modern_builtin_identifier_empty_blob = 1953,
+    modern_builtin_identifier_get_sigma_field_value = 1984,
+    modern_builtin_identifier_get_sigma_successor = 2016,
+    modern_builtin_identifier_get_named_value = 2048,
+    modern_builtin_identifier_get_function_type_left = 2080,
+    modern_builtin_identifier_get_function_type_right = 2112,
+    modern_builtin_identifier_get_sigma_type_field_type = 2144,
+    modern_builtin_identifier_get_sigma_type_successor = 2176,
+    modern_builtin_identifier_get_named_type_content_type = 2208,
+    modern_builtin_identifier_get_universe_type_level = 2240,
+    modern_builtin_identifier_make_sigma = 2272,
+    modern_builtin_identifier_make_name = 2304,
+    modern_builtin_identifier_make_named_value = 2336,
+    modern_builtin_identifier_make_function_type = 2368,
+    modern_builtin_identifier_make_sigma_type = 2400,
+    modern_builtin_identifier_make_named_type = 2432,
+    modern_builtin_identifier_make_universe_type = 2464,
+    modern_builtin_identifier_make_maybe_type = 2496,
+    modern_builtin_identifier_get_maybe_type_content_type = 2528,
+    modern_builtin_identifier_maybe_is_just = 2560,
+    modern_builtin_identifier_fmap_maybe = 2592,
+    modern_builtin_identifier_from_maybe = 2624,
+    modern_builtin_identifier_cast_int8_int16 = 10240,
+    modern_builtin_identifier_cast_int8_int32 = 10241,
+    modern_builtin_identifier_cast_int8_int64 = 10242,
+    modern_builtin_identifier_cast_int8_nat8 = 10243,
+    modern_builtin_identifier_cast_int8_nat16 = 10244,
+    modern_builtin_identifier_cast_int8_nat32 = 10245,
+    modern_builtin_identifier_cast_int8_nat64 = 10246,
+    modern_builtin_identifier_cast_int16_int8 = 10247,
+    modern_builtin_identifier_cast_int16_int32 = 10248,
+    modern_builtin_identifier_cast_int16_int64 = 10249,
+    modern_builtin_identifier_cast_int16_nat8 = 10250,
+    modern_builtin_identifier_cast_int16_nat16 = 10251,
+    modern_builtin_identifier_cast_int16_nat32 = 10252,
+    modern_builtin_identifier_cast_int16_nat64 = 10253,
+    modern_builtin_identifier_cast_int32_int8 = 10254,
+    modern_builtin_identifier_cast_int32_int16 = 10255,
+    modern_builtin_identifier_cast_int32_int64 = 10256,
+    modern_builtin_identifier_cast_int32_nat8 = 10257,
+    modern_builtin_identifier_cast_int32_nat16 = 10258,
+    modern_builtin_identifier_cast_int32_nat32 = 10259,
+    modern_builtin_identifier_cast_int32_nat64 = 10260,
+    modern_builtin_identifier_cast_int64_int8 = 10261,
+    modern_builtin_identifier_cast_int64_int16 = 10262,
+    modern_builtin_identifier_cast_int64_int32 = 10263,
+    modern_builtin_identifier_cast_int64_nat8 = 10264,
+    modern_builtin_identifier_cast_int64_nat16 = 10265,
+    modern_builtin_identifier_cast_int64_nat32 = 10266,
+    modern_builtin_identifier_cast_int64_nat64 = 10267,
+    modern_builtin_identifier_cast_nat8_int8 = 10268,
+    modern_builtin_identifier_cast_nat8_int16 = 10269,
+    modern_builtin_identifier_cast_nat8_int32 = 10270,
+    modern_builtin_identifier_cast_nat8_int64 = 10271,
+    modern_builtin_identifier_cast_nat8_nat16 = 10272,
+    modern_builtin_identifier_cast_nat8_nat32 = 10273,
+    modern_builtin_identifier_cast_nat8_nat64 = 10274,
+    modern_builtin_identifier_cast_nat16_int8 = 10275,
+    modern_builtin_identifier_cast_nat16_int16 = 10276,
+    modern_builtin_identifier_cast_nat16_int32 = 10277,
+    modern_builtin_identifier_cast_nat16_int64 = 10278,
+    modern_builtin_identifier_cast_nat16_nat8 = 10279,
+    modern_builtin_identifier_cast_nat16_nat32 = 10280,
+    modern_builtin_identifier_cast_nat16_nat64 = 10281,
+    modern_builtin_identifier_cast_nat32_int8 = 10282,
+    modern_builtin_identifier_cast_nat32_int16 = 10283,
+    modern_builtin_identifier_cast_nat32_int32 = 10284,
+    modern_builtin_identifier_cast_nat32_int64 = 10285,
+    modern_builtin_identifier_cast_nat32_nat8 = 10286,
+    modern_builtin_identifier_cast_nat32_nat16 = 10287,
+    modern_builtin_identifier_cast_nat32_nat64 = 10288,
+    modern_builtin_identifier_cast_nat64_int8 = 10289,
+    modern_builtin_identifier_cast_nat64_int16 = 10290,
+    modern_builtin_identifier_cast_nat64_int32 = 10291,
+    modern_builtin_identifier_cast_nat64_int64 = 10292,
+    modern_builtin_identifier_cast_nat64_nat8 = 10293,
+    modern_builtin_identifier_cast_nat64_nat16 = 10294,
+    modern_builtin_identifier_cast_nat64_nat32 = 10295,
+    modern_builtin_identifier_cast_utf8_blob = 10296,
+    modern_builtin_identifier_cast_blob_utf8 = 10297,
+    modern_builtin_identifier_cast_name_blob = 10298,
+    modern_builtin_identifier_cast_blob_name = 10299,
+    modern_builtin_identifier_cast_float32_float64 = 10300,
+    modern_builtin_identifier_cast_float64_float32 = 10301,
+    modern_builtin_identifier_cast_blob_int8 = 10302,
+    modern_builtin_identifier_cast_blob_int16 = 10303,
+    modern_builtin_identifier_cast_blob_int32 = 10304,
+    modern_builtin_identifier_cast_blob_int64 = 10305,
+    modern_builtin_identifier_cast_blob_nat8 = 10306,
+    modern_builtin_identifier_cast_blob_nat16 = 10307,
+    modern_builtin_identifier_cast_blob_nat32 = 10308,
+    modern_builtin_identifier_cast_blob_nat64 = 10309,
+    modern_builtin_identifier_cast_blob_float32 = 10310,
+    modern_builtin_identifier_cast_blob_float64 = 10311,
+    modern_builtin_identifier_cast_int8_blob = 10312,
+    modern_builtin_identifier_cast_int16_blob = 10313,
+    modern_builtin_identifier_cast_int32_blob = 10314,
+    modern_builtin_identifier_cast_int64_blob = 10315,
+    modern_builtin_identifier_cast_nat8_blob = 10316,
+    modern_builtin_identifier_cast_nat16_blob = 10317,
+    modern_builtin_identifier_cast_nat32_blob = 10318,
+    modern_builtin_identifier_cast_nat64_blob = 10319,
+    modern_builtin_identifier_cast_float32_blob = 10320,
+    modern_builtin_identifier_cast_float64_blob = 10321,
+};
+
+
+struct modern_node {
+    enum modern_node_type
+      (*modern_node_get_node_type)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_value_type)
+      (modern_library *library,
+       void *value);
+    int
+      (*modern_node_get_mutable)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_copy)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_maybe_just_content)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_maybe_just_content_link)
+      (modern_library *library,
+       void *value);
+    int8_t 
+      (*modern_node_get_int8)
+      (modern_library *library,
+       void *value);
+    int16_t 
+      (*modern_node_get_int16)
+      (modern_library *library,
+       void *value);
+    int32_t 
+      (*modern_node_get_int32)
+      (modern_library *library,
+       void *value);
+    int64_t 
+      (*modern_node_get_int64)
+      (modern_library *library,
+       void *value);
+    uint8_t 
+      (*modern_node_get_nat8)
+      (modern_library *library,
+       void *value);
+    uint16_t 
+      (*modern_node_get_nat16)
+      (modern_library *library,
+       void *value);
+    uint32_t 
+      (*modern_node_get_nat32)
+      (modern_library *library,
+       void *value);
+    uint64_t 
+      (*modern_node_get_nat64)
+      (modern_library *library,
+       void *value);
+    float 
+      (*modern_node_get_float32)
+      (modern_library *library,
+       void *value);
+    double 
+      (*modern_node_get_float64)
+      (modern_library *library,
+       void *value);
+    size_t 
+      (*modern_node_get_utf8_bytes)
+      (modern_library *library,
+       void *value);
+    uint8_t *
+      (*modern_node_get_utf8_data_piece)
+      (modern_library *library,
+       void *value, size_t offset, size_t bytes);
+    size_t 
+      (*modern_node_get_blob_bytes)
+      (modern_library *library,
+       void *value);
+    uint8_t *
+      (*modern_node_get_blob_data_piece)
+      (modern_library *library,
+       void *value, size_t offset, size_t bytes);
+    void *
+      (*modern_node_get_sigma_field_value)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_sigma_field_value_link)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_sigma_successor)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_sigma_successor_link)
+      (modern_library *library,
+       void *value);
+    struct modern_hash modern_node_get_name_hash
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_named_value)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_named_value_link)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_maybe_type_content_type)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_maybe_type_content_type_link)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_function_type_left)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_function_type_left_link)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_function_type_right)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_function_type_right_link)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_sigma_type_field_type)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_sigma_type_field_type_link)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_sigma_type_successor)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_sigma_type_successor_link)
+      (modern_library *library,
+       void *value);
+    struct modern_hash modern_node_get_named_type_name
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_named_type_content_type)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_named_type_content_type_link)
+      (modern_library *library,
+       void *value);
+    uint64_t 
+      (*modern_node_get_universe_type_level)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_lambda_content)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_lambda_content_link)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_apply_left)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_apply_left_link)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_apply_right)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_apply_right_link)
+      (modern_library *library,
+       void *value);
+    uint64_t 
+      (*modern_node_get_type_family_count)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_type_family_item)
+      (modern_library *library,
+       void *value, uint64_t index);
+    void *
+      (*modern_node_get_type_family_item_link)
+      (modern_library *library,
+       void *value, uint64_t index);
+    uint64_t 
+      (*modern_node_get_let_count)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_let_item)
+      (modern_library *library,
+       void *value, uint64_t index);
+    void *
+      (*modern_node_get_let_item_link)
+      (modern_library *library,
+       void *value, uint64_t index);
+    void *
+      (*modern_node_get_let_content)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_get_let_content_link)
+      (modern_library *library,
+       void *value);
+    uint64_t 
+      (*modern_node_get_backreference_index)
+      (modern_library *library,
+       void *value);
+    uint16_t 
+      (*modern_node_get_builtin_identifier)
+      (modern_library *library,
+       void *value);
+    void *
+      (*modern_node_make_bool_false)
+      (modern_library *library);
+    void *
+      (*modern_node_make_bool_true)
+      (modern_library *library);
+    void *
+      (*modern_node_make_ordering_less)
+      (modern_library *library);
+    void *
+      (*modern_node_make_ordering_equal)
+      (modern_library *library);
+    void *
+      (*modern_node_make_ordering_greater)
+      (modern_library *library);
+    void *
+      (*modern_node_make_maybe_nothing)
+      (modern_library *library,
+       void *type);
+    void *
+      (*modern_node_make_maybe_just)
+      (modern_library *library,
+       void *type,
+       void *content_value);
+    void *
+      (*modern_node_make_int8)
+      (modern_library *library,
+       int8_t value);
+    void *
+      (*modern_node_make_int16)
+      (modern_library *library,
+       int16_t value);
+    void *
+      (*modern_node_make_int32)
+      (modern_library *library,
+       int32_t value);
+    void *
+      (*modern_node_make_int64)
+      (modern_library *library,
+       int64_t value);
+    void *
+      (*modern_node_make_nat8)
+      (modern_library *library,
+       uint8_t value);
+    void *
+      (*modern_node_make_nat16)
+      (modern_library *library,
+       uint16_t value);
+    void *
+      (*modern_node_make_nat32)
+      (modern_library *library,
+       uint32_t value);
+    void *
+      (*modern_node_make_nat64)
+      (modern_library *library,
+       uint64_t value);
+    void *
+      (*modern_node_make_float32)
+      (modern_library *library,
+       float value);
+    void *
+      (*modern_node_make_float64)
+      (modern_library *library,
+       double value);
+    void *
+      (*modern_node_make_utf8)
+      (modern_library *library,
+       uint8_t *data);
+    void *
+      (*modern_node_make_blob)
+      (modern_library *library,
+       uint8_t *data, size_t bytes);
+    void *
+      (*modern_node_make_sigma)
+      (modern_library *library,
+       void *type, void *field_value, void *successor_value);
+    void *
+      (*modern_node_make_name)
+      (modern_library *library,
+       struct modern_hash name);
+    void *
+      (*modern_node_make_named_value)
+      (modern_library *library,
+       void *type, void *value);
+    void *
+      (*modern_node_make_bool_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_ordering_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_maybe_type)
+      (modern_library *library,
+       void *content_type);
+    void *
+      (*modern_node_make_int8_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_int16_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_int32_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_int64_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_nat8_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_nat16_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_nat32_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_nat64_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_float32_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_float64_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_utf8_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_blob_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_function_type)
+      (modern_library *library,
+       void *left, void *right);
+    void *
+      (*modern_node_make_sigma_type)
+      (modern_library *library,
+       void *field_type, void *successor);
+    void *
+      (*modern_node_make_name_type)
+      (modern_library *library);
+    void *
+      (*modern_node_make_named_type)
+      (modern_library *library,
+       struct modern_hash name, void *content_type);
+    void *
+      (*modern_node_make_universe_type)
+      (modern_library *library,
+       uint64_t level);
+    
+    void *
+      (*modern_node_make_lambda)
+      (modern_library *library,
+       void *content);
+    void *
+      (*modern_node_make_apply)
+      (modern_library *library,
+       void *left, void *right);
+    void *
+      (*modern_node_make_type_family)
+      (modern_library *library,
+       uint64_t n_items, void **types);
+    void *
+      (*modern_node_make_let)
+      (modern_library *library,
+       uint64_t n_items, void **values, void *content);
+    void *
+      (*modern_node_make_backreference)
+      (modern_library *library,
+       uint64_t index);
+    void *
+      (*modern_node_make_builtin)
+      (modern_library *library,
+       uint16_t identifier);
+    void 
+      (*modern_node_set_immutable)
+      (modern_library *library,
+       void *value);
+    void 
+      (*modern_node_set_maybe_just_content)
+      (modern_library *library,
+       void *value,
+       void *content_value);
+    void 
+      (*modern_node_set_int8)
+      (modern_library *library,
+       void *node,
+       int8_t value);
+    void 
+      (*modern_node_set_int16)
+      (modern_library *library,
+       void *node,
+       int16_t value);
+    void 
+      (*modern_node_set_int32)
+      (modern_library *library,
+       void *node,
+       int32_t value);
+    void 
+      (*modern_node_set_int64)
+      (modern_library *library,
+       void *node,
+       int64_t value);
+    void 
+      (*modern_node_set_nat8)
+      (modern_library *library,
+       void *node,
+       uint8_t value);
+    void 
+      (*modern_node_set_nat16)
+      (modern_library *library,
+       void *node,
+       uint16_t value);
+    void 
+      (*modern_node_set_nat32)
+      (modern_library *library,
+       void *node,
+       uint32_t value);
+    void 
+      (*modern_node_set_nat64)
+      (modern_library *library,
+       void *node,
+       uint64_t value);
+    void 
+      (*modern_node_set_float32)
+      (modern_library *library,
+       void *node,
+       float value);
+    void 
+      (*modern_node_set_float64)
+      (modern_library *library,
+       void *node,
+       double value);
+    void 
+      (*modern_node_set_utf8_data_piece)
+      (modern_library *library,
+       void *value,
+       uint8_t *data,
+       size_t offset,
+       size_t old_bytes,
+       size_t new_bytes);
+    void 
+      (*modern_node_set_blob_data_piece)
+      (modern_library *library,
+       void *value,
+       uint8_t *data,
+       size_t offset,
+       size_t old_bytes,
+       size_t new_bytes);
+    void 
+      (*modern_node_set_sigma)
+      (modern_library *library,
+       void *value,
+       void *field_value,
+       void *successor);
+    void 
+      (*modern_node_set_named_value)
+      (modern_library *library,
+       void *node,
+       void *type,
+       void *value);
+    void 
+      (*modern_node_set_maybe_type_content_type)
+      (modern_library *library,
+       void *value,
+       void *content_type);
+    void 
+      (*modern_node_set_function_type_left)
+      (modern_library *library,
+       void *value,
+       void *left);
+    void 
+      (*modern_node_set_function_type_right)
+      (modern_library *library,
+       void *value,
+       void *right);
+    void 
+      (*modern_node_set_sigma_type_field_type)
+      (modern_library *library,
+       void *value,
+       void *field_type);
+    void 
+      (*modern_node_set_sigma_type_successor)
+      (modern_library *library,
+       void *value,
+       void *successor);
+    void 
+      (*modern_node_set_named_type_name)
+      (modern_library *library,
+       void *value,
+       struct modern_hash name);
+    void 
+      (*modern_node_set_named_type_content_type)
+      (modern_library *library,
+       void *value,
+       void *content_type);
+    void 
+      (*modern_node_set_universe_type_level)
+      (modern_library *library,
+       void *value,
+       uint64_t level);
+    void 
+      (*modern_node_set_lambda_content)
+      (modern_library *library,
+       void *value,
+       void *content);
+    void 
+      (*modern_node_set_apply_left)
+      (modern_library *library,
+       void *value,
+       void *left);
+    void 
+      (*modern_node_set_apply_right)
+      (modern_library *library,
+       void *value,
+       void *right);
+    void 
+      (*modern_node_set_type_family_add_item)
+      (modern_library *library,
+       void *value,
+       void *item,
+       uint64_t index);
+    void 
+      (*modern_node_set_type_family_remove_item)
+      (modern_library *library,
+       void *value,
+       uint64_t index);
+    void 
+      (*modern_node_set_let_add_item)
+      (modern_library *library,
+       void *value,
+       void *item,
+       uint64_t index);
+    void 
+      (*modern_node_set_let_remove_item)
+      (modern_library *library,
+       void *value,
+       uint64_t index);
+    void 
+      (*modern_node_set_let_content)
+      (modern_library *library,
+       void *value,
+       void *content);
+    void 
+      (*modern_node_set_backreference_index)
+      (modern_library *library,
+       void *value,
+       uint64_t index);
+    void 
+      (*modern_node_set_builtin_identifier)
+      (modern_library *library,
+       void *value,
+       uint16_t identifier);
 };
 
 
@@ -716,20 +1375,11 @@ extern void *modern_library_get_client_state
   (modern_library *library);
 extern void modern_library_finalize(modern_library *library);
 
-extern modern_autorelease_pool *modern_make_autorelease_pool
-  (modern_library *library);
-extern void modern_autorelease_pool_release
-  (modern_library *library,
-   modern_autorelease_pool *pool);
 extern void modern_retain
   (modern_library *library,
    void *retainable);
 extern void modern_release
   (modern_library *library,
-   void *retainable);
-extern void modern_autorelease
-  (modern_library *library,
-   modern_autorelease_pool *pool,
    void *retainable);
 
 extern modern_context *modern_make_initial_context
@@ -789,519 +1439,10 @@ extern modern *modern_serialize_output_stream
    modern *value, modern_context *context,
    struct modern_stream *stream);
 
-extern enum modern_node_type modern_node_get_node_type
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_value_type
-  (modern_library *library,
-   modern *value);
-extern int modern_node_get_mutable
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_copy
-  (modern_library *library,
-   modern *value);
-
-extern modern *modern_node_get_maybe_just_content
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_maybe_just_content_link
-  (modern_library *library,
-   modern *value);
-extern int8_t modern_node_get_int8
-  (modern_library *library,
-   modern *value);
-extern int16_t modern_node_get_int16
-  (modern_library *library,
-   modern *value);
-extern int32_t modern_node_get_int32
-  (modern_library *library,
-   modern *value);
-extern int64_t modern_node_get_int64
-  (modern_library *library,
-   modern *value);
-extern uint8_t modern_node_get_nat8
-  (modern_library *library,
-   modern *value);
-extern uint16_t modern_node_get_nat16
-  (modern_library *library,
-   modern *value);
-extern uint32_t modern_node_get_nat32
-  (modern_library *library,
-   modern *value);
-extern uint64_t modern_node_get_nat64
-  (modern_library *library,
-   modern *value);
-extern modern_float32 modern_node_get_float32
-  (modern_library *library,
-   modern *value);
-extern modern_float64 modern_node_get_float64
-  (modern_library *library,
-   modern *value);
-extern size_t modern_node_get_utf8_bytes
-  (modern_library *library,
-   modern *value);
-extern uint8_t *modern_node_get_utf8_data_piece
-  (modern_library *library,
-   modern *value, size_t offset, size_t bytes);
-extern size_t modern_node_get_blob_bytes
-  (modern_library *library,
-   modern *value);
-extern uint8_t *modern_node_get_blob_data_piece
-  (modern_library *library,
-   modern *value, size_t offset, size_t bytes);
-extern modern *modern_node_get_sigma_field_value
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_sigma_field_value_link
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_sigma_successor
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_sigma_successor_link
-  (modern_library *library,
-   modern *value);
-extern struct modern_hash modern_node_get_name_hash
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_named_value
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_named_value_link
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_maybe_type_content_type
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_maybe_type_content_type_link
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_function_type_left
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_function_type_left_link
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_function_type_right
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_function_type_right_link
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_sigma_type_field_type
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_sigma_type_field_type_link
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_sigma_type_successor
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_sigma_type_successor_link
-  (modern_library *library,
-   modern *value);
-extern struct modern_hash modern_node_get_named_type_name
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_named_type_content_type
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_named_type_content_type_link
-  (modern_library *library,
-   modern *value);
-extern uint64_t modern_node_get_universe_type_level
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_lambda_content
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_lambda_content_link
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_apply_left
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_apply_left_link
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_apply_right
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_apply_right_link
-  (modern_library *library,
-   modern *value);
-extern uint64_t modern_node_get_type_family_count
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_type_family_item
-  (modern_library *library,
-   modern *value, uint64_t index);
-extern modern *modern_node_get_type_family_item_link
-  (modern_library *library,
-   modern *value, uint64_t index);
-extern uint64_t modern_node_get_let_count
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_let_item
-  (modern_library *library,
-   modern *value, uint64_t index);
-extern modern *modern_node_get_let_item_link
-  (modern_library *library,
-   modern *value, uint64_t index);
-extern modern *modern_node_get_let_content
-  (modern_library *library,
-   modern *value);
-extern modern *modern_node_get_let_content_link
-  (modern_library *library,
-   modern *value);
-extern uint64_t modern_node_get_backreference_index
-  (modern_library *library,
-   modern *value);
-extern uint16_t modern_node_get_builtin_identifier
-  (modern_library *library,
-   modern *value);
-
-extern modern *modern_node_make_bool_false
-  (modern_library *library);
-extern modern *modern_node_make_bool_true
-  (modern_library *library);
-extern modern *modern_node_make_ordering_less
-  (modern_library *library);
-extern modern *modern_node_make_ordering_equal
-  (modern_library *library);
-extern modern *modern_node_make_ordering_greater
-  (modern_library *library);
-extern modern *modern_node_make_maybe_nothing
-  (modern_library *library,
-   modern *type);
-extern modern *modern_node_make_maybe_just
-  (modern_library *library,
-   modern *type,
-   modern *content_value);
-extern modern *modern_node_make_int8
-  (modern_library *library,
-   int8_t value);
-extern modern *modern_node_make_int16
-  (modern_library *library,
-   int16_t value);
-extern modern *modern_node_make_int32
-  (modern_library *library,
-   int32_t value);
-extern modern *modern_node_make_int64
-  (modern_library *library,
-   int64_t value);
-extern modern *modern_node_make_nat8
-  (modern_library *library,
-   uint8_t value);
-extern modern *modern_node_make_nat16
-  (modern_library *library,
-   uint16_t value);
-extern modern *modern_node_make_nat32
-  (modern_library *library,
-   uint32_t value);
-extern modern *modern_node_make_nat64
-  (modern_library *library,
-   uint64_t value);
-extern modern *modern_node_make_float32
-  (modern_library *library,
-   modern_float32 value);
-extern modern *modern_node_make_float64
-  (modern_library *library,
-   modern_float64 value);
-extern modern *modern_node_make_utf8
-  (modern_library *library,
-   uint8_t *data);
-extern modern *modern_node_make_blob
-  (modern_library *library,
-   uint8_t *data, size_t bytes);
-extern modern *modern_node_make_sigma
-  (modern_library *library,
-   modern *type, modern *field_value, modern *successor_value);
-extern modern *modern_node_make_name
-  (modern_library *library,
-   struct modern_hash name);
-extern modern *modern_node_make_named_value
-  (modern_library *library,
-   modern *type, modern *value);
-
-extern modern *modern_node_make_bool_type
-  (modern_library *library);
-extern modern *modern_node_make_ordering_type
-  (modern_library *library);
-extern modern *modern_node_make_maybe_type
-  (modern_library *library,
-   modern *content_type);
-extern modern *modern_node_make_int8_type
-  (modern_library *library);
-extern modern *modern_node_make_int16_type
-  (modern_library *library);
-extern modern *modern_node_make_int32_type
-  (modern_library *library);
-extern modern *modern_node_make_int64_type
-  (modern_library *library);
-extern modern *modern_node_make_nat8_type
-  (modern_library *library);
-extern modern *modern_node_make_nat16_type
-  (modern_library *library);
-extern modern *modern_node_make_nat32_type
-  (modern_library *library);
-extern modern *modern_node_make_nat64_type
-  (modern_library *library);
-extern modern *modern_node_make_float32_type
-  (modern_library *library);
-extern modern *modern_node_make_float64_type
-  (modern_library *library);
-extern modern *modern_node_make_utf8_type
-  (modern_library *library);
-extern modern *modern_node_make_blob_type
-  (modern_library *library);
-extern modern *modern_node_make_function_type
-  (modern_library *library,
-   modern *left, modern *right);
-extern modern *modern_node_make_sigma_type
-  (modern_library *library,
-   modern *field_type, modern *successor);
-extern modern *modern_node_make_name_type
-  (modern_library *library);
-extern modern *modern_node_make_named_type
-  (modern_library *library,
-   struct modern_hash name, modern *content_type);
-extern modern *modern_node_make_universe_type
-  (modern_library *library,
-   uint64_t level);
-
-extern modern *modern_node_make_lambda
-  (modern_library *library,
-   modern *content);
-extern modern *modern_node_make_apply
-  (modern_library *library,
-   modern *left, modern *right);
-extern modern *modern_node_make_type_family
-  (modern_library *library,
-   uint64_t n_items, modern **types);
-extern modern *modern_node_make_let
-  (modern_library *library,
-   uint64_t n_items, modern **values, modern *content);
-extern modern *modern_node_make_backreference
-  (modern_library *library,
-   uint64_t index);
-extern modern *modern_node_make_builtin
-  (modern_library *library,
-   uint16_t identifier);
-
-extern void modern_node_set_immutable
-  (modern_library *library,
-   modern *value);
-
-extern void modern_node_set_maybe_just_content
-  (modern_library *library,
-   modern *value,
-   modern *content_value);
-extern void modern_node_set_int8
-  (modern_library *library,
-   modern *node,
-   int8_t value);
-extern void modern_node_set_int16
-  (modern_library *library,
-   modern *node,
-   int16_t value);
-extern void modern_node_set_int32
-  (modern_library *library,
-   modern *node,
-   int32_t value);
-extern void modern_node_set_int64
-  (modern_library *library,
-   modern *node,
-   int64_t value);
-extern void modern_node_set_nat8
-  (modern_library *library,
-   modern *node,
-   uint8_t value);
-extern void modern_node_set_nat16
-  (modern_library *library,
-   modern *node,
-   uint16_t value);
-extern void modern_node_set_nat32
-  (modern_library *library,
-   modern *node,
-   uint32_t value);
-extern void modern_node_set_nat64
-  (modern_library *library,
-   modern *node,
-   uint64_t value);
-extern void modern_node_set_float32
-  (modern_library *library,
-   modern *node,
-   float value);
-extern void modern_node_set_float64
-  (modern_library *library,
-   modern *node,
-   double value);
-extern void modern_node_set_utf8_data_piece
-  (modern_library *library,
-   modern *value,
-   uint8_t *data,
-   size_t offset,
-   size_t old_bytes,
-   size_t new_bytes);
-extern void modern_node_set_blob_data_piece
-  (modern_library *library,
-   modern *value,
-   uint8_t *data,
-   size_t offset,
-   size_t old_bytes,
-   size_t new_bytes);
-extern void modern_node_set_sigma
-  (modern_library *library,
-   modern *value,
-   modern *field_value,
-   modern *successor);
-extern void modern_node_set_named_value
-  (modern_library *library,
-   modern *node,
-   modern *type,
-   modern *value);
-
-extern void modern_node_set_maybe_type_content_type
-  (modern_library *library,
-   modern *value,
-   modern *content_type);
-extern void modern_node_set_function_type_left
-  (modern_library *library,
-   modern *value,
-   modern *left);
-extern void modern_node_set_function_type_right
-  (modern_library *library,
-   modern *value,
-   modern *right);
-extern void modern_node_set_sigma_type_field_type
-  (modern_library *library,
-   modern *value,
-   modern *field_type);
-extern void modern_node_set_sigma_type_successor
-  (modern_library *library,
-   modern *value,
-   modern *successor);
-extern void modern_node_set_named_type_name
-  (modern_library *library,
-   modern *value,
-   struct modern_hash name);
-extern void modern_node_set_named_type_content_type
-  (modern_library *library,
-   modern *value,
-   modern *content_type);
-extern void modern_node_set_universe_type_level
-  (modern_library *library,
-   modern *value,
-   uint64_t level);
-
-extern void modern_node_set_lambda_content
-  (modern_library *library,
-   modern *value,
-   modern *content);
-extern void modern_node_set_apply_left
-  (modern_library *library,
-   modern *value,
-   modern *left);
-extern void modern_node_set_apply_right
-  (modern_library *library,
-   modern *value,
-   modern *right);
-extern void modern_node_set_type_family_add_item
-  (modern_library *library,
-   modern *value,
-   modern *item,
-   uint64_t index);
-extern void modern_node_set_type_family_remove_item
-  (modern_library *library,
-   modern *value,
-   uint64_t index);
-extern void modern_node_set_let_add_item
-  (modern_library *library,
-   modern *value,
-   modern *item,
-   uint64_t index);
-extern void modern_node_set_let_remove_item
-  (modern_library *library,
-   modern *value,
-   uint64_t index);
-extern void modern_node_set_let_content
-  (modern_library *library,
-   modern *value,
-   modern *content);
-extern void modern_node_set_backreference_index
-  (modern_library *library,
-   modern *value,
-   uint64_t index);
-extern void modern_node_set_builtin_identifier
-  (modern_library *library,
-   modern *value,
-   uint16_t identifier);
-
 extern int modern_node_canonical_hash
   (modern_library *library,
    modern *value,
    struct modern_hash *out);
-
-extern void *modern_input_stream_memory
-  (modern_library *library,
-   modern_autorelease_pool *pool,
-   struct modern_stream *stream,
-   uint8_t *data, size_t length);
-extern void *modern_input_stream_file
-  (modern_library *library,
-   modern_autorelease_pool *pool,
-   struct modern_stream *stream,
-   FILE *file);
-extern void *modern_input_stream_fd
-  (modern_library *library,
-   modern_autorelease_pool *pool,
-   struct modern_stream *stream,
-   int fd);
-extern void *modern_input_stream_vfile
-  (modern_library *library,
-   modern_autorelease_pool *pool,
-   struct modern_stream *stream,
-   struct modern_vfile *vfile, void *vfile_state);
-
-extern void modern_input_stream_step
-  (modern_library *library,
-   struct modern_stream *stream, void *processor_state, void **stream_state);
-extern void modern_input_stream_run
-  (modern_library *library,
-   struct modern_stream *stream, void *processor_state, void **stream_state);
-extern void modern_input_stream_do_all
-  (modern_library *library,
-   struct modern_stream *stream, void *processor_state);
-
-extern void modern_input_stream_finalize
-  (modern_library *library,
-   void *processor_state);
-
-extern void *modern_output_stream_memory_buffer
-  (modern_library *library,
-   modern_autorelease_pool *pool,
-   uint8_t *buffer, size_t *length);
-extern void *modern_output_stream_memory_allocating
-  (modern_library *library,
-   modern_autorelease_pool *pool,
-   size_t *length);
-extern uint8_t *modern_output_stream_memory_allocating_result
-  (modern_library *library,
-   void *stream_state, size_t *length);
-extern void *modern_output_stream_file
-  (modern_library *library,
-   modern_autorelease_pool *pool,
-   FILE *file);
-extern void *modern_output_stream_fd
-  (modern_library *library,
-   modern_autorelease_pool *pool,
-   int fd);
-extern void *modern_output_stream_vfile
-  (modern_library *library,
-   modern_autorelease_pool *pool,
-   struct modern_vfile *vfile, void *vfile_state);
 
 extern modern *modern_evaluate
   (modern_library *library, modern *node);
@@ -1315,16 +1456,58 @@ extern void modern_compute_child_hash
    uint8_t *data, size_t length, struct modern_hash *out);
 extern void modern_compute_initial_namespace_hash(struct modern_hash *out);
 
-extern struct modern_vfile *modern_make_memory_buffer_vfile
+extern struct modern_vfile *modern_make_vfile_memory_buffer
   (modern_library *library);
-extern struct modern_vfile *modern_make_memory_allocating_vfile
+extern void *modern_initialize_vfile_memory_buffer
+  (modern_library *library,
+   uint8_t *data,
+   size_t length);
+extern void modern_finalize_vfile_memory_buffer
+  (modern_library *library,
+   void *vfile_state);
+
+extern struct modern_vfile *modern_make_vfile_memory_allocating
   (modern_library *library);
-extern struct modern_vfile *modern_make_file_vfile
+extern void *modern_initialize_vfile_memory_allocating
   (modern_library *library);
-extern struct modern_vfile *modern_make_fd_vfile
+extern void modern_finalize_vfile_memory_allocating
+  (modern_library *library,
+   void *vfile_state);
+extern size_t modern_get_vfile_memory_allocating_bytes
+  (modern_library *library,
+   void *vfile_state);
+extern uint8_t *modern_get_vfile_memory_allocating_data_piece
+  (modern_library *library,
+   void *vfile_state,
+   size_t offset, size_t bytes);
+
+extern struct modern_vfile *modern_make_vfile_stdio
+  (modern_library *library);
+extern void *modern_initialize_vfile_stdio
+  (modern_library *library,
+   FILE *stream);
+extern void modern_finalize_vfile_stdio
+  (modern_library *library,
+   void *vfile_state);
+
+extern struct modern_vfile *modern_make_vfile_fd
+  (modern_library *library);
+extern void *modern_initialize_vfile_fd
+  (modern_library *library,
+   int fd);
+extern void modern_finalize_vfile_fd
+  (modern_library *library,
+   void *vfile_state);
+
+extern struct modern_processor *modern_make_input_processor
   (modern_library *library);
 
+extern struct modern_stream *modern_make_output_stream
+  (modern_library *library);
 extern struct modern_stream *modern_make_explicatory_stream
   (modern_library *library);
 extern struct modern_stream *modern_make_documentation_stream
+  (modern_library *library);
+
+extern struct modern_node *modern_make_node
   (modern_library *library);
