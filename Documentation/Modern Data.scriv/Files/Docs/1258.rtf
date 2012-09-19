@@ -1,0 +1,10 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187
+{\fonttbl\f0\fnil\fcharset0 Cochin;}
+{\colortbl;\red255\green255\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li11\fi-1\pardirnatural
+
+\f0\fs24 \cf0 The node-based object model is an abstraction which presents a view on a Modern Data document and schema allowing them to be navigated by traversing links from containers to their contents, and from values to their types.  Users familiar with the HTML document-object model (DOM) will be at home here; the major difference to note is that in Modern Data, nodes comprise an arbitrary directed graph rather than a strict tree.  That is, a node may be shared among multiple parents, and cyclic structures are possible.  Also, because of the tree structure, in the DOM it makes sense to navigate from a node to its sole parent; in Modern Data, it does not, so this navigation is not possible.\
+\
+Ordinarily one will use the system-provided implementation of nodes; a structure containing pointers to the necessary callback functions can be obtained by a one-time call to modern_node_make().  Nodes themselves are then represented as void pointers, and created, inspected, and mutated using these callbacks.\
+\
+It is also possible to provide one\'92s own implementation of nodes.  This is appropriate, for example, when authoring a binding to a new programming language and wishing to use that language\'92s native data structures to represent node values, without the memory-management complications of wrapping them around C objects.  To do this one \'93merely\'94 needs to implement the hundred or so callbacks in the modern_node structure.  It is a nontrivial undertaking, but it is expected that it only needs to be done once for any given programming language.}

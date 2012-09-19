@@ -781,402 +781,408 @@ enum modern_builtin_identifier {
 
 struct modern_node {
     enum modern_node_type
-      (*modern_node_get_node_type)
+      (*modern_node_node_type_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_value_type)
+      (*modern_node_value_type_get)
       (modern_library *library,
        void *value);
     int
-      (*modern_node_get_mutable)
+      (*modern_node_mutable_get)
       (modern_library *library,
        void *value);
-    void *
-      (*modern_node_copy)
+    struct modern_hash
+      (*modern_node_canonical_hash_get)
       (modern_library *library,
-       void *value);
+       modern *value);
     void *
-      (*modern_node_get_maybe_just_content)
+      (*modern_node_maybe_just_content_get)
       (modern_library *library,
        void *value);
     int8_t 
-      (*modern_node_get_int8)
+      (*modern_node_int8_get)
       (modern_library *library,
        void *value);
     int16_t 
-      (*modern_node_get_int16)
+      (*modern_node_int16_get)
       (modern_library *library,
        void *value);
     int32_t 
-      (*modern_node_get_int32)
+      (*modern_node_int32_get)
       (modern_library *library,
        void *value);
     int64_t 
-      (*modern_node_get_int64)
+      (*modern_node_int64_get)
       (modern_library *library,
        void *value);
     uint8_t 
-      (*modern_node_get_nat8)
+      (*modern_node_nat8_get)
       (modern_library *library,
        void *value);
     uint16_t 
-      (*modern_node_get_nat16)
+      (*modern_node_nat16_get)
       (modern_library *library,
        void *value);
     uint32_t 
-      (*modern_node_get_nat32)
+      (*modern_node_nat32_get)
       (modern_library *library,
        void *value);
     uint64_t 
-      (*modern_node_get_nat64)
+      (*modern_node_nat64_get)
       (modern_library *library,
        void *value);
     float 
-      (*modern_node_get_float32)
+      (*modern_node_float32_get)
       (modern_library *library,
        void *value);
     double 
-      (*modern_node_get_float64)
+      (*modern_node_float64_get)
       (modern_library *library,
        void *value);
     size_t 
-      (*modern_node_get_utf8_bytes)
+      (*modern_node_utf8_bytes_get)
       (modern_library *library,
        void *value);
     uint8_t *
-      (*modern_node_get_utf8_data_piece)
+      (*modern_node_utf8_data_piece_get)
       (modern_library *library,
        void *value, size_t offset, size_t bytes);
     size_t 
-      (*modern_node_get_blob_bytes)
+      (*modern_node_blob_bytes_get)
       (modern_library *library,
        void *value);
     uint8_t *
-      (*modern_node_get_blob_data_piece)
+      (*modern_node_blob_data_piece_get)
       (modern_library *library,
        void *value, size_t offset, size_t bytes);
     void *
-      (*modern_node_get_sigma_field_value)
+      (*modern_node_sigma_field_value_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_sigma_successor)
+      (*modern_node_sigma_successor_get)
       (modern_library *library,
        void *value);
     struct modern_hash modern_node_get_name_hash
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_named_value)
+      (*modern_node_named_value_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_maybe_type_content_type)
+      (*modern_node_maybe_type_content_type_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_function_type_left)
+      (*modern_node_function_type_left_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_function_type_right)
+      (*modern_node_function_type_right_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_sigma_type_field_type)
+      (*modern_node_sigma_type_field_type_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_sigma_type_successor)
+      (*modern_node_sigma_type_successor_get)
       (modern_library *library,
        void *value);
-    struct modern_hash modern_node_get_named_type_name
+    struct modern_hash
+      (*modern_node_named_type_name_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_named_type_content_type)
+      (*modern_node_named_type_content_type_get)
       (modern_library *library,
        void *value);
     uint64_t 
-      (*modern_node_get_universe_type_level)
+      (*modern_node_universe_type_level_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_lambda_content)
+      (*modern_node_lambda_content_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_apply_left)
+      (*modern_node_apply_left_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_apply_right)
+      (*modern_node_apply_right_get)
       (modern_library *library,
        void *value);
     uint64_t 
-      (*modern_node_get_type_family_count)
+      (*modern_node_type_family_count_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_type_family_item)
+      (*modern_node_type_family_item_get)
       (modern_library *library,
        void *value, uint64_t index);
     uint64_t 
-      (*modern_node_get_let_count)
+      (*modern_node_let_count_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_let_item)
+      (*modern_node_let_item_get)
       (modern_library *library,
        void *value, uint64_t index);
     void *
-      (*modern_node_get_let_content)
+      (*modern_node_let_content_get)
       (modern_library *library,
        void *value);
     uint64_t 
-      (*modern_node_get_backreference_index)
+      (*modern_node_backreference_index_get)
       (modern_library *library,
        void *value);
     uint16_t 
-      (*modern_node_get_builtin_identifier)
+      (*modern_node_builtin_identifier_get)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_make_bool_false)
+      (*modern_node_bool_false_make)
       (modern_library *library);
     void *
-      (*modern_node_make_bool_true)
+      (*modern_node_bool_true_make)
       (modern_library *library);
     void *
-      (*modern_node_make_ordering_less)
+      (*modern_node_ordering_less_make)
       (modern_library *library);
     void *
-      (*modern_node_make_ordering_equal)
+      (*modern_node_ordering_equal_make)
       (modern_library *library);
     void *
-      (*modern_node_make_ordering_greater)
+      (*modern_node_ordering_greater_make)
       (modern_library *library);
     void *
-      (*modern_node_make_maybe_nothing)
+      (*modern_node_maybe_nothing_make)
       (modern_library *library,
        void *type);
     void *
-      (*modern_node_make_maybe_just)
+      (*modern_node_maybe_just_make)
       (modern_library *library,
        void *type,
        void *content_value);
     void *
-      (*modern_node_make_int8)
+      (*modern_node_int8_make)
       (modern_library *library,
        int8_t value);
     void *
-      (*modern_node_make_int16)
+      (*modern_node_int16_make)
       (modern_library *library,
        int16_t value);
     void *
-      (*modern_node_make_int32)
+      (*modern_node_int32_make)
       (modern_library *library,
        int32_t value);
     void *
-      (*modern_node_make_int64)
+      (*modern_node_int64_make)
       (modern_library *library,
        int64_t value);
     void *
-      (*modern_node_make_nat8)
+      (*modern_node_nat8_make)
       (modern_library *library,
        uint8_t value);
     void *
-      (*modern_node_make_nat16)
+      (*modern_node_nat16_make)
       (modern_library *library,
        uint16_t value);
     void *
-      (*modern_node_make_nat32)
+      (*modern_node_nat32_make)
       (modern_library *library,
        uint32_t value);
     void *
-      (*modern_node_make_nat64)
+      (*modern_node_nat64_make)
       (modern_library *library,
        uint64_t value);
     void *
-      (*modern_node_make_float32)
+      (*modern_node_float32_make)
       (modern_library *library,
        float value);
     void *
-      (*modern_node_make_float64)
+      (*modern_node_float64_make)
       (modern_library *library,
        double value);
     void *
-      (*modern_node_make_utf8)
+      (*modern_node_utf8_make)
       (modern_library *library,
        uint8_t *data);
     void *
-      (*modern_node_make_blob)
+      (*modern_node_blob_make)
       (modern_library *library,
        uint8_t *data, size_t bytes);
     void *
-      (*modern_node_make_sigma)
+      (*modern_node_sigma_make)
       (modern_library *library,
        void *type, void *field_value, void *successor_value);
     void *
-      (*modern_node_make_name)
+      (*modern_node_name_make)
       (modern_library *library,
        struct modern_hash name);
     void *
-      (*modern_node_make_named_value)
+      (*modern_node_named_value_make)
       (modern_library *library,
        void *type, void *value);
     void *
-      (*modern_node_make_bool_type)
+      (*modern_node_bool_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_ordering_type)
+      (*modern_node_ordering_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_maybe_type)
+      (*modern_node_maybe_type_make)
       (modern_library *library,
        void *content_type);
     void *
-      (*modern_node_make_int8_type)
+      (*modern_node_int8_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_int16_type)
+      (*modern_node_int16_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_int32_type)
+      (*modern_node_int32_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_int64_type)
+      (*modern_node_int64_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_nat8_type)
+      (*modern_node_nat8_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_nat16_type)
+      (*modern_node_nat16_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_nat32_type)
+      (*modern_node_nat32_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_nat64_type)
+      (*modern_node_nat64_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_float32_type)
+      (*modern_node_float32_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_float64_type)
+      (*modern_node_float64_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_utf8_type)
+      (*modern_node_utf8_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_blob_type)
+      (*modern_node_blob_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_function_type)
+      (*modern_node_function_type_make)
       (modern_library *library,
        void *left, void *right);
     void *
-      (*modern_node_make_sigma_type)
+      (*modern_node_sigma_type_make)
       (modern_library *library,
        void *field_type, void *successor);
     void *
-      (*modern_node_make_name_type)
+      (*modern_node_name_type_make)
       (modern_library *library);
     void *
-      (*modern_node_make_named_type)
+      (*modern_node_named_type_make)
       (modern_library *library,
        struct modern_hash name, void *content_type);
     void *
-      (*modern_node_make_universe_type)
+      (*modern_node_universe_type_make)
       (modern_library *library,
        uint64_t level);
     
     void *
-      (*modern_node_make_lambda)
+      (*modern_node_lambda_make)
       (modern_library *library,
        void *content);
     void *
-      (*modern_node_make_apply)
+      (*modern_node_apply_make)
       (modern_library *library,
        void *left, void *right);
     void *
-      (*modern_node_make_type_family)
+      (*modern_node_type_family_make)
       (modern_library *library,
        uint64_t n_items, void **types);
     void *
-      (*modern_node_make_let)
+      (*modern_node_let_make)
       (modern_library *library,
        uint64_t n_items, void **values, void *content);
     void *
-      (*modern_node_make_backreference)
+      (*modern_node_backreference_make)
       (modern_library *library,
        uint64_t index);
     void *
-      (*modern_node_make_builtin)
+      (*modern_node_builtin_make)
       (modern_library *library,
        uint16_t identifier);
     void 
-      (*modern_node_set_immutable)
+      (*modern_node_immutable_set)
       (modern_library *library,
        void *value);
+    void
+      (*modern_node_canonical_hash_set)
+      (modern_library *library,
+       void *value,
+       struct modern_hash hash);
     void 
-      (*modern_node_set_maybe_just_content)
+      (*modern_node_maybe_just_content_set)
       (modern_library *library,
        void *value,
        void *content_value);
     void 
-      (*modern_node_set_int8)
+      (*modern_node_int8_set)
       (modern_library *library,
        void *node,
        int8_t value);
     void 
-      (*modern_node_set_int16)
+      (*modern_node_int16_set)
       (modern_library *library,
        void *node,
        int16_t value);
     void 
-      (*modern_node_set_int32)
+      (*modern_node_int32_set)
       (modern_library *library,
        void *node,
        int32_t value);
     void 
-      (*modern_node_set_int64)
+      (*modern_node_int64_set)
       (modern_library *library,
        void *node,
        int64_t value);
     void 
-      (*modern_node_set_nat8)
+      (*modern_node_nat8_set)
       (modern_library *library,
        void *node,
        uint8_t value);
     void 
-      (*modern_node_set_nat16)
+      (*modern_node_nat16_set)
       (modern_library *library,
        void *node,
        uint16_t value);
     void 
-      (*modern_node_set_nat32)
+      (*modern_node_nat32_set)
       (modern_library *library,
        void *node,
        uint32_t value);
     void 
-      (*modern_node_set_nat64)
+      (*modern_node_nat64_set)
       (modern_library *library,
        void *node,
        uint64_t value);
     void 
-      (*modern_node_set_float32)
+      (*modern_node_float32_set)
       (modern_library *library,
        void *node,
        float value);
     void 
-      (*modern_node_set_float64)
+      (*modern_node_float64_set)
       (modern_library *library,
        void *node,
        double value);
     void 
-      (*modern_node_set_utf8_data_piece)
+      (*modern_node_utf8_data_piece_set)
       (modern_library *library,
        void *value,
        uint8_t *data,
@@ -1184,7 +1190,7 @@ struct modern_node {
        size_t old_bytes,
        size_t new_bytes);
     void 
-      (*modern_node_set_blob_data_piece)
+      (*modern_node_blob_data_piece_set)
       (modern_library *library,
        void *value,
        uint8_t *data,
@@ -1192,106 +1198,106 @@ struct modern_node {
        size_t old_bytes,
        size_t new_bytes);
     void 
-      (*modern_node_set_sigma)
+      (*modern_node_sigma_set)
       (modern_library *library,
        void *value,
        void *field_value,
        void *successor);
     void 
-      (*modern_node_set_named_value)
+      (*modern_node_named_value_set)
       (modern_library *library,
        void *node,
        void *type,
        void *value);
     void 
-      (*modern_node_set_maybe_type_content_type)
+      (*modern_node_maybe_type_content_type_set)
       (modern_library *library,
        void *value,
        void *content_type);
     void 
-      (*modern_node_set_function_type_left)
+      (*modern_node_function_type_left_set)
       (modern_library *library,
        void *value,
        void *left);
     void 
-      (*modern_node_set_function_type_right)
+      (*modern_node_function_type_right_set)
       (modern_library *library,
        void *value,
        void *right);
     void 
-      (*modern_node_set_sigma_type_field_type)
+      (*modern_node_sigma_type_field_type_set)
       (modern_library *library,
        void *value,
        void *field_type);
     void 
-      (*modern_node_set_sigma_type_successor)
+      (*modern_node_sigma_type_successor_set)
       (modern_library *library,
        void *value,
        void *successor);
     void 
-      (*modern_node_set_named_type_name)
+      (*modern_node_named_type_name_set)
       (modern_library *library,
        void *value,
        struct modern_hash name);
     void 
-      (*modern_node_set_named_type_content_type)
+      (*modern_node_named_type_content_type_set)
       (modern_library *library,
        void *value,
        void *content_type);
     void 
-      (*modern_node_set_universe_type_level)
+      (*modern_node_universe_type_level_set)
       (modern_library *library,
        void *value,
        uint64_t level);
     void 
-      (*modern_node_set_lambda_content)
+      (*modern_node_lambda_content_set)
       (modern_library *library,
        void *value,
        void *content);
     void 
-      (*modern_node_set_apply_left)
+      (*modern_node_apply_left_set)
       (modern_library *library,
        void *value,
        void *left);
     void 
-      (*modern_node_set_apply_right)
+      (*modern_node_apply_right_set)
       (modern_library *library,
        void *value,
        void *right);
     void 
-      (*modern_node_set_type_family_add_item)
+      (*modern_node_set_type_family_item_add)
       (modern_library *library,
        void *value,
        void *item,
        uint64_t index);
     void 
-      (*modern_node_set_type_family_remove_item)
+      (*modern_node_set_type_family_item_remove)
       (modern_library *library,
        void *value,
        uint64_t index);
     void 
-      (*modern_node_set_let_add_item)
+      (*modern_node_set_let_item_add)
       (modern_library *library,
        void *value,
        void *item,
        uint64_t index);
     void 
-      (*modern_node_set_let_remove_item)
+      (*modern_node_set_let_item_remove)
       (modern_library *library,
        void *value,
        uint64_t index);
     void 
-      (*modern_node_set_let_content)
+      (*modern_node_let_content_set)
       (modern_library *library,
        void *value,
        void *content);
     void 
-      (*modern_node_set_backreference_index)
+      (*modern_node_backreference_index_set)
       (modern_library *library,
        void *value,
        uint64_t index);
     void 
-      (*modern_node_set_builtin_identifier)
+      (*modern_node_builtin_identifier_set)
       (modern_library *library,
        void *value,
        uint16_t identifier);
@@ -1303,11 +1309,11 @@ extern modern_library *modern_library_initialize
    struct modern_allocator *allocator,
    void (*finalizer)(void *client_state),
    void *client_state);
-extern struct modern_error_handler *modern_library_get_error_handler
+extern struct modern_error_handler *modern_library_error_handler_get
   (modern_library *library);
-extern struct modern_allocator *modern_library_get_allocator
+extern struct modern_allocator *modern_library_allocator_get
   (modern_library *library);
-extern void *modern_library_get_client_state
+extern void *modern_library_client_state_get
   (modern_library *library);
 extern void modern_library_finalize(modern_library *library);
 
@@ -1318,18 +1324,18 @@ extern void modern_release
   (modern_library *library,
    void *retainable);
 
-extern modern_context *modern_make_initial_context
+extern modern_context *modern_initial_context_make
   (modern_library *library);
 extern modern_context *modern_copy_context
   (modern_library *library,
    modern_context *context);
-extern int modern_get_in_context
+extern int modern_in_context_get
   (modern_library *library,
    modern_context *context, modern *node);
-extern void modern_add_to_context
+extern void modern_to_context_add
   (modern_library *library,
    modern_context *context, modern *node);
-extern modern *modern_get_from_context
+extern modern *modern_from_context_get
   (modern_library *library,
    modern_context *context, struct modern_hash hash);
 
@@ -1375,7 +1381,7 @@ extern modern *modern_serialize_output_stream
    modern *value, modern_context *context,
    struct modern_stream *stream);
 
-extern int modern_node_canonical_hash
+extern int modern_node_canonical_hash_compute
   (modern_library *library,
    modern *value,
    struct modern_hash *out);
@@ -1385,65 +1391,65 @@ extern modern *modern_evaluate
 extern modern *modern_resolve_backreferences
   (modern_library *library, modern *node);
 
-extern void modern_compute_hash
+extern void modern_hash_compute
   (uint8_t *data, size_t length, struct modern_hash *out);
-extern void modern_compute_child_hash
+extern void modern_hash_child_compute
   (struct modern_hash *parent,
    uint8_t *data, size_t length, struct modern_hash *out);
-extern void modern_compute_initial_namespace_hash(struct modern_hash *out);
+extern void modern_hash_initial_namespace_compute(struct modern_hash *out);
 
-extern struct modern_vfile *modern_make_vfile_memory_buffer
+extern struct modern_vfile *modern_vfile_memory_buffer_make
   (modern_library *library);
-extern void *modern_initialize_vfile_memory_buffer
+extern void *modern_vfile_memory_buffer_initialize
   (modern_library *library,
    uint8_t *data,
    size_t length);
-extern void modern_finalize_vfile_memory_buffer
+extern void modern_vfile_memory_buffer_finalize
   (modern_library *library,
    void *vfile_state);
 
-extern struct modern_vfile *modern_make_vfile_memory_allocating
+extern struct modern_vfile *modern_vfile_memory_allocating_make
   (modern_library *library);
-extern void *modern_initialize_vfile_memory_allocating
+extern void *modern_vfile_memory_allocating_initialize
   (modern_library *library);
-extern void modern_finalize_vfile_memory_allocating
+extern void modern_vfile_memory_allocating_finalize
   (modern_library *library,
    void *vfile_state);
-extern size_t modern_get_vfile_memory_allocating_bytes
+extern size_t modern_vfile_memory_allocating_bytes_get
   (modern_library *library,
    void *vfile_state);
-extern uint8_t *modern_get_vfile_memory_allocating_data_piece
+extern uint8_t *modern_vfile_memory_allocating_data_piece_get
   (modern_library *library,
    void *vfile_state,
    size_t offset, size_t bytes);
 
-extern struct modern_vfile *modern_make_vfile_stdio
+extern struct modern_vfile *modern_vfile_stdio_make
   (modern_library *library);
-extern void *modern_initialize_vfile_stdio
+extern void *modern_vfile_stdio_initialize
   (modern_library *library,
    FILE *stream);
-extern void modern_finalize_vfile_stdio
+extern void modern_vfile_stdio_finalize
   (modern_library *library,
    void *vfile_state);
 
-extern struct modern_vfile *modern_make_vfile_fd
+extern struct modern_vfile *modern_vfile_fd_make
   (modern_library *library);
-extern void *modern_initialize_vfile_fd
+extern void *modern_vfile_fd_initialize
   (modern_library *library,
    int fd);
-extern void modern_finalize_vfile_fd
+extern void modern_vfile_fd_finalize
   (modern_library *library,
    void *vfile_state);
 
-extern struct modern_processor *modern_make_input_processor
+extern struct modern_processor *modern_processor_input_make
   (modern_library *library);
 
-extern struct modern_stream *modern_make_output_stream
+extern struct modern_stream *modern_stream_output_make
   (modern_library *library);
-extern struct modern_stream *modern_make_explicatory_stream
+extern struct modern_stream *modern_stream_explicatory_make
   (modern_library *library);
-extern struct modern_stream *modern_make_documentation_stream
+extern struct modern_stream *modern_stream_documentation_make
   (modern_library *library);
 
-extern struct modern_node *modern_make_node
+extern struct modern_node *modern_node_make
   (modern_library *library);
