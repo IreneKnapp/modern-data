@@ -151,22 +151,14 @@ It is important to note that each node, independently, has its own cano...</p>
 <ul>
 <li>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern_library *<br/>
-modern_library_initalize<br/>
+modern_library_initialize<br/>
 (struct modern_error_handler *error_handler,<br/>
  struct modern_allocator *allocator,<br/>
  void (*finalizer)(void *client_state),<br/>
  void *client_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>Parameters</strong><br/>Error handler<br/>
-<br/>
-Allocator<br/>
-<br/>
-Finalizer<br/>
-<br/>
-Client state<br/>
-<br/>
-Return</p>
+<p class="binderItem"><strong>Parameters</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -457,6 +449,25 @@ modern_library_finalize<br/>
 </ul>
 <hr/>
 <li>
+<p class="binderItem"><strong>modern_error_handler_builtin_identifier</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
+(*modern_error_handler_builtin_identifier)<br/>
+(void *client_state,<br/>
+ uint16_t identifier);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Parameters</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
 <p class="binderItem"><strong>modern_error_handler_usage</strong></p>
 </li>
 <hr/>
@@ -545,7 +556,8 @@ modern_library_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_allocator_realloc)<br/>
 (void *client_state,<br/>
- void *memory, size_t size);</p>
+ void *memory,<br/>
+ size_t size);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -893,7 +905,8 @@ modern_get_vfile_memory_allocating_bytes<br/>
 modern_get_vfile_memory_allocating_data_piece<br/>
 (modern_library *library,<br/>
  void *vfile_state,<br/>
- size_t offset, size_t bytes);</p>
+ size_t offset,<br/>
+ size_t bytes);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -1013,7 +1026,8 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>void modern_finalize_vfile_fd<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
+modern_finalize_vfile_fd<br/>
 (modern_library *library,<br/>
  void *vfile_state);</p>
 </li>
@@ -1034,21 +1048,8 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Overview</strong><br/>The node-based object model provides high-level functions which create a graph of objects in-memory as they are deserialized, and which also have the capability to serialize this graph back into Modern Data.  It is parametrized on the specific data structure used (the only constraint being that a void pointer must be able to refer to it), in order to allow bindings against non-C programming languages to use this implementation as their basis.  This avoids having to write new versions of the cano...</p>
+<p class="binderItem"><strong>Overview</strong></p>
 </li>
-<li>
-<p class="binderItem"><strong>modern</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>Synopsis</strong><br/>typedef void modern;</p>
-</li>
-<li>
-<p class="binderItem"><strong>Semantics</strong></p>
-</li>
-</ul>
-<hr/>
 <li>
 <p class="binderItem"><strong>Node Types</strong></p>
 </li>
@@ -1060,9 +1061,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>enum modern_node_type {<br/>
-    …<br/>
-};</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1075,7 +1074,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_bool_value_false = 1</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1088,7 +1087,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_bool_value_true = 2</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1101,7 +1100,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_ordering_value_less = 3</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1114,7 +1113,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_ordering_value_equal = 4</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1127,7 +1126,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_ordering_value_greater = 5</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1140,7 +1139,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_maybe_value_nothing = 6</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1153,7 +1152,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_maybe_value_just = 7</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1166,7 +1165,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_int8_value = 8</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1179,7 +1178,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_int16_value = 9</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1192,7 +1191,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_int32_value = 10</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1205,7 +1204,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_int64_value = 11</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1218,7 +1217,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_nat8_value = 12</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1231,7 +1230,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_nat16_value = 13</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1244,7 +1243,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_nat32_value = 14</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1257,7 +1256,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_nat64_value = 15</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1270,7 +1269,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_float32_value = 16</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1283,7 +1282,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_float64_value = 17</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1296,7 +1295,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_utf8_value = 18</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1309,7 +1308,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_blob_value = 19</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1322,7 +1321,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_sigma_value = 20</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1335,7 +1334,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_named_value = 21</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1348,7 +1347,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_named_value = 22</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1361,7 +1360,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_bool_type = 23</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1374,7 +1373,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_bool_type = 24</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1387,7 +1386,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_maybe_type = 25</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1400,7 +1399,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_int8_type = 26</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1413,7 +1412,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_int16_type = 27</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1426,7 +1425,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_int32_type = 28</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1439,7 +1438,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_int64_type = 29</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1452,7 +1451,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_nat8_type = 30</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1465,7 +1464,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_nat16_type = 31</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1478,7 +1477,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_nat32_type = 32</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1491,7 +1490,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_nat64_type = 33</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1504,7 +1503,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_float32_type = 34</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1517,7 +1516,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_float64_type = 35</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1530,7 +1529,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_utf8_type = 36</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1543,7 +1542,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_blob_type = 37</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1556,7 +1555,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_function_type = 38</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1569,7 +1568,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_sigma_type = 39</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1582,7 +1581,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_name_type = 40</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1595,7 +1594,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_named_type = 41</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1608,7 +1607,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_universe_type = 42</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1621,7 +1620,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_lambda = 43</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1634,7 +1633,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_apply = 44</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1647,7 +1646,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_type_family = 45</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1660,7 +1659,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_let = 46</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1673,7 +1672,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_backreference = 47</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1686,7 +1685,7 @@ modern_initialize_vfile_fd<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_builtin = 48</p>
+<p class="binderItem"><strong>Synopsis</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -1729,25 +1728,25 @@ modern_initialize_vfile_fd<br/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_node_get_node_type</strong><br/>enum modern_node_type<br/>
-modern_node_get_node_type<br/>
+(*modern_node_get_node_type)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_value_type</strong><br/>modern *<br/>
-modern_node_get_value_type<br/>
+(*modern_node_get_value_type)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_mutable</strong><br/>int<br/>
-modern_node_get_mutable<br/>
+(*modern_node_get_mutable)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_copy</strong><br/>modern *<br/>
-modern_node_copy<br/>
+(*modern_node_copy)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
@@ -1760,85 +1759,79 @@ modern_node_copy<br/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_node_get_maybe_just_content</strong><br/>modern *<br/>
-modern_node_get_maybe_just_content<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_maybe_just_content_link</strong><br/>modern *<br/>
-modern_node_get_maybe_just_content_link<br/>
+(*modern_node_get_maybe_just_content)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_int8</strong><br/>int8_t<br/>
-modern_node_get_int8<br/>
+(*modern_node_get_int8)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_int16</strong><br/>int16_t<br/>
-modern_node_get_int16<br/>
+(*modern_node_get_int16)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_int32</strong><br/>int32_t<br/>
-modern_node_get_int32<br/>
+(*modern_node_get_int32)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_int64</strong><br/>int64_t<br/>
-modern_node_get_int64<br/>
+(*modern_node_get_int64)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat8</strong><br/>uint8_t<br/>
-modern_node_get_nat8<br/>
+(*modern_node_get_nat8)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat16</strong><br/>uint16_t<br/>
-modern_node_get_nat16<br/>
+(*modern_node_get_nat16)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat32</strong><br/>uint32_t<br/>
-modern_node_get_nat32<br/>
+(*modern_node_get_nat32)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_nat64</strong><br/>uint64_t<br/>
-modern_node_get_nat64<br/>
+(*modern_node_get_nat64)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_float32</strong><br/>float<br/>
-modern_node_get_float32<br/>
+(*modern_node_get_float32)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_float64</strong><br/>double<br/>
-modern_node_get_float64<br/>
+(*modern_node_get_float64)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_utf8_bytes</strong><br/>size_t<br/>
-modern_node_get_utf8_bytes<br/>
+(*modern_node_get_utf8_bytes)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_utf8_data_piece</strong><br/>uint8_t *<br/>
-modern_node_get_utf8_data_piece<br/>
+(*modern_node_get_utf8_data_piece)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  size_t offset,<br/>
@@ -1846,13 +1839,13 @@ modern_node_get_utf8_data_piece<br/>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_blob_bytes</strong><br/>size_t<br/>
-modern_node_get_blob_bytes<br/>
+(*modern_node_get_blob_bytes)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_blob_data_piece</strong><br/>uint8_t *<br/>
-modern_node_get_blob_data_piece<br/>
+(*modern_node_get_blob_data_piece)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  size_t offset,<br/>
@@ -1860,43 +1853,25 @@ modern_node_get_blob_data_piece<br/>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_sigma_field_value</strong><br/>modern *<br/>
-modern_node_get_sigma_field_value<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_sigma_field_value_link</strong><br/>modern *<br/>
-modern_node_get_sigma_field_value_link<br/>
+(*modern_node_get_sigma_field_value)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_sigma_successor</strong><br/>modern *<br/>
-modern_node_get_sigma_successor<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_sigma_successor_link</strong><br/>modern *<br/>
-modern_node_get_sigma_successor_link<br/>
+(*modern_node_get_sigma_successor)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_name_hash</strong><br/>struct modern_hash *<br/>
-modern_node_get_name_hash<br/>
+(*modern_node_get_name_hash)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_named_value</strong><br/>modern *<br/>
-modern_node_get_named_value<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_named_value_link</strong><br/>modern *<br/>
-modern_node_get_named_value_link<br/>
+(*modern_node_get_named_value)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
@@ -1909,85 +1884,49 @@ modern_node_get_named_value_link<br/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_node_get_maybe_type_content_type</strong><br/>modern *<br/>
-modern_node_get_maybe_type_content_type<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_maybe_type_content_type_link</strong><br/>modern *<br/>
-modern_node_get_maybe_type_content_type_link<br/>
+(*modern_node_get_maybe_type_content_type)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_function_type_left</strong><br/>modern *<br/>
-modern_node_get_function_type_left<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_function_type_left_link</strong><br/>modern *<br/>
-modern_node_get_function_type_left_link<br/>
+(*modern_node_get_function_type_left)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_function_type_right</strong><br/>modern *<br/>
-modern_node_get_function_type_right<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_function_type_right_link</strong><br/>modern *<br/>
-modern_node_get_function_type_right_link<br/>
+(*modern_node_get_function_type_right)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_sigma_type_field_type</strong><br/>modern *<br/>
-modern_node_get_sigma_type_field_type<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_sigma_type_field_type_link</strong><br/>modern *<br/>
-modern_node_get_sigma_type_field_type_link<br/>
+(*modern_node_get_sigma_type_field_type)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_sigma_type_successor</strong><br/>modern *<br/>
-modern_node_get_sigma_type_successor<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_sigma_type_successor_link</strong><br/>modern *<br/>
-modern_node_get_sigma_type_successor_link<br/>
+(*modern_node_get_sigma_type_successor)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_named_type_name</strong><br/>struct modern_hash *<br/>
-modern_node_get_named_type_name<br/>
+(*modern_node_get_named_type_name)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_named_type_content_type</strong><br/>modern *<br/>
-modern_node_get_named_type_content_type<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_named_type_content_type_link</strong><br/>modern *<br/>
-modern_node_get_named_type_content_type_link<br/>
+(*modern_node_get_named_type_content_type)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_universe_type_level</strong><br/>uint64_t<br/>
-modern_node_get_universe_type_level<br/>
+(*modern_node_get_universe_type_level)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
@@ -2000,101 +1939,63 @@ modern_node_get_universe_type_level<br/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_node_get_lambda_content</strong><br/>modern *<br/>
-modern_node_get_lambda_content<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_lambda_content_link</strong><br/>modern *<br/>
-modern_node_get_lambda_content_link<br/>
+(*modern_node_get_lambda_content)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_apply_left</strong><br/>modern *<br/>
-modern_node_get_apply_left<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_apply_left copy</strong><br/>modern *<br/>
-modern_node_get_apply_left_link<br/>
+(*modern_node_get_apply_left)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_apply_right</strong><br/>modern *<br/>
-modern_node_get_apply_right<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_apply_right_link</strong><br/>modern *<br/>
-modern_node_get_apply_right_link<br/>
+(*modern_node_get_apply_right)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_type_family_count</strong><br/>uint64_t<br/>
-modern_node_get_type_family_count<br/>
+(*modern_node_get_type_family_count)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_type_family_item</strong><br/>modern *<br/>
-modern_node_get_type_family_item<br/>
-(modern_library *library,<br/>
- modern *value,<br/>
- uint64_t index);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_type_family_item_link</strong><br/>modern *<br/>
-modern_node_get_type_family_item_link<br/>
+(*modern_node_get_type_family_item)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  uint64_t index);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_let_count</strong><br/>uint64_t<br/>
-modern_node_get_let_count<br/>
+(*modern_node_get_let_count)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_let_item</strong><br/>modern *<br/>
-modern_node_get_let_item<br/>
-(modern_library *library,<br/>
- modern *value,<br/>
- uint64_t index);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_let_item_link</strong><br/>modern *<br/>
-modern_node_get_let_item_link<br/>
+(*modern_node_get_let_item)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  uint64_t index);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_let_content</strong><br/>modern *<br/>
-modern_node_get_let_content<br/>
-(modern_library *library,<br/>
- modern *value);</p>
-</li>
-<li>
-<p class="binderItem"><strong>modern_node_get_let_content_link</strong><br/>modern *<br/>
-modern_node_get_let_content_link<br/>
+(*modern_node_get_let_content)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_backreference_index</strong><br/>uint64_t<br/>
-modern_node_get_backreference_index<br/>
+(*modern_node_get_backreference_index)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_get_builtin_identifier</strong><br/>uint16_t<br/>
-modern_node_get_builtin_identifier<br/>
+(*modern_node_get_builtin_identifier)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
@@ -2113,118 +2014,118 @@ modern_node_get_builtin_identifier<br/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_node_make_bool_false</strong><br/>modern *<br/>
-modern_node_make_bool_false<br/>
+(*modern_node_make_bool_false)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_bool_true</strong><br/>modern *<br/>
-modern_node_make_bool_true<br/>
+(*modern_node_make_bool_true)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_ordering_less</strong><br/>modern *<br/>
-modern_node_make_ordering_less<br/>
+(*modern_node_make_ordering_less)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_ordering_equal</strong><br/>modern *<br/>
-modern_node_make_ordering_equal<br/>
+(*modern_node_make_ordering_equal)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_ordering_greater</strong><br/>modern *<br/>
-modern_node_make_ordering_greater<br/>
+(*modern_node_make_ordering_greater)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_maybe_nothing</strong><br/>modern *<br/>
-modern_node_make_maybe_nothing<br/>
+(*modern_node_make_maybe_nothing)<br/>
 (modern_library *library,<br/>
  modern *type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_maybe_just</strong><br/>modern *<br/>
-modern_node_make_maybe_just<br/>
+(*modern_node_make_maybe_just)<br/>
 (modern_library *library,<br/>
  modern *type,<br/>
  modern *content_value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_int8</strong><br/>modern *<br/>
-modern_node_make_int8<br/>
+(*modern_node_make_int8)<br/>
 (modern_library *library,<br/>
  int8_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_int16</strong><br/>modern *<br/>
-modern_node_make_int16<br/>
+(*modern_node_make_int16)<br/>
 (modern_library *library,<br/>
  int16_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_int32</strong><br/>modern *<br/>
-modern_node_make_int32<br/>
+(*modern_node_make_int32)<br/>
 (modern_library *library,<br/>
  int32_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_int64</strong><br/>modern *<br/>
-modern_node_make_int64<br/>
+(*modern_node_make_int64)<br/>
 (modern_library *library,<br/>
  int64_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat8</strong><br/>modern *<br/>
-modern_node_make_nat8<br/>
+(*modern_node_make_nat8)<br/>
 (modern_library *library,<br/>
  uint8_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat16</strong><br/>modern *<br/>
-modern_node_make_nat16<br/>
+(*modern_node_make_nat16)<br/>
 (modern_library *library,<br/>
  uint16_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat32</strong><br/>modern *<br/>
-modern_node_make_nat32<br/>
+(*modern_node_make_nat32)<br/>
 (modern_library *library,<br/>
  uint32_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat64</strong><br/>modern *<br/>
-modern_node_make_nat64<br/>
+(*modern_node_make_nat64)<br/>
 (modern_library *library,<br/>
  uint64_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_float32</strong><br/>modern *<br/>
-modern_node_make_float32<br/>
+(*modern_node_make_float32)<br/>
 (modern_library *library,<br/>
  float value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_float64</strong><br/>modern *<br/>
-modern_node_make_float64<br/>
+(*modern_node_make_float64)<br/>
 (modern_library *library,<br/>
  double value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_utf8</strong><br/>modern *<br/>
-modern_node_make_utf8<br/>
+(*modern_node_make_utf8)<br/>
 (modern_library *library,<br/>
  uint8_t *data);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_blob</strong><br/>modern *<br/>
-modern_node_make_blob<br/>
+(*modern_node_make_blob)<br/>
 (modern_library *library,<br/>
  uint8_t *data,<br/>
  size_t bytes);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_sigma</strong><br/>modern *<br/>
-modern_node_make_sigma<br/>
+(*modern_node_make_sigma)<br/>
 (modern_library *library,<br/>
  modern *type,<br/>
  modern *field_value,<br/>
@@ -2232,13 +2133,13 @@ modern_node_make_sigma<br/>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_name</strong><br/>modern *<br/>
-modern_node_make_name<br/>
+(*modern_node_make_name)<br/>
 (modern_library *library,<br/>
  struct modern_hash *name);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_named_value</strong><br/>modern *<br/>
-modern_node_make_named_value<br/>
+(*modern_node_make_named_value)<br/>
 (modern_library *library,<br/>
  modern *type,<br/>
  modern *value);</p>
@@ -2252,108 +2153,108 @@ modern_node_make_named_value<br/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_node_make_bool_type</strong><br/>modern *<br/>
-modern_node_make_bool_type<br/>
+(*modern_node_make_bool_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_ordering_type</strong><br/>modern *<br/>
-modern_node_make_ordering_type<br/>
+(*modern_node_make_ordering_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_maybe_type</strong><br/>modern *<br/>
-modern_node_make_maybe_type<br/>
+(*modern_node_make_maybe_type)<br/>
 (modern_library *library,<br/>
  modern *content_type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_int8_type</strong><br/>modern *<br/>
-modern_node_make_int8_type<br/>
+(*modern_node_make_int8_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_int16_type</strong><br/>modern *<br/>
-modern_node_make_int16_type<br/>
+(*modern_node_make_int16_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_int32_type</strong><br/>modern *<br/>
-modern_node_make_int32_type<br/>
+(*modern_node_make_int32_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_int64_type</strong><br/>modern *<br/>
-modern_node_make_int64_type<br/>
+(*modern_node_make_int64_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat8_type</strong><br/>modern *<br/>
-modern_node_make_nat8_type<br/>
+(*modern_node_make_nat8_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat16_type</strong><br/>modern *<br/>
-modern_node_make_nat16_type<br/>
+(*modern_node_make_nat16_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat32_type</strong><br/>modern *<br/>
-modern_node_make_nat32_type<br/>
+(*modern_node_make_nat32_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_nat64_type</strong><br/>modern *<br/>
-modern_node_make_nat64_type<br/>
+(*modern_node_make_nat64_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_float32_type</strong><br/>modern *<br/>
-modern_node_make_float32_type<br/>
+(*modern_node_make_float32_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_float64_type</strong><br/>modern *<br/>
-modern_node_make_float64_type<br/>
+(*modern_node_make_float64_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_utf8_type</strong><br/>modern *<br/>
-modern_node_make_utf8_type<br/>
+(*modern_node_make_utf8_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_blob_type</strong><br/>modern *<br/>
-modern_node_make_blob_type<br/>
+(*modern_node_make_blob_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_function_type</strong><br/>modern *<br/>
-modern_node_make_function_type<br/>
+(*modern_node_make_function_type)<br/>
 (modern_library *library,<br/>
  modern *left,<br/>
  modern *right);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_sigma_type</strong><br/>modern *<br/>
-modern_node_make_sigma_type<br/>
+(*modern_node_make_sigma_type)<br/>
 (modern_library *library,<br/>
  modern *field_type, modern *successor);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_name_type</strong><br/>modern *<br/>
-modern_node_make_name_type<br/>
+(*modern_node_make_name_type)<br/>
 (modern_library *library);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_named_type</strong><br/>modern *<br/>
-modern_node_make_named_type<br/>
+(*modern_node_make_named_type)<br/>
 (modern_library *library,<br/>
  struct modern_hash *name,<br/>
  modern *content_type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_universe_type</strong><br/>modern *<br/>
-modern_node_make_universe_type<br/>
+(*modern_node_make_universe_type)<br/>
 (modern_library *library,<br/>
  uint64_t level);</p>
 </li>
@@ -2366,27 +2267,27 @@ modern_node_make_universe_type<br/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_node_make_lambda</strong><br/>modern *<br/>
-modern_node_make_lambda<br/>
+(*modern_node_make_lambda)<br/>
 (modern_library *library,<br/>
  modern *content);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_apply</strong><br/>modern *<br/>
-modern_node_make_apply<br/>
+(*modern_node_make_apply)<br/>
 (modern_library *library,<br/>
  modern *left,<br/>
  modern *right);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_type_family</strong><br/>modern *<br/>
-modern_node_make_type_family<br/>
+(*modern_node_make_type_family)<br/>
 (modern_library *library,<br/>
  uint64_t n_items,<br/>
  modern **types);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_let</strong><br/>modern *<br/>
-modern_node_make_let<br/>
+(*modern_node_make_let)<br/>
 (modern_library *library,<br/>
  uint64_t n_items,<br/>
  modern **types,<br/>
@@ -2394,13 +2295,13 @@ modern_node_make_let<br/>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_backreference</strong><br/>modern *<br/>
-modern_node_make_backreference<br/>
+(*modern_node_make_backreference)<br/>
 (modern_library *library,<br/>
  uint64_t index);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_make_builtin</strong><br/>modern *<br/>
-modern_node_make_builtin<br/>
+(*modern_node_make_builtin)<br/>
 (modern_library *library,<br/>
  uint16_t identifier);</p>
 </li>
@@ -2419,7 +2320,7 @@ modern_node_make_builtin<br/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_node_set_immutable</strong><br/>void<br/>
-modern_node_set_immutable<br/>
+(*modern_node_set_immutable)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
@@ -2432,84 +2333,84 @@ modern_node_set_immutable<br/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_node_set_maybe_just_content</strong><br/>void<br/>
-modern_node_set_maybe_just_content<br/>
+(*modern_node_set_maybe_just_content)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *content_value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_int8</strong><br/>void<br/>
-modern_node_set_int8<br/>
+(*modern_node_set_int8)<br/>
 (modern_library *library,<br/>
  modern *node,<br/>
  int8_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_int16</strong><br/>void<br/>
-modern_node_set_int16<br/>
+(*modern_node_set_int16)<br/>
 (modern_library *library,<br/>
  modern *node,<br/>
  int16_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_int32</strong><br/>void<br/>
-modern_node_set_int32<br/>
+(*modern_node_set_int32)<br/>
 (modern_library *library,<br/>
  modern *node,<br/>
  int32_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_int64</strong><br/>void<br/>
-modern_node_set_int64<br/>
+(*modern_node_set_int64)<br/>
 (modern_library *library,<br/>
  modern *node,<br/>
  int64_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_nat8</strong><br/>void<br/>
-modern_node_set_nat8<br/>
+(*modern_node_set_nat8)<br/>
 (modern_library *library,<br/>
  modern *node,<br/>
  uint8_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_nat16</strong><br/>void<br/>
-modern_node_set_nat16<br/>
+(*modern_node_set_nat16)<br/>
 (modern_library *library,<br/>
  modern *node,<br/>
  uint16_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_nat32</strong><br/>void<br/>
-modern_node_set_nat32<br/>
+(*modern_node_set_nat32)<br/>
 (modern_library *library,<br/>
  modern *node,<br/>
  uint32_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_nat64</strong><br/>void<br/>
-modern_node_set_nat64<br/>
+(*modern_node_set_nat64)<br/>
 (modern_library *library,<br/>
  modern *node,<br/>
  uint64_t value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_float32</strong><br/>void<br/>
-modern_node_set_float32<br/>
+(*modern_node_set_float32)<br/>
 (modern_library *library,<br/>
  modern *node,<br/>
  float value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_float64</strong><br/>void<br/>
-modern_node_set_float64<br/>
+(*modern_node_set_float64)<br/>
 (modern_library *library,<br/>
  modern *node,<br/>
  double value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_utf8_data_piece</strong><br/>void<br/>
-modern_node_set_utf8_data_piece<br/>
+(*modern_node_set_utf8_data_piece)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  uint8_t *data,<br/>
@@ -2519,7 +2420,7 @@ modern_node_set_utf8_data_piece<br/>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_blob_data_piece</strong><br/>void<br/>
-modern_node_set_blob_data_piece<br/>
+(*modern_node_set_blob_data_piece)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  uint8_t *data,<br/>
@@ -2529,7 +2430,7 @@ modern_node_set_blob_data_piece<br/>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_sigma</strong><br/>void<br/>
-modern_node_set_sigma<br/>
+(*modern_node_set_sigma)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *field_value,<br/>
@@ -2537,7 +2438,7 @@ modern_node_set_sigma<br/>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_named_value</strong><br/>void<br/>
-modern_node_set_named_value<br/>
+(*modern_node_set_named_value)<br/>
 (modern_library *library,<br/>
  modern *node,<br/>
  modern *type,<br/>
@@ -2552,56 +2453,56 @@ modern_node_set_named_value<br/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_node_set_maybe_type_content_type</strong><br/>void<br/>
-modern_node_set_maybe_type_content_type<br/>
+(*modern_node_set_maybe_type_content_type)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *content_type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_function_type_left</strong><br/>void<br/>
-modern_node_set_function_type_left<br/>
+(*modern_node_set_function_type_left)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *left);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_function_type_right</strong><br/>void<br/>
-modern_node_set_function_type_right<br/>
+(*modern_node_set_function_type_right)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *right);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_sigma_type_field_type</strong><br/>void<br/>
-modern_node_set_sigma_type_field_type<br/>
+(*modern_node_set_sigma_type_field_type)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *field_type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_sigma_type_successor</strong><br/>void<br/>
-modern_node_set_sigma_type_successor<br/>
+(*modern_node_set_sigma_type_successor)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *successor);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_named_type_name</strong><br/>void<br/>
-modern_node_set_named_type_name<br/>
+(*modern_node_set_named_type_name)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  struct modern_hash *name);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_named_type_content_type</strong><br/>void<br/>
-modern_node_set_named_type_content_type<br/>
+(*modern_node_set_named_type_content_type)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *content_type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_universe_type_level</strong><br/>void<br/>
-modern_node_set_universe_type_level<br/>
+(*modern_node_set_universe_type_level)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  uint64_t level);</p>
@@ -2615,28 +2516,28 @@ modern_node_set_universe_type_level<br/>
 <ul>
 <li>
 <p class="binderItem"><strong>modern_node_set_lambda_content</strong><br/>void<br/>
-modern_node_set_lambda_content<br/>
+(*modern_node_set_lambda_content)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *content);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_apply_left</strong><br/>void<br/>
-modern_node_set_apply_left<br/>
+(*modern_node_set_apply_left)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *left);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_apply_right</strong><br/>void<br/>
-modern_node_set_apply_right<br/>
+(*modern_node_set_apply_right)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *right);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_type_family_add_item</strong><br/>void<br/>
-modern_node_set_type_family_add_item<br/>
+(*modern_node_set_type_family_add_item)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *item,<br/>
@@ -2644,14 +2545,14 @@ modern_node_set_type_family_add_item<br/>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_type_family_remove_item</strong><br/>void<br/>
-modern_node_set_type_family_remove_item<br/>
+(*modern_node_set_type_family_remove_item)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  uint64_t index);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_let_add_item</strong><br/>void<br/>
-modern_node_set_let_add_item<br/>
+(*modern_node_set_let_add_item)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *item,<br/>
@@ -2659,28 +2560,28 @@ modern_node_set_let_add_item<br/>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_let_remove_item</strong><br/>void<br/>
-modern_node_set_let_remove_item<br/>
+(*modern_node_set_let_remove_item)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  uint64_t index);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_let_content</strong><br/>void<br/>
-modern_node_set_let_content<br/>
+(*modern_node_set_let_content)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  modern *content);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_backreference_index</strong><br/>void<br/>
-modern_node_set_backreference_index<br/>
+(*modern_node_set_backreference_index)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  uint64_t index);</p>
 </li>
 <li>
 <p class="binderItem"><strong>modern_node_set_builtin_identifier</strong><br/>void<br/>
-modern_node_set_builtin_identifier<br/>
+(*modern_node_set_builtin_identifier)<br/>
 (modern_library *library,<br/>
  modern *value,<br/>
  uint16_t identifier);</p>
@@ -2902,9 +2803,7 @@ modern_serialize_output_stream<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Overview</strong><br/>A “stream” is an interface across which events describing a Modern Data document are passed.  A “processor” is an abstraction representing the loop which passes events between external storage and a stream.  Both streams and processors have both opaque parts, represented as void pointers, and transparent parts, represented respectively as structs modern_processor and modern_stream, containing callback pointers.<br/>
-<br/>
-To perform input - deserialization - client code obtains a processor from the system...</p>
+<p class="binderItem"><strong>Overview</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Processors</strong></p>
@@ -2976,10 +2875,23 @@ modern_make_input_processor<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_stream</strong><br/>struct modern_stream {<br/>
+<p class="binderItem"><strong>modern_stream</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>struct modern_stream {<br/>
     …<br/>
 };</p>
 </li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Members</strong></p>
+</li>
+</ul>
+<hr/>
 <li>
 <p class="binderItem"><strong>Callbacks</strong></p>
 </li>
@@ -3444,9 +3356,7 @@ modern_make_documentation_stream<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Concepts</strong><br/>To perform input, client code fills out the callback fields in an instance of struct modern_stream, then obtains a processor created by the system by a call to modern_make_input_processor().  The processor is then normally run by a call to the modern_processor_run() callback (modern_processor_step() can also be used, iterating by hand).  The below diagram summarizes the sequence of events and responsibilities.<br/>
-<br/>
-#</p>
+<p class="binderItem"><strong>Concepts</strong></p>
 </li>
 </ul>
 <hr/>
@@ -3456,9 +3366,7 @@ modern_make_documentation_stream<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Concepts</strong><br/>To perform output, client code creates a processor by encapsulating any state it needs into a void pointer, and also obtains a stream created by the system by a call to one of the modern_make_*_stream() functions, usually modern_make_output_stream().  The client code then invokes the stream’s callbacks, which were provided by the system, until the data it wishes to serialize is complete.  The below diagram summarizes the sequence of events and responsibilities.<br/>
-<br/>
-#</p>
+<p class="binderItem"><strong>Concepts</strong></p>
 </li>
 </ul>
 </ul>
@@ -3481,9 +3389,7 @@ modern_compute_initial_namespace_hash<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier</strong><br/>enum modern_builtin_identifier {<br/>
-    …<br/>
-};</p>
+<p class="binderItem"><strong>modern_builtin_identifier</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Flow control</strong></p>

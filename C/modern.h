@@ -800,10 +800,6 @@ struct modern_node {
       (*modern_node_get_maybe_just_content)
       (modern_library *library,
        void *value);
-    void *
-      (*modern_node_get_maybe_just_content_link)
-      (modern_library *library,
-       void *value);
     int8_t 
       (*modern_node_get_int8)
       (modern_library *library,
@@ -865,15 +861,7 @@ struct modern_node {
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_sigma_field_value_link)
-      (modern_library *library,
-       void *value);
-    void *
       (*modern_node_get_sigma_successor)
-      (modern_library *library,
-       void *value);
-    void *
-      (*modern_node_get_sigma_successor_link)
       (modern_library *library,
        void *value);
     struct modern_hash modern_node_get_name_hash
@@ -884,15 +872,7 @@ struct modern_node {
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_named_value_link)
-      (modern_library *library,
-       void *value);
-    void *
       (*modern_node_get_maybe_type_content_type)
-      (modern_library *library,
-       void *value);
-    void *
-      (*modern_node_get_maybe_type_content_type_link)
       (modern_library *library,
        void *value);
     void *
@@ -900,15 +880,7 @@ struct modern_node {
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_function_type_left_link)
-      (modern_library *library,
-       void *value);
-    void *
       (*modern_node_get_function_type_right)
-      (modern_library *library,
-       void *value);
-    void *
-      (*modern_node_get_function_type_right_link)
       (modern_library *library,
        void *value);
     void *
@@ -916,15 +888,7 @@ struct modern_node {
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_sigma_type_field_type_link)
-      (modern_library *library,
-       void *value);
-    void *
       (*modern_node_get_sigma_type_successor)
-      (modern_library *library,
-       void *value);
-    void *
-      (*modern_node_get_sigma_type_successor_link)
       (modern_library *library,
        void *value);
     struct modern_hash modern_node_get_named_type_name
@@ -932,10 +896,6 @@ struct modern_node {
        void *value);
     void *
       (*modern_node_get_named_type_content_type)
-      (modern_library *library,
-       void *value);
-    void *
-      (*modern_node_get_named_type_content_type_link)
       (modern_library *library,
        void *value);
     uint64_t 
@@ -947,23 +907,11 @@ struct modern_node {
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_lambda_content_link)
-      (modern_library *library,
-       void *value);
-    void *
       (*modern_node_get_apply_left)
       (modern_library *library,
        void *value);
     void *
-      (*modern_node_get_apply_left_link)
-      (modern_library *library,
-       void *value);
-    void *
       (*modern_node_get_apply_right)
-      (modern_library *library,
-       void *value);
-    void *
-      (*modern_node_get_apply_right_link)
       (modern_library *library,
        void *value);
     uint64_t 
@@ -972,10 +920,6 @@ struct modern_node {
        void *value);
     void *
       (*modern_node_get_type_family_item)
-      (modern_library *library,
-       void *value, uint64_t index);
-    void *
-      (*modern_node_get_type_family_item_link)
       (modern_library *library,
        void *value, uint64_t index);
     uint64_t 
@@ -987,15 +931,7 @@ struct modern_node {
       (modern_library *library,
        void *value, uint64_t index);
     void *
-      (*modern_node_get_let_item_link)
-      (modern_library *library,
-       void *value, uint64_t index);
-    void *
       (*modern_node_get_let_content)
-      (modern_library *library,
-       void *value);
-    void *
-      (*modern_node_get_let_content_link)
       (modern_library *library,
        void *value);
     uint64_t 
