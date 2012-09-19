@@ -6691,10 +6691,11 @@
                                 <TextSelection>0,0</TextSelection>
                             </TextSettings>
                             <Children>
-                                <BinderItem ID="1001" Type="Text" Created="2012-09-18 15:28:57 -0400" Modified="2012-09-18 15:29:07 -0400">
+                                <BinderItem ID="1001" Type="Text" Created="2012-09-18 15:28:57 -0400" Modified="2012-09-19 09:18:31 -0400">
                                     <Title>Overview</Title>
                                     <MetaData>
                                         <LabelID>1</LabelID>
+                                        <StatusID>0</StatusID>
                                         <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
@@ -7608,10 +7609,11 @@
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
                                     <Children>
-                                        <BinderItem ID="965" Type="Text" Created="2012-09-18 12:19:18 -0400" Modified="2012-09-18 15:27:42 -0400">
+                                        <BinderItem ID="965" Type="Text" Created="2012-09-18 12:19:18 -0400" Modified="2012-09-19 09:18:38 -0400">
                                             <Title>Concepts</Title>
                                             <MetaData>
                                                 <LabelID>1</LabelID>
+                                                <StatusID>0</StatusID>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -7636,10 +7638,11 @@
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
                                     <Children>
-                                        <BinderItem ID="967" Type="Text" Created="2012-09-18 12:22:24 -0400" Modified="2012-09-18 15:26:53 -0400">
+                                        <BinderItem ID="967" Type="Text" Created="2012-09-18 12:22:24 -0400" Modified="2012-09-19 09:18:43 -0400">
                                             <Title>Concepts</Title>
                                             <MetaData>
                                                 <LabelID>1</LabelID>
+                                                <StatusID>0</StatusID>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
