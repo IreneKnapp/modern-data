@@ -51,24 +51,20 @@ To make things with cycles, what happens behind the scenes is…  Well, it’s n
 <br/>
 The operations on a modern node are serialization, deserialization, and evaluation.  Serialization is performed on a modern node in some “modern context”, and produces a strea...</p>
 </li>
-<hr/>
-<ul>
 <li>
 <p class="binderItem"><strong>Scoping</strong><br/>Importantly, a modern type must be in scope in the given context before a value of that type can be serialized or deserialized. The high-level “node-based” portion of the library will check whether a value’s type is in context when serializing, and emit additional instructions which bring it into context if it is not, mutating the context object which it is passed to make note of the fact.  Similarly, when deserializing, if a value’s type is not in context, an error is produced and processing ha...</p>
 </li>
 <li>
-<p class="binderItem"><strong>Cyclic structures</strong></p>
+<p class="binderItem"><strong>Cyclic structures</strong><br/>Cyclic structures, both at the type level and at the value level, can be created with inductive families and recursive lets - these two mechanisms are similar to each other, with the one being for types and the other for values.  The details of how this is done are left to a later chapter.  It is enough to know that the details of how these mechanisms are used do in fact become part of a modern node’s identity.  That is, they affect how types are canonicalized, which means that you have a differ...</p>
 </li>
 <li>
-<p class="binderItem"><strong>Mutation</strong></p>
+<p class="binderItem"><strong>Mutation</strong><br/>Although many functional languages are additionally "purely functional", meaning that their variables are immutable, nodes can be mutated in memory in some languages.  This is to make it easier to create cyclic structures, which could not otherwise be done in languages without recursive binding.  The semantics of mutation are that all references to the old node become references to the new node.  Mutation is possible on all nodes, with the provision that nodes being modified have never been in s...</p>
 </li>
 <li>
 <p class="binderItem"><strong>Evaluation</strong><br/>It has been mentioned that Modern Data’s type system is dependent; that is, the type of a value that comes later on is allowed to depend upon the actual value of an earlier one.  It is necessary for the infrastructure to know what these dependent types evaluate to, which means that there must be an evaluator - a means of actually executing the function that computes each dependent type and determining its results.<br/>
 <br/>
 The evaluation algorithm is given here as two mutually-recursive functions, and i...</p>
 </li>
-</ul>
-<hr/>
 <li>
 <p class="binderItem"><strong>Canonical form</strong><br/>Modern Data contexts are essentially hash tables containing modern nodes as their elements.  The hash key used for indexing them is based on the “canonical form” of the modern node.  This section discusses what that canonical form means and how it is computed.  Though client code need never be aware of what are essentially implementation details such as these, independent implementations of the library do need to know them.<br/>
 <br/>
@@ -127,6 +123,7341 @@ It is important to note that each node, independently, has its own cano...</p>
 </li>
 </ul>
 </ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Builtin values</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Overview</strong><br/>“Built-in value” is a special node type, which consists of an identifier from a sixteen-bit unsigned number-space.  Each permitted identifier has a name and a semantic meaning, described in this section.  Unlike most other node types, the value type of a built-in value depends (solely) on its identifier.  Thus, this node type could be viewed as an “extension” node type, providing a larger number-space.<br/>
+<br/>
+Many of the extant built-in values exist to provide primitive operations on the other value t...</p>
+</li>
+<li>
+<p class="binderItem"><strong>Flow control</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>if_bool</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>if_bool = 0<br/>
+<br/>
+Value type (abstract notation)<br/>
+a : universe 0 -> bool -> a -> a -> a<br/>
+<br/>
+Value type<br/>
+(lambda<br/>
+  (function<br/>
+    (backreference 0)<br/>
+    (function<br/>
+      bool<br/>
+      (function<br/>
+        (backreference 0)<br/>
+        (Backreference 0)))))</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Logic</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>and_bool</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>and_bool = 32<br/>
+<br/>
+Value type (abstract notation)<br/>
+bool -> bool -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>or_bool</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>or_bool = 64<br/>
+<br/>
+Value type (abstract notation)<br/>
+bool -> bool -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>not_bool</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>not_bool = 96<br/>
+<br/>
+Value type (abstract notation)<br/>
+bool -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Equality</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>equal_to_bool</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_bool = 128<br/>
+<br/>
+Value type (abstract notation)<br/>
+bool -> bool -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_int8 = 129<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> int8 -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_int16 = 130<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> int16 -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_int32 = 131<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> int32 -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_int64 = 132<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> int64 -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_nat8 = 133<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat8 -> nat8 -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_nat16 = 134<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat16 -> nat16 -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_nat32 = 135<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat32 -> nat32 -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_nat64 = 136<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat64 -> nat64 -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_float32 = 137<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32 -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_float64 = 138<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64 -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_name</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_name = 139<br/>
+<br/>
+Value type (abstract notation)<br/>
+name -> name -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_utf8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_utf8 = 140<br/>
+<br/>
+Value type (abstract notation)<br/>
+utf8 -> uft8 -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_blob = 150<br/>
+<br/>
+Value type (abstract notation)<br/>
+blob -> blob -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>equal_to_ordering</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>equal_to_ordering = 151<br/>
+<br/>
+Value type (abstract notation)<br/>
+ordering -> ordering -> bool<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Ordering</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>compare_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>compare_int8 = 160<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> int8 -> ordering<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>compare_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>compare_int16 = 161<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> int16 -> ordering<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>compare_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>compare_int32 = 162<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> int32 -> ordering<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>compare_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>compare_int64 = 163<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> int64 -> ordering<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>compare_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>compare_nat8 = 164<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat8 -> nat8 -> ordering<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>compare_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>compare_nat16 = 165<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat16 -> nat16 -> ordering<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>compare_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>compare_nat32 = 166<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat32 -> nat32 -> ordering<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>compare_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>compare_nat64 = 167<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat64 -> nat64 -> ordering<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>compare_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>compare_float32 = 168<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32 -> ordering<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>compare_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>compare_float64 = 169<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64 -> ordering<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Arithmetic</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>add_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>add_int8 = 192<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> int8 -> maybe int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>add_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>add_int16 = 193<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> int16 -> maybe int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>add_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>add_int32 = 194<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> int32 -> maybe int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>add_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>add_int64 = 195<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> int64 -> maybe int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>add_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>add_nat8 = 196<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat8 -> nat8 -> maybe nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>add_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>add_nat16 = 197<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat16 -> nat16 -> maybe nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>add_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>add_nat32 = 198<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat32 -> nat32 -> maybe nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>add_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>add_nat64 = 199<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat64 -> nat64 -> maybe nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>add_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>add_float32 = 200<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32 -> maybe float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>add_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>add_float64 = 201<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64 -> maybe float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>subtract_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>subtract_int8 = 224<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> int8 -> maybe int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>subtract_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>subtract_int16 = 225<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> int16 -> maybe int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>subtract_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>subtract_int32 = 226<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> int32 -> maybe int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>subtract_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>subtract_int64 = 227<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> int64 -> maybe int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>subtract_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>subtract_nat8 = 228<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat8 -> nat8 -> maybe nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>subtract_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>subtract_nat16 = 229<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat16 -> nat16 -> maybe nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>subtract_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>subtract_nat32 = 230<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat32 -> nat32 -> maybe nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>subtract_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>subtract_nat64 = 231<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat64 -> nat64 -> maybe nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>subtract_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>subtract_float32 = 232<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32 -> maybe float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>subtract_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>subtract_float64 = 233<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64 -> maybe float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>multiply_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>multiply_int8 = 256<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> int8 -> maybe int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>multiply_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>multiply_int16 = 257<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> int16 -> maybe int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>multiply_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>multiply_int32 = 258<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> int32 -> maybe int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>multiply_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>multiply_int64 = 259<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> int64 -> maybe int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>multiply_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>multiply_nat8 = 260<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat8 -> nat8 -> maybe nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>multiply_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>multiply_nat16 = 261<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat16 -> nat16 -> maybe nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>multiply_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>multiply_nat32 = 262<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat32 -> nat32 -> maybe nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>multiply_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>multiply_nat64 = 263<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat64 -> nat64 -> maybe nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>multiply_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>multiply_float32 = 264<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32 -> maybe float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>multiply_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>multiply_float64 = 265<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64 -> maybe float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_zero_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_zero_int8 = 288<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> int8 -> maybe int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_zero_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_zero_int16 = 289<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> int16 -> maybe int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_zero_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_zero_int32 = 290<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> int32 -> maybe int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_zero_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_zero_int64 = 291<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> int64 -> maybe int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_zero_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_zero_nat8 = 292<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat8 -> nat8 -> maybe nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_zero_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_zero_nat16 = 293<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat16 -> nat16 -> maybe nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_zero_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_zero_nat32 = 294<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat32 -> nat32 -> maybe nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_zero_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_zero_nat64 = 295<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat64 -> nat64 -> maybe nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_negative_infinity_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_negative_infinity_int8 = 320<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> int8 -> maybe int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_negative_infinity_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_negative_infinity_int16 = 321<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> int16 -> maybe int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_negative_infinity_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_negative_infinity_int32 = 322<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> int32 -> maybe int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_negative_infinity_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_negative_infinity_int64 = 323<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> int64 -> maybe int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_negative_infinity_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_negative_infinity_nat8 = 324<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat8 -> nat8 -> maybe nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_negative_infinity_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_negative_infinity_nat16 = 325<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat16 -> nat16 -> maybe nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_negative_infinity_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_negative_infinity_nat32 = 326<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat32 -> nat32 -> maybe nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_towards_negative_infinity_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_towards_negative_infinity_nat64 = 327<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat64 -> nat64 -> maybe nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_float32 = 352<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32 -> maybe float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>divide_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>divide_float64 = 353<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64 -> maybe float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_zero_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_zero_int8 = 384<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> int8 -> maybe int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_zero_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_zero_int16 = 385<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> int16 -> maybe int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_zero_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_zero_int32 = 386<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> int32 -> maybe int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_zero_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_zero_int64 = 387<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> int64 -> maybe int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_zero_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_zero_nat8 = 388<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat8 -> nat8 -> maybe nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_zero_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_zero_nat16 = 389<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat16 -> nat16 -> maybe nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_zero_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_zero_nat32 = 390<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat32 -> nat32 -> maybe nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_zero_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_zero_nat64 = 391<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat64 -> nat64 -> maybe nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_negative_infinity_int8 = 416<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> int8 -> maybe int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_negative_infinity_int16 = 417<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> int16 -> maybe int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_negative_infinity_int32 = 418<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> int32 -> maybe int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_negative_infinity_int64 = 419<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> int64 -> maybe int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_negative_infinity_nat8 = 420<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat8 -> nat8 -> maybe nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_negative_infinity_nat16 = 421<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat16 -> nat16 -> maybe nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_negative_infinity_nat32 = 422<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat32 -> nat32 -> maybe nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modulus_towards_negative_infinity_nat64 = 423<br/>
+<br/>
+Value type (abstract notation)<br/>
+nat64 -> nat64 -> maybe nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>negate_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>negate_int8 = 448<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> maybe int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>negate_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>negate_int16 = 449<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> maybe int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>negate_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>negate_int32 = 450<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> maybe int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>negate_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>negate_int64 = 451<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> maybe int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>negate_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>negate_float32 = 452<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> maybe float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>negate_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>negate_float64 = 453<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> maybe float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>absolute_value_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>absolute_value_int8 = 480<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> maybe int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>absolute_value_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>absolute_value_int16 = 481<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> maybe int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>absolute_value_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>absolute_value_int32 = 482<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> maybe int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>absolute_value_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>absolute_value_int64 = 483<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> maybe int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>absolute_value_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>absolute_value_float32 = 484<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> maybe float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>absolute_value_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>absolute_value_float64 = 485<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> maybe float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>sign_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>sign_int8 = 512<br/>
+<br/>
+Value type (abstract notation)<br/>
+int8 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>sign_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>sign_int16 = 513<br/>
+<br/>
+Value type (abstract notation)<br/>
+int16 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>sign_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>sign_int32 = 514<br/>
+<br/>
+Value type (abstract notation)<br/>
+int32 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>sign_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>sign_int64 = 515<br/>
+<br/>
+Value type (abstract notation)<br/>
+int64 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>sign_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>sign_float32 = 516<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>sign_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>sign_float64 = 517<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Logarithm and exponent</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>pi_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>pi_float32 = 544<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>pi_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>pi_float64 = 545<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>square_root_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>square_root_float32 = 576<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>square_root_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>square_root_float64 = 577<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>natural_logarithm_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>natural_logarithm_float32 = 608<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>natural_logarithm_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>natural_logarithm_float64 = 609<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>e_to_the_x_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>e_to_the_x_float32 = 640<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>e_to_the_x_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>e_to_the_x_float64 = 641<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>two_to_the_x_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>two_to_the_x_float32 = 672<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>two_to_the_x_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>two_to_the_x_float64 = 673<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>x_to_the_y_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>x_to_the_y_float32 = 704<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>x_to_the_y_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>x_to_the_y_float64 = 705<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>logarithm_base_x_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>logarithm_base_x_float32 = 736<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>logarithm_base_x_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>logarithm_base_x_float64 = 737<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Trigonometric</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>sine_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>sine_float32 = 768<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>sine_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>sine_float64 = 769<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cosine_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cosine_float32 = 800<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cosine_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cosine_float64 = 801<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>tangent_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>tangent_float32 = 832<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>tangent_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>tangent_float64 = 833<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>arcsine_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>arcsine_float32 = 864<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>arcsine_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>arcsine_float64 = 865<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>arccosine_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>arccosine_float32 = 896<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>arccosine_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>arccosine_float64 = 897<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>arctangent_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>arctangent_float32 = 928<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>arctangent_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>arctangent_float64 = 929<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>arctangent_fraction_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>arctangent_fraction_float32 = 960<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>arctangent_fraction_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>arctangent_fraction_float64 = 961<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_sine_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_sine_float32 = 992<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_sine_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_sine_float64 = 993<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_cosine_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_cosine_float32 = 1024<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_cosine_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_cosine_float64 = 1025<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_tangent_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_tangent_float32 = 1056<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_tangent_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_tangent_float64 = 1057<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_arcsine_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_arcsine_float32 = 1088<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_arcsine_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_arcsine_float64 = 1089<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_arccosine_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_arccosine_float32 = 1120<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_arccosine_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_arccosine_float64 = 1121<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_arctangent_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_arctangent_float32 = 1152<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>hyperbolic_arctangent_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>hyperbolic_arctangent_float64 = 1153<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Rounding</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float32_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float32_int8 = 1184<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float64_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float64_int8 = 1185<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float32_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float32_int16 = 1186<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float64_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float64_int16 = 1187<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float32_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float32_int32 = 1188<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float64_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float64_int32 = 1189<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float32_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float32_int64 = 1190<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float64_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float64_int64 = 1191<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float32_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float32_nat8 = 1192<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float64_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float64_nat8 = 1193<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float32_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float32_nat16 = 1194<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float64_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float64_nat16 = 1195<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float32_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float32_nat32 = 1196<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float64_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float64_nat32 = 1197<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float32_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float32_nat64 = 1198<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float64_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float64_nat64 = 1199<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float32_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float32_float32 = 1200<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_zero_float64_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_zero_float64_float64 = 1201<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float32_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float32_int8 = 1216<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float64_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float64_int8 = 1217<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float32_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float32_int16 = 1218<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float64_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float64_int16 = 1219<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float32_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float32_int32 = 1220<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float64_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float64_int32 = 1221<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float32_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float32_int64 = 1222<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float64_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float64_int64 = 1223<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float32_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float32_nat8 = 1224<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float64_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float64_nat8 = 1225<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float32_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float32_nat16 = 1226<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float64_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float64_nat16 = 1227<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float32_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float32_nat32 = 1228<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float64_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float64_nat32 = 1229<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float32_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float32_nat64 = 1230<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float64_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float64_nat64 = 1231<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float32_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float32_float32 = 1232<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_away_from_zero_float64_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_away_from_zero_float64_float64 = 1233<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float32_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float32_int8 = 1248<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float64_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float64_int8 = 1249<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float32_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float32_int16 = 1250<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float64_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float64_int16 = 1251<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float32_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float32_int32 = 1252<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float64_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float64_int32 = 1253<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float32_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float32_int64 = 1254<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float64_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float64_int64 = 1255<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float32_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float32_nat8 = 1256<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float64_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float64_nat8 = 1257<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float32_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float32_nat16 = 1258<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float64_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float64_nat16 = 1259<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float32_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float32_nat32 = 1260<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float64_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float64_nat32 = 1261<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float32_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float32_nat64 = 1262<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float64_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float64_nat64 = 1263<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float32_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float32_float32 = 1264<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_even_float64_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_even_float64_float64 = 1265<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float32_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float32_int8 = 1280<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float64_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float64_int8 = 1281<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float32_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float32_int16 = 1282<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float64_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float64_int16 = 1283<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float32_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float32_int32 = 1284<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float64_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float64_int32 = 1285<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float32_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float32_int64 = 1286<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float64_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float64_int64 = 1287<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float32_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float32_nat8 = 1288<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float64_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float64_nat8 = 1289<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float32_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float32_nat16 = 1290<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float64_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float64_nat16 = 1291<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float32_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float32_nat32 = 1292<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float64_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float64_nat32 = 1293<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float32_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float32_nat64 = 1294<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float64_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float64_nat64 = 1295<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float32_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float32_float32 = 1296<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>round_towards_odd_float64_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>round_towards_odd_float64_float64 = 1297<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float32_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float32_int8 = 1312<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float64_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float64_int8 = 1313<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float32_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float32_int16 = 1314<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float64_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float64_int16 = 1315<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float32_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float32_int32 = 1316<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float64_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float64_int32 = 1317<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float32_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float32_int64 = 1318<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float64_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float64_int64 = 1319<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float32_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float32_nat8 = 1320<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float64_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float64_nat8 = 1321<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float32_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float32_nat16 = 1322<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float64_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float64_nat16 = 1323<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float32_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float32_nat32 = 1324<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float64_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float64_nat32 = 1325<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float32_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float32_nat64 = 1326<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float64_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float64_nat64 = 1327<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float32_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float32_float32 = 1328<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>ceiling_float64_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>ceiling_float64_float64 = 1329<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float32_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float32_int8 = 1344<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float64_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float64_int8 = 1345<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float32_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float32_int16 = 1346<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float64_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float64_int16 = 1347<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float32_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float32_int32 = 1348<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float64_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float64_int32 = 1349<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float32_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float32_int64 = 1350<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float64_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float64_int64 = 1351<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> int64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float32_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float32_nat8 = 1352<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float64_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float64_nat8 = 1353<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat8<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float32_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float32_nat16 = 1354<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float64_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float64_nat16 = 1355<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat16<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float32_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float32_nat32 = 1356<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float64_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float64_nat32 = 1357<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float32_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float32_nat64 = 1358<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float64_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float64_nat64 = 1359<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> nat64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float32_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float32_float32 = 1360<br/>
+<br/>
+Value type (abstract notation)<br/>
+float32 -> float32<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>floor_float64_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>floor_float64_float64 = 1361<br/>
+<br/>
+Value type (abstract notation)<br/>
+float64 -> float64<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Boundary value</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>minimum_bound_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>minimum_bound_int8 = 1376</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>minimum_bound_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>minimum_bound_int16 = 1377</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>minimum_bound_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>minimum_bound_int32 = 1378</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>minimum_bound_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>minimum_bound_int64 = 1379</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>minimum_bound_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>minimum_bound_nat8 = 1380</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>minimum_bound_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>minimum_bound_nat16 = 1381</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>minimum_bound_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>minimum_bound_nat32 = 1382</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>minimum_bound_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>minimum_bound_nat64 = 1383</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>maximum_bound_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>maximum_bound_int8 = 1408</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>maximum_bound_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>maximum_bound_int16 = 1409</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>maximum_bound_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>maximum_bound_int32 = 1410</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>maximum_bound_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>maximum_bound_int64 = 1411</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>maximum_bound_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>maximum_bound_nat8 = 1412</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>maximum_bound_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>maximum_bound_nat16 = 1413</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>maximum_bound_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>maximum_bound_nat32 = 1414</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>maximum_bound_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>maximum_bound_nat64 = 1415</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Bitwise</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>shift_left_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_left_int8 = 1440</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_left_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_left_int16 = 1441</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_left_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_left_int32 = 1442</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_left_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_left_int64 = 1443</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_left_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_left_nat8 = 1444</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_left_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_left_nat16 = 1445</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_left_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_left_nat32 = 1456</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_left_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_left_nat64 = 1457</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_right_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_right_int8 = 1472</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_right_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_right_int16 = 1473</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_right_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_right_int32 = 1474</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_right_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_right_int64 = 1475</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_right_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_right_nat8 = 1476</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_right_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_right_nat16 = 1477</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_right_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_right_nat32 = 1478</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>shift_right_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>shift_right_nat64 = 1479</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_left_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_left_int8 = 1504</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_left_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_left_int16 = 1505</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_left_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_left_int32 = 1506</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_left_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_left_int64 = 1507</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_left_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_left_nat8 = 1508</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_left_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_left_nat16 = 1509</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_left_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_left_nat32 = 1510</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_left_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_left_nat64 = 1511</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_right_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_right_int8 = 1536</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_right_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_right_int16 = 1537</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_right_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_right_int32 = 1538</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_right_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_right_int64 = 1539</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_right_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_right_nat8 = 1540</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_right_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_right_nat16 = 1541</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_right_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_right_nat32 = 1542</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>rotate_right_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>rotate_right_nat64 = 1543</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_and_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_and_int8 = 1568</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_and_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_and_int16 = 1569</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_and_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_and_int32 = 1570</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_and_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_and_int64 = 1571</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_and_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_and_nat8 = 1572</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_and_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_and_nat16 = 1573</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_and_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_and_nat32 = 1574</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_and_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_and_nat64 = 1575</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_or_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_or_int8 = 1600</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_or_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_or_int16 = 1601</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_or_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_or_int32 = 1602</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_or_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_or_int64 = 1603</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_or_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_or_nat8 = 1604</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_or_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_or_nat16 = 1605</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_or_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_or_nat32 = 1606</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_or_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_or_nat64 = 1607</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_xor_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_xor_int8 = 1632</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_xor_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_xor_int16 = 1633</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_xor_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_xor_int32 = 1634</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_xor_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_xor_int64 = 1635</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_xor_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_xor_nat8 = 1636</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_xor_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_xor_nat16 = 1637</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_xor_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_xor_nat32 = 1638</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_xor_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_xor_nat64 = 1639</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_not_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_not_int8 = 1664</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_not_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_not_int16 = 1665</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_not_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_not_int32 = 1666</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_not_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_not_int64 = 1667</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_not_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_not_nat8 = 1668</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_not_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_not_nat16 = 1669</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_not_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_not_nat32 = 1670</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>bit_not_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>bit_not_nat64 = 1671</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Large object</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>decode_utf8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>decode_utf8 = 1696</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>encode_utf8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>encode_utf8 = 1728</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>character_offset_to_byte_offset_utf8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>character_offset_to_byte_offset_utf8 = 1760</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>length_bytes_utf8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>length_bytes_utf8 = 1792</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>length_bytes_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>length_bytes_blob = 1793</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>get_byte_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_byte_blob = 1824</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>replace_byte_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>replace_byte_blob = 1856</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>get_data_piece_utf8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_data_piece_utf8 = 1888</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>get_data_piece_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_data_piece_blob = 1889</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>replace_data_piece_utf8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>replace_data_piece_utf8 = 1920</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>replace_data_piece_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>replace_data_piece_blob = 1921</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>empty_utf8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>empty_utf8 = 1952</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>empty_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>empty_blob = 1953</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Sigma value</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>get_sigma_field_value</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_sigma_field_value = 1984</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>get_sigma_successor</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_sigma_successor = 2016</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Named value</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>get_named_value</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_named_value = 2048</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Maybe value</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>maybe_is_just</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>maybe_is_just = 2560</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>fmap_maybe</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>fmap_maybe = 2592</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>from_maybe</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>from_maybe = 2624</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Type manipulation</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>get_maybe_type_content_type</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_maybe_type_content_type = 2528</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>get_function_type_left</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_function_type_left = 2080</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>get_function_type_right</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_function_type_right = 2112</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>get_sigma_type_field_type</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_sigma_type_field_type = 2144</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>get_sigma_type_successor</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_sigma_type_successor = 2176</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>get_named_type_content_type</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_named_type_content_type = 2208</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>get_universe_type_level</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_universe_type_level = 2240</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>make_sigma</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>make_sigma = 2272</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>make_name</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>make_name = 2304</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>make_maybe_type</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>make_maybe_type = 2496</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>make_function_type</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>make_function_type = 2368</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>make_named_value</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>make_named_value = 2336</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>make_sigma_type</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>make_sigma_type = 2400</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>make_named_type</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>make_named_type = 2432</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>make_universe_type</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>make_universe_type = 2464</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Cast</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>cast_int8_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int8_int16 = 10240</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int8_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int8_int32 = 10241</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int8_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int8_int64 = 10242</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int8_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int8_nat8 = 10243</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int8_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int8_nat16 = 10244</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int8_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int8_nat32 = 10245</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int8_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int8_nat64 = 10246</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int16_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int16_int8 = 10247</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int16_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int16_int32 = 10248</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int16_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int16_int64 = 10249</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int16_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int16_nat8 = 10250</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int16_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int16_nat16 = 10251</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int16_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int16_nat32 = 10252</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int16_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int16_nat64 = 10253</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int32_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int32_int8 = 10254</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int32_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int32_int16 = 10255</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int32_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int32_int64 = 10256</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int32_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int32_nat8 = 10257</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int32_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int32_nat16 = 10258</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int32_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int32_nat32 = 10259</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int32_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int32_nat64 = 10260</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int64_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int64_int8 = 10261</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int64_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int64_int16 = 10262</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int64_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int64_int32 = 10263</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int64_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int64_nat8 = 10264</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int64_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int64_nat16 = 10265</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int64_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int64_nat32 = 10266</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int64_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int64_nat64 = 10267</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat8_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat8_int8 = 10268</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat8_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat8_int16 = 10269</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat8_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat8_int32 = 10270</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat8_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat8_int64 = 10271</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat8_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat8_nat16 = 10272</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat8_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat8_nat32 = 10273</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat8_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat8_nat64 = 10274</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat16_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat16_int8 = 10275</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat16_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat16_int16 = 10276</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat16_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat16_int32 = 10277</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat16_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat16_int64 = 10278</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat16_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat16_nat8 = 10279</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat16_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat16_nat32 = 10280</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat16_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat16_nat64 = 10281</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat32_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat32_int8 = 10282</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat32_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat32_int16 = 10283</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat32_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat32_int32 = 10284</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat32_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat32_int64 = 10285</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat32_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat32_nat8 = 10286</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat32_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat32_nat16 = 10287</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat32_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat32_nat64 = 10288</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat64_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat64_int8 = 10289</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat64_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat64_int16 = 10290</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat64_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat64_int32 = 10291</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat64_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat64_int64 = 10292</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat64_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat64_nat8 = 10293</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat64_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat64_nat16 = 10294</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat64_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat64_nat32 = 10295</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_utf8_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_utf8_blob = 10296</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_utf8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_utf8 = 10297</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_name_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_name_blob = 10298</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_name</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_name = 10299</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_float32_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_float32_float64 = 10300</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_float64_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_float64_float32 = 10301</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_int8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_int8 = 10302</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_int16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_int16 = 10303</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_int32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_int32 = 10304</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_int64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_int64 = 10305</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_nat8</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_nat8 = 10306</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_nat16</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_nat16 = 10307</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_nat32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_nat32 = 10308</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_nat64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_nat64 = 10309</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_float32</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_float32 = 10310</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_blob_float64</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_blob_float64 = 10311</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int8_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int8_blob = 10312</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int16_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int16_blob = 10313</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int32_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int32_blob = 10314</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_int64_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_int64_blob = 10315</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat8_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat8_blob = 10316</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat16_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat16_blob = 10317</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat32_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat32_blob = 10318</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_nat64_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_nat64_blob = 10319</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_float32_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_float32_blob = 10320</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>cast_float64_blob</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>cast_float64_blob = 10321</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Predefined values</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Overview</strong></p>
+</li>
+</ul>
 </ul>
 <hr/>
 <li>
@@ -135,10 +7466,16 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
+<p class="binderItem"><strong>Overview</strong></p>
+</li>
+<li>
 <p class="binderItem"><strong>Library instances</strong></p>
 </li>
 <hr/>
 <ul>
+<li>
+<p class="binderItem"><strong>Overview</strong></p>
+</li>
 <li>
 <p class="binderItem"><strong>General</strong></p>
 </li>
@@ -158,7 +7495,15 @@ modern_library_initialize<br/>
  void *client_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>Parameters</strong></p>
+<p class="binderItem"><strong>Parameters</strong><br/>Error handler<br/>
+<br/>
+Allocator<br/>
+<br/>
+Finalizer<br/>
+<br/>
+Client state<br/>
+<br/>
+Return</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -575,6 +7920,9 @@ modern_library_finalize<br/>
 <hr/>
 <ul>
 <li>
+<p class="binderItem"><strong>Overview</strong></p>
+</li>
+<li>
 <p class="binderItem"><strong>modern_retain</strong></p>
 </li>
 <hr/>
@@ -618,6 +7966,9 @@ modern_release<br/>
 </li>
 <hr/>
 <ul>
+<li>
+<p class="binderItem"><strong>Overview</strong></p>
+</li>
 <li>
 <p class="binderItem"><strong>modern_hash</strong></p>
 </li>
@@ -6138,6 +13489,9 @@ modern_stream_documentation_make<br/>
 <hr/>
 <ul>
 <li>
+<p class="binderItem"><strong>Overview</strong></p>
+</li>
+<li>
 <p class="binderItem"><strong>modern_hash_initial_namespace_compute</strong></p>
 </li>
 <hr/>
@@ -6161,6 +13515,9 @@ modern_hash_initial_namespace_compute<br/>
 </li>
 <hr/>
 <ul>
+<li>
+<p class="binderItem"><strong>Overview</strong></p>
+</li>
 <li>
 <p class="binderItem"><strong>modern_builtin_identifier</strong></p>
 </li>
