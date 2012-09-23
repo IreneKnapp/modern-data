@@ -1341,23 +1341,23 @@ extern modern *modern_from_context_get
 
 extern modern *modern_deserialize_memory
   (modern_library *library,
-   modern_autorelease_pool *pool, modern_context *context,
+   modern_context *context,
    uint8_t *data, size_t length);
 extern modern *modern_deserialize_file
   (modern_library *library,
-   modern_autorelease_pool *pool, modern_context *context,
+   modern_context *context,
    FILE *file);
 extern modern *modern_deserialize_fd
   (modern_library *library,
-   modern_autorelease_pool *pool, modern_context *context,
+   modern_context *context,
    int fd);
 extern modern *modern_deserialize_vfile
   (modern_library *library,
-   modern_autorelease_pool *pool, modern_context *context,
+   modern_context *context,
    struct modern_vfile *vfile, void *vfile_state);
 extern modern *modern_deserialize_input_stream
   (modern_library *library,
-   modern_autorelease_pool *pool, modern_context *context,
+   modern_context *context,
    void *processor_state, void *stream_state);
 
 extern void modern_serialize_memory_buffer

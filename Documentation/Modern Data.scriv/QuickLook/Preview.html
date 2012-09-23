@@ -58,7 +58,7 @@ The operations on a modern node are serialization, deserialization, and evaluati
 <p class="binderItem"><strong>Cyclic structures</strong><br/>Cyclic structures, both at the type level and at the value level, can be created with inductive families and recursive lets - these two mechanisms are similar to each other, with the one being for types and the other for values.  The details of how this is done are left to a later chapter.  It is enough to know that the details of how these mechanisms are used do in fact become part of a modern node’s identity.  That is, they affect how types are canonicalized, which means that you have a differ...</p>
 </li>
 <li>
-<p class="binderItem"><strong>Mutation</strong><br/>Although many functional languages are additionally "purely functional", meaning that their variables are immutable, nodes can be mutated in memory in some languages.  This is to make it easier to create cyclic structures, which could not otherwise be done in languages without recursive binding.  The semantics of mutation are that all references to the old node become references to the new node.  Mutation is possible on all nodes, with the provision that nodes being modified have never been in s...</p>
+<p class="binderItem"><strong>Mutation</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Evaluation</strong><br/>It has been mentioned that Modern Data’s type system is dependent; that is, the type of a value that comes later on is allowed to depend upon the actual value of an earlier one.  It is necessary for the infrastructure to know what these dependent types evaluate to, which means that there must be an evaluator - a means of actually executing the function that computes each dependent type and determining its results.<br/>
@@ -11781,7 +11781,6 @@ modern_resolve_backreferences<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_memory<br/>
 (modern_library *library,<br/>
- modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  uint8_t *data,<br/>
  size_t length);</p>
@@ -11803,7 +11802,6 @@ modern_deserialize_memory<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_file<br/>
 (modern_library *library,<br/>
- modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  FILE *file);</p>
 </li>
@@ -11824,7 +11822,6 @@ modern_deserialize_file<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_fd<br/>
 (modern_library *library,<br/>
- modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  int fd);</p>
 </li>
@@ -11845,7 +11842,6 @@ modern_deserialize_fd<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_vfile<br/>
 (modern_library *library,<br/>
- modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  struct modern_vfile *vfile,<br/>
  void *vfile_state);</p>
@@ -11867,7 +11863,6 @@ modern_deserialize_vfile<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_input_stream<br/>
 (modern_library *library,<br/>
- modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  void *processor_state,<br/>
  void *stream_state);</p>
