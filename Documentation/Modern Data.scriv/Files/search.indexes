@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SearchIndexes Version="1.0">
     <Documents>
-        <Document ID="1229">
+        <Document ID="2269">
             <Title>Semantics</Title>
         </Document>
         <Document ID="3655">
@@ -5460,6 +5460,7 @@ Value type (detailed notation)</Text>
 modern_library_initialize
 (struct modern_error_handler *error_handler,
  struct modern_allocator *allocator,
+ struct modern_node *node,
  void (*finalizer)(void *client_state),
  void *client_state);</Text>
         </Document>
@@ -7521,6 +7522,9 @@ Value type (detailed notation)</Text>
  void *stream_state,
  uint64_t index);</Text>
         </Document>
+        <Document ID="4235">
+            <Title>modern_library_node_get</Title>
+        </Document>
         <Document ID="545">
             <Title>modern_builtin_identifier_arctangent_float32</Title>
         </Document>
@@ -7550,6 +7554,12 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="546">
             <Title>modern_builtin_identifier_arctangent_float64</Title>
+        </Document>
+        <Document ID="4236">
+            <Title>Synopsis</Title>
+            <Text>struct modern_node *
+modern_library_node_get
+(modern_library *library);</Text>
         </Document>
         <Document ID="1476">
             <Title>Synopsis</Title>
@@ -7584,6 +7594,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2862">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4237">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="548">
             <Title>modern_builtin_identifier_arctangent_fraction_float64</Title>
@@ -7644,6 +7657,9 @@ It’s worth noting in passing that it is bad style but technically possible in 
 Although many functional languages are additionally "purely functional", meaning that their variables are immutable, nodes can be mutated in memory in some languages.  This is to make it easier to create cyclic structures, which could not otherwise be done in languages without recursive binding.  The semantics of mutation are that all references to the old node become references to the new node.  Mutation is possible on all nodes, with the provision that nodes being modified have never been in scope in any context.  In other words, once a node has become part of a schema of types and and thus potentially has extant nodes which are values of it, it can no longer be modified.  This is, of course, to avoid the scenario of a value node being inconsistent in structure with the type node that corresponds to it.
 
 Of course, it is expected that sets of types for some particular purpose will be constructed in most situations not through imperative code but through the use of an interactive editor having Modern Data as its native format.  The ease with which what would be called a schema in other systems can be serialized and deserialized obviates the need to construct one by hand, most of the time.  As such, the details discussed above should seldom be an issue.</Text>
+        </Document>
+        <Document ID="4238">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1478">
             <Title>Synopsis</Title>
@@ -16717,12 +16733,12 @@ Value type (detailed notation)</Text>
         <Document ID="2998">
             <Title>modern_builtin_identifier_subtract_float32</Title>
         </Document>
+        <Document ID="1229">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1958">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_compare_int8 = 160</Text>
-        </Document>
-        <Document ID="2269">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="631">
             <Title>modern_builtin_identifier_ceiling_float32_int64</Title>

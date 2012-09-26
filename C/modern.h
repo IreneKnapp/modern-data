@@ -57,12 +57,12 @@ struct modern_processor {
     void (*modern_processor_finalize)(void *processor_state);
     void (*modern_processor_step)
       (void *processor_state,
-       struct modern_stream *stream, void *stream_state,
-       struct modern_vfile *vfile, void *vfile_state);
+       void *stream, void *stream_state,
+       void *vfile, void *vfile_state);
     void (*modern_processor_run)
       (void *processor_state,
-       struct modern_stream *stream, void *stream_state,
-       struct modern_vfile *vfile, void *vfile_state);
+       void *stream, void *stream_state,
+       void *vfile, void *vfile_state);
     void (*modern_processor_abort)(void *processor_state);
     void (*modern_processor_flush)(void *processor_state);
 };
@@ -864,7 +864,8 @@ struct modern_node {
       (*modern_node_sigma_successor_get)
       (modern_library *library,
        void *value);
-    struct modern_hash modern_node_get_name_hash
+    struct modern_hash
+      (*modern_node_get_name_hash)
       (modern_library *library,
        void *value);
     void *
@@ -1307,11 +1308,14 @@ struct modern_node {
 extern modern_library *modern_library_initialize
   (struct modern_error_handler *error_handler,
    struct modern_allocator *allocator,
+   struct modern_node *node,
    void (*finalizer)(void *client_state),
    void *client_state);
 extern struct modern_error_handler *modern_library_error_handler_get
   (modern_library *library);
 extern struct modern_allocator *modern_library_allocator_get
+  (modern_library *library);
+extern struct modern_node *modern_library_node_get
   (modern_library *library);
 extern void *modern_library_client_state_get
   (modern_library *library);

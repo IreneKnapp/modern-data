@@ -8471,19 +8471,12 @@ Value type (detailed notation)</p>
 modern_library_initialize<br/>
 (struct modern_error_handler *error_handler,<br/>
  struct modern_allocator *allocator,<br/>
+ struct modern_node *node,<br/>
  void (*finalizer)(void *client_state),<br/>
  void *client_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>Parameters</strong><br/>Error handler<br/>
-<br/>
-Allocator<br/>
-<br/>
-Finalizer<br/>
-<br/>
-Client state<br/>
-<br/>
-Return</p>
+<p class="binderItem"><strong>Parameters</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -8516,6 +8509,24 @@ modern_library_error_handler_get<br/>
 <li>
 <p class="binderItem"><strong>Synopsis</strong><br/>struct modern_allocator *<br/>
 modern_library_allocator_get<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Parameters</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_library_node_get</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>struct modern_node *<br/>
+modern_library_node_get<br/>
 (modern_library *library);</p>
 </li>
 <li>
@@ -12761,7 +12772,6 @@ modern_resolve_backreferences<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_memory<br/>
 (modern_library *library,<br/>
- modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  uint8_t *data,<br/>
  size_t length);</p>
@@ -12783,7 +12793,6 @@ modern_deserialize_memory<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_file<br/>
 (modern_library *library,<br/>
- modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  FILE *file);</p>
 </li>
@@ -12804,7 +12813,6 @@ modern_deserialize_file<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_fd<br/>
 (modern_library *library,<br/>
- modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  int fd);</p>
 </li>
@@ -12825,7 +12833,6 @@ modern_deserialize_fd<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_vfile<br/>
 (modern_library *library,<br/>
- modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  struct modern_vfile *vfile,<br/>
  void *vfile_state);</p>
@@ -12847,7 +12854,6 @@ modern_deserialize_vfile<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_input_stream<br/>
 (modern_library *library,<br/>
- modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  void *processor_state,<br/>
  void *stream_state);</p>

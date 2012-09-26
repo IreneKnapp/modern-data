@@ -5,6 +5,7 @@
 struct modern_library {
     struct modern_error_handler *error_handler;
     struct modern_allocator *allocator;
+    struct modern_node *node;
     void (*finalizer)(void *client_state);
     void *client_state;
 };
