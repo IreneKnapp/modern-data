@@ -1317,6 +1317,8 @@ extern struct modern_allocator *modern_library_allocator_get
   (modern_library *library);
 extern struct modern_node *modern_library_node_get
   (modern_library *library);
+extern void modern_library_node_set
+  (modern_library *library, struct modern_node *node);
 extern void *modern_library_client_state_get
   (modern_library *library);
 extern void modern_library_finalize(modern_library *library);
@@ -1456,4 +1458,4 @@ extern struct modern_stream *modern_stream_documentation_make
   (modern_library *library);
 
 extern struct modern_node *modern_node_make
-  (modern_library *library);
+  (struct modern_library *library);

@@ -7,7 +7,8 @@ OBJECTS=context.o \
 		memory.o \
 		node-canonical.o \
 		node-get.o \
-		node-make.o
+		node-make.o \
+		predefined.o
 INCLUDES=modern.h internal.h
 
 default: example-canonical
@@ -36,6 +37,9 @@ node-get.o: node-get.c ${INCLUDES}
 
 node-make.o: node-make.c ${INCLUDES}
 	${CC} ${CFLAGS} -c node-make.c -o node-make.o
+
+predefined.o: predefined.c ${INCLUDES}
+	${CC} ${CFLAGS} -c predefined.c -o predefined.o
 
 test-canonical.o: test-canonical.c ${INCLUDES}
 	${CC} ${CFLAGS} -c test-canonical.c -o test-canonical.o

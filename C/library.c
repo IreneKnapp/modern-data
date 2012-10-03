@@ -52,6 +52,20 @@ struct modern_node *modern_library_node_get
 }
 
 
+void modern_library_node_set
+  (modern_library *library_in, struct modern_node *node)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    
+    if(library->node) {
+        library->error_handler->modern_error_handler_usage(library->client_state);
+        return;
+    }
+    
+    library->node = node;
+}
+
+
 void *modern_library_client_state_get
   (modern_library *library_in)
 {

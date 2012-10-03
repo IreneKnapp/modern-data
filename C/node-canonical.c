@@ -106,11 +106,11 @@ HELPER int helper_visit_node_top_level
    struct modern *node)
 {
     switch(node->node_type) {
-    case bool_value_false_modern_node_type:
+    case modern_node_type_bool_value_false:
     {
         uint8_t temporary[1];
         
-        temporary[0] = bool_value_false_modern_node_type;
+        temporary[0] = modern_node_type_bool_value_false;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -119,11 +119,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case bool_value_true_modern_node_type:
+    case modern_node_type_bool_value_true:
     {
         uint8_t temporary[1];
         
-        temporary[0] = bool_value_true_modern_node_type;
+        temporary[0] = modern_node_type_bool_value_true;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -132,11 +132,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case ordering_value_less_modern_node_type:
+    case modern_node_type_ordering_value_less:
     {
         uint8_t temporary[1];
         
-        temporary[0] = ordering_value_less_modern_node_type;
+        temporary[0] = modern_node_type_ordering_value_less;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -145,11 +145,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case ordering_value_equal_modern_node_type:
+    case modern_node_type_ordering_value_equal:
     {
         uint8_t temporary[1];
         
-        temporary[0] = ordering_value_equal_modern_node_type;
+        temporary[0] = modern_node_type_ordering_value_equal;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -158,11 +158,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case ordering_value_greater_modern_node_type:
+    case modern_node_type_ordering_value_greater:
     {
         uint8_t temporary[1];
         
-        temporary[0] = ordering_value_greater_modern_node_type;
+        temporary[0] = modern_node_type_ordering_value_greater;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -171,11 +171,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case maybe_value_nothing_modern_node_type:
+    case modern_node_type_maybe_value_nothing:
     {
         uint8_t temporary[1];
         
-        temporary[0] = maybe_value_nothing_modern_node_type;
+        temporary[0] = modern_node_type_maybe_value_nothing;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -184,11 +184,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case maybe_value_just_modern_node_type:
+    case modern_node_type_maybe_value_just:
     {
         uint8_t temporary[1];
         
-        temporary[0] = maybe_value_just_modern_node_type;
+        temporary[0] = modern_node_type_maybe_value_just;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -201,11 +201,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case int8_value_modern_node_type:
+    case modern_node_type_int8_value:
     {
         uint8_t temporary[2];
         
-        temporary[0] = int8_value_modern_node_type;
+        temporary[0] = modern_node_type_int8_value;
         temporary[1] = node->specifics.int8_value;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
@@ -215,11 +215,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case int16_value_modern_node_type:
+    case modern_node_type_int16_value:
     {
         uint8_t temporary[3];
         
-        temporary[0] = int16_value_modern_node_type;
+        temporary[0] = modern_node_type_int16_value;
         temporary[1] = ((node->specifics.int16_value >> 0) & 0xFF);
         temporary[2] = ((node->specifics.int16_value >> 8) & 0xFF);
         
@@ -230,11 +230,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case int32_value_modern_node_type:
+    case modern_node_type_int32_value:
     {
         uint8_t temporary[5];
         
-        temporary[0] = int32_value_modern_node_type;
+        temporary[0] = modern_node_type_int32_value;
         temporary[1] = ((node->specifics.int32_value >> 0) & 0xFF);
         temporary[2] = ((node->specifics.int32_value >> 8) & 0xFF);
         temporary[3] = ((node->specifics.int32_value >> 16) & 0xFF);
@@ -247,11 +247,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case int64_value_modern_node_type:
+    case modern_node_type_int64_value:
     {
         uint8_t temporary[9];
         
-        temporary[0] = int64_value_modern_node_type;
+        temporary[0] = modern_node_type_int64_value;
         temporary[1] = ((node->specifics.int64_value >> 0) & 0xFF);
         temporary[2] = ((node->specifics.int64_value >> 8) & 0xFF);
         temporary[3] = ((node->specifics.int64_value >> 16) & 0xFF);
@@ -268,11 +268,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case nat8_value_modern_node_type:
+    case modern_node_type_nat8_value:
     {
         uint8_t temporary[2];
         
-        temporary[0] = nat8_value_modern_node_type;
+        temporary[0] = modern_node_type_nat8_value;
         temporary[1] = node->specifics.nat8_value;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
@@ -282,11 +282,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case nat16_value_modern_node_type:
+    case modern_node_type_nat16_value:
     {
         uint8_t temporary[3];
         
-        temporary[0] = nat16_value_modern_node_type;
+        temporary[0] = modern_node_type_nat16_value;
         temporary[1] = ((node->specifics.nat16_value >> 0) & 0xFF);
         temporary[2] = ((node->specifics.nat16_value >> 8) & 0xFF);
         
@@ -297,11 +297,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case nat32_value_modern_node_type:
+    case modern_node_type_nat32_value:
     {
         uint8_t temporary[5];
         
-        temporary[0] = nat32_value_modern_node_type;
+        temporary[0] = modern_node_type_nat32_value;
         temporary[1] = ((node->specifics.nat32_value >> 0) & 0xFF);
         temporary[2] = ((node->specifics.nat32_value >> 8) & 0xFF);
         temporary[3] = ((node->specifics.nat32_value >> 16) & 0xFF);
@@ -314,11 +314,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case nat64_value_modern_node_type:
+    case modern_node_type_nat64_value:
     {
         uint8_t temporary[9];
         
-        temporary[0] = nat64_value_modern_node_type;
+        temporary[0] = modern_node_type_nat64_value;
         temporary[1] = ((node->specifics.nat64_value >> 0) & 0xFF);
         temporary[2] = ((node->specifics.nat64_value >> 8) & 0xFF);
         temporary[3] = ((node->specifics.nat64_value >> 16) & 0xFF);
@@ -335,11 +335,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case float32_value_modern_node_type:
+    case modern_node_type_float32_value:
     {
         uint8_t temporary[5];
         
-        temporary[0] = float32_value_modern_node_type;
+        temporary[0] = modern_node_type_float32_value;
         temporary[1] = 0x00;
         temporary[2] = 0x00;
         temporary[3] = 0x00;
@@ -376,11 +376,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case float64_value_modern_node_type:
+    case modern_node_type_float64_value:
     {
         uint8_t temporary[9];
         
-        temporary[0] = float64_value_modern_node_type;
+        temporary[0] = modern_node_type_float64_value;
         temporary[1] = 0x00;
         temporary[2] = 0x00;
         temporary[3] = 0x00;
@@ -425,11 +425,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case utf8_value_modern_node_type:
+    case modern_node_type_utf8_value:
     {
         uint8_t temporary[9];
         
-        temporary[0] = utf8_value_modern_node_type;
+        temporary[0] = modern_node_type_utf8_value;
         temporary[1] = ((node->specifics.utf8_value.bytes >> 0) & 0xFF);
         temporary[2] = ((node->specifics.utf8_value.bytes >> 8) & 0xFF);
         temporary[3] = ((node->specifics.utf8_value.bytes >> 16) & 0xFF);
@@ -451,11 +451,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case blob_value_modern_node_type:
+    case modern_node_type_blob_value:
     {
         uint8_t temporary[9];
         
-        temporary[0] = blob_value_modern_node_type;
+        temporary[0] = modern_node_type_blob_value;
         temporary[1] = ((node->specifics.blob_value.bytes >> 0) & 0xFF);
         temporary[2] = ((node->specifics.blob_value.bytes >> 8) & 0xFF);
         temporary[3] = ((node->specifics.blob_value.bytes >> 16) & 0xFF);
@@ -477,11 +477,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case sigma_value_modern_node_type:
+    case modern_node_type_sigma_value:
     {
         uint8_t temporary[1];
         
-        temporary[0] = sigma_value_modern_node_type;
+        temporary[0] = modern_node_type_sigma_value;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -498,11 +498,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case name_value_modern_node_type:
+    case modern_node_type_name_value:
     {
         uint8_t temporary[17];
         
-        temporary[0] = name_value_modern_node_type;
+        temporary[0] = modern_node_type_name_value;
         temporary[1] = ((node->specifics.name_value.hash.a >> 0) & 0xFF);
         temporary[2] = ((node->specifics.name_value.hash.a >> 8) & 0xFF);
         temporary[3] = ((node->specifics.name_value.hash.a >> 16) & 0xFF);
@@ -527,11 +527,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case named_value_modern_node_type:
+    case modern_node_type_named_value:
     {
         uint8_t temporary[1];
         
-        temporary[0] = named_value_modern_node_type;
+        temporary[0] = modern_node_type_named_value;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -544,11 +544,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case bool_type_modern_node_type:
+    case modern_node_type_bool_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = bool_type_modern_node_type;
+        temporary[0] = modern_node_type_bool_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -557,11 +557,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case ordering_type_modern_node_type:
+    case modern_node_type_ordering_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = ordering_type_modern_node_type;
+        temporary[0] = modern_node_type_ordering_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -570,11 +570,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case maybe_type_modern_node_type:
+    case modern_node_type_maybe_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = maybe_type_modern_node_type;
+        temporary[0] = modern_node_type_maybe_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -587,11 +587,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case int8_type_modern_node_type:
+    case modern_node_type_int8_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = int8_type_modern_node_type;
+        temporary[0] = modern_node_type_int8_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -600,11 +600,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case int16_type_modern_node_type:
+    case modern_node_type_int16_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = int16_type_modern_node_type;
+        temporary[0] = modern_node_type_int16_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -613,11 +613,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case int32_type_modern_node_type:
+    case modern_node_type_int32_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = int32_type_modern_node_type;
+        temporary[0] = modern_node_type_int32_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -626,11 +626,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case int64_type_modern_node_type:
+    case modern_node_type_int64_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = int64_type_modern_node_type;
+        temporary[0] = modern_node_type_int64_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -639,11 +639,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case nat8_type_modern_node_type:
+    case modern_node_type_nat8_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = nat8_type_modern_node_type;
+        temporary[0] = modern_node_type_nat8_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -652,11 +652,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case nat16_type_modern_node_type:
+    case modern_node_type_nat16_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = nat16_type_modern_node_type;
+        temporary[0] = modern_node_type_nat16_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -665,11 +665,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case nat32_type_modern_node_type:
+    case modern_node_type_nat32_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = nat32_type_modern_node_type;
+        temporary[0] = modern_node_type_nat32_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -678,11 +678,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case nat64_type_modern_node_type:
+    case modern_node_type_nat64_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = nat64_type_modern_node_type;
+        temporary[0] = modern_node_type_nat64_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -691,11 +691,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case float32_type_modern_node_type:
+    case modern_node_type_float32_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = float32_type_modern_node_type;
+        temporary[0] = modern_node_type_float32_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -704,11 +704,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case float64_type_modern_node_type:
+    case modern_node_type_float64_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = float64_type_modern_node_type;
+        temporary[0] = modern_node_type_float64_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -717,11 +717,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case utf8_type_modern_node_type:
+    case modern_node_type_utf8_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = utf8_type_modern_node_type;
+        temporary[0] = modern_node_type_utf8_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -730,11 +730,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case blob_type_modern_node_type:
+    case modern_node_type_blob_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = blob_type_modern_node_type;
+        temporary[0] = modern_node_type_blob_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -743,11 +743,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case function_type_modern_node_type:
+    case modern_node_type_function_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = function_type_modern_node_type;
+        temporary[0] = modern_node_type_function_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -764,11 +764,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case sigma_type_modern_node_type:
+    case modern_node_type_sigma_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = sigma_type_modern_node_type;
+        temporary[0] = modern_node_type_sigma_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -785,11 +785,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case name_type_modern_node_type:
+    case modern_node_type_name_type:
     {
         uint8_t temporary[1];
         
-        temporary[0] = name_type_modern_node_type;
+        temporary[0] = modern_node_type_name_type;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -798,11 +798,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case named_type_modern_node_type:
+    case modern_node_type_named_type:
     {
         uint8_t temporary[17];
         
-        temporary[0] = named_type_modern_node_type;
+        temporary[0] = modern_node_type_named_type;
         temporary[1] = ((node->specifics.named_type.name.a >> 0) & 0xFF);
         temporary[2] = ((node->specifics.named_type.name.a >> 8) & 0xFF);
         temporary[3] = ((node->specifics.named_type.name.a >> 16) & 0xFF);
@@ -831,11 +831,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case universe_type_modern_node_type:
+    case modern_node_type_universe_type:
     {
         uint8_t temporary[9];
         
-        temporary[0] = universe_type_modern_node_type;
+        temporary[0] = modern_node_type_universe_type;
         temporary[1] = ((node->specifics.universe_type.level >> 0) & 0xFF);
         temporary[2] = ((node->specifics.universe_type.level >> 8) & 0xFF);
         temporary[3] = ((node->specifics.universe_type.level >> 16) & 0xFF);
@@ -852,11 +852,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case lambda_modern_node_type:
+    case modern_node_type_lambda:
     {
         uint8_t temporary[1];
         
-        temporary[0] = lambda_modern_node_type;
+        temporary[0] = modern_node_type_lambda;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -869,11 +869,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case apply_modern_node_type:
+    case modern_node_type_apply:
     {
         uint8_t temporary[1];
         
-        temporary[0] = apply_modern_node_type;
+        temporary[0] = modern_node_type_apply;
         
         if(!helper_byte_buffer_append(library, canonical_form, temporary,
                                       sizeof(temporary)))
@@ -890,11 +890,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case type_family_modern_node_type:
+    case modern_node_type_type_family:
     {
         uint8_t temporary[9];
         
-        temporary[0] = type_family_modern_node_type;
+        temporary[0] = modern_node_type_type_family;
         temporary[1] = ((node->specifics.type_family.n_items >> 0) & 0xFF);
         temporary[2] = ((node->specifics.type_family.n_items >> 8) & 0xFF);
         temporary[3] = ((node->specifics.type_family.n_items >> 16) & 0xFF);
@@ -917,11 +917,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case let_modern_node_type:
+    case modern_node_type_let:
     {
         uint8_t temporary[9];
         
-        temporary[0] = let_modern_node_type;
+        temporary[0] = modern_node_type_let;
         temporary[1] = ((node->specifics.let.n_items >> 0) & 0xFF);
         temporary[2] = ((node->specifics.let.n_items >> 8) & 0xFF);
         temporary[3] = ((node->specifics.let.n_items >> 16) & 0xFF);
@@ -948,11 +948,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
         
-    case backreference_modern_node_type:
+    case modern_node_type_backreference:
     {
         uint8_t temporary[9];
         
-        temporary[0] = backreference_modern_node_type;
+        temporary[0] = modern_node_type_backreference;
         temporary[1] = ((node->specifics.backreference.index >> 0) & 0xFF);
         temporary[2] = ((node->specifics.backreference.index >> 8) & 0xFF);
         temporary[3] = ((node->specifics.backreference.index >> 16) & 0xFF);
@@ -969,11 +969,11 @@ HELPER int helper_visit_node_top_level
         return 1;
     }
     
-    case builtin_modern_node_type:
+    case modern_node_type_builtin:
     {
         uint8_t temporary[3];
         
-        temporary[0] = builtin_modern_node_type;
+        temporary[0] = modern_node_type_builtin;
         temporary[1] = ((node->specifics.builtin >> 0) & 0xFF);
         temporary[2] = ((node->specifics.builtin >> 8) & 0xFF);
         
@@ -1025,12 +1025,18 @@ HELPER int helper_visit_node_interior
 }
 
 
-int modern_node_canonical_hash
+INTERNAL int modern_node_canonical_hash
   (modern_library *library_in,
    modern *value_in,
    struct modern_hash *out)
 {
     struct modern_library *library = (struct modern_library *) library_in;
+    
+    if(!library->node) {
+        library->error_handler->modern_error_handler_usage(library->client_state);
+        return 0;
+    }
+    
     struct modern *value = (struct modern *) value_in;
     
     if(!value->canonical_hash_valid) {

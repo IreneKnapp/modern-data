@@ -234,7 +234,7 @@ HELPER struct modern *helper_evaluate_application
     
     while(parameter_stack) {
         struct helper_parameter_stack_frame *frame = parameter_stack;
-        intermediate_result = modern_node_make_apply
+        intermediate_result = library->node->modern_node_apply_make
             (library, intermediate_result, frame->parameter);
         parameter_stack = frame->parent;
         helper_free_parameter_stack_frame(library, frame);        

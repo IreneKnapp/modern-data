@@ -58,21 +58,24 @@ int main(int argc, char **argv) {
     allocator.modern_allocator_realloc =
         (void *(*)(void *, void *, size_t)) allocator_realloc;
     
+    struct modern_node *node = modern_node_make(&allocator);
+    
     modern_library *library = modern_library_initialize
         (&error_handler,
          &allocator,
+         node,
          (void (*)(void *)) library_finalizer,
          NULL);
     
     size_t all_nodes_count = 0;
     modern **all_nodes[1024];
     
-    modern *float32_node = modern_node_make_float32(library, 12.13);
+    modern *float32_node = node->modern_node_float32_make(library, 12.13);
     all_nodes[all_nodes_count++] = float32_node;
     
     for(size_t i = 0; i < all_nodes_count; i++) {
-        struct modern_hash hash;
-        modern_node_canonical_hash(library, all_nodes[i], &hash);
+        struct modern_hash hash =
+            node->modern_node_canonical_hash_get(library, all_nodes[i]);
         printf("%016llx%016llx\n",
                (unsigned long long) hash.a,
                (unsigned long long) hash.b);

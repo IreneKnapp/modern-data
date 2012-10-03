@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SearchIndexes Version="1.0">
     <Documents>
-        <Document ID="2269">
-            <Title>Semantics</Title>
+        <Document ID="1958">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_compare_int8 = 160</Text>
         </Document>
         <Document ID="3655">
             <Title>Semantics</Title>
@@ -555,6 +556,13 @@ modern_hash_initial_namespace_compute
             <Title>Synopsis</Title>
             <Text>modern_node_type_int16_value = 9</Text>
         </Document>
+        <Document ID="4240">
+            <Title>Synopsis</Title>
+            <Text>void
+modern_library_node_set
+(modern_library *library,
+ struct modern_node *node);</Text>
+        </Document>
         <Document ID="3200">
             <Title>modern_builtin_identifier_square_root_float64</Title>
         </Document>
@@ -599,6 +607,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_node_type_int32_value = 10</Text>
         </Document>
+        <Document ID="4241">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="3930">
             <Title>Maybe value</Title>
         </Document>
@@ -637,6 +648,9 @@ modern_stream_documentation_make
         </Document>
         <Document ID="356">
             <Title>modern_node_function_type_left_get</Title>
+        </Document>
+        <Document ID="4242">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3931">
             <Title>modern_builtin_identifier_maybe_is_just</Title>
@@ -7495,14 +7509,14 @@ Value type (detailed notation)</Text>
         <Document ID="16">
             <Title>modern_stream_type_magic_number</Title>
         </Document>
+        <Document ID="4235">
+            <Title>modern_library_node_get</Title>
+        </Document>
         <Document ID="1820">
             <Title>Parameters</Title>
         </Document>
         <Document ID="2860">
             <Title>or_bool</Title>
-        </Document>
-        <Document ID="544">
-            <Title>modern_builtin_identifier_arccosine_float64</Title>
         </Document>
         <Document ID="3579">
             <Title>Semantics</Title>
@@ -7522,8 +7536,8 @@ Value type (detailed notation)</Text>
  void *stream_state,
  uint64_t index);</Text>
         </Document>
-        <Document ID="4235">
-            <Title>modern_library_node_get</Title>
+        <Document ID="544">
+            <Title>modern_builtin_identifier_arccosine_float64</Title>
         </Document>
         <Document ID="545">
             <Title>modern_builtin_identifier_arctangent_float32</Title>
@@ -7540,6 +7554,12 @@ Value type (detailed notation)</Text>
         <Document ID="3925">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4236">
+            <Title>Synopsis</Title>
+            <Text>struct modern_node *
+modern_library_node_get
+(modern_library *library);</Text>
+        </Document>
         <Document ID="1821">
             <Title>Semantics</Title>
         </Document>
@@ -7554,12 +7574,6 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="546">
             <Title>modern_builtin_identifier_arctangent_float64</Title>
-        </Document>
-        <Document ID="4236">
-            <Title>Synopsis</Title>
-            <Text>struct modern_node *
-modern_library_node_get
-(modern_library *library);</Text>
         </Document>
         <Document ID="1476">
             <Title>Synopsis</Title>
@@ -7589,14 +7603,14 @@ Value type (detailed notation)</Text>
         <Document ID="3926">
             <Title>Named value</Title>
         </Document>
+        <Document ID="4237">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="1822">
             <Title>Parameters</Title>
         </Document>
         <Document ID="2862">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="4237">
-            <Title>Parameters</Title>
         </Document>
         <Document ID="548">
             <Title>modern_builtin_identifier_arctangent_fraction_float64</Title>
@@ -7632,11 +7646,11 @@ modern_retain
 (modern_library *library,
  void *retainable);</Text>
         </Document>
-        <Document ID="1823">
+        <Document ID="4238">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2863">
-            <Title>not_bool</Title>
+        <Document ID="1823">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="301">
             <Title>Caveats</Title>
@@ -7658,8 +7672,8 @@ Although many functional languages are additionally "purely functional", meaning
 
 Of course, it is expected that sets of types for some particular purpose will be constructed in most situations not through imperative code but through the use of an interactive editor having Modern Data as its native format.  The ease with which what would be called a schema in other systems can be serialized and deserialized obviates the need to construct one by hand, most of the time.  As such, the details discussed above should seldom be an issue.</Text>
         </Document>
-        <Document ID="4238">
-            <Title>Semantics</Title>
+        <Document ID="2863">
+            <Title>not_bool</Title>
         </Document>
         <Document ID="1478">
             <Title>Synopsis</Title>
@@ -7707,6 +7721,9 @@ Value type (abstract notation)
 bool -> bool
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4239">
+            <Title>modern_library_node_set</Title>
         </Document>
         <Document ID="303">
             <Title>modern_evaluate</Title>
@@ -12918,7 +12935,7 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>struct modern_node *
 modern_node_make
-(modern_library *library);</Text>
+(struct modern_library *library);</Text>
         </Document>
         <Document ID="310">
             <Title>modern_stream_let_is_next</Title>
@@ -16730,15 +16747,14 @@ nat16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2269">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2998">
             <Title>modern_builtin_identifier_subtract_float32</Title>
         </Document>
         <Document ID="1229">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="1958">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_compare_int8 = 160</Text>
         </Document>
         <Document ID="631">
             <Title>modern_builtin_identifier_ceiling_float32_int64</Title>
