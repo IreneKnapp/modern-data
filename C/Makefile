@@ -2,13 +2,13 @@ CC=clang
 CFLAGS=-g -O0
 OBJECTS=context.o \
         evaluation.o \
-		hash.o \
-		library.o \
-		memory.o \
-		node-canonical.o \
-		node-get.o \
-		node-make.o \
-		predefined.o
+        hash.o \
+        library.o \
+        memory.o \
+        node-canonical.o \
+        node-get.o \
+        node-make.o \
+        predefined.o
 INCLUDES=modern.h internal.h
 
 default: example-canonical
@@ -69,3 +69,4 @@ example-canonical: ${OBJECTS} example-canonical.o
 	${CC} ${CFLAGS} ${OBJECTS} example-canonical.o -o example-canonical
 
 .dummy: default all
+
