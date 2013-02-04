@@ -1458,4 +1458,6 @@ extern struct modern_stream *modern_stream_documentation_make
   (modern_library *library);
 
 extern struct modern_node *modern_node_make
-  (struct modern_library *library);
+  (struct modern_allocator *allocator,
+   void *client_state);
+
