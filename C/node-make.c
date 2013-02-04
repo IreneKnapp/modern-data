@@ -776,7 +776,7 @@ HELPER void helper_finalize_ordering_type
 INTERNAL modern *modern_node_make_maybe_type
     (modern_library *library_in,
      modern *content_type)
- {
+{
     struct modern_library *library = (struct modern_library *) library_in;
     
     if(!content_type) {
