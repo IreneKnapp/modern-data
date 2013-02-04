@@ -3,11 +3,6 @@
 #include "internal.h"
 
 
-INTERNAL void internal_context_finalizer
-  (struct modern_library *library,
-   void *context);
-
-
 modern_context *modern_make_initial_context
   (modern_library *library_in)
 {
