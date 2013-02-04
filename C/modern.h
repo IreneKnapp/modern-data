@@ -1266,24 +1266,24 @@ struct modern_node {
        void *value,
        void *right);
     void 
-      (*modern_node_set_type_family_item_add)
+      (*modern_node_type_family_item_add)
       (modern_library *library,
        void *value,
        void *item,
        uint64_t index);
     void 
-      (*modern_node_set_type_family_item_remove)
+      (*modern_node_type_family_item_remove)
       (modern_library *library,
        void *value,
        uint64_t index);
     void 
-      (*modern_node_set_let_item_add)
+      (*modern_node_let_item_add)
       (modern_library *library,
        void *value,
        void *item,
        uint64_t index);
     void 
-      (*modern_node_set_let_item_remove)
+      (*modern_node_let_item_remove)
       (modern_library *library,
        void *value,
        uint64_t index);

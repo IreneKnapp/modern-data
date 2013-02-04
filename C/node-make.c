@@ -86,7 +86,7 @@ HELPER void helper_finalize_builtin
   (struct modern_library *library, void *retainable);
 
 
-INTERNAL modern *modern_node_make_int8
+INTERNAL modern *default_modern_node_make_int8
     (modern_library *library_in,
      int8_t value)
 {
@@ -123,7 +123,7 @@ HELPER void helper_finalize_int8
 }
 
 
-INTERNAL modern *modern_node_make_int16
+INTERNAL modern *default_modern_node_make_int16
     (modern_library *library_in,
      int16_t value)
 {
@@ -160,7 +160,7 @@ HELPER void helper_finalize_int16
 }
 
 
-INTERNAL modern *modern_node_make_int32
+INTERNAL modern *default_modern_node_make_int32
     (modern_library *library_in,
      int32_t value)
 {
@@ -197,7 +197,7 @@ HELPER void helper_finalize_int32
 }
 
 
-INTERNAL modern *modern_node_make_int64
+INTERNAL modern *default_modern_node_make_int64
     (modern_library *library_in,
      int64_t value)
 {
@@ -234,7 +234,7 @@ HELPER void helper_finalize_int64
 }
 
 
-INTERNAL modern *modern_node_make_nat8
+INTERNAL modern *default_modern_node_make_nat8
     (modern_library *library_in,
      uint8_t value)
 {
@@ -271,7 +271,7 @@ HELPER void helper_finalize_nat8
 }
 
 
-INTERNAL modern *modern_node_make_nat16
+INTERNAL modern *default_modern_node_make_nat16
     (modern_library *library_in,
      uint16_t value)
 {
@@ -308,7 +308,7 @@ HELPER void helper_finalize_nat16
 }
 
 
-INTERNAL modern *modern_node_make_nat32
+INTERNAL modern *default_modern_node_make_nat32
     (modern_library *library_in,
      uint32_t value)
 {
@@ -345,7 +345,7 @@ HELPER void helper_finalize_nat32
 }
 
 
-INTERNAL modern *modern_node_make_nat64
+INTERNAL modern *default_modern_node_make_nat64
     (modern_library *library_in,
      uint64_t value)
 {
@@ -382,7 +382,7 @@ HELPER void helper_finalize_nat64
 }
 
 
-INTERNAL modern *modern_node_make_float32
+INTERNAL modern *default_modern_node_make_float32
     (modern_library *library_in,
      float value)
 {
@@ -439,7 +439,7 @@ HELPER void helper_finalize_float32
 }
 
 
-INTERNAL modern *modern_node_make_float64
+INTERNAL modern *default_modern_node_make_float64
     (modern_library *library_in,
      double value)
 {
@@ -496,7 +496,7 @@ HELPER void helper_finalize_float64
 }
 
 
-INTERNAL modern *modern_node_make_utf8
+INTERNAL modern *default_modern_node_make_utf8
     (modern_library *library_in,
      uint8_t *data)
 {
@@ -550,7 +550,7 @@ HELPER void helper_finalize_utf8
 }
 
 
-INTERNAL modern *modern_node_make_blob
+INTERNAL modern *default_modern_node_make_blob
     (modern_library *library_in,
      uint8_t *data, size_t bytes)
 {
@@ -603,7 +603,7 @@ HELPER void helper_finalize_blob
 }
 
 
-INTERNAL modern *modern_node_make_sigma
+INTERNAL modern *default_modern_node_make_sigma
     (modern_library *library_in,
      modern *type_in,
      modern *field_value_in,
@@ -659,7 +659,7 @@ HELPER void helper_finalize_sigma_value
 }
 
 
-INTERNAL modern *modern_node_make_named_value
+INTERNAL modern *default_modern_node_make_named_value
     (modern_library *library_in,
      modern *type_in, modern *value_in)
 {
@@ -703,7 +703,7 @@ HELPER void helper_finalize_named_value
 }
 
 
-INTERNAL modern *modern_node_make_bool_type
+INTERNAL modern *default_modern_node_make_bool_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -738,7 +738,7 @@ HELPER void helper_finalize_bool_type
 }
 
 
-INTERNAL modern *modern_node_make_ordering_type
+INTERNAL modern *default_modern_node_make_ordering_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -773,7 +773,7 @@ HELPER void helper_finalize_ordering_type
 }
 
 
-INTERNAL modern *modern_node_make_maybe_type
+INTERNAL modern *default_modern_node_make_maybe_type
     (modern_library *library_in,
      modern *content_type)
 {
@@ -819,7 +819,7 @@ HELPER void helper_finalize_maybe_type
 }
 
 
-INTERNAL modern *modern_node_make_int8_type
+INTERNAL modern *default_modern_node_make_int8_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -854,7 +854,7 @@ HELPER void helper_finalize_int8_type
 }
 
 
-INTERNAL modern *modern_node_make_int16_type
+INTERNAL modern *default_modern_node_make_int16_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -889,7 +889,7 @@ HELPER void helper_finalize_int16_type
 }
 
 
-INTERNAL modern *modern_node_make_int32_type
+INTERNAL modern *default_modern_node_make_int32_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -924,7 +924,7 @@ HELPER void helper_finalize_int32_type
 }
 
 
-INTERNAL modern *modern_node_make_int64_type
+INTERNAL modern *default_modern_node_make_int64_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -959,7 +959,7 @@ HELPER void helper_finalize_int64_type
 }
 
 
-INTERNAL modern *modern_node_make_nat8_type
+INTERNAL modern *default_modern_node_make_nat8_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -994,7 +994,7 @@ HELPER void helper_finalize_nat8_type
 }
 
 
-INTERNAL modern *modern_node_make_nat16_type
+INTERNAL modern *default_modern_node_make_nat16_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1029,7 +1029,7 @@ HELPER void helper_finalize_nat16_type
 }
 
 
-INTERNAL modern *modern_node_make_nat32_type
+INTERNAL modern *default_modern_node_make_nat32_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1064,7 +1064,7 @@ HELPER void helper_finalize_nat32_type
 }
 
 
-INTERNAL modern *modern_node_make_nat64_type
+INTERNAL modern *default_modern_node_make_nat64_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1099,7 +1099,7 @@ HELPER void helper_finalize_nat64_type
 }
 
 
-INTERNAL modern *modern_node_make_float32_type
+INTERNAL modern *default_modern_node_make_float32_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1134,7 +1134,7 @@ HELPER void helper_finalize_float32_type
 }
 
 
-INTERNAL modern *modern_node_make_float64_type
+INTERNAL modern *default_modern_node_make_float64_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1169,7 +1169,7 @@ HELPER void helper_finalize_float64_type
 }
 
 
-INTERNAL modern *modern_node_make_utf8_type
+INTERNAL modern *default_modern_node_make_utf8_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1204,7 +1204,7 @@ HELPER void helper_finalize_utf8_type
 }
 
 
-INTERNAL modern *modern_node_make_blob_type
+INTERNAL modern *default_modern_node_make_blob_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1239,7 +1239,7 @@ HELPER void helper_finalize_blob_type
 }
 
 
-INTERNAL modern *modern_node_make_function_type
+INTERNAL modern *default_modern_node_make_function_type
     (modern_library *library_in,
      modern *left_in, modern *right_in)
 {
@@ -1286,7 +1286,7 @@ HELPER void helper_finalize_function_type
 }
 
 
-INTERNAL modern *modern_node_make_sigma_type
+INTERNAL modern *default_modern_node_make_sigma_type
     (modern_library *library_in,
      modern *field_type, modern *successor)
 {
@@ -1331,7 +1331,7 @@ HELPER void helper_finalize_sigma_type
 }
 
 
-INTERNAL modern *modern_node_make_name_type
+INTERNAL modern *default_modern_node_make_name_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1366,7 +1366,7 @@ HELPER void helper_finalize_name_type
 }
 
 
-INTERNAL modern *modern_node_make_named_type
+INTERNAL modern *default_modern_node_make_named_type
     (modern_library *library_in,
      struct modern_hash name, modern *content_type)
 {
@@ -1406,7 +1406,7 @@ HELPER void helper_finalize_named_type
 }
 
 
-INTERNAL modern *modern_node_make_universe_type
+INTERNAL modern *default_modern_node_make_universe_type
     (modern_library *library_in,
      uint64_t level)
 {
@@ -1443,7 +1443,7 @@ HELPER void helper_finalize_universe_type
 }
 
 
-INTERNAL modern *modern_node_make_lambda
+INTERNAL modern *default_modern_node_make_lambda
     (modern_library *library_in,
      modern *content_in)
 {
@@ -1483,7 +1483,7 @@ HELPER void helper_finalize_lambda
 }
 
 
-INTERNAL modern *modern_node_make_apply
+INTERNAL modern *default_modern_node_make_apply
     (modern_library *library_in,
      modern *left_in, modern *right_in)
 {
@@ -1526,7 +1526,7 @@ HELPER void helper_finalize_apply
 }
 
 
-INTERNAL modern *modern_node_make_type_family
+INTERNAL modern *default_modern_node_make_type_family
     (modern_library *library_in,
      uint64_t n_items, modern **types_in)
 {
@@ -1587,7 +1587,7 @@ HELPER void helper_finalize_type_family
 }
 
 
-INTERNAL modern *modern_node_make_let
+INTERNAL modern *default_modern_node_make_let
     (modern_library *library_in,
      uint64_t n_items, modern **values_in, modern *content_in)
 {
@@ -1653,7 +1653,7 @@ HELPER void helper_finalize_let
 }
 
 
-INTERNAL modern *modern_node_make_backreference
+INTERNAL modern *default_modern_node_make_backreference
     (modern_library *library_in,
      uint64_t index)
 {
@@ -1690,7 +1690,7 @@ HELPER void helper_finalize_backreference
 }
 
 
-INTERNAL modern *modern_node_make_builtin
+INTERNAL modern *default_modern_node_make_builtin
     (modern_library *library_in,
      uint16_t identifier)
 {
