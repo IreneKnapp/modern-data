@@ -1,0 +1,4 @@
+Write up in the docs:
+
+Type families vs. lets.
+
