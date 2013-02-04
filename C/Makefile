@@ -8,6 +8,7 @@ OBJECTS=context.o \
         node-canonical.o \
         node-get.o \
         node-make.o \
+        node-set.o \
         predefined.o
 INCLUDES=modern.h internal.h
 
@@ -37,6 +38,9 @@ node-get.o: node-get.c ${INCLUDES}
 
 node-make.o: node-make.c ${INCLUDES}
 	${CC} ${CFLAGS} -c node-make.c -o node-make.o
+
+node-set.o: node-set.c ${INCLUDES}
+	${CC} ${CFLAGS} -c node-set.c -o node-set.o
 
 predefined.o: predefined.c ${INCLUDES}
 	${CC} ${CFLAGS} -c predefined.c -o predefined.o
