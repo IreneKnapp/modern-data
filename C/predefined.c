@@ -4,14 +4,451 @@
 #include "internal.h"
 
 
-INTERNAL struct modern_node *modern_node_make
-    (struct modern_allocator *allocator)
+HELPER void helper_finalize_int8
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_int16
+    (modern_library *library_in,
+     int16_t value);
+HELPER void helper_finalize_int16
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_int32
+    (modern_library *library_in,
+     int32_t value);
+HELPER void helper_finalize_int32
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_int64
+    (modern_library *library_in,
+     int64_t value);
+HELPER void helper_finalize_int64
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_nat8
+    (modern_library *library_in,
+     uint8_t value);
+HELPER void helper_finalize_nat8
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_nat16
+    (modern_library *library_in,
+     uint16_t value);
+HELPER void helper_finalize_nat16
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_nat32
+    (modern_library *library_in,
+     uint32_t value);
+HELPER void helper_finalize_nat32
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_nat64
+    (modern_library *library_in,
+     uint64_t value);
+HELPER void helper_finalize_nat64
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_float32
+    (modern_library *library_in,
+     float value);
+HELPER void helper_finalize_float32
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_float64
+    (modern_library *library_in,
+     double value);
+HELPER void helper_finalize_float64
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_utf8
+    (modern_library *library_in,
+     uint8_t *data);
+HELPER void helper_finalize_utf8
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_blob
+    (modern_library *library_in,
+     uint8_t *data, size_t bytes);
+HELPER void helper_finalize_blob
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_sigma
+    (modern_library *library_in,
+     modern *type_in,
+     modern *field_value_in,
+     modern *successor_in);
+HELPER void helper_finalize_sigma_value
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_named_value
+    (modern_library *library_in,
+     modern *type_in, modern *value_in);
+HELPER void helper_finalize_named_value
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_bool_type
+    (modern_library *library_in);
+HELPER void helper_finalize_bool_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_ordering_type
+    (modern_library *library_in);
+HELPER void helper_finalize_ordering_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_maybe_type
+    (modern_library *library_in,
+     modern *content_type);
+HELPER void helper_finalize_maybe_type
+  (struct modern_library *library, void *retainable);
+HELPER void helper_finalize_maybe_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_int8_type
+    (modern_library *library_in);
+HELPER void helper_finalize_int8_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_int16_type
+    (modern_library *library_in);
+HELPER void helper_finalize_int16_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_int32_type
+    (modern_library *library_in);
+HELPER void helper_finalize_int32_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_int64_type
+    (modern_library *library_in);
+HELPER void helper_finalize_int64_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_nat8_type
+    (modern_library *library_in);
+HELPER void helper_finalize_nat8_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_nat16_type
+    (modern_library *library_in);
+HELPER void helper_finalize_nat16_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_nat32_type
+    (modern_library *library_in);
+HELPER void helper_finalize_nat32_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_nat64_type
+    (modern_library *library_in);
+HELPER void helper_finalize_nat64_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_float32_type
+    (modern_library *library_in);
+HELPER void helper_finalize_float32_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_float64_type
+    (modern_library *library_in);
+HELPER void helper_finalize_float64_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_utf8_type
+    (modern_library *library_in);
+HELPER void helper_finalize_utf8_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_blob_type
+    (modern_library *library_in);
+HELPER void helper_finalize_blob_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_function_type
+    (modern_library *library_in,
+     modern *left_in, modern *right_in);
+HELPER void helper_finalize_function_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_sigma_type
+    (modern_library *library_in,
+     modern *field_type, modern *successor);
+HELPER void helper_finalize_sigma_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_name_type
+    (modern_library *library_in);
+HELPER void helper_finalize_name_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_named_type
+    (modern_library *library_in,
+     struct modern_hash name, modern *content_type);
+HELPER void helper_finalize_named_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_universe_type
+    (modern_library *library_in,
+     uint64_t level);
+HELPER void helper_finalize_universe_type
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_lambda
+    (modern_library *library_in,
+     modern *content_in);
+HELPER void helper_finalize_lambda
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_apply
+    (modern_library *library_in,
+     modern *left_in, modern *right_in);
+HELPER void helper_finalize_apply
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_type_family
+    (modern_library *library_in,
+     uint64_t n_items, modern **types_in);
+HELPER void helper_finalize_type_family
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_let
+    (modern_library *library_in,
+     uint64_t n_items, modern **values_in, modern *content_in);
+HELPER void helper_finalize_let
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_backreference
+    (modern_library *library_in,
+     uint64_t index);
+HELPER void helper_finalize_backreference
+  (struct modern_library *library, void *retainable);
+HELPER modern *modern_node_make_builtin
+    (modern_library *library_in,
+     uint16_t identifier);
+HELPER void helper_finalize_builtin
+  (struct modern_library *library, void *retainable);
+
+
+struct modern_node *modern_node_make
+  (struct modern_allocator *allocator,
+   void *client_state)
 {
     struct modern_node *result =
         allocator->modern_allocator_alloc
-            (library->client_state, result_size);
+            (client_state, sizeof(struct modern_node));
+    if(!result) return NULL;
     
-    // TODO
+    result->modern_node_node_type_get =
+        modern_node_node_type_get;
+    result->modern_node_value_type_get =
+        modern_node_value_type_get;
+    result->modern_node_mutable_get =
+        modern_node_mutable_get;
+    result->modern_node_canonical_hash_get =
+        modern_node_canonical_hash_get;
+    result->modern_node_maybe_just_content_get =
+        modern_node_maybe_just_content_get;
+    result->modern_node_int8_get =
+        modern_node_int8_get;
+    result->modern_node_int16_get =
+        modern_node_int16_get;
+    result->modern_node_int32_get =
+        modern_node_int32_get;
+    result->modern_node_int64_get =
+        modern_node_int64_get;
+    result->modern_node_nat8_get =
+        modern_node_nat8_get;
+    result->modern_node_nat16_get =
+        modern_node_nat16_get;
+    result->modern_node_nat32_get =
+        modern_node_nat32_get;
+    result->modern_node_nat64_get =
+        modern_node_nat64_get;
+    result->modern_node_float32_get =
+        modern_node_float32_get;
+    result->modern_node_float64_get =
+        modern_node_float64_get;
+    result->modern_node_utf8_bytes_get =
+        modern_node_utf8_bytes_get;
+    result->modern_node_utf8_data_piece_get =
+        modern_node_utf8_data_piece_get;
+    result->modern_node_blob_bytes_get =
+        modern_node_blob_bytes_get;
+    result->modern_node_blob_data_piece_get =
+        modern_node_blob_data_piece_get;
+    result->modern_node_sigma_field_value_get =
+        modern_node_sigma_field_value_get;
+    result->modern_node_sigma_successor_get =
+        modern_node_sigma_successor_get;
+    result->modern_node_get_name_hash =
+        modern_node_get_name_hash;
+    result->modern_node_named_value_get =
+        modern_node_named_value_get;
+    result->modern_node_maybe_type_content_type_get =
+        modern_node_maybe_type_content_type_get;
+    result->modern_node_function_type_left_get =
+        modern_node_function_type_left_get;
+    result->modern_node_function_type_right_get =
+        modern_node_function_type_right_get;
+    result->modern_node_sigma_type_field_type_get =
+        modern_node_sigma_type_field_type_get;
+    result->modern_node_sigma_type_successor_get =
+        modern_node_sigma_type_successor_get;
+    result->modern_node_named_type_name_get =
+        modern_node_named_type_name_get;
+    result->modern_node_named_type_content_type_get =
+        modern_node_named_type_content_type_get;
+    result->modern_node_universe_type_level_get =
+        modern_node_universe_type_level_get;
+    result->modern_node_lambda_content_get =
+        modern_node_lambda_content_get;
+    result->modern_node_apply_left_get =
+        modern_node_apply_left_get;
+    result->modern_node_apply_right_get =
+        modern_node_apply_right_get;
+    result->modern_node_type_family_count_get =
+        modern_node_type_family_count_get;
+    result->modern_node_type_family_item_get =
+        modern_node_type_family_item_get;
+    result->modern_node_let_count_get =
+        modern_node_let_count_get;
+    result->modern_node_let_item_get =
+        modern_node_let_item_get;
+    result->modern_node_let_content_get =
+        modern_node_let_content_get;
+    result->modern_node_backreference_index_get =
+        modern_node_backreference_index_get;
+    result->modern_node_builtin_identifier_get =
+        modern_node_builtin_identifier_get;
+    result->modern_node_bool_false_make =
+        modern_node_bool_false_make;
+    result->modern_node_bool_true_make =
+        modern_node_bool_true_make;
+    result->modern_node_ordering_less_make =
+        modern_node_ordering_less_make;
+    result->modern_node_ordering_equal_make =
+        modern_node_ordering_equal_make;
+    result->modern_node_ordering_greater_make =
+        modern_node_ordering_greater_make;
+    result->modern_node_maybe_nothing_make =
+        modern_node_maybe_nothing_make;
+    result->modern_node_maybe_just_make =
+        modern_node_maybe_just_make;
+    result->modern_node_int8_make =
+        modern_node_int8_make;
+    result->modern_node_int16_make =
+        modern_node_int16_make;
+    result->modern_node_int32_make =
+        modern_node_int32_make;
+    result->modern_node_int64_make =
+        modern_node_int64_make;
+    result->modern_node_nat8_make =
+        modern_node_nat8_make;
+    result->modern_node_nat16_make =
+        modern_node_nat16_make;
+    result->modern_node_nat32_make =
+        modern_node_nat32_make;
+    result->modern_node_nat64_make =
+        modern_node_nat64_make;
+    result->modern_node_float32_make =
+        modern_node_float32_make;
+    result->modern_node_float64_make =
+        modern_node_float64_make;
+    result->modern_node_utf8_make =
+        modern_node_utf8_make;
+    result->modern_node_blob_make =
+        modern_node_blob_make;
+    result->modern_node_sigma_make =
+        modern_node_sigma_make;
+    result->modern_node_name_make =
+        modern_node_name_make;
+    result->modern_node_named_value_make =
+        modern_node_named_value_make;
+    result->modern_node_bool_type_make =
+        modern_node_bool_type_make;
+    result->modern_node_ordering_type_make =
+        modern_node_ordering_type_make;
+    result->modern_node_maybe_type_make =
+        modern_node_maybe_type_make;
+    result->modern_node_int8_type_make =
+        modern_node_int8_type_make;
+    result->modern_node_int16_type_make =
+        modern_node_int16_type_make;
+    result->modern_node_int32_type_make =
+        modern_node_int32_type_make;
+    result->modern_node_int64_type_make =
+        modern_node_int64_type_make;
+    result->modern_node_nat8_type_make =
+        modern_node_nat8_type_make;
+    result->modern_node_nat16_type_make =
+        modern_node_nat16_type_make;
+    result->modern_node_nat32_type_make =
+        modern_node_nat32_type_make;
+    result->modern_node_nat64_type_make =
+        modern_node_nat64_type_make;
+    result->modern_node_float32_type_make =
+        modern_node_float32_type_make;
+    result->modern_node_float64_type_make =
+        modern_node_float64_type_make;
+    result->modern_node_utf8_type_make =
+        modern_node_utf8_type_make;
+    result->modern_node_blob_type_make =
+        modern_node_blob_type_make;
+    result->modern_node_function_type_make =
+        modern_node_function_type_make;
+    result->modern_node_sigma_type_make =
+        modern_node_sigma_type_make;
+    result->modern_node_name_type_make =
+        modern_node_name_type_make;
+    result->modern_node_named_type_make =
+        modern_node_named_type_make;
+    result->modern_node_universe_type_make =
+        modern_node_universe_type_make;
+    result->modern_node_lambda_make =
+        modern_node_lambda_make;
+    result->modern_node_apply_make =
+        modern_node_apply_make;
+    result->modern_node_type_family_make =
+        modern_node_type_family_make;
+    result->modern_node_let_make =
+        modern_node_let_make;
+    result->modern_node_backreference_make =
+        modern_node_backreference_make;
+    result->modern_node_builtin_make =
+        modern_node_builtin_make;
+    result->modern_node_immutable_set =
+        modern_node_immutable_set;
+    result->modern_node_canonical_hash_set =
+        modern_node_canonical_hash_set;
+    result->modern_node_maybe_just_content_set =
+        modern_node_maybe_just_content_set;
+    result->modern_node_int8_set =
+        modern_node_int8_set;
+    result->modern_node_int16_set =
+        modern_node_int16_set;
+    result->modern_node_int32_set =
+        modern_node_int32_set;
+    result->modern_node_int64_set =
+        modern_node_int64_set;
+    result->modern_node_nat8_set =
+        modern_node_nat8_set;
+    result->modern_node_nat16_set =
+        modern_node_nat16_set;
+    result->modern_node_nat32_set =
+        modern_node_nat32_set;
+    result->modern_node_nat64_set =
+        modern_node_nat64_set;
+    result->modern_node_float32_set =
+        modern_node_float32_set;
+    result->modern_node_float64_set =
+        modern_node_float64_set;
+    result->modern_node_utf8_data_piece_set =
+        modern_node_utf8_data_piece_set;
+    result->modern_node_blob_data_piece_set =
+        modern_node_blob_data_piece_set;
+    result->modern_node_sigma_set =
+        modern_node_sigma_set;
+    result->modern_node_named_value_set =
+        modern_node_named_value_set;
+    result->modern_node_maybe_type_content_type_set =
+        modern_node_maybe_type_content_type_set;
+    result->modern_node_function_type_left_set =
+        modern_node_function_type_left_set;
+    result->modern_node_function_type_right_set =
+        modern_node_function_type_right_set;
+    result->modern_node_sigma_type_field_type_set =
+        modern_node_sigma_type_field_type_set;
+    result->modern_node_sigma_type_successor_set =
+        modern_node_sigma_type_successor_set;
+    result->modern_node_named_type_name_set =
+        modern_node_named_type_name_set;
+    result->modern_node_named_type_content_type_set =
+        modern_node_named_type_content_type_set;
+    result->modern_node_universe_type_level_set =
+        modern_node_universe_type_level_set;
+    result->modern_node_lambda_content_set =
+        modern_node_lambda_content_set;
+    result->modern_node_apply_left_set =
+        modern_node_apply_left_set;
+    result->modern_node_apply_right_set =
+        modern_node_apply_right_set;
+    result->modern_node_set_type_family_item_add =
+        modern_node_set_type_family_item_add;
+    result->modern_node_set_type_family_item_remove =
+        modern_node_set_type_family_item_remove;
+    result->modern_node_set_let_item_add =
+        modern_node_set_let_item_add;
+    result->modern_node_set_let_item_remove =
+        modern_node_set_let_item_remove;
+    result->modern_node_let_content_set =
+        modern_node_let_content_set;
+    result->modern_node_backreference_index_set =
+        modern_node_backreference_index_set;
+    result->modern_node_builtin_identifier_set =
+        modern_node_builtin_identifier_set;
     
     return result;
 }
@@ -26,7 +463,7 @@ HELPER void helper_finalize_int8
 }
 
 
-modern *modern_node_make_int16
+HELPER modern *modern_node_make_int16
     (modern_library *library_in,
      int16_t value)
 {
@@ -63,7 +500,7 @@ HELPER void helper_finalize_int16
 }
 
 
-modern *modern_node_make_int32
+HELPER modern *modern_node_make_int32
     (modern_library *library_in,
      int32_t value)
 {
@@ -100,7 +537,7 @@ HELPER void helper_finalize_int32
 }
 
 
-modern *modern_node_make_int64
+HELPER modern *modern_node_make_int64
     (modern_library *library_in,
      int64_t value)
 {
@@ -137,7 +574,7 @@ HELPER void helper_finalize_int64
 }
 
 
-modern *modern_node_make_nat8
+HELPER modern *modern_node_make_nat8
     (modern_library *library_in,
      uint8_t value)
 {
@@ -174,7 +611,7 @@ HELPER void helper_finalize_nat8
 }
 
 
-modern *modern_node_make_nat16
+HELPER modern *modern_node_make_nat16
     (modern_library *library_in,
      uint16_t value)
 {
@@ -211,7 +648,7 @@ HELPER void helper_finalize_nat16
 }
 
 
-modern *modern_node_make_nat32
+HELPER modern *modern_node_make_nat32
     (modern_library *library_in,
      uint32_t value)
 {
@@ -248,7 +685,7 @@ HELPER void helper_finalize_nat32
 }
 
 
-modern *modern_node_make_nat64
+HELPER modern *modern_node_make_nat64
     (modern_library *library_in,
      uint64_t value)
 {
@@ -285,7 +722,7 @@ HELPER void helper_finalize_nat64
 }
 
 
-modern *modern_node_make_float32
+HELPER modern *modern_node_make_float32
     (modern_library *library_in,
      float value)
 {
@@ -342,7 +779,7 @@ HELPER void helper_finalize_float32
 }
 
 
-modern *modern_node_make_float64
+HELPER modern *modern_node_make_float64
     (modern_library *library_in,
      double value)
 {
@@ -399,7 +836,7 @@ HELPER void helper_finalize_float64
 }
 
 
-modern *modern_node_make_utf8
+HELPER modern *modern_node_make_utf8
     (modern_library *library_in,
      uint8_t *data)
 {
@@ -453,7 +890,7 @@ HELPER void helper_finalize_utf8
 }
 
 
-modern *modern_node_make_blob
+HELPER modern *modern_node_make_blob
     (modern_library *library_in,
      uint8_t *data, size_t bytes)
 {
@@ -506,7 +943,7 @@ HELPER void helper_finalize_blob
 }
 
 
-modern *modern_node_make_sigma
+HELPER modern *modern_node_make_sigma
     (modern_library *library_in,
      modern *type_in,
      modern *field_value_in,
@@ -562,7 +999,7 @@ HELPER void helper_finalize_sigma_value
 }
 
 
-modern *modern_node_make_named_value
+HELPER modern *modern_node_make_named_value
     (modern_library *library_in,
      modern *type_in, modern *value_in)
 {
@@ -606,7 +1043,7 @@ HELPER void helper_finalize_named_value
 }
 
 
-modern *modern_node_make_bool_type
+HELPER modern *modern_node_make_bool_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -641,7 +1078,7 @@ HELPER void helper_finalize_bool_type
 }
 
 
-modern *modern_node_make_ordering_type
+HELPER modern *modern_node_make_ordering_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -676,10 +1113,10 @@ HELPER void helper_finalize_ordering_type
 }
 
 
-modern *modern_node_make_maybe_type
+HELPER modern *modern_node_make_maybe_type
     (modern_library *library_in,
      modern *content_type)
- {
+{
     struct modern_library *library = (struct modern_library *) library_in;
     
     if(!content_type) {
@@ -722,7 +1159,7 @@ HELPER void helper_finalize_maybe_type
 }
 
 
-modern *modern_node_make_int8_type
+HELPER modern *modern_node_make_int8_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -757,7 +1194,7 @@ HELPER void helper_finalize_int8_type
 }
 
 
-modern *modern_node_make_int16_type
+HELPER modern *modern_node_make_int16_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -792,7 +1229,7 @@ HELPER void helper_finalize_int16_type
 }
 
 
-modern *modern_node_make_int32_type
+HELPER modern *modern_node_make_int32_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -827,7 +1264,7 @@ HELPER void helper_finalize_int32_type
 }
 
 
-modern *modern_node_make_int64_type
+HELPER modern *modern_node_make_int64_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -862,7 +1299,7 @@ HELPER void helper_finalize_int64_type
 }
 
 
-modern *modern_node_make_nat8_type
+HELPER modern *modern_node_make_nat8_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -897,7 +1334,7 @@ HELPER void helper_finalize_nat8_type
 }
 
 
-modern *modern_node_make_nat16_type
+HELPER modern *modern_node_make_nat16_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -932,7 +1369,7 @@ HELPER void helper_finalize_nat16_type
 }
 
 
-modern *modern_node_make_nat32_type
+HELPER modern *modern_node_make_nat32_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -967,7 +1404,7 @@ HELPER void helper_finalize_nat32_type
 }
 
 
-modern *modern_node_make_nat64_type
+HELPER modern *modern_node_make_nat64_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1002,7 +1439,7 @@ HELPER void helper_finalize_nat64_type
 }
 
 
-modern *modern_node_make_float32_type
+HELPER modern *modern_node_make_float32_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1037,7 +1474,7 @@ HELPER void helper_finalize_float32_type
 }
 
 
-modern *modern_node_make_float64_type
+HELPER modern *modern_node_make_float64_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1072,7 +1509,7 @@ HELPER void helper_finalize_float64_type
 }
 
 
-modern *modern_node_make_utf8_type
+HELPER modern *modern_node_make_utf8_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1107,7 +1544,7 @@ HELPER void helper_finalize_utf8_type
 }
 
 
-modern *modern_node_make_blob_type
+HELPER modern *modern_node_make_blob_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1142,7 +1579,7 @@ HELPER void helper_finalize_blob_type
 }
 
 
-modern *modern_node_make_function_type
+HELPER modern *modern_node_make_function_type
     (modern_library *library_in,
      modern *left_in, modern *right_in)
 {
@@ -1189,7 +1626,7 @@ HELPER void helper_finalize_function_type
 }
 
 
-modern *modern_node_make_sigma_type
+HELPER modern *modern_node_make_sigma_type
     (modern_library *library_in,
      modern *field_type, modern *successor)
 {
@@ -1234,7 +1671,7 @@ HELPER void helper_finalize_sigma_type
 }
 
 
-modern *modern_node_make_name_type
+HELPER modern *modern_node_make_name_type
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1269,7 +1706,7 @@ HELPER void helper_finalize_name_type
 }
 
 
-modern *modern_node_make_named_type
+HELPER modern *modern_node_make_named_type
     (modern_library *library_in,
      struct modern_hash name, modern *content_type)
 {
@@ -1309,7 +1746,7 @@ HELPER void helper_finalize_named_type
 }
 
 
-modern *modern_node_make_universe_type
+HELPER modern *modern_node_make_universe_type
     (modern_library *library_in,
      uint64_t level)
 {
@@ -1346,7 +1783,7 @@ HELPER void helper_finalize_universe_type
 }
 
 
-modern *modern_node_make_lambda
+HELPER modern *modern_node_make_lambda
     (modern_library *library_in,
      modern *content_in)
 {
@@ -1386,7 +1823,7 @@ HELPER void helper_finalize_lambda
 }
 
 
-modern *modern_node_make_apply
+HELPER modern *modern_node_make_apply
     (modern_library *library_in,
      modern *left_in, modern *right_in)
 {
@@ -1429,7 +1866,7 @@ HELPER void helper_finalize_apply
 }
 
 
-modern *modern_node_make_type_family
+HELPER modern *modern_node_make_type_family
     (modern_library *library_in,
      uint64_t n_items, modern **types_in)
 {
@@ -1490,7 +1927,7 @@ HELPER void helper_finalize_type_family
 }
 
 
-modern *modern_node_make_let
+HELPER modern *modern_node_make_let
     (modern_library *library_in,
      uint64_t n_items, modern **values_in, modern *content_in)
 {
@@ -1556,7 +1993,7 @@ HELPER void helper_finalize_let
 }
 
 
-modern *modern_node_make_backreference
+HELPER modern *modern_node_make_backreference
     (modern_library *library_in,
      uint64_t index)
 {
@@ -1593,7 +2030,7 @@ HELPER void helper_finalize_backreference
 }
 
 
-modern *modern_node_make_builtin
+HELPER modern *modern_node_make_builtin
     (modern_library *library_in,
      uint16_t identifier)
 {
