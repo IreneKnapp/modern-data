@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SearchIndexes Version="1.0">
     <Documents>
-        <Document ID="1958">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_compare_int8 = 160</Text>
+        <Document ID="2998">
+            <Title>modern_builtin_identifier_subtract_float32</Title>
         </Document>
         <Document ID="3655">
             <Title>Semantics</Title>
@@ -7710,6 +7709,9 @@ Value type (detailed notation)</Text>
         <Document ID="1071">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="4239">
+            <Title>modern_library_node_set</Title>
+        </Document>
         <Document ID="1824">
             <Title>Parameters</Title>
         </Document>
@@ -7721,9 +7723,6 @@ Value type (abstract notation)
 bool -> bool
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="4239">
-            <Title>modern_library_node_set</Title>
         </Document>
         <Document ID="303">
             <Title>modern_evaluate</Title>
@@ -9637,7 +9636,7 @@ Value type (detailed notation)</Text>
         <Document ID="1289">
             <Title>Synopsis</Title>
             <Text>struct modern_hash *
-(*modern_node_get_name_hash)
+(*modern_node_name_value_hash_get)
 (modern_library *library,
  modern *value);</Text>
         </Document>
@@ -10715,7 +10714,7 @@ Value type (detailed notation)</Text>
             <Title>Parameters</Title>
         </Document>
         <Document ID="412">
-            <Title>modern_node_name_make</Title>
+            <Title>modern_node_name_value_make</Title>
         </Document>
         <Document ID="413">
             <Title>modern_node_name_type_make</Title>
@@ -12533,7 +12532,7 @@ Value type (detailed notation)</Text>
         <Document ID="1329">
             <Title>Synopsis</Title>
             <Text>modern *
-(*modern_node_name_make)
+(*modern_node_name_value_make)
 (modern_library *library,
  struct modern_hash *name);</Text>
         </Document>
@@ -15483,7 +15482,7 @@ modern_library_allocator_get
             <Title>Semantics</Title>
         </Document>
         <Document ID="946">
-            <Title>modern_node_get_name_hash</Title>
+            <Title>modern_node_name_value_hash_get</Title>
         </Document>
         <Document ID="4102">
             <Title>Synopsis</Title>
@@ -16750,11 +16749,12 @@ Value type (detailed notation)</Text>
         <Document ID="2269">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2998">
-            <Title>modern_builtin_identifier_subtract_float32</Title>
-        </Document>
         <Document ID="1229">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="1958">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_compare_int8 = 160</Text>
         </Document>
         <Document ID="631">
             <Title>modern_builtin_identifier_ceiling_float32_int64</Title>

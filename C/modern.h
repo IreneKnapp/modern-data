@@ -865,7 +865,7 @@ struct modern_node {
       (modern_library *library,
        void *value);
     struct modern_hash
-      (*modern_node_get_name_hash)
+      (*modern_node_name_value_hash_get)
       (modern_library *library,
        void *value);
     void *
@@ -1021,7 +1021,7 @@ struct modern_node {
       (modern_library *library,
        void *type, void *field_value, void *successor_value);
     void *
-      (*modern_node_name_make)
+      (*modern_node_name_value_make)
       (modern_library *library,
        struct modern_hash name);
     void *
@@ -1457,7 +1457,7 @@ extern struct modern_stream *modern_stream_explicatory_make
 extern struct modern_stream *modern_stream_documentation_make
   (modern_library *library);
 
-extern struct modern_node *modern_node_make
+extern struct modern_node *modern_node_default_make
   (struct modern_allocator *allocator,
    void *client_state);
 

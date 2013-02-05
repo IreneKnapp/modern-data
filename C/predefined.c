@@ -4,7 +4,7 @@
 #include "internal.h"
 
 
-struct modern_node *modern_node_make
+struct modern_node *modern_node_default_make
   (struct modern_allocator *allocator,
    void *client_state)
 {
@@ -135,8 +135,8 @@ struct modern_node *modern_node_make
         default_modern_node_blob_make;
     result->modern_node_sigma_make =
         default_modern_node_sigma_make;
-    result->modern_node_name_make =
-        default_modern_node_name_make;
+    result->modern_node_name_value_make =
+        default_modern_node_name_value_make;
     result->modern_node_named_value_make =
         default_modern_node_named_value_make;
     result->modern_node_bool_type_make =

@@ -58,7 +58,7 @@ The operations on a modern node are serialization, deserialization, and evaluati
 <p class="binderItem"><strong>Cyclic structures</strong><br/>Cyclic structures, both at the type level and at the value level, can be created with inductive families and recursive lets - these two mechanisms are similar to each other, with the one being for types and the other for values.  The details of how this is done are left to a later chapter.  It is enough to know that the details of how these mechanisms are used do in fact become part of a modern node’s identity.  That is, they affect how types are canonicalized, which means that you have a differ...</p>
 </li>
 <li>
-<p class="binderItem"><strong>Mutation</strong></p>
+<p class="binderItem"><strong>Mutation</strong><br/>Although many functional languages are additionally "purely functional", meaning that their variables are immutable, nodes can be mutated in memory in some languages.  This is to make it easier to create cyclic structures, which could not otherwise be done in languages without recursive binding.  The semantics of mutation are that all references to the old node become references to the new node.  Mutation is possible on all nodes, with the provision that nodes being modified have never been in s...</p>
 </li>
 <li>
 <p class="binderItem"><strong>Evaluation</strong><br/>It has been mentioned that Modern Data’s type system is dependent; that is, the type of a value that comes later on is allowed to depend upon the actual value of an earlier one.  It is necessary for the infrastructure to know what these dependent types evaluate to, which means that there must be an evaluator - a means of actually executing the function that computes each dependent type and determining its results.<br/>
@@ -103,7 +103,7 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libr...</p>
+<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not.  This is, not least, because there are no standardized names for the functions - though GNU libquadmath uses the “q” suffix on the ISO C99 base names.  The C type which would be the most likely candidate to be a 128-bit float, long double, is actually an 80-bit float on most Intel-related platforms, while non-Intel platforms seldom suppo...</p>
 </li>
 </ul>
 <hr/>
@@ -119,7 +119,7 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Why sigma?</strong><br/>An early draft of Modern Data used three types of aggregate value - unions, arrays, and structures.  With these, it was intended that any more-complicated type could be built up out of the component pieces.  This was abandoned when it was realized that dependent types are not so easily built of these combinators; the author is grateful to the pre-reader who suggested borrowing Agda’s “sigma” type.  Sigma is elegantly simple and is also known as a dependent pair.  From it, the above three combina...</p>
+<p class="binderItem"><strong>Why sigma?</strong></p>
 </li>
 </ul>
 </ul>
@@ -10502,13 +10502,13 @@ modern_vfile_fd_finalize<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_node_get_name_hash</strong></p>
+<p class="binderItem"><strong>modern_node_name_value_hash_get</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
 <p class="binderItem"><strong>Synopsis</strong><br/>struct modern_hash *<br/>
-(*modern_node_get_name_hash)<br/>
+(*modern_node_name_value_hash_get)<br/>
 (modern_library *library,<br/>
  modern *value);</p>
 </li>
@@ -11287,13 +11287,13 @@ modern_vfile_fd_finalize<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_node_name_make</strong></p>
+<p class="binderItem"><strong>modern_node_name_value_make</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
-(*modern_node_name_make)<br/>
+(*modern_node_name_value_make)<br/>
 (modern_library *library,<br/>
  struct modern_hash *name);</p>
 </li>

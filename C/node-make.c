@@ -4,89 +4,91 @@
 #include "internal.h"
 
 
-HELPER void helper_finalize_int8
+HELPER void helper_int8_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_int16
+HELPER void helper_int16_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_int32
+HELPER void helper_int32_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_int64
+HELPER void helper_int64_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_nat8
+HELPER void helper_nat8_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_nat16
+HELPER void helper_nat16_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_nat32
+HELPER void helper_nat32_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_nat64
+HELPER void helper_nat64_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_float32
+HELPER void helper_float32_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_float64
+HELPER void helper_float64_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_utf8
+HELPER void helper_utf8_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_blob
+HELPER void helper_blob_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_sigma_value
+HELPER void helper_sigma_value_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_name_type
+HELPER void helper_name_value_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_named_value
+HELPER void helper_name_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_bool_type
+HELPER void helper_named_value_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_ordering_type
+HELPER void helper_bool_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_maybe_type
+HELPER void helper_ordering_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_int8_type
+HELPER void helper_maybe_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_int16_type
+HELPER void helper_int8_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_int32_type
+HELPER void helper_int16_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_int64_type
+HELPER void helper_int32_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_nat8_type
+HELPER void helper_int64_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_nat16_type
+HELPER void helper_nat8_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_nat32_type
+HELPER void helper_nat16_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_nat64_type
+HELPER void helper_nat32_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_float32_type
+HELPER void helper_nat64_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_float64_type
+HELPER void helper_float32_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_utf8_type
+HELPER void helper_float64_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_blob_type
+HELPER void helper_utf8_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_function_type
+HELPER void helper_blob_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_sigma_type
+HELPER void helper_function_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_named_type
+HELPER void helper_sigma_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_universe_type
+HELPER void helper_named_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_lambda
+HELPER void helper_universe_type_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_apply
+HELPER void helper_lambda_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_type_family
+HELPER void helper_apply_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_let
+HELPER void helper_type_family_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_backreference
+HELPER void helper_let_finalize
   (struct modern_library *library, void *retainable);
-HELPER void helper_finalize_builtin
+HELPER void helper_backreference_finalize
+  (struct modern_library *library, void *retainable);
+HELPER void helper_builtin_finalize
   (struct modern_library *library, void *retainable);
 
 
-INTERNAL modern *default_modern_node_make_int8
+INTERNAL modern *default_modern_node_int8_make
     (modern_library *library_in,
      int8_t value)
 {
@@ -104,7 +106,7 @@ INTERNAL modern *default_modern_node_make_int8
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_int8;
+    result->memory.finalizer = helper_int8_finalize;
     
     result->node_type = modern_node_type_int8_value;
     result->value_type = NULL;
@@ -114,7 +116,7 @@ INTERNAL modern *default_modern_node_make_int8
 }
 
 
-HELPER void helper_finalize_int8
+HELPER void helper_int8_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -123,7 +125,7 @@ HELPER void helper_finalize_int8
 }
 
 
-INTERNAL modern *default_modern_node_make_int16
+INTERNAL modern *default_modern_node_int16_make
     (modern_library *library_in,
      int16_t value)
 {
@@ -141,7 +143,7 @@ INTERNAL modern *default_modern_node_make_int16
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_int16;
+    result->memory.finalizer = helper_int16_finalize;
     
     result->node_type = modern_node_type_int16_value;
     result->value_type = NULL;
@@ -151,7 +153,7 @@ INTERNAL modern *default_modern_node_make_int16
 }
 
 
-HELPER void helper_finalize_int16
+HELPER void helper_int16_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -160,7 +162,7 @@ HELPER void helper_finalize_int16
 }
 
 
-INTERNAL modern *default_modern_node_make_int32
+INTERNAL modern *default_modern_node_int32_make
     (modern_library *library_in,
      int32_t value)
 {
@@ -178,7 +180,7 @@ INTERNAL modern *default_modern_node_make_int32
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_int32;
+    result->memory.finalizer = helper_int32_finalize;
     
     result->node_type = modern_node_type_int32_value;
     result->value_type = NULL;
@@ -188,7 +190,7 @@ INTERNAL modern *default_modern_node_make_int32
 }
 
 
-HELPER void helper_finalize_int32
+HELPER void helper_int32_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -197,7 +199,7 @@ HELPER void helper_finalize_int32
 }
 
 
-INTERNAL modern *default_modern_node_make_int64
+INTERNAL modern *default_modern_node_int64_make
     (modern_library *library_in,
      int64_t value)
 {
@@ -215,7 +217,7 @@ INTERNAL modern *default_modern_node_make_int64
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_int64;
+    result->memory.finalizer = helper_int64_finalize;
     
     result->node_type = modern_node_type_int64_value;
     result->value_type = NULL;
@@ -225,7 +227,7 @@ INTERNAL modern *default_modern_node_make_int64
 }
 
 
-HELPER void helper_finalize_int64
+HELPER void helper_int64_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -234,7 +236,7 @@ HELPER void helper_finalize_int64
 }
 
 
-INTERNAL modern *default_modern_node_make_nat8
+INTERNAL modern *default_modern_node_nat8_make
     (modern_library *library_in,
      uint8_t value)
 {
@@ -252,7 +254,7 @@ INTERNAL modern *default_modern_node_make_nat8
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_nat8;
+    result->memory.finalizer = helper_nat8_finalize;
     
     result->node_type = modern_node_type_nat8_value;
     result->value_type = NULL;
@@ -262,7 +264,7 @@ INTERNAL modern *default_modern_node_make_nat8
 }
 
 
-HELPER void helper_finalize_nat8
+HELPER void helper_nat8_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -271,7 +273,7 @@ HELPER void helper_finalize_nat8
 }
 
 
-INTERNAL modern *default_modern_node_make_nat16
+INTERNAL modern *default_modern_node_nat16_make
     (modern_library *library_in,
      uint16_t value)
 {
@@ -289,7 +291,7 @@ INTERNAL modern *default_modern_node_make_nat16
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_nat16;
+    result->memory.finalizer = helper_nat16_finalize;
     
     result->node_type = modern_node_type_nat16_value;
     result->value_type = NULL;
@@ -299,7 +301,7 @@ INTERNAL modern *default_modern_node_make_nat16
 }
 
 
-HELPER void helper_finalize_nat16
+HELPER void helper_nat16_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -308,7 +310,7 @@ HELPER void helper_finalize_nat16
 }
 
 
-INTERNAL modern *default_modern_node_make_nat32
+INTERNAL modern *default_modern_node_nat32_make
     (modern_library *library_in,
      uint32_t value)
 {
@@ -326,7 +328,7 @@ INTERNAL modern *default_modern_node_make_nat32
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_nat32;
+    result->memory.finalizer = helper_nat32_finalize;
     
     result->node_type = modern_node_type_nat32_value;
     result->value_type = NULL;
@@ -336,7 +338,7 @@ INTERNAL modern *default_modern_node_make_nat32
 }
 
 
-HELPER void helper_finalize_nat32
+HELPER void helper_nat32_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -345,7 +347,7 @@ HELPER void helper_finalize_nat32
 }
 
 
-INTERNAL modern *default_modern_node_make_nat64
+INTERNAL modern *default_modern_node_nat64_make
     (modern_library *library_in,
      uint64_t value)
 {
@@ -363,7 +365,7 @@ INTERNAL modern *default_modern_node_make_nat64
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_nat64;
+    result->memory.finalizer = helper_nat64_finalize;
     
     result->node_type = modern_node_type_nat64_value;
     result->value_type = NULL;
@@ -373,7 +375,7 @@ INTERNAL modern *default_modern_node_make_nat64
 }
 
 
-HELPER void helper_finalize_nat64
+HELPER void helper_nat64_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -382,7 +384,7 @@ HELPER void helper_finalize_nat64
 }
 
 
-INTERNAL modern *default_modern_node_make_float32
+INTERNAL modern *default_modern_node_float32_make
     (modern_library *library_in,
      float value)
 {
@@ -420,7 +422,7 @@ INTERNAL modern *default_modern_node_make_float32
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_float32;
+    result->memory.finalizer = helper_float32_finalize;
     
     result->node_type = modern_node_type_float32_value;
     result->value_type = NULL;
@@ -430,7 +432,7 @@ INTERNAL modern *default_modern_node_make_float32
 }
 
 
-HELPER void helper_finalize_float32
+HELPER void helper_float32_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -439,7 +441,7 @@ HELPER void helper_finalize_float32
 }
 
 
-INTERNAL modern *default_modern_node_make_float64
+INTERNAL modern *default_modern_node_float64_make
     (modern_library *library_in,
      double value)
 {
@@ -477,7 +479,7 @@ INTERNAL modern *default_modern_node_make_float64
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_float64;
+    result->memory.finalizer = helper_float64_finalize;
     
     result->node_type = modern_node_type_float64_value;
     result->value_type = NULL;
@@ -487,7 +489,7 @@ INTERNAL modern *default_modern_node_make_float64
 }
 
 
-HELPER void helper_finalize_float64
+HELPER void helper_float64_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -496,7 +498,7 @@ HELPER void helper_finalize_float64
 }
 
 
-INTERNAL modern *default_modern_node_make_utf8
+INTERNAL modern *default_modern_node_utf8_make
     (modern_library *library_in,
      uint8_t *data)
 {
@@ -527,7 +529,7 @@ INTERNAL modern *default_modern_node_make_utf8
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_utf8;
+    result->memory.finalizer = helper_utf8_finalize;
     
     result->node_type = modern_node_type_utf8_value;
     result->value_type = NULL;
@@ -538,7 +540,7 @@ INTERNAL modern *default_modern_node_make_utf8
 }
 
 
-HELPER void helper_finalize_utf8
+HELPER void helper_utf8_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -550,7 +552,7 @@ HELPER void helper_finalize_utf8
 }
 
 
-INTERNAL modern *default_modern_node_make_blob
+INTERNAL modern *default_modern_node_blob_make
     (modern_library *library_in,
      uint8_t *data, size_t bytes)
 {
@@ -580,7 +582,7 @@ INTERNAL modern *default_modern_node_make_blob
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_blob;
+    result->memory.finalizer = helper_blob_finalize;
     
     result->node_type = modern_node_type_blob_value;
     result->value_type = NULL;
@@ -591,7 +593,7 @@ INTERNAL modern *default_modern_node_make_blob
 }
 
 
-HELPER void helper_finalize_blob
+HELPER void helper_blob_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -603,7 +605,7 @@ HELPER void helper_finalize_blob
 }
 
 
-INTERNAL modern *default_modern_node_make_sigma
+INTERNAL modern *default_modern_node_sigma_make
     (modern_library *library_in,
      modern *type_in,
      modern *field_value_in,
@@ -633,7 +635,7 @@ INTERNAL modern *default_modern_node_make_sigma
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_sigma_value;
+    result->memory.finalizer = helper_sigma_value_finalize;
     
     result->node_type = modern_node_type_sigma_value;
     result->value_type = type;
@@ -647,7 +649,7 @@ INTERNAL modern *default_modern_node_make_sigma
 }
 
 
-HELPER void helper_finalize_sigma_value
+HELPER void helper_sigma_value_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -659,7 +661,44 @@ HELPER void helper_finalize_sigma_value
 }
 
 
-INTERNAL modern *default_modern_node_make_named_value
+INTERNAL modern *default_modern_node_name_value_make
+    (modern_library *library_in,
+     struct modern_hash name)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    
+    size_t result_size = sizeof(struct modern);
+    struct modern *result =
+        library->allocator->modern_allocator_alloc
+            (library->client_state, result_size);
+    if(!result) {
+        library->error_handler->modern_error_handler_memory
+            (library->client_state, result_size);
+        return NULL;
+    }
+    
+    result->memory.retain_count = 1;
+    result->memory.is_autoreleased = 0;
+    result->memory.finalizer = helper_name_value_finalize;
+    
+    result->node_type = modern_node_type_name_value;
+    result->value_type = NULL;
+    result->specifics.name_value.hash = name;
+    
+    return (modern *) result;
+}
+
+
+HELPER void helper_name_value_finalize
+  (struct modern_library *library, void *retainable)
+{
+    struct modern *node = (struct modern *) retainable;
+    
+    if(node->value_type) modern_release(library, node->value_type);
+}
+
+
+INTERNAL modern *default_modern_node_named_value_make
     (modern_library *library_in,
      modern *type_in, modern *value_in)
 {
@@ -679,7 +718,7 @@ INTERNAL modern *default_modern_node_make_named_value
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_named_value;
+    result->memory.finalizer = helper_named_value_finalize;
     
     result->node_type = modern_node_type_named_value;
     result->value_type = type;
@@ -692,7 +731,7 @@ INTERNAL modern *default_modern_node_make_named_value
 }
 
 
-HELPER void helper_finalize_named_value
+HELPER void helper_named_value_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -703,7 +742,7 @@ HELPER void helper_finalize_named_value
 }
 
 
-INTERNAL modern *default_modern_node_make_bool_type
+INTERNAL modern *default_modern_node_bool_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -720,7 +759,7 @@ INTERNAL modern *default_modern_node_make_bool_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_bool_type;
+    result->memory.finalizer = helper_bool_type_finalize;
     
     result->node_type = modern_node_type_bool_type;
     result->value_type = NULL;
@@ -729,7 +768,7 @@ INTERNAL modern *default_modern_node_make_bool_type
 }
 
 
-HELPER void helper_finalize_bool_type
+HELPER void helper_bool_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -738,7 +777,7 @@ HELPER void helper_finalize_bool_type
 }
 
 
-INTERNAL modern *default_modern_node_make_ordering_type
+INTERNAL modern *default_modern_node_ordering_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -755,7 +794,7 @@ INTERNAL modern *default_modern_node_make_ordering_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_ordering_type;
+    result->memory.finalizer = helper_ordering_type_finalize;
     
     result->node_type = modern_node_type_ordering_type;
     result->value_type = NULL;
@@ -764,7 +803,7 @@ INTERNAL modern *default_modern_node_make_ordering_type
 }
 
 
-HELPER void helper_finalize_ordering_type
+HELPER void helper_ordering_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -773,7 +812,7 @@ HELPER void helper_finalize_ordering_type
 }
 
 
-INTERNAL modern *default_modern_node_make_maybe_type
+INTERNAL modern *default_modern_node_maybe_type_make
     (modern_library *library_in,
      modern *content_type)
 {
@@ -798,7 +837,7 @@ INTERNAL modern *default_modern_node_make_maybe_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_maybe_type;
+    result->memory.finalizer = helper_maybe_type_finalize;
     
     result->node_type = modern_node_type_maybe_type;
     result->value_type = NULL;
@@ -808,7 +847,7 @@ INTERNAL modern *default_modern_node_make_maybe_type
 }
 
 
-HELPER void helper_finalize_maybe_type
+HELPER void helper_maybe_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -819,7 +858,7 @@ HELPER void helper_finalize_maybe_type
 }
 
 
-INTERNAL modern *default_modern_node_make_int8_type
+INTERNAL modern *default_modern_node_int8_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -836,7 +875,7 @@ INTERNAL modern *default_modern_node_make_int8_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_int8_type;
+    result->memory.finalizer = helper_int8_type_finalize;
     
     result->node_type = modern_node_type_int8_type;
     result->value_type = NULL;
@@ -845,7 +884,7 @@ INTERNAL modern *default_modern_node_make_int8_type
 }
 
 
-HELPER void helper_finalize_int8_type
+HELPER void helper_int8_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -854,7 +893,7 @@ HELPER void helper_finalize_int8_type
 }
 
 
-INTERNAL modern *default_modern_node_make_int16_type
+INTERNAL modern *default_modern_node_int16_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -871,7 +910,7 @@ INTERNAL modern *default_modern_node_make_int16_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_int16_type;
+    result->memory.finalizer = helper_int16_type_finalize;
     
     result->node_type = modern_node_type_int16_type;
     result->value_type = NULL;
@@ -880,7 +919,7 @@ INTERNAL modern *default_modern_node_make_int16_type
 }
 
 
-HELPER void helper_finalize_int16_type
+HELPER void helper_int16_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -889,7 +928,7 @@ HELPER void helper_finalize_int16_type
 }
 
 
-INTERNAL modern *default_modern_node_make_int32_type
+INTERNAL modern *default_modern_node_int32_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -906,7 +945,7 @@ INTERNAL modern *default_modern_node_make_int32_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_int32_type;
+    result->memory.finalizer = helper_int32_type_finalize;
     
     result->node_type = modern_node_type_int32_type;
     result->value_type = NULL;
@@ -915,7 +954,7 @@ INTERNAL modern *default_modern_node_make_int32_type
 }
 
 
-HELPER void helper_finalize_int32_type
+HELPER void helper_int32_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -924,7 +963,7 @@ HELPER void helper_finalize_int32_type
 }
 
 
-INTERNAL modern *default_modern_node_make_int64_type
+INTERNAL modern *default_modern_node_int64_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -941,7 +980,7 @@ INTERNAL modern *default_modern_node_make_int64_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_int64_type;
+    result->memory.finalizer = helper_int64_type_finalize;
     
     result->node_type = modern_node_type_int64_type;
     result->value_type = NULL;
@@ -950,7 +989,7 @@ INTERNAL modern *default_modern_node_make_int64_type
 }
 
 
-HELPER void helper_finalize_int64_type
+HELPER void helper_int64_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -959,7 +998,7 @@ HELPER void helper_finalize_int64_type
 }
 
 
-INTERNAL modern *default_modern_node_make_nat8_type
+INTERNAL modern *default_modern_node_nat8_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -976,7 +1015,7 @@ INTERNAL modern *default_modern_node_make_nat8_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_nat8_type;
+    result->memory.finalizer = helper_nat8_type_finalize;
     
     result->node_type = modern_node_type_nat8_type;
     result->value_type = NULL;
@@ -985,7 +1024,7 @@ INTERNAL modern *default_modern_node_make_nat8_type
 }
 
 
-HELPER void helper_finalize_nat8_type
+HELPER void helper_nat8_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -994,7 +1033,7 @@ HELPER void helper_finalize_nat8_type
 }
 
 
-INTERNAL modern *default_modern_node_make_nat16_type
+INTERNAL modern *default_modern_node_nat16_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1011,7 +1050,7 @@ INTERNAL modern *default_modern_node_make_nat16_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_nat16_type;
+    result->memory.finalizer = helper_nat16_type_finalize;
     
     result->node_type = modern_node_type_nat16_type;
     result->value_type = NULL;
@@ -1020,7 +1059,7 @@ INTERNAL modern *default_modern_node_make_nat16_type
 }
 
 
-HELPER void helper_finalize_nat16_type
+HELPER void helper_nat16_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1029,7 +1068,7 @@ HELPER void helper_finalize_nat16_type
 }
 
 
-INTERNAL modern *default_modern_node_make_nat32_type
+INTERNAL modern *default_modern_node_nat32_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1046,7 +1085,7 @@ INTERNAL modern *default_modern_node_make_nat32_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_nat32_type;
+    result->memory.finalizer = helper_nat32_type_finalize;
     
     result->node_type = modern_node_type_nat32_type;
     result->value_type = NULL;
@@ -1055,7 +1094,7 @@ INTERNAL modern *default_modern_node_make_nat32_type
 }
 
 
-HELPER void helper_finalize_nat32_type
+HELPER void helper_nat32_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1064,7 +1103,7 @@ HELPER void helper_finalize_nat32_type
 }
 
 
-INTERNAL modern *default_modern_node_make_nat64_type
+INTERNAL modern *default_modern_node_nat64_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1081,7 +1120,7 @@ INTERNAL modern *default_modern_node_make_nat64_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_nat64_type;
+    result->memory.finalizer = helper_nat64_type_finalize;
     
     result->node_type = modern_node_type_nat64_type;
     result->value_type = NULL;
@@ -1090,7 +1129,7 @@ INTERNAL modern *default_modern_node_make_nat64_type
 }
 
 
-HELPER void helper_finalize_nat64_type
+HELPER void helper_nat64_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1099,7 +1138,7 @@ HELPER void helper_finalize_nat64_type
 }
 
 
-INTERNAL modern *default_modern_node_make_float32_type
+INTERNAL modern *default_modern_node_float32_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1116,7 +1155,7 @@ INTERNAL modern *default_modern_node_make_float32_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_float32_type;
+    result->memory.finalizer = helper_float32_type_finalize;
     
     result->node_type = modern_node_type_float32_type;
     result->value_type = NULL;
@@ -1125,7 +1164,7 @@ INTERNAL modern *default_modern_node_make_float32_type
 }
 
 
-HELPER void helper_finalize_float32_type
+HELPER void helper_float32_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1134,7 +1173,7 @@ HELPER void helper_finalize_float32_type
 }
 
 
-INTERNAL modern *default_modern_node_make_float64_type
+INTERNAL modern *default_modern_node_float64_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1151,7 +1190,7 @@ INTERNAL modern *default_modern_node_make_float64_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_float64_type;
+    result->memory.finalizer = helper_float64_type_finalize;
     
     result->node_type = modern_node_type_float64_type;
     result->value_type = NULL;
@@ -1160,7 +1199,7 @@ INTERNAL modern *default_modern_node_make_float64_type
 }
 
 
-HELPER void helper_finalize_float64_type
+HELPER void helper_float64_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1169,7 +1208,7 @@ HELPER void helper_finalize_float64_type
 }
 
 
-INTERNAL modern *default_modern_node_make_utf8_type
+INTERNAL modern *default_modern_node_utf8_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1186,7 +1225,7 @@ INTERNAL modern *default_modern_node_make_utf8_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_utf8_type;
+    result->memory.finalizer = helper_utf8_type_finalize;
     
     result->node_type = modern_node_type_utf8_type;
     result->value_type = NULL;
@@ -1195,7 +1234,7 @@ INTERNAL modern *default_modern_node_make_utf8_type
 }
 
 
-HELPER void helper_finalize_utf8_type
+HELPER void helper_utf8_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1204,7 +1243,7 @@ HELPER void helper_finalize_utf8_type
 }
 
 
-INTERNAL modern *default_modern_node_make_blob_type
+INTERNAL modern *default_modern_node_blob_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1221,7 +1260,7 @@ INTERNAL modern *default_modern_node_make_blob_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_blob_type;
+    result->memory.finalizer = helper_blob_type_finalize;
     
     result->node_type = modern_node_type_blob_type;
     result->value_type = NULL;
@@ -1230,7 +1269,7 @@ INTERNAL modern *default_modern_node_make_blob_type
 }
 
 
-HELPER void helper_finalize_blob_type
+HELPER void helper_blob_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1239,7 +1278,7 @@ HELPER void helper_finalize_blob_type
 }
 
 
-INTERNAL modern *default_modern_node_make_function_type
+INTERNAL modern *default_modern_node_function_type_make
     (modern_library *library_in,
      modern *left_in, modern *right_in)
 {
@@ -1259,7 +1298,7 @@ INTERNAL modern *default_modern_node_make_function_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_function_type;
+    result->memory.finalizer = helper_function_type_finalize;
     
     result->node_type = modern_node_type_function_type;
     result->value_type = NULL;
@@ -1274,7 +1313,7 @@ INTERNAL modern *default_modern_node_make_function_type
 
 
 
-HELPER void helper_finalize_function_type
+HELPER void helper_function_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1286,7 +1325,7 @@ HELPER void helper_finalize_function_type
 }
 
 
-INTERNAL modern *default_modern_node_make_sigma_type
+INTERNAL modern *default_modern_node_sigma_type_make
     (modern_library *library_in,
      modern *field_type, modern *successor)
 {
@@ -1304,7 +1343,7 @@ INTERNAL modern *default_modern_node_make_sigma_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_sigma_type;
+    result->memory.finalizer = helper_sigma_type_finalize;
     
     result->node_type = modern_node_type_sigma_type;
     result->value_type = NULL;
@@ -1319,7 +1358,7 @@ INTERNAL modern *default_modern_node_make_sigma_type
 
 
 
-HELPER void helper_finalize_sigma_type
+HELPER void helper_sigma_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1331,7 +1370,7 @@ HELPER void helper_finalize_sigma_type
 }
 
 
-INTERNAL modern *default_modern_node_make_name_type
+INTERNAL modern *default_modern_node_name_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -1348,7 +1387,7 @@ INTERNAL modern *default_modern_node_make_name_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_name_type;
+    result->memory.finalizer = helper_name_type_finalize;
     
     result->node_type = modern_node_type_name_type;
     result->value_type = NULL;
@@ -1357,7 +1396,7 @@ INTERNAL modern *default_modern_node_make_name_type
 }
 
 
-HELPER void helper_finalize_name_type
+HELPER void helper_name_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1366,7 +1405,7 @@ HELPER void helper_finalize_name_type
 }
 
 
-INTERNAL modern *default_modern_node_make_named_type
+INTERNAL modern *default_modern_node_named_type_make
     (modern_library *library_in,
      struct modern_hash name, modern *content_type)
 {
@@ -1384,7 +1423,7 @@ INTERNAL modern *default_modern_node_make_named_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_named_type;
+    result->memory.finalizer = helper_named_type_finalize;
     
     result->node_type = modern_node_type_named_type;
     result->value_type = NULL;
@@ -1395,7 +1434,7 @@ INTERNAL modern *default_modern_node_make_named_type
 }
 
 
-HELPER void helper_finalize_named_type
+HELPER void helper_named_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1406,7 +1445,7 @@ HELPER void helper_finalize_named_type
 }
 
 
-INTERNAL modern *default_modern_node_make_universe_type
+INTERNAL modern *default_modern_node_universe_type_make
     (modern_library *library_in,
      uint64_t level)
 {
@@ -1424,7 +1463,7 @@ INTERNAL modern *default_modern_node_make_universe_type
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_universe_type;
+    result->memory.finalizer = helper_universe_type_finalize;
     
     result->node_type = modern_node_type_universe_type;
     result->value_type = NULL;
@@ -1434,7 +1473,7 @@ INTERNAL modern *default_modern_node_make_universe_type
 }
 
 
-HELPER void helper_finalize_universe_type
+HELPER void helper_universe_type_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1443,7 +1482,7 @@ HELPER void helper_finalize_universe_type
 }
 
 
-INTERNAL modern *default_modern_node_make_lambda
+INTERNAL modern *default_modern_node_lambda_make
     (modern_library *library_in,
      modern *content_in)
 {
@@ -1462,7 +1501,7 @@ INTERNAL modern *default_modern_node_make_lambda
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_lambda;
+    result->memory.finalizer = helper_lambda_finalize;
     
     result->node_type = modern_node_type_lambda;
     result->value_type = NULL;
@@ -1472,7 +1511,7 @@ INTERNAL modern *default_modern_node_make_lambda
 }
 
 
-HELPER void helper_finalize_lambda
+HELPER void helper_lambda_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1483,7 +1522,7 @@ HELPER void helper_finalize_lambda
 }
 
 
-INTERNAL modern *default_modern_node_make_apply
+INTERNAL modern *default_modern_node_apply_make
     (modern_library *library_in,
      modern *left_in, modern *right_in)
 {
@@ -1503,7 +1542,7 @@ INTERNAL modern *default_modern_node_make_apply
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_apply;
+    result->memory.finalizer = helper_apply_finalize;
     
     result->node_type = modern_node_type_apply;
     result->value_type = NULL;
@@ -1514,7 +1553,7 @@ INTERNAL modern *default_modern_node_make_apply
 }
 
 
-HELPER void helper_finalize_apply
+HELPER void helper_apply_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1526,7 +1565,7 @@ HELPER void helper_finalize_apply
 }
 
 
-INTERNAL modern *default_modern_node_make_type_family
+INTERNAL modern *default_modern_node_type_family_make
     (modern_library *library_in,
      uint64_t n_items, modern **types_in)
 {
@@ -1556,7 +1595,7 @@ INTERNAL modern *default_modern_node_make_type_family
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_type_family;
+    result->memory.finalizer = helper_type_family_finalize;
     
     result->node_type = modern_node_type_type_family;
     result->value_type = NULL;
@@ -1571,7 +1610,7 @@ INTERNAL modern *default_modern_node_make_type_family
 }
 
 
-HELPER void helper_finalize_type_family
+HELPER void helper_type_family_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1587,7 +1626,7 @@ HELPER void helper_finalize_type_family
 }
 
 
-INTERNAL modern *default_modern_node_make_let
+INTERNAL modern *default_modern_node_let_make
     (modern_library *library_in,
      uint64_t n_items, modern **values_in, modern *content_in)
 {
@@ -1617,7 +1656,7 @@ INTERNAL modern *default_modern_node_make_let
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_let;
+    result->memory.finalizer = helper_let_finalize;
     
     result->node_type = modern_node_type_type_family;
     result->value_type = NULL;
@@ -1635,7 +1674,7 @@ INTERNAL modern *default_modern_node_make_let
 }
 
 
-HELPER void helper_finalize_let
+HELPER void helper_let_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1653,7 +1692,7 @@ HELPER void helper_finalize_let
 }
 
 
-INTERNAL modern *default_modern_node_make_backreference
+INTERNAL modern *default_modern_node_backreference_make
     (modern_library *library_in,
      uint64_t index)
 {
@@ -1671,7 +1710,7 @@ INTERNAL modern *default_modern_node_make_backreference
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_backreference;
+    result->memory.finalizer = helper_backreference_finalize;
     
     result->node_type = modern_node_type_backreference;
     result->value_type = NULL;
@@ -1681,7 +1720,7 @@ INTERNAL modern *default_modern_node_make_backreference
 }
 
 
-HELPER void helper_finalize_backreference
+HELPER void helper_backreference_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
@@ -1690,7 +1729,7 @@ HELPER void helper_finalize_backreference
 }
 
 
-INTERNAL modern *default_modern_node_make_builtin
+INTERNAL modern *default_modern_node_builtin_make
     (modern_library *library_in,
      uint16_t identifier)
 {
@@ -1708,7 +1747,7 @@ INTERNAL modern *default_modern_node_make_builtin
     
     result->memory.retain_count = 1;
     result->memory.is_autoreleased = 0;
-    result->memory.finalizer = helper_finalize_builtin;
+    result->memory.finalizer = helper_builtin_finalize;
     
     result->node_type = modern_node_type_backreference;
     result->value_type = NULL;
@@ -1718,7 +1757,7 @@ INTERNAL modern *default_modern_node_make_builtin
 }
 
 
-HELPER void helper_finalize_builtin
+HELPER void helper_builtin_finalize
   (struct modern_library *library, void *retainable)
 {
     struct modern *node = (struct modern *) retainable;
