@@ -58,7 +58,7 @@ The operations on a modern node are serialization, deserialization, type-checkin
 <p class="binderItem"><strong>Cyclic structures</strong><br/>Cyclic structures, both at the type level and at the value level, can be created with inductive families and recursive lets - these two mechanisms are similar to each other, with the one being for types and the other for values.  The details of how this is done are left to a later chapter.  It is enough to know that the details of how these mechanisms are used do in fact become part of a modern node’s identity.  That is, they affect how types are canonicalized, which means that you have a differ...</p>
 </li>
 <li>
-<p class="binderItem"><strong>Mutation</strong></p>
+<p class="binderItem"><strong>Mutation</strong><br/>Although many functional languages are additionally "purely functional", meaning that their variables are immutable, nodes can be mutated in memory in some languages.  This is to make it easier to create cyclic structures, which could not otherwise be done in languages without recursive binding.  The semantics of mutation are that all references to the old node become references to the new node.  Mutation is possible on all nodes, with the provision that nodes being modified have never been in s...</p>
 </li>
 <li>
 <p class="binderItem"><strong>Evaluation</strong><br/>It has been mentioned that Modern Data’s type system is dependent; that is, the type of a value that comes later on is allowed to depend upon the actual value of an earlier one.  It is necessary for the infrastructure to know what these dependent types evaluate to, which means that there must be an evaluator - a means of actually executing the function that computes each dependent type and determining its results.<br/>
@@ -103,7 +103,7 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libr...</p>
+<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not.  This is, not least, because there are no standardized names for the functions - though GNU libquadmath uses the “q” suffix on the ISO C99 base names.  The C type which would be the most likely candidate to be a 128-bit float, long double, is actually an 80-bit float on most Intel-related platforms, while non-Intel platforms seldom suppo...</p>
 </li>
 </ul>
 <hr/>
@@ -119,7 +119,7 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Why sigma?</strong><br/>An early draft of Modern Data used three types of aggregate value - unions, arrays, and structures.  With these, it was intended that any more-complicated type could be built up out of the component pieces.  This was abandoned when it was realized that dependent types are not so easily built of these combinators; the author is grateful to the pre-reader who suggested borrowing Agda’s “sigma” type.  Sigma is elegantly simple and is also known as a dependent pair.  From it, the above three combina...</p>
+<p class="binderItem"><strong>Why sigma?</strong></p>
 </li>
 </ul>
 <hr/>
@@ -140,7 +140,9 @@ Many of the extant built-in values exist to provide primitive operations on the 
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Overview</strong></p>
+<p class="binderItem"><strong>Overview</strong><br/>The C-based library is a major part of the Modern Data system.  It is the foundation for the library in all other languages, due to the ease of linking against and using C.  It is designed to allow pieces of the system to be swapped out with ease, not just the allocator but the actual representation of nodes.  There is a fair amount of setup that needs to be done in order to use it, so it is recommended to read these overview sections in order.<br/>
+<br/>
+In order to be considerate about namespace, all sy...</p>
 </li>
 <li>
 <p class="binderItem"><strong>Library instances</strong></p>
@@ -148,7 +150,9 @@ Many of the extant built-in values exist to provide primitive operations on the 
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Overview</strong></p>
+<p class="binderItem"><strong>Overview</strong><br/>A library instance is an opaque structure which represents a single configured copy of the system.  It is a basic type which, once constructed, is passed to every function.  It contains structures of pointers to callbacks which are used to accomplish all the low-level tasks the library needs to conduct.  Callback structures are used in several places in the system, and not all of them are part of the library instance - only the most fundamental ones.<br/>
+<br/>
+In all callbacks, the library is written wit...</p>
 </li>
 <li>
 <p class="binderItem"><strong>General</strong></p>
@@ -165,20 +169,12 @@ Many of the extant built-in values exist to provide primitive operations on the 
 modern_library_initialize<br/>
 (struct modern_error_handler *error_handler,<br/>
  struct modern_allocator *allocator,<br/>
- struct modern_node *node,<br/>
+ struct modern_node_representation *node,<br/>
  void (*finalizer)(void *client_state),<br/>
  void *client_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>Parameters</strong><br/>Error handler<br/>
-<br/>
-Allocator<br/>
-<br/>
-Finalizer<br/>
-<br/>
-Client state<br/>
-<br/>
-Return</p>
+<p class="binderItem"><strong>Parameters</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -222,33 +218,14 @@ modern_library_allocator_get<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_library_node_get</strong></p>
+<p class="binderItem"><strong>modern_library_node_representation_get</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
 <p class="binderItem"><strong>Synopsis</strong><br/>struct modern_node *<br/>
-modern_library_node_get<br/>
+modern_library_node_representation_get<br/>
 (modern_library *library);</p>
-</li>
-<li>
-<p class="binderItem"><strong>Parameters</strong></p>
-</li>
-<li>
-<p class="binderItem"><strong>Semantics</strong></p>
-</li>
-</ul>
-<hr/>
-<li>
-<p class="binderItem"><strong>modern_library_node_set</strong></p>
-</li>
-<hr/>
-<ul>
-<li>
-<p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
-modern_library_node_set<br/>
-(modern_library *library,<br/>
- struct modern_node *node);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -312,9 +289,6 @@ modern_library_finalize<br/>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
-</li>
-<li>
-<p class="binderItem"><strong>Members</strong></p>
 </li>
 </ul>
 <hr/>
@@ -561,9 +535,6 @@ modern_library_finalize<br/>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
 </li>
-<li>
-<p class="binderItem"><strong>Members</strong></p>
-</li>
 </ul>
 <hr/>
 <li>
@@ -624,6 +595,2036 @@ modern_library_finalize<br/>
 </li>
 </ul>
 </ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Node representations</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_node_representation</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>struct modern_node_representation {<br/>
+    …<br/>
+};</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_node_type_get</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>enum modern_node_representation_type<br/>
+(*modern_node_representation_node_type_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_value_type_get</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_representation_value_type_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_mutable_get</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>int<br/>
+(*modern_node_representation_mutable_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_canonical_hash_get</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>struct modern_hash<br/>
+(*modern_node_representation_canonical_hash_get)<br/>
+(modern_library *library,<br/>
+ modern *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_maybe_just_content_get</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_representation_maybe_just_content_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int8_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>int8_t <br/>
+(*modern_node_representation_int8_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int16_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>int16_t <br/>
+(*modern_node_representation_int16_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int32_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>int32_t <br/>
+(*modern_node_representation_int32_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int64_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>int64_t <br/>
+(*modern_node_representation_int64_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat8_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>uint8_t <br/>
+(*modern_node_representation_nat8_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat16_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>uint16_t <br/>
+(*modern_node_representation_nat16_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat32_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>uint32_t <br/>
+(*modern_node_representation_nat32_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat64_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>uint64_t <br/>
+(*modern_node_representation_nat64_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_float32_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>float <br/>
+(*modern_node_representation_float32_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_float64_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>double <br/>
+(*modern_node_representation_float64_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_utf8_bytes_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>size_t <br/>
+(*modern_node_representation_utf8_bytes_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_utf8_data_piece_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>uint8_t *<br/>
+(*modern_node_representation_utf8_data_piece_get)<br/>
+(modern_library *library,<br/>
+ void *value, size_t offset, size_t bytes);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_blob_bytes_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>size_t <br/>
+(*modern_node_representation_blob_bytes_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_blob_data_piece_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>uint8_t *<br/>
+(*modern_node_representation_blob_data_piece_get)<br/>
+(modern_library *library,<br/>
+ void *value, size_t offset, size_t bytes);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_sigma_field_value_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_representation_sigma_field_value_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_sigma_successor_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_representation_sigma_successor_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_name_value_hash_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>struct modern_hash<br/>
+(*modern_node_representation_name_value_hash_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_named_value_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_representation_named_value_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_maybe_type_content_type_get</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_representation_maybe_type_content_type_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_function_type_left_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_representation_function_type_left_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_function_type_right_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_representation_function_type_right_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_sigma_type_field_type_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_representation_sigma_type_field_type_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_sigma_type_successor_get </strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_representation_sigma_type_successor_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_named_type_name_get </strong><br/>struct modern_hash<br/>
+(*modern_node_representation_named_type_name_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_named_type_content_type_get</strong><br/>void *<br/>
+(*modern_node_representation_named_type_content_type_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_universe_type_level_get </strong><br/>uint64_t <br/>
+(*modern_node_representation_universe_type_level_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_lambda_content_get </strong><br/>void *<br/>
+(*modern_node_representation_lambda_content_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_apply_left_get </strong><br/>void *<br/>
+(*modern_node_representation_apply_left_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_apply_right_get </strong><br/>void *<br/>
+(*modern_node_representation_apply_right_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_type_family_count_get </strong><br/>uint64_t <br/>
+(*modern_node_representation_type_family_count_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_type_family_item_get </strong><br/>void *<br/>
+(*modern_node_representation_type_family_item_get)<br/>
+(modern_library *library,<br/>
+ void *value, uint64_t index);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_let_count_get </strong><br/>uint64_t <br/>
+(*modern_node_representation_let_count_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_let_item_get </strong><br/>void *<br/>
+(*modern_node_representation_let_item_get)<br/>
+(modern_library *library,<br/>
+ void *value, uint64_t index);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_let_content_get </strong><br/>void *<br/>
+(*modern_node_representation_let_content_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_backreference_index_get </strong><br/>uint64_t <br/>
+(*modern_node_representation_backreference_index_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_builtin_identifier_get </strong><br/>uint16_t <br/>
+(*modern_node_representation_builtin_identifier_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_bool_false_make </strong><br/>void *<br/>
+(*modern_node_representation_bool_false_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_bool_true_make </strong><br/>void *<br/>
+(*modern_node_representation_bool_true_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_ordering_less_make </strong><br/>void *<br/>
+(*modern_node_representation_ordering_less_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_ordering_equal_make </strong><br/>void *<br/>
+(*modern_node_representation_ordering_equal_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_ordering_greater_make </strong><br/>void *<br/>
+(*modern_node_representation_ordering_greater_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_maybe_nothing_make </strong><br/>void *<br/>
+(*modern_node_representation_maybe_nothing_make)<br/>
+(modern_library *library,<br/>
+ void *type);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_maybe_just_make </strong><br/>void *<br/>
+(*modern_node_representation_maybe_just_make)<br/>
+(modern_library *library,<br/>
+ void *type,<br/>
+ void *content_value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int8_make </strong><br/>void *<br/>
+(*modern_node_representation_int8_make)<br/>
+(modern_library *library,<br/>
+ int8_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int16_make </strong><br/>void *<br/>
+(*modern_node_representation_int16_make)<br/>
+(modern_library *library,<br/>
+ int16_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int32_make </strong><br/>void *<br/>
+(*modern_node_representation_int32_make)<br/>
+(modern_library *library,<br/>
+ int32_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int64_make </strong><br/>void *<br/>
+(*modern_node_representation_int64_make)<br/>
+(modern_library *library,<br/>
+ int64_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat8_make </strong><br/>void *<br/>
+(*modern_node_representation_nat8_make)<br/>
+(modern_library *library,<br/>
+ uint8_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat16_make </strong><br/>void *<br/>
+(*modern_node_representation_nat16_make)<br/>
+(modern_library *library,<br/>
+ uint16_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat32_make </strong><br/>void *<br/>
+(*modern_node_representation_nat32_make)<br/>
+(modern_library *library,<br/>
+ uint32_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat64_make </strong><br/>void *<br/>
+(*modern_node_representation_nat64_make)<br/>
+(modern_library *library,<br/>
+ uint64_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_float32_make </strong><br/>void *<br/>
+(*modern_node_representation_float32_make)<br/>
+(modern_library *library,<br/>
+ float value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_float64_make </strong><br/>void *<br/>
+(*modern_node_representation_float64_make)<br/>
+(modern_library *library,<br/>
+ double value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_utf8_make </strong><br/>void *<br/>
+(*modern_node_representation_utf8_make)<br/>
+(modern_library *library,<br/>
+ uint8_t *data);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_blob_make </strong><br/>void *<br/>
+(*modern_node_representation_blob_make)<br/>
+(modern_library *library,<br/>
+ uint8_t *data, size_t bytes);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_sigma_make </strong><br/>void *<br/>
+(*modern_node_representation_sigma_make)<br/>
+(modern_library *library,<br/>
+ void *type, void *field_value, void *successor_value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_name_value_make </strong><br/>void *<br/>
+(*modern_node_representation_name_value_make)<br/>
+(modern_library *library,<br/>
+ struct modern_hash name);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_named_value_make </strong><br/>void *<br/>
+(*modern_node_representation_named_value_make)<br/>
+(modern_library *library,<br/>
+ void *type, void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_bool_type_make </strong><br/>void *<br/>
+(*modern_node_representation_bool_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_ordering_type_make </strong><br/>void *<br/>
+(*modern_node_representation_ordering_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_maybe_type_make </strong><br/>void *<br/>
+(*modern_node_representation_maybe_type_make)<br/>
+(modern_library *library,<br/>
+ void *content_type);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int8_type_make </strong><br/>void *<br/>
+(*modern_node_representation_int8_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int16_type_make </strong><br/>void *<br/>
+(*modern_node_representation_int16_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int32_type_make </strong><br/>void *<br/>
+(*modern_node_representation_int32_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int64_type_make </strong><br/>void *<br/>
+(*modern_node_representation_int64_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat8_type_make </strong><br/>void *<br/>
+(*modern_node_representation_nat8_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat16_type_make </strong><br/>void *<br/>
+(*modern_node_representation_nat16_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat32_type_make </strong><br/>void *<br/>
+(*modern_node_representation_nat32_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat64_type_make </strong><br/>void *<br/>
+(*modern_node_representation_nat64_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_float32_type_make </strong><br/>void *<br/>
+(*modern_node_representation_float32_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_float64_type_make </strong><br/>void *<br/>
+(*modern_node_representation_float64_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_utf8_type_make </strong><br/>void *<br/>
+(*modern_node_representation_utf8_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_blob_type_make </strong><br/>void *<br/>
+(*modern_node_representation_blob_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_function_type_make </strong><br/>void *<br/>
+(*modern_node_representation_function_type_make)<br/>
+(modern_library *library,<br/>
+ void *left, void *right);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_sigma_type_make </strong><br/>void *<br/>
+(*modern_node_representation_sigma_type_make)<br/>
+(modern_library *library,<br/>
+ void *field_type, void *successor);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_name_type_make </strong><br/>void *<br/>
+(*modern_node_representation_name_type_make)<br/>
+(modern_library *library);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_named_type_make </strong><br/>void *<br/>
+(*modern_node_representation_named_type_make)<br/>
+(modern_library *library,<br/>
+ struct modern_hash name, void *content_type);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_universe_type_make </strong><br/>void *<br/>
+(*modern_node_representation_universe_type_make)<br/>
+(modern_library *library,<br/>
+ uint64_t level);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_lambda_make </strong><br/>void *<br/>
+(*modern_node_representation_lambda_make)<br/>
+(modern_library *library,<br/>
+ void *content);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_lambda_apply_make</strong><br/>void *<br/>
+(*modern_node_representation_apply_make)<br/>
+(modern_library *library,<br/>
+ void *left, void *right);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_type_family_make </strong><br/>void *<br/>
+(*modern_node_representation_type_family_make)<br/>
+(modern_library *library,<br/>
+ uint64_t n_items, void **types);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_let_make </strong><br/>void *<br/>
+(*modern_node_representation_let_make)<br/>
+(modern_library *library,<br/>
+ uint64_t n_items, void **values, void *content);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_backreference_make </strong><br/>void *<br/>
+(*modern_node_representation_backreference_make)<br/>
+(modern_library *library,<br/>
+ uint64_t index);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_builtin_make </strong><br/>void *<br/>
+(*modern_node_representation_builtin_make)<br/>
+(modern_library *library,<br/>
+ uint16_t identifier);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_immutable_set </strong><br/>void <br/>
+(*modern_node_representation_immutable_set)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_canonical_hash_set </strong><br/>void<br/>
+(*modern_node_representation_canonical_hash_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ struct modern_hash hash);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_maybe_just_content_set </strong><br/>void <br/>
+(*modern_node_representation_maybe_just_content_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *content_value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int8_set </strong><br/>void <br/>
+(*modern_node_representation_int8_set)<br/>
+(modern_library *library,<br/>
+ void *node,<br/>
+ int8_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int16_set </strong><br/>void <br/>
+(*modern_node_representation_int16_set)<br/>
+(modern_library *library,<br/>
+ void *node,<br/>
+ int16_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int32_set </strong><br/>void <br/>
+(*modern_node_representation_int32_set)<br/>
+(modern_library *library,<br/>
+ void *node,<br/>
+ int32_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_int64_set </strong><br/>void <br/>
+(*modern_node_representation_int64_set)<br/>
+(modern_library *library,<br/>
+ void *node,<br/>
+ int64_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat8_set </strong><br/>void <br/>
+(*modern_node_representation_nat8_set)<br/>
+(modern_library *library,<br/>
+ void *node,<br/>
+ uint8_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat16_set </strong><br/>void <br/>
+(*modern_node_representation_nat16_set)<br/>
+(modern_library *library,<br/>
+ void *node,<br/>
+ uint16_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat32_set </strong><br/>void <br/>
+(*modern_node_representation_nat32_set)<br/>
+(modern_library *library,<br/>
+ void *node,<br/>
+ uint32_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_nat64_set </strong><br/>void <br/>
+(*modern_node_representation_nat64_set)<br/>
+(modern_library *library,<br/>
+ void *node,<br/>
+ uint64_t value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_float32_set </strong><br/>void <br/>
+(*modern_node_representation_float32_set)<br/>
+(modern_library *library,<br/>
+ void *node,<br/>
+ float value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_float64_set </strong><br/>void <br/>
+(*modern_node_representation_float64_set)<br/>
+(modern_library *library,<br/>
+ void *node,<br/>
+ double value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_utf8_data_piece_set </strong><br/>void <br/>
+(*modern_node_representation_utf8_data_piece_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ uint8_t *data,<br/>
+ size_t offset,<br/>
+ size_t old_bytes,<br/>
+ size_t new_bytes);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_blob_data_piece_set </strong><br/>void <br/>
+(*modern_node_representation_blob_data_piece_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ uint8_t *data,<br/>
+ size_t offset,<br/>
+ size_t old_bytes,<br/>
+ size_t new_bytes);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_sigma_set </strong><br/>void <br/>
+(*modern_node_representation_sigma_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *field_value,<br/>
+ void *successor);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_named_value_set </strong><br/>void <br/>
+(*modern_node_representation_named_value_set)<br/>
+(modern_library *library,<br/>
+ void *node,<br/>
+ void *type,<br/>
+ void *value);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_maybe_type_content_type_set</strong><br/>void <br/>
+(*modern_node_representation_maybe_type_content_type_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *content_type);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_function_type_left_set </strong><br/>void <br/>
+(*modern_node_representation_function_type_left_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *left);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_function_type_right_set </strong><br/>void <br/>
+(*modern_node_representation_function_type_right_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *right);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_sigma_type_field_type_set </strong><br/>void <br/>
+(*modern_node_representation_sigma_type_field_type_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *field_type);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_sigma_type_successor_set </strong><br/>void <br/>
+(*modern_node_representation_sigma_type_successor_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *successor);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_named_type_name_set </strong><br/>void <br/>
+(*modern_node_representation_named_type_name_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ struct modern_hash name);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_named_type_content_type_set</strong><br/>void <br/>
+(*modern_node_representation_named_type_content_type_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *content_type);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_universe_type_level_set </strong><br/>void <br/>
+(*modern_node_representation_universe_type_level_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ uint64_t level);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_lambda_content_set </strong><br/>void <br/>
+(*modern_node_representation_lambda_content_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *content);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_apply_left_set </strong><br/>void <br/>
+(*modern_node_representation_apply_left_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *left);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_apply_right_set </strong><br/>void <br/>
+(*modern_node_representation_apply_right_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *right);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_type_family_item_add </strong><br/>void <br/>
+(*modern_node_representation_type_family_item_add)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *item,<br/>
+ uint64_t index);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_type_family_item_remove </strong><br/>void <br/>
+(*modern_node_representation_type_family_item_remove)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ uint64_t index);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_let_item_add </strong><br/>void <br/>
+(*modern_node_representation_let_item_add)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *item,<br/>
+ uint64_t index);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_let_item_remove </strong><br/>void <br/>
+(*modern_node_representation_let_item_remove)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ uint64_t index);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_let_content_set </strong><br/>void <br/>
+(*modern_node_representation_let_content_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *content);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_backreference_index_set </strong><br/>void <br/>
+(*modern_node_representation_backreference_index_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ uint64_t index);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_representation_builtin_identifier_set </strong><br/>void <br/>
+(*modern_node_representation_builtin_identifier_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ uint16_t identifier);</p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
 </ul>
 <hr/>
 <li>
@@ -672,9 +2673,6 @@ modern_finalize<br/>
     uint64_t a;<br/>
     uint64_t b;<br/>
 };</p>
-</li>
-<li>
-<p class="binderItem"><strong>Members</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -748,9 +2746,6 @@ modern_hash_child_compute<br/>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
-</li>
-<li>
-<p class="binderItem"><strong>Members</strong></p>
 </li>
 </ul>
 <hr/>
@@ -1759,9 +3754,6 @@ modern_vfile_fd_finalize<br/>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
-</li>
-<li>
-<p class="binderItem"><strong>Members</strong></p>
 </li>
 </ul>
 <hr/>
@@ -4921,9 +6913,6 @@ modern_processor_input_make<br/>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
-</li>
-<li>
-<p class="binderItem"><strong>Members</strong></p>
 </li>
 </ul>
 <hr/>

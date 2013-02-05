@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SearchIndexes Version="1.0">
     <Documents>
-        <Document ID="2269">
-            <Title>Semantics</Title>
+        <Document ID="1958">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_compare_int8 = 160</Text>
+        </Document>
+        <Document ID="4311">
+            <Title>modern_node_representation_utf8_make </Title>
+            <Text>void *
+(*modern_node_representation_utf8_make)
+(modern_library *library,
+ uint8_t *data);</Text>
         </Document>
         <Document ID="3655">
             <Title>Semantics</Title>
@@ -31,6 +39,13 @@ Value type (detailed notation)</Text>
         <Document ID="1959">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4312">
+            <Title>modern_node_representation_blob_make </Title>
+            <Text>void *
+(*modern_node_representation_blob_make)
+(modern_library *library,
+ uint8_t *data, size_t bytes);</Text>
+        </Document>
         <Document ID="633">
             <Title>modern_builtin_identifier_ceiling_float32_nat8</Title>
         </Document>
@@ -50,6 +65,13 @@ Value type (detailed notation)</Text>
         <Document ID="2592">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_bit_not_int32 = 1666</Text>
+        </Document>
+        <Document ID="4313">
+            <Title>modern_node_representation_sigma_make </Title>
+            <Text>void *
+(*modern_node_representation_sigma_make)
+(modern_library *library,
+ void *type, void *field_value, void *successor_value);</Text>
         </Document>
         <Document ID="635">
             <Title>modern_builtin_identifier_ceiling_float32_nat16</Title>
@@ -75,6 +97,13 @@ Value type (detailed notation)</Text>
         <Document ID="636">
             <Title>modern_builtin_identifier_ceiling_float64_nat16</Title>
         </Document>
+        <Document ID="4290">
+            <Title>modern_node_representation_let_item_get </Title>
+            <Text>void *
+(*modern_node_representation_let_item_get)
+(modern_library *library,
+ void *value, uint64_t index);</Text>
+        </Document>
         <Document ID="3250">
             <Title>Synopsis</Title>
             <Text>tangent_float64 = 833
@@ -87,6 +116,13 @@ Value type (detailed notation)</Text>
         <Document ID="2210">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_hyperbolic_tangent_float32 = 1056</Text>
+        </Document>
+        <Document ID="4314">
+            <Title>modern_node_representation_name_value_make </Title>
+            <Text>void *
+(*modern_node_representation_name_value_make)
+(modern_library *library,
+ struct modern_hash name);</Text>
         </Document>
         <Document ID="637">
             <Title>modern_builtin_identifier_ceiling_float32_nat32</Title>
@@ -108,6 +144,13 @@ Value type (detailed notation)</Text>
         <Document ID="638">
             <Title>modern_builtin_identifier_ceiling_float64_nat32</Title>
         </Document>
+        <Document ID="4291">
+            <Title>modern_node_representation_let_content_get </Title>
+            <Text>void *
+(*modern_node_representation_let_content_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="3980">
             <Title>modern_builtin_identifier_make_named_type</Title>
         </Document>
@@ -126,6 +169,13 @@ Value type (detailed notation)</Text>
         <Document ID="639">
             <Title>modern_builtin_identifier_ceiling_float32_nat64</Title>
         </Document>
+        <Document ID="4315">
+            <Title>modern_node_representation_named_value_make </Title>
+            <Text>void *
+(*modern_node_representation_named_value_make)
+(modern_library *library,
+ void *type, void *value);</Text>
+        </Document>
         <Document ID="3659">
             <Title>modern_builtin_identifier_minimum_bound_nat64</Title>
         </Document>
@@ -137,6 +187,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2595">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4292">
+            <Title>modern_node_representation_backreference_index_get </Title>
+            <Text>uint64_t 
+(*modern_node_representation_backreference_index_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="3981">
             <Title>Synopsis</Title>
@@ -168,12 +225,25 @@ Value type (detailed notation)</Text>
         <Document ID="3252">
             <Title>modern_builtin_identifier_arcsine_float32</Title>
         </Document>
+        <Document ID="4316">
+            <Title>modern_node_representation_bool_type_make </Title>
+            <Text>void *
+(*modern_node_representation_bool_type_make)
+(modern_library *library);</Text>
+        </Document>
         <Document ID="2596">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_bit_not_nat8 = 1668</Text>
         </Document>
         <Document ID="1556">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4293">
+            <Title>modern_node_representation_builtin_identifier_get </Title>
+            <Text>uint16_t 
+(*modern_node_representation_builtin_identifier_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="3982">
             <Title>Semantics</Title>
@@ -196,11 +266,23 @@ float32 -> float32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4317">
+            <Title>modern_node_representation_ordering_type_make </Title>
+            <Text>void *
+(*modern_node_representation_ordering_type_make)
+(modern_library *library);</Text>
+        </Document>
         <Document ID="2597">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1557">
             <Title>Parameters</Title>
+        </Document>
+        <Document ID="4294">
+            <Title>modern_node_representation_bool_false_make </Title>
+            <Text>void *
+(*modern_node_representation_bool_false_make)
+(modern_library *library);</Text>
         </Document>
         <Document ID="3983">
             <Title>modern_builtin_identifier_make_universe_type</Title>
@@ -233,8 +315,21 @@ Value type (detailed notation)</Text>
         <Document ID="1558">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4318">
+            <Title>modern_node_representation_maybe_type_make </Title>
+            <Text>void *
+(*modern_node_representation_maybe_type_make)
+(modern_library *library,
+ void *content_type);</Text>
+        </Document>
         <Document ID="3600">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4295">
+            <Title>modern_node_representation_bool_true_make </Title>
+            <Text>void *
+(*modern_node_representation_bool_true_make)
+(modern_library *library);</Text>
         </Document>
         <Document ID="3984">
             <Title>Synopsis</Title>
@@ -273,8 +368,20 @@ Value type (detailed notation)</Text>
         <Document ID="2599">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4319">
+            <Title>modern_node_representation_int8_type_make </Title>
+            <Text>void *
+(*modern_node_representation_int8_type_make)
+(modern_library *library);</Text>
+        </Document>
         <Document ID="3601">
             <Title>modern_builtin_identifier_floor_float32_int64</Title>
+        </Document>
+        <Document ID="4296">
+            <Title>modern_node_representation_ordering_less_make </Title>
+            <Text>void *
+(*modern_node_representation_ordering_less_make)
+(modern_library *library);</Text>
         </Document>
         <Document ID="3985">
             <Title>Semantics</Title>
@@ -330,6 +437,12 @@ Value type (detailed notation)</Text>
         <Document ID="591">
             <Title>modern_builtin_identifier_round_away_from_zero_float32_nat64</Title>
         </Document>
+        <Document ID="4297">
+            <Title>modern_node_representation_ordering_equal_make </Title>
+            <Text>void *
+(*modern_node_representation_ordering_equal_make)
+(modern_library *library);</Text>
+        </Document>
         <Document ID="3986">
             <Title>Cast</Title>
         </Document>
@@ -360,6 +473,12 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="593">
             <Title>modern_builtin_identifier_round_towards_even_float32_int8</Title>
+        </Document>
+        <Document ID="4298">
+            <Title>modern_node_representation_ordering_greater_make </Title>
+            <Text>void *
+(*modern_node_representation_ordering_greater_make)
+(modern_library *library);</Text>
         </Document>
         <Document ID="3987">
             <Title>modern_builtin_identifier_cast_int8_int16</Title>
@@ -406,6 +525,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="595">
             <Title>modern_builtin_identifier_round_towards_even_float32_int16</Title>
+        </Document>
+        <Document ID="4299">
+            <Title>modern_node_representation_maybe_nothing_make </Title>
+            <Text>void *
+(*modern_node_representation_maybe_nothing_make)
+(modern_library *library,
+ void *type);</Text>
         </Document>
         <Document ID="3988">
             <Title>Synopsis</Title>
@@ -907,6 +1033,9 @@ Value type (detailed notation)</Text>
         <Document ID="118">
             <Title>moden_deserialize_input_stream</Title>
         </Document>
+        <Document ID="4247">
+            <Title>Node representations</Title>
+        </Document>
         <Document ID="3184">
             <Title>modern_builtin_identifier_sign_float32</Title>
         </Document>
@@ -962,6 +1091,12 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="119">
             <Title>Serialization</Title>
+        </Document>
+        <Document ID="4248">
+            <Title>modern_node_representation</Title>
+        </Document>
+        <Document ID="4570">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3185">
             <Title>Synopsis</Title>
@@ -1019,6 +1154,15 @@ Value type (detailed notation)</Text>
         <Document ID="3531">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4249">
+            <Title>Synopsis</Title>
+            <Text>struct modern_node_representation {
+    …
+};</Text>
+        </Document>
+        <Document ID="4571">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3186">
             <Title>Semantics</Title>
         </Document>
@@ -1048,6 +1192,9 @@ modern_hash_compute
         <Document ID="2875">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4572">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3532">
             <Title>modern_builtin_identifier_ceiling_float64_int8</Title>
         </Document>
@@ -1075,6 +1222,9 @@ modern_vfile_fd_initialize
         </Document>
         <Document ID="2876">
             <Title>equal_to_int32</Title>
+        </Document>
+        <Document ID="4573">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3533">
             <Title>Synopsis</Title>
@@ -1128,6 +1278,9 @@ int32 -> int32 -> bool
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4574">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3534">
             <Title>Semantics</Title>
         </Document>
@@ -1166,6 +1319,9 @@ Value type (detailed notation)</Text>
         <Document ID="2878">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4575">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3535">
             <Title>modern_builtin_identifier_ceiling_float32_int16</Title>
         </Document>
@@ -1190,6 +1346,9 @@ Value type (detailed notation)</Text>
         <Document ID="2879">
             <Title>equal_to_int64</Title>
         </Document>
+        <Document ID="4576">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3536">
             <Title>Synopsis</Title>
             <Text>ceiling_float32_int16 = 1314
@@ -1213,6 +1372,9 @@ Value type (detailed notation)</Text>
         <Document ID="1087">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="4577">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3537">
             <Title>Semantics</Title>
         </Document>
@@ -1233,6 +1395,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3130">
             <Title>modern_builtin_identifier_modulus_towards_negative_infinity_nat32</Title>
+        </Document>
+        <Document ID="4578">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3538">
             <Title>modern_builtin_identifier_ceiling_float64_int16</Title>
@@ -1274,6 +1439,9 @@ Value type (detailed notation)</Text>
             <Text>modern_builtin_identifier_cast_int16_blob = 10313</Text>
         </Document>
         <Document ID="3860">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4579">
             <Title>Semantics</Title>
         </Document>
         <Document ID="3539">
@@ -1408,6 +1576,9 @@ Value type (detailed notation)</Text>
  void *processor_state,
  void *stream_state);</Text>
         </Document>
+        <Document ID="4520">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="565">
             <Title>modern_builtin_identifier_round_towards_zero_float32_int32</Title>
         </Document>
@@ -1452,6 +1623,9 @@ Value type (detailed notation)</Text>
  void *processor_state,
  void *stream_state);</Text>
         </Document>
+        <Document ID="4521">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="567">
             <Title>modern_builtin_identifier_round_towards_zero_float32_int64</Title>
         </Document>
@@ -1486,6 +1660,9 @@ Value type (detailed notation)</Text>
         <Document ID="568">
             <Title>modern_builtin_identifier_round_towards_zero_float64_int64</Title>
         </Document>
+        <Document ID="4522">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="569">
             <Title>modern_builtin_identifier_round_towards_zero_float32_nat8</Title>
         </Document>
@@ -1517,6 +1694,9 @@ Value type (detailed notation)</Text>
             <Title>Semantics</Title>
         </Document>
         <Document ID="3866">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4523">
             <Title>Semantics</Title>
         </Document>
         <Document ID="4178">
@@ -1551,6 +1731,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2420">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4524">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="4179">
             <Title>modern_builtin_identifier_cast_blob_int32</Title>
@@ -1592,6 +1775,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_floor_float64_int64 = 1351</Text>
         </Document>
+        <Document ID="4525">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2076">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_modulus_towards_zero_int8 = 384</Text>
@@ -1615,6 +1801,9 @@ Value type (detailed notation)</Text>
         <Document ID="2422">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4526">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="2077">
             <Title>Semantics</Title>
         </Document>
@@ -1634,6 +1823,9 @@ Value type (detailed notation)</Text>
         <Document ID="2423">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_floor_float32_nat8 = 1352</Text>
+        </Document>
+        <Document ID="4527">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="810">
             <Title>modern_builtin_identifier_cast_nat32_int32</Title>
@@ -1680,6 +1872,9 @@ Value type (detailed notation)</Text>
         <Document ID="2424">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4528">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="812">
             <Title>modern_builtin_identifier_cast_nat32_nat8</Title>
         </Document>
@@ -1715,6 +1910,9 @@ Value type (detailed notation)</Text>
         <Document ID="2425">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_floor_float64_nat8 = 1353</Text>
+        </Document>
+        <Document ID="4529">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="814">
             <Title>modern_builtin_identifier_cast_nat32_nat64</Title>
@@ -1993,6 +2191,9 @@ Value type (detailed notation)</Text>
         <Document ID="288">
             <Title>IEEE 754-2008</Title>
         </Document>
+        <Document ID="4450">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3410">
             <Title>Synopsis</Title>
             <Text>round_away_from_zero_float32_nat64 = 1230
@@ -2060,6 +2261,9 @@ Value type (detailed notation)</Text>
         <Document ID="3411">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4451">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="771">
             <Title>modern_builtin_identifier_cast_int8_nat32</Title>
         </Document>
@@ -2086,6 +2290,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="772">
             <Title>modern_builtin_identifier_cast_int8_nat64</Title>
+        </Document>
+        <Document ID="4452">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3412">
             <Title>modern_builtin_identifier_round_away_from_zero_float64_nat64</Title>
@@ -2211,6 +2418,9 @@ Value type (detailed notation)</Text>
         <Document ID="8">
             <Title>modern_context</Title>
         </Document>
+        <Document ID="4453">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3797">
             <Title>Semantics</Title>
         </Document>
@@ -2256,6 +2466,9 @@ Value type (detailed notation)</Text>
         <Document ID="2350">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4454">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3798">
             <Title>modern_builtin_identifier_bit_and_nat16</Title>
         </Document>
@@ -2297,6 +2510,9 @@ Value type (detailed notation)</Text>
         <Document ID="2351">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_odd_float32_nat8 = 1288</Text>
+        </Document>
+        <Document ID="4455">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3799">
             <Title>Synopsis</Title>
@@ -2352,6 +2568,9 @@ Value type (detailed notation)</Text>
         <Document ID="2352">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4456">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="1696">
             <Title>Semantics</Title>
         </Document>
@@ -2376,6 +2595,9 @@ Value type (detailed notation)</Text>
         <Document ID="2353">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_odd_float64_nat8 = 1289</Text>
+        </Document>
+        <Document ID="4457">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1697">
             <Title>Parameters</Title>
@@ -2414,6 +2636,9 @@ Value type (detailed notation)</Text>
 (*modern_node_named_value_get)
 (modern_library *library,
  modern *value);</Text>
+        </Document>
+        <Document ID="4458">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="1698">
             <Title>Semantics</Title>
@@ -2484,6 +2709,9 @@ Value type (detailed notation)</Text>
 (*modern_node_maybe_type_content_type_get)
 (modern_library *library,
  modern *value);</Text>
+        </Document>
+        <Document ID="4459">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1699">
             <Title>Parameters</Title>
@@ -2620,6 +2848,13 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  modern *value);</Text>
         </Document>
+        <Document ID="4400">
+            <Title>Synopsis</Title>
+            <Text>uint16_t 
+(*modern_node_representation_nat16_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="4055">
             <Title>Semantics</Title>
         </Document>
@@ -2659,6 +2894,9 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  modern *value);</Text>
         </Document>
+        <Document ID="4401">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="4056">
             <Title>modern_builtin_identifier_cast_int64_int32</Title>
         </Document>
@@ -2697,6 +2935,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="58">
             <Title>modern_stream_lambda_is_next</Title>
+        </Document>
+        <Document ID="4402">
+            <Title>Synopsis</Title>
+            <Text>uint32_t 
+(*modern_node_representation_nat32_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="59">
             <Title>modern_stream_apply_is_next</Title>
@@ -2738,6 +2983,9 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  modern *value);</Text>
         </Document>
+        <Document ID="4403">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="490">
             <Title>modern_builtin_identifier_modulus_towards_zero_int64</Title>
         </Document>
@@ -2771,6 +3019,9 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  modern *value);</Text>
         </Document>
+        <Document ID="4380">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3340">
             <Title>modern_builtin_identifier_round_towards_zero_float64_nat8</Title>
         </Document>
@@ -2780,6 +3031,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="492">
             <Title>modern_builtin_identifier_modulus_towards_zero_nat16</Title>
+        </Document>
+        <Document ID="4404">
+            <Title>Synopsis</Title>
+            <Text>uint64_t 
+(*modern_node_representation_nat64_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="4059">
             <Title>modern_builtin_identifier_cast_int64_nat8</Title>
@@ -2815,6 +3073,9 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  modern *value);</Text>
         </Document>
+        <Document ID="4381">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3341">
             <Title>Synopsis</Title>
             <Text>round_towards_zero_float64_nat8 = 1193
@@ -2825,6 +3086,9 @@ float64 -> nat8
 Value type (detailed notation)</Text>
         </Document>
         <Document ID="2301">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4405">
             <Title>Semantics</Title>
         </Document>
         <Document ID="494">
@@ -2847,12 +3111,26 @@ Value type (detailed notation)</Text>
         <Document ID="495">
             <Title>modern_builtin_identifier_modulus_towards_negative_infinity_int8</Title>
         </Document>
+        <Document ID="4382">
+            <Title>Synopsis</Title>
+            <Text>void *
+(*modern_node_representation_value_type_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="3342">
             <Title>Semantics</Title>
         </Document>
         <Document ID="2302">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_even_float32_int16 = 1250</Text>
+        </Document>
+        <Document ID="4406">
+            <Title>Synopsis</Title>
+            <Text>float 
+(*modern_node_representation_float32_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="496">
             <Title>modern_builtin_identifier_modulus_towards_negative_infinity_int16</Title>
@@ -2866,10 +3144,16 @@ Value type (detailed notation)</Text>
         <Document ID="497">
             <Title>modern_builtin_identifier_modulus_towards_negative_infinity_int32</Title>
         </Document>
+        <Document ID="4383">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3343">
             <Title>modern_builtin_identifier_round_towards_zero_float32_nat16</Title>
         </Document>
         <Document ID="2303">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4407">
             <Title>Semantics</Title>
         </Document>
         <Document ID="498">
@@ -2897,6 +3181,13 @@ Value type (detailed notation)</Text>
         <Document ID="499">
             <Title>modern_builtin_identifier_modulus_towards_negative_infinity_nat8</Title>
         </Document>
+        <Document ID="4384">
+            <Title>Synopsis</Title>
+            <Text>int
+(*modern_node_representation_mutable_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="2280">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_away_from_zero_float64_nat8 = 1225</Text>
@@ -2920,6 +3211,13 @@ Value type (detailed notation)</Text>
         <Document ID="980">
             <Title>modern_vfile_memory_buffer_make</Title>
         </Document>
+        <Document ID="4408">
+            <Title>Synopsis</Title>
+            <Text>double 
+(*modern_node_representation_float64_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="2688">
             <Title>Semantics</Title>
         </Document>
@@ -2934,6 +3232,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="981">
             <Title>modern_vfile_memory_buffer_initialize</Title>
+        </Document>
+        <Document ID="4385">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2281">
             <Title>Semantics</Title>
@@ -2964,6 +3265,9 @@ Value type (detailed notation)</Text>
         <Document ID="1649">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="4409">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="4002">
             <Title>modern_builtin_identifier_cast_int8_nat32</Title>
         </Document>
@@ -2972,6 +3276,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="983">
             <Title>modern_vfile_memory_allocating_make</Title>
+        </Document>
+        <Document ID="4386">
+            <Title>Synopsis</Title>
+            <Text>struct modern_hash
+(*modern_node_representation_canonical_hash_get)
+(modern_library *library,
+ modern *value);</Text>
         </Document>
         <Document ID="2282">
             <Title>Synopsis</Title>
@@ -3030,6 +3341,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_compare_nat64 = 167</Text>
         </Document>
+        <Document ID="4387">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="257">
             <Title>modern_stream_nat32</Title>
         </Document>
@@ -3062,6 +3376,13 @@ Value type (detailed notation)</Text>
         <Document ID="1973">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4388">
+            <Title>Synopsis</Title>
+            <Text>void *
+(*modern_node_representation_maybe_just_content_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="259">
             <Title>modern_copy_context</Title>
         </Document>
@@ -3080,6 +3401,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="740">
             <Title>modern_builtin_identifier_length_bytes_utf8</Title>
+        </Document>
+        <Document ID="4389">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2285">
             <Title>Semantics</Title>
@@ -3188,6 +3512,12 @@ Value type (detailed notation)</Text>
         <Document ID="1977">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4330">
+            <Title>modern_node_representation_blob_type_make </Title>
+            <Text>void *
+(*modern_node_representation_blob_type_make)
+(modern_library *library);</Text>
+        </Document>
         <Document ID="4009">
             <Title>Synopsis</Title>
             <Text>cast_int16_int8 = 10247
@@ -3226,6 +3556,13 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_add_int8 = 192</Text>
         </Document>
+        <Document ID="4331">
+            <Title>modern_node_representation_function_type_make </Title>
+            <Text>void *
+(*modern_node_representation_function_type_make)
+(modern_library *library,
+ void *left, void *right);</Text>
+        </Document>
         <Document ID="500">
             <Title>modern_builtin_identifier_modulus_towards_negative_infinity_nat16</Title>
         </Document>
@@ -3253,6 +3590,13 @@ Value type (detailed notation)</Text>
         <Document ID="501">
             <Title>modern_builtin_identifier_modulus_towards_negative_infinity_nat32</Title>
         </Document>
+        <Document ID="4332">
+            <Title>modern_node_representation_sigma_type_make </Title>
+            <Text>void *
+(*modern_node_representation_sigma_type_make)
+(modern_library *library,
+ void *field_type, void *successor);</Text>
+        </Document>
         <Document ID="3676">
             <Title>Semantics</Title>
         </Document>
@@ -3268,6 +3612,12 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="503">
             <Title>modern_builtin_identifier_negate_int8</Title>
+        </Document>
+        <Document ID="4333">
+            <Title>modern_node_representation_name_type_make </Title>
+            <Text>void *
+(*modern_node_representation_name_type_make)
+(modern_library *library);</Text>
         </Document>
         <Document ID="3677">
             <Title>modern_builtin_identifier_maximum_bound_nat16</Title>
@@ -3290,6 +3640,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="505">
             <Title>modern_builtin_identifier_negate_int32</Title>
+        </Document>
+        <Document ID="4334">
+            <Title>modern_node_representation_named_type_make </Title>
+            <Text>void *
+(*modern_node_representation_named_type_make)
+(modern_library *library,
+ struct modern_hash name, void *content_type);</Text>
         </Document>
         <Document ID="3678">
             <Title>Synopsis</Title>
@@ -3337,6 +3694,13 @@ nat16 -> nat16 -> maybe nat16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4335">
+            <Title>modern_node_representation_universe_type_make </Title>
+            <Text>void *
+(*modern_node_representation_universe_type_make)
+(modern_library *library,
+ uint64_t level);</Text>
+        </Document>
         <Document ID="3679">
             <Title>Semantics</Title>
         </Document>
@@ -3366,6 +3730,13 @@ Value type (detailed notation)</Text>
         <Document ID="2961">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4336">
+            <Title>modern_node_representation_lambda_make </Title>
+            <Text>void *
+(*modern_node_representation_lambda_make)
+(modern_library *library,
+ void *content);</Text>
+        </Document>
         <Document ID="1576">
             <Title>Semantics</Title>
         </Document>
@@ -3380,6 +3751,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2962">
             <Title>modern_builtin_identifier_add_nat32</Title>
+        </Document>
+        <Document ID="4337">
+            <Title>modern_node_representation_lambda_apply_make</Title>
+            <Text>void *
+(*modern_node_representation_apply_make)
+(modern_library *library,
+ void *left, void *right);</Text>
         </Document>
         <Document ID="1577">
             <Title>Parameters</Title>
@@ -3414,6 +3792,13 @@ nat32 -> nat32 -> maybe nat32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4338">
+            <Title>modern_node_representation_type_family_make </Title>
+            <Text>void *
+(*modern_node_representation_type_family_make)
+(modern_library *library,
+ uint64_t n_items, void **types);</Text>
+        </Document>
         <Document ID="1578">
             <Title>Semantics</Title>
         </Document>
@@ -3441,6 +3826,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2964">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4339">
+            <Title>modern_node_representation_let_make </Title>
+            <Text>void *
+(*modern_node_representation_let_make)
+(modern_library *library,
+ uint64_t n_items, void **values, void *content);</Text>
         </Document>
         <Document ID="1579">
             <Title>Parameters</Title>
@@ -3639,6 +4031,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_node_type_int64_type = 29</Text>
         </Document>
+        <Document ID="4260">
+            <Title>modern_node_representation_int32_get </Title>
+        </Document>
         <Document ID="3220">
             <Title>Semantics</Title>
         </Document>
@@ -3661,6 +4056,9 @@ Value type (detailed notation)</Text>
         <Document ID="1179">
             <Title>Synopsis</Title>
             <Text>modern_node_type_nat8_type = 30</Text>
+        </Document>
+        <Document ID="4261">
+            <Title>modern_node_representation_int64_get </Title>
         </Document>
         <Document ID="3950">
             <Title>modern_builtin_identifier_get_sigma_type_field_type</Title>
@@ -3698,6 +4096,9 @@ Value type (detailed notation)</Text>
         <Document ID="953">
             <Title>modern_stream_type_definition_ordering</Title>
         </Document>
+        <Document ID="4262">
+            <Title>modern_node_representation_nat8_get </Title>
+        </Document>
         <Document ID="3951">
             <Title>Synopsis</Title>
             <Text>get_sigma_type_field_type = 2144
@@ -3732,6 +4133,9 @@ Value type (detailed notation)</Text>
         <Document ID="955">
             <Title>modern_node_ordering_equal_make</Title>
         </Document>
+        <Document ID="4263">
+            <Title>modern_node_representation_nat16_get </Title>
+        </Document>
         <Document ID="3952">
             <Title>Semantics</Title>
         </Document>
@@ -3752,6 +4156,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="957">
             <Title>modern_node_ordering_type_make</Title>
+        </Document>
+        <Document ID="4264">
+            <Title>modern_node_representation_nat32_get </Title>
         </Document>
         <Document ID="3953">
             <Title>modern_builtin_identifier_get_sigma_type_successor</Title>
@@ -3779,11 +4186,17 @@ Value type (detailed notation)</Text>
         <Document ID="1528">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4610">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="710">
             <Title>modern_builtin_identifier_bit_and_nat16</Title>
         </Document>
         <Document ID="959">
             <Title>modern_node_type_ordering_value_less</Title>
+        </Document>
+        <Document ID="4265">
+            <Title>modern_node_representation_nat64_get </Title>
         </Document>
         <Document ID="3954">
             <Title>Synopsis</Title>
@@ -3834,8 +4247,14 @@ Value type (detailed notation)</Text>
         <Document ID="2569">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4611">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="712">
             <Title>modern_builtin_identifier_bit_and_nat64</Title>
+        </Document>
+        <Document ID="4266">
+            <Title>modern_node_representation_float32_get </Title>
         </Document>
         <Document ID="3955">
             <Title>Semantics</Title>
@@ -3868,8 +4287,14 @@ modern_vfile_memory_allocating_data_piece_get
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_two_to_the_x_float32 = 672</Text>
         </Document>
+        <Document ID="4612">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="714">
             <Title>modern_builtin_identifier_bit_or_int16</Title>
+        </Document>
+        <Document ID="4267">
+            <Title>modern_node_representation_float64_get </Title>
         </Document>
         <Document ID="3956">
             <Title>modern_builtin_identifier_get_named_type_content_type</Title>
@@ -3901,8 +4326,14 @@ Value type (detailed notation)</Text>
         <Document ID="2163">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4613">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="716">
             <Title>modern_builtin_identifier_bit_or_int64</Title>
+        </Document>
+        <Document ID="4268">
+            <Title>modern_node_representation_utf8_bytes_get </Title>
         </Document>
         <Document ID="3957">
             <Title>Synopsis</Title>
@@ -3947,12 +4378,18 @@ Value type (detailed notation)</Text>
         <Document ID="717">
             <Title>modern_builtin_identifier_bit_or_nat8</Title>
         </Document>
+        <Document ID="4590">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3550">
             <Title>modern_builtin_identifier_ceiling_float64_int64</Title>
         </Document>
         <Document ID="2510">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_rotate_left_int16 = 1505</Text>
+        </Document>
+        <Document ID="4614">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="718">
             <Title>modern_builtin_identifier_bit_or_nat16</Title>
@@ -3988,6 +4425,9 @@ modern_vfile_memory_allocating_bytes_get
         <Document ID="719">
             <Title>modern_builtin_identifier_bit_or_nat32</Title>
         </Document>
+        <Document ID="4269">
+            <Title>modern_node_representation_utf8_data_piece_get </Title>
+        </Document>
         <Document ID="3551">
             <Title>Synopsis</Title>
             <Text>ceiling_float64_int64 = 1319
@@ -3998,6 +4438,12 @@ float64 -> int64
 Value type (detailed notation)</Text>
         </Document>
         <Document ID="2511">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4591">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4615">
             <Title>Semantics</Title>
         </Document>
         <Document ID="181">
@@ -4031,12 +4477,18 @@ Value type (detailed notation)</Text>
         <Document ID="182">
             <Title>modern_node_nat64_type_make</Title>
         </Document>
+        <Document ID="4592">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3552">
             <Title>Semantics</Title>
         </Document>
         <Document ID="2512">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_rotate_left_int32 = 1506</Text>
+        </Document>
+        <Document ID="4616">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="183">
             <Title>modern_node_float32_type_make</Title>
@@ -4056,10 +4508,16 @@ Value type (detailed notation)</Text>
         <Document ID="184">
             <Title>modern_node_float64_type_make</Title>
         </Document>
+        <Document ID="4593">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3553">
             <Title>modern_builtin_identifier_ceiling_float32_nat8</Title>
         </Document>
         <Document ID="2513">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4617">
             <Title>Semantics</Title>
         </Document>
         <Document ID="2897">
@@ -4091,6 +4549,9 @@ Value type (detailed notation)</Text>
         <Document ID="186">
             <Title>modern_node_utf8_type_make</Title>
         </Document>
+        <Document ID="4594">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3554">
             <Title>Synopsis</Title>
             <Text>ceiling_float32_nat8 = 1320
@@ -4114,6 +4575,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2490">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4618">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="187">
             <Title>modern_node_blob_type_make</Title>
@@ -4142,6 +4606,9 @@ Value type (detailed notation)</Text>
         <Document ID="2169">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4595">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3555">
             <Title>Semantics</Title>
         </Document>
@@ -4160,6 +4627,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_shift_right_int8 = 1472</Text>
         </Document>
+        <Document ID="4619">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2899">
             <Title>Semantics</Title>
         </Document>
@@ -4174,6 +4644,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="670">
             <Title>modern_builtin_identifier_maximum_bound_nat16</Title>
+        </Document>
+        <Document ID="4596">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3556">
             <Title>modern_builtin_identifier_ceiling_float64_nat8</Title>
@@ -4242,6 +4715,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_shift_right_int16 = 1473</Text>
         </Document>
+        <Document ID="4597">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="673">
             <Title>modern_builtin_identifier_shift_left_int8</Title>
         </Document>
@@ -4256,6 +4732,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="4214">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4598">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3558">
             <Title>Semantics</Title>
@@ -4325,6 +4804,9 @@ Value type (detailed notation)</Text>
         <Document ID="676">
             <Title>modern_builtin_identifier_shift_left_int64</Title>
         </Document>
+        <Document ID="4599">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="4192">
             <Title>Synopsis</Title>
             <Text>cast_blob_nat32 = 10308
@@ -4369,6 +4851,19 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2841">
             <Title>Overview</Title>
+            <Text>A library instance is an opaque structure which represents a single configured copy of the system.  It is a basic type which, once constructed, is passed to every function.  It contains structures of pointers to callbacks which are used to accomplish all the low-level tasks the library needs to conduct.  Callback structures are used in several places in the system, and not all of them are part of the library instance - only the most fundamental ones.
+
+In all callbacks, the library is written with the expectation that the client code may longjmp() or cause program termination at any time, and will not crash upon these events.  Allocation failure is also not the unrecoverable condition that it is in some systems; it is permitted, and will cause neither crashes nor memory leaks.  The test suite verifies all of these behaviours extensively.
+
+Library instances (as all of Modern Data) are threading-naive; that is, they use no thread-local storage, but also do no internal locking.  No special action is needed to migrate a library instance from one operating-system thread to another, but only one thread may be in the midst of a library call at any given moment.
+
+The callback structures are the error handler, the allocator, and the node routines; the client state, an opaque pointer for the use of client code, is also part of the library instance’s state.  None of these can be changed once the library instance is initialized, but they can be retrieved and inspected at any time.
+
+The most fundamental task is error handling.  In order to allow the system to be robust against allocation failure, it is necessary that there be no heap allocation required to process an error!  As such, each possible error condition has its own callback.  This leads to a verbose style, but is typically what one wants in any event.
+
+The next-most-important task is memory allocation.  This is straightforward and does not need further discussion.
+
+The final important task is to handle primitive operations on the representation of nodes.  The library provides a default implementation here, but in order to bind more closely with non-C programming languages, the capability to provide one’s own is also provided.  All access to the internal structures is indirected through these callbacks, with the result that all the basic operations (serialization, evaluation, and so on) can be performed regardless of the actual node representation.</Text>
         </Document>
         <Document ID="3881">
             <Title>Synopsis</Title>
@@ -4504,6 +4999,9 @@ Value type (detailed notation)</Text>
         <Document ID="433">
             <Title>modern_builtin_identifier_compare_nat8</Title>
         </Document>
+        <Document ID="4540">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="4195">
             <Title>Synopsis</Title>
             <Text>cast_blob_nat64 = 10309
@@ -4579,6 +5077,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2844">
             <Title>Overview</Title>
+            <Text>The C-based library is a major part of the Modern Data system.  It is the foundation for the library in all other languages, due to the ease of linking against and using C.  It is designed to allow pieces of the system to be swapped out with ease, not just the allocator but the actual representation of nodes.  There is a fair amount of setup that needs to be done in order to use it, so it is recommended to read these overview sections in order.
+
+In order to be considerate about namespace, all symbols that the library exports start with the string “modern_”.</Text>
         </Document>
         <Document ID="3884">
             <Title>Synopsis</Title>
@@ -4588,6 +5089,9 @@ Value type (abstract notation)
 nat32 -> maybe utf8
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4541">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="4196">
             <Title>Semantics</Title>
@@ -4622,6 +5126,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3885">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4542">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="437">
             <Title>modern_builtin_identifier_compare_float32</Title>
@@ -4659,6 +5166,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3886">
             <Title>modern_builtin_identifier_character_offset_to_byte_offset_utf8</Title>
+        </Document>
+        <Document ID="4543">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3503">
             <Title>Synopsis</Title>
@@ -4741,6 +5251,9 @@ modern_evaluate
         <Document ID="2440">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4544">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="4199">
             <Title>Semantics</Title>
         </Document>
@@ -4790,6 +5303,9 @@ modern_resolve_backreferences
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_floor_float64_float64 = 1361
 </Text>
+        </Document>
+        <Document ID="4545">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2096">
             <Title>Synopsis</Title>
@@ -4850,6 +5366,9 @@ modern_deserialize_memory
         <Document ID="2442">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4546">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="2097">
             <Title>Semantics</Title>
         </Document>
@@ -4877,6 +5396,9 @@ modern_deserialize_file
         <Document ID="2443">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_minimum_bound_int8 = 1376</Text>
+        </Document>
+        <Document ID="4547">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2098">
             <Title>Synopsis</Title>
@@ -4926,6 +5448,9 @@ modern_deserialize_fd
         </Document>
         <Document ID="2444">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4548">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="2099">
             <Title>Semantics</Title>
@@ -4994,6 +5519,9 @@ modern_deserialize_vfile
         <Document ID="2445">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_minimum_bound_int16 = 1377</Text>
+        </Document>
+        <Document ID="4549">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1789">
             <Title>Semantics</Title>
@@ -5356,6 +5884,9 @@ Value type (detailed notation)</Text>
         <Document ID="3837">
             <Title>modern_builtin_identifier_bit_xor_int32</Title>
         </Document>
+        <Document ID="4470">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3430">
             <Title>modern_builtin_identifier_round_towards_even_float64_int16</Title>
         </Document>
@@ -5406,6 +5937,9 @@ int32 -> int32 -> int32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4471">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3431">
             <Title>Synopsis</Title>
             <Text>round_towards_even_float64_int16 = 1251
@@ -5442,6 +5976,9 @@ Value type (detailed notation)</Text>
         <Document ID="640">
             <Title>modern_builtin_identifier_ceiling_float64_nat64</Title>
         </Document>
+        <Document ID="4472">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3432">
             <Title>Semantics</Title>
         </Document>
@@ -5465,6 +6002,9 @@ Value type (detailed notation)</Text>
         <Document ID="642">
             <Title>modern_builtin_identifier_floor_float64_int8</Title>
         </Document>
+        <Document ID="4473">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3433">
             <Title>modern_builtin_identifier_round_towards_even_float32_int32</Title>
         </Document>
@@ -5483,7 +6023,7 @@ Value type (detailed notation)</Text>
 modern_library_initialize
 (struct modern_error_handler *error_handler,
  struct modern_allocator *allocator,
- struct modern_node *node,
+ struct modern_node_representation *node,
  void (*finalizer)(void *client_state),
  void *client_state);</Text>
         </Document>
@@ -5492,6 +6032,9 @@ modern_library_initialize
         </Document>
         <Document ID="644">
             <Title>modern_builtin_identifier_floor_float64_int16</Title>
+        </Document>
+        <Document ID="4474">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="2370">
             <Title>Semantics</Title>
@@ -5551,6 +6094,9 @@ Value type (detailed notation)</Text>
         <Document ID="646">
             <Title>modern_builtin_identifier_floor_float64_int32</Title>
         </Document>
+        <Document ID="4475">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2371">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_ceiling_float32_int8 = 1312</Text>
@@ -5591,6 +6137,9 @@ Value type (detailed notation)</Text>
         <Document ID="3436">
             <Title>modern_builtin_identifier_round_towards_even_float64_int32</Title>
         </Document>
+        <Document ID="4476">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="62">
             <Title>modern_stream_end</Title>
         </Document>
@@ -5629,6 +6178,9 @@ Value type (detailed notation)</Text>
         <Document ID="65">
             <Title>modern_vfile_read</Title>
         </Document>
+        <Document ID="4477">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="402">
             <Title>modern_stream_bool_false</Title>
         </Document>
@@ -5662,6 +6214,9 @@ Value type (detailed notation)</Text>
         <Document ID="3438">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4478">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="69">
             <Title>modern_node_type_int16_value</Title>
         </Document>
@@ -5685,6 +6240,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3031">
             <Title>modern_builtin_identifier_multiply_float64</Title>
+        </Document>
+        <Document ID="4479">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2375">
             <Title>Synopsis</Title>
@@ -5798,6 +6356,13 @@ Value type (detailed notation)</Text>
 (*modern_node_nat8_type_make)
 (modern_library *library);</Text>
         </Document>
+        <Document ID="4420">
+            <Title>Synopsis</Title>
+            <Text>void *
+(*modern_node_representation_sigma_successor_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="4075">
             <Title>Synopsis</Title>
             <Text>cast_nat8_int16 = 10269
@@ -5835,6 +6400,9 @@ Value type (detailed notation)</Text>
 (*modern_node_nat16_type_make)
 (modern_library *library);</Text>
         </Document>
+        <Document ID="4421">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="4076">
             <Title>Semantics</Title>
         </Document>
@@ -5850,6 +6418,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3036">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4422">
+            <Title>Synopsis</Title>
+            <Text>struct modern_hash
+(*modern_node_representation_name_value_hash_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="4077">
             <Title>modern_builtin_identifier_cast_nat8_int32</Title>
@@ -5871,6 +6446,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3037">
             <Title>modern_builtin_identifier_divide_towards_zero_int16</Title>
+        </Document>
+        <Document ID="4423">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="4078">
             <Title>Synopsis</Title>
@@ -5910,6 +6488,13 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_even_float64_nat16 = 1259</Text>
         </Document>
+        <Document ID="4424">
+            <Title>Synopsis</Title>
+            <Text>void *
+(*modern_node_representation_named_value_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="4079">
             <Title>Semantics</Title>
         </Document>
@@ -5936,6 +6521,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3361">
             <Title>modern_builtin_identifier_round_towards_zero_float32_float32</Title>
+        </Document>
+        <Document ID="4425">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3769">
             <Title>Synopsis</Title>
@@ -5972,6 +6560,13 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_even_float32_nat32 = 1260</Text>
         </Document>
+        <Document ID="4426">
+            <Title>Synopsis</Title>
+            <Text>void *
+(*modern_node_representation_maybe_type_content_type_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="1666">
             <Title>Semantics</Title>
         </Document>
@@ -5986,6 +6581,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="366">
             <Title>modern_node_builtin_identifier_get</Title>
+        </Document>
+        <Document ID="4427">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1667">
             <Title>Parameters</Title>
@@ -6011,6 +6609,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="368">
             <Title>modern_node_function_type_make</Title>
+        </Document>
+        <Document ID="4428">
+            <Title>Synopsis</Title>
+            <Text>void *
+(*modern_node_representation_function_type_left_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="1668">
             <Title>Semantics</Title>
@@ -6057,6 +6662,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="850">
             <Title>modern_builtin_identifier_cast_blob_nat8</Title>
+        </Document>
+        <Document ID="4429">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1669">
             <Title>Parameters</Title>
@@ -6326,6 +6934,14 @@ Value type (detailed notation)</Text>
         <Document ID="1997">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4350">
+            <Title>modern_node_representation_nat16_set </Title>
+            <Text>void 
+(*modern_node_representation_nat16_set)
+(modern_library *library,
+ void *node,
+ uint16_t value);</Text>
+        </Document>
         <Document ID="3310">
             <Title>Synopsis</Title>
             <Text>hyperbolic_arctangent_float64 = 1153
@@ -6382,6 +6998,14 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_subtract_int8 = 224</Text>
         </Document>
+        <Document ID="4351">
+            <Title>modern_node_representation_nat32_set </Title>
+            <Text>void 
+(*modern_node_representation_nat32_set)
+(modern_library *library,
+ void *node,
+ uint32_t value);</Text>
+        </Document>
         <Document ID="3311">
             <Title>Semantics</Title>
         </Document>
@@ -6410,6 +7034,14 @@ Value type (detailed notation)</Text>
         <Document ID="1999">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4352">
+            <Title>modern_node_representation_nat64_set </Title>
+            <Text>void 
+(*modern_node_representation_nat64_set)
+(modern_library *library,
+ void *node,
+ uint64_t value);</Text>
+        </Document>
         <Document ID="3312">
             <Title>Rounding</Title>
         </Document>
@@ -6427,6 +7059,14 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1592">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4353">
+            <Title>modern_node_representation_float32_set </Title>
+            <Text>void 
+(*modern_node_representation_float32_set)
+(modern_library *library,
+ void *node,
+ float value);</Text>
         </Document>
         <Document ID="3313">
             <Title>modern_builtin_identifier_round_towards_zero_float32_int8</Title>
@@ -6469,6 +7109,14 @@ float32 -> int8
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4354">
+            <Title>modern_node_representation_float64_set </Title>
+            <Text>void 
+(*modern_node_representation_float64_set)
+(modern_library *library,
+ void *node,
+ double value);</Text>
+        </Document>
         <Document ID="3698">
             <Title>Semantics</Title>
         </Document>
@@ -6498,6 +7146,17 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2980">
             <Title>modern_builtin_identifier_subtract_int32</Title>
+        </Document>
+        <Document ID="4355">
+            <Title>modern_node_representation_utf8_data_piece_set </Title>
+            <Text>void 
+(*modern_node_representation_utf8_data_piece_set)
+(modern_library *library,
+ void *value,
+ uint8_t *data,
+ size_t offset,
+ size_t old_bytes,
+ size_t new_bytes);</Text>
         </Document>
         <Document ID="3699">
             <Title>modern_builtin_identifier_shift_left_nat8</Title>
@@ -6544,6 +7203,17 @@ int32 -> int32 -> maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4356">
+            <Title>modern_node_representation_blob_data_piece_set </Title>
+            <Text>void 
+(*modern_node_representation_blob_data_piece_set)
+(modern_library *library,
+ void *value,
+ uint8_t *data,
+ size_t offset,
+ size_t old_bytes,
+ size_t new_bytes);</Text>
+        </Document>
         <Document ID="1596">
             <Title>Semantics</Title>
         </Document>
@@ -6573,6 +7243,15 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="570">
             <Title>modern_builtin_identifier_round_towards_zero_float64_nat8</Title>
+        </Document>
+        <Document ID="4357">
+            <Title>modern_node_representation_sigma_set </Title>
+            <Text>void 
+(*modern_node_representation_sigma_set)
+(modern_library *library,
+ void *value,
+ void *field_value,
+ void *successor);</Text>
         </Document>
         <Document ID="1597">
             <Title>Parameters</Title>
@@ -6609,6 +7288,15 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1598">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4358">
+            <Title>modern_node_representation_named_value_set </Title>
+            <Text>void 
+(*modern_node_representation_named_value_set)
+(modern_library *library,
+ void *node,
+ void *type,
+ void *value);</Text>
         </Document>
         <Document ID="3640">
             <Title>Semantics</Title>
@@ -6653,6 +7341,14 @@ Value type (abstract notation)
 int64 -> int64 -> maybe int64
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4359">
+            <Title>modern_node_representation_maybe_type_content_type_set</Title>
+            <Text>void 
+(*modern_node_representation_maybe_type_content_type_set)
+(modern_library *library,
+ void *value,
+ void *content_type);</Text>
         </Document>
         <Document ID="574">
             <Title>modern_builtin_identifier_round_towards_zero_float64_nat32</Title>
@@ -6773,6 +7469,14 @@ nat8 -> nat8 -> maybe nat8
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4300">
+            <Title>modern_node_representation_maybe_just_make </Title>
+            <Text>void *
+(*modern_node_representation_maybe_just_make)
+(modern_library *library,
+ void *type,
+ void *content_value);</Text>
+        </Document>
         <Document ID="3644">
             <Title>modern_builtin_identifier_minimum_bound_int32</Title>
         </Document>
@@ -6806,6 +7510,13 @@ Value type (detailed notation)</Text>
         <Document ID="2988">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4301">
+            <Title>modern_node_representation_int8_make </Title>
+            <Text>void *
+(*modern_node_representation_int8_make)
+(modern_library *library,
+ int8_t value);</Text>
+        </Document>
         <Document ID="3645">
             <Title>Synopsis</Title>
             <Text>minimum_bound_int32 = 1378
@@ -6835,6 +7546,13 @@ Value type (detailed notation)</Text>
         <Document ID="2989">
             <Title>modern_builtin_identifier_subtract_nat16</Title>
         </Document>
+        <Document ID="4302">
+            <Title>modern_node_representation_int16_make </Title>
+            <Text>void *
+(*modern_node_representation_int16_make)
+(modern_library *library,
+ int16_t value);</Text>
+        </Document>
         <Document ID="3646">
             <Title>Semantics</Title>
         </Document>
@@ -6853,6 +7571,13 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_node_type_builtin = 48</Text>
         </Document>
+        <Document ID="4303">
+            <Title>modern_node_representation_int32_make </Title>
+            <Text>void *
+(*modern_node_representation_int32_make)
+(modern_library *library,
+ int32_t value);</Text>
+        </Document>
         <Document ID="3647">
             <Title>modern_builtin_identifier_minimum_bound_int64</Title>
         </Document>
@@ -6868,12 +7593,22 @@ Value type (detailed notation)</Text>
         <Document ID="1198">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4280">
+            <Title>modern_node_representation_sigma_type_successor_get </Title>
+        </Document>
         <Document ID="3240">
             <Title>modern_builtin_identifier_cosine_float32</Title>
         </Document>
         <Document ID="2200">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_arctangent_fraction_float64 = 961</Text>
+        </Document>
+        <Document ID="4304">
+            <Title>modern_node_representation_int64_make </Title>
+            <Text>void *
+(*modern_node_representation_int64_make)
+(modern_library *library,
+ int64_t value);</Text>
         </Document>
         <Document ID="3648">
             <Title>Synopsis</Title>
@@ -6919,6 +7654,20 @@ float32 -> float32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4281">
+            <Title>modern_node_representation_named_type_name_get </Title>
+            <Text>struct modern_hash
+(*modern_node_representation_named_type_name_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
+        <Document ID="4305">
+            <Title>modern_node_representation_nat8_make </Title>
+            <Text>void *
+(*modern_node_representation_nat8_make)
+(modern_library *library,
+ uint8_t value);</Text>
+        </Document>
         <Document ID="3649">
             <Title>Semantics</Title>
         </Document>
@@ -6933,6 +7682,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2585">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4282">
+            <Title>modern_node_representation_named_type_content_type_get</Title>
+            <Text>void *
+(*modern_node_representation_named_type_content_type_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="3971">
             <Title>modern_builtin_identifier_make_function_type</Title>
@@ -6950,6 +7706,13 @@ Value type (detailed notation)</Text>
         <Document ID="3242">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4306">
+            <Title>modern_node_representation_nat16_make </Title>
+            <Text>void *
+(*modern_node_representation_nat16_make)
+(modern_library *library,
+ uint16_t value);</Text>
+        </Document>
         <Document ID="2586">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_bit_xor_nat64 = 1639</Text>
@@ -6959,6 +7722,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="823">
             <Title>modern_builtin_identifier_cast_blob_utf8</Title>
+        </Document>
+        <Document ID="4283">
+            <Title>modern_node_representation_universe_type_level_get </Title>
+            <Text>uint64_t 
+(*modern_node_representation_universe_type_level_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="3972">
             <Title>Synopsis</Title>
@@ -6987,6 +7757,13 @@ Value type (detailed notation)</Text>
         <Document ID="3243">
             <Title>modern_builtin_identifier_cosine_float64</Title>
         </Document>
+        <Document ID="4307">
+            <Title>modern_node_representation_nat32_make </Title>
+            <Text>void *
+(*modern_node_representation_nat32_make)
+(modern_library *library,
+ uint32_t value);</Text>
+        </Document>
         <Document ID="2587">
             <Title>Semantics</Title>
         </Document>
@@ -6995,6 +7772,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="825">
             <Title>modern_builtin_identifier_cast_blob_name</Title>
+        </Document>
+        <Document ID="4284">
+            <Title>modern_node_representation_lambda_content_get </Title>
+            <Text>void *
+(*modern_node_representation_lambda_content_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="3973">
             <Title>Semantics</Title>
@@ -7027,12 +7811,26 @@ modern_vfile_memory_buffer_initialize
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_cosine_float64 = 801</Text>
         </Document>
+        <Document ID="4308">
+            <Title>modern_node_representation_nat64_make </Title>
+            <Text>void *
+(*modern_node_representation_nat64_make)
+(modern_library *library,
+ uint64_t value);</Text>
+        </Document>
         <Document ID="2588">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_bit_not_int8 = 1664</Text>
         </Document>
         <Document ID="1548">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4285">
+            <Title>modern_node_representation_apply_left_get </Title>
+            <Text>void *
+(*modern_node_representation_apply_left_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="3974">
             <Title>modern_builtin_identifier_make_named_value</Title>
@@ -7064,6 +7862,20 @@ modern_vfile_memory_buffer_initialize
         <Document ID="290">
             <Title>Floating-point numbers</Title>
             <Text>The floating-point datatypes used by Modern Data are a subset of the “interchange formats” defined by IEEE 754-2008.</Text>
+        </Document>
+        <Document ID="4309">
+            <Title>modern_node_representation_float32_make </Title>
+            <Text>void *
+(*modern_node_representation_float32_make)
+(modern_library *library,
+ float value);</Text>
+        </Document>
+        <Document ID="4286">
+            <Title>modern_node_representation_apply_right_get </Title>
+            <Text>void *
+(*modern_node_representation_apply_right_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="3975">
             <Title>Synopsis</Title>
@@ -7107,6 +7919,13 @@ Value type (detailed notation)</Text>
         <Document ID="292">
             <Title>Natural numbers</Title>
         </Document>
+        <Document ID="4287">
+            <Title>modern_node_representation_type_family_count_get </Title>
+            <Text>uint64_t 
+(*modern_node_representation_type_family_count_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="3976">
             <Title>Semantics</Title>
         </Document>
@@ -7139,6 +7958,13 @@ modern_vfile_memory_buffer_make
         </Document>
         <Document ID="294">
             <Title>Text</Title>
+        </Document>
+        <Document ID="4288">
+            <Title>modern_node_representation_type_family_item_get </Title>
+            <Text>void *
+(*modern_node_representation_type_family_item_get)
+(modern_library *library,
+ void *value, uint64_t index);</Text>
         </Document>
         <Document ID="3977">
             <Title>modern_builtin_identifier_make_sigma_type</Title>
@@ -7178,6 +8004,13 @@ modern_vfile_memory_buffer_make
             <Text>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libraries simply use the platform’s largest available floating-point type, which is usually 80 bits, for all function parameters and return values, while converting these to and from 128-bit representations for interchange.
 
 Should 128-bit floats become practical on the key platforms where Modern Data is supported, it is expected that the API will be changed to use these types, breaking linking compatibility but retaining source and over-the-wire compatibility.  Hence, code linked against present versions of the library will interoperate with future systems which use 128-bit floats natively, but will never be able to directly use more precision than the system has available.</Text>
+        </Document>
+        <Document ID="4289">
+            <Title>modern_node_representation_let_count_get </Title>
+            <Text>uint64_t 
+(*modern_node_representation_let_count_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="3978">
             <Title>Synopsis</Title>
@@ -7519,7 +8352,7 @@ Value type (detailed notation)</Text>
             <Title>modern_stream_type_magic_number</Title>
         </Document>
         <Document ID="4235">
-            <Title>modern_library_node_get</Title>
+            <Title>modern_library_node_representation_get</Title>
         </Document>
         <Document ID="1820">
             <Title>Parameters</Title>
@@ -7566,7 +8399,7 @@ Value type (detailed notation)</Text>
         <Document ID="4236">
             <Title>Synopsis</Title>
             <Text>struct modern_node *
-modern_library_node_get
+modern_library_node_representation_get
 (modern_library *library);</Text>
         </Document>
         <Document ID="1821">
@@ -7692,6 +8525,9 @@ Of course, it is expected that sets of types for some particular purpose will be
  void *processor_state,
  void *stream_state);</Text>
         </Document>
+        <Document ID="4560">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3520">
             <Title>modern_builtin_identifier_round_towards_odd_float64_nat64</Title>
         </Document>
@@ -7737,6 +8573,9 @@ Value type (detailed notation)</Text>
         <Document ID="303">
             <Title>modern_evaluate</Title>
         </Document>
+        <Document ID="4561">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3521">
             <Title>Synopsis</Title>
             <Text>round_towards_odd_float64_nat64 = 1295
@@ -7776,6 +8615,9 @@ Value type (detailed notation)</Text>
         <Document ID="305">
             <Title>modern_error_handler_universe_level_overflow</Title>
         </Document>
+        <Document ID="4562">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3522">
             <Title>Semantics</Title>
         </Document>
@@ -7805,6 +8647,9 @@ modern_finalize
         <Document ID="307">
             <Title>modern_error_handler_not_applicable</Title>
         </Document>
+        <Document ID="4563">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3523">
             <Title>modern_builtin_identifier_round_towards_odd_float32_float32</Title>
         </Document>
@@ -7825,6 +8670,9 @@ modern_finalize
         </Document>
         <Document ID="2867">
             <Title>equal_to_bool</Title>
+        </Document>
+        <Document ID="4564">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3524">
             <Title>Synopsis</Title>
@@ -7872,6 +8720,9 @@ bool -> bool -> bool
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4565">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3525">
             <Title>Semantics</Title>
         </Document>
@@ -7894,6 +8745,9 @@ Value type (detailed notation)</Text>
         <Document ID="2869">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4566">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3526">
             <Title>modern_builtin_identifier_round_towards_odd_float64_float64</Title>
         </Document>
@@ -7911,6 +8765,9 @@ Value type (detailed notation)</Text>
             <Text>struct modern_allocator {
     …
 };</Text>
+        </Document>
+        <Document ID="4567">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3527">
             <Title>Synopsis</Title>
@@ -7941,6 +8798,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3120">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4568">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3528">
             <Title>Semantics</Title>
@@ -8013,6 +8873,9 @@ In addition to and built on top of the built-in values, Modern Data also include
         <Document ID="2465">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_maximum_bound_int64 = 1411</Text>
+        </Document>
+        <Document ID="4569">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="990">
             <Title>modern_vfile_stdio_finalize</Title>
@@ -8146,6 +9009,9 @@ Value type (detailed notation)</Text>
         <Document ID="266">
             <Title>modern_library_error_handler_get</Title>
         </Document>
+        <Document ID="4510">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="4165">
             <Title>Synopsis</Title>
             <Text>cast_blob_name = 10299
@@ -8205,6 +9071,9 @@ Value type (detailed notation)</Text>
         <Document ID="3854">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4511">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="4166">
             <Title>Semantics</Title>
         </Document>
@@ -8241,6 +9110,9 @@ modern_library_client_state_get
         </Document>
         <Document ID="750">
             <Title>modern_builtin_identifier_get_sigma_field_value</Title>
+        </Document>
+        <Document ID="4512">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="999">
             <Title>modern_stream</Title>
@@ -8282,6 +9154,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="752">
             <Title>modern_builtin_identifier_get_named_value</Title>
+        </Document>
+        <Document ID="4513">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="4168">
             <Title>Synopsis</Title>
@@ -8326,6 +9201,9 @@ Value type (detailed notation)</Text>
         <Document ID="3857">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4490">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="71">
             <Title>int64_value_modern_node_type</Title>
         </Document>
@@ -8337,6 +9215,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3450">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4514">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="72">
             <Title>nat8_value_modern_node_type</Title>
@@ -8392,6 +9273,12 @@ modern_library_finalize
         <Document ID="75">
             <Title>nat64_value_modern_node_type</Title>
         </Document>
+        <Document ID="4491">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4515">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2795">
             <Title>Semantics</Title>
         </Document>
@@ -8426,6 +9313,9 @@ int16 -> int16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4492">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3452">
             <Title>Synopsis</Title>
             <Text>round_towards_even_float32_nat16 = 1258
@@ -8437,6 +9327,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2412">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4516">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="758">
             <Title>modern_builtin_identifier_get_universe_type_level</Title>
@@ -8463,6 +9356,9 @@ Value type (detailed notation)</Text>
         <Document ID="759">
             <Title>modern_builtin_identifier_make_sigma</Title>
         </Document>
+        <Document ID="4493">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3453">
             <Title>Semantics</Title>
         </Document>
@@ -8472,6 +9368,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="511">
             <Title>modern_builtin_identifier_absolute_value_int32</Title>
+        </Document>
+        <Document ID="4517">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2797">
             <Title>Semantics</Title>
@@ -8496,6 +9395,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_divide_towards_negative_infinity_nat32 = 326</Text>
         </Document>
+        <Document ID="4494">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="2390">
             <Title>Semantics</Title>
         </Document>
@@ -8514,6 +9416,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3454">
             <Title>modern_builtin_identifier_round_towards_even_float64_nat16</Title>
+        </Document>
+        <Document ID="4518">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="2798">
             <Title>Synopsis</Title>
@@ -8543,6 +9448,9 @@ Value type (detailed notation)</Text>
         <Document ID="2069">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4495">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2391">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_ceiling_float32_nat16 = 1322</Text>
@@ -8570,6 +9478,9 @@ Value type (detailed notation)</Text>
         <Document ID="515">
             <Title>modern_builtin_identifier_sign_int8</Title>
         </Document>
+        <Document ID="4519">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2799">
             <Title>Semantics</Title>
         </Document>
@@ -8584,6 +9495,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="516">
             <Title>modern_builtin_identifier_sign_int16</Title>
+        </Document>
+        <Document ID="4496">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="2392">
             <Title>Semantics</Title>
@@ -8619,6 +9533,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="518">
             <Title>modern_builtin_identifier_sign_int64</Title>
+        </Document>
+        <Document ID="4497">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2393">
             <Title>Synopsis</Title>
@@ -8675,6 +9592,9 @@ Value type (abstract notation)
 nat16 -> nat16 -> maybe nat16
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4498">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="2394">
             <Title>Semantics</Title>
@@ -8740,6 +9660,9 @@ Value type (detailed notation)</Text>
             <Text>modern_builtin_identifier_floor_float32_int64 = 1350</Text>
         </Document>
         <Document ID="3459">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4499">
             <Title>Semantics</Title>
         </Document>
         <Document ID="4092">
@@ -8876,6 +9799,9 @@ Value type (detailed notation)</Text>
  modern *value,
  modern *content_value);</Text>
         </Document>
+        <Document ID="4440">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3400">
             <Title>modern_builtin_identifier_round_away_from_zero_float64_nat16</Title>
         </Document>
@@ -8946,6 +9872,9 @@ float64 -> nat16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4441">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="472">
             <Title>modern_builtin_identifier_divide_towards_zero_int64</Title>
         </Document>
@@ -8989,6 +9918,9 @@ Value type (detailed notation)</Text>
         <Document ID="1681">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="4442">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3402">
             <Title>Semantics</Title>
         </Document>
@@ -9019,6 +9951,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="475">
             <Title>modern_builtin_identifier_divide_towards_zero_nat32</Title>
+        </Document>
+        <Document ID="4443">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3403">
             <Title>modern_builtin_identifier_round_away_from_zero_float32_nat32</Title>
@@ -9085,6 +10020,9 @@ Value type (detailed notation)</Text>
         <Document ID="2340">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4444">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="4099">
             <Title>Synopsis</Title>
             <Text>cast_nat16_int32 = 10277
@@ -9142,6 +10080,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_odd_float64_int16 = 1283</Text>
         </Document>
+        <Document ID="4445">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="960">
             <Title>modern_node_type_ordering_value_equal</Title>
         </Document>
@@ -9176,6 +10117,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2342">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4446">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="962">
             <Title>ordering_type_modern_node_type</Title>
@@ -9218,6 +10162,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="963">
             <Title>modern_resolve_backreferences</Title>
+        </Document>
+        <Document ID="4447">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1687">
             <Title>Parameters</Title>
@@ -9267,6 +10214,9 @@ Note that the diagram also shows a vfile being obtained from the system.  This i
 (*modern_node_nat64_get)
 (modern_library *library,
  modern *value);</Text>
+        </Document>
+        <Document ID="4448">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="1688">
             <Title>Semantics</Title>
@@ -9324,6 +10274,9 @@ Note that the diagram also shows a vfile being obtained from the system.  This i
 (*modern_node_float32_get)
 (modern_library *library,
  modern *value);</Text>
+        </Document>
+        <Document ID="4449">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1689">
             <Title>Parameters</Title>
@@ -9631,6 +10584,15 @@ Value type (detailed notation)</Text>
         <Document ID="3330">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4370">
+            <Title>modern_node_representation_type_family_item_add </Title>
+            <Text>void 
+(*modern_node_representation_type_family_item_add)
+(modern_library *library,
+ void *value,
+ void *item,
+ uint64_t index);</Text>
+        </Document>
         <Document ID="4049">
             <Title>Semantics</Title>
         </Document>
@@ -9656,6 +10618,14 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  modern *value);</Text>
         </Document>
+        <Document ID="4371">
+            <Title>modern_node_representation_type_family_item_remove </Title>
+            <Text>void 
+(*modern_node_representation_type_family_item_remove)
+(modern_library *library,
+ void *value,
+ uint64_t index);</Text>
+        </Document>
         <Document ID="3331">
             <Title>modern_builtin_identifier_round_towards_zero_float32_int64</Title>
         </Document>
@@ -9678,6 +10648,15 @@ Value type (detailed notation)</Text>
         <Document ID="196">
             <Title>modern_node_type_family_make</Title>
         </Document>
+        <Document ID="4372">
+            <Title>modern_node_representation_let_item_add </Title>
+            <Text>void 
+(*modern_node_representation_let_item_add)
+(modern_library *library,
+ void *value,
+ void *item,
+ uint64_t index);</Text>
+        </Document>
         <Document ID="3332">
             <Title>Synopsis</Title>
             <Text>round_towards_zero_float32_int64 = 1190
@@ -9699,6 +10678,14 @@ Value type (detailed notation)</Text>
         <Document ID="198">
             <Title>Values</Title>
         </Document>
+        <Document ID="4373">
+            <Title>modern_node_representation_let_item_remove </Title>
+            <Text>void 
+(*modern_node_representation_let_item_remove)
+(modern_library *library,
+ void *value,
+ uint64_t index);</Text>
+        </Document>
         <Document ID="3333">
             <Title>Semantics</Title>
         </Document>
@@ -9714,6 +10701,14 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="680">
             <Title>modern_builtin_identifier_shift_left_nat64</Title>
+        </Document>
+        <Document ID="4374">
+            <Title>modern_node_representation_let_content_set </Title>
+            <Text>void 
+(*modern_node_representation_let_content_set)
+(modern_library *library,
+ void *value,
+ void *content);</Text>
         </Document>
         <Document ID="2270">
             <Title>Synopsis</Title>
@@ -9736,6 +10731,14 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="682">
             <Title>modern_builtin_identifier_shift_right_int16</Title>
+        </Document>
+        <Document ID="4375">
+            <Title>modern_node_representation_backreference_index_set </Title>
+            <Text>void 
+(*modern_node_representation_backreference_index_set)
+(modern_library *library,
+ void *value,
+ uint64_t index);</Text>
         </Document>
         <Document ID="2271">
             <Title>Semantics</Title>
@@ -9768,6 +10771,14 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="684">
             <Title>modern_builtin_identifier_shift_right_int64</Title>
+        </Document>
+        <Document ID="4376">
+            <Title>modern_node_representation_builtin_identifier_set </Title>
+            <Text>void 
+(*modern_node_representation_builtin_identifier_set)
+(modern_library *library,
+ void *value,
+ uint16_t identifier);</Text>
         </Document>
         <Document ID="2272">
             <Title>Synopsis</Title>
@@ -9806,6 +10817,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="688">
             <Title>modern_builtin_identifier_shift_right_nat64</Title>
+        </Document>
+        <Document ID="4378">
+            <Title>Synopsis</Title>
+            <Text>enum modern_node_representation_type
+(*modern_node_representation_node_type_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="2274">
             <Title>Synopsis</Title>
@@ -9847,6 +10865,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="441">
             <Title>modern_builtin_identifier_add_int32</Title>
+        </Document>
+        <Document ID="4379">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2275">
             <Title>Semantics</Title>
@@ -9934,6 +10955,12 @@ Value type (detailed notation)</Text>
         <Document ID="1967">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4320">
+            <Title>modern_node_representation_int16_type_make </Title>
+            <Text>void *
+(*modern_node_representation_int16_type_make)
+(modern_library *library);</Text>
+        </Document>
         <Document ID="448">
             <Title>modern_builtin_identifier_add_float64</Title>
         </Document>
@@ -9963,6 +10990,12 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_compare_nat16 = 165</Text>
         </Document>
+        <Document ID="4321">
+            <Title>modern_node_representation_int32_type_make </Title>
+            <Text>void *
+(*modern_node_representation_int32_type_make)
+(modern_library *library);</Text>
+        </Document>
         <Document ID="201">
             <Title>modern_node_int32_set</Title>
         </Document>
@@ -9980,6 +11013,12 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1969">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4322">
+            <Title>modern_node_representation_int64_type_make </Title>
+            <Text>void *
+(*modern_node_representation_int64_type_make)
+(modern_library *library);</Text>
         </Document>
         <Document ID="203">
             <Title>modern_node_nat8_set</Title>
@@ -10003,6 +11042,12 @@ Value type (detailed notation)</Text>
         <Document ID="204">
             <Title>modern_node_nat16_set</Title>
         </Document>
+        <Document ID="4323">
+            <Title>modern_node_representation_nat8_type_make </Title>
+            <Text>void *
+(*modern_node_representation_nat8_type_make)
+(modern_library *library);</Text>
+        </Document>
         <Document ID="205">
             <Title>modern_node_nat32_set</Title>
         </Document>
@@ -10024,6 +11069,12 @@ Value type (detailed notation)</Text>
         <Document ID="2220">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_hyperbolic_arccosine_float64 = 1121</Text>
+        </Document>
+        <Document ID="4324">
+            <Title>modern_node_representation_nat16_type_make </Title>
+            <Text>void *
+(*modern_node_representation_nat16_type_make)
+(modern_library *library);</Text>
         </Document>
         <Document ID="207">
             <Title>modern_node_float32_set</Title>
@@ -10055,6 +11106,12 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2950">
             <Title>modern_builtin_identifier_add_int32</Title>
+        </Document>
+        <Document ID="4325">
+            <Title>modern_node_representation_nat32_type_make </Title>
+            <Text>void *
+(*modern_node_representation_nat32_type_make)
+(modern_library *library);</Text>
         </Document>
         <Document ID="3669">
             <Title>Synopsis</Title>
@@ -10105,6 +11162,12 @@ int32 -> int32 -> maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4326">
+            <Title>modern_node_representation_nat64_type_make </Title>
+            <Text>void *
+(*modern_node_representation_nat64_type_make)
+(modern_library *library);</Text>
+        </Document>
         <Document ID="1566">
             <Title>Semantics</Title>
         </Document>
@@ -10125,6 +11188,12 @@ Value type (detailed notation)</Text>
             <Text>enum modern_builtin_identifier {
     …
 };</Text>
+        </Document>
+        <Document ID="4327">
+            <Title>modern_node_representation_float32_type_make </Title>
+            <Text>void *
+(*modern_node_representation_float32_type_make)
+(modern_library *library);</Text>
         </Document>
         <Document ID="1567">
             <Title>Parameters</Title>
@@ -10148,6 +11217,12 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1913">
             <Title>Parameters</Title>
+        </Document>
+        <Document ID="4328">
+            <Title>modern_node_representation_float64_type_make </Title>
+            <Text>void *
+(*modern_node_representation_float64_type_make)
+(modern_library *library);</Text>
         </Document>
         <Document ID="1568">
             <Title>Semantics</Title>
@@ -10195,6 +11270,12 @@ Value type (detailed notation)</Text>
         <Document ID="1914">
             <Title>Semantics</Title>
             <Text>A modern_builtin_identifier is an enumerated value, as described in the nearby section Builtin identifiers - Overview.  The actual permissible values, the names that go with them, and their semantics are all detailed in the larger top-level section Builtin identifiers.</Text>
+        </Document>
+        <Document ID="4329">
+            <Title>modern_node_representation_utf8_type_make </Title>
+            <Text>void *
+(*modern_node_representation_utf8_type_make)
+(modern_library *library);</Text>
         </Document>
         <Document ID="1569">
             <Title>Parameters</Title>
@@ -10497,6 +11578,9 @@ float32 -> float32 -> float32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4250">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3594">
             <Title>Semantics</Title>
         </Document>
@@ -10535,6 +11619,9 @@ Value type (detailed notation)</Text>
         <Document ID="3211">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4251">
+            <Title>Members</Title>
+        </Document>
         <Document ID="3595">
             <Title>modern_builtin_identifier_floor_float32_int32</Title>
         </Document>
@@ -10555,6 +11642,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1899">
             <Title>Parameters</Title>
+        </Document>
+        <Document ID="4252">
+            <Title>modern_node_representation_node_type_get</Title>
         </Document>
         <Document ID="3941">
             <Title>modern_builtin_identifier_get_maybe_type_content_type</Title>
@@ -10595,6 +11685,527 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="656">
             <Title>modern_builtin_identifier_floor_float64_nat64</Title>
+        </Document>
+        <Document ID="4253">
+            <Title>enum modern_node_representation_type-1</Title>
+            <Text>void *
+(*modern_node_representation_value_type_get)
+(modern_library *library,
+ void *value);
+int
+(*modern_node_representation_mutable_get)
+(modern_library *library,
+ void *value);
+struct modern_hash
+(*modern_node_representation_canonical_hash_get)
+(modern_library *library,
+ modern *value);
+void *
+(*modern_node_representation_maybe_just_content_get)
+(modern_library *library,
+ void *value);
+int8_t 
+(*modern_node_representation_int8_get)
+(modern_library *library,
+ void *value);
+int16_t 
+(*modern_node_representation_int16_get)
+(modern_library *library,
+ void *value);
+int32_t 
+(*modern_node_representation_int32_get)
+(modern_library *library,
+ void *value);
+int64_t 
+(*modern_node_representation_int64_get)
+(modern_library *library,
+ void *value);
+uint8_t 
+(*modern_node_representation_nat8_get)
+(modern_library *library,
+ void *value);
+uint16_t 
+(*modern_node_representation_nat16_get)
+(modern_library *library,
+ void *value);
+uint32_t 
+(*modern_node_representation_nat32_get)
+(modern_library *library,
+ void *value);
+uint64_t 
+(*modern_node_representation_nat64_get)
+(modern_library *library,
+ void *value);
+float 
+(*modern_node_representation_float32_get)
+(modern_library *library,
+ void *value);
+double 
+(*modern_node_representation_float64_get)
+(modern_library *library,
+ void *value);
+size_t 
+(*modern_node_representation_utf8_bytes_get)
+(modern_library *library,
+ void *value);
+uint8_t *
+(*modern_node_representation_utf8_data_piece_get)
+(modern_library *library,
+ void *value, size_t offset, size_t bytes);
+size_t 
+(*modern_node_representation_blob_bytes_get)
+(modern_library *library,
+ void *value);
+uint8_t *
+(*modern_node_representation_blob_data_piece_get)
+(modern_library *library,
+ void *value, size_t offset, size_t bytes);
+void *
+(*modern_node_representation_sigma_field_value_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_sigma_successor_get)
+(modern_library *library,
+ void *value);
+struct modern_hash
+(*modern_node_representation_name_value_hash_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_named_value_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_maybe_type_content_type_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_function_type_left_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_function_type_right_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_sigma_type_field_type_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_sigma_type_successor_get)
+(modern_library *library,
+ void *value);
+struct modern_hash
+(*modern_node_representation_named_type_name_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_named_type_content_type_get)
+(modern_library *library,
+ void *value);
+uint64_t 
+(*modern_node_representation_universe_type_level_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_lambda_content_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_apply_left_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_apply_right_get)
+(modern_library *library,
+ void *value);
+uint64_t 
+(*modern_node_representation_type_family_count_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_type_family_item_get)
+(modern_library *library,
+ void *value, uint64_t index);
+uint64_t 
+(*modern_node_representation_let_count_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_let_item_get)
+(modern_library *library,
+ void *value, uint64_t index);
+void *
+(*modern_node_representation_let_content_get)
+(modern_library *library,
+ void *value);
+uint64_t 
+(*modern_node_representation_backreference_index_get)
+(modern_library *library,
+ void *value);
+uint16_t 
+(*modern_node_representation_builtin_identifier_get)
+(modern_library *library,
+ void *value);
+void *
+(*modern_node_representation_bool_false_make)
+(modern_library *library);
+void *
+(*modern_node_representation_bool_true_make)
+(modern_library *library);
+void *
+(*modern_node_representation_ordering_less_make)
+(modern_library *library);
+void *
+(*modern_node_representation_ordering_equal_make)
+(modern_library *library);
+void *
+(*modern_node_representation_ordering_greater_make)
+(modern_library *library);
+void *
+(*modern_node_representation_maybe_nothing_make)
+(modern_library *library,
+ void *type);
+void *
+(*modern_node_representation_maybe_just_make)
+(modern_library *library,
+ void *type,
+ void *content_value);
+void *
+(*modern_node_representation_int8_make)
+(modern_library *library,
+ int8_t value);
+void *
+(*modern_node_representation_int16_make)
+(modern_library *library,
+ int16_t value);
+void *
+(*modern_node_representation_int32_make)
+(modern_library *library,
+ int32_t value);
+void *
+(*modern_node_representation_int64_make)
+(modern_library *library,
+ int64_t value);
+void *
+(*modern_node_representation_nat8_make)
+(modern_library *library,
+ uint8_t value);
+void *
+(*modern_node_representation_nat16_make)
+(modern_library *library,
+ uint16_t value);
+void *
+(*modern_node_representation_nat32_make)
+(modern_library *library,
+ uint32_t value);
+void *
+(*modern_node_representation_nat64_make)
+(modern_library *library,
+ uint64_t value);
+void *
+(*modern_node_representation_float32_make)
+(modern_library *library,
+ float value);
+void *
+(*modern_node_representation_float64_make)
+(modern_library *library,
+ double value);
+void *
+(*modern_node_representation_utf8_make)
+(modern_library *library,
+ uint8_t *data);
+void *
+(*modern_node_representation_blob_make)
+(modern_library *library,
+ uint8_t *data, size_t bytes);
+void *
+(*modern_node_representation_sigma_make)
+(modern_library *library,
+ void *type, void *field_value, void *successor_value);
+void *
+(*modern_node_representation_name_value_make)
+(modern_library *library,
+ struct modern_hash name);
+void *
+(*modern_node_representation_named_value_make)
+(modern_library *library,
+ void *type, void *value);
+void *
+(*modern_node_representation_bool_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_ordering_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_maybe_type_make)
+(modern_library *library,
+ void *content_type);
+void *
+(*modern_node_representation_int8_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_int16_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_int32_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_int64_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_nat8_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_nat16_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_nat32_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_nat64_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_float32_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_float64_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_utf8_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_blob_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_function_type_make)
+(modern_library *library,
+ void *left, void *right);
+void *
+(*modern_node_representation_sigma_type_make)
+(modern_library *library,
+ void *field_type, void *successor);
+void *
+(*modern_node_representation_name_type_make)
+(modern_library *library);
+void *
+(*modern_node_representation_named_type_make)
+(modern_library *library,
+ struct modern_hash name, void *content_type);
+void *
+(*modern_node_representation_universe_type_make)
+(modern_library *library,
+ uint64_t level);
+void *
+(*modern_node_representation_lambda_make)
+(modern_library *library,
+ void *content);
+void *
+(*modern_node_representation_apply_make)
+(modern_library *library,
+ void *left, void *right);
+void *
+(*modern_node_representation_type_family_make)
+(modern_library *library,
+ uint64_t n_items, void **types);
+void *
+(*modern_node_representation_let_make)
+(modern_library *library,
+ uint64_t n_items, void **values, void *content);
+void *
+(*modern_node_representation_backreference_make)
+(modern_library *library,
+ uint64_t index);
+void *
+(*modern_node_representation_builtin_make)
+(modern_library *library,
+ uint16_t identifier);
+void 
+(*modern_node_representation_immutable_set)
+(modern_library *library,
+ void *value);
+void
+(*modern_node_representation_canonical_hash_set)
+(modern_library *library,
+ void *value,
+ struct modern_hash hash);
+void 
+(*modern_node_representation_maybe_just_content_set)
+(modern_library *library,
+ void *value,
+ void *content_value);
+void 
+(*modern_node_representation_int8_set)
+(modern_library *library,
+ void *node,
+ int8_t value);
+void 
+(*modern_node_representation_int16_set)
+(modern_library *library,
+ void *node,
+ int16_t value);
+void 
+(*modern_node_representation_int32_set)
+(modern_library *library,
+ void *node,
+ int32_t value);
+void 
+(*modern_node_representation_int64_set)
+(modern_library *library,
+ void *node,
+ int64_t value);
+void 
+(*modern_node_representation_nat8_set)
+(modern_library *library,
+ void *node,
+ uint8_t value);
+void 
+(*modern_node_representation_nat16_set)
+(modern_library *library,
+ void *node,
+ uint16_t value);
+void 
+(*modern_node_representation_nat32_set)
+(modern_library *library,
+ void *node,
+ uint32_t value);
+void 
+(*modern_node_representation_nat64_set)
+(modern_library *library,
+ void *node,
+ uint64_t value);
+void 
+(*modern_node_representation_float32_set)
+(modern_library *library,
+ void *node,
+ float value);
+void 
+(*modern_node_representation_float64_set)
+(modern_library *library,
+ void *node,
+ double value);
+void 
+(*modern_node_representation_utf8_data_piece_set)
+(modern_library *library,
+ void *value,
+ uint8_t *data,
+ size_t offset,
+ size_t old_bytes,
+ size_t new_bytes);
+void 
+(*modern_node_representation_blob_data_piece_set)
+(modern_library *library,
+ void *value,
+ uint8_t *data,
+ size_t offset,
+ size_t old_bytes,
+ size_t new_bytes);
+void 
+(*modern_node_representation_sigma_set)
+(modern_library *library,
+ void *value,
+ void *field_value,
+ void *successor);
+void 
+(*modern_node_representation_named_value_set)
+(modern_library *library,
+ void *node,
+ void *type,
+ void *value);
+void 
+(*modern_node_representation_maybe_type_content_type_set)
+(modern_library *library,
+ void *value,
+ void *content_type);
+void 
+(*modern_node_representation_function_type_left_set)
+(modern_library *library,
+ void *value,
+ void *left);
+void 
+(*modern_node_representation_function_type_right_set)
+(modern_library *library,
+ void *value,
+ void *right);
+void 
+(*modern_node_representation_sigma_type_field_type_set)
+(modern_library *library,
+ void *value,
+ void *field_type);
+void 
+(*modern_node_representation_sigma_type_successor_set)
+(modern_library *library,
+ void *value,
+ void *successor);
+void 
+(*modern_node_representation_named_type_name_set)
+(modern_library *library,
+ void *value,
+ struct modern_hash name);
+void 
+(*modern_node_representation_named_type_content_type_set)
+(modern_library *library,
+ void *value,
+ void *content_type);
+void 
+(*modern_node_representation_universe_type_level_set)
+(modern_library *library,
+ void *value,
+ uint64_t level);
+void 
+(*modern_node_representation_lambda_content_set)
+(modern_library *library,
+ void *value,
+ void *content);
+void 
+(*modern_node_representation_apply_left_set)
+(modern_library *library,
+ void *value,
+ void *left);
+void 
+(*modern_node_representation_apply_right_set)
+(modern_library *library,
+ void *value,
+ void *right);
+void 
+(*modern_node_representation_type_family_item_add)
+(modern_library *library,
+ void *value,
+ void *item,
+ uint64_t index);
+void 
+(*modern_node_representation_type_family_item_remove)
+(modern_library *library,
+ void *value,
+ uint64_t index);
+void 
+(*modern_node_representation_let_item_add)
+(modern_library *library,
+ void *value,
+ void *item,
+ uint64_t index);
+void 
+(*modern_node_representation_let_item_remove)
+(modern_library *library,
+ void *value,
+ uint64_t index);
+void 
+(*modern_node_representation_let_content_set)
+(modern_library *library,
+ void *value,
+ void *content);
+void 
+(*modern_node_representation_backreference_index_set)
+(modern_library *library,
+ void *value,
+ uint64_t index);
+void 
+(*modern_node_representation_builtin_identifier_set)
+(modern_library *library,
+ void *value,
+ uint16_t identifier);
+</Text>
         </Document>
         <Document ID="3942">
             <Title>Synopsis</Title>
@@ -10679,6 +12290,12 @@ modern_vfile_fd_make
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_square_root_float32 = 576</Text>
         </Document>
+        <Document ID="4254">
+            <Title>modern_node_representation_value_type_get</Title>
+        </Document>
+        <Document ID="4600">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3191">
             <Title>modern_builtin_identifier_pi_float32</Title>
         </Document>
@@ -10739,6 +12356,12 @@ Value type (detailed notation)</Text>
         <Document ID="1111">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="4255">
+            <Title>modern_node_representation_mutable_get</Title>
+        </Document>
+        <Document ID="4601">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3192">
             <Title>Synopsis</Title>
             <Text>pi_float32 = 544
@@ -10788,6 +12411,12 @@ Value type (detailed notation)</Text>
         <Document ID="1112">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4256">
+            <Title>modern_node_representation_canonical_hash_get</Title>
+        </Document>
+        <Document ID="4602">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="415">
             <Title>modern_builtin_identifier_or_bool</Title>
         </Document>
@@ -10823,6 +12452,12 @@ Value type (detailed notation)</Text>
             <Text>void modern_vfile_stdio_finalize
 (modern_library *library,
  void *vfile_state);</Text>
+        </Document>
+        <Document ID="4257">
+            <Title>modern_node_representation_maybe_just_content_get</Title>
+        </Document>
+        <Document ID="4603">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="417">
             <Title>modern_builtin_identifier_equal_to_bool</Title>
@@ -10883,8 +12518,17 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_shift_right_nat8 = 1476</Text>
         </Document>
+        <Document ID="4258">
+            <Title>modern_node_representation_int8_get </Title>
+        </Document>
         <Document ID="419">
             <Title>modern_builtin_identifier_equal_to_int16</Title>
+        </Document>
+        <Document ID="4580">
+            <Title>Synopsis</Title>
+        </Document>
+        <Document ID="4604">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3195">
             <Title>Synopsis</Title>
@@ -10946,6 +12590,15 @@ Value type (detailed notation)</Text>
         <Document ID="901">
             <Title>modern_stream_type_definition_maybe_is_next</Title>
         </Document>
+        <Document ID="4259">
+            <Title>modern_node_representation_int16_get </Title>
+        </Document>
+        <Document ID="4581">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4605">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3196">
             <Title>Semantics</Title>
         </Document>
@@ -10978,6 +12631,9 @@ modern_vfile_stdio_initialize
         <Document ID="2885">
             <Title>equal_to_nat16</Title>
         </Document>
+        <Document ID="4582">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3542">
             <Title>Synopsis</Title>
             <Text>ceiling_float32_int32 = 1316
@@ -10990,6 +12646,9 @@ Value type (detailed notation)</Text>
         <Document ID="2502">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_shift_right_nat16 = 1477</Text>
+        </Document>
+        <Document ID="4606">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="903">
             <Title>modern_node_type_maybe_value_just</Title>
@@ -11021,10 +12680,16 @@ Value type (detailed notation)</Text>
         <Document ID="904">
             <Title>maybe_type_modern_node_type</Title>
         </Document>
+        <Document ID="4583">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3543">
             <Title>Semantics</Title>
         </Document>
         <Document ID="2503">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4607">
             <Title>Semantics</Title>
         </Document>
         <Document ID="905">
@@ -11061,6 +12726,9 @@ Value type (detailed notation)</Text>
         <Document ID="906">
             <Title>modern_node_maybe_just_make</Title>
         </Document>
+        <Document ID="4584">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3544">
             <Title>modern_builtin_identifier_ceiling_float64_int32</Title>
         </Document>
@@ -11078,6 +12746,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2480">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4608">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="907">
             <Title>modern_node_maybe_type_make</Title>
@@ -11118,6 +12789,9 @@ Value type (detailed notation)</Text>
         <Document ID="908">
             <Title>modern_node_maybe_just_content_get</Title>
         </Document>
+        <Document ID="4585">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3545">
             <Title>Synopsis</Title>
             <Text>ceiling_float64_int32 = 1317
@@ -11145,6 +12819,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_shift_left_int64 = 1443</Text>
         </Document>
+        <Document ID="4609">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="909">
             <Title>modern_node_maybe_type_content_type_get</Title>
         </Document>
@@ -11168,6 +12845,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="371">
             <Title>modern_node_builtin_make</Title>
+        </Document>
+        <Document ID="4586">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3546">
             <Title>Semantics</Title>
@@ -11195,6 +12875,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="4203">
             <Title>modern_builtin_identifier_cast_int8_blob</Title>
+        </Document>
+        <Document ID="4587">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3547">
             <Title>modern_builtin_identifier_ceiling_float32_int64</Title>
@@ -11261,6 +12944,9 @@ Value type (detailed notation)</Text>
         <Document ID="375">
             <Title>modern_node_utf8_data_piece_set</Title>
         </Document>
+        <Document ID="4588">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3548">
             <Title>Synopsis</Title>
             <Text>ceiling_float32_int64 = 1318
@@ -11312,6 +12998,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="377">
             <Title>modern_node_sigma_set</Title>
+        </Document>
+        <Document ID="4589">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3549">
             <Title>Semantics</Title>
@@ -11516,6 +13205,9 @@ Value type (detailed notation)</Text>
         <Document ID="3873">
             <Title>modern_builtin_identifier_bit_not_nat32</Title>
         </Document>
+        <Document ID="4530">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="864">
             <Title>modern_builtin_identifier_cast_float32_blob</Title>
         </Document>
@@ -11576,6 +13268,9 @@ nat32 -> nat32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4531">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="4186">
             <Title>Synopsis</Title>
             <Text>cast_blob_nat8 = 10306
@@ -11627,6 +13322,9 @@ Value type (detailed notation)</Text>
         <Document ID="3875">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4532">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="4187">
             <Title>Semantics</Title>
         </Document>
@@ -11665,6 +13363,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3876">
             <Title>modern_builtin_identifier_bit_not_nat64</Title>
+        </Document>
+        <Document ID="4533">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="621">
             <Title>modern_builtin_identifier_round_towards_odd_float32_nat32</Title>
@@ -11717,6 +13418,9 @@ Value type (detailed notation)</Text>
         <Document ID="2430">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4534">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="4189">
             <Title>Synopsis</Title>
             <Text>cast_blob_nat16 = 10307
@@ -11766,6 +13470,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_floor_float32_nat32 = 1356</Text>
         </Document>
+        <Document ID="4535">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2086">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_modulus_towards_zero_nat16 = 389</Text>
@@ -11797,6 +13504,9 @@ Value type (detailed notation)</Text>
         <Document ID="3472">
             <Title>modern_builtin_identifier_round_towards_even_float64_float64</Title>
         </Document>
+        <Document ID="4536">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="2087">
             <Title>Semantics</Title>
         </Document>
@@ -11824,6 +13534,9 @@ Value type (detailed notation)</Text>
         <Document ID="2433">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_floor_float64_nat32 = 1357</Text>
+        </Document>
+        <Document ID="4537">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2088">
             <Title>Synopsis</Title>
@@ -11857,6 +13570,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2434">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4538">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="2089">
             <Title>Semantics</Title>
@@ -11897,6 +13613,9 @@ Value type (detailed notation)</Text>
         <Document ID="2435">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_floor_float32_nat64 = 1358</Text>
+        </Document>
+        <Document ID="4539">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1779">
             <Title>Semantics</Title>
@@ -12159,6 +13878,9 @@ Value type (detailed notation)</Text>
  modern *value,
  struct modern_hash *name);</Text>
         </Document>
+        <Document ID="4460">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3420">
             <Title>Semantics</Title>
         </Document>
@@ -12196,6 +13918,9 @@ Value type (detailed notation)</Text>
  modern *value,
  modern *content_type);</Text>
         </Document>
+        <Document ID="4461">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3421">
             <Title>modern_builtin_identifier_round_towards_even_float32_int8</Title>
         </Document>
@@ -12222,6 +13947,9 @@ Value type (abstract notation)
 nat64 -> nat64 -> nat64
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4462">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3422">
             <Title>Synopsis</Title>
@@ -12252,6 +13980,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_multiply_float64 = 265</Text>
         </Document>
+        <Document ID="4463">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3423">
             <Title>Semantics</Title>
         </Document>
@@ -12266,6 +13997,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2038">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4464">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="2360">
             <Title>Semantics</Title>
@@ -12293,6 +14027,9 @@ Value type (detailed notation)</Text>
         <Document ID="2039">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_divide_towards_zero_int8 = 288</Text>
+        </Document>
+        <Document ID="4465">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2361">
             <Title>Synopsis</Title>
@@ -12323,6 +14060,9 @@ Value type (detailed notation)</Text>
         <Document ID="100">
             <Title>apply_modern_node_type</Title>
         </Document>
+        <Document ID="4466">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="2362">
             <Title>Semantics</Title>
         </Document>
@@ -12338,6 +14078,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="101">
             <Title>Memory management</Title>
+        </Document>
+        <Document ID="4467">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2363">
             <Title>Synopsis</Title>
@@ -12370,6 +14113,9 @@ Value type (abstract notation)
 nat16 -> nat16 -> maybe nat16
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4468">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="2364">
             <Title>Semantics</Title>
@@ -12407,6 +14153,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="106">
             <Title>modern_finalize</Title>
+        </Document>
+        <Document ID="4469">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2365">
             <Title>Synopsis</Title>
@@ -12518,6 +14267,13 @@ Value type (detailed notation)</Text>
  modern *field_value,
  modern *successor_value);</Text>
         </Document>
+        <Document ID="4410">
+            <Title>Synopsis</Title>
+            <Text>size_t 
+(*modern_node_representation_utf8_bytes_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="4065">
             <Title>modern_builtin_identifier_cast_int64_nat32</Title>
         </Document>
@@ -12553,6 +14309,9 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  struct modern_hash *name);</Text>
         </Document>
+        <Document ID="4411">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="4066">
             <Title>Synopsis</Title>
             <Text>cast_int64_nat32 = 10266
@@ -12585,6 +14344,13 @@ Value type (detailed notation)</Text>
         <Document ID="3755">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4412">
+            <Title>Synopsis</Title>
+            <Text>uint8_t *
+(*modern_node_representation_utf8_data_piece_get)
+(modern_library *library,
+ void *value, size_t offset, size_t bytes);</Text>
+        </Document>
         <Document ID="4067">
             <Title>Semantics</Title>
         </Document>
@@ -12602,6 +14368,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3756">
             <Title>modern_builtin_identifier_rotate_left_nat64</Title>
+        </Document>
+        <Document ID="4413">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="4068">
             <Title>modern_builtin_identifier_cast_int64_nat64</Title>
@@ -12632,6 +14401,13 @@ Value type (detailed notation)</Text>
         <Document ID="790">
             <Title>modern_builtin_identifier_cast_int64_nat8</Title>
         </Document>
+        <Document ID="4390">
+            <Title>Synopsis</Title>
+            <Text>int8_t 
+(*modern_node_representation_int8_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="3350">
             <Title>Synopsis</Title>
             <Text>round_towards_zero_float32_nat32 = 1196
@@ -12644,6 +14420,13 @@ Value type (detailed notation)</Text>
         <Document ID="2310">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_even_float32_int64 = 1254</Text>
+        </Document>
+        <Document ID="4414">
+            <Title>Synopsis</Title>
+            <Text>size_t 
+(*modern_node_representation_blob_bytes_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="791">
             <Title>modern_builtin_identifier_cast_int64_nat16</Title>
@@ -12681,10 +14464,16 @@ Value type (detailed notation)</Text>
         <Document ID="792">
             <Title>modern_builtin_identifier_cast_int64_nat32</Title>
         </Document>
+        <Document ID="4391">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3351">
             <Title>Semantics</Title>
         </Document>
         <Document ID="2311">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4415">
             <Title>Semantics</Title>
         </Document>
         <Document ID="793">
@@ -12707,12 +14496,26 @@ Value type (detailed notation)</Text>
         <Document ID="794">
             <Title>modern_builtin_identifier_cast_nat8_int8</Title>
         </Document>
+        <Document ID="4392">
+            <Title>Synopsis</Title>
+            <Text>int16_t 
+(*modern_node_representation_int16_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="3352">
             <Title>modern_builtin_identifier_round_towards_zero_float64_nat32</Title>
         </Document>
         <Document ID="2312">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_even_float64_int64 = 1255</Text>
+        </Document>
+        <Document ID="4416">
+            <Title>Synopsis</Title>
+            <Text>uint8_t *
+(*modern_node_representation_blob_data_piece_get)
+(modern_library *library,
+ void *value, size_t offset, size_t bytes);</Text>
         </Document>
         <Document ID="2696">
             <Title>Semantics</Title>
@@ -12738,6 +14541,12 @@ Value type (detailed notation)</Text>
         <Document ID="2313">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4393">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4417">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2697">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_cast_int16_nat32 = 10252</Text>
@@ -12750,6 +14559,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="4010">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4394">
+            <Title>Synopsis</Title>
+            <Text>int32_t 
+(*modern_node_representation_int32_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="2290">
             <Title>Synopsis</Title>
@@ -12767,6 +14583,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3354">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4418">
+            <Title>Synopsis</Title>
+            <Text>void *
+(*modern_node_representation_sigma_field_value_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="2698">
             <Title>Semantics</Title>
@@ -12811,6 +14634,12 @@ Value type (detailed notation)</Text>
         <Document ID="3355">
             <Title>modern_builtin_identifier_round_towards_zero_float32_nat64</Title>
         </Document>
+        <Document ID="4395">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4419">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2699">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_cast_int16_nat64 = 10253</Text>
@@ -12832,6 +14661,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3701">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4396">
+            <Title>Synopsis</Title>
+            <Text>int64_t 
+(*modern_node_representation_int64_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="2292">
             <Title>Synopsis</Title>
@@ -12864,6 +14700,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3702">
             <Title>modern_builtin_identifier_shift_left_nat16</Title>
+        </Document>
+        <Document ID="4397">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2293">
             <Title>Semantics</Title>
@@ -12898,6 +14737,13 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="4014">
             <Title>modern_builtin_identifier_cast_int16_int64</Title>
+        </Document>
+        <Document ID="4398">
+            <Title>Synopsis</Title>
+            <Text>uint8_t 
+(*modern_node_representation_nat8_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="2294">
             <Title>Synopsis</Title>
@@ -12943,6 +14789,9 @@ Value type (abstract notation)
 int8 -> maybe int16
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4399">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2295">
             <Title>Semantics</Title>
@@ -13090,6 +14939,13 @@ It is also possible to provide one’s own implementation of nodes.  This is app
         <Document ID="1987">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4340">
+            <Title>modern_node_representation_backreference_make </Title>
+            <Text>void *
+(*modern_node_representation_backreference_make)
+(modern_library *library,
+ uint64_t index);</Text>
+        </Document>
         <Document ID="316">
             <Title>backreference_modern_node_type</Title>
         </Document>
@@ -13129,6 +14985,13 @@ Value type (detailed notation)</Text>
         <Document ID="1988">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_add_nat16 = 197</Text>
+        </Document>
+        <Document ID="4341">
+            <Title>modern_node_representation_builtin_make </Title>
+            <Text>void *
+(*modern_node_representation_builtin_make)
+(modern_library *library,
+ uint16_t identifier);</Text>
         </Document>
         <Document ID="3301">
             <Title>Synopsis</Title>
@@ -13170,6 +15033,13 @@ Value type (detailed notation)</Text>
         <Document ID="1989">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4342">
+            <Title>modern_node_representation_immutable_set </Title>
+            <Text>void 
+(*modern_node_representation_immutable_set)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="800">
             <Title>modern_builtin_identifier_cast_nat8_nat64</Title>
         </Document>
@@ -13190,6 +15060,14 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1582">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4343">
+            <Title>modern_node_representation_canonical_hash_set </Title>
+            <Text>void
+(*modern_node_representation_canonical_hash_set)
+(modern_library *library,
+ void *value,
+ struct modern_hash hash);</Text>
         </Document>
         <Document ID="3303">
             <Title>modern_builtin_identifier_hyperbolic_arccosine_float64</Title>
@@ -13240,6 +15118,14 @@ Value type (abstract notation)
 float64 -> float64
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4344">
+            <Title>modern_node_representation_maybe_just_content_set </Title>
+            <Text>void 
+(*modern_node_representation_maybe_just_content_set)
+(modern_library *library,
+ void *value,
+ void *content_value);</Text>
         </Document>
         <Document ID="3688">
             <Title>Synopsis</Title>
@@ -13296,6 +15182,14 @@ Value type (detailed notation)</Text>
         <Document ID="1585">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="4345">
+            <Title>modern_node_representation_int8_set </Title>
+            <Text>void 
+(*modern_node_representation_int8_set)
+(modern_library *library,
+ void *node,
+ int8_t value);</Text>
+        </Document>
         <Document ID="807">
             <Title>modern_builtin_identifier_cast_nat16_nat64</Title>
         </Document>
@@ -13321,6 +15215,14 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3306">
             <Title>modern_builtin_identifier_hyperbolic_arctangent_float32</Title>
+        </Document>
+        <Document ID="4346">
+            <Title>modern_node_representation_int16_set </Title>
+            <Text>void 
+(*modern_node_representation_int16_set)
+(modern_library *library,
+ void *node,
+ int16_t value);</Text>
         </Document>
         <Document ID="1586">
             <Title>Semantics</Title>
@@ -13369,6 +15271,14 @@ Value type (abstract notation)
 float32 -> float32
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4347">
+            <Title>modern_node_representation_int32_set </Title>
+            <Text>void 
+(*modern_node_representation_int32_set)
+(modern_library *library,
+ void *node,
+ int32_t value);</Text>
         </Document>
         <Document ID="1587">
             <Title>Parameters</Title>
@@ -13421,6 +15331,14 @@ Value type (detailed notation)</Text>
         <Document ID="3630">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4348">
+            <Title>modern_node_representation_int64_set </Title>
+            <Text>void 
+(*modern_node_representation_int64_set)
+(modern_library *library,
+ void *node,
+ int64_t value);</Text>
+        </Document>
         <Document ID="274">
             <Title>modern_error_handler_double_autorelease</Title>
         </Document>
@@ -13457,6 +15375,14 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3309">
             <Title>modern_builtin_identifier_hyperbolic_arctangent_float64</Title>
+        </Document>
+        <Document ID="4349">
+            <Title>modern_node_representation_nat8_set </Title>
+            <Text>void 
+(*modern_node_representation_nat8_set)
+(modern_library *library,
+ void *node,
+ uint8_t value);</Text>
         </Document>
         <Document ID="37">
             <Title>modern_stream_int8</Title>
@@ -13679,6 +15605,9 @@ Value type (detailed notation)</Text>
         <Document ID="768">
             <Title>modern_builtin_identifier_cast_int8_int64</Title>
         </Document>
+        <Document ID="4270">
+            <Title>modern_node_representation_blob_bytes_get </Title>
+        </Document>
         <Document ID="3230">
             <Title>modern_builtin_identifier_logarithm_base_x_float64</Title>
         </Document>
@@ -13704,6 +15633,9 @@ Value type (detailed notation)</Text>
         <Document ID="1189">
             <Title>Synopsis</Title>
             <Text>modern_node_type_name_type = 40</Text>
+        </Document>
+        <Document ID="4271">
+            <Title>modern_node_representation_blob_data_piece_get </Title>
         </Document>
         <Document ID="3231">
             <Title>Synopsis</Title>
@@ -13753,6 +15685,9 @@ Value type (detailed notation)</Text>
         <Document ID="523">
             <Title>modern_builtin_identifier_square_root_float32</Title>
         </Document>
+        <Document ID="4272">
+            <Title>modern_node_representation_sigma_field_value_get </Title>
+        </Document>
         <Document ID="3232">
             <Title>Semantics</Title>
         </Document>
@@ -13774,6 +15709,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="525">
             <Title>modern_builtin_identifier_natural_logarithm_float32</Title>
+        </Document>
+        <Document ID="4273">
+            <Title>modern_node_representation_sigma_successor_get </Title>
         </Document>
         <Document ID="3233">
             <Title>Trigonometric</Title>
@@ -13828,6 +15766,9 @@ TODO this probably comes out, doesn’t it?
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4274">
+            <Title>modern_node_representation_name_value_hash_get </Title>
+        </Document>
         <Document ID="2578">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_bit_xor_int64 = 1635</Text>
@@ -13837,6 +15778,12 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1538">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4620">
+            <Title>Synopsis</Title>
+        </Document>
+        <Document ID="4275">
+            <Title>modern_node_representation_named_value_get </Title>
         </Document>
         <Document ID="529">
             <Title>modern_builtin_identifier_two_to_the_x_float32</Title>
@@ -13874,6 +15821,12 @@ Value type (detailed notation)</Text>
         <Document ID="1539">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="4621">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4276">
+            <Title>modern_node_representation_maybe_type_content_type_get</Title>
+        </Document>
         <Document ID="2172">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_logarithm_base_x_float64 = 737</Text>
@@ -13892,6 +15845,12 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3965">
             <Title>modern_builtin_identifier_make_name</Title>
+        </Document>
+        <Document ID="4622">
+            <Title>Synopsis</Title>
+        </Document>
+        <Document ID="4277">
+            <Title>modern_node_representation_function_type_left_get </Title>
         </Document>
         <Document ID="2173">
             <Title>Semantics</Title>
@@ -13923,6 +15882,12 @@ Value type (abstract notation)
 universe 0 -> maybe (universe 0) TODO … ???
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4623">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4278">
+            <Title>modern_node_representation_function_type_right_get </Title>
         </Document>
         <Document ID="2174">
             <Title>Synopsis</Title>
@@ -13965,6 +15930,12 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_rotate_left_nat32 = 1510</Text>
         </Document>
+        <Document ID="4624">
+            <Title>Synopsis</Title>
+        </Document>
+        <Document ID="4279">
+            <Title>modern_node_representation_sigma_type_field_type_get </Title>
+        </Document>
         <Document ID="2175">
             <Title>Semantics</Title>
         </Document>
@@ -13987,6 +15958,9 @@ Value type (detailed notation)</Text>
             <Title>Semantics</Title>
         </Document>
         <Document ID="2521">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4625">
             <Title>Semantics</Title>
         </Document>
         <Document ID="480">
@@ -14030,6 +16004,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_rotate_left_nat64 = 1511</Text>
         </Document>
+        <Document ID="4626">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="2177">
             <Title>Semantics</Title>
         </Document>
@@ -14060,6 +16037,9 @@ Value type (abstract notation)
 float64 -> nat16
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4627">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2178">
             <Title>Synopsis</Title>
@@ -14491,6 +16471,9 @@ int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4550">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="3510">
             <Title>Semantics</Title>
         </Document>
@@ -14559,6 +16542,9 @@ Value type
         <Document ID="3511">
             <Title>modern_builtin_identifier_round_towards_odd_float32_nat32</Title>
         </Document>
+        <Document ID="4551">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="734">
             <Title>modern_builtin_identifier_bit_not_nat16</Title>
         </Document>
@@ -14588,6 +16574,9 @@ Value type
         </Document>
         <Document ID="3919">
             <Title>Sigma value</Title>
+        </Document>
+        <Document ID="4552">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3512">
             <Title>Synopsis</Title>
@@ -14637,6 +16626,9 @@ Value type (abstract notation)
 blob -> nat64 -> maybe nat8
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4553">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3513">
             <Title>Semantics</Title>
@@ -14689,6 +16681,9 @@ modern_serialize_fd
         </Document>
         <Document ID="3514">
             <Title>modern_builtin_identifier_round_towards_odd_float64_nat32</Title>
+        </Document>
+        <Document ID="4554">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3169">
             <Title>modern_builtin_identifier_absolute_value_float64</Title>
@@ -14750,6 +16745,9 @@ float64 -> nat32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4555">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3899">
             <Title>Synopsis</Title>
             <Text>replace_byte_blob = 1856
@@ -14789,6 +16787,9 @@ modern_serialize_output_stream
         <Document ID="3516">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4556">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="1796">
             <Title>Parameters</Title>
         </Document>
@@ -14814,6 +16815,9 @@ modern_serialize_output_stream
         </Document>
         <Document ID="3517">
             <Title>modern_builtin_identifier_round_towards_odd_float32_nat64</Title>
+        </Document>
+        <Document ID="4557">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1797">
             <Title>Semantics</Title>
@@ -14874,6 +16878,9 @@ float32 -> nat64
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4558">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="1798">
             <Title>Parameters</Title>
         </Document>
@@ -14918,6 +16925,9 @@ Value type (detailed notation)</Text>
             <Text>modern_builtin_identifier_minimum_bound_nat32 = 1382</Text>
         </Document>
         <Document ID="3519">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4559">
             <Title>Semantics</Title>
         </Document>
         <Document ID="691">
@@ -15071,6 +17081,9 @@ modern_initial_context_make
         <Document ID="3498">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4500">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="697">
             <Title>modern_builtin_identifier_rotate_right_int8</Title>
         </Document>
@@ -15132,6 +17145,9 @@ Value type (detailed notation)</Text>
         <Document ID="4155">
             <Title>modern_builtin_identifier_cast_utf8_blob</Title>
         </Document>
+        <Document ID="4501">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="450">
             <Title>modern_builtin_identifier_subtract_int16</Title>
         </Document>
@@ -15191,6 +17207,9 @@ int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4502">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="452">
             <Title>modern_builtin_identifier_subtract_int64</Title>
         </Document>
@@ -15223,6 +17242,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="453">
             <Title>modern_builtin_identifier_subtract_nat8</Title>
+        </Document>
+        <Document ID="4503">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="454">
             <Title>modern_builtin_identifier_subtract_nat16</Title>
@@ -15279,6 +17301,12 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2400">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4480">
+            <Title>Synopsis</Title>
+        </Document>
+        <Document ID="4504">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3095">
             <Title>Synopsis</Title>
@@ -15346,6 +17374,12 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_ceiling_float64_nat64 = 1327</Text>
         </Document>
+        <Document ID="4481">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4505">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3096">
             <Title>Semantics</Title>
         </Document>
@@ -15373,6 +17407,9 @@ modern_library_error_handler_get
         <Document ID="3849">
             <Title>modern_builtin_identifier_bit_xor_nat32</Title>
         </Document>
+        <Document ID="4482">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="459">
             <Title>modern_builtin_identifier_multiply_int8</Title>
         </Document>
@@ -15381,6 +17418,9 @@ modern_library_error_handler_get
         </Document>
         <Document ID="3442">
             <Title>modern_builtin_identifier_round_towards_even_float64_int64</Title>
+        </Document>
+        <Document ID="4506">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3097">
             <Title>modern_builtin_identifier_modulus_towards_zero_int64</Title>
@@ -15395,6 +17435,9 @@ modern_library_error_handler_get
         <Document ID="1017">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="4483">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3443">
             <Title>Synopsis</Title>
             <Text>round_towards_even_float64_int64 = 1255
@@ -15407,6 +17450,9 @@ Value type (detailed notation)</Text>
         <Document ID="2403">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_ceiling_float32_float32 = 1328</Text>
+        </Document>
+        <Document ID="4507">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3098">
             <Title>Synopsis</Title>
@@ -15433,6 +17479,9 @@ Value type (detailed notation)</Text>
         <Document ID="4100">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4484">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="2380">
             <Title>Semantics</Title>
         </Document>
@@ -15447,6 +17496,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3444">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="4508">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="3099">
             <Title>Semantics</Title>
@@ -15473,6 +17525,9 @@ modern_library_allocator_get
         <Document ID="4101">
             <Title>modern_builtin_identifier_cast_nat16_int64</Title>
         </Document>
+        <Document ID="4485">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2381">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_ceiling_float64_int32 = 1317</Text>
@@ -15493,6 +17548,9 @@ modern_library_allocator_get
         <Document ID="3445">
             <Title>modern_builtin_identifier_round_towards_even_float32_nat8</Title>
         </Document>
+        <Document ID="4509">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2789">
             <Title>Semantics</Title>
         </Document>
@@ -15510,6 +17568,9 @@ Value type (abstract notation)
 int8 -> maybe int16
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4486">
+            <Title>Synopsis</Title>
         </Document>
         <Document ID="2382">
             <Title>Semantics</Title>
@@ -15543,6 +17604,9 @@ float32 -> nat8
 Value type (detailed notation)</Text>
         </Document>
         <Document ID="4103">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4487">
             <Title>Semantics</Title>
         </Document>
         <Document ID="2383">
@@ -15624,6 +17688,9 @@ To apply a node (also called the left node), given a target stack and a paramete
         <Document ID="4104">
             <Title>modern_builtin_identifier_cast_nat16_nat8</Title>
         </Document>
+        <Document ID="4488">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="2384">
             <Title>Semantics</Title>
         </Document>
@@ -15680,6 +17747,9 @@ Value type (abstract notation)
 int8 -> maybe int16
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4489">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2385">
             <Title>Synopsis</Title>
@@ -15841,6 +17911,13 @@ Value type (detailed notation)</Text>
         <Document ID="171">
             <Title>Types</Title>
         </Document>
+        <Document ID="4430">
+            <Title>Synopsis</Title>
+            <Text>void *
+(*modern_node_representation_function_type_right_get)
+(modern_library *library,
+ void *value);</Text>
+        </Document>
         <Document ID="4085">
             <Title>Semantics</Title>
         </Document>
@@ -15877,6 +17954,9 @@ Value type (detailed notation)</Text>
  struct modern_hash *name,
  modern *content_type);</Text>
         </Document>
+        <Document ID="4431">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="173">
             <Title>Values</Title>
         </Document>
@@ -15908,6 +17988,13 @@ Value type (abstract notation)
 nat16 -> nat8 -> nat16
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4432">
+            <Title>Synopsis</Title>
+            <Text>void *
+(*modern_node_representation_sigma_type_field_type_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="4087">
             <Title>Synopsis</Title>
@@ -15942,6 +18029,9 @@ Value type (detailed notation)</Text>
         <Document ID="3776">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4433">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="177">
             <Title>modern_node_int32_type_make</Title>
         </Document>
@@ -15974,6 +18064,13 @@ Value type (detailed notation)</Text>
         <Document ID="2330">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_even_float32_float32 = 1264</Text>
+        </Document>
+        <Document ID="4434">
+            <Title>Synopsis</Title>
+            <Text>void *
+(*modern_node_representation_sigma_type_successor_get)
+(modern_library *library,
+ void *value);</Text>
         </Document>
         <Document ID="179">
             <Title>modern_node_nat8_type_make</Title>
@@ -16017,6 +18114,9 @@ Value type (detailed notation)</Text>
         <Document ID="2331">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4435">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="661">
             <Title>modern_builtin_identifier_minimum_bound_nat8</Title>
         </Document>
@@ -16040,6 +18140,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_even_float64_float64 = 1265</Text>
         </Document>
+        <Document ID="4436">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="663">
             <Title>modern_builtin_identifier_minimum_bound_nat32</Title>
         </Document>
@@ -16053,6 +18156,9 @@ Value type (detailed notation)</Text>
             <Title>modern_builtin_identifier_round_away_from_zero_float32_int16</Title>
         </Document>
         <Document ID="2333">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="4437">
             <Title>Semantics</Title>
         </Document>
         <Document ID="665">
@@ -16089,6 +18195,9 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  modern *value);</Text>
         </Document>
+        <Document ID="4438">
+            <Title>Synopsis</Title>
+        </Document>
         <Document ID="667">
             <Title>modern_builtin_identifier_maximum_bound_int32</Title>
         </Document>
@@ -16118,6 +18227,9 @@ Value type (detailed notation)</Text>
         <Document ID="2335">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_odd_float32_int8 = 1280</Text>
+        </Document>
+        <Document ID="4439">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="420">
             <Title>modern_builtin_identifier_equal_to_int32</Title>
@@ -16340,6 +18452,14 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  modern *value);</Text>
         </Document>
+        <Document ID="4360">
+            <Title>modern_node_representation_function_type_left_set </Title>
+            <Text>void 
+(*modern_node_representation_function_type_left_set)
+(modern_library *library,
+ void *value,
+ void *left);</Text>
+        </Document>
         <Document ID="3320">
             <Title>Synopsis</Title>
             <Text>round_towards_zero_float32_int16 = 1186
@@ -16377,6 +18497,14 @@ Value type (detailed notation)</Text>
         <Document ID="915">
             <Title>modern_builtin_identifier_make_maybe_type</Title>
         </Document>
+        <Document ID="4361">
+            <Title>modern_node_representation_function_type_right_set </Title>
+            <Text>void 
+(*modern_node_representation_function_type_right_set)
+(modern_library *library,
+ void *value,
+ void *right);</Text>
+        </Document>
         <Document ID="3321">
             <Title>Semantics</Title>
         </Document>
@@ -16405,6 +18533,14 @@ Value type (detailed notation)</Text>
         <Document ID="3322">
             <Title>modern_builtin_identifier_round_towards_zero_float64_int16</Title>
         </Document>
+        <Document ID="4362">
+            <Title>modern_node_representation_sigma_type_field_type_set </Title>
+            <Text>void 
+(*modern_node_representation_sigma_type_field_type_set)
+(modern_library *library,
+ void *value,
+ void *field_type);</Text>
+        </Document>
         <Document ID="42">
             <Title>modern_stream_float32</Title>
         </Document>
@@ -16422,6 +18558,14 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="380">
             <Title>modern_node_function_type_right_set</Title>
+        </Document>
+        <Document ID="4363">
+            <Title>modern_node_representation_sigma_type_successor_set </Title>
+            <Text>void 
+(*modern_node_representation_sigma_type_successor_set)
+(modern_library *library,
+ void *value,
+ void *successor);</Text>
         </Document>
         <Document ID="919">
             <Title>modern_builtin_identifier_from_maybe</Title>
@@ -16473,6 +18617,14 @@ Value type (detailed notation)</Text>
         <Document ID="49">
             <Title>modern_stream_blob_data</Title>
         </Document>
+        <Document ID="4364">
+            <Title>modern_node_representation_named_type_name_set </Title>
+            <Text>void 
+(*modern_node_representation_named_type_name_set)
+(modern_library *library,
+ void *value,
+ struct modern_hash name);</Text>
+        </Document>
         <Document ID="383">
             <Title>modern_node_named_type_name_set</Title>
         </Document>
@@ -16506,6 +18658,14 @@ Value type (detailed notation)</Text>
         <Document ID="3325">
             <Title>modern_builtin_identifier_round_towards_zero_float32_int32</Title>
         </Document>
+        <Document ID="4365">
+            <Title>modern_node_representation_named_type_content_type_set</Title>
+            <Text>void 
+(*modern_node_representation_named_type_content_type_set)
+(modern_library *library,
+ void *value,
+ void *content_type);</Text>
+        </Document>
         <Document ID="2669">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_make_named_type = 2432</Text>
@@ -16515,6 +18675,14 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1629">
             <Title>Parameters</Title>
+        </Document>
+        <Document ID="4366">
+            <Title>modern_node_representation_universe_type_level_set </Title>
+            <Text>void 
+(*modern_node_representation_universe_type_level_set)
+(modern_library *library,
+ void *value,
+ uint64_t level);</Text>
         </Document>
         <Document ID="386">
             <Title>modern_node_lambda_content_set</Title>
@@ -16545,6 +18713,14 @@ Value type (detailed notation)</Text>
         <Document ID="387">
             <Title>modern_node_apply_left_set</Title>
         </Document>
+        <Document ID="4367">
+            <Title>modern_node_representation_lambda_content_set </Title>
+            <Text>void 
+(*modern_node_representation_lambda_content_set)
+(modern_library *library,
+ void *value,
+ void *content);</Text>
+        </Document>
         <Document ID="2263">
             <Title>Semantics</Title>
         </Document>
@@ -16565,6 +18741,14 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="389">
             <Title>modern_node_set_type_family_item_remove</Title>
+        </Document>
+        <Document ID="4368">
+            <Title>modern_node_representation_apply_left_set </Title>
+            <Text>void 
+(*modern_node_representation_apply_left_set)
+(modern_library *library,
+ void *value,
+ void *left);</Text>
         </Document>
         <Document ID="141">
             <Title>modern_node_utf8_bytes_get</Title>
@@ -16607,6 +18791,14 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3650">
             <Title>modern_builtin_identifier_minimum_bound_nat8</Title>
+        </Document>
+        <Document ID="4369">
+            <Title>modern_node_representation_apply_right_set </Title>
+            <Text>void 
+(*modern_node_representation_apply_right_set)
+(modern_library *library,
+ void *value,
+ void *right);</Text>
         </Document>
         <Document ID="2265">
             <Title>Semantics</Title>
@@ -16732,6 +18924,13 @@ Value type (detailed notation)</Text>
         <Document ID="2997">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4310">
+            <Title>modern_node_representation_float64_make </Title>
+            <Text>void *
+(*modern_node_representation_float64_make)
+(modern_library *library,
+ double value);</Text>
+        </Document>
         <Document ID="149">
             <Title>modern_node_named_type_content_type_get</Title>
         </Document>
@@ -16764,15 +18963,14 @@ nat16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2269">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2998">
             <Title>modern_builtin_identifier_subtract_float32</Title>
         </Document>
         <Document ID="1229">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="1958">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_compare_int8 = 160</Text>
         </Document>
         <Document ID="631">
             <Title>modern_builtin_identifier_ceiling_float32_int64</Title>
