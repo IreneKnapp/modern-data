@@ -245,6 +245,9 @@ INTERNAL modern *default_modern_node_sigma_make
      modern *type_in,
      modern *field_value_in,
      modern *successor_in);
+INTERNAL modern *default_modern_node_name_value_make
+    (modern_library *library_in,
+     struct modern_hash name);
 INTERNAL modern *default_modern_node_named_value_make
     (modern_library *library_in,
      modern *type_in, modern *value_in);
