@@ -17,12 +17,6 @@ struct modern_hash {
 struct modern_error_handler {
     void (*modern_error_handler_memory)
       (void *client_state, size_t requested_size);
-    void (*modern_error_handler_retain_count_overflow)
-      (void *client_state, void *retainable);
-    void (*modern_error_handler_retain_count_underflow)
-      (void *client_state, void *retainable);
-    void (*modern_error_handler_double_autorelease)
-      (void *client_state, void *retainable);
     void (*modern_error_handler_type_mismatch)
       (void *client_state, modern *expected, modern *actual);
     void (*modern_error_handler_universe_level_overflow)
@@ -1323,12 +1317,9 @@ extern void *modern_library_client_state_get
   (modern_library *library);
 extern void modern_library_finalize(modern_library *library);
 
-extern void modern_retain
+extern void modern_finalize
   (modern_library *library,
-   void *retainable);
-extern void modern_release
-  (modern_library *library,
-   void *retainable);
+   void *finalizable);
 
 extern modern_context *modern_initial_context_make
   (modern_library *library);

@@ -12,8 +12,6 @@ struct modern_library {
 
 
 struct memory {
-	uint64_t retain_count;
-	unsigned is_autoreleased : 1;
 	void (*finalizer)(struct modern_library *library, void *retainable);
 };
 
@@ -105,14 +103,6 @@ struct modern_context {
     size_t n_buckets;
     struct modern *hash;
 };
-
-
-struct modern_autorelease_pool {
-	size_t item_buffer_count;
-	size_t item_buffer_capacity;
-	struct memory **item_buffer;
-};
-
 
 
 // context.c
