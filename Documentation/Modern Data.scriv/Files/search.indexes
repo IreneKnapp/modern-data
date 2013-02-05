@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SearchIndexes Version="1.0">
     <Documents>
-        <Document ID="1958">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_compare_int8 = 160</Text>
+        <Document ID="1229">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3655">
             <Title>Semantics</Title>
@@ -746,6 +745,7 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="4244">
             <Title>Overview</Title>
+            <Text>The meaning and purpose of these values is described in the section Semantics - Values and types - Builtin values.</Text>
         </Document>
         <Document ID="3588">
             <Title>Semantics</Title>
@@ -4707,7 +4707,7 @@ Value type (detailed notation)</Text>
             <Title>Semantics</Title>
         </Document>
         <Document ID="2847">
-            <Title>Overview</Title>
+            <Title>Builtin values</Title>
             <Text>“Built-in value” is a special node type, which consists of an identifier from a sixteen-bit unsigned number-space.  Each permitted identifier has a name and a semantic meaning, described in this section.  Unlike most other node types, the value type of a built-in value depends (solely) on its identifier.  Thus, this node type could be viewed as an “extension” node type, providing a larger number-space.
 
 Many of the extant built-in values exist to provide primitive operations on the other value types, such as arithmetic, trigonometry, and introspection.  There is also one, if_bool, which provides flow control.  Because loops can be implemented with cyclic structures (which is to say, with let-bindings), no other flow-control constructs are necessary to be Turing-complete.
@@ -7407,7 +7407,7 @@ Value type (detailed notation)</Text>
             <Title>modern_builtin_identifier_cast_int64_int16</Title>
         </Document>
         <Document ID="4233">
-            <Title>Overview</Title>
+            <Title>Predefined values</Title>
         </Document>
         <Document ID="3922">
             <Title>Semantics</Title>
@@ -9786,7 +9786,7 @@ Value type (detailed notation)</Text>
             <Title>Semantics</Title>
         </Document>
         <Document ID="686">
-            <Title>modern_builtin_identifier_shift_right_nat8</Title>
+            <Title>modern_builtin_identifier_shift_right_nat16</Title>
         </Document>
         <Document ID="2273">
             <Title>Semantics</Title>
@@ -16767,10 +16767,11 @@ Value type (detailed notation)</Text>
         <Document ID="2998">
             <Title>modern_builtin_identifier_subtract_float32</Title>
         </Document>
-        <Document ID="2269">
-            <Title>Semantics</Title>
+        <Document ID="1958">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_compare_int8 = 160</Text>
         </Document>
-        <Document ID="1229">
+        <Document ID="2269">
             <Title>Semantics</Title>
         </Document>
         <Document ID="631">

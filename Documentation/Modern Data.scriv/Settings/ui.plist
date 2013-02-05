@@ -248,6 +248,28 @@
 			<key>WindowFrame</key>
 			<string>1420 280 475 522 0 0 2560 1418 </string>
 		</dict>
+		<key>2502</key>
+		<dict>
+			<key>BinderID</key>
+			<integer>2502</integer>
+			<key>CurrentMetaData</key>
+			<integer>-1</integer>
+			<key>ShowsFormatBar</key>
+			<true/>
+			<key>ShowsMetaData</key>
+			<false/>
+			<key>SplitInfo</key>
+			<array>
+				<string>{{0, 273}, {475, 163}}</string>
+			</array>
+			<key>TextSettings</key>
+			<dict>
+				<key>textScale</key>
+				<integer>100</integer>
+			</dict>
+			<key>WindowFrame</key>
+			<string>1063 671 475 522 0 0 2560 1418 </string>
+		</dict>
 		<key>2853</key>
 		<dict>
 			<key>BinderID</key>
@@ -383,6 +405,28 @@
 			</dict>
 			<key>WindowFrame</key>
 			<string>1378 326 475 522 0 0 2560 1418 </string>
+		</dict>
+		<key>3727</key>
+		<dict>
+			<key>BinderID</key>
+			<integer>3727</integer>
+			<key>CurrentMetaData</key>
+			<integer>-1</integer>
+			<key>ShowsFormatBar</key>
+			<true/>
+			<key>ShowsMetaData</key>
+			<false/>
+			<key>SplitInfo</key>
+			<array>
+				<string>{{0, 273}, {475, 163}}</string>
+			</array>
+			<key>TextSettings</key>
+			<dict>
+				<key>textScale</key>
+				<integer>100</integer>
+			</dict>
+			<key>WindowFrame</key>
+			<string>1042 694 475 522 0 0 2560 1418 </string>
 		</dict>
 		<key>481</key>
 		<dict>
@@ -528,7 +572,7 @@
 	<false/>
 	<key>binderSelection</key>
 	<array>
-		<integer>27</integer>
+		<integer>26</integer>
 	</array>
 	<key>binderSplitFrames</key>
 	<array>
@@ -543,489 +587,7 @@
 		<integer>289</integer>
 		<integer>290</integer>
 		<integer>1004</integer>
-		<integer>2846</integer>
-		<integer>2866</integer>
-		<integer>2867</integer>
-		<integer>2870</integer>
-		<integer>2873</integer>
-		<integer>2876</integer>
-		<integer>2879</integer>
-		<integer>2882</integer>
-		<integer>2885</integer>
-		<integer>2888</integer>
-		<integer>2891</integer>
-		<integer>2894</integer>
-		<integer>2897</integer>
-		<integer>2900</integer>
-		<integer>2903</integer>
-		<integer>2906</integer>
-		<integer>2909</integer>
 		<integer>4243</integer>
-		<integer>893</integer>
-		<integer>417</integer>
-		<integer>418</integer>
-		<integer>419</integer>
-		<integer>420</integer>
-		<integer>421</integer>
-		<integer>422</integer>
-		<integer>423</integer>
-		<integer>424</integer>
-		<integer>425</integer>
-		<integer>426</integer>
-		<integer>427</integer>
-		<integer>428</integer>
-		<integer>878</integer>
-		<integer>879</integer>
-		<integer>958</integer>
-		<integer>894</integer>
-		<integer>429</integer>
-		<integer>430</integer>
-		<integer>431</integer>
-		<integer>432</integer>
-		<integer>433</integer>
-		<integer>434</integer>
-		<integer>435</integer>
-		<integer>436</integer>
-		<integer>437</integer>
-		<integer>438</integer>
-		<integer>891</integer>
-		<integer>439</integer>
-		<integer>440</integer>
-		<integer>441</integer>
-		<integer>442</integer>
-		<integer>443</integer>
-		<integer>444</integer>
-		<integer>445</integer>
-		<integer>446</integer>
-		<integer>447</integer>
-		<integer>448</integer>
-		<integer>449</integer>
-		<integer>450</integer>
-		<integer>451</integer>
-		<integer>452</integer>
-		<integer>453</integer>
-		<integer>454</integer>
-		<integer>455</integer>
-		<integer>456</integer>
-		<integer>457</integer>
-		<integer>458</integer>
-		<integer>459</integer>
-		<integer>460</integer>
-		<integer>461</integer>
-		<integer>462</integer>
-		<integer>463</integer>
-		<integer>464</integer>
-		<integer>465</integer>
-		<integer>466</integer>
-		<integer>467</integer>
-		<integer>468</integer>
-		<integer>469</integer>
-		<integer>470</integer>
-		<integer>471</integer>
-		<integer>472</integer>
-		<integer>473</integer>
-		<integer>474</integer>
-		<integer>475</integer>
-		<integer>476</integer>
-		<integer>477</integer>
-		<integer>478</integer>
-		<integer>479</integer>
-		<integer>480</integer>
-		<integer>481</integer>
-		<integer>482</integer>
-		<integer>483</integer>
-		<integer>484</integer>
-		<integer>485</integer>
-		<integer>486</integer>
-		<integer>487</integer>
-		<integer>488</integer>
-		<integer>489</integer>
-		<integer>490</integer>
-		<integer>491</integer>
-		<integer>492</integer>
-		<integer>493</integer>
-		<integer>494</integer>
-		<integer>495</integer>
-		<integer>496</integer>
-		<integer>497</integer>
-		<integer>498</integer>
-		<integer>499</integer>
-		<integer>500</integer>
-		<integer>501</integer>
-		<integer>502</integer>
-		<integer>503</integer>
-		<integer>504</integer>
-		<integer>505</integer>
-		<integer>506</integer>
-		<integer>507</integer>
-		<integer>508</integer>
-		<integer>509</integer>
-		<integer>510</integer>
-		<integer>511</integer>
-		<integer>512</integer>
-		<integer>513</integer>
-		<integer>514</integer>
-		<integer>515</integer>
-		<integer>516</integer>
-		<integer>517</integer>
-		<integer>518</integer>
-		<integer>519</integer>
-		<integer>520</integer>
-		<integer>890</integer>
-		<integer>521</integer>
-		<integer>522</integer>
-		<integer>523</integer>
-		<integer>524</integer>
-		<integer>525</integer>
-		<integer>526</integer>
-		<integer>527</integer>
-		<integer>528</integer>
-		<integer>529</integer>
-		<integer>530</integer>
-		<integer>531</integer>
-		<integer>532</integer>
-		<integer>533</integer>
-		<integer>534</integer>
-		<integer>889</integer>
-		<integer>535</integer>
-		<integer>536</integer>
-		<integer>537</integer>
-		<integer>538</integer>
-		<integer>539</integer>
-		<integer>540</integer>
-		<integer>541</integer>
-		<integer>542</integer>
-		<integer>543</integer>
-		<integer>544</integer>
-		<integer>545</integer>
-		<integer>546</integer>
-		<integer>547</integer>
-		<integer>548</integer>
-		<integer>549</integer>
-		<integer>550</integer>
-		<integer>551</integer>
-		<integer>552</integer>
-		<integer>553</integer>
-		<integer>554</integer>
-		<integer>555</integer>
-		<integer>556</integer>
-		<integer>557</integer>
-		<integer>558</integer>
-		<integer>559</integer>
-		<integer>560</integer>
-		<integer>888</integer>
-		<integer>561</integer>
-		<integer>562</integer>
-		<integer>563</integer>
-		<integer>564</integer>
-		<integer>565</integer>
-		<integer>566</integer>
-		<integer>567</integer>
-		<integer>568</integer>
-		<integer>569</integer>
-		<integer>570</integer>
-		<integer>571</integer>
-		<integer>572</integer>
-		<integer>573</integer>
-		<integer>574</integer>
-		<integer>575</integer>
-		<integer>576</integer>
-		<integer>866</integer>
-		<integer>867</integer>
-		<integer>577</integer>
-		<integer>578</integer>
-		<integer>579</integer>
-		<integer>580</integer>
-		<integer>581</integer>
-		<integer>582</integer>
-		<integer>583</integer>
-		<integer>584</integer>
-		<integer>585</integer>
-		<integer>586</integer>
-		<integer>587</integer>
-		<integer>588</integer>
-		<integer>589</integer>
-		<integer>590</integer>
-		<integer>591</integer>
-		<integer>592</integer>
-		<integer>868</integer>
-		<integer>869</integer>
-		<integer>593</integer>
-		<integer>594</integer>
-		<integer>595</integer>
-		<integer>596</integer>
-		<integer>597</integer>
-		<integer>598</integer>
-		<integer>599</integer>
-		<integer>600</integer>
-		<integer>601</integer>
-		<integer>602</integer>
-		<integer>603</integer>
-		<integer>604</integer>
-		<integer>605</integer>
-		<integer>606</integer>
-		<integer>607</integer>
-		<integer>608</integer>
-		<integer>870</integer>
-		<integer>871</integer>
-		<integer>609</integer>
-		<integer>610</integer>
-		<integer>611</integer>
-		<integer>612</integer>
-		<integer>613</integer>
-		<integer>614</integer>
-		<integer>615</integer>
-		<integer>616</integer>
-		<integer>617</integer>
-		<integer>618</integer>
-		<integer>619</integer>
-		<integer>620</integer>
-		<integer>621</integer>
-		<integer>622</integer>
-		<integer>623</integer>
-		<integer>624</integer>
-		<integer>872</integer>
-		<integer>873</integer>
-		<integer>625</integer>
-		<integer>626</integer>
-		<integer>627</integer>
-		<integer>628</integer>
-		<integer>629</integer>
-		<integer>630</integer>
-		<integer>631</integer>
-		<integer>632</integer>
-		<integer>633</integer>
-		<integer>634</integer>
-		<integer>635</integer>
-		<integer>636</integer>
-		<integer>637</integer>
-		<integer>638</integer>
-		<integer>639</integer>
-		<integer>640</integer>
-		<integer>874</integer>
-		<integer>875</integer>
-		<integer>641</integer>
-		<integer>642</integer>
-		<integer>643</integer>
-		<integer>644</integer>
-		<integer>645</integer>
-		<integer>646</integer>
-		<integer>647</integer>
-		<integer>648</integer>
-		<integer>649</integer>
-		<integer>650</integer>
-		<integer>651</integer>
-		<integer>652</integer>
-		<integer>653</integer>
-		<integer>654</integer>
-		<integer>655</integer>
-		<integer>656</integer>
-		<integer>876</integer>
-		<integer>877</integer>
-		<integer>887</integer>
-		<integer>657</integer>
-		<integer>658</integer>
-		<integer>659</integer>
-		<integer>660</integer>
-		<integer>661</integer>
-		<integer>662</integer>
-		<integer>663</integer>
-		<integer>664</integer>
-		<integer>665</integer>
-		<integer>666</integer>
-		<integer>667</integer>
-		<integer>668</integer>
-		<integer>669</integer>
-		<integer>670</integer>
-		<integer>671</integer>
-		<integer>672</integer>
-		<integer>886</integer>
-		<integer>673</integer>
-		<integer>674</integer>
-		<integer>675</integer>
-		<integer>676</integer>
-		<integer>677</integer>
-		<integer>678</integer>
-		<integer>679</integer>
-		<integer>680</integer>
-		<integer>681</integer>
-		<integer>682</integer>
-		<integer>683</integer>
-		<integer>684</integer>
-		<integer>685</integer>
-		<integer>686</integer>
-		<integer>687</integer>
-		<integer>688</integer>
-		<integer>689</integer>
-		<integer>690</integer>
-		<integer>691</integer>
-		<integer>692</integer>
-		<integer>693</integer>
-		<integer>694</integer>
-		<integer>695</integer>
-		<integer>696</integer>
-		<integer>697</integer>
-		<integer>698</integer>
-		<integer>699</integer>
-		<integer>700</integer>
-		<integer>701</integer>
-		<integer>702</integer>
-		<integer>703</integer>
-		<integer>704</integer>
-		<integer>705</integer>
-		<integer>706</integer>
-		<integer>707</integer>
-		<integer>708</integer>
-		<integer>709</integer>
-		<integer>710</integer>
-		<integer>711</integer>
-		<integer>712</integer>
-		<integer>713</integer>
-		<integer>714</integer>
-		<integer>715</integer>
-		<integer>716</integer>
-		<integer>717</integer>
-		<integer>718</integer>
-		<integer>719</integer>
-		<integer>720</integer>
-		<integer>721</integer>
-		<integer>722</integer>
-		<integer>723</integer>
-		<integer>724</integer>
-		<integer>725</integer>
-		<integer>726</integer>
-		<integer>727</integer>
-		<integer>728</integer>
-		<integer>729</integer>
-		<integer>730</integer>
-		<integer>731</integer>
-		<integer>732</integer>
-		<integer>733</integer>
-		<integer>734</integer>
-		<integer>735</integer>
-		<integer>736</integer>
-		<integer>885</integer>
-		<integer>737</integer>
-		<integer>738</integer>
-		<integer>739</integer>
-		<integer>740</integer>
-		<integer>741</integer>
-		<integer>742</integer>
-		<integer>743</integer>
-		<integer>744</integer>
-		<integer>745</integer>
-		<integer>746</integer>
-		<integer>747</integer>
-		<integer>748</integer>
-		<integer>749</integer>
-		<integer>884</integer>
-		<integer>750</integer>
-		<integer>751</integer>
-		<integer>883</integer>
-		<integer>752</integer>
-		<integer>914</integer>
-		<integer>917</integer>
-		<integer>918</integer>
-		<integer>919</integer>
-		<integer>882</integer>
-		<integer>916</integer>
-		<integer>753</integer>
-		<integer>754</integer>
-		<integer>755</integer>
-		<integer>756</integer>
-		<integer>757</integer>
-		<integer>758</integer>
-		<integer>759</integer>
-		<integer>760</integer>
-		<integer>915</integer>
-		<integer>762</integer>
-		<integer>761</integer>
-		<integer>763</integer>
-		<integer>764</integer>
-		<integer>765</integer>
-		<integer>881</integer>
-		<integer>766</integer>
-		<integer>767</integer>
-		<integer>768</integer>
-		<integer>769</integer>
-		<integer>770</integer>
-		<integer>771</integer>
-		<integer>772</integer>
-		<integer>773</integer>
-		<integer>774</integer>
-		<integer>775</integer>
-		<integer>776</integer>
-		<integer>777</integer>
-		<integer>778</integer>
-		<integer>779</integer>
-		<integer>780</integer>
-		<integer>781</integer>
-		<integer>782</integer>
-		<integer>783</integer>
-		<integer>784</integer>
-		<integer>785</integer>
-		<integer>786</integer>
-		<integer>787</integer>
-		<integer>788</integer>
-		<integer>789</integer>
-		<integer>790</integer>
-		<integer>791</integer>
-		<integer>792</integer>
-		<integer>793</integer>
-		<integer>794</integer>
-		<integer>795</integer>
-		<integer>796</integer>
-		<integer>797</integer>
-		<integer>798</integer>
-		<integer>799</integer>
-		<integer>800</integer>
-		<integer>801</integer>
-		<integer>802</integer>
-		<integer>803</integer>
-		<integer>804</integer>
-		<integer>805</integer>
-		<integer>806</integer>
-		<integer>807</integer>
-		<integer>808</integer>
-		<integer>809</integer>
-		<integer>810</integer>
-		<integer>811</integer>
-		<integer>812</integer>
-		<integer>813</integer>
-		<integer>814</integer>
-		<integer>815</integer>
-		<integer>816</integer>
-		<integer>817</integer>
-		<integer>818</integer>
-		<integer>819</integer>
-		<integer>820</integer>
-		<integer>821</integer>
-		<integer>822</integer>
-		<integer>823</integer>
-		<integer>824</integer>
-		<integer>825</integer>
-		<integer>844</integer>
-		<integer>845</integer>
-		<integer>846</integer>
-		<integer>847</integer>
-		<integer>848</integer>
-		<integer>849</integer>
-		<integer>850</integer>
-		<integer>851</integer>
-		<integer>852</integer>
-		<integer>853</integer>
-		<integer>854</integer>
-		<integer>855</integer>
-		<integer>856</integer>
-		<integer>857</integer>
-		<integer>858</integer>
-		<integer>859</integer>
-		<integer>860</integer>
-		<integer>861</integer>
-		<integer>862</integer>
-		<integer>863</integer>
-		<integer>864</integer>
-		<integer>865</integer>
 		<integer>287</integer>
 	</array>
 	<key>binderWidth</key>
@@ -1058,7 +620,7 @@
 		<string>{{0, 498}, {936, 548}}</string>
 	</array>
 	<key>editorSplitType</key>
-	<integer>1</integer>
+	<integer>0</integer>
 	<key>fullScreenBackgroundFade</key>
 	<real>0.89999997615814209</real>
 	<key>fullScreenInspectorMode</key>
@@ -1106,8 +668,8 @@
 	<integer>0</integer>
 	<key>inspectorSplitFrames</key>
 	<array>
-		<string>{{0, 0}, {936, 826}}</string>
-		<string>{{937, 0}, {227, 826}}</string>
+		<string>{{0, 0}, {936, 1046}}</string>
+		<string>{{937, 0}, {227, 1046}}</string>
 	</array>
 	<key>inspectorWidth</key>
 	<real>227</real>
@@ -1116,9 +678,7 @@
 	<key>mainDocumentEditor.affectsOtherEditor</key>
 	<false/>
 	<key>mainDocumentEditor.binderDocuments</key>
-	<array>
-		<integer>4243</integer>
-	</array>
+	<array/>
 	<key>mainDocumentEditor.currentEditorViewMode</key>
 	<integer>3</integer>
 	<key>mainDocumentEditor.editorGroupsViewMode</key>
@@ -88212,11 +87772,9 @@
 		<integer>865</integer>
 	</array>
 	<key>mainDocumentEditor.scrollRect</key>
-	<string>{{0, 0}, {526.28571, 428}}</string>
+	<string>{{0, 0}, {606, 304}}</string>
 	<key>mainDocumentEditor.selectedItemIDs</key>
-	<array>
-		<integer>503</integer>
-	</array>
+	<array/>
 	<key>mainDocumentEditor.textEditorState</key>
 	<dict>
 		<key>hasMultiplePages</key>
@@ -88228,6 +87786,8 @@
 		<key>usesFacingPages</key>
 		<false/>
 	</dict>
+	<key>mainDocumentView</key>
+	<string>supportingDocumentEditor</string>
 	<key>mainWindowFrame</key>
 	<string>374 128 1555 1094 0 0 2560 1418 </string>
 	<key>searchResultsTable</key>
@@ -88252,7 +87812,7 @@
 	<integer>0</integer>
 	<key>supportingDocumentEditor.binderDocuments</key>
 	<array>
-		<integer>2846</integer>
+		<integer>4243</integer>
 	</array>
 	<key>supportingDocumentEditor.currentEditorViewMode</key>
 	<integer>3</integer>
@@ -88281,7 +87841,7 @@
 	<key>supportingDocumentEditor.navigationHistory</key>
 	<dict>
 		<key>CurrentIndex</key>
-		<integer>92</integer>
+		<integer>122</integer>
 		<key>NavigationHistoryArray</key>
 		<array>
 			<dict>
@@ -91677,6 +91237,289 @@
 				<key>ViewMode</key>
 				<integer>3</integer>
 			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>2847</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>2866</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{23, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>2866</integer>
+					<integer>2912</integer>
+					<integer>2943</integer>
+					<integer>3190</integer>
+					<integer>3233</integer>
+					<integer>3312</integer>
+					<integer>3637</integer>
+					<integer>3686</integer>
+					<integer>3879</integer>
+					<integer>3919</integer>
+					<integer>3926</integer>
+					<integer>3930</integer>
+					<integer>3940</integer>
+					<integer>3986</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4234</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>2847</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>2846</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4234</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>2847</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4234</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4233</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4234</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4233</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4245</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>6</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4233</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4234</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>6</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4244</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>6</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>2844</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>6</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4233</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>6</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4233</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>2847</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4244</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>893</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{134, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4243</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{0, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>896</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>4243</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>3</integer>
+			</dict>
 		</array>
 	</dict>
 	<key>supportingDocumentEditor.outlinerColumnsState</key>
@@ -92166,10 +92009,10 @@
 		<integer>4230</integer>
 	</array>
 	<key>supportingDocumentEditor.scrollRect</key>
-	<string>{{0, 0}, {526.28571, 206.85715}}</string>
+	<string>{{0, 0}, {526.28571, 571.42859}}</string>
 	<key>supportingDocumentEditor.selectedItemIDs</key>
 	<array>
-		<integer>3369</integer>
+		<integer>895</integer>
 	</array>
 	<key>supportingDocumentEditor.textEditorState</key>
 	<dict>
@@ -92181,6 +92024,6 @@
 		<false/>
 	</dict>
 	<key>supportingDocumentViewIsCurrent</key>
-	<true/>
+	<false/>
 </dict>
 </plist>
