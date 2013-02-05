@@ -170,7 +170,15 @@ modern_library_initialize<br/>
  void *client_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>Parameters</strong></p>
+<p class="binderItem"><strong>Parameters</strong><br/>Error handler<br/>
+<br/>
+Allocator<br/>
+<br/>
+Finalizer<br/>
+<br/>
+Client state<br/>
+<br/>
+Return</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -4467,6 +4475,7 @@ modern_resolve_backreferences<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_memory<br/>
 (modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  uint8_t *data,<br/>
  size_t length);</p>
@@ -4488,6 +4497,7 @@ modern_deserialize_memory<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_file<br/>
 (modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  FILE *file);</p>
 </li>
@@ -4508,6 +4518,7 @@ modern_deserialize_file<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_fd<br/>
 (modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  int fd);</p>
 </li>
@@ -4528,6 +4539,7 @@ modern_deserialize_fd<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_vfile<br/>
 (modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  struct modern_vfile *vfile,<br/>
  void *vfile_state);</p>
@@ -4549,6 +4561,7 @@ modern_deserialize_vfile<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
 modern_deserialize_input_stream<br/>
 (modern_library *library,<br/>
+ modern_autorelease_pool *pool,<br/>
  modern_context *context,<br/>
  void *processor_state,<br/>
  void *stream_state);</p>
@@ -6230,7 +6243,7 @@ modern_hash_initial_namespace_compute<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_if_bool</strong></p>
+<p class="binderItem"><strong>if_bool</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6265,7 +6278,7 @@ Value type<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_and_bool</strong></p>
+<p class="binderItem"><strong>and_bool</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6286,7 +6299,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_or_bool</strong></p>
+<p class="binderItem"><strong>or_bool</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6307,7 +6320,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_not_bool</strong></p>
+<p class="binderItem"><strong>not_bool</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6334,7 +6347,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_bool</strong></p>
+<p class="binderItem"><strong>equal_to_bool</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6355,7 +6368,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_int8</strong></p>
+<p class="binderItem"><strong>equal_to_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6376,7 +6389,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_int16</strong></p>
+<p class="binderItem"><strong>equal_to_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6397,7 +6410,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_int32</strong></p>
+<p class="binderItem"><strong>equal_to_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6418,7 +6431,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_int64</strong></p>
+<p class="binderItem"><strong>equal_to_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6439,7 +6452,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_nat8</strong></p>
+<p class="binderItem"><strong>equal_to_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6460,7 +6473,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_nat16</strong></p>
+<p class="binderItem"><strong>equal_to_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6481,7 +6494,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_nat32</strong></p>
+<p class="binderItem"><strong>equal_to_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6502,7 +6515,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_nat64</strong></p>
+<p class="binderItem"><strong>equal_to_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6523,7 +6536,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_float32</strong></p>
+<p class="binderItem"><strong>equal_to_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6544,7 +6557,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_float64</strong></p>
+<p class="binderItem"><strong>equal_to_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6565,7 +6578,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_name</strong></p>
+<p class="binderItem"><strong>equal_to_name</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6586,7 +6599,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_utf8</strong></p>
+<p class="binderItem"><strong>equal_to_utf8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6607,7 +6620,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_blob</strong></p>
+<p class="binderItem"><strong>equal_to_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6628,7 +6641,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_equal_to_ordering</strong></p>
+<p class="binderItem"><strong>equal_to_ordering</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6655,7 +6668,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_compare_int8</strong></p>
+<p class="binderItem"><strong>compare_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6676,7 +6689,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_compare_int16</strong></p>
+<p class="binderItem"><strong>compare_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6697,7 +6710,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_compare_int32</strong></p>
+<p class="binderItem"><strong>compare_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6718,7 +6731,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_compare_int64</strong></p>
+<p class="binderItem"><strong>compare_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6739,7 +6752,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_compare_nat8</strong></p>
+<p class="binderItem"><strong>compare_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6760,7 +6773,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_compare_nat16</strong></p>
+<p class="binderItem"><strong>compare_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6781,7 +6794,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_compare_nat32</strong></p>
+<p class="binderItem"><strong>compare_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6802,7 +6815,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_compare_nat64</strong></p>
+<p class="binderItem"><strong>compare_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6823,7 +6836,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_compare_float32</strong></p>
+<p class="binderItem"><strong>compare_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6844,7 +6857,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_compare_float64</strong></p>
+<p class="binderItem"><strong>compare_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6871,7 +6884,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_add_int8</strong></p>
+<p class="binderItem"><strong>add_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6892,7 +6905,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_add_int16</strong></p>
+<p class="binderItem"><strong>add_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6913,7 +6926,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_add_int32</strong></p>
+<p class="binderItem"><strong>add_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6934,7 +6947,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_add_int64</strong></p>
+<p class="binderItem"><strong>add_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6955,7 +6968,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_add_nat8</strong></p>
+<p class="binderItem"><strong>add_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6976,7 +6989,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_add_nat16</strong></p>
+<p class="binderItem"><strong>add_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -6997,7 +7010,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_add_nat32</strong></p>
+<p class="binderItem"><strong>add_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7018,7 +7031,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_add_nat64</strong></p>
+<p class="binderItem"><strong>add_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7039,7 +7052,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_add_float32</strong></p>
+<p class="binderItem"><strong>add_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7060,7 +7073,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_add_float64</strong></p>
+<p class="binderItem"><strong>add_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7081,7 +7094,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_subtract_int8</strong></p>
+<p class="binderItem"><strong>subtract_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7102,7 +7115,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_subtract_int16</strong></p>
+<p class="binderItem"><strong>subtract_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7123,7 +7136,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_subtract_int32</strong></p>
+<p class="binderItem"><strong>subtract_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7144,7 +7157,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_subtract_int64</strong></p>
+<p class="binderItem"><strong>subtract_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7165,7 +7178,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_subtract_nat8</strong></p>
+<p class="binderItem"><strong>subtract_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7186,7 +7199,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_subtract_nat16</strong></p>
+<p class="binderItem"><strong>subtract_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7207,7 +7220,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_subtract_nat32</strong></p>
+<p class="binderItem"><strong>subtract_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7228,7 +7241,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_subtract_nat64</strong></p>
+<p class="binderItem"><strong>subtract_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7249,7 +7262,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_subtract_float32</strong></p>
+<p class="binderItem"><strong>subtract_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7270,7 +7283,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_subtract_float64</strong></p>
+<p class="binderItem"><strong>subtract_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7291,7 +7304,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_multiply_int8</strong></p>
+<p class="binderItem"><strong>multiply_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7312,7 +7325,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_multiply_int16</strong></p>
+<p class="binderItem"><strong>multiply_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7333,7 +7346,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_multiply_int32</strong></p>
+<p class="binderItem"><strong>multiply_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7354,7 +7367,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_multiply_int64</strong></p>
+<p class="binderItem"><strong>multiply_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7375,7 +7388,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_multiply_nat8</strong></p>
+<p class="binderItem"><strong>multiply_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7396,7 +7409,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_multiply_nat16</strong></p>
+<p class="binderItem"><strong>multiply_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7417,7 +7430,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_multiply_nat32</strong></p>
+<p class="binderItem"><strong>multiply_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7438,7 +7451,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_multiply_nat64</strong></p>
+<p class="binderItem"><strong>multiply_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7459,7 +7472,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_multiply_float32</strong></p>
+<p class="binderItem"><strong>multiply_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7480,7 +7493,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_multiply_float64</strong></p>
+<p class="binderItem"><strong>multiply_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7501,7 +7514,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_zero_int8</strong></p>
+<p class="binderItem"><strong>divide_towards_zero_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7522,7 +7535,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_zero_int16</strong></p>
+<p class="binderItem"><strong>divide_towards_zero_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7543,7 +7556,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_zero_int32</strong></p>
+<p class="binderItem"><strong>divide_towards_zero_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7564,7 +7577,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_zero_int64</strong></p>
+<p class="binderItem"><strong>divide_towards_zero_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7585,7 +7598,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_zero_nat8</strong></p>
+<p class="binderItem"><strong>divide_towards_zero_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7606,7 +7619,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_zero_nat16</strong></p>
+<p class="binderItem"><strong>divide_towards_zero_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7627,7 +7640,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_zero_nat32</strong></p>
+<p class="binderItem"><strong>divide_towards_zero_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7648,7 +7661,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_zero_nat64</strong></p>
+<p class="binderItem"><strong>divide_towards_zero_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7669,7 +7682,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_negative_infinity_int8</strong></p>
+<p class="binderItem"><strong>divide_towards_negative_infinity_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7690,7 +7703,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_negative_infinity_int16</strong></p>
+<p class="binderItem"><strong>divide_towards_negative_infinity_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7711,7 +7724,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_negative_infinity_int32</strong></p>
+<p class="binderItem"><strong>divide_towards_negative_infinity_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7732,7 +7745,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_towards_negative_infinity_int64</strong></p>
+<p class="binderItem"><strong>divide_towards_negative_infinity_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7753,7 +7766,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_float32</strong></p>
+<p class="binderItem"><strong>divide_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7774,7 +7787,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_divide_float64</strong></p>
+<p class="binderItem"><strong>divide_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7795,7 +7808,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_zero_int8</strong></p>
+<p class="binderItem"><strong>modulus_towards_zero_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7816,7 +7829,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_zero_int16</strong></p>
+<p class="binderItem"><strong>modulus_towards_zero_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7837,7 +7850,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_zero_int32</strong></p>
+<p class="binderItem"><strong>modulus_towards_zero_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7858,7 +7871,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_zero_int64</strong></p>
+<p class="binderItem"><strong>modulus_towards_zero_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7879,7 +7892,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_zero_nat8</strong></p>
+<p class="binderItem"><strong>modulus_towards_zero_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7900,7 +7913,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_zero_nat16</strong></p>
+<p class="binderItem"><strong>modulus_towards_zero_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7921,7 +7934,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_zero_nat32</strong></p>
+<p class="binderItem"><strong>modulus_towards_zero_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7942,7 +7955,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_zero_nat64</strong></p>
+<p class="binderItem"><strong>modulus_towards_zero_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7963,7 +7976,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_negative_infinity_int8</strong></p>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -7984,7 +7997,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_negative_infinity_int16</strong></p>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8005,7 +8018,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_negative_infinity_int32</strong></p>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8026,7 +8039,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_modulus_towards_negative_infinity_int64</strong></p>
+<p class="binderItem"><strong>modulus_towards_negative_infinity_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8047,7 +8060,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_negate_int8</strong></p>
+<p class="binderItem"><strong>negate_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8068,7 +8081,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_negate_int16</strong></p>
+<p class="binderItem"><strong>negate_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8089,7 +8102,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_negate_int32</strong></p>
+<p class="binderItem"><strong>negate_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8110,7 +8123,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_negate_int64</strong></p>
+<p class="binderItem"><strong>negate_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8131,7 +8144,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_negate_float32</strong></p>
+<p class="binderItem"><strong>negate_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8152,7 +8165,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_negate_float64</strong></p>
+<p class="binderItem"><strong>negate_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8173,7 +8186,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_absolute_value_int8</strong></p>
+<p class="binderItem"><strong>absolute_value_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8194,7 +8207,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_absolute_value_int16</strong></p>
+<p class="binderItem"><strong>absolute_value_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8215,7 +8228,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_absolute_value_int32</strong></p>
+<p class="binderItem"><strong>absolute_value_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8236,7 +8249,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_absolute_value_int64</strong></p>
+<p class="binderItem"><strong>absolute_value_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8257,7 +8270,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_absolute_value_float32</strong></p>
+<p class="binderItem"><strong>absolute_value_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8278,7 +8291,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_absolute_value_float64</strong></p>
+<p class="binderItem"><strong>absolute_value_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8299,7 +8312,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_sign_int8</strong></p>
+<p class="binderItem"><strong>sign_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8320,7 +8333,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_sign_int16</strong></p>
+<p class="binderItem"><strong>sign_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8341,7 +8354,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_sign_int32</strong></p>
+<p class="binderItem"><strong>sign_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8362,7 +8375,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_sign_int64</strong></p>
+<p class="binderItem"><strong>sign_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8383,7 +8396,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_sign_float32</strong></p>
+<p class="binderItem"><strong>sign_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8404,7 +8417,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_sign_float64</strong></p>
+<p class="binderItem"><strong>sign_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8431,7 +8444,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_pi_float32</strong></p>
+<p class="binderItem"><strong>pi_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8452,7 +8465,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_pi_float64</strong></p>
+<p class="binderItem"><strong>pi_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8473,7 +8486,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_square_root_float32</strong></p>
+<p class="binderItem"><strong>square_root_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8494,7 +8507,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_square_root_float64</strong></p>
+<p class="binderItem"><strong>square_root_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8515,7 +8528,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_natural_logarithm_float32</strong></p>
+<p class="binderItem"><strong>natural_logarithm_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8536,7 +8549,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_natural_logarithm_float64</strong></p>
+<p class="binderItem"><strong>natural_logarithm_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8557,7 +8570,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_e_to_the_x_float32</strong></p>
+<p class="binderItem"><strong>e_to_the_x_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8578,7 +8591,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_e_to_the_x_float64</strong></p>
+<p class="binderItem"><strong>e_to_the_x_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8599,7 +8612,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_two_to_the_x_float32</strong></p>
+<p class="binderItem"><strong>two_to_the_x_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8620,7 +8633,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_two_to_the_x_float64</strong></p>
+<p class="binderItem"><strong>two_to_the_x_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8641,7 +8654,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_x_to_the_y_float32</strong></p>
+<p class="binderItem"><strong>x_to_the_y_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8662,7 +8675,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_x_to_the_y_float64</strong></p>
+<p class="binderItem"><strong>x_to_the_y_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8683,7 +8696,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_logarithm_base_x_float32</strong></p>
+<p class="binderItem"><strong>logarithm_base_x_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8704,7 +8717,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_logarithm_base_x_float64</strong></p>
+<p class="binderItem"><strong>logarithm_base_x_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8731,7 +8744,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_sine_float32</strong></p>
+<p class="binderItem"><strong>sine_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8752,7 +8765,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_sine_float64</strong></p>
+<p class="binderItem"><strong>sine_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8773,7 +8786,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cosine_float32</strong></p>
+<p class="binderItem"><strong>cosine_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8794,7 +8807,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cosine_float64</strong></p>
+<p class="binderItem"><strong>cosine_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8815,7 +8828,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_tangent_float32</strong></p>
+<p class="binderItem"><strong>tangent_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8836,7 +8849,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_tangent_float64</strong></p>
+<p class="binderItem"><strong>tangent_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8857,7 +8870,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_arcsine_float32</strong></p>
+<p class="binderItem"><strong>arcsine_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8878,7 +8891,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_arcsine_float64</strong></p>
+<p class="binderItem"><strong>arcsine_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8899,7 +8912,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_arccosine_float32</strong></p>
+<p class="binderItem"><strong>arccosine_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8920,7 +8933,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_arccosine_float64</strong></p>
+<p class="binderItem"><strong>arccosine_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8941,7 +8954,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_arctangent_float32</strong></p>
+<p class="binderItem"><strong>arctangent_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8962,7 +8975,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_arctangent_float64</strong></p>
+<p class="binderItem"><strong>arctangent_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -8983,7 +8996,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_arctangent_fraction_float32</strong></p>
+<p class="binderItem"><strong>arctangent_fraction_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9004,7 +9017,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_arctangent_fraction_float64</strong></p>
+<p class="binderItem"><strong>arctangent_fraction_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9025,7 +9038,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_sine_float32</strong></p>
+<p class="binderItem"><strong>hyperbolic_sine_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9046,7 +9059,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_sine_float64</strong></p>
+<p class="binderItem"><strong>hyperbolic_sine_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9067,7 +9080,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_cosine_float32</strong></p>
+<p class="binderItem"><strong>hyperbolic_cosine_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9088,7 +9101,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_cosine_float64</strong></p>
+<p class="binderItem"><strong>hyperbolic_cosine_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9109,7 +9122,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_tangent_float32</strong></p>
+<p class="binderItem"><strong>hyperbolic_tangent_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9130,7 +9143,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_tangent_float64</strong></p>
+<p class="binderItem"><strong>hyperbolic_tangent_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9151,7 +9164,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_arcsine_float32</strong></p>
+<p class="binderItem"><strong>hyperbolic_arcsine_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9172,7 +9185,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_arcsine_float64</strong></p>
+<p class="binderItem"><strong>hyperbolic_arcsine_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9193,7 +9206,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_arccosine_float32</strong></p>
+<p class="binderItem"><strong>hyperbolic_arccosine_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9214,7 +9227,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_arccosine_float64</strong></p>
+<p class="binderItem"><strong>hyperbolic_arccosine_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9235,7 +9248,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_arctangent_float32</strong></p>
+<p class="binderItem"><strong>hyperbolic_arctangent_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9256,7 +9269,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_hyperbolic_arctangent_float64</strong></p>
+<p class="binderItem"><strong>hyperbolic_arctangent_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9283,7 +9296,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float32_int8</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float32_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9304,7 +9317,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float64_int8</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float64_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9325,7 +9338,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float32_int16</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float32_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9346,7 +9359,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float64_int16</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float64_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9367,7 +9380,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float32_int32</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float32_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9388,7 +9401,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float64_int32</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float64_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9409,7 +9422,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float32_int64</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float32_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9430,7 +9443,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float64_int64</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float64_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9451,7 +9464,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float32_nat8</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float32_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9472,7 +9485,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float64_nat8</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float64_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9493,7 +9506,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float32_nat16</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float32_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9514,7 +9527,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float64_nat16</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float64_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9535,7 +9548,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float32_nat32</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float32_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9556,7 +9569,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float64_nat32</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float64_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9577,7 +9590,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float32_nat64</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float32_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9598,7 +9611,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float64_nat64</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float64_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9619,7 +9632,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float32_float32</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float32_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9640,7 +9653,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_zero_float64_float64</strong></p>
+<p class="binderItem"><strong>round_towards_zero_float64_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9661,7 +9674,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float32_int8</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float32_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9682,7 +9695,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float64_int8</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float64_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9703,7 +9716,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float32_int16</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float32_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9724,7 +9737,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float64_int16</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float64_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9745,7 +9758,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float32_int32</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float32_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9766,7 +9779,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float64_int32</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float64_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9787,7 +9800,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float32_int64</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float32_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9808,7 +9821,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float64_int64</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float64_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9829,7 +9842,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float32_nat8</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float32_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9850,7 +9863,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float64_nat8</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float64_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9871,7 +9884,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float32_nat16</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float32_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9892,7 +9905,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float64_nat16</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float64_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9913,7 +9926,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float32_nat32</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float32_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9934,7 +9947,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float64_nat32</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float64_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9955,7 +9968,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float32_nat64</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float32_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9976,7 +9989,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float64_nat64</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float64_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -9997,7 +10010,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float32_float32</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float32_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10018,7 +10031,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_away_from_zero_float64_float64</strong></p>
+<p class="binderItem"><strong>round_away_from_zero_float64_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10039,7 +10052,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float32_int8</strong></p>
+<p class="binderItem"><strong>round_towards_even_float32_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10060,7 +10073,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float64_int8</strong></p>
+<p class="binderItem"><strong>round_towards_even_float64_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10081,7 +10094,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float32_int16</strong></p>
+<p class="binderItem"><strong>round_towards_even_float32_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10102,7 +10115,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float64_int16</strong></p>
+<p class="binderItem"><strong>round_towards_even_float64_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10123,7 +10136,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float32_int32</strong></p>
+<p class="binderItem"><strong>round_towards_even_float32_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10144,7 +10157,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float64_int32</strong></p>
+<p class="binderItem"><strong>round_towards_even_float64_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10165,7 +10178,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float32_int64</strong></p>
+<p class="binderItem"><strong>round_towards_even_float32_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10186,7 +10199,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float64_int64</strong></p>
+<p class="binderItem"><strong>round_towards_even_float64_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10207,7 +10220,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float32_nat8</strong></p>
+<p class="binderItem"><strong>round_towards_even_float32_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10228,7 +10241,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float64_nat8</strong></p>
+<p class="binderItem"><strong>round_towards_even_float64_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10249,7 +10262,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float32_nat16</strong></p>
+<p class="binderItem"><strong>round_towards_even_float32_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10270,7 +10283,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float64_nat16</strong></p>
+<p class="binderItem"><strong>round_towards_even_float64_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10291,7 +10304,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float32_nat32</strong></p>
+<p class="binderItem"><strong>round_towards_even_float32_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10312,7 +10325,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float64_nat32</strong></p>
+<p class="binderItem"><strong>round_towards_even_float64_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10333,7 +10346,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float32_nat64</strong></p>
+<p class="binderItem"><strong>round_towards_even_float32_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10354,7 +10367,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float64_nat64</strong></p>
+<p class="binderItem"><strong>round_towards_even_float64_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10375,7 +10388,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float32_float32</strong></p>
+<p class="binderItem"><strong>round_towards_even_float32_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10396,7 +10409,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_even_float64_float64</strong></p>
+<p class="binderItem"><strong>round_towards_even_float64_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10417,7 +10430,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float32_int8</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float32_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10438,7 +10451,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float64_int8</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float64_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10459,7 +10472,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float32_int16</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float32_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10480,7 +10493,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float64_int16</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float64_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10501,7 +10514,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float32_int32</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float32_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10522,7 +10535,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float64_int32</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float64_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10543,7 +10556,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float32_int64</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float32_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10564,7 +10577,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float64_int64</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float64_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10585,7 +10598,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float32_nat8</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float32_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10606,7 +10619,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float64_nat8</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float64_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10627,7 +10640,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float32_nat16</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float32_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10648,7 +10661,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float64_nat16</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float64_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10669,7 +10682,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float32_nat32</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float32_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10690,7 +10703,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float64_nat32</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float64_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10711,7 +10724,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float32_nat64</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float32_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10732,7 +10745,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float64_nat64</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float64_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10753,7 +10766,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float32_float32</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float32_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10774,7 +10787,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_round_towards_odd_float64_float64</strong></p>
+<p class="binderItem"><strong>round_towards_odd_float64_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10795,7 +10808,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float32_int8</strong></p>
+<p class="binderItem"><strong>ceiling_float32_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10816,7 +10829,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float64_int8</strong></p>
+<p class="binderItem"><strong>ceiling_float64_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10837,7 +10850,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float32_int16</strong></p>
+<p class="binderItem"><strong>ceiling_float32_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10858,7 +10871,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float64_int16</strong></p>
+<p class="binderItem"><strong>ceiling_float64_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10879,7 +10892,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float32_int32</strong></p>
+<p class="binderItem"><strong>ceiling_float32_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10900,7 +10913,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float64_int32</strong></p>
+<p class="binderItem"><strong>ceiling_float64_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10921,7 +10934,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float32_int64</strong></p>
+<p class="binderItem"><strong>ceiling_float32_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10942,7 +10955,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float64_int64</strong></p>
+<p class="binderItem"><strong>ceiling_float64_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10963,7 +10976,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float32_nat8</strong></p>
+<p class="binderItem"><strong>ceiling_float32_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -10984,7 +10997,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float64_nat8</strong></p>
+<p class="binderItem"><strong>ceiling_float64_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11005,7 +11018,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float32_nat16</strong></p>
+<p class="binderItem"><strong>ceiling_float32_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11026,7 +11039,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float64_nat16</strong></p>
+<p class="binderItem"><strong>ceiling_float64_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11047,7 +11060,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float32_nat32</strong></p>
+<p class="binderItem"><strong>ceiling_float32_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11068,7 +11081,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float64_nat32</strong></p>
+<p class="binderItem"><strong>ceiling_float64_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11089,7 +11102,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float32_nat64</strong></p>
+<p class="binderItem"><strong>ceiling_float32_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11110,7 +11123,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float64_nat64</strong></p>
+<p class="binderItem"><strong>ceiling_float64_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11131,7 +11144,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float32_float32</strong></p>
+<p class="binderItem"><strong>ceiling_float32_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11152,7 +11165,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_ceiling_float64_float64</strong></p>
+<p class="binderItem"><strong>ceiling_float64_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11173,7 +11186,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float32_int8</strong></p>
+<p class="binderItem"><strong>floor_float32_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11194,7 +11207,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float64_int8</strong></p>
+<p class="binderItem"><strong>floor_float64_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11215,7 +11228,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float32_int16</strong></p>
+<p class="binderItem"><strong>floor_float32_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11236,7 +11249,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float64_int16</strong></p>
+<p class="binderItem"><strong>floor_float64_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11257,7 +11270,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float32_int32</strong></p>
+<p class="binderItem"><strong>floor_float32_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11278,7 +11291,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float64_int32</strong></p>
+<p class="binderItem"><strong>floor_float64_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11299,7 +11312,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float32_int64</strong></p>
+<p class="binderItem"><strong>floor_float32_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11320,7 +11333,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float64_int64</strong></p>
+<p class="binderItem"><strong>floor_float64_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11341,7 +11354,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float32_nat8</strong></p>
+<p class="binderItem"><strong>floor_float32_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11362,7 +11375,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float64_nat8</strong></p>
+<p class="binderItem"><strong>floor_float64_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11383,7 +11396,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float32_nat16</strong></p>
+<p class="binderItem"><strong>floor_float32_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11404,7 +11417,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float64_nat16</strong></p>
+<p class="binderItem"><strong>floor_float64_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11425,7 +11438,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float32_nat32</strong></p>
+<p class="binderItem"><strong>floor_float32_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11446,7 +11459,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float64_nat32</strong></p>
+<p class="binderItem"><strong>floor_float64_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11467,7 +11480,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float32_nat64</strong></p>
+<p class="binderItem"><strong>floor_float32_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11488,7 +11501,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float64_nat64</strong></p>
+<p class="binderItem"><strong>floor_float64_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11509,7 +11522,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float32_float32</strong></p>
+<p class="binderItem"><strong>floor_float32_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11530,7 +11543,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_floor_float64_float64</strong></p>
+<p class="binderItem"><strong>floor_float64_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11557,7 +11570,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_minimum_bound_int8</strong></p>
+<p class="binderItem"><strong>minimum_bound_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11578,7 +11591,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_minimum_bound_int16</strong></p>
+<p class="binderItem"><strong>minimum_bound_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11599,7 +11612,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_minimum_bound_int32</strong></p>
+<p class="binderItem"><strong>minimum_bound_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11620,7 +11633,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_minimum_bound_int64</strong></p>
+<p class="binderItem"><strong>minimum_bound_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11641,7 +11654,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_minimum_bound_nat8</strong></p>
+<p class="binderItem"><strong>minimum_bound_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11662,7 +11675,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_minimum_bound_nat16</strong></p>
+<p class="binderItem"><strong>minimum_bound_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11683,7 +11696,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_minimum_bound_nat32</strong></p>
+<p class="binderItem"><strong>minimum_bound_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11704,7 +11717,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_minimum_bound_nat64</strong></p>
+<p class="binderItem"><strong>minimum_bound_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11725,7 +11738,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_maximum_bound_int8</strong></p>
+<p class="binderItem"><strong>maximum_bound_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11746,7 +11759,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_maximum_bound_int16</strong></p>
+<p class="binderItem"><strong>maximum_bound_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11767,7 +11780,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_maximum_bound_int32</strong></p>
+<p class="binderItem"><strong>maximum_bound_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11788,7 +11801,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_maximum_bound_int64</strong></p>
+<p class="binderItem"><strong>maximum_bound_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11809,7 +11822,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_maximum_bound_nat8</strong></p>
+<p class="binderItem"><strong>maximum_bound_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11830,7 +11843,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_maximum_bound_nat16</strong></p>
+<p class="binderItem"><strong>maximum_bound_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11851,7 +11864,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_maximum_bound_nat32</strong></p>
+<p class="binderItem"><strong>maximum_bound_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11872,7 +11885,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_maximum_bound_nat64</strong></p>
+<p class="binderItem"><strong>maximum_bound_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11899,7 +11912,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_left_int8</strong></p>
+<p class="binderItem"><strong>shift_left_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11920,7 +11933,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_left_int16</strong></p>
+<p class="binderItem"><strong>shift_left_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11941,7 +11954,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_left_int32</strong></p>
+<p class="binderItem"><strong>shift_left_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11962,7 +11975,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_left_int64</strong></p>
+<p class="binderItem"><strong>shift_left_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -11983,7 +11996,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_left_nat8</strong></p>
+<p class="binderItem"><strong>shift_left_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12004,7 +12017,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_left_nat16</strong></p>
+<p class="binderItem"><strong>shift_left_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12025,7 +12038,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_left_nat32</strong></p>
+<p class="binderItem"><strong>shift_left_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12046,7 +12059,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_left_nat64</strong></p>
+<p class="binderItem"><strong>shift_left_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12067,7 +12080,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_right_int8</strong></p>
+<p class="binderItem"><strong>shift_right_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12088,7 +12101,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_right_int16</strong></p>
+<p class="binderItem"><strong>shift_right_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12109,7 +12122,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_right_int32</strong></p>
+<p class="binderItem"><strong>shift_right_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12130,7 +12143,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_right_int64</strong></p>
+<p class="binderItem"><strong>shift_right_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12151,7 +12164,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_right_nat8</strong></p>
+<p class="binderItem"><strong>shift_right_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12172,7 +12185,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_right_nat16</strong></p>
+<p class="binderItem"><strong>shift_right_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12193,7 +12206,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_right_nat32</strong></p>
+<p class="binderItem"><strong>shift_right_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12214,7 +12227,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_shift_right_nat64</strong></p>
+<p class="binderItem"><strong>shift_right_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12235,7 +12248,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_left_int8</strong></p>
+<p class="binderItem"><strong>rotate_left_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12256,7 +12269,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_left_int16</strong></p>
+<p class="binderItem"><strong>rotate_left_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12277,7 +12290,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_left_int32</strong></p>
+<p class="binderItem"><strong>rotate_left_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12298,7 +12311,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_left_int64</strong></p>
+<p class="binderItem"><strong>rotate_left_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12319,7 +12332,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_left_nat8</strong></p>
+<p class="binderItem"><strong>rotate_left_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12340,7 +12353,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_left_nat16</strong></p>
+<p class="binderItem"><strong>rotate_left_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12361,7 +12374,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_left_nat32</strong></p>
+<p class="binderItem"><strong>rotate_left_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12382,7 +12395,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_left_nat64</strong></p>
+<p class="binderItem"><strong>rotate_left_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12403,7 +12416,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_right_int8</strong></p>
+<p class="binderItem"><strong>rotate_right_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12424,7 +12437,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_right_int16</strong></p>
+<p class="binderItem"><strong>rotate_right_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12445,7 +12458,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_right_int32</strong></p>
+<p class="binderItem"><strong>rotate_right_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12466,7 +12479,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_right_int64</strong></p>
+<p class="binderItem"><strong>rotate_right_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12487,7 +12500,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_right_nat8</strong></p>
+<p class="binderItem"><strong>rotate_right_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12508,7 +12521,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_right_nat16</strong></p>
+<p class="binderItem"><strong>rotate_right_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12529,7 +12542,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_right_nat32</strong></p>
+<p class="binderItem"><strong>rotate_right_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12550,7 +12563,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_rotate_right_nat64</strong></p>
+<p class="binderItem"><strong>rotate_right_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12571,7 +12584,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_and_int8</strong></p>
+<p class="binderItem"><strong>bit_and_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12592,7 +12605,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_and_int16</strong></p>
+<p class="binderItem"><strong>bit_and_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12613,7 +12626,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_and_int32</strong></p>
+<p class="binderItem"><strong>bit_and_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12634,7 +12647,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_and_int64</strong></p>
+<p class="binderItem"><strong>bit_and_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12655,7 +12668,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_and_nat8</strong></p>
+<p class="binderItem"><strong>bit_and_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12676,7 +12689,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_and_nat16</strong></p>
+<p class="binderItem"><strong>bit_and_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12697,7 +12710,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_and_nat32</strong></p>
+<p class="binderItem"><strong>bit_and_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12718,7 +12731,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_and_nat64</strong></p>
+<p class="binderItem"><strong>bit_and_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12739,7 +12752,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_or_int8</strong></p>
+<p class="binderItem"><strong>bit_or_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12760,7 +12773,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_or_int16</strong></p>
+<p class="binderItem"><strong>bit_or_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12781,7 +12794,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_or_int32</strong></p>
+<p class="binderItem"><strong>bit_or_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12802,7 +12815,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_or_int64</strong></p>
+<p class="binderItem"><strong>bit_or_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12823,7 +12836,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_or_nat8</strong></p>
+<p class="binderItem"><strong>bit_or_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12844,7 +12857,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_or_nat16</strong></p>
+<p class="binderItem"><strong>bit_or_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12865,7 +12878,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_or_nat32</strong></p>
+<p class="binderItem"><strong>bit_or_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12886,7 +12899,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_or_nat64</strong></p>
+<p class="binderItem"><strong>bit_or_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12907,7 +12920,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_xor_int8</strong></p>
+<p class="binderItem"><strong>bit_xor_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12928,7 +12941,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_xor_int16</strong></p>
+<p class="binderItem"><strong>bit_xor_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12949,7 +12962,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_xor_int32</strong></p>
+<p class="binderItem"><strong>bit_xor_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12970,7 +12983,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_xor_int64</strong></p>
+<p class="binderItem"><strong>bit_xor_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -12991,7 +13004,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_xor_nat8</strong></p>
+<p class="binderItem"><strong>bit_xor_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13012,7 +13025,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_xor_nat16</strong></p>
+<p class="binderItem"><strong>bit_xor_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13033,7 +13046,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_xor_nat32</strong></p>
+<p class="binderItem"><strong>bit_xor_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13054,7 +13067,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_xor_nat64</strong></p>
+<p class="binderItem"><strong>bit_xor_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13075,7 +13088,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_not_int8</strong></p>
+<p class="binderItem"><strong>bit_not_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13096,7 +13109,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_not_int16</strong></p>
+<p class="binderItem"><strong>bit_not_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13117,7 +13130,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_not_int32</strong></p>
+<p class="binderItem"><strong>bit_not_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13138,7 +13151,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_not_int64</strong></p>
+<p class="binderItem"><strong>bit_not_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13159,7 +13172,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_not_nat8</strong></p>
+<p class="binderItem"><strong>bit_not_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13180,7 +13193,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_not_nat16</strong></p>
+<p class="binderItem"><strong>bit_not_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13201,7 +13214,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_not_nat32</strong></p>
+<p class="binderItem"><strong>bit_not_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13222,7 +13235,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_bit_not_nat64</strong></p>
+<p class="binderItem"><strong>bit_not_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13249,7 +13262,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_decode_utf8</strong></p>
+<p class="binderItem"><strong>decode_utf8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13270,7 +13283,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_encode_utf8</strong></p>
+<p class="binderItem"><strong>encode_utf8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13291,7 +13304,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_character_offset_to_byte_offset_utf8</strong></p>
+<p class="binderItem"><strong>character_offset_to_byte_offset_utf8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13312,7 +13325,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_length_bytes_utf8</strong></p>
+<p class="binderItem"><strong>length_bytes_utf8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13333,7 +13346,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_length_bytes_blob</strong></p>
+<p class="binderItem"><strong>length_bytes_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13354,7 +13367,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_byte_blob</strong></p>
+<p class="binderItem"><strong>get_byte_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13375,7 +13388,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_replace_byte_blob</strong></p>
+<p class="binderItem"><strong>replace_byte_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13396,7 +13409,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_data_piece_utf8</strong></p>
+<p class="binderItem"><strong>get_data_piece_utf8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13417,7 +13430,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_data_piece_blob</strong></p>
+<p class="binderItem"><strong>get_data_piece_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13438,7 +13451,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_replace_data_piece_utf8</strong></p>
+<p class="binderItem"><strong>replace_data_piece_utf8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13459,7 +13472,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_replace_data_piece_blob</strong></p>
+<p class="binderItem"><strong>replace_data_piece_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13480,7 +13493,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_empty_utf8</strong></p>
+<p class="binderItem"><strong>empty_utf8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13501,7 +13514,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_empty_blob</strong></p>
+<p class="binderItem"><strong>empty_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13528,7 +13541,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_sigma_field_value</strong></p>
+<p class="binderItem"><strong>get_sigma_field_value</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13551,7 +13564,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_sigma_successor</strong></p>
+<p class="binderItem"><strong>get_sigma_successor</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13580,7 +13593,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_named_value</strong></p>
+<p class="binderItem"><strong>get_named_value</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13609,7 +13622,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_maybe_is_just</strong></p>
+<p class="binderItem"><strong>maybe_is_just</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13631,7 +13644,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_fmap_maybe</strong></p>
+<p class="binderItem"><strong>fmap_maybe</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13654,7 +13667,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_from_maybe</strong></p>
+<p class="binderItem"><strong>from_maybe</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13682,7 +13695,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_maybe_type_content_type</strong></p>
+<p class="binderItem"><strong>get_maybe_type_content_type</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13703,7 +13716,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_function_type_left</strong></p>
+<p class="binderItem"><strong>get_function_type_left</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13724,7 +13737,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_function_type_right</strong></p>
+<p class="binderItem"><strong>get_function_type_right</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13745,7 +13758,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_sigma_type_field_type</strong></p>
+<p class="binderItem"><strong>get_sigma_type_field_type</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13766,7 +13779,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_sigma_type_successor</strong></p>
+<p class="binderItem"><strong>get_sigma_type_successor</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13788,7 +13801,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_named_type_content_type</strong></p>
+<p class="binderItem"><strong>get_named_type_content_type</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13809,7 +13822,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_get_universe_type_level</strong></p>
+<p class="binderItem"><strong>get_universe_type_level</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13830,7 +13843,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_make_sigma</strong></p>
+<p class="binderItem"><strong>make_sigma</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13846,7 +13859,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_make_name</strong></p>
+<p class="binderItem"><strong>make_name</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13862,7 +13875,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_make_maybe_type</strong></p>
+<p class="binderItem"><strong>make_maybe_type</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13883,7 +13896,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_make_function_type</strong></p>
+<p class="binderItem"><strong>make_function_type</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13904,7 +13917,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_make_named_value</strong></p>
+<p class="binderItem"><strong>make_named_value</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13920,7 +13933,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_make_sigma_type</strong></p>
+<p class="binderItem"><strong>make_sigma_type</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13943,7 +13956,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_make_named_type</strong></p>
+<p class="binderItem"><strong>make_named_type</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13966,7 +13979,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_make_universe_type</strong></p>
+<p class="binderItem"><strong>make_universe_type</strong></p>
 </li>
 <hr/>
 <ul>
@@ -13993,7 +14006,7 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int8_int16</strong></p>
+<p class="binderItem"><strong>cast_int8_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14014,7 +14027,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int8_int32</strong></p>
+<p class="binderItem"><strong>cast_int8_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14035,7 +14048,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int8_int64</strong></p>
+<p class="binderItem"><strong>cast_int8_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14056,7 +14069,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int8_nat8</strong></p>
+<p class="binderItem"><strong>cast_int8_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14077,7 +14090,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int8_nat16</strong></p>
+<p class="binderItem"><strong>cast_int8_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14098,7 +14111,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int8_nat32</strong></p>
+<p class="binderItem"><strong>cast_int8_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14119,7 +14132,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int8_nat64</strong></p>
+<p class="binderItem"><strong>cast_int8_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14140,7 +14153,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int16_int8</strong></p>
+<p class="binderItem"><strong>cast_int16_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14161,7 +14174,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int16_int32</strong></p>
+<p class="binderItem"><strong>cast_int16_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14182,7 +14195,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int16_int64</strong></p>
+<p class="binderItem"><strong>cast_int16_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14203,7 +14216,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int16_nat8</strong></p>
+<p class="binderItem"><strong>cast_int16_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14224,7 +14237,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int16_nat16</strong></p>
+<p class="binderItem"><strong>cast_int16_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14245,7 +14258,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int16_nat32</strong></p>
+<p class="binderItem"><strong>cast_int16_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14258,7 +14271,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int16_nat64</strong></p>
+<p class="binderItem"><strong>cast_int16_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14279,7 +14292,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int32_int8</strong></p>
+<p class="binderItem"><strong>cast_int32_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14300,7 +14313,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int32_int16</strong></p>
+<p class="binderItem"><strong>cast_int32_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14321,7 +14334,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int32_int64</strong></p>
+<p class="binderItem"><strong>cast_int32_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14342,7 +14355,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int32_nat8</strong></p>
+<p class="binderItem"><strong>cast_int32_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14363,7 +14376,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int32_nat16</strong></p>
+<p class="binderItem"><strong>cast_int32_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14384,7 +14397,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int32_nat32</strong></p>
+<p class="binderItem"><strong>cast_int32_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14405,7 +14418,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int32_nat64</strong></p>
+<p class="binderItem"><strong>cast_int32_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14426,7 +14439,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int64_int8</strong></p>
+<p class="binderItem"><strong>cast_int64_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14447,7 +14460,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int64_int16</strong></p>
+<p class="binderItem"><strong>cast_int64_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14468,7 +14481,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int64_int32</strong></p>
+<p class="binderItem"><strong>cast_int64_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14489,7 +14502,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int64_nat8</strong></p>
+<p class="binderItem"><strong>cast_int64_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14510,7 +14523,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int64_nat16</strong></p>
+<p class="binderItem"><strong>cast_int64_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14531,7 +14544,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int64_nat32</strong></p>
+<p class="binderItem"><strong>cast_int64_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14552,7 +14565,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int64_nat64</strong></p>
+<p class="binderItem"><strong>cast_int64_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14573,7 +14586,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat8_int8</strong></p>
+<p class="binderItem"><strong>cast_nat8_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14594,7 +14607,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat8_int16</strong></p>
+<p class="binderItem"><strong>cast_nat8_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14615,7 +14628,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat8_int32</strong></p>
+<p class="binderItem"><strong>cast_nat8_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14636,7 +14649,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat8_int64</strong></p>
+<p class="binderItem"><strong>cast_nat8_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14657,7 +14670,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat8_nat16</strong></p>
+<p class="binderItem"><strong>cast_nat8_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14678,7 +14691,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat8_nat32</strong></p>
+<p class="binderItem"><strong>cast_nat8_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14699,7 +14712,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat8_nat64</strong></p>
+<p class="binderItem"><strong>cast_nat8_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14720,7 +14733,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat16_int8</strong></p>
+<p class="binderItem"><strong>cast_nat16_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14741,7 +14754,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat16_int16</strong></p>
+<p class="binderItem"><strong>cast_nat16_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14762,7 +14775,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat16_int32</strong></p>
+<p class="binderItem"><strong>cast_nat16_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14783,7 +14796,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat16_int64</strong></p>
+<p class="binderItem"><strong>cast_nat16_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14804,7 +14817,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat16_nat8</strong></p>
+<p class="binderItem"><strong>cast_nat16_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14825,7 +14838,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat16_nat32</strong></p>
+<p class="binderItem"><strong>cast_nat16_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14846,7 +14859,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat16_nat64</strong></p>
+<p class="binderItem"><strong>cast_nat16_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14867,7 +14880,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat32_int8</strong></p>
+<p class="binderItem"><strong>cast_nat32_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14888,7 +14901,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat32_int16</strong></p>
+<p class="binderItem"><strong>cast_nat32_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14909,7 +14922,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat32_int32</strong></p>
+<p class="binderItem"><strong>cast_nat32_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14930,7 +14943,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat32_int64</strong></p>
+<p class="binderItem"><strong>cast_nat32_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14951,7 +14964,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat32_nat8</strong></p>
+<p class="binderItem"><strong>cast_nat32_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14972,7 +14985,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat32_nat16</strong></p>
+<p class="binderItem"><strong>cast_nat32_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -14993,7 +15006,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat32_nat64</strong></p>
+<p class="binderItem"><strong>cast_nat32_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15014,7 +15027,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat64_int8</strong></p>
+<p class="binderItem"><strong>cast_nat64_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15035,7 +15048,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat64_int16</strong></p>
+<p class="binderItem"><strong>cast_nat64_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15056,7 +15069,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat64_int32</strong></p>
+<p class="binderItem"><strong>cast_nat64_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15077,7 +15090,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat64_int64</strong></p>
+<p class="binderItem"><strong>cast_nat64_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15098,7 +15111,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat64_nat8</strong></p>
+<p class="binderItem"><strong>cast_nat64_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15119,7 +15132,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat64_nat16</strong></p>
+<p class="binderItem"><strong>cast_nat64_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15140,7 +15153,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat64_nat32</strong></p>
+<p class="binderItem"><strong>cast_nat64_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15161,7 +15174,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_utf8_blob</strong></p>
+<p class="binderItem"><strong>cast_utf8_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15182,7 +15195,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_utf8</strong></p>
+<p class="binderItem"><strong>cast_blob_utf8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15203,7 +15216,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_name_blob</strong></p>
+<p class="binderItem"><strong>cast_name_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15224,7 +15237,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_name</strong></p>
+<p class="binderItem"><strong>cast_blob_name</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15245,7 +15258,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_float32_float64</strong></p>
+<p class="binderItem"><strong>cast_float32_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15266,7 +15279,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_float64_float32</strong></p>
+<p class="binderItem"><strong>cast_float64_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15287,7 +15300,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_int8</strong></p>
+<p class="binderItem"><strong>cast_blob_int8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15308,7 +15321,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_int16</strong></p>
+<p class="binderItem"><strong>cast_blob_int16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15329,7 +15342,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_int32</strong></p>
+<p class="binderItem"><strong>cast_blob_int32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15350,7 +15363,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_int64</strong></p>
+<p class="binderItem"><strong>cast_blob_int64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15371,7 +15384,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_nat8</strong></p>
+<p class="binderItem"><strong>cast_blob_nat8</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15392,7 +15405,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_nat16</strong></p>
+<p class="binderItem"><strong>cast_blob_nat16</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15413,7 +15426,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_nat32</strong></p>
+<p class="binderItem"><strong>cast_blob_nat32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15434,7 +15447,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_nat64</strong></p>
+<p class="binderItem"><strong>cast_blob_nat64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15455,7 +15468,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_float32</strong></p>
+<p class="binderItem"><strong>cast_blob_float32</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15476,7 +15489,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_blob_float64</strong></p>
+<p class="binderItem"><strong>cast_blob_float64</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15497,7 +15510,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int8_blob</strong></p>
+<p class="binderItem"><strong>cast_int8_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15518,7 +15531,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int16_blob</strong></p>
+<p class="binderItem"><strong>cast_int16_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15539,7 +15552,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int32_blob</strong></p>
+<p class="binderItem"><strong>cast_int32_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15560,7 +15573,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_int64_blob</strong></p>
+<p class="binderItem"><strong>cast_int64_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15581,7 +15594,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat8_blob</strong></p>
+<p class="binderItem"><strong>cast_nat8_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15602,7 +15615,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat16_blob</strong></p>
+<p class="binderItem"><strong>cast_nat16_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15623,7 +15636,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat32_blob</strong></p>
+<p class="binderItem"><strong>cast_nat32_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15644,7 +15657,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_nat64_blob</strong></p>
+<p class="binderItem"><strong>cast_nat64_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15665,7 +15678,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_float32_blob</strong></p>
+<p class="binderItem"><strong>cast_float32_blob</strong></p>
 </li>
 <hr/>
 <ul>
@@ -15686,7 +15699,7 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_builtin_identifier_cast_float64_blob</strong></p>
+<p class="binderItem"><strong>cast_float64_blob</strong></p>
 </li>
 <hr/>
 <ul>

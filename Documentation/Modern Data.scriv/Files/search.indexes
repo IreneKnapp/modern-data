@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SearchIndexes Version="1.0">
     <Documents>
-        <Document ID="1229">
+        <Document ID="2269">
             <Title>Semantics</Title>
         </Document>
         <Document ID="3655">
@@ -16767,12 +16767,12 @@ Value type (detailed notation)</Text>
         <Document ID="2998">
             <Title>modern_builtin_identifier_subtract_float32</Title>
         </Document>
+        <Document ID="1229">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1958">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_compare_int8 = 160</Text>
-        </Document>
-        <Document ID="2269">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="631">
             <Title>modern_builtin_identifier_ceiling_float32_int64</Title>
