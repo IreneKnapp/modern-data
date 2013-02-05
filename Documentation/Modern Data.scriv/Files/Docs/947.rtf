@@ -1,10 +1,11 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1187
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf340
 {\fonttbl\f0\fnil\fcharset0 Cochin;}
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\li11\fi-1\pardirnatural
 
 \f0\fs24 \cf0 Cyclic structures, both at the type level and at the value level, can be created with inductive families and recursive lets - these two mechanisms are similar to each other, with the one being for types and the other for values.  The details of how this is done are left to a later chapter.  It is enough to know that the details of how these mechanisms are used do in fact become part of a modern node\'92s identity.  That is, they affect how types are canonicalized, which means that you have a different type if you insert the inductive family into the structure at a different place.  Canonicalization does not apply to values (except for values which are part of types), so the fact that the details of a recursive let also affect the node\'92s identity is not important in most situations.\
 \
+It would be conceivable for nodes \
 As with the scope issue, the node-based portion of the library hides the issue of flattening cyclic structures from the client code, while the stream-based portion exposes it and places the burden on the client.  However, this hiding cannot be complete, so it is important to be aware of its semantics.\
 \
 Cycles will be automatically broken by introducing the appropriate constructs at the time that they need to be serialized, if they have not already been; cycle-breaking can also be introduced manually.  Thus users can build up cyclic structures through mutation and expect serialization and deserialization of them to \'93just work\'94, or they can use inductive families and recursive lets directly, and that will also work.\

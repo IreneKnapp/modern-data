@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Links Version="1.0">
+    <ScrivenerLinks>
+        <TextLinks>
+            <LinkID Range="2,25">1000</LinkID>
+            <LinkID Range="148,24">317</LinkID>
+            <LinkID Range="625,19">4243</LinkID>
+        </TextLinks>
+    </ScrivenerLinks>
+</Links>
