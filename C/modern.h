@@ -392,10 +392,6 @@ enum modern_builtin_identifier {
     modern_builtin_identifier_divide_towards_negative_infinity_int16 = 321,
     modern_builtin_identifier_divide_towards_negative_infinity_int32 = 322,
     modern_builtin_identifier_divide_towards_negative_infinity_int64 = 323,
-    modern_builtin_identifier_divide_towards_negative_infinity_nat8 = 324,
-    modern_builtin_identifier_divide_towards_negative_infinity_nat16 = 325,
-    modern_builtin_identifier_divide_towards_negative_infinity_nat32 = 326,
-    modern_builtin_identifier_divide_towards_negative_infinity_nat64 = 327,
     modern_builtin_identifier_divide_float32 = 352,
     modern_builtin_identifier_divide_float64 = 353,
     modern_builtin_identifier_modulus_towards_zero_int8 = 384,
@@ -410,10 +406,6 @@ enum modern_builtin_identifier {
     modern_builtin_identifier_modulus_towards_negative_infinity_int16 = 417,
     modern_builtin_identifier_modulus_towards_negative_infinity_int32 = 418,
     modern_builtin_identifier_modulus_towards_negative_infinity_int64 = 419,
-    modern_builtin_identifier_modulus_towards_negative_infinity_nat8 = 420,
-    modern_builtin_identifier_modulus_towards_negative_infinity_nat16 = 421,
-    modern_builtin_identifier_modulus_towards_negative_infinity_nat32 = 422,
-    modern_builtin_identifier_modulus_towards_negative_infinity_nat64 = 423,
     modern_builtin_identifier_negate_int8 = 448,
     modern_builtin_identifier_negate_int16 = 449,
     modern_builtin_identifier_negate_int32 = 450,
@@ -1323,10 +1315,7 @@ extern void *modern_library_client_state_get
   (modern_library *library);
 extern void modern_library_finalize(modern_library *library);
 
-extern void modern_retain
-  (modern_library *library,
-   void *retainable);
-extern void modern_release
+extern void modern_finalize
   (modern_library *library,
    void *retainable);
 

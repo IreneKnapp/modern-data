@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SearchIndexes Version="1.0">
     <Documents>
-        <Document ID="2998">
-            <Title>modern_builtin_identifier_subtract_float32</Title>
+        <Document ID="1958">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_compare_int8 = 160</Text>
         </Document>
         <Document ID="3655">
             <Title>Semantics</Title>
@@ -679,6 +680,9 @@ modern_stream_output_make
         <Document ID="358">
             <Title>modern_node_sigma_type_field_type_get</Title>
         </Document>
+        <Document ID="4243">
+            <Title>Builtin identifiers</Title>
+        </Document>
         <Document ID="3932">
             <Title>Synopsis</Title>
             <Text>maybe_is_just = 2560
@@ -739,6 +743,9 @@ Value type (abstract notation)
 float32 -> float32
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4244">
+            <Title>Overview</Title>
         </Document>
         <Document ID="3588">
             <Title>Semantics</Title>
@@ -4477,6 +4484,7 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2843">
             <Title>Overview</Title>
+            <Text>A modern_builtin_identifier is an enumerated value, one of a sparsely-allocated set which fits in a sixteen-bit range.  They are used with nodes of modern_node_type_builtin to represent certain functions and values which are, as the reader might already be imagining, built-in to the system because they are required for its normal usage.  The represented values are comprised of flow-control primitives, logical combinators, comparators, and operations on primitive values and types, both atomic and aggregate.  The actual names and numbers of each are, for brevity, given alongside their types and semantics in the section Builtin identifiers.</Text>
         </Document>
         <Document ID="3883">
             <Title>modern_builtin_identifier_encode_utf8</Title>
@@ -4702,9 +4710,11 @@ Value type (detailed notation)</Text>
             <Title>Overview</Title>
             <Text>“Built-in value” is a special node type, which consists of an identifier from a sixteen-bit unsigned number-space.  Each permitted identifier has a name and a semantic meaning, described in this section.  Unlike most other node types, the value type of a built-in value depends (solely) on its identifier.  Thus, this node type could be viewed as an “extension” node type, providing a larger number-space.
 
-Many of the extant built-in values exist to provide primitive operations on the other value types, such as arithmetic, trigonometry, and introspection.  There is also one, if_bool, which provides flow control.  Because loops can be implemented with cyclic structures, no other flow-control constructs are necessary to be Turing-complete.
+Many of the extant built-in values exist to provide primitive operations on the other value types, such as arithmetic, trigonometry, and introspection.  There is also one, if_bool, which provides flow control.  Because loops can be implemented with cyclic structures (which is to say, with let-bindings), no other flow-control constructs are necessary to be Turing-complete.
 
-The reader is urged not to inspect the ordering of the symbols within the number-space too carefully, as it will reveal embarrassing details of the order in which concepts were invented during early drafts of Modern Data!  They are presented here in a logical order and grouping; the actual numbers assignations are purely an implementation detail.</Text>
+The reader is urged not to inspect the ordering of the symbols within the number-space too carefully, as it will reveal embarrassing details of the order in which concepts were invented during early drafts of Modern Data!  They are presented in this document in a logical order and grouping; the actual numbers assignations are purely an implementation detail.
+
+The human-readable names, numeric values, and semantics are given, in order to attain some approximation of brevity, in a top-level section of this document, Builtin identifiers, alongside the C-library names.</Text>
         </Document>
         <Document ID="3887">
             <Title>Synopsis</Title>
@@ -7782,9 +7792,9 @@ Value type (detailed notation)</Text>
         <Document ID="1073">
             <Title>Synopsis</Title>
             <Text>void
-modern_release
+modern_finalize
 (modern_library *library,
- void *retainable);</Text>
+ void *finalizable);</Text>
         </Document>
         <Document ID="1826">
             <Title>Parameters</Title>
@@ -7972,7 +7982,13 @@ Value type (detailed notation)</Text>
             <Title>Overview</Title>
             <Text>In Modern Data, the fundamental in-memory datatype is the “modern node”, which is a representation of, loosely, either a value or a type.  If we wish to specify further, we may occasionally refer to a “modern type” or “modern value”, but these concepts do not map to actual host-language datatypes; only “modern node” does.
 
-The operations on a modern node are serialization, deserialization, and evaluation.  Serialization is performed on a modern node in some “modern context”, and produces a stream of bytes.  Deserialization is performed on a stream of bytes in some modern context, and produces a modern node.  Evaluation is performed on a modern node, and produces another modern node.
+The operations on a modern node are serialization, deserialization, type-checking, evaluation, and traversal.  The concept of a “modern context” holding types and values is used by serialization, deserialization, type-checking, and evaluation.  The concept of a “modern cursor” describing a node and a path to reach it from the root is used by traversal.
+
+Serialization is performed on a modern node in some modern context, and produces a stream of bytes.
+
+Deserialization is performed on a stream of bytes in some modern context, and produces a modern node.
+
+Evaluation is performed on a modern node, and produces another modern node.  Traversal is begun by creating a “modern cursor” from some modern node 
 
 Although simple applications which merely wish to exchange and act on data need never use anything but the default context, it is nonetheless a concept worth understanding.  The context is internally a hash table of modern types (and occasionally modern values, used as parts of dependent types).  The hash key is determined in a way that captures the notion of type equality, by placing the modern node in a canonical form and computing a hash function of that.  Any modern node which is in the hash table is “in scope” in that context.
 
@@ -10178,6 +10194,7 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1914">
             <Title>Semantics</Title>
+            <Text>A modern_builtin_identifier is an enumerated value, as described in the nearby section Builtin identifiers - Overview.  The actual permissible values, the names that go with them, and their semantics are all detailed in the larger top-level section Builtin identifiers.</Text>
         </Document>
         <Document ID="1569">
             <Title>Parameters</Title>
@@ -12389,7 +12406,7 @@ Value type (detailed notation)</Text>
             <Title>modern_builtin_identifier_rotate_left_nat16</Title>
         </Document>
         <Document ID="106">
-            <Title>modern_release</Title>
+            <Title>modern_finalize</Title>
         </Document>
         <Document ID="2365">
             <Title>Synopsis</Title>
@@ -12887,7 +12904,7 @@ Value type (detailed notation)</Text>
             <Text>modern_builtin_identifier_round_away_from_zero_float32_float32 = 1232</Text>
         </Document>
         <Document ID="1254">
-            <Title>modern_node_make</Title>
+            <Title>modern_node_default_make</Title>
         </Document>
         <Document ID="557">
             <Title>modern_builtin_identifier_hyperbolic_arccosine_float32</Title>
@@ -12933,8 +12950,9 @@ Value type (detailed notation)</Text>
         <Document ID="1255">
             <Title>Synopsis</Title>
             <Text>struct modern_node *
-modern_node_make
-(struct modern_library *library);</Text>
+modern_node_default_make
+(struct modern_allocator *allocator,
+ void *client_state);</Text>
         </Document>
         <Document ID="310">
             <Title>modern_stream_let_is_next</Title>
@@ -13065,7 +13083,7 @@ Value type (detailed notation)</Text>
             <Title>Overview</Title>
             <Text>The node-based object model is an abstraction which presents a view on a Modern Data document and schema allowing them to be navigated by traversing links from containers to their contents, and from values to their types.  Users familiar with the HTML document-object model (DOM) will be at home here; the major difference to note is that in Modern Data, nodes comprise an arbitrary directed graph rather than a strict tree.  That is, a node may be shared among multiple parents, and cyclic structures are possible.  Also, because of the tree structure, in the DOM it makes sense to navigate from a node to its sole parent; in Modern Data, it does not, so this navigation is not possible.
 
-Ordinarily one will use the system-provided implementation of nodes; a structure containing pointers to the necessary callback functions can be obtained by a one-time call to modern_node_make().  Nodes themselves are then represented as void pointers, and created, inspected, and mutated using these callbacks.
+Ordinarily one will use the system-provided implementation of nodes; a structure containing pointers to the necessary callback functions can be obtained by a one-time call to modern_node_default_make().  Nodes themselves are then represented as void pointers, and created, inspected, and mutated using these callbacks.
 
 It is also possible to provide one’s own implementation of nodes.  This is appropriate, for example, when authoring a binding to a new programming language and wishing to use that language’s native data structures to represent node values, without the memory-management complications of wrapping them around C objects.  To do this one “merely” needs to implement the hundred or so callbacks in the modern_node structure.  It is a nontrivial undertaking, but it is expected that it only needs to be done once for any given programming language.</Text>
         </Document>
@@ -16746,15 +16764,14 @@ nat16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2998">
+            <Title>modern_builtin_identifier_subtract_float32</Title>
+        </Document>
         <Document ID="2269">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1229">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="1958">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_compare_int8 = 160</Text>
         </Document>
         <Document ID="631">
             <Title>modern_builtin_identifier_ceiling_float32_int64</Title>

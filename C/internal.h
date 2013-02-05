@@ -12,8 +12,6 @@ struct modern_library {
 
 
 struct memory {
-	uint64_t retain_count;
-	unsigned is_autoreleased : 1;
 	void (*finalizer)(struct modern_library *library, void *retainable);
 };
 
