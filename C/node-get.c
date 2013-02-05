@@ -2,7 +2,7 @@
 #include "internal.h"
 
 
-INTERNAL enum modern_node_type modern_node_get_node_type
+INTERNAL enum modern_node_type default_modern_node_type_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern *value = (struct modern *) value_in;
@@ -10,7 +10,7 @@ INTERNAL enum modern_node_type modern_node_get_node_type
 }
 
 
-INTERNAL modern *modern_node_get_value_type
+INTERNAL modern *default_modern_value_type_get
     (modern_library *library_in,
      modern *value_in)
 {
@@ -178,7 +178,7 @@ INTERNAL modern *modern_node_get_value_type
 }
 
 
-INTERNAL int8_t modern_node_get_int8
+INTERNAL int8_t default_modern_int8_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -193,7 +193,7 @@ INTERNAL int8_t modern_node_get_int8
 }
 
 
-INTERNAL int16_t modern_node_get_int16
+INTERNAL int16_t default_modern_int16_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -202,7 +202,7 @@ INTERNAL int16_t modern_node_get_int16
 }
 
 
-INTERNAL int32_t modern_node_get_int32
+INTERNAL int32_t default_modern_int32_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -211,7 +211,7 @@ INTERNAL int32_t modern_node_get_int32
 }
 
 
-INTERNAL int64_t modern_node_get_int64
+INTERNAL int64_t default_modern_int64_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -220,7 +220,7 @@ INTERNAL int64_t modern_node_get_int64
 }
 
 
-INTERNAL uint8_t modern_node_get_nat8
+INTERNAL uint8_t default_modern_nat8_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -229,7 +229,7 @@ INTERNAL uint8_t modern_node_get_nat8
 }
 
 
-INTERNAL uint16_t modern_node_get_nat16
+INTERNAL uint16_t default_modern_nat16_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -238,7 +238,7 @@ INTERNAL uint16_t modern_node_get_nat16
 }
 
 
-INTERNAL uint32_t modern_node_get_nat32
+INTERNAL uint32_t default_modern_nat32_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -247,7 +247,7 @@ INTERNAL uint32_t modern_node_get_nat32
 }
 
 
-INTERNAL uint64_t modern_node_get_nat64
+INTERNAL uint64_t default_modern_nat64_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -256,7 +256,7 @@ INTERNAL uint64_t modern_node_get_nat64
 }
 
 
-INTERNAL float modern_node_get_float32
+INTERNAL float default_modern_float32_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -265,7 +265,7 @@ INTERNAL float modern_node_get_float32
 }
 
 
-INTERNAL double modern_node_get_float64
+INTERNAL double default_modern_float64_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -274,7 +274,7 @@ INTERNAL double modern_node_get_float64
 }
 
 
-INTERNAL size_t modern_node_get_utf8_bytes
+INTERNAL size_t default_modern_utf8_bytes_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -283,7 +283,7 @@ INTERNAL size_t modern_node_get_utf8_bytes
 }
 
 
-INTERNAL uint8_t *modern_node_get_utf8_data_piece
+INTERNAL uint8_t *default_modern_utf8_data_piece_get
   (modern_library *library_in, modern *value_in,
    size_t offset, size_t bytes)
 {
@@ -299,7 +299,7 @@ INTERNAL uint8_t *modern_node_get_utf8_data_piece
 }
 
 
-INTERNAL size_t modern_node_get_blob_bytes
+INTERNAL size_t default_modern_blob_bytes_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -308,7 +308,7 @@ INTERNAL size_t modern_node_get_blob_bytes
 }
 
 
-INTERNAL uint8_t *modern_node_get_blob_data_piece
+INTERNAL uint8_t *default_modern_blob_data_piece_get
   (modern_library *library_in, modern *value_in,
    size_t offset, size_t bytes)
 {
@@ -324,7 +324,7 @@ INTERNAL uint8_t *modern_node_get_blob_data_piece
 }
 
 
-INTERNAL modern *modern_node_get_sigma_field_value
+INTERNAL modern *default_modern_sigma_field_value_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -333,7 +333,7 @@ INTERNAL modern *modern_node_get_sigma_field_value
 }
 
 
-INTERNAL modern *modern_node_get_sigma_successor
+INTERNAL modern *default_modern_sigma_successor_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -342,7 +342,7 @@ INTERNAL modern *modern_node_get_sigma_successor
 }
 
 
-INTERNAL modern *modern_node_get_named_value
+INTERNAL modern *default_modern_named_value_get
     (modern_library *library_in,
      modern *value_in)
 {
@@ -352,7 +352,7 @@ INTERNAL modern *modern_node_get_named_value
 }
 
 
-INTERNAL modern *modern_node_get_function_type_left
+INTERNAL modern *default_modern_function_type_left_get
   (modern_library *library_in,
    modern *value_in)
 {
@@ -362,7 +362,7 @@ INTERNAL modern *modern_node_get_function_type_left
 }
 
 
-INTERNAL modern *modern_node_get_function_type_right
+INTERNAL modern *default_modern_function_type_right_get
   (modern_library *library_in,
    modern *value_in)
 {
@@ -372,7 +372,7 @@ INTERNAL modern *modern_node_get_function_type_right
 }
 
 
-INTERNAL modern *modern_node_get_sigma_type_field_type
+INTERNAL modern *default_modern_sigma_type_field_type_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -381,7 +381,7 @@ INTERNAL modern *modern_node_get_sigma_type_field_type
 }
 
 
-INTERNAL modern *modern_node_get_sigma_type_successor
+INTERNAL modern *default_modern_sigma_type_successor_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -390,7 +390,7 @@ INTERNAL modern *modern_node_get_sigma_type_successor
 }
 
 
-INTERNAL struct modern_hash modern_node_get_named_type_name
+INTERNAL struct modern_hash default_modern_named_type_name_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -399,7 +399,7 @@ INTERNAL struct modern_hash modern_node_get_named_type_name
 }
 
 
-INTERNAL modern *modern_node_get_named_type_content_type
+INTERNAL modern *default_modern_named_type_content_type_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -408,7 +408,7 @@ INTERNAL modern *modern_node_get_named_type_content_type
 }
 
 
-INTERNAL uint64_t modern_node_get_universe_type_level
+INTERNAL uint64_t default_modern_universe_type_level_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -417,7 +417,7 @@ INTERNAL uint64_t modern_node_get_universe_type_level
 }
 
 
-INTERNAL modern *modern_node_get_lambda_content
+INTERNAL modern *default_modern_lambda_content_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -426,7 +426,7 @@ INTERNAL modern *modern_node_get_lambda_content
 }
 
 
-INTERNAL modern *modern_node_get_apply_left
+INTERNAL modern *default_modern_apply_left_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -435,7 +435,7 @@ INTERNAL modern *modern_node_get_apply_left
 }
 
 
-INTERNAL modern *modern_node_get_apply_right
+INTERNAL modern *default_modern_apply_right_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -444,7 +444,7 @@ INTERNAL modern *modern_node_get_apply_right
 }
 
 
-INTERNAL uint64_t modern_node_get_type_family_count
+INTERNAL uint64_t default_modern_type_family_count_get
   (modern_library *library_in,
    modern *value_in)
 {
@@ -454,7 +454,7 @@ INTERNAL uint64_t modern_node_get_type_family_count
 }
 
 
-INTERNAL modern *modern_node_get_type_family_item
+INTERNAL modern *default_modern_type_family_item_get
   (modern_library *library_in,
    modern *value_in, uint64_t index)
 {
@@ -464,7 +464,7 @@ INTERNAL modern *modern_node_get_type_family_item
 }
 
 
-INTERNAL uint64_t modern_node_get_let_count
+INTERNAL uint64_t default_modern_let_count_get
   (modern_library *library_in,
    modern *value_in)
 {
@@ -474,7 +474,7 @@ INTERNAL uint64_t modern_node_get_let_count
 }
 
 
-INTERNAL modern *modern_node_get_let_item
+INTERNAL modern *default_modern_let_item_get
   (modern_library *library_in,
    modern *value_in, uint64_t index)
 {
@@ -484,7 +484,7 @@ INTERNAL modern *modern_node_get_let_item
 }
 
 
-INTERNAL modern *modern_node_get_let_content
+INTERNAL modern *default_modern_let_content_get
   (modern_library *library_in,
    modern *value_in)
 {
@@ -494,7 +494,7 @@ INTERNAL modern *modern_node_get_let_content
 }
 
 
-INTERNAL uint16_t modern_node_get_builtin_identifier
+INTERNAL uint16_t default_modern_builtin_identifier_get
   (modern_library *library_in,
    modern *value_in)
 {
