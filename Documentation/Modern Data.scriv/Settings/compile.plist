@@ -339,7 +339,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileFormatKey</key>
 	<integer>30</integer>
 	<key>SCRCompileFrontMatterIDKey</key>
-	<integer>-1</integer>
+	<integer>4631</integer>
 	<key>SCRCompileGeneratePDFWithAspose</key>
 	<integer>0</integer>
 	<key>SCRCompileGroupFootnotesBeforePageBreakTypeKey</key>
@@ -427,6 +427,12 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			<string>&lt;$projecttitle&gt;</string>
 			<key>key</key>
 			<string>Title</string>
+		</dict>
+		<dict>
+			<key>data</key>
+			<string>xhtml-toc-h2.xslt</string>
+			<key>key</key>
+			<string>XHTML XSLT</string>
 		</dict>
 		<dict>
 			<key>data</key>

@@ -1,0 +1,424 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf370
+{\fonttbl\f0\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;\red142\green142\blue142;\red252\green105\blue8;\red38\green38\blue38;
+}
+\deftab720
+\pard\pardeftab720\qr
+
+\f0\fs24 \cf2 9:23\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 \'a0how long and what general topic?\
+\pard\pardeftab720\qr
+\cf2 9:23\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 it's my Modern Data project, a self-describing binary data format for dependently-typed object graphs (*pauses for breath*), and you can read just until it gets boring if you want :)\
+you aren't obligated just btw :)\
+\pard\pardeftab720\qr
+\cf2 9:42\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 the third paragraph seems pretty... strange to me. \'a0 I don't think I agree\
+\pard\pardeftab720\qr
+\cf2 9:42\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 hmmm\
+the binary-only one?\
+\pard\pardeftab720\qr
+\cf2 9:42\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 yeah\
+I'm not opposed to a binary format\
+\pard\pardeftab720\qr
+\cf2 9:42\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 but you don't think I've justified it\
+\pard\pardeftab720\qr
+\cf2 9:42\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 though I think a standard textual format would be helpful too\
+\pard\pardeftab720\qr
+\cf2 9:42\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 that's valuable feedback and I'd like to discuss further\
+yeah - well it has become very clear that I need one for documentation purposes at the very least\
+\pard\pardeftab720\qr
+\cf2 9:43\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 I mean, if you are complaining about html, \'a0i think the problem is more that we were much too lenient in trying to get something to show up in the browser\
+\pard\pardeftab720\qr
+\cf2 9:43\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 with my current set of possible node types, anything textual is going to be very verbose, but that's fine for documentation\
+I just really don't want people to think of the text format as the real one, because then they'll be like "Modern Data is ridiculous, how can I use this syntax?"\
+you're not supposed to - it exists for documentation and debugging, which are important, but that's it\
+I guess I should just say that\
+you're not the first person to comment on that part but you're the first to outright disagree with it, and I appreciate that\
+\pard\pardeftab720\qr
+\cf2 9:45\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 well, \'a0I don't think the fact that people make mistakes is very relevant\
+\pard\pardeftab720\qr
+\cf2 9:46\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 yeah, no, I see that now, I think I got into a case where I really wanted to buy this argument because I was convinced of its conclusion but couldn't elucidate the real argument\
+\pard\pardeftab720\qr
+\cf2 9:47\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 Parametericity is an interesting idea though\
+\pard\pardeftab720\qr
+\cf2 9:47\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 Unlike the above-mentioned alternatives, Modern Data is primarily a binary format, not a textual one. \'a0This is because any textual format based on it would necessarily be either very verbose and hard to write, or else would give up many important features. \'a0There is a textual format for documentation and debugging, but users are urged never to use it for interchange.\
+does that sound better?\
+yes!\
+\pard\pardeftab720\qr
+\cf2 9:47\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 maybe not as useful without functions as well, \'a0but still, \'a0it does get you something\
+\pard\pardeftab720\qr
+\cf2 9:47\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 oh it has functions\
+it has to - I didn't realize when I wrote this introduction\
+but dependent types imply them\
+\pard\pardeftab720\qr
+\cf2 9:47\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 hmm\
+\pard\pardeftab720\qr
+\cf2 9:47\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 because the typechecker has to be able to evaluate things\
+you need lambda and apply, and that means you're Turing-complete\
+\pard\pardeftab720\qr
+\cf2 9:47\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 yeah\
+\pard\pardeftab720\qr
+\cf2 9:48\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 so you might as well throw in operations on primitives to make things easy, so I did\
+\pard\pardeftab720\qr
+\cf2 9:48\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 I'm all for strongly encouraging it not be used for interchange, I'm fine with that\
+\pard\pardeftab720\qr
+\cf2 9:48\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 good :)\
+so you like the new wording. \'a0I've put it in my master copy.\
+\pard\pardeftab720\qr
+\cf2 9:48\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 but to be honest, \'a0for a lot of people some kind of standard textual format will be their preferred way of interacting with it\
+\pard\pardeftab720\qr
+\cf2 9:48\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 I suppose.\
+I've got a separate project which is a GUI editor for the thing\
+I should make sure it works on the console as well\
+but I want the core library working, at least for basic serialization and deserialization (typechecking and evaluating can wait until I have some practical experience with the thing)\
+before I put too much time into the editor\
+\pard\pardeftab720\qr
+\cf2 9:50\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 yeah, your scrawlings are pretty incomprehensible, \'a0but that's ok\
+\pard\pardeftab720\qr
+\cf2 9:50\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 haha\
+sorry :)\
+I forgot those got included, but I see I have managed to put a disclaimer at the top of them lol\
+it's also no longer all true. \'a0like cycle breaking is no longer lambda/apply, it's recursive-let and what I called "type families" (recursive-let-for-types)\
+(the difference is that a type family doesn't return a value - in Haskell notation, there's no "in" clause)\
+\pard\pardeftab720\qr
+\cf2 9:53\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 well, sounds moderately interesting, \'a0I may read some more later.... though I skimmed down to mutation, \'a0which I suppose is relevant to the C api, \'a0but how is a standard notion of mutation helpful otherwise?\
+\pard\pardeftab720\qr
+\cf2 9:53\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 thanks, haha\
+it's not helpful otherwise. \'a0I have been flip-fllopping.\
+\pard\pardeftab720\qr
+\cf2 9:53\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 I mean, \'a0globally there is no consistent state. \'a0(Though I guess google's started to fix that)\
+\pard\pardeftab720\qr
+\cf2 9:53\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 I might take it out again\
+lol\
+thank you for reading, again :) I really do appreciate all feedback and time\
+I had been thinking,\
+until yesterday when I had an epiphany,\
+\pard\pardeftab720\qr
+\cf2 9:54\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 data's best thought of as pure values, \'a0sent between stateful processes in my mind\
+\pard\pardeftab720\qr
+\cf2 9:54\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 that mutation was necessary to construct cyclic objects\
+there needs to be a paragraph or two in here about how the way it actually works is that there's "surface structure", which is a proper tree, and "deep structure", which potentially has sharing and cycles\
+\pard\pardeftab720\qr
+\cf2 9:55\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 sure, \'a0unless you have data-based fixed points\
+\pard\pardeftab720\qr
+\cf2 9:55\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 I do, actually, but they aren't sufficient\
+\pard\pardeftab720\qr
+\cf2 9:55\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 oh?\
+\pard\pardeftab720\qr
+\cf2 9:55\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 well - say rather that they're really, really inefficient\
+that was my first model\
+I abandoned it because it got really confusing\
+and because it meant I had to make the evaluator work before I could test ANYTHING\
+\pard\pardeftab720\qr
+\cf2 9:56\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 I could believe that\
+\pard\pardeftab720\qr
+\cf2 9:56\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 what I actually do now is, there are nodes that are "back references" in the "surface structure"\
+they are actually De Bruijn indices\
+and they behave like symbolic links do in Unix\
+normal operations traverse them silently, but they're available for inspection as well\
+I also - I'm going to copy-paste this chatlog somewhere and turn it into reminders to myself, if that's okay\
+\pard\pardeftab720\qr
+\cf2 9:58\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 yeah that's fine\
+\pard\pardeftab720\qr
+\cf2 9:58\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 thanks\
+\pard\pardeftab720\qr
+\cf2 9:58\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 I log pretty much everything :)\
+\pard\pardeftab720\qr
+\cf2 9:58\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 nod :)\
+\pard\pardeftab720\qr
+\cf2 9:59\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 I suppose I should delete those logs once in a while though.\
+\pard\pardeftab720\qr
+\cf2 9:59\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 perhaps, I dunno. \'a0I have logs back to 1998.\
+not continuous for that period, and not all in the same file format, ....\
+I also have logs that predate that, but they're like a 5-meg archive in the ICQ version 99b database format that I can't read, but I saved it alongside a copy of the reverse-engineering notes for that format in case I ever really want to see what the life of an angsty teen was like :)\
+oh right, so what I was about to say but I distracted myself\
+I need to write up notes on possible applications\
+stylesheet languages, "fake typeclasses" (because you don't need real typeclasses with dependent types)\
+for defined file formats, I expect the normal top-level data structure to be\
+MyFancyDocumentFormat (a : Type) (a -> SomeExportFormat) a\
+in other words, a three-tuple of a description of the actual format, a function converting that to the desired format, and the actual format\
+it's essentially saying "anything that is convertible to this format" instead of "anything that's in this exact format", to allow programs to interoperate but still store things their own way\
+when I figure out how dictionaries are going to work (I think I can build them on the primitives I have already - but I need to do that), I may change that recommendation to be a dictionary one field of which is the exporter\
+so that you can store data that has multiple views\
+\pard\pardeftab720\qr
+\cf2 10:05\
+\pard\pardeftab720
+
+\b \cf3 lpsmith\
+\pard\pardeftab720
+
+\b0 \cf4 I dunno, \'a0I'd come up with a couple simple-ish examples\
+\pard\pardeftab720\qr
+\cf2 10:05\
+\pard\pardeftab720
+
+\b \cf0 irene-knapp\
+\pard\pardeftab720
+
+\b0 \cf4 "View as webpage", "view as printer-oriented document", "view as hyper-document-archive-thing"\
+yeah, probably\
+I need simple examples also\
+well, anyway\
+I've talked your ear off enough :) hehe}

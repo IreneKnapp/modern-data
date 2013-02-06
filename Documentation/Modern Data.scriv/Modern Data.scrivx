@@ -7,8 +7,9 @@
                 <IncludeInCompile>Yes</IncludeInCompile>
             </MetaData>
             <CorkboardAndOutliner>
-                <SelectedSubdocumentIDs>1914</SelectedSubdocumentIDs>
+                <SelectedSubdocumentIDs>3</SelectedSubdocumentIDs>
                 <OutlinerExpandedState>
+                    <ItemID>1002</ItemID>
                     <ItemID>6</ItemID>
                     <ItemID>264</ItemID>
                     <ItemID>978</ItemID>
@@ -16,15 +17,11 @@
                     <ItemID>266</ItemID>
                     <ItemID>267</ItemID>
                     <ItemID>4235</ItemID>
-                    <ItemID>4239</ItemID>
                     <ItemID>355</ItemID>
                     <ItemID>269</ItemID>
                     <ItemID>270</ItemID>
                     <ItemID>1089</ItemID>
                     <ItemID>271</ItemID>
-                    <ItemID>272</ItemID>
-                    <ItemID>273</ItemID>
-                    <ItemID>274</ItemID>
                     <ItemID>275</ItemID>
                     <ItemID>305</ItemID>
                     <ItemID>306</ItemID>
@@ -38,6 +35,7 @@
                     <ItemID>248</ItemID>
                     <ItemID>249</ItemID>
                     <ItemID>250</ItemID>
+                    <ItemID>4247</ItemID>
                     <ItemID>101</ItemID>
                     <ItemID>106</ItemID>
                     <ItemID>979</ItemID>
@@ -46,43 +44,115 @@
                     <ItemID>236</ItemID>
                     <ItemID>973</ItemID>
                     <ItemID>64</ItemID>
+                    <ItemID>1094</ItemID>
+                    <ItemID>65</ItemID>
+                    <ItemID>66</ItemID>
                     <ItemID>238</ItemID>
+                    <ItemID>994</ItemID>
+                    <ItemID>995</ItemID>
+                    <ItemID>996</ItemID>
+                    <ItemID>997</ItemID>
                     <ItemID>126</ItemID>
                     <ItemID>67</ItemID>
+                    <ItemID>1148</ItemID>
+                    <ItemID>404</ItemID>
+                    <ItemID>405</ItemID>
+                    <ItemID>959</ItemID>
+                    <ItemID>960</ItemID>
+                    <ItemID>961</ItemID>
+                    <ItemID>902</ItemID>
+                    <ItemID>903</ItemID>
+                    <ItemID>68</ItemID>
+                    <ItemID>69</ItemID>
+                    <ItemID>70</ItemID>
+                    <ItemID>71</ItemID>
+                    <ItemID>72</ItemID>
+                    <ItemID>73</ItemID>
+                    <ItemID>74</ItemID>
+                    <ItemID>75</ItemID>
+                    <ItemID>76</ItemID>
+                    <ItemID>77</ItemID>
+                    <ItemID>79</ItemID>
+                    <ItemID>80</ItemID>
+                    <ItemID>81</ItemID>
+                    <ItemID>410</ItemID>
+                    <ItemID>82</ItemID>
+                    <ItemID>406</ItemID>
+                    <ItemID>962</ItemID>
+                    <ItemID>904</ItemID>
+                    <ItemID>83</ItemID>
+                    <ItemID>84</ItemID>
+                    <ItemID>85</ItemID>
+                    <ItemID>86</ItemID>
+                    <ItemID>87</ItemID>
+                    <ItemID>88</ItemID>
+                    <ItemID>89</ItemID>
+                    <ItemID>90</ItemID>
+                    <ItemID>91</ItemID>
+                    <ItemID>92</ItemID>
+                    <ItemID>94</ItemID>
+                    <ItemID>95</ItemID>
+                    <ItemID>313</ItemID>
+                    <ItemID>96</ItemID>
+                    <ItemID>411</ItemID>
+                    <ItemID>97</ItemID>
+                    <ItemID>98</ItemID>
+                    <ItemID>99</ItemID>
+                    <ItemID>100</ItemID>
+                    <ItemID>314</ItemID>
+                    <ItemID>315</ItemID>
+                    <ItemID>316</ItemID>
+                    <ItemID>317</ItemID>
                     <ItemID>1247</ItemID>
+                    <ItemID>1248</ItemID>
+                    <ItemID>127</ItemID>
+                    <ItemID>153</ItemID>
+                    <ItemID>197</ItemID>
+                    <ItemID>1253</ItemID>
                     <ItemID>283</ItemID>
+                    <ItemID>284</ItemID>
                     <ItemID>108</ItemID>
+                    <ItemID>8</ItemID>
+                    <ItemID>109</ItemID>
+                    <ItemID>259</ItemID>
+                    <ItemID>110</ItemID>
+                    <ItemID>111</ItemID>
+                    <ItemID>112</ItemID>
                     <ItemID>302</ItemID>
+                    <ItemID>303</ItemID>
+                    <ItemID>963</ItemID>
                     <ItemID>113</ItemID>
+                    <ItemID>114</ItemID>
+                    <ItemID>115</ItemID>
+                    <ItemID>116</ItemID>
+                    <ItemID>117</ItemID>
+                    <ItemID>118</ItemID>
                     <ItemID>119</ItemID>
+                    <ItemID>120</ItemID>
+                    <ItemID>121</ItemID>
+                    <ItemID>122</ItemID>
+                    <ItemID>123</ItemID>
+                    <ItemID>124</ItemID>
+                    <ItemID>125</ItemID>
                     <ItemID>964</ItemID>
                     <ItemID>1001</ItemID>
                     <ItemID>974</ItemID>
+                    <ItemID>12</ItemID>
+                    <ItemID>972</ItemID>
                     <ItemID>975</ItemID>
+                    <ItemID>999</ItemID>
+                    <ItemID>13</ItemID>
+                    <ItemID>243</ItemID>
                     <ItemID>254</ItemID>
                     <ItemID>237</ItemID>
                     <ItemID>318</ItemID>
                     <ItemID>1000</ItemID>
-                    <ItemID>896</ItemID>
-                    <ItemID>895</ItemID>
-                    <ItemID>893</ItemID>
-                    <ItemID>894</ItemID>
-                    <ItemID>891</ItemID>
-                    <ItemID>890</ItemID>
-                    <ItemID>889</ItemID>
-                    <ItemID>888</ItemID>
-                    <ItemID>887</ItemID>
-                    <ItemID>886</ItemID>
-                    <ItemID>885</ItemID>
-                    <ItemID>884</ItemID>
-                    <ItemID>883</ItemID>
-                    <ItemID>914</ItemID>
-                    <ItemID>882</ItemID>
-                    <ItemID>881</ItemID>
+                    <ItemID>4243</ItemID>
+                    <ItemID>287</ItemID>
                 </OutlinerExpandedState>
             </CorkboardAndOutliner>
             <Children>
-                <BinderItem ID="3" Type="Text" Created="2012-08-10 15:30:35 -0400" Modified="2012-09-18 15:35:51 -0400">
+                <BinderItem ID="3" Type="Text" Created="2012-08-10 15:30:35 -0400" Modified="2013-02-05 21:47:16 -0500">
                     <Title>Introduction</Title>
                     <MetaData>
                         <LabelID>1</LabelID>
@@ -90,18 +160,7 @@
                         <NotesTextSelection>0,0</NotesTextSelection>
                     </MetaData>
                     <TextSettings>
-                        <TextSelection>5479,0</TextSelection>
-                    </TextSettings>
-                </BinderItem>
-                <BinderItem ID="5" Type="Text" Created="2012-08-10 16:11:28 -0400" Modified="2012-09-19 14:22:10 -0400">
-                    <Title>Scrawlings</Title>
-                    <MetaData>
-                        <LabelID>1</LabelID>
-                        <IncludeInCompile>Yes</IncludeInCompile>
-                        <NotesTextSelection>0,0</NotesTextSelection>
-                    </MetaData>
-                    <TextSettings>
-                        <TextSelection>4323,0</TextSelection>
+                        <TextSelection>1117,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
                 <BinderItem ID="1002" Type="Folder" Created="2012-09-18 15:37:28 -0400" Modified="2012-09-19 14:22:07 -0400">
@@ -276,10 +335,11 @@
                                         <TextSelection>116,0</TextSelection>
                                     </TextSettings>
                                     <Children>
-                                        <BinderItem ID="296" Type="Text" Created="2012-08-20 15:05:10 -0400" Modified="2012-09-18 15:36:32 -0400">
+                                        <BinderItem ID="296" Type="Text" Created="2012-08-20 15:05:10 -0400" Modified="2013-02-05 17:37:01 -0500">
                                             <Title>80-bit and 128-bit values</Title>
                                             <MetaData>
                                                 <LabelID>3</LabelID>
+                                                <StatusID>1</StatusID>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
@@ -289,7 +349,7 @@
                                         </BinderItem>
                                     </Children>
                                 </BinderItem>
-                                <BinderItem ID="294" Type="Text" Created="2012-08-20 14:37:37 -0400" Modified="2012-09-18 15:36:32 -0400">
+                                <BinderItem ID="294" Type="Text" Created="2012-08-20 14:37:37 -0400" Modified="2013-02-05 17:54:20 -0500">
                                     <Title>Text</Title>
                                     <MetaData>
                                         <LabelID>3</LabelID>
@@ -297,7 +357,7 @@
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
                                     <TextSettings>
-                                        <TextSelection>0,0</TextSelection>
+                                        <TextSelection>759,0</TextSelection>
                                     </TextSettings>
                                 </BinderItem>
                                 <BinderItem ID="295" Type="Text" Created="2012-08-20 14:37:44 -0400" Modified="2012-09-18 15:36:32 -0400">
@@ -322,15 +382,16 @@
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
                                     <Children>
-                                        <BinderItem ID="1005" Type="Text" Created="2012-09-18 15:39:20 -0400" Modified="2012-09-18 15:42:56 -0400">
+                                        <BinderItem ID="1005" Type="Text" Created="2012-09-18 15:39:20 -0400" Modified="2013-02-05 17:36:55 -0500">
                                             <Title>Why sigma?</Title>
                                             <MetaData>
                                                 <LabelID>1</LabelID>
+                                                <StatusID>1</StatusID>
                                                 <IncludeInCompile>Yes</IncludeInCompile>
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
                                             <TextSettings>
-                                                <TextSelection>0,0</TextSelection>
+                                                <TextSelection>360,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
                                     </Children>
@@ -344,7 +405,7 @@
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
                                     <TextSettings>
-                                        <TextSelection>406,0</TextSelection>
+                                        <TextSelection>518,0</TextSelection>
                                     </TextSettings>
                                     <References>
                                         <Reference BinderID="4244" Destination="[Internal Link]">Overview</Reference>
@@ -404,7 +465,7 @@
                         </OutlinerExpandedState>
                     </CorkboardAndOutliner>
                     <Children>
-                        <BinderItem ID="2844" Type="Text" Created="2012-09-20 15:40:46 -0400" Modified="2013-02-05 07:57:22 -0500">
+                        <BinderItem ID="2844" Type="Text" Created="2012-09-20 15:40:46 -0400" Modified="2013-02-05 17:39:40 -0500">
                             <Title>Overview</Title>
                             <MetaData>
                                 <LabelID>1</LabelID>
@@ -413,7 +474,7 @@
                                 <NotesTextSelection>0,0</NotesTextSelection>
                             </MetaData>
                             <TextSettings>
-                                <TextSelection>563,0</TextSelection>
+                                <TextSelection>141,0</TextSelection>
                             </TextSettings>
                         </BinderItem>
                         <BinderItem ID="264" Type="Folder" Created="2012-08-14 16:10:17 -0400" Modified="2012-09-19 11:41:54 -0400">
@@ -795,7 +856,7 @@
                                                         <NotesTextSelection>0,0</NotesTextSelection>
                                                     </MetaData>
                                                     <TextSettings>
-                                                        <TextSelection>0,38</TextSelection>
+                                                        <TextSelection>10,0</TextSelection>
                                                     </TextSettings>
                                                 </BinderItem>
                                                 <BinderItem ID="1091" Type="Text" Created="2012-09-18 16:18:43 -0400" Modified="2012-09-18 16:19:01 -0400">
@@ -6289,7 +6350,7 @@
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
                                             <TextSettings>
-                                                <TextSelection>62,0</TextSelection>
+                                                <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
                                         <BinderItem ID="1074" Type="Text" Created="2012-09-18 16:11:38 -0400" Modified="2012-09-18 16:12:09 -0400">
@@ -44684,8 +44745,8 @@
                         <TextSelection>0,0</TextSelection>
                     </TextSettings>
                     <Children>
-                        <BinderItem ID="288" Type="Text" Created="2012-08-20 13:44:20 -0400" Modified="2012-09-18 15:36:44 -0400">
-                            <Title>IEEE 754-2008</Title>
+                        <BinderItem ID="288" Type="Text" Created="2012-08-20 13:44:20 -0400" Modified="2013-02-05 17:52:04 -0500">
+                            <Title>IEEE 754-2008 (floating-point)</Title>
                             <MetaData>
                                 <LabelID>3</LabelID>
                                 <IncludeInCompile>Yes</IncludeInCompile>
@@ -44698,6 +44759,16 @@
                                 <Reference BinderID="286" Destination="[Internal Link]">The floating-point datatypes used by Modern Data are</Reference>
                             </References>
                         </BinderItem>
+                        <BinderItem ID="4628" Type="Text" Created="2013-02-05 17:51:31 -0500" Modified="2013-02-05 17:51:55 -0500">
+                            <Title>RFC 3629 (UTF-8)</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                                <NotesTextSelection>0,0</NotesTextSelection>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
                     </Children>
                 </BinderItem>
             </Children>
@@ -44707,6 +44778,29 @@
             <MetaData>
                 <IncludeInCompile>Yes</IncludeInCompile>
             </MetaData>
+            <Children>
+                <BinderItem ID="5" Type="Text" Created="2012-08-10 16:11:28 -0400" Modified="2012-09-19 14:22:10 -0400">
+                    <Title>Scrawlings</Title>
+                    <MetaData>
+                        <LabelID>1</LabelID>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>4323,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="4630" Type="Text" Created="2013-02-05 22:07:18 -0500" Modified="2013-02-05 22:17:16 -0500">
+                    <Title>2013-02-05 lpsmith</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>7335,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+            </Children>
         </BinderItem>
         <BinderItem ID="2" Type="TrashFolder" Created="2012-08-10 15:30:35 -0400" Modified="2012-08-10 15:30:35 -0400">
             <Title>Trash</Title>
@@ -44864,6 +44958,27 @@
                         </BinderItem>
                     </Children>
                 </BinderItem>
+                <BinderItem ID="4629" Type="Text" Created="2013-02-05 17:51:56 -0500" Modified="2013-02-05 17:51:56 -0500">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="4631" Type="Text" Created="2013-02-06 08:54:55 -0500" Modified="2013-02-06 09:17:21 -0500">
+                    <Title></Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <CompileAsIs>Yes</CompileAsIs>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,10</TextSelection>
+                    </TextSettings>
+                </BinderItem>
             </Children>
         </BinderItem>
     </Binder>
@@ -44914,7 +45029,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="2262" Characters="28728" Date="2013-02-05 10:51:13 -0500"></PreviousSession>
+        <PreviousSession Words="0" Characters="0" Date="2013-02-06 09:03:13 -0500"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>

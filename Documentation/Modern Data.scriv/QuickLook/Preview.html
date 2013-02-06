@@ -33,15 +33,6 @@
 A self-describing data format is a format like XML, JSON, or Common Lisp’s s-expressions, which can be processed at a superficial level without knowledge of the specific type of data it contains.  The typical purpose of such formats is interchange across diverse software tools; for example, many tools for working with databases can produce output or accept input in XML.  They ...</p>
 </li>
 <li>
-<p class="binderItem"><strong>Scrawlings</strong><br/>To my pre-readers:  This section is random notes, most of which are not yet written down elsewhere.  Nothing it says is normative and some of it has become wrong over time.<br/>
-<br/>
-For C, everything is effectively like Data.Dynamic.  For Haskell there will be a GADT and an existential.<br/>
-<br/>
-Node types “lambda”, “apply”, “index” (as in De Bruijn), and “family” (as in inductive type family).<br/>
-<br/>
-To make things with cycles, what happens behind the scenes is…  Well, it’s not behind the scenes when you’re doing st...</p>
-</li>
-<li>
 <p class="binderItem"><strong>Semantics</strong></p>
 </li>
 <hr/>
@@ -103,12 +94,14 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not; not least because there are no standardized names for the functions (though GNU libquadmath uses the “q” suffix on the ISO C99 base names).  Modern Data is of course primarily an interchange format, and only secondarily a set of libraries; therefore, it does not try to resolve this difficulty!  Instead of addressing the problem, the libr...</p>
+<p class="binderItem"><strong>80-bit and 128-bit values</strong><br/>It is worth noting that, while many platforms support 128-bit float values, many others do not.  Even when the compiler does, often the system library does not.  This is, not least, because there are no standardized names for the functions - though GNU libquadmath uses the “q” suffix on the ISO C99 base names.  The C type which would be the most likely candidate to be a 128-bit float, long double, is actually an 80-bit float on most Intel-related platforms, while non-Intel platforms seldom suppo...</p>
 </li>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>Text</strong></p>
+<p class="binderItem"><strong>Text</strong><br/>Modern Data supports exactly one text encoding, which is UTF-8, as defined by RFC 3629.  Because this encoding is inherently variable-length even with a fixed number of characters, no attempt is made to constrain its size at the level of primitives.  Instead, it is treated by Modern Data as a variable-length object.<br/>
+<br/>
+It would be possible to have a taxonomy of text encodings and character sets, with primitives for conversion.  However, the primary goal of Modern Data is to be an interchange forma...</p>
 </li>
 <li>
 <p class="binderItem"><strong>Binary large objects</strong></p>
@@ -119,7 +112,7 @@ It is important to note that each node, independently, has its own cano...</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Why sigma?</strong><br/>An early draft of Modern Data used three types of aggregate value - unions, arrays, and structures.  With these, it was intended that any more-complicated type could be built up out of the component pieces.  This was abandoned when it was realized that dependent types are not so easily built of these combinators; the author is grateful to the pre-reader who suggested borrowing Agda’s “sigma” type.  Sigma is elegantly simple and is also known as a dependent pair.  From it, the above three combina...</p>
+<p class="binderItem"><strong>Why sigma?</strong><br/>An early version of Modern Data featured separate primitives for structures (also called records), arrays, and unions.  A point in favor of this approach is that it makes the job of graphical editors easier, because they don’t need to do special logic to determine “this value is an array”, for example.  However, it was unclear how to fit dependency into this scheme.  Adding a dependent pair type solves this problem but makes the other types redundant, and because the other types can all be built...</p>
 </li>
 </ul>
 <hr/>
@@ -140,9 +133,9 @@ Many of the extant built-in values exist to provide primitive operations on the 
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Overview</strong><br/>The C-based library is a major part of the Modern Data system.  It is the foundation for the library in all other languages, due to the ease of linking against and using C.  It is designed to allow pieces of the system to be swapped out with ease, not just the allocator but the actual representation of nodes.  There is a fair amount of setup that needs to be done in order to use it, so it is recommended to read these overview sections in order.<br/>
+<p class="binderItem"><strong>Overview</strong><br/>The C-based library is a major part of the Modern Data system.  It is the foundation for the library in all other languages except JavaScript, due to the ease of linking against and using C.  It is designed to allow pieces of the system to be swapped out with ease, not just the allocator but the actual representation of nodes.  There is a fair amount of setup that needs to be done in order to use it, so it is recommended to read these overview sections in order.<br/>
 <br/>
-In order to be considerate about namespace, all sy...</p>
+In order to be considerate about...</p>
 </li>
 <li>
 <p class="binderItem"><strong>Library instances</strong></p>
@@ -174,15 +167,7 @@ modern_library_initialize<br/>
  void *client_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>Parameters</strong><br/>Error handler<br/>
-<br/>
-Allocator<br/>
-<br/>
-Finalizer<br/>
-<br/>
-Client state<br/>
-<br/>
-Return</p>
+<p class="binderItem"><strong>Parameters</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -17662,7 +17647,10 @@ Value type (detailed notation)</p>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>IEEE 754-2008</strong></p>
+<p class="binderItem"><strong>IEEE 754-2008 (floating-point)</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>RFC 3629 (UTF-8)</strong></p>
 </li>
 </ul>
 </ul>
