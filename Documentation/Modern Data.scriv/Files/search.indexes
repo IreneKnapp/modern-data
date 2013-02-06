@@ -7,14 +7,14 @@
         <Document ID="2591">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="1551">
-            <Title>Parameters</Title>
+        <Document ID="2615">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="632">
             <Title>ceiling_float64_int64</Title>
         </Document>
-        <Document ID="2615">
-            <Title>Semantics</Title>
+        <Document ID="1551">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="2999">
             <Title>Synopsis</Title>
@@ -38,12 +38,12 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_bit_not_int32 = 1666</Text>
         </Document>
-        <Document ID="1552">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="2616">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_replace_byte_blob = 1856</Text>
+        </Document>
+        <Document ID="1552">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="634">
             <Title>ceiling_float64_nat8</Title>
@@ -63,13 +63,13 @@ nat32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2617">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1553">
             <Title>Parameters</Title>
         </Document>
         <Document ID="2593">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="2617">
             <Title>Semantics</Title>
         </Document>
         <Document ID="636">
@@ -101,12 +101,12 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_bit_not_int64 = 1667</Text>
         </Document>
-        <Document ID="1554">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="2618">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_get_data_piece_utf8 = 1888</Text>
+        </Document>
+        <Document ID="1554">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="638">
             <Title>ceiling_float64_nat32</Title>
@@ -129,17 +129,25 @@ Value type (detailed notation)</Text>
         <Document ID="2595">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="1555">
-            <Title>Parameters</Title>
-        </Document>
         <Document ID="2619">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="1555">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="4292">
             <Title>modern_node_representation_backreference_index_get </Title>
         </Document>
-        <Document ID="4316">
-            <Title>modern_node_representation_bool_type_make </Title>
+        <Document ID="3981">
+            <Title>Synopsis</Title>
+            <Text>make_named_type = 2432
+
+Value type (abstract notation)
+universe 0
+-> name
+-> universe 0
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="2941">
             <Title>Synopsis</Title>
@@ -157,16 +165,8 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_hyperbolic_tangent_float64 = 1057</Text>
         </Document>
-        <Document ID="3981">
-            <Title>Synopsis</Title>
-            <Text>make_named_type = 2432
-
-Value type (abstract notation)
-universe 0
--> name
--> universe 0
-
-Value type (detailed notation)</Text>
+        <Document ID="4316">
+            <Title>modern_node_representation_bool_type_make </Title>
         </Document>
         <Document ID="2596">
             <Title>Synopsis</Title>
@@ -233,8 +233,14 @@ Value type (detailed notation)</Text>
         <Document ID="4295">
             <Title>modern_node_representation_bool_true_make </Title>
         </Document>
-        <Document ID="2191">
-            <Title>Semantics</Title>
+        <Document ID="3984">
+            <Title>Synopsis</Title>
+            <Text>make_universe_type = 2464
+
+Value type (abstract notation)
+(level : nat64) -> universe level
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="2215">
             <Title>Semantics</Title>
@@ -249,17 +255,11 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_node_type_bool_value_true = 2</Text>
         </Document>
+        <Document ID="2191">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="4319">
             <Title>modern_node_representation_int8_type_make </Title>
-        </Document>
-        <Document ID="3984">
-            <Title>Synopsis</Title>
-            <Text>make_universe_type = 2464
-
-Value type (abstract notation)
-(level : nat64) -> universe level
-
-Value type (detailed notation)</Text>
         </Document>
         <Document ID="2599">
             <Title>Semantics</Title>
@@ -380,12 +380,12 @@ Value type (detailed notation)</Text>
         <Document ID="4299">
             <Title>modern_node_representation_maybe_nothing_make </Title>
         </Document>
-        <Document ID="3259">
+        <Document ID="3988">
             <Title>Synopsis</Title>
-            <Text>arccosine_float32 = 896
+            <Text>cast_int8_int16 = 10240
 
 Value type (abstract notation)
-float32 -> float32
+int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -404,6 +404,15 @@ Value type (detailed notation)</Text>
         <Document ID="2219">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="3259">
+            <Title>Synopsis</Title>
+            <Text>arccosine_float32 = 896
+
+Value type (abstract notation)
+float32 -> float32
+
+Value type (detailed notation)</Text>
+        </Document>
         <Document ID="1884">
             <Title>Semantics</Title>
         </Document>
@@ -411,20 +420,11 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_node_type_maybe_value_nothing = 6</Text>
         </Document>
-        <Document ID="2195">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="596">
             <Title>round_towards_even_float64_int16</Title>
         </Document>
-        <Document ID="3988">
-            <Title>Synopsis</Title>
-            <Text>cast_int8_int16 = 10240
-
-Value type (abstract notation)
-int8 -> maybe int16
-
-Value type (detailed notation)</Text>
+        <Document ID="2195">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3581">
             <Title>Synopsis</Title>
@@ -435,6 +435,12 @@ float64 -> float64
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2541">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="1501">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="3605">
             <Title>Synopsis</Title>
             <Text>floor_float64_int64 = 1351
@@ -443,12 +449,6 @@ Value type (abstract notation)
 float64 -> int64
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="1501">
-            <Title>Parameters</Title>
-        </Document>
-        <Document ID="2541">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="597">
             <Title>round_towards_even_float32_int32</Title>
@@ -519,14 +519,18 @@ float32 -> int8
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2544">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_bit_and_int32 = 1570</Text>
+        </Document>
+        <Document ID="1504">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1480">
             <Title>Synopsis</Title>
             <Text>struct modern_stream *
 modern_stream_explicatory_make
 (modern_library *library);</Text>
-        </Document>
-        <Document ID="1504">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="3608">
             <Title>Synopsis</Title>
@@ -536,10 +540,6 @@ Value type (abstract notation)
 float32 -> nat8
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2544">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_bit_and_int32 = 1570</Text>
         </Document>
         <Document ID="2199">
             <Title>Semantics</Title>
@@ -563,17 +563,17 @@ Value type (detailed notation)</Text>
         <Document ID="355">
             <Title>modern_library_client_state_get</Title>
         </Document>
+        <Document ID="2545">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="1505">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="1481">
             <Title>Synopsis</Title>
             <Text>struct modern_stream *
 modern_stream_documentation_make
 (modern_library *library);</Text>
-        </Document>
-        <Document ID="1505">
-            <Title>Parameters</Title>
-        </Document>
-        <Document ID="2545">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="1889">
             <Title>Parameters</Title>
@@ -584,18 +584,18 @@ modern_stream_documentation_make
         <Document ID="357">
             <Title>modern_node_function_type_right_get</Title>
         </Document>
+        <Document ID="2546">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_bit_and_int64 = 1571</Text>
+        </Document>
+        <Document ID="1506">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1482">
             <Title>Synopsis</Title>
             <Text>struct modern_stream *
 modern_stream_output_make
 (modern_library *library);</Text>
-        </Document>
-        <Document ID="1506">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="2546">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_bit_and_int64 = 1571</Text>
         </Document>
         <Document ID="358">
             <Title>modern_node_sigma_type_field_type_get</Title>
@@ -625,17 +625,17 @@ float64 -> int8
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1483">
-            <Title>Parameters</Title>
+        <Document ID="2547">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1507">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="1483">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="359">
             <Title>modern_node_sigma_type_successor_get</Title>
-        </Document>
-        <Document ID="2547">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="111">
             <Title>modern_to_context_add</Title>
@@ -662,15 +662,15 @@ Value type (detailed notation)</Text>
         <Document ID="112">
             <Title>modern_from_context_get</Title>
         </Document>
-        <Document ID="1484">
-            <Title>Semantics</Title>
+        <Document ID="2548">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_bit_and_nat8 = 1572</Text>
         </Document>
         <Document ID="1508">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2548">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_bit_and_nat8 = 1572</Text>
+        <Document ID="1484">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="113">
             <Title>Deserialization</Title>
@@ -690,17 +690,17 @@ Value type (detailed notation)</Text>
         <Document ID="1830">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="1485">
-            <Title>Parameters</Title>
+        <Document ID="2549">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1509">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="1485">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="114">
             <Title>modern_deserialize_memory</Title>
-        </Document>
-        <Document ID="2549">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="3182">
             <Title>Synopsis</Title>
@@ -717,6 +717,20 @@ Value type (detailed notation)</Text>
         <Document ID="1102">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="844">
+            <Title>cast_float32_float64</Title>
+        </Document>
+        <Document ID="3935">
+            <Title>Synopsis</Title>
+            <Text>fmap_maybe = 2592
+
+Value type (abstract notation)
+(a : universe 0)
+-> (a : universe 0)
+-> maybe a -> (a -> b) -> maybe b
+
+Value type (detailed notation)</Text>
+        </Document>
         <Document ID="1831">
             <Title>Semantics</Title>
         </Document>
@@ -732,28 +746,14 @@ Value type (detailed notation)</Text>
         <Document ID="115">
             <Title>modern_deserialize_file</Title>
         </Document>
-        <Document ID="3935">
-            <Title>Synopsis</Title>
-            <Text>fmap_maybe = 2592
-
-Value type (abstract notation)
-(a : universe 0)
--> (a : universe 0)
--> maybe a -> (a -> b) -> maybe b
-
-Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="844">
-            <Title>cast_float32_float64</Title>
-        </Document>
         <Document ID="1486">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="116">
-            <Title>modern_deserialize_fd</Title>
-        </Document>
         <Document ID="845">
             <Title>cast_float64_float32</Title>
+        </Document>
+        <Document ID="116">
+            <Title>modern_deserialize_fd</Title>
         </Document>
         <Document ID="4247">
             <Title>Node representations</Title>
@@ -764,6 +764,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1103">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="846">
+            <Title>cast_blob_int8</Title>
         </Document>
         <Document ID="3207">
             <Title>Synopsis</Title>
@@ -780,17 +783,14 @@ Value type (detailed notation)</Text>
         <Document ID="117">
             <Title>modern_deserialize_vfile</Title>
         </Document>
-        <Document ID="846">
-            <Title>cast_blob_int8</Title>
-        </Document>
         <Document ID="1487">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="118">
-            <Title>moden_deserialize_input_stream</Title>
-        </Document>
         <Document ID="847">
             <Title>cast_blob_int16</Title>
+        </Document>
+        <Document ID="118">
+            <Title>moden_deserialize_input_stream</Title>
         </Document>
         <Document ID="4248">
             <Title>modern_node_representation</Title>
@@ -805,6 +805,9 @@ modern_vfile_fd_finalize
 (modern_library *library,
  void *vfile_state);</Text>
         </Document>
+        <Document ID="848">
+            <Title>cast_blob_int32</Title>
+        </Document>
         <Document ID="1080">
             <Title>Synopsis</Title>
             <Text>struct modern_hash {
@@ -817,9 +820,6 @@ modern_vfile_fd_finalize
         </Document>
         <Document ID="119">
             <Title>Serialization</Title>
-        </Document>
-        <Document ID="848">
-            <Title>cast_blob_int32</Title>
         </Document>
         <Document ID="1488">
             <Title>Parameters</Title>
@@ -863,6 +863,16 @@ Value type (detailed notation)</Text>
         <Document ID="1105">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="3938">
+            <Title>Synopsis</Title>
+            <Text>from_maybe = 2624
+
+Value type (abstract notation)
+(a : universe 0)
+-> a -> maybe a -> a
+
+Value type (detailed notation)</Text>
+        </Document>
         <Document ID="601">
             <Title>round_towards_even_float32_nat8</Title>
         </Document>
@@ -878,25 +888,15 @@ Value type (detailed notation)</Text>
         <Document ID="1834">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="1489">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2874">
             <Title>Synopsis</Title>
             <Text>equal_to_int16 = 130
 
 Value type (abstract notation)
 int16 -> int16 -> bool
-
-Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="1489">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="3938">
-            <Title>Synopsis</Title>
-            <Text>from_maybe = 2624
-
-Value type (abstract notation)
-(a : universe 0)
--> a -> maybe a -> a
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1171,11 +1171,11 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_shift_left_int8 = 1440</Text>
         </Document>
-        <Document ID="560">
-            <Title>hyperbolic_arctangent_float64</Title>
-        </Document>
         <Document ID="2821">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="560">
+            <Title>hyperbolic_arctangent_float64</Title>
         </Document>
         <Document ID="2476">
             <Title>Semantics</Title>
@@ -1263,16 +1263,16 @@ Value type (detailed notation)</Text>
         <Document ID="1760">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2824">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_int64_blob = 10315</Text>
-        </Document>
         <Document ID="1031">
             <Title>Synopsis</Title>
             <Text>void
 (*modern_error_handler_retain_count_overflow)
 (void *client_state,
  void *retainable);</Text>
+        </Document>
+        <Document ID="2824">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_int64_blob = 10315</Text>
         </Document>
         <Document ID="566">
             <Title>round_towards_zero_float64_int32</Title>
@@ -1302,6 +1302,12 @@ Value type (detailed notation)</Text>
         <Document ID="1761">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="1032">
+            <Title>Parameters</Title>
+        </Document>
+        <Document ID="2825">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3865">
             <Title>Synopsis</Title>
             <Text>bit_not_int64 = 1667
@@ -1310,12 +1316,6 @@ Value type (abstract notation)
 int64 -> int64
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2825">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="1032">
-            <Title>Parameters</Title>
         </Document>
         <Document ID="568">
             <Title>round_towards_zero_float64_int64</Title>
@@ -1350,10 +1350,10 @@ Value type (detailed notation)</Text>
         <Document ID="1762">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2073">
+        <Document ID="1033">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="1033">
+        <Document ID="2073">
             <Title>Semantics</Title>
         </Document>
         <Document ID="4523">
@@ -1366,16 +1366,16 @@ Value type (detailed notation)</Text>
         <Document ID="1763">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2827">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat8_blob = 10316</Text>
-        </Document>
         <Document ID="1034">
             <Title>Synopsis</Title>
             <Text>void
 (*modern_error_handler_retain_count_underflow)
 (void *client_state,
  void *retainable);</Text>
+        </Document>
+        <Document ID="2827">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_nat8_blob = 10316</Text>
         </Document>
         <Document ID="4524">
             <Title>Synopsis</Title>
@@ -1392,6 +1392,12 @@ Value type (detailed notation)</Text>
         <Document ID="1764">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="1035">
+            <Title>Parameters</Title>
+        </Document>
+        <Document ID="2828">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3868">
             <Title>Synopsis</Title>
             <Text>bit_not_nat8 = 1668
@@ -1400,12 +1406,6 @@ Value type (abstract notation)
 nat8 -> nat8
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2828">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="1035">
-            <Title>Parameters</Title>
         </Document>
         <Document ID="4525">
             <Title>Semantics</Title>
@@ -1430,12 +1430,12 @@ Value type (detailed notation)</Text>
         <Document ID="1765">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="1036">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2829">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_cast_nat16_blob = 10317</Text>
-        </Document>
-        <Document ID="1036">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="4526">
             <Title>Synopsis</Title>
@@ -1588,14 +1588,8 @@ int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="3467">
-            <Title>Synopsis</Title>
-            <Text>round_towards_even_float64_nat64 = 1263
-
-Value type (abstract notation)
-float64 -> nat64
-
-Value type (detailed notation)</Text>
+        <Document ID="817">
+            <Title>cast_nat64_int32</Title>
         </Document>
         <Document ID="1363">
             <Title>Synopsis</Title>
@@ -1609,8 +1603,14 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_floor_float32_nat16 = 1354</Text>
         </Document>
-        <Document ID="817">
-            <Title>cast_nat64_int32</Title>
+        <Document ID="3467">
+            <Title>Synopsis</Title>
+            <Text>round_towards_even_float64_nat64 = 1263
+
+Value type (abstract notation)
+float64 -> nat64
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="818">
             <Title>cast_nat64_int64</Title>
@@ -1626,11 +1626,11 @@ Value type (detailed notation)</Text>
  modern *node,
  uint16_t value);</Text>
         </Document>
-        <Document ID="2428">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="819">
             <Title>cast_nat64_nat8</Title>
+        </Document>
+        <Document ID="2428">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3790">
             <Title>Synopsis</Title>
@@ -1641,13 +1641,6 @@ int32 -> int32 -> int32
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2021">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_multiply_int16 = 257</Text>
-        </Document>
-        <Document ID="1710">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="3814">
             <Title>Synopsis</Title>
             <Text>bit_or_int32 = 1602
@@ -1657,8 +1650,15 @@ int32 -> int32 -> int32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="1710">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2750">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="2021">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_multiply_int16 = 257</Text>
         </Document>
         <Document ID="1365">
             <Title>Synopsis</Title>
@@ -1675,12 +1675,12 @@ Value type (detailed notation)</Text>
         <Document ID="283">
             <Title>Canonical form</Title>
         </Document>
-        <Document ID="3062">
+        <Document ID="4126">
             <Title>Synopsis</Title>
-            <Text>divide_towards_negative_infinity_int16 = 321
+            <Text>cast_nat32_nat8 = 10286
 
 Value type (abstract notation)
-int16 -> int16 -> maybe int16
+int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1690,12 +1690,12 @@ Value type (detailed notation)</Text>
         <Document ID="1711">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="4126">
+        <Document ID="3062">
             <Title>Synopsis</Title>
-            <Text>cast_nat32_nat8 = 10286
+            <Text>divide_towards_negative_infinity_int16 = 321
 
 Value type (abstract notation)
-int8 -> maybe int16
+int16 -> int16 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1710,16 +1710,16 @@ Value type (detailed notation)</Text>
  modern *node,
  uint64_t value);</Text>
         </Document>
-        <Document ID="2023">
+        <Document ID="2752">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_multiply_int32 = 258</Text>
+            <Text>modern_builtin_identifier_cast_nat16_nat8 = 10279</Text>
         </Document>
         <Document ID="1712">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2752">
+        <Document ID="2023">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat16_nat8 = 10279</Text>
+            <Text>modern_builtin_identifier_multiply_int32 = 258</Text>
         </Document>
         <Document ID="1367">
             <Title>Synopsis</Title>
@@ -1738,12 +1738,6 @@ int64 -> int64 -> int64
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2024">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="1713">
-            <Title>Parameters</Title>
-        </Document>
         <Document ID="3817">
             <Title>Synopsis</Title>
             <Text>bit_or_int64 = 1603
@@ -1753,11 +1747,17 @@ int64 -> int64 -> int64
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="1713">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="2753">
             <Title>Semantics</Title>
         </Document>
         <Document ID="287">
             <Title>Normative references</Title>
+        </Document>
+        <Document ID="2024">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1368">
             <Title>Synopsis</Title>
@@ -1786,6 +1786,29 @@ float32 -> nat64
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="4129">
+            <Title>Synopsis</Title>
+            <Text>cast_nat32_nat16 = 10287
+
+Value type (abstract notation)
+int8 -> maybe int16
+
+Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="2754">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_nat16_nat32 = 10280</Text>
+        </Document>
+        <Document ID="1714">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="289">
+            <Title>Values and types</Title>
+        </Document>
+        <Document ID="2025">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_multiply_int64 = 259</Text>
+        </Document>
         <Document ID="3065">
             <Title>Synopsis</Title>
             <Text>divide_towards_negative_infinity_int32 = 322
@@ -1795,31 +1818,11 @@ int32 -> int32 -> maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="289">
-            <Title>Values and types</Title>
-        </Document>
-        <Document ID="1714">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="2025">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_multiply_int64 = 259</Text>
-        </Document>
         <Document ID="1690">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2754">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat16_nat32 = 10280</Text>
-        </Document>
-        <Document ID="4129">
-            <Title>Synopsis</Title>
-            <Text>cast_nat32_nat16 = 10287
-
-Value type (abstract notation)
-int8 -> maybe int16
-
-Value type (detailed notation)</Text>
+        <Document ID="770">
+            <Title>cast_int8_nat16</Title>
         </Document>
         <Document ID="1369">
             <Title>Synopsis</Title>
@@ -1832,26 +1835,23 @@ Value type (detailed notation)</Text>
  size_t old_bytes,
  size_t new_bytes);</Text>
         </Document>
-        <Document ID="770">
-            <Title>cast_int8_nat16</Title>
-        </Document>
         <Document ID="4451">
             <Title>Semantics</Title>
         </Document>
         <Document ID="771">
             <Title>cast_int8_nat32</Title>
         </Document>
-        <Document ID="2026">
+        <Document ID="2755">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1715">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="2026">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1691">
             <Title>Parameters</Title>
-        </Document>
-        <Document ID="2755">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="772">
             <Title>cast_int8_nat64</Title>
@@ -1900,25 +1900,11 @@ nat8 -> nat8 -> nat8
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2027">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_multiply_nat8 = 260</Text>
-        </Document>
-        <Document ID="1716">
-            <Title>Parameters</Title>
-        </Document>
-        <Document ID="1692">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="773">
             <Title>cast_int16_int8</Title>
         </Document>
-        <Document ID="2756">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat16_nat64 = 10281</Text>
-        </Document>
-        <Document ID="6">
-            <Title>C library</Title>
+        <Document ID="1716">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="5">
             <Title>Scrawlings</Title>
@@ -1966,6 +1952,20 @@ There’s blob, too, so if you need to embed non-Modern data in some known forma
 
 However, the type system has been simplified now - instead of array, union, and structure, there’s just sigma.</Text>
         </Document>
+        <Document ID="2756">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_nat16_nat64 = 10281</Text>
+        </Document>
+        <Document ID="2027">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_multiply_nat8 = 260</Text>
+        </Document>
+        <Document ID="6">
+            <Title>C library</Title>
+        </Document>
+        <Document ID="1692">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="4453">
             <Title>Semantics</Title>
         </Document>
@@ -1993,20 +1993,20 @@ int64 -> int64 -> maybe int64
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2028">
+        <Document ID="2757">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="1717">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="1693">
-            <Title>Parameters</Title>
         </Document>
         <Document ID="775">
             <Title>cast_int16_int64</Title>
         </Document>
-        <Document ID="2757">
+        <Document ID="1717">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="2028">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="1693">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="4454">
             <Title>Synopsis</Title>
@@ -2015,8 +2015,8 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  void *value, uint64_t index);</Text>
         </Document>
-        <Document ID="2350">
-            <Title>Semantics</Title>
+        <Document ID="776">
+            <Title>cast_int16_nat8</Title>
         </Document>
         <Document ID="1310">
             <Title>Synopsis</Title>
@@ -2024,25 +2024,25 @@ Value type (detailed notation)</Text>
 (*modern_node_bool_true_make)
 (modern_library *library);</Text>
         </Document>
-        <Document ID="776">
-            <Title>cast_int16_nat8</Title>
-        </Document>
-        <Document ID="2029">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_multiply_nat16 = 261</Text>
-        </Document>
-        <Document ID="1718">
+        <Document ID="2350">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="1694">
+        <Document ID="2758">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_nat32_int8 = 10282</Text>
+        </Document>
+        <Document ID="1718">
             <Title>Semantics</Title>
         </Document>
         <Document ID="777">
             <Title>cast_int16_nat16</Title>
         </Document>
-        <Document ID="2758">
+        <Document ID="2029">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat32_int8 = 10282</Text>
+            <Text>modern_builtin_identifier_multiply_nat16 = 261</Text>
+        </Document>
+        <Document ID="1694">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="4455">
             <Title>Semantics</Title>
@@ -2051,14 +2051,14 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_odd_float32_nat8 = 1288</Text>
         </Document>
+        <Document ID="778">
+            <Title>cast_int16_nat32</Title>
+        </Document>
         <Document ID="1311">
             <Title>Synopsis</Title>
             <Text>modern *
 (*modern_node_ordering_less_make)
 (modern_library *library);</Text>
-        </Document>
-        <Document ID="778">
-            <Title>cast_int16_nat32</Title>
         </Document>
         <Document ID="3799">
             <Title>Synopsis</Title>
@@ -2069,8 +2069,8 @@ nat16 -> nat16 -> nat16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1695">
-            <Title>Parameters</Title>
+        <Document ID="2759">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="530">
             <Title>two_to_the_x_float64</Title>
@@ -2081,8 +2081,8 @@ Value type (detailed notation)</Text>
         <Document ID="779">
             <Title>cast_int16_nat64</Title>
         </Document>
-        <Document ID="2759">
-            <Title>Semantics</Title>
+        <Document ID="1695">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="4456">
             <Title>Synopsis</Title>
@@ -2394,6 +2394,20 @@ Value type (detailed notation)</Text>
         <Document ID="4401">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="2681">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_int8_nat16 = 10244</Text>
+        </Document>
+        <Document ID="1641">
+            <Title>Parameters</Title>
+        </Document>
+        <Document ID="2705">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_int32_int64 = 10256</Text>
+        </Document>
+        <Document ID="57">
+            <Title>modern_stream_named_value_is_next</Title>
+        </Document>
         <Document ID="3745">
             <Title>Synopsis</Title>
             <Text>rotate_left_int64 = 1507
@@ -2402,20 +2416,6 @@ Value type (abstract notation)
 int64 -> nat8 -> int64
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="1641">
-            <Title>Parameters</Title>
-        </Document>
-        <Document ID="2681">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_int8_nat16 = 10244</Text>
-        </Document>
-        <Document ID="57">
-            <Title>modern_stream_named_value_is_next</Title>
-        </Document>
-        <Document ID="2705">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_int32_int64 = 10256</Text>
         </Document>
         <Document ID="1296">
             <Title>Synopsis</Title>
@@ -2512,6 +2512,15 @@ Value type (detailed notation)</Text>
         <Document ID="492">
             <Title>modulus_towards_zero_nat16</Title>
         </Document>
+        <Document ID="2684">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="1644">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="2708">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3748">
             <Title>Synopsis</Title>
             <Text>rotate_left_nat8 = 1508
@@ -2520,15 +2529,6 @@ Value type (abstract notation)
 nat8 -> nat8 -> nat8
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="1644">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="2684">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="2708">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="493">
             <Title>modulus_towards_zero_nat32</Title>
@@ -2899,12 +2899,12 @@ Value type (detailed notation)</Text>
         <Document ID="1247">
             <Title>Callbacks</Title>
         </Document>
+        <Document ID="744">
+            <Title>get_data_piece_utf8</Title>
+        </Document>
         <Document ID="1976">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_compare_float64 = 169</Text>
-        </Document>
-        <Document ID="744">
-            <Title>get_data_piece_utf8</Title>
         </Document>
         <Document ID="745">
             <Title>get_data_piece_blob</Title>
@@ -2919,24 +2919,14 @@ Value type (detailed notation)</Text>
         <Document ID="1248">
             <Title>modern_node</Title>
         </Document>
+        <Document ID="746">
+            <Title>replace_data_piece_utf8</Title>
+        </Document>
         <Document ID="1977">
             <Title>Semantics</Title>
         </Document>
         <Document ID="4330">
             <Title>modern_node_representation_blob_type_make </Title>
-        </Document>
-        <Document ID="746">
-            <Title>replace_data_piece_utf8</Title>
-        </Document>
-        <Document ID="747">
-            <Title>replace_data_piece_blob</Title>
-        </Document>
-        <Document ID="1570">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="2634">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_get_named_value = 2048</Text>
         </Document>
         <Document ID="4009">
             <Title>Synopsis</Title>
@@ -2947,6 +2937,16 @@ int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2634">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_get_named_value = 2048</Text>
+        </Document>
+        <Document ID="1570">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="747">
+            <Title>replace_data_piece_blob</Title>
+        </Document>
         <Document ID="2289">
             <Title>Semantics</Title>
         </Document>
@@ -2956,15 +2956,15 @@ Value type (detailed notation)</Text>
     …
 };</Text>
         </Document>
+        <Document ID="748">
+            <Title>empty_utf8</Title>
+        </Document>
         <Document ID="1978">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_add_int8 = 192</Text>
         </Document>
         <Document ID="4331">
             <Title>modern_node_representation_function_type_make </Title>
-        </Document>
-        <Document ID="748">
-            <Title>empty_utf8</Title>
         </Document>
         <Document ID="3675">
             <Title>Synopsis</Title>
@@ -2975,14 +2975,14 @@ nat8
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2635">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1571">
             <Title>Parameters</Title>
         </Document>
         <Document ID="749">
             <Title>empty_blob</Title>
-        </Document>
-        <Document ID="2635">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="1979">
             <Title>Semantics</Title>
@@ -2990,12 +2990,12 @@ Value type (detailed notation)</Text>
         <Document ID="4332">
             <Title>modern_node_representation_sigma_type_make </Title>
         </Document>
-        <Document ID="1572">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="2636">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_maybe_is_just = 2560</Text>
+        </Document>
+        <Document ID="1572">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="503">
             <Title>negate_int8</Title>
@@ -3003,14 +3003,14 @@ Value type (detailed notation)</Text>
         <Document ID="4333">
             <Title>modern_node_representation_name_type_make </Title>
         </Document>
+        <Document ID="2637">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1573">
             <Title>Parameters</Title>
         </Document>
         <Document ID="504">
             <Title>negate_int16</Title>
-        </Document>
-        <Document ID="2637">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="4334">
             <Title>modern_node_representation_named_type_make </Title>
@@ -3031,15 +3031,15 @@ nat16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2638">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_fmap_maybe = 2592</Text>
+        </Document>
         <Document ID="1574">
             <Title>Semantics</Title>
         </Document>
         <Document ID="506">
             <Title>negate_int64</Title>
-        </Document>
-        <Document ID="2638">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_fmap_maybe = 2592</Text>
         </Document>
         <Document ID="3271">
             <Title>Synopsis</Title>
@@ -3071,11 +3071,11 @@ nat16 -> nat16 -> maybe nat16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1575">
-            <Title>Parameters</Title>
-        </Document>
         <Document ID="2639">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="1575">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="508">
             <Title>negate_float64</Title>
@@ -3387,21 +3387,21 @@ Value type (detailed notation)</Text>
         <Document ID="4262">
             <Title>modern_node_representation_nat8_get </Title>
         </Document>
-        <Document ID="3222">
-            <Title>Synopsis</Title>
-            <Text>x_to_the_y_float32 = 704
-
-Value type (abstract notation)
-float32 -> float32 -> float32
-
-Value type (detailed notation)</Text>
-        </Document>
         <Document ID="3951">
             <Title>Synopsis</Title>
             <Text>get_sigma_type_field_type = 2144
 
 Value type (abstract notation)
 universe 0 -> maybe (universe 0)
+
+Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="3222">
+            <Title>Synopsis</Title>
+            <Text>x_to_the_y_float32 = 704
+
+Value type (abstract notation)
+float32 -> float32 -> float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3470,12 +3470,13 @@ Value type (detailed notation)</Text>
         <Document ID="4265">
             <Title>modern_node_representation_nat64_get </Title>
         </Document>
-        <Document ID="3225">
+        <Document ID="3954">
             <Title>Synopsis</Title>
-            <Text>x_to_the_y_float64 = 705
+            <Text>get_sigma_type_successor = 2176
 
 Value type (abstract notation)
-float64 -> float64 -> float64
+universe 0 -> (a : universe 0)
+-> maybe (a -> universe 0)
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3488,27 +3489,26 @@ int8 -> int8 -> ordering
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="3225">
+            <Title>Synopsis</Title>
+            <Text>x_to_the_y_float64 = 705
+
+Value type (abstract notation)
+float64 -> float64 -> float64
+
+Value type (detailed notation)</Text>
+        </Document>
         <Document ID="1850">
             <Title>Parameters</Title>
+        </Document>
+        <Document ID="711">
+            <Title>bit_and_nat32</Title>
         </Document>
         <Document ID="1121">
             <Title>Semantics</Title>
         </Document>
         <Document ID="2161">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="711">
-            <Title>bit_and_nat32</Title>
-        </Document>
-        <Document ID="3954">
-            <Title>Synopsis</Title>
-            <Text>get_sigma_type_successor = 2176
-
-Value type (abstract notation)
-universe 0 -> (a : universe 0)
--> maybe (a -> universe 0)
-
-Value type (detailed notation)</Text>
         </Document>
         <Document ID="2569">
             <Title>Semantics</Title>
@@ -3588,12 +3588,12 @@ Value type (detailed notation)</Text>
         <Document ID="4268">
             <Title>modern_node_representation_utf8_bytes_get </Title>
         </Document>
-        <Document ID="3228">
+        <Document ID="3957">
             <Title>Synopsis</Title>
-            <Text>logarithm_base_x_float32 = 736
+            <Text>get_named_type_content_type = 2208
 
 Value type (abstract notation)
-float32 -> float32 -> float32
+universe 0 -> maybe (universe 0)
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3606,6 +3606,15 @@ int16 -> int16 -> ordering
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="3228">
+            <Title>Synopsis</Title>
+            <Text>logarithm_base_x_float32 = 736
+
+Value type (abstract notation)
+float32 -> float32 -> float32
+
+Value type (detailed notation)</Text>
+        </Document>
         <Document ID="1853">
             <Title>Semantics</Title>
         </Document>
@@ -3615,15 +3624,6 @@ Value type (detailed notation)</Text>
         <Document ID="2164">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_two_to_the_x_float64 = 673</Text>
-        </Document>
-        <Document ID="3957">
-            <Title>Synopsis</Title>
-            <Text>get_named_type_content_type = 2208
-
-Value type (abstract notation)
-universe 0 -> maybe (universe 0)
-
-Value type (detailed notation)</Text>
         </Document>
         <Document ID="717">
             <Title>bit_or_nat8</Title>
@@ -3650,11 +3650,11 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_rotate_left_int16 = 1505</Text>
         </Document>
+        <Document ID="718">
+            <Title>bit_or_nat16</Title>
+        </Document>
         <Document ID="4269">
             <Title>modern_node_representation_utf8_data_piece_get </Title>
-        </Document>
-        <Document ID="2165">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="1854">
             <Title>Parameters</Title>
@@ -3666,8 +3666,8 @@ modern_vfile_memory_allocating_bytes_get
 (modern_library *library,
  void *vfile_state);</Text>
         </Document>
-        <Document ID="718">
-            <Title>bit_or_nat16</Title>
+        <Document ID="2165">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="180">
             <Title>modern_node_nat16_type_make</Title>
@@ -3933,6 +3933,9 @@ float64 -> nat8
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2517">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1453">
             <Title>Synopsis</Title>
             <Text>void
@@ -3949,9 +3952,6 @@ Value type (detailed notation)</Text>
         <Document ID="672">
             <Title>maximum_bound_nat64</Title>
         </Document>
-        <Document ID="2517">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="673">
             <Title>shift_left_int8</Title>
         </Document>
@@ -3966,6 +3966,10 @@ Value type (detailed notation)</Text>
         <Document ID="2494">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="2518">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_rotate_left_nat16 = 1509</Text>
+        </Document>
         <Document ID="1454">
             <Title>Synopsis</Title>
             <Text>void
@@ -3977,10 +3981,6 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="674">
             <Title>shift_left_int16</Title>
-        </Document>
-        <Document ID="2518">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_rotate_left_nat16 = 1509</Text>
         </Document>
         <Document ID="675">
             <Title>shift_left_int32</Title>
@@ -3998,6 +3998,9 @@ Value type (detailed notation)</Text>
         <Document ID="4599">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="2519">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1455">
             <Title>Synopsis</Title>
             <Text>void
@@ -4009,9 +4012,6 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="676">
             <Title>shift_left_int64</Title>
-        </Document>
-        <Document ID="2519">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="4192">
             <Title>Synopsis</Title>
@@ -4034,6 +4034,24 @@ Value type (detailed notation)</Text>
         <Document ID="2112">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="3905">
+            <Title>Synopsis</Title>
+            <Text>get_data_piece_blob = 1889
+
+Value type (abstract notation)
+blob -> nat64 -> nat64 -> maybe blob
+
+Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="4216">
+            <Title>Synopsis</Title>
+            <Text>cast_nat8_blob = 10316
+
+Value type (abstract notation)
+int8 -> maybe int16
+
+Value type (detailed notation)</Text>
+        </Document>
         <Document ID="1801">
             <Title>Semantics</Title>
         </Document>
@@ -4053,24 +4071,12 @@ The next-most-important task is memory allocation.  This is straightforward and 
 
 The final important task is to handle primitive operations on the representation of nodes.  The library provides a default implementation here, but in order to bind more closely with non-C programming languages, the capability to provide one’s own is also provided.  All access to the internal structures is indirected through these callbacks, with the result that all the basic operations (serialization, evaluation, and so on) can be performed regardless of the actual node representation.</Text>
         </Document>
-        <Document ID="677">
-            <Title>shift_left_nat8</Title>
-        </Document>
         <Document ID="3881">
             <Title>Synopsis</Title>
             <Text>decode_utf8 = 1696
 
 Value type (abstract notation)
 utf8 -> maybe nat32
-
-Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="3905">
-            <Title>Synopsis</Title>
-            <Text>get_data_piece_blob = 1889
-
-Value type (abstract notation)
-blob -> nat64 -> nat64 -> maybe blob
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4087,17 +4093,11 @@ Value type (detailed notation)</Text>
  void *stream_state,
  int64_t value);</Text>
         </Document>
+        <Document ID="677">
+            <Title>shift_left_nat8</Title>
+        </Document>
         <Document ID="678">
             <Title>shift_left_nat16</Title>
-        </Document>
-        <Document ID="4216">
-            <Title>Synopsis</Title>
-            <Text>cast_nat8_blob = 10316
-
-Value type (abstract notation)
-int8 -> maybe int16
-
-Value type (detailed notation)</Text>
         </Document>
         <Document ID="430">
             <Title>compare_int16</Title>
@@ -4209,14 +4209,20 @@ Value type (detailed notation)</Text>
         <Document ID="1780">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="3908">
+            <Title>Synopsis</Title>
+            <Text>replace_data_piece_utf8 = 1920
+
+Value type (abstract notation)
+utf8 -> nat64 -> nat64 -> utf8 -> maybe utf8
+
+Value type (detailed notation)</Text>
+        </Document>
         <Document ID="1051">
             <Title>Semantics</Title>
         </Document>
         <Document ID="2091">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="1804">
-            <Title>Parameters</Title>
         </Document>
         <Document ID="2499">
             <Title>Semantics</Title>
@@ -4230,11 +4236,14 @@ Value type (detailed notation)</Text>
  void *stream_state,
  uint32_t value);</Text>
         </Document>
-        <Document ID="2844">
-            <Title>Overview</Title>
-            <Text>The C-based library is a major part of the Modern Data system.  It is the foundation for the library in all other languages except JavaScript, due to the ease of linking against and using C.  It is designed to allow pieces of the system to be swapped out with ease, not just the allocator but the actual representation of nodes.  There is a fair amount of setup that needs to be done in order to use it, so it is recommended to read these overview sections in order.
+        <Document ID="4219">
+            <Title>Synopsis</Title>
+            <Text>cast_nat16_blob = 10317
 
-In order to be considerate about namespace, all symbols that the library exports start with the string “modern_”.</Text>
+Value type (abstract notation)
+int8 -> maybe int16
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="435">
             <Title>compare_nat32</Title>
@@ -4242,30 +4251,21 @@ In order to be considerate about namespace, all symbols that the library exports
         <Document ID="4541">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="1804">
+            <Title>Parameters</Title>
+        </Document>
+        <Document ID="2844">
+            <Title>Overview</Title>
+            <Text>The C-based library is a major part of the Modern Data system.  It is the foundation for the library in all other languages except JavaScript, due to the ease of linking against and using C.  It is designed to allow pieces of the system to be swapped out with ease, not just the allocator but the actual representation of nodes.  There is a fair amount of setup that needs to be done in order to use it, so it is recommended to read these overview sections in order.
+
+In order to be considerate about namespace, all symbols that the library exports start with the string “modern_”.</Text>
+        </Document>
         <Document ID="3884">
             <Title>Synopsis</Title>
             <Text>encode_utf8 = 1728
 
 Value type (abstract notation)
 nat32 -> maybe utf8
-
-Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="3908">
-            <Title>Synopsis</Title>
-            <Text>replace_data_piece_utf8 = 1920
-
-Value type (abstract notation)
-utf8 -> nat64 -> nat64 -> utf8 -> maybe utf8
-
-Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="4219">
-            <Title>Synopsis</Title>
-            <Text>cast_nat16_blob = 10317
-
-Value type (abstract notation)
-int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4761,9 +4761,9 @@ modern_serialize_file
         <Document ID="398">
             <Title>modern_node_immutable_set</Title>
         </Document>
-        <Document ID="2041">
+        <Document ID="2770">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_divide_towards_zero_int16 = 289</Text>
+            <Text>modern_builtin_identifier_cast_nat32_nat64 = 10288</Text>
         </Document>
         <Document ID="1730">
             <Title>Semantics</Title>
@@ -4781,9 +4781,9 @@ Virtual files, or vfiles, are also relevant to the streaming model, as they are 
         <Document ID="399">
             <Title>modern_error_handler_immutable</Title>
         </Document>
-        <Document ID="2770">
+        <Document ID="2041">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat32_nat64 = 10288</Text>
+            <Text>modern_builtin_identifier_divide_towards_zero_int16 = 289</Text>
         </Document>
         <Document ID="1385">
             <Title>Synopsis</Title>
@@ -4813,7 +4813,7 @@ modern_serialize_memory_allocating
         <Document ID="151">
             <Title>modern_node_apply_left_get</Title>
         </Document>
-        <Document ID="2042">
+        <Document ID="2771">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1731">
@@ -4822,8 +4822,14 @@ modern_serialize_memory_allocating
         <Document ID="1002">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="881">
+            <Title>Cast</Title>
+        </Document>
         <Document ID="152">
             <Title>modern_node_apply_right_get</Title>
+        </Document>
+        <Document ID="2042">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3835">
             <Title>Synopsis</Title>
@@ -4834,12 +4840,6 @@ int16 -> int16 -> int16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="881">
-            <Title>Cast</Title>
-        </Document>
-        <Document ID="2771">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="1386">
             <Title>Synopsis</Title>
             <Text>void
@@ -4848,18 +4848,18 @@ Value type (detailed notation)</Text>
  modern *value,
  uint64_t index);</Text>
         </Document>
-        <Document ID="153">
-            <Title>Construction</Title>
-        </Document>
         <Document ID="882">
             <Title>Type manipulation</Title>
         </Document>
-        <Document ID="3083">
+        <Document ID="153">
+            <Title>Construction</Title>
+        </Document>
+        <Document ID="4147">
             <Title>Synopsis</Title>
-            <Text>divide_float32 = 352
+            <Text>cast_nat64_nat8 = 10293
 
 Value type (abstract notation)
-float32 -> float32 -> maybe float32
+int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4875,26 +4875,26 @@ Value type (detailed notation)</Text>
         <Document ID="1732">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2043">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_divide_towards_zero_int32 = 290</Text>
-        </Document>
         <Document ID="2772">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_cast_nat64_int8 = 10289</Text>
         </Document>
-        <Document ID="154">
-            <Title>modern_node_int8_make</Title>
+        <Document ID="2043">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_divide_towards_zero_int32 = 290</Text>
         </Document>
         <Document ID="883">
             <Title>Named value</Title>
         </Document>
-        <Document ID="4147">
+        <Document ID="154">
+            <Title>modern_node_int8_make</Title>
+        </Document>
+        <Document ID="3083">
             <Title>Synopsis</Title>
-            <Text>cast_nat64_nat8 = 10293
+            <Text>divide_float32 = 352
 
 Value type (abstract notation)
-int8 -> maybe int16
+float32 -> float32 -> maybe float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4907,13 +4907,13 @@ Value type (detailed notation)</Text>
  modern *item,
  uint64_t index);</Text>
         </Document>
-        <Document ID="155">
-            <Title>modern_node_int16_make</Title>
-        </Document>
         <Document ID="884">
             <Title>Sigma value</Title>
         </Document>
-        <Document ID="2044">
+        <Document ID="155">
+            <Title>modern_node_int16_make</Title>
+        </Document>
+        <Document ID="2773">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1733">
@@ -4922,14 +4922,14 @@ Value type (detailed notation)</Text>
         <Document ID="1004">
             <Title>Aggregate values</Title>
         </Document>
-        <Document ID="2773">
+        <Document ID="2044">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="156">
-            <Title>modern_node_int32_make</Title>
         </Document>
         <Document ID="885">
             <Title>Large object</Title>
+        </Document>
+        <Document ID="156">
+            <Title>modern_node_int32_make</Title>
         </Document>
         <Document ID="1388">
             <Title>Synopsis</Title>
@@ -4951,9 +4951,9 @@ Value type (detailed notation)</Text>
         <Document ID="157">
             <Title>modern_node_int64_make</Title>
         </Document>
-        <Document ID="2045">
+        <Document ID="2774">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_divide_towards_zero_int64 = 291</Text>
+            <Text>modern_builtin_identifier_cast_nat64_int16 = 10290</Text>
         </Document>
         <Document ID="1734">
             <Title>Semantics</Title>
@@ -4961,6 +4961,10 @@ Value type (detailed notation)</Text>
         <Document ID="1005">
             <Title>Why sigma?</Title>
             <Text>An early version of Modern Data featured separate primitives for structures (also called records), arrays, and unions.  A point in favor of this approach is that it makes the job of graphical editors easier, because they don’t need to do special logic to determine “this value is an array”, for example.  However, it was unclear how to fit dependency into this scheme.  Adding a dependent pair type solves this problem but makes the other types redundant, and because the other types can all be built out of dependent pairs as well, the editor’s task is actually still just as hard.  So the decision was made to drop the other types and just build in terms of the dependent pair, which, to give it greater prominence, was given its alternate name of “sigma”.</Text>
+        </Document>
+        <Document ID="2045">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_divide_towards_zero_int64 = 291</Text>
         </Document>
         <Document ID="3838">
             <Title>Synopsis</Title>
@@ -4970,10 +4974,6 @@ Value type (abstract notation)
 int32 -> int32 -> int32
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2774">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat64_int16 = 10290</Text>
         </Document>
         <Document ID="887">
             <Title>Boundary value</Title>
@@ -5007,11 +5007,14 @@ Value type (detailed notation)</Text>
         <Document ID="159">
             <Title>modern_node_nat16_make</Title>
         </Document>
-        <Document ID="2046">
+        <Document ID="2775">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1735">
             <Title>Parameters</Title>
+        </Document>
+        <Document ID="2046">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="3086">
             <Title>Synopsis</Title>
@@ -5021,9 +5024,6 @@ Value type (abstract notation)
 float64 -> float64 -> maybe float64
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2775">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="640">
             <Title>ceiling_float64_nat64</Title>
@@ -5041,16 +5041,16 @@ Value type (detailed notation)</Text>
         <Document ID="641">
             <Title>floor_float32_int8</Title>
         </Document>
-        <Document ID="2047">
+        <Document ID="2776">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_divide_towards_zero_nat8 = 292</Text>
+            <Text>modern_builtin_identifier_cast_nat64_int32 = 10291</Text>
         </Document>
         <Document ID="1736">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2776">
+        <Document ID="2047">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat64_int32 = 10291</Text>
+            <Text>modern_builtin_identifier_divide_towards_zero_nat8 = 292</Text>
         </Document>
         <Document ID="642">
             <Title>floor_float64_int8</Title>
@@ -5061,7 +5061,7 @@ Value type (detailed notation)</Text>
         <Document ID="643">
             <Title>floor_float32_int16</Title>
         </Document>
-        <Document ID="2048">
+        <Document ID="2777">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1008">
@@ -5074,7 +5074,7 @@ modern_library_initialize
  void (*finalizer)(void *client_state),
  void *client_state);</Text>
         </Document>
-        <Document ID="2777">
+        <Document ID="2048">
             <Title>Semantics</Title>
         </Document>
         <Document ID="644">
@@ -5111,9 +5111,9 @@ Value type (detailed notation)</Text>
         <Document ID="645">
             <Title>floor_float32_int32</Title>
         </Document>
-        <Document ID="2049">
+        <Document ID="2778">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_divide_towards_zero_nat16 = 293</Text>
+            <Text>modern_builtin_identifier_cast_nat64_int64 = 10292</Text>
         </Document>
         <Document ID="1738">
             <Title>Parameters</Title>
@@ -5130,6 +5130,10 @@ Client state
 
 Return</Text>
         </Document>
+        <Document ID="2049">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_divide_towards_zero_nat16 = 293</Text>
+        </Document>
         <Document ID="3089">
             <Title>Synopsis</Title>
             <Text>modulus_towards_zero_int8 = 384
@@ -5138,10 +5142,6 @@ Value type (abstract notation)
 int8 -> int8 -> maybe int8
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2778">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat64_int64 = 10292</Text>
         </Document>
         <Document ID="646">
             <Title>floor_float64_int32</Title>
@@ -5593,9 +5593,6 @@ Value type (detailed notation)</Text>
         <Document ID="1668">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="120">
-            <Title>modern_serialize_memory_buffer</Title>
-        </Document>
         <Document ID="4021">
             <Title>Synopsis</Title>
             <Text>cast_int16_nat16 = 10251
@@ -5604,6 +5601,9 @@ Value type (abstract notation)
 int8 -> maybe int16
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="120">
+            <Title>modern_serialize_memory_buffer</Title>
         </Document>
         <Document ID="369">
             <Title>modern_node_let_make</Title>
@@ -5769,6 +5769,13 @@ int16 -> nat8 -> int16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2651">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_get_sigma_type_successor = 2176</Text>
+        </Document>
+        <Document ID="1611">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="3715">
             <Title>Synopsis</Title>
             <Text>shift_right_int16 = 1473
@@ -5778,15 +5785,8 @@ int16 -> nat8 -> int16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1611">
-            <Title>Parameters</Title>
-        </Document>
         <Document ID="610">
             <Title>round_towards_odd_float64_int8</Title>
-        </Document>
-        <Document ID="2651">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_get_sigma_type_successor = 2176</Text>
         </Document>
         <Document ID="859">
             <Title>cast_int64_blob</Title>
@@ -5868,10 +5868,13 @@ int32 -> nat8 -> int32
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1590">
+        <Document ID="2654">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1614">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="1590">
             <Title>Semantics</Title>
         </Document>
         <Document ID="3718">
@@ -5882,9 +5885,6 @@ Value type (abstract notation)
 int32 -> nat8 -> int32
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2654">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="616">
             <Title>round_towards_odd_float64_int64</Title>
@@ -5906,15 +5906,15 @@ Value type (detailed notation)</Text>
         <Document ID="617">
             <Title>round_towards_odd_float32_nat8</Title>
         </Document>
-        <Document ID="1591">
-            <Title>Parameters</Title>
+        <Document ID="2655">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_get_universe_type_level = 2240</Text>
         </Document>
         <Document ID="1615">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2655">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_get_universe_type_level = 2240</Text>
+        <Document ID="1591">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="618">
             <Title>round_towards_odd_float64_nat8</Title>
@@ -5928,13 +5928,13 @@ Value type (detailed notation)</Text>
         <Document ID="619">
             <Title>round_towards_odd_float32_nat16</Title>
         </Document>
-        <Document ID="1592">
+        <Document ID="2656">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1616">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2656">
+        <Document ID="1592">
             <Title>Semantics</Title>
         </Document>
         <Document ID="4353">
@@ -5949,15 +5949,15 @@ int64 -> nat8 -> int64
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1593">
-            <Title>Parameters</Title>
+        <Document ID="2657">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_make_sigma = 2272</Text>
         </Document>
         <Document ID="1617">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2657">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_make_sigma = 2272</Text>
+        <Document ID="1593">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="4354">
             <Title>modern_node_representation_float64_set </Title>
@@ -5978,13 +5978,13 @@ float32 -> int8
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1594">
+        <Document ID="2658">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1618">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2658">
+        <Document ID="1594">
             <Title>Semantics</Title>
         </Document>
         <Document ID="4355">
@@ -5999,15 +5999,15 @@ Value type (detailed notation)</Text>
         <Document ID="1940">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="1595">
-            <Title>Parameters</Title>
+        <Document ID="2659">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_make_name = 2304</Text>
         </Document>
         <Document ID="1619">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2659">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_make_name = 2304</Text>
+        <Document ID="1595">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="3292">
             <Title>Synopsis</Title>
@@ -6247,12 +6247,12 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_bit_xor_nat8 = 1636</Text>
         </Document>
-        <Document ID="1540">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="2604">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_decode_utf8 = 1696</Text>
+        </Document>
+        <Document ID="1540">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2259">
             <Title>Semantics</Title>
@@ -6279,13 +6279,13 @@ int32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2605">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1541">
             <Title>Parameters</Title>
         </Document>
         <Document ID="2581">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="2605">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1196">
@@ -6303,12 +6303,12 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_bit_xor_nat16 = 1637</Text>
         </Document>
-        <Document ID="1542">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="2606">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_encode_utf8 = 1728</Text>
+        </Document>
+        <Document ID="1542">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1197">
             <Title>Synopsis</Title>
@@ -6320,11 +6320,11 @@ Value type (detailed notation)</Text>
         <Document ID="2583">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="1543">
-            <Title>Parameters</Title>
-        </Document>
         <Document ID="2607">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="1543">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="1198">
             <Title>Semantics</Title>
@@ -6348,6 +6348,10 @@ int64
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2608">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_character_offset_to_byte_offset_utf8 = 1760</Text>
+        </Document>
         <Document ID="1544">
             <Title>Semantics</Title>
         </Document>
@@ -6355,15 +6359,11 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_bit_xor_nat32 = 1638</Text>
         </Document>
-        <Document ID="2608">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_character_offset_to_byte_offset_utf8 = 1760</Text>
-        </Document>
         <Document ID="1199">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="4281">
-            <Title>modern_node_representation_named_type_name_get </Title>
+        <Document ID="820">
+            <Title>cast_nat64_nat16</Title>
         </Document>
         <Document ID="3241">
             <Title>Synopsis</Title>
@@ -6377,36 +6377,36 @@ Value type (detailed notation)</Text>
         <Document ID="2201">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="4281">
+            <Title>modern_node_representation_named_type_name_get </Title>
+        </Document>
         <Document ID="4305">
             <Title>modern_node_representation_nat8_make </Title>
         </Document>
-        <Document ID="820">
-            <Title>cast_nat64_nat16</Title>
-        </Document>
         <Document ID="2585">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="1545">
-            <Title>Parameters</Title>
-        </Document>
-        <Document ID="2609">
             <Title>Semantics</Title>
         </Document>
         <Document ID="821">
             <Title>cast_nat64_nat32</Title>
         </Document>
+        <Document ID="2609">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="1545">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="4282">
             <Title>modern_node_representation_named_type_content_type_get</Title>
         </Document>
-        <Document ID="4306">
-            <Title>modern_node_representation_nat16_make </Title>
+        <Document ID="822">
+            <Title>cast_utf8_blob</Title>
         </Document>
         <Document ID="2202">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_hyperbolic_sine_float32 = 992</Text>
         </Document>
-        <Document ID="822">
-            <Title>cast_utf8_blob</Title>
+        <Document ID="4306">
+            <Title>modern_node_representation_nat16_make </Title>
         </Document>
         <Document ID="2586">
             <Title>Synopsis</Title>
@@ -6421,8 +6421,14 @@ Value type (detailed notation)</Text>
         <Document ID="4283">
             <Title>modern_node_representation_universe_type_level_get </Title>
         </Document>
-        <Document ID="4307">
-            <Title>modern_node_representation_nat32_make </Title>
+        <Document ID="3972">
+            <Title>Synopsis</Title>
+            <Text>make_function_type = 2368
+
+Value type (abstract notation)
+universe 0 -> universe 0 -> universe 0
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="2932">
             <Title>Synopsis</Title>
@@ -6433,20 +6439,14 @@ nat32 -> nat32 -> ordering
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="824">
+            <Title>cast_name_blob</Title>
+        </Document>
         <Document ID="2203">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="3972">
-            <Title>Synopsis</Title>
-            <Text>make_function_type = 2368
-
-Value type (abstract notation)
-universe 0 -> universe 0 -> universe 0
-
-Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="824">
-            <Title>cast_name_blob</Title>
+        <Document ID="4307">
+            <Title>modern_node_representation_nat32_make </Title>
         </Document>
         <Document ID="2587">
             <Title>Semantics</Title>
@@ -6721,9 +6721,15 @@ I've talked your ear off enough :) hehe</Text>
         <Document ID="4286">
             <Title>modern_node_representation_apply_right_get </Title>
         </Document>
-        <Document ID="2182">
+        <Document ID="3975">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_tangent_float32 = 832</Text>
+            <Synopsis>TODO What does this function do?</Synopsis>
+            <Text>make_named_value = 2336
+
+Value type (abstract notation)
+universe 0 -> name -> universe 0 TODO … ???
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="2935">
             <Title>Synopsis</Title>
@@ -6747,15 +6753,9 @@ Value type (detailed notation)</Text>
         <Document ID="1142">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="3975">
+        <Document ID="2182">
             <Title>Synopsis</Title>
-            <Synopsis>TODO What does this function do?</Synopsis>
-            <Text>make_named_value = 2336
-
-Value type (abstract notation)
-universe 0 -> name -> universe 0 TODO … ???
-
-Value type (detailed notation)</Text>
+            <Text>modern_builtin_identifier_tangent_float32 = 832</Text>
         </Document>
         <Document ID="292">
             <Title>Natural numbers</Title>
@@ -6829,8 +6829,16 @@ This decision was not made casually; in fact, an early version of the design fea
         <Document ID="4289">
             <Title>modern_node_representation_let_count_get </Title>
         </Document>
-        <Document ID="2185">
-            <Title>Semantics</Title>
+        <Document ID="3978">
+            <Title>Synopsis</Title>
+            <Text>make_sigma_type = 2400
+
+Value type (abstract notation)
+(a : universe 0)
+-> (b : a -> universe 0)
+-> universe 0
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="2938">
             <Title>Synopsis</Title>
@@ -6866,16 +6874,8 @@ For ease of implementation and on the general principle of consistency, the form
         <Document ID="1145">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="3978">
-            <Title>Synopsis</Title>
-            <Text>make_sigma_type = 2400
-
-Value type (abstract notation)
-(a : universe 0)
--> (b : a -> universe 0)
--> universe 0
-
-Value type (detailed notation)</Text>
+        <Document ID="2185">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2531">
             <Title>Semantics</Title>
@@ -6931,6 +6931,10 @@ Value type (detailed notation)</Text>
         <Document ID="783">
             <Title>cast_int32_nat8</Title>
         </Document>
+        <Document ID="2534">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_rotate_right_nat16 = 1541</Text>
+        </Document>
         <Document ID="1470">
             <Title>Synopsis</Title>
             <Text>void
@@ -6939,10 +6943,6 @@ Value type (detailed notation)</Text>
  void *processor_state,
  void *stream_state,
  struct modern_hash *name);</Text>
-        </Document>
-        <Document ID="2534">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_rotate_right_nat16 = 1541</Text>
         </Document>
         <Document ID="784">
             <Title>cast_int32_nat16</Title>
@@ -6980,6 +6980,9 @@ float64 -> nat64
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2535">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1471">
             <Title>Synopsis</Title>
             <Text>void
@@ -6987,9 +6990,6 @@ Value type (detailed notation)</Text>
 (struct modern_processor *processor,
  void *processor_state,
  void *stream_state);</Text>
-        </Document>
-        <Document ID="2535">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="786">
             <Title>cast_int32_nat64</Title>
@@ -7011,6 +7011,10 @@ Value type (detailed notation)</Text>
         <Document ID="787">
             <Title>cast_int64_int8</Title>
         </Document>
+        <Document ID="2536">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_rotate_right_nat32 = 1542</Text>
+        </Document>
         <Document ID="1472">
             <Title>Synopsis</Title>
             <Text>void
@@ -7018,10 +7022,6 @@ Value type (detailed notation)</Text>
 (struct modern_processor *processor,
  void *processor_state,
  void *stream_state);</Text>
-        </Document>
-        <Document ID="2536">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_rotate_right_nat32 = 1542</Text>
         </Document>
         <Document ID="788">
             <Title>cast_int64_int16</Title>
@@ -7035,6 +7035,9 @@ Value type (detailed notation)</Text>
         <Document ID="789">
             <Title>cast_int64_int32</Title>
         </Document>
+        <Document ID="2537">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1473">
             <Title>Synopsis</Title>
             <Text>void
@@ -7043,9 +7046,6 @@ Value type (detailed notation)</Text>
  void *processor_state,
  void *stream_state,
  uint64_t n_items);</Text>
-        </Document>
-        <Document ID="2537">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="11">
             <Title>Allocators</Title>
@@ -7083,6 +7083,10 @@ float32 -> float32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2538">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_rotate_right_nat64 = 1543</Text>
+        </Document>
         <Document ID="1474">
             <Title>Synopsis</Title>
             <Text>void
@@ -7091,10 +7095,6 @@ Value type (detailed notation)</Text>
  void *processor_state,
  void *stream_state,
  uint64_t n_items);</Text>
-        </Document>
-        <Document ID="2538">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_rotate_right_nat64 = 1543</Text>
         </Document>
         <Document ID="14">
             <Title>modern_stream_initialize</Title>
@@ -7112,12 +7112,6 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_absolute_value_float64 = 485</Text>
         </Document>
-        <Document ID="1820">
-            <Title>Parameters</Title>
-        </Document>
-        <Document ID="16">
-            <Title>modern_stream_type_magic_number</Title>
-        </Document>
         <Document ID="3924">
             <Title>Synopsis</Title>
             <Text>get_sigma_successor = 2016
@@ -7129,11 +7123,20 @@ Value type (abstract notation)
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="16">
+            <Title>modern_stream_type_magic_number</Title>
+        </Document>
+        <Document ID="1820">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="544">
             <Title>arccosine_float64</Title>
         </Document>
         <Document ID="17">
             <Title>modern_stream_name_definition</Title>
+        </Document>
+        <Document ID="2539">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1475">
             <Title>Synopsis</Title>
@@ -7143,9 +7146,6 @@ Value type (detailed notation)</Text>
  void *processor_state,
  void *stream_state,
  uint64_t index);</Text>
-        </Document>
-        <Document ID="2539">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="545">
             <Title>arctangent_float32</Title>
@@ -7264,6 +7264,17 @@ The low-level “stream-based” portion of the library does no such checking, a
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_sign_int16 = 513</Text>
         </Document>
+        <Document ID="3928">
+            <Title>Synopsis</Title>
+            <Text>get_named_value = 2048
+
+Value type (abstract notation)
+(a : universe 0)
+-> (b : name)
+-> named b a -> a
+
+Value type (detailed notation)</Text>
+        </Document>
         <Document ID="1824">
             <Title>Parameters</Title>
         </Document>
@@ -7273,17 +7284,6 @@ The low-level “stream-based” portion of the library does no such checking, a
 
 Value type (abstract notation)
 bool -> bool
-
-Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="3928">
-            <Title>Synopsis</Title>
-            <Text>get_named_value = 2048
-
-Value type (abstract notation)
-(a : universe 0)
--> (b : name)
--> named b a -> a
 
 Value type (detailed notation)</Text>
         </Document>
@@ -7560,8 +7560,14 @@ In addition to and built on top of the built-in values, Modern Data also include
         <Document ID="990">
             <Title>modern_vfile_stdio_finalize</Title>
         </Document>
-        <Document ID="261">
-            <Title>modern_node_sigma_type_make</Title>
+        <Document ID="4162">
+            <Title>Synopsis</Title>
+            <Text>cast_name_blob = 10298
+
+Value type (abstract notation)
+int8 -> maybe int16
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="3122">
             <Title>Synopsis</Title>
@@ -7572,14 +7578,8 @@ int64 -> int64 -> maybe int64
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="4162">
-            <Title>Synopsis</Title>
-            <Text>cast_name_blob = 10298
-
-Value type (abstract notation)
-int8 -> maybe int16
-
-Value type (detailed notation)</Text>
+        <Document ID="261">
+            <Title>modern_node_sigma_type_make</Title>
         </Document>
         <Document ID="2811">
             <Title>Semantics</Title>
@@ -7642,6 +7642,9 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_divide_towards_negative_infinity_int32 = 322</Text>
         </Document>
+        <Document ID="2813">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3853">
             <Title>Synopsis</Title>
             <Text>bit_xor_nat64 = 1639
@@ -7650,9 +7653,6 @@ Value type (abstract notation)
 nat64 -> nat64 -> nat64
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2813">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="2468">
             <Title>Semantics</Title>
@@ -7687,8 +7687,9 @@ int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2061">
-            <Title>Semantics</Title>
+        <Document ID="2790">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_name_blob = 10298</Text>
         </Document>
         <Document ID="996">
             <Title>Stdio files</Title>
@@ -7702,9 +7703,8 @@ Value type (detailed notation)</Text>
         <Document ID="1021">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2790">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_name_blob = 10298</Text>
+        <Document ID="2061">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2814">
             <Title>Synopsis</Title>
@@ -7728,9 +7728,8 @@ Value type (detailed notation)</Text>
         <Document ID="4511">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2062">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_divide_towards_negative_infinity_int64 = 323</Text>
+        <Document ID="2791">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1751">
             <Title>Semantics</Title>
@@ -7747,8 +7746,9 @@ Value type (detailed notation)</Text>
 modern_library_client_state_get
 (modern_library *library);</Text>
         </Document>
-        <Document ID="2791">
-            <Title>Semantics</Title>
+        <Document ID="2062">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_divide_towards_negative_infinity_int64 = 323</Text>
         </Document>
         <Document ID="2815">
             <Title>Semantics</Title>
@@ -7765,14 +7765,25 @@ modern_library_client_state_get
         <Document ID="999">
             <Title>modern_stream</Title>
         </Document>
-        <Document ID="2063">
-            <Title>Semantics</Title>
+        <Document ID="2792">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_blob_name = 10299</Text>
+        </Document>
+        <Document ID="751">
+            <Title>get_sigma_successor</Title>
         </Document>
         <Document ID="1752">
             <Title>Parameters</Title>
         </Document>
         <Document ID="1023">
             <Title>Parameters</Title>
+        </Document>
+        <Document ID="2063">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="2816">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_blob_float64 = 10311</Text>
         </Document>
         <Document ID="3856">
             <Title>Synopsis</Title>
@@ -7783,22 +7794,11 @@ int8 -> int8
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="751">
-            <Title>get_sigma_successor</Title>
-        </Document>
-        <Document ID="2792">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_blob_name = 10299</Text>
-        </Document>
-        <Document ID="2816">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_blob_float64 = 10311</Text>
+        <Document ID="752">
+            <Title>get_named_value</Title>
         </Document>
         <Document ID="4513">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="752">
-            <Title>get_named_value</Title>
         </Document>
         <Document ID="4168">
             <Title>Synopsis</Title>
@@ -7815,11 +7815,11 @@ Value type (detailed notation)</Text>
         <Document ID="1753">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="1024">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="753">
             <Title>get_function_type_left</Title>
+        </Document>
+        <Document ID="1024">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2817">
             <Title>Semantics</Title>
@@ -7840,14 +7840,14 @@ Value type (detailed notation)</Text>
 (*modern_node_representation_int16_type_make)
 (modern_library *library);</Text>
         </Document>
+        <Document ID="754">
+            <Title>get_function_type_right</Title>
+        </Document>
         <Document ID="71">
             <Title>modern_node_type_int64_value</Title>
         </Document>
         <Document ID="2410">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="754">
-            <Title>get_function_type_right</Title>
         </Document>
         <Document ID="72">
             <Title>modern_node_type_nat8_value</Title>
@@ -7865,11 +7865,11 @@ Value type (detailed notation)</Text>
 modern_library_finalize
 (modern_library *library);</Text>
         </Document>
-        <Document ID="73">
-            <Title>modern_node_type_nat16_value</Title>
-        </Document>
         <Document ID="755">
             <Title>get_sigma_type_field_type</Title>
+        </Document>
+        <Document ID="73">
+            <Title>modern_node_type_nat16_value</Title>
         </Document>
         <Document ID="2818">
             <Title>Synopsis</Title>
@@ -7894,14 +7894,8 @@ modern_library_finalize
         <Document ID="75">
             <Title>modern_node_type_nat64_value</Title>
         </Document>
-        <Document ID="3859">
-            <Title>Synopsis</Title>
-            <Text>bit_not_int16 = 1665
-
-Value type (abstract notation)
-int16 -> int16
-
-Value type (detailed notation)</Text>
+        <Document ID="2795">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1755">
             <Title>Semantics</Title>
@@ -7915,14 +7909,20 @@ Value type (detailed notation)</Text>
         <Document ID="757">
             <Title>get_named_type_content_type</Title>
         </Document>
-        <Document ID="2795">
+        <Document ID="2819">
             <Title>Semantics</Title>
         </Document>
         <Document ID="77">
             <Title>modern_node_type_float64_value</Title>
         </Document>
-        <Document ID="2819">
-            <Title>Semantics</Title>
+        <Document ID="3859">
+            <Title>Synopsis</Title>
+            <Text>bit_not_int16 = 1665
+
+Value type (abstract notation)
+int16 -> int16
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="4492">
             <Title>Synopsis</Title>
@@ -8160,12 +8160,12 @@ int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="3050">
+        <Document ID="4114">
             <Title>Synopsis</Title>
-            <Text>divide_towards_zero_nat16 = 293
+            <Text>cast_nat32_int8 = 10282
 
 Value type (abstract notation)
-nat16 -> nat16 -> maybe nat16
+int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8173,12 +8173,12 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_subtract_nat32 = 230</Text>
         </Document>
-        <Document ID="4114">
+        <Document ID="3050">
             <Title>Synopsis</Title>
-            <Text>cast_nat32_int8 = 10282
+            <Text>divide_towards_zero_nat16 = 293
 
 Value type (abstract notation)
-int8 -> maybe int16
+nat16 -> nat16 -> maybe nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8213,13 +8213,13 @@ float32 -> nat32
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2011">
+        <Document ID="2740">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1700">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2740">
+        <Document ID="2011">
             <Title>Semantics</Title>
         </Document>
         <Document ID="4499">
@@ -8284,30 +8284,30 @@ int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="3053">
-            <Title>Synopsis</Title>
-            <Text>divide_towards_zero_nat32 = 294
-
-Value type (abstract notation)
-nat32 -> nat32 -> maybe nat32
-
-Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2013">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="1702">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="2742">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="4117">
             <Title>Synopsis</Title>
             <Text>cast_nat32_int16 = 10283
 
 Value type (abstract notation)
 int8 -> maybe int16
+
+Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="2742">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="1702">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="2013">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="3053">
+            <Title>Synopsis</Title>
+            <Text>divide_towards_zero_nat32 = 294
+
+Value type (abstract notation)
+nat32 -> nat32 -> maybe nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8322,16 +8322,16 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  modern *value);</Text>
         </Document>
-        <Document ID="2014">
+        <Document ID="2743">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_subtract_nat64 = 231</Text>
+            <Text>modern_builtin_identifier_cast_nat16_int8 = 10275</Text>
         </Document>
         <Document ID="1703">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2743">
+        <Document ID="2014">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat16_int8 = 10275</Text>
+            <Text>modern_builtin_identifier_subtract_nat64 = 231</Text>
         </Document>
         <Document ID="2398">
             <Title>Semantics</Title>
@@ -8363,16 +8363,6 @@ int8 -> int8 -> int8
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2015">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_subtract_float32 = 232</Text>
-        </Document>
-        <Document ID="1704">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="1680">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="3808">
             <Title>Synopsis</Title>
             <Text>bit_or_int8 = 1600
@@ -8382,10 +8372,20 @@ int8 -> int8 -> int8
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="1704">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="2744">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="2015">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_subtract_float32 = 232</Text>
+        </Document>
         <Document ID="471">
             <Title>divide_towards_zero_int32</Title>
         </Document>
-        <Document ID="2744">
+        <Document ID="1680">
             <Title>Semantics</Title>
         </Document>
         <Document ID="2399">
@@ -8433,18 +8433,18 @@ nat64 -> nat64 -> maybe nat64
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2016">
-            <Title>Semantics</Title>
+        <Document ID="2745">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_nat16_int16 = 10276</Text>
         </Document>
         <Document ID="1705">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="2016">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1681">
             <Title>Parameters</Title>
-        </Document>
-        <Document ID="2745">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat16_int16 = 10276</Text>
         </Document>
         <Document ID="473">
             <Title>divide_towards_zero_nat8</Title>
@@ -8465,12 +8465,12 @@ Value type (detailed notation)</Text>
         <Document ID="1706">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="2746">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2017">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_subtract_float64 = 233</Text>
-        </Document>
-        <Document ID="2746">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="475">
             <Title>divide_towards_zero_nat32</Title>
@@ -8496,12 +8496,12 @@ Value type (detailed notation)</Text>
         <Document ID="1707">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2018">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="2747">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_cast_nat16_int32 = 10277</Text>
+        </Document>
+        <Document ID="2018">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="477">
             <Title>divide_towards_negative_infinity_int8</Title>
@@ -8559,6 +8559,9 @@ Value type (detailed notation)</Text>
         <Document ID="1708">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="2748">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2019">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_multiply_int8 = 256</Text>
@@ -8571,9 +8574,6 @@ Value type (abstract notation)
 int8 -> int8 -> maybe int8
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2748">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="479">
             <Title>divide_towards_negative_infinity_int32</Title>
@@ -8765,8 +8765,14 @@ Note that the diagram also shows a vfile being obtained from the system.  This i
         <Document ID="1689">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="968">
-            <Title>modern_stream_sigma_is_next</Title>
+        <Document ID="4042">
+            <Title>Synopsis</Title>
+            <Text>cast_int32_nat16 = 10258
+
+Value type (abstract notation)
+int8 -> maybe int16
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="3002">
             <Title>Synopsis</Title>
@@ -8777,14 +8783,8 @@ float64 -> float64 -> maybe float64
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="4042">
-            <Title>Synopsis</Title>
-            <Text>cast_int32_nat16 = 10258
-
-Value type (abstract notation)
-int8 -> maybe int16
-
-Value type (detailed notation)</Text>
+        <Document ID="968">
+            <Title>modern_stream_sigma_is_next</Title>
         </Document>
         <Document ID="3386">
             <Title>Synopsis</Title>
@@ -8897,11 +8897,11 @@ Value type (detailed notation)</Text>
         <Document ID="1630">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="725">
-            <Title>bit_xor_nat8</Title>
-        </Document>
         <Document ID="2670">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="725">
+            <Title>bit_xor_nat8</Title>
         </Document>
         <Document ID="3389">
             <Title>Synopsis</Title>
@@ -8954,6 +8954,12 @@ Value type (detailed notation)</Text>
         <Document ID="728">
             <Title>bit_xor_nat64</Title>
         </Document>
+        <Document ID="2672">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="1632">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3736">
             <Title>Synopsis</Title>
             <Text>rotate_left_int8 = 1504
@@ -8963,14 +8969,8 @@ int8 -> nat8 -> int8
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1632">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="729">
             <Title>bit_not_int8</Title>
-        </Document>
-        <Document ID="2672">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="1287">
             <Title>Synopsis</Title>
@@ -9003,12 +9003,12 @@ Value type (detailed notation)</Text>
         <Document ID="1633">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="192">
-            <Title>modern_node_universe_type_make</Title>
-        </Document>
         <Document ID="2673">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_cast_int8_int16 = 10240</Text>
+        </Document>
+        <Document ID="192">
+            <Title>modern_node_universe_type_make</Title>
         </Document>
         <Document ID="1288">
             <Title>Synopsis</Title>
@@ -9042,6 +9042,13 @@ Value type (detailed notation)</Text>
         <Document ID="4371">
             <Title>modern_node_representation_type_family_item_remove </Title>
         </Document>
+        <Document ID="2675">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_int8_int32 = 10241</Text>
+        </Document>
+        <Document ID="1635">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="3739">
             <Title>Synopsis</Title>
             <Text>rotate_left_int16 = 1505
@@ -9051,15 +9058,8 @@ int16 -> nat8 -> int16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1635">
-            <Title>Parameters</Title>
-        </Document>
         <Document ID="196">
             <Title>modern_node_type_family_make</Title>
-        </Document>
-        <Document ID="2675">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_int8_int32 = 10241</Text>
         </Document>
         <Document ID="4372">
             <Title>modern_node_representation_let_item_add </Title>
@@ -9327,12 +9327,12 @@ Value type (detailed notation)</Text>
         <Document ID="448">
             <Title>add_float64</Title>
         </Document>
-        <Document ID="1560">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="2624">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_replace_data_piece_blob = 1921</Text>
+        </Document>
+        <Document ID="1560">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="200">
             <Title>modern_node_int16_set</Title>
@@ -9356,11 +9356,11 @@ Value type (detailed notation)</Text>
         <Document ID="201">
             <Title>modern_node_int32_set</Title>
         </Document>
-        <Document ID="1561">
-            <Title>Parameters</Title>
-        </Document>
         <Document ID="2625">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="1561">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="202">
             <Title>modern_node_int64_set</Title>
@@ -9383,12 +9383,12 @@ int16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1562">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="2626">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_empty_utf8 = 1952</Text>
+        </Document>
+        <Document ID="1562">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="204">
             <Title>modern_node_nat16_set</Title>
@@ -9399,11 +9399,11 @@ Value type (detailed notation)</Text>
         <Document ID="205">
             <Title>modern_node_nat32_set</Title>
         </Document>
-        <Document ID="1563">
-            <Title>Parameters</Title>
-        </Document>
         <Document ID="2627">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="1563">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="206">
             <Title>modern_node_nat64_set</Title>
@@ -9418,12 +9418,12 @@ Value type (detailed notation)</Text>
         <Document ID="207">
             <Title>modern_node_float32_set</Title>
         </Document>
-        <Document ID="1564">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="2628">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_empty_blob = 1953</Text>
+        </Document>
+        <Document ID="1564">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="208">
             <Title>modern_node_float64_set</Title>
@@ -9446,11 +9446,24 @@ int32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2629">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="1565">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2629">
-            <Title>Semantics</Title>
+        <Document ID="3991">
+            <Title>Synopsis</Title>
+            <Text>cast_int8_int32 = 10241
+
+Value type (abstract notation)
+int8 -> maybe int16
+
+Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="2222">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_hyperbolic_arctangent_float32 = 1152</Text>
         </Document>
         <Document ID="3262">
             <Title>Synopsis</Title>
@@ -9461,31 +9474,18 @@ float64 -> float64
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2951">
-            <Title>Synopsis</Title>
-            <Text>add_int32 = 194
-
-Value type (abstract notation)
-int32 -> int32 -> maybe int32
-
-Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2222">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_hyperbolic_arctangent_float32 = 1152</Text>
-        </Document>
         <Document ID="4326">
             <Title>modern_node_representation_nat64_type_make </Title>
         </Document>
         <Document ID="1911">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="3991">
+        <Document ID="2951">
             <Title>Synopsis</Title>
-            <Text>cast_int8_int32 = 10241
+            <Text>add_int32 = 194
 
 Value type (abstract notation)
-int8 -> maybe int16
+int32 -> int32 -> maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9521,12 +9521,12 @@ Value type (detailed notation)</Text>
         <Document ID="1568">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="3265">
+        <Document ID="3994">
             <Title>Synopsis</Title>
-            <Text>arctangent_float32 = 928
+            <Text>cast_int8_int64 = 10242
 
 Value type (abstract notation)
-float32 -> float32
+int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9542,6 +9542,15 @@ Value type (detailed notation)</Text>
         <Document ID="2225">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="3265">
+            <Title>Synopsis</Title>
+            <Text>arctangent_float32 = 928
+
+Value type (abstract notation)
+float32 -> float32
+
+Value type (detailed notation)</Text>
+        </Document>
         <Document ID="1890">
             <Title>Semantics</Title>
         </Document>
@@ -9555,15 +9564,6 @@ Value type (detailed notation)</Text>
         <Document ID="1914">
             <Title>Semantics</Title>
             <Text>A modern_builtin_identifier is an enumerated value, as described in the nearby section Builtin identifiers - Overview.  The actual permissible values, the names that go with them, and their semantics are all detailed in the larger top-level section Builtin identifiers.</Text>
-        </Document>
-        <Document ID="3994">
-            <Title>Synopsis</Title>
-            <Text>cast_int8_int64 = 10242
-
-Value type (abstract notation)
-int8 -> maybe int16
-
-Value type (detailed notation)</Text>
         </Document>
         <Document ID="1569">
             <Title>Parameters</Title>
@@ -9581,15 +9581,15 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_zero_float32_int8 = 1184</Text>
         </Document>
+        <Document ID="1915">
+            <Title>modern_node_canonical_hash_get</Title>
+        </Document>
         <Document ID="1891">
             <Title>Parameters</Title>
         </Document>
         <Document ID="1162">
             <Title>Synopsis</Title>
             <Text>modern_node_type_nat16_value = 13</Text>
-        </Document>
-        <Document ID="1915">
-            <Title>modern_node_canonical_hash_get</Title>
         </Document>
         <Document ID="160">
             <Title>modern_node_nat32_make</Title>
@@ -9623,8 +9623,14 @@ Value type (detailed notation)</Text>
         <Document ID="891">
             <Title>Arithmetic</Title>
         </Document>
-        <Document ID="163">
-            <Title>modern_node_float64_make</Title>
+        <Document ID="3997">
+            <Title>Synopsis</Title>
+            <Text>cast_int8_nat8 = 10243
+
+Value type (abstract notation)
+int8 -> maybe int16
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="2957">
             <Title>Synopsis</Title>
@@ -9637,6 +9643,9 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1917">
             <Title>Parameters</Title>
+        </Document>
+        <Document ID="163">
+            <Title>modern_node_float64_make</Title>
         </Document>
         <Document ID="2228">
             <Title>Synopsis</Title>
@@ -9657,15 +9666,6 @@ Value type (detailed notation)</Text>
         <Document ID="1164">
             <Title>Synopsis</Title>
             <Text>modern_node_type_nat64_value = 15</Text>
-        </Document>
-        <Document ID="3997">
-            <Title>Synopsis</Title>
-            <Text>cast_int8_nat8 = 10243
-
-Value type (abstract notation)
-int8 -> maybe int16
-
-Value type (detailed notation)</Text>
         </Document>
         <Document ID="893">
             <Title>Equality</Title>
@@ -9717,6 +9717,9 @@ Value type (detailed notation)</Text>
         <Document ID="166">
             <Title>modern_node_blob_make</Title>
         </Document>
+        <Document ID="2551">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="20">
             <Title>modern_stream_type_definition_int16</Title>
         </Document>
@@ -9725,9 +9728,6 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1511">
             <Title>Parameters</Title>
-        </Document>
-        <Document ID="2551">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="21">
             <Title>modern_stream_type_definition_int32</Title>
@@ -9752,18 +9752,18 @@ Value type (detailed notation)</Text>
         <Document ID="23">
             <Title>modern_stream_type_definition_nat8</Title>
         </Document>
+        <Document ID="2552">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_bit_and_nat32 = 1574</Text>
+        </Document>
         <Document ID="897">
             <Title>Hashing</Title>
-        </Document>
-        <Document ID="1512">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="24">
             <Title>modern_stream_type_definition_nat16</Title>
         </Document>
-        <Document ID="2552">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_bit_and_nat32 = 1574</Text>
+        <Document ID="1512">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="25">
             <Title>modern_stream_type_definition_nat32</Title>
@@ -9790,6 +9790,9 @@ float64 -> int16
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="2553">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="27">
             <Title>modern_stream_type_definition_float32</Title>
         </Document>
@@ -9808,14 +9811,11 @@ Value type (detailed notation)</Text>
         <Document ID="650">
             <Title>floor_float64_nat8</Title>
         </Document>
-        <Document ID="1513">
-            <Title>Parameters</Title>
-        </Document>
         <Document ID="28">
             <Title>modern_stream_type_definition_float64</Title>
         </Document>
-        <Document ID="2553">
-            <Title>Semantics</Title>
+        <Document ID="1513">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="1897">
             <Title>Parameters</Title>
@@ -9840,6 +9840,10 @@ Value type (detailed notation)</Text>
         <Document ID="651">
             <Title>floor_float32_nat16</Title>
         </Document>
+        <Document ID="2554">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_bit_and_nat64 = 1575</Text>
+        </Document>
         <Document ID="1490">
             <Title>Semantics</Title>
         </Document>
@@ -9848,10 +9852,6 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1514">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="2554">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_bit_and_nat64 = 1575</Text>
         </Document>
         <Document ID="1898">
             <Title>Semantics</Title>
@@ -9863,17 +9863,17 @@ Value type (detailed notation)</Text>
         <Document ID="653">
             <Title>floor_float32_nat32</Title>
         </Document>
-        <Document ID="1491">
-            <Title>Parameters</Title>
+        <Document ID="2555">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1515">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="1491">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="654">
             <Title>floor_float64_nat32</Title>
-        </Document>
-        <Document ID="2555">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="1899">
             <Title>Parameters</Title>
@@ -9902,18 +9902,27 @@ float32 -> int32
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1492">
-            <Title>Semantics</Title>
+        <Document ID="2556">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_bit_or_int8 = 1600</Text>
         </Document>
         <Document ID="1516">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="1492">
             <Title>Semantics</Title>
         </Document>
         <Document ID="656">
             <Title>floor_float64_nat64</Title>
         </Document>
-        <Document ID="2556">
+        <Document ID="3942">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_bit_or_int8 = 1600</Text>
+            <Text>get_maybe_type_content_type = 2528
+
+Value type (abstract notation)
+universe 0 -> maybe (universe 0)
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="3213">
             <Title>Synopsis</Title>
@@ -9927,23 +9936,14 @@ Value type (detailed notation)</Text>
         <Document ID="657">
             <Title>minimum_bound_int8</Title>
         </Document>
-        <Document ID="3942">
-            <Title>Synopsis</Title>
-            <Text>get_maybe_type_content_type = 2528
-
-Value type (abstract notation)
-universe 0 -> maybe (universe 0)
-
-Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="1493">
-            <Title>Parameters</Title>
+        <Document ID="2557">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1517">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2557">
-            <Title>Semantics</Title>
+        <Document ID="1493">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="658">
             <Title>minimum_bound_int16</Title>
@@ -9967,14 +9967,15 @@ modern_vfile_fd_make
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_square_root_float32 = 576</Text>
         </Document>
-        <Document ID="1494">
-            <Title>Semantics</Title>
+        <Document ID="2558">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_bit_or_int16 = 1601</Text>
         </Document>
         <Document ID="1518">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="411">
-            <Title>modern_node_type_name_type</Title>
+        <Document ID="1494">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="4600">
             <Title>Synopsis</Title>
@@ -9984,9 +9985,8 @@ modern_vfile_fd_make
  void *value,
  void *successor);</Text>
         </Document>
-        <Document ID="2558">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_bit_or_int16 = 1601</Text>
+        <Document ID="411">
+            <Title>modern_node_type_name_type</Title>
         </Document>
         <Document ID="4255">
             <Title>modern_node_representation_mutable_get</Title>
@@ -10030,14 +10030,14 @@ float64 -> int32
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1495">
-            <Title>Parameters</Title>
+        <Document ID="2559">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1519">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2559">
-            <Title>Semantics</Title>
+        <Document ID="1495">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="4601">
             <Title>Semantics</Title>
@@ -10057,6 +10057,15 @@ Value type (detailed notation)</Text>
         <Document ID="2152">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_square_root_float64 = 577</Text>
+        </Document>
+        <Document ID="3945">
+            <Title>Synopsis</Title>
+            <Text>get_function_type_left = 2080
+
+Value type (abstract notation)
+universe 0 -> maybe (universe 0)
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="3216">
             <Title>Synopsis</Title>
@@ -10078,15 +10087,6 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="1112">
             <Title>Semantics</Title>
-        </Document>
-        <Document ID="3945">
-            <Title>Synopsis</Title>
-            <Text>get_function_type_left = 2080
-
-Value type (abstract notation)
-universe 0 -> maybe (universe 0)
-
-Value type (detailed notation)</Text>
         </Document>
         <Document ID="1496">
             <Title>Semantics</Title>
@@ -10210,6 +10210,15 @@ Value type (detailed notation)</Text>
         <Document ID="1115">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="3948">
+            <Title>Synopsis</Title>
+            <Text>get_function_type_right = 2112
+
+Value type (abstract notation)
+universe 0 -> maybe (universe 0)
+
+Value type (detailed notation)</Text>
+        </Document>
         <Document ID="1091">
             <Title>Semantics</Title>
         </Document>
@@ -10228,20 +10237,11 @@ Value type (detailed notation)</Text>
         <Document ID="900">
             <Title>modern_stream_maybe_just_is_next</Title>
         </Document>
-        <Document ID="1844">
-            <Title>Parameters</Title>
-        </Document>
         <Document ID="1499">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="3948">
-            <Title>Synopsis</Title>
-            <Text>get_function_type_right = 2112
-
-Value type (abstract notation)
-universe 0 -> maybe (universe 0)
-
-Value type (detailed notation)</Text>
+        <Document ID="1844">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="4581">
             <Title>Semantics</Title>
@@ -10673,11 +10673,11 @@ Value type (detailed notation)</Text>
         <Document ID="81">
             <Title>modern_node_type_sigma_value</Title>
         </Document>
-        <Document ID="131">
-            <Title>modern_node_int16_get</Title>
-        </Document>
         <Document ID="860">
             <Title>cast_nat8_blob</Title>
+        </Document>
+        <Document ID="131">
+            <Title>modern_node_int16_get</Title>
         </Document>
         <Document ID="82">
             <Title>modern_node_type_named_value</Title>
@@ -10715,11 +10715,11 @@ Value type (detailed notation)</Text>
         <Document ID="83">
             <Title>modern_node_type_int8_type</Title>
         </Document>
-        <Document ID="132">
-            <Title>modern_node_int32_get</Title>
-        </Document>
         <Document ID="861">
             <Title>cast_nat16_blob</Title>
+        </Document>
+        <Document ID="132">
+            <Title>modern_node_int32_get</Title>
         </Document>
         <Document ID="2487">
             <Title>Synopsis</Title>
@@ -10739,15 +10739,18 @@ Value type (detailed notation)</Text>
         <Document ID="85">
             <Title>modern_node_type_int32_type</Title>
         </Document>
-        <Document ID="133">
-            <Title>modern_node_int64_get</Title>
-        </Document>
         <Document ID="862">
             <Title>cast_nat32_blob</Title>
+        </Document>
+        <Document ID="133">
+            <Title>modern_node_int64_get</Title>
         </Document>
         <Document ID="2080">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_modulus_towards_zero_int32 = 386</Text>
+        </Document>
+        <Document ID="86">
+            <Title>modern_node_type_int64_type</Title>
         </Document>
         <Document ID="1040">
             <Title>Synopsis</Title>
@@ -10757,18 +10760,15 @@ Value type (detailed notation)</Text>
  modern *expected,
  modern *actual);</Text>
         </Document>
-        <Document ID="86">
-            <Title>modern_node_type_int64_type</Title>
-        </Document>
         <Document ID="2833">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_cast_nat64_blob = 10319</Text>
         </Document>
-        <Document ID="134">
-            <Title>modern_node_nat8_get</Title>
+        <Document ID="87">
+            <Title>modern_node_type_nat8_type</Title>
         </Document>
-        <Document ID="2488">
-            <Title>Semantics</Title>
+        <Document ID="863">
+            <Title>cast_nat64_blob</Title>
         </Document>
         <Document ID="1448">
             <Title>Synopsis</Title>
@@ -10778,8 +10778,8 @@ Value type (detailed notation)</Text>
  void *processor_state,
  void *stream_state);</Text>
         </Document>
-        <Document ID="87">
-            <Title>modern_node_type_nat8_type</Title>
+        <Document ID="2488">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="4530">
             <Title>Synopsis</Title>
@@ -10790,11 +10790,11 @@ Value type (detailed notation)</Text>
         <Document ID="88">
             <Title>modern_node_type_nat16_type</Title>
         </Document>
-        <Document ID="863">
-            <Title>cast_nat64_blob</Title>
+        <Document ID="134">
+            <Title>modern_node_nat8_get</Title>
         </Document>
-        <Document ID="135">
-            <Title>modern_node_nat16_get</Title>
+        <Document ID="864">
+            <Title>cast_float32_blob</Title>
         </Document>
         <Document ID="89">
             <Title>modern_node_type_nat32_type</Title>
@@ -10808,6 +10808,12 @@ Value type (detailed notation)</Text>
         <Document ID="1041">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="135">
+            <Title>modern_node_nat16_get</Title>
+        </Document>
+        <Document ID="2834">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3874">
             <Title>Synopsis</Title>
             <Text>bit_not_nat32 = 1670
@@ -10817,15 +10823,8 @@ nat32 -> nat32
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2834">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="864">
-            <Title>cast_float32_blob</Title>
-        </Document>
-        <Document ID="2489">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_shift_left_nat64 = 1457</Text>
+        <Document ID="865">
+            <Title>cast_float64_blob</Title>
         </Document>
         <Document ID="1449">
             <Title>Synopsis</Title>
@@ -10835,17 +10834,24 @@ Value type (detailed notation)</Text>
  void *processor_state,
  void *stream_state);</Text>
         </Document>
-        <Document ID="136">
-            <Title>modern_node_nat32_get</Title>
+        <Document ID="2489">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_shift_left_nat64 = 1457</Text>
         </Document>
         <Document ID="4531">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="865">
-            <Title>cast_float64_blob</Title>
+        <Document ID="136">
+            <Title>modern_node_nat32_get</Title>
         </Document>
-        <Document ID="866">
-            <Title>round_towards_zero_float32_float32</Title>
+        <Document ID="4186">
+            <Title>Synopsis</Title>
+            <Text>cast_blob_nat8 = 10306
+
+Value type (abstract notation)
+int8 -> maybe int16
+
+Value type (detailed notation)</Text>
         </Document>
         <Document ID="3146">
             <Title>Synopsis</Title>
@@ -10855,6 +10861,9 @@ Value type (abstract notation)
 int64 -> maybe int64
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="866">
+            <Title>round_towards_zero_float32_float32</Title>
         </Document>
         <Document ID="1771">
             <Title>Semantics</Title>
@@ -10868,15 +10877,6 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="137">
             <Title>modern_node_nat64_get</Title>
-        </Document>
-        <Document ID="4186">
-            <Title>Synopsis</Title>
-            <Text>cast_blob_nat8 = 10306
-
-Value type (abstract notation)
-int8 -> maybe int16
-
-Value type (detailed notation)</Text>
         </Document>
         <Document ID="2835">
             <Title>Synopsis</Title>
@@ -10941,6 +10941,10 @@ Value type (detailed notation)</Text>
         <Document ID="1044">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="2837">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_float64_blob = 10321</Text>
+        </Document>
         <Document ID="3877">
             <Title>Synopsis</Title>
             <Text>bit_not_nat64 = 1671
@@ -10949,10 +10953,6 @@ Value type (abstract notation)
 nat64 -> nat64
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2837">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_float64_blob = 10321</Text>
         </Document>
         <Document ID="622">
             <Title>round_towards_odd_float64_nat32</Title>
@@ -11200,9 +11200,6 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_floor_float64_nat64 = 1359</Text>
         </Document>
-        <Document ID="2030">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="3823">
             <Title>Synopsis</Title>
             <Text>bit_or_nat16 = 1605
@@ -11211,6 +11208,9 @@ Value type (abstract notation)
 nat16 -> nat16 -> nat16
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="2030">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1374">
             <Title>Synopsis</Title>
@@ -11223,20 +11223,6 @@ Value type (detailed notation)</Text>
         <Document ID="2438">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="580">
-            <Title>round_away_from_zero_float64_int16</Title>
-        </Document>
-        <Document ID="2031">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_multiply_nat32 = 262</Text>
-        </Document>
-        <Document ID="1720">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="2760">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat32_int16 = 10283</Text>
-        </Document>
         <Document ID="4135">
             <Title>Synopsis</Title>
             <Text>cast_nat64_int8 = 10289
@@ -11245,6 +11231,20 @@ Value type (abstract notation)
 int8 -> maybe int16
 
 Value type (detailed notation)</Text>
+        </Document>
+        <Document ID="2760">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_nat32_int16 = 10283</Text>
+        </Document>
+        <Document ID="1720">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="2031">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_multiply_nat32 = 262</Text>
+        </Document>
+        <Document ID="580">
+            <Title>round_away_from_zero_float64_int16</Title>
         </Document>
         <Document ID="3479">
             <Title>Synopsis</Title>
@@ -11270,17 +11270,17 @@ Value type (detailed notation)</Text>
         <Document ID="581">
             <Title>round_away_from_zero_float32_int32</Title>
         </Document>
-        <Document ID="2032">
+        <Document ID="2761">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1721">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="2032">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="582">
             <Title>round_away_from_zero_float64_int32</Title>
-        </Document>
-        <Document ID="2761">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="1376">
             <Title>Synopsis</Title>
@@ -11293,16 +11293,6 @@ Value type (detailed notation)</Text>
         <Document ID="583">
             <Title>round_away_from_zero_float32_int64</Title>
         </Document>
-        <Document ID="2033">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_multiply_nat64 = 263</Text>
-        </Document>
-        <Document ID="1722">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="584">
-            <Title>round_away_from_zero_float64_int64</Title>
-        </Document>
         <Document ID="3826">
             <Title>Synopsis</Title>
             <Text>bit_or_nat32 = 1606
@@ -11312,9 +11302,19 @@ nat32 -> nat32 -> nat32
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="1722">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="2762">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_cast_nat32_int32 = 10284</Text>
+        </Document>
+        <Document ID="2033">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_multiply_nat64 = 263</Text>
+        </Document>
+        <Document ID="584">
+            <Title>round_away_from_zero_float64_int64</Title>
         </Document>
         <Document ID="1377">
             <Title>Synopsis</Title>
@@ -11336,17 +11336,17 @@ int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2034">
+        <Document ID="2763">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1723">
             <Title>Parameters</Title>
         </Document>
+        <Document ID="2034">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="586">
             <Title>round_away_from_zero_float64_nat8</Title>
-        </Document>
-        <Document ID="2763">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="1378">
             <Title>Synopsis</Title>
@@ -11366,16 +11366,16 @@ Value type (detailed notation)</Text>
         <Document ID="587">
             <Title>round_away_from_zero_float32_nat16</Title>
         </Document>
-        <Document ID="2035">
+        <Document ID="2764">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_multiply_float32 = 264</Text>
+            <Text>modern_builtin_identifier_cast_nat32_int64 = 10285</Text>
         </Document>
         <Document ID="1724">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2764">
+        <Document ID="2035">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat32_int64 = 10285</Text>
+            <Text>modern_builtin_identifier_multiply_float32 = 264</Text>
         </Document>
         <Document ID="588">
             <Title>round_away_from_zero_float64_nat16</Title>
@@ -11394,12 +11394,6 @@ Value type (detailed notation)</Text>
         <Document ID="589">
             <Title>round_away_from_zero_float32_nat32</Title>
         </Document>
-        <Document ID="2036">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="1725">
-            <Title>Parameters</Title>
-        </Document>
         <Document ID="3829">
             <Title>Synopsis</Title>
             <Text>bit_or_nat64 = 1607
@@ -11409,7 +11403,13 @@ nat64 -> nat64 -> nat64
 
 Value type (detailed notation)</Text>
         </Document>
+        <Document ID="1725">
+            <Title>Parameters</Title>
+        </Document>
         <Document ID="2765">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="2036">
             <Title>Semantics</Title>
         </Document>
         <Document ID="4462">
@@ -11427,27 +11427,27 @@ float32 -> int8
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="2037">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_multiply_float64 = 265</Text>
-        </Document>
-        <Document ID="1726">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="2766">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_cast_nat32_nat8 = 10286</Text>
         </Document>
+        <Document ID="1726">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="2037">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_multiply_float64 = 265</Text>
+        </Document>
         <Document ID="4463">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2038">
+        <Document ID="2767">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1727">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2767">
+        <Document ID="2038">
             <Title>Semantics</Title>
         </Document>
         <Document ID="4464">
@@ -11466,16 +11466,16 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  uint8_t value);</Text>
         </Document>
-        <Document ID="2039">
+        <Document ID="2768">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_divide_towards_zero_int8 = 288</Text>
+            <Text>modern_builtin_identifier_cast_nat32_nat16 = 10287</Text>
         </Document>
         <Document ID="1728">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2768">
+        <Document ID="2039">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_nat32_nat16 = 10287</Text>
+            <Text>modern_builtin_identifier_divide_towards_zero_int8 = 288</Text>
         </Document>
         <Document ID="4465">
             <Title>Semantics</Title>
@@ -11690,6 +11690,15 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  void *value);</Text>
         </Document>
+        <Document ID="2690">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="1650">
+            <Title>Semantics</Title>
+        </Document>
+        <Document ID="2714">
+            <Title>Semantics</Title>
+        </Document>
         <Document ID="3754">
             <Title>Synopsis</Title>
             <Text>rotate_left_nat32 = 1510
@@ -11698,15 +11707,6 @@ Value type (abstract notation)
 nat32 -> nat8 -> nat32
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="1650">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="2690">
-            <Title>Semantics</Title>
-        </Document>
-        <Document ID="2714">
-            <Title>Semantics</Title>
         </Document>
         <Document ID="2369">
             <Title>Synopsis</Title>
@@ -11770,6 +11770,17 @@ Value type (detailed notation)</Text>
         <Document ID="4413">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="2693">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_int16_nat8 = 10250</Text>
+        </Document>
+        <Document ID="1653">
+            <Title>Parameters</Title>
+        </Document>
+        <Document ID="2717">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_cast_int64_int16 = 10262</Text>
+        </Document>
         <Document ID="3757">
             <Title>Synopsis</Title>
             <Text>rotate_left_nat64 = 1511
@@ -11778,17 +11789,6 @@ Value type (abstract notation)
 nat64 -> nat8 -> nat64
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="1653">
-            <Title>Parameters</Title>
-        </Document>
-        <Document ID="2693">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_int16_nat8 = 10250</Text>
-        </Document>
-        <Document ID="2717">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_cast_int64_int16 = 10262</Text>
         </Document>
         <Document ID="790">
             <Title>cast_int64_nat8</Title>
@@ -11906,8 +11906,8 @@ Value type (detailed notation)</Text>
         <Document ID="795">
             <Title>cast_nat8_int16</Title>
         </Document>
-        <Document ID="4393">
-            <Title>Semantics</Title>
+        <Document ID="796">
+            <Title>cast_nat8_int32</Title>
         </Document>
         <Document ID="4417">
             <Title>Semantics</Title>
@@ -11924,8 +11924,8 @@ float64 -> nat32
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="796">
-            <Title>cast_nat8_int32</Title>
+        <Document ID="4393">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="2697">
             <Title>Synopsis</Title>
@@ -11958,24 +11958,24 @@ Value type (detailed notation)</Text>
 (modern_library *library,
  void *value);</Text>
         </Document>
+        <Document ID="798">
+            <Title>cast_nat8_nat16</Title>
+        </Document>
         <Document ID="2314">
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_round_towards_even_float32_nat8 = 1256</Text>
         </Document>
-        <Document ID="798">
-            <Title>cast_nat8_nat16</Title>
-        </Document>
-        <Document ID="550">
-            <Title>hyperbolic_sine_float64</Title>
+        <Document ID="2698">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1658">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2698">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="799">
             <Title>cast_nat8_nat32</Title>
+        </Document>
+        <Document ID="550">
+            <Title>hyperbolic_sine_float64</Title>
         </Document>
         <Document ID="3700">
             <Title>Synopsis</Title>
@@ -12121,15 +12121,15 @@ int8 -> maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="558">
-            <Title>hyperbolic_arccosine_float64</Title>
+        <Document ID="2640">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_from_maybe = 2624</Text>
         </Document>
         <Document ID="1600">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2640">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_from_maybe = 2624</Text>
+        <Document ID="558">
+            <Title>hyperbolic_arccosine_float64</Title>
         </Document>
         <Document ID="4399">
             <Title>Semantics</Title>
@@ -12175,14 +12175,14 @@ nat32
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="311">
-            <Title>modern_stream_backreference_is_next</Title>
+        <Document ID="2641">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="1601">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2641">
-            <Title>Semantics</Title>
+        <Document ID="311">
+            <Title>modern_stream_backreference_is_next</Title>
         </Document>
         <Document ID="2296">
             <Title>Synopsis</Title>
@@ -12197,11 +12197,15 @@ Value type (detailed notation)</Text>
         <Document ID="1985">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="313">
-            <Title>modern_node_type_function_type</Title>
+        <Document ID="2642">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_get_maybe_type_content_type = 2528</Text>
         </Document>
         <Document ID="1602">
             <Title>Semantics</Title>
+        </Document>
+        <Document ID="313">
+            <Title>modern_node_type_function_type</Title>
         </Document>
         <Document ID="3706">
             <Title>Synopsis</Title>
@@ -12211,10 +12215,6 @@ Value type (abstract notation)
 nat32 -> nat8 -> nat32
 
 Value type (detailed notation)</Text>
-        </Document>
-        <Document ID="2642">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_get_maybe_type_content_type = 2528</Text>
         </Document>
         <Document ID="2297">
             <Title>Semantics</Title>
@@ -12311,11 +12311,18 @@ Value type (detailed notation)</Text>
         <Document ID="318">
             <Title>Builtin identifiers</Title>
         </Document>
-        <Document ID="1581">
-            <Title>Parameters</Title>
+        <Document ID="2645">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_get_function_type_left = 2080</Text>
         </Document>
         <Document ID="1605">
             <Title>Parameters</Title>
+        </Document>
+        <Document ID="1581">
+            <Title>Parameters</Title>
+        </Document>
+        <Document ID="319">
+            <Title>if_bool</Title>
         </Document>
         <Document ID="3709">
             <Title>Synopsis</Title>
@@ -12326,13 +12333,6 @@ nat64 -> nat8 -> nat64
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="319">
-            <Title>if_bool</Title>
-        </Document>
-        <Document ID="2645">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_get_function_type_left = 2080</Text>
-        </Document>
         <Document ID="1989">
             <Title>Semantics</Title>
         </Document>
@@ -12342,17 +12342,17 @@ Value type (detailed notation)</Text>
         <Document ID="800">
             <Title>cast_nat8_nat64</Title>
         </Document>
-        <Document ID="1582">
+        <Document ID="2646">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1606">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2646">
-            <Title>Semantics</Title>
-        </Document>
         <Document ID="801">
             <Title>cast_nat16_int8</Title>
+        </Document>
+        <Document ID="1582">
+            <Title>Semantics</Title>
         </Document>
         <Document ID="4343">
             <Title>modern_node_representation_canonical_hash_set </Title>
@@ -12360,15 +12360,15 @@ Value type (detailed notation)</Text>
         <Document ID="802">
             <Title>cast_nat16_int16</Title>
         </Document>
-        <Document ID="1583">
-            <Title>Parameters</Title>
+        <Document ID="2647">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_get_function_type_right = 2112</Text>
         </Document>
         <Document ID="1607">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2647">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_get_function_type_right = 2112</Text>
+        <Document ID="1583">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="803">
             <Title>cast_nat16_int32</Title>
@@ -12389,6 +12389,9 @@ Value type (detailed notation)</Text>
         <Document ID="1200">
             <Title>Semantics</Title>
         </Document>
+        <Document ID="804">
+            <Title>cast_nat16_int64</Title>
+        </Document>
         <Document ID="3304">
             <Title>Synopsis</Title>
             <Text>hyperbolic_arccosine_float64 = 1121
@@ -12401,9 +12404,6 @@ Value type (detailed notation)</Text>
         <Document ID="4344">
             <Title>modern_node_representation_maybe_just_content_set </Title>
         </Document>
-        <Document ID="804">
-            <Title>cast_nat16_int64</Title>
-        </Document>
         <Document ID="3688">
             <Title>Synopsis</Title>
             <Text>shift_left_int8 = 1440
@@ -12413,13 +12413,13 @@ int8 -> nat8 -> int8
 
 Value type (detailed notation)</Text>
         </Document>
-        <Document ID="1584">
+        <Document ID="2648">
             <Title>Semantics</Title>
         </Document>
         <Document ID="1608">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="2648">
+        <Document ID="1584">
             <Title>Semantics</Title>
         </Document>
         <Document ID="805">
@@ -12440,15 +12440,15 @@ Value type (detailed notation)</Text>
         <Document ID="806">
             <Title>cast_nat16_nat32</Title>
         </Document>
-        <Document ID="1585">
-            <Title>Parameters</Title>
+        <Document ID="2649">
+            <Title>Synopsis</Title>
+            <Text>modern_builtin_identifier_get_sigma_type_field_type = 2144</Text>
         </Document>
         <Document ID="1609">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="2649">
-            <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_get_sigma_type_field_type = 2144</Text>
+        <Document ID="1585">
+            <Title>Parameters</Title>
         </Document>
         <Document ID="807">
             <Title>cast_nat16_nat64</Title>
@@ -12546,6 +12546,9 @@ Value type (detailed notation)</Text>
         <Document ID="32">
             <Title>modern_stream_type_definition_function_is_next</Title>
         </Document>
+        <Document ID="273">
+            <Title>modern_error_handler_retain_count_underflow</Title>
+        </Document>
         <Document ID="1180">
             <Title>Synopsis</Title>
             <Text>modern_node_type_nat16_type = 31</Text>
@@ -12554,20 +12557,17 @@ Value type (detailed notation)</Text>
             <Title>Synopsis</Title>
             <Text>modern_builtin_identifier_equal_to_int32 = 131</Text>
         </Document>
-        <Document ID="273">
-            <Title>modern_error_handler_retain_count_underflow</Title>
-        </Document>
         <Document ID="33">
             <Title>modern_stream_type_definition_sigma_is_next</Title>
         </Document>
         <Document ID="1588">
             <Title>Parameters</Title>
         </Document>
-        <Document ID="34">
-            <Title>modern_stream_type_definition_named_is_next</Title>
-        </Document>
         <Document ID="274">
             <Title>modern_error_handler_double_autorelease</Title>
+        </Document>
+        <Document ID="34">
+            <Title>modern_stream_type_definition_named_is_next</Title>
         </Document>
         <Document ID="4349">
             <Title>modern_node_representation_nat8_set </Title>
