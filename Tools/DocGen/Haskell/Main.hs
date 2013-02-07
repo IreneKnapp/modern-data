@@ -22,8 +22,16 @@ import Text.XML.Cursor
 data Section =
   Section {
       sectionPath :: [(Int, T.Text)],
+      sectionType :: SectionType,
       sectionChildren :: [Section]
     }
+
+
+data SectionType
+  = Numbered
+  | Lettered
+  | Anonymous Bool
+  | InParent Bool
 
 
 main :: IO ()
@@ -64,7 +72,7 @@ process inputWrapperPath outputDirectoryPath = do
          &/ element "Labels"
          &/ element "Label"
          &| (\itemCursor ->
-               let key = attribute "ID" itemCursor
+               let key = T.concat $ attribute "ID" itemCursor
                    name = T.concat $ itemCursor $/ content
                in (key, name))
       statuses =
@@ -79,13 +87,22 @@ process inputWrapperPath outputDirectoryPath = do
                in (key, name))
   binder <-
     mapM (\(index, binderItem) -> do
-             collectBinderItem binderItem [(index, binderItemTitle binderItem)])
+             collectBinderItem labels binderItem
+                               [(index, binderItemTitle binderItem)])
          (zip [1 ..] $ (fromDocument inputBinder)
                      $/ element "Binder"
                      &/ element "BinderItem"
                      &| node)
-  let draft = computeDraft binder
-  putStrLn $ show draft
+  draft <- case computeDraft binder of
+             Nothing -> do
+               putStrLn $ "Draft not found by that name in the binder."
+               IO.exitFailure
+             Just draft -> return draft
+  let processSection level section = do
+        putStrLn $ (take (level * 4) (repeat ' '))
+                   ++ (show $ sectionPath section)
+        mapM_ (processSection (level + 1)) (sectionChildren section)
+  processSection 0 draft
 
 
 binderItemTitle :: XML.Node -> T.Text
@@ -93,18 +110,37 @@ binderItemTitle binderItem =
   T.concat $ (fromNode binderItem) $/ element "Title" &/ content
 
 
-collectBinderItem :: XML.Node -> [(Int, T.Text)] -> IO Section
-collectBinderItem binderItem path = do
+collectBinderItem
+  :: Map.Map T.Text T.Text -> XML.Node -> [(Int, T.Text)] -> IO Section
+collectBinderItem labels binderItem path = do
   children <-
     mapM (\(index, child) -> do
-              collectBinderItem child
+              collectBinderItem labels child
                                 (path ++ [(index, binderItemTitle child)]))
          (zip [1 ..] ((fromNode binderItem)
                       $/ element "Children"
                       &/ element "BinderItem"
                       &| node))
+  let labelID = T.concat ((fromNode binderItem)
+                          $/ element "MetaData"
+                          &/ element "LabelID"
+                          &/ content)
+      maybeLabel = Map.lookup labelID labels
+      sectionType' =
+        case maybeLabel of
+          Just "Overview" -> InParent False
+          Just "Synopsis" -> InParent True
+          Just "Reference" -> Numbered
+          Just "Tutorial" -> Numbered
+          Just "Parameters" -> InParent True
+          Just "Semantics" -> InParent True
+          Just "Xref" -> InParent True
+          Just "Manpage" -> Anonymous True
+          Just "Appendix" -> Lettered
+          _ -> Numbered
   return Section {
              sectionPath = path,
+             sectionType = sectionType',
              sectionChildren = children
            }
 
@@ -141,6 +177,7 @@ computeDraft binder =
       stripPathPrefix length section =
         Section {
             sectionPath = drop length (sectionPath section),
+            sectionType = sectionType section,
             sectionChildren =
               map (stripPathPrefix length) (sectionChildren section)
           }
