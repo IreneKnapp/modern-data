@@ -3,8 +3,11 @@ module Main (main) where
 
 import System.FilePath (FilePath)
 
+import qualified Data.ByteString as BS
+import qualified Data.Digest.Murmur3 as Hash
 import qualified Data.Map as Map
 import qualified Data.Text as T
+import qualified Data.Text.Encoding as T
 import qualified System.Environment as IO
 import qualified System.Exit as IO
 import qualified System.FilePath as IO
@@ -17,6 +20,7 @@ import Data.Char
 import Data.List
 import Data.Maybe
 import Data.String
+import Numeric
 import Text.XML.Cursor
 
 import Debug.Trace
@@ -26,6 +30,7 @@ data Section =
   Section {
       sectionPath :: [(Int, T.Text)],
       sectionType :: SectionType,
+      sectionDocumentID :: T.Text,
       sectionChildren :: [Section]
     }
 
@@ -39,10 +44,18 @@ data SectionType
 
 data OutputSection =
   OutputSection {
+      outputSectionID :: T.Text,
       outputSectionNumber :: Maybe T.Text,
       outputSectionTitle :: Maybe [T.Text],
       outputSectionBody :: [BodyItem],
       outputSectionChildren :: [OutputSection]
+    }
+
+
+data FlattenedOutputSection =
+  FlattenedOutputSection {
+      flattenedOutputSectionTitle :: T.Text,
+      flattenedOutputSectionBody :: [BodyItem]
     }
 
 
@@ -119,15 +132,16 @@ process inputWrapperPath outputDirectoryPath = do
              Nothing -> do
                putStrLn $ "Draft not found by that name in the binder."
                IO.exitFailure
-             Just draft -> return $ computeOutputDraft draft
+             Just draft -> getOutputDraft draft
   let processSection level section = do
         putStrLn $
-          case (outputSectionNumber section, outputSectionTitle section) of
-            (Just number, Just title) ->
-              T.unpack $ T.concat [number, " ", T.intercalate " - " title]
-            (Just number, Nothing) -> T.unpack number
-            (Nothing, Just title) -> T.unpack $ T.intercalate " - " title
-            (Nothing, Nothing) -> "Table of Contents"
+          (T.unpack $ outputSectionID section) ++ " "
+          ++ case (outputSectionNumber section, outputSectionTitle section) of
+               (Just number, Just title) ->
+                 T.unpack $ T.concat [number, " ", T.intercalate " - " title]
+               (Just number, Nothing) -> T.unpack number
+               (Nothing, Just title) -> T.unpack $ T.intercalate " - " title
+               (Nothing, Nothing) -> "Table of Contents"
         mapM_ (processSection (level + 1))
               (outputSectionChildren section)
   processSection 0 draft
@@ -166,9 +180,12 @@ collectBinderItem labels binderItem path = do
           Just "Manpage" -> Anonymous
           Just "Appendix" -> Lettered
           _ -> Numbered
+      documentID = T.concat ((fromNode binderItem)
+                             $| attribute "ID")
   return Section {
              sectionPath = path,
              sectionType = sectionType',
+             sectionDocumentID = documentID,
              sectionChildren = children
            }
 
@@ -206,6 +223,7 @@ computeDraft binder =
         Section {
             sectionPath = drop length (sectionPath section),
             sectionType = sectionType section,
+            sectionDocumentID = sectionDocumentID section,
             sectionChildren =
               map (stripPathPrefix length) (sectionChildren section)
           }
@@ -213,16 +231,16 @@ computeDraft binder =
           maybeDraft
 
 
-computeOutputDraft :: Section -> OutputSection
-computeOutputDraft draft =
-  let (result, _) = computeOutputSection True Nothing 1 [] draft
-  in result
+getOutputDraft :: Section -> IO OutputSection
+getOutputDraft draft = do
+  (result, _) <- getOutputSection True Nothing 1 [] draft
+  return result
 
 
-computeOutputSection
+getOutputSection
   :: Bool -> Maybe T.Text -> Int -> [T.Text] -> Section
-  -> (OutputSection, Bool)
-computeOutputSection isRoot numberSoFar nextNumberPart titleSoFar section =
+  -> IO (OutputSection, Bool)
+getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
   let number =
         if isRoot
           then Nothing
@@ -259,55 +277,55 @@ computeOutputSection isRoot numberSoFar nextNumberPart titleSoFar section =
         if inParent
           then numberSoFar
           else number
-      (_, _, title, children, body) =
-        foldl' (\(indexSoFar, letteredModeSoFar, titleSoFar, childrenSoFar,
-                  bodySoFar)
-                 childSection ->
-                   let (indexHere, letteredMode) =
-                         case sectionType section of
-                           Lettered -> if letteredModeSoFar
-                                         then (indexSoFar, True)
-                                         else (1, True)
-                           _ -> (indexSoFar, letteredModeSoFar)
-                       (child, childInLine) =
-                         computeOutputSection False
-                                              childNumber
-                                              indexSoFar
-                                              (fromMaybe [] title)
-                                              childSection
-                       title =
-                         case titleSoFar of
-                           Just _ -> titleSoFar
-                           Nothing -> if childInLine
-                                        then outputSectionTitle child
-                                        else Nothing
-                       body =
-                         if childInLine
-                           then bodySoFar ++ outputSectionBody child
-                           else
-                             let header =
-                                   case (outputSectionNumber child,
-                                         outputSectionTitle child) of
-                                     (Just number, Just title) ->
-                                       T.concat [number, " ",
-                                                 T.intercalate " - " title]
-                                     (Just number, Nothing) -> number
-                                     (Nothing, Just title) ->
-                                       T.intercalate " - " title
-                                     (Nothing, Nothing) -> "?"
-                             in bodySoFar ++ [Header [Link [Text header]]]
-                       children =
-                         if childInLine
-                           then childrenSoFar
-                           else childrenSoFar ++ [child]
-                       index =
-                         if childInLine
-                           then indexHere
-                           else indexHere + 1
-                   in (index, letteredMode, title, children, body))
-               (1, False, initialTitle, [], [])
-               (sectionChildren section)
-      bodyPrefix =
+  (_, _, title, children, body) <-
+        foldM (\(indexSoFar, letteredModeSoFar, titleSoFar, childrenSoFar,
+                 bodySoFar)
+                childSection -> do
+                  let (indexHere, letteredMode) =
+                        case sectionType section of
+                          Lettered -> if letteredModeSoFar
+                                        then (indexSoFar, True)
+                                        else (1, True)
+                          _ -> (indexSoFar, letteredModeSoFar)
+                  (child, childInLine) <-
+                    getOutputSection False
+                                     childNumber
+                                     indexSoFar
+                                     (fromMaybe [] titleSoFar)
+                                     childSection
+                  let title =
+                        case titleSoFar of
+                          Just _ -> titleSoFar
+                          Nothing -> if childInLine
+                                       then outputSectionTitle child
+                                       else Nothing
+                      body =
+                        if childInLine
+                          then bodySoFar ++ outputSectionBody child
+                          else
+                            let header =
+                                  case (outputSectionNumber child,
+                                        outputSectionTitle child) of
+                                    (Just number, Just title) ->
+                                      T.concat [number, " ",
+                                                T.intercalate " - " title]
+                                    (Just number, Nothing) -> number
+                                    (Nothing, Just title) ->
+                                      T.intercalate " - " title
+                                    (Nothing, Nothing) -> "?"
+                            in bodySoFar ++ [Header [Link [Text header]]]
+                      children =
+                        if childInLine
+                          then childrenSoFar
+                          else childrenSoFar ++ [child]
+                      index =
+                        if childInLine
+                          then indexHere
+                          else indexHere + 1
+                  return (index, letteredMode, title, children, body))
+              (1, False, initialTitle, [], [])
+              (sectionChildren section)
+  let bodyPrefix =
         if inParent
           then case title of
                  Nothing -> []
@@ -316,10 +334,23 @@ computeOutputSection isRoot numberSoFar nextNumberPart titleSoFar section =
                                          (init title),
                                      [Text $ last title]]]
           else []
-  in (OutputSection {
-          outputSectionNumber = number,
-          outputSectionTitle = title,
-          outputSectionBody = bodyPrefix ++ body,
-          outputSectionChildren = children
-       }, inParent)
+      identifier = computeIdentifierHash $ sectionDocumentID section
+  return (OutputSection {
+              outputSectionID = identifier,
+              outputSectionNumber = number,
+              outputSectionTitle = title,
+              outputSectionBody = bodyPrefix ++ body,
+              outputSectionChildren = children
+           }, inParent)
+
+
+computeIdentifierHash :: T.Text -> T.Text
+computeIdentifierHash documentID =
+  T.pack
+    $ concatMap (\byte -> let hex = showHex byte ""
+                              padding = take (2 - length hex) (repeat '0')
+                          in hex ++ padding)
+    $ BS.unpack $ BS.take 4
+    $ Hash.asByteString $ Hash.hash
+    $ T.encodeUtf8 documentID
 
