@@ -3,7 +3,9 @@ module Main (main) where
 
 import System.FilePath (FilePath)
 
+import qualified Data.Aeson as JSON
 import qualified Data.ByteString as BS
+import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Digest.Murmur3 as Hash
 import qualified Data.Map as Map
 import qualified Data.Text as T
@@ -57,16 +59,29 @@ data FlattenedOutputSection =
       flattenedOutputSectionTitle :: T.Text,
       flattenedOutputSectionBody :: [BodyItem]
     }
+instance JSON.ToJSON FlattenedOutputSection where
+  toJSON section =
+    JSON.object
+      ["title" JSON..= (JSON.toJSON $ flattenedOutputSectionTitle section),
+       "body" JSON..= (JSON.toJSON $ flattenedOutputSectionBody section)]
 
 
 data BodyItem
   = Header [TextItem]
   | Paragraph [TextItem]
-
+instance JSON.ToJSON BodyItem where
+  toJSON (Header items) =
+    JSON.toJSON $ JSON.String "header" : map JSON.toJSON items
+  toJSON (Paragraph items) =
+    JSON.toJSON $ JSON.String "paragraph" : map JSON.toJSON items 
 
 data TextItem
   = Link [TextItem]
   | Text T.Text
+instance JSON.ToJSON TextItem where
+  toJSON (Link items) =
+    JSON.toJSON $ JSON.String "link" : map JSON.toJSON items
+  toJSON (Text text) = JSON.String text
 
 
 main :: IO ()
@@ -133,18 +148,10 @@ process inputWrapperPath outputDirectoryPath = do
                putStrLn $ "Draft not found by that name in the binder."
                IO.exitFailure
              Just draft -> getOutputDraft draft
-  let processSection level section = do
-        putStrLn $
-          (T.unpack $ outputSectionID section) ++ " "
-          ++ case (outputSectionNumber section, outputSectionTitle section) of
-               (Just number, Just title) ->
-                 T.unpack $ T.concat [number, " ", T.intercalate " - " title]
-               (Just number, Nothing) -> T.unpack number
-               (Nothing, Just title) -> T.unpack $ T.intercalate " - " title
-               (Nothing, Nothing) -> "Table of Contents"
-        mapM_ (processSection (level + 1))
-              (outputSectionChildren section)
-  processSection 0 draft
+           >>= return . computeFlattenedOutput
+  IO.createDirectory outputDirectoryPath
+  LBS.writeFile (outputDirectoryPath ++ "/content.json")
+                (JSON.encode $ JSON.object $ map (uncurry (JSON..=)) draft)
 
 
 binderItemTitle :: XML.Node -> T.Text
@@ -353,4 +360,20 @@ computeIdentifierHash documentID =
     $ BS.unpack $ BS.take 4
     $ Hash.asByteString $ Hash.hash
     $ T.encodeUtf8 documentID
+
+
+computeFlattenedOutput :: OutputSection -> [(T.Text, FlattenedOutputSection)]
+computeFlattenedOutput section =
+  [(outputSectionID section,
+    FlattenedOutputSection {
+        flattenedOutputSectionTitle =
+          case (outputSectionNumber section, outputSectionTitle section) of
+            (Just number, Just title) ->
+              T.concat [number, " ", T.intercalate " - " title]
+            (Just number, Nothing) -> number
+            (Nothing, Just title) -> T.intercalate " - " title
+            (Nothing, Nothing) -> "Table of Contents",
+        flattenedOutputSectionBody = outputSectionBody section
+      })]
+  ++ concatMap computeFlattenedOutput (outputSectionChildren section)
 
