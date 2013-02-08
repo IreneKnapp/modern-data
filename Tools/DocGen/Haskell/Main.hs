@@ -57,12 +57,15 @@ data OutputSection =
 data FlattenedOutputSection =
   FlattenedOutputSection {
       flattenedOutputSectionTitle :: T.Text,
+      flattenedOutputSectionNavigation :: [[TextItem]],
       flattenedOutputSectionBody :: [BodyItem]
     }
 instance JSON.ToJSON FlattenedOutputSection where
   toJSON section =
     JSON.object
       ["title" JSON..= (JSON.toJSON $ flattenedOutputSectionTitle section),
+       "navigation" JSON..= 
+         (JSON.toJSON $ flattenedOutputSectionNavigation section),
        "body" JSON..= (JSON.toJSON $ flattenedOutputSectionBody section)]
 
 
@@ -369,6 +372,16 @@ computeFlattenedOutput section =
         flattenedOutputSectionTitle =
           case (outputSectionNumber section, outputSectionTitle section) of
             (Just number, Just title) ->
+              T.concat [number, " ", T.intercalate " - " title]
+            (Just number, Nothing) -> number
+            (Nothing, Just title) -> T.intercalate " - " title
+            (Nothing, Nothing) -> "Table of Contents",
+        flattenedOutputSectionNavigation =
+          case (outputSectionNumber section, outputSectionTitle section) of
+            (Just number, Just title) ->
+              [[Text $ T.concat [number, " "]]
+               ++ (map Link (init title))
+               ++ [Text $ T.concat [" ", last title]]]
               T.concat [number, " ", T.intercalate " - " title]
             (Just number, Nothing) -> number
             (Nothing, Just title) -> T.intercalate " - " title
