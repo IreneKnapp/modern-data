@@ -317,11 +317,13 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
                                   case (outputSectionNumber child,
                                         outputSectionTitle child) of
                                     (Just number, Just title) ->
-                                      T.concat [number, " ",
-                                                T.intercalate " - " title]
+                                      T.concat
+                                        [number,
+                                         " ",
+                                         T.intercalate titleSeparator title]
                                     (Just number, Nothing) -> number
                                     (Nothing, Just title) ->
-                                      T.intercalate " - " title
+                                      T.intercalate titleSeparator title
                                     (Nothing, Nothing) -> "?"
                             in bodySoFar ++ [Header [Link [Text header]]]
                       children =
@@ -372,21 +374,28 @@ computeFlattenedOutput section =
         flattenedOutputSectionTitle =
           case (outputSectionNumber section, outputSectionTitle section) of
             (Just number, Just title) ->
-              T.concat [number, " ", T.intercalate " - " title]
+              T.concat [number, " ", T.intercalate titleSeparator title]
             (Just number, Nothing) -> number
-            (Nothing, Just title) -> T.intercalate " - " title
+            (Nothing, Just title) -> T.intercalate titleSeparator title
             (Nothing, Nothing) -> "Table of Contents",
         flattenedOutputSectionNavigation =
           case (outputSectionNumber section, outputSectionTitle section) of
             (Just number, Just title) ->
-              [[Text $ T.concat [number, " "]]
-               ++ (map Link (init title))
-               ++ [Text $ T.concat [" ", last title]]]
-              T.concat [number, " ", T.intercalate " - " title]
-            (Just number, Nothing) -> number
-            (Nothing, Just title) -> T.intercalate " - " title
-            (Nothing, Nothing) -> "Table of Contents",
+              [intercalate [Text " "]
+                           [[Text number]
+                            ++ (map (\item -> Link [Text item]) (init title))
+                            ++ [Text $ last title]]]
+            (Just number, Nothing) -> [[Text number]]
+            (Nothing, Just title) ->
+              [intercalate [Text " "]
+                           [(map (\item -> Link [Text item]) (init title))
+                            ++ [Text $ last title]]]
+            (Nothing, Nothing) ->
+              [[Text "Table of Contents"]],
         flattenedOutputSectionBody = outputSectionBody section
       })]
   ++ concatMap computeFlattenedOutput (outputSectionChildren section)
 
+
+titleSeparator :: T.Text
+titleSeparator = " ∙ "
