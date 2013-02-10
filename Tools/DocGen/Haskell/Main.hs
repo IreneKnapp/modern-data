@@ -405,25 +405,32 @@ computeFlattenedOutput maybeParentTitle section =
                 map (\(identifier, name) ->
                          Link identifier [Text name])
                     title
+              overallNavigation =
+                [Header [Link "..." [Text "Table of Contents"],
+                         Text " ",
+                         Link "..." [Text "Symbol Index"]]]
           in case (outputSectionNumber section, outputSectionTitle section) of
                (Just number, Just [(_, properTitle)]) ->
                  (case maybeParentTitle of
                     Nothing -> []
                     Just parentTitle ->
-                      [intersperse (Text " ") (titleParts parentTitle)])
+                      [intersperse (Text titleSeparator)
+                                   (titleParts parentTitle)])
                  ++ [[Text number, Text " ", Text properTitle]]
                (Nothing, Just [(_, properTitle)]) ->
                  (case maybeParentTitle of
                     Nothing -> []
                     Just parentTitle ->
-                      [intersperse (Text " ") (titleParts parentTitle)])
+                      [intersperse (Text titleSeparator)
+                                   (titleParts parentTitle)])
                  ++ [[Text properTitle]]
                (Just number, Just title) ->
-                 [intersperse (Text " ")
-                              ([Text number] ++ titlePartsExceptLast title)]
+                 [[Text number, Text " "]
+                  ++ (intersperse (Text titleSeparator)
+                                  (titlePartsExceptLast title))]
                (Just number, Nothing) -> [[Text number]]
                (Nothing, Just title) ->
-                 [intersperse (Text " ")
+                 [intersperse (Text titleSeparator)
                               (titlePartsExceptLast title)]
                (Nothing, Nothing) ->
                  [[Text "Table of Contents"]],
