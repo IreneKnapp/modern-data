@@ -154,7 +154,11 @@ process inputWrapperPath outputDirectoryPath = do
            >>= return . computeFlattenedOutput
   IO.createDirectory outputDirectoryPath
   LBS.writeFile (outputDirectoryPath ++ "/content.json")
-                (JSON.encode $ JSON.object $ map (uncurry (JSON..=)) draft)
+                (JSON.encode
+                  $ JSON.object
+                    ["toc" JSON..= (JSON.String $ fst $ head draft),
+                     "sections" JSON..=
+                       (JSON.object $ map (uncurry (JSON..=)) draft)])
 
 
 binderItemTitle :: XML.Node -> T.Text
