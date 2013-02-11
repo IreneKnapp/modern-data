@@ -1224,7 +1224,7 @@
 		<integer>4356</integer>
 	</array>
 	<key>mainDocumentEditor.scrollRect</key>
-	<string>{{0, 0}, {621, 304}}</string>
+	<string>{{0, 0}, {606, 304}}</string>
 	<key>mainDocumentEditor.selectedItemIDs</key>
 	<array/>
 	<key>mainDocumentEditor.textEditorState</key>
@@ -2656,7 +2656,7 @@
 		<integer>287</integer>
 	</array>
 	<key>supportingDocumentEditor.scrollRect</key>
-	<string>{{0, 0}, {414.28571, 382.85715}}</string>
+	<string>{{0, 0}, {606, 304}}</string>
 	<key>supportingDocumentEditor.selectedItemIDs</key>
 	<array>
 		<integer>4628</integer>

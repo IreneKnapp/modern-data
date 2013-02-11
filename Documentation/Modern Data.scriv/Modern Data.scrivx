@@ -963,7 +963,7 @@
                 </OutlinerExpandedState>
             </CorkboardAndOutliner>
             <Children>
-                <BinderItem ID="3" Type="Text" Created="2012-08-10 15:30:35 -0400" Modified="2013-02-05 21:47:16 -0500">
+                <BinderItem ID="3" Type="Text" Created="2012-08-10 15:30:35 -0400" Modified="2013-02-09 00:51:26 -0500">
                     <Title>Introduction</Title>
                     <MetaData>
                         <LabelID>1</LabelID>
@@ -45612,6 +45612,17 @@
                         <TextSelection>7335,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
+                <BinderItem ID="4633" Type="WebArchive" Created="2013-02-09 00:48:44 -0500" Modified="2013-02-09 00:48:44 -0500">
+                    <Title>The Blink Protocol</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <FileExtension>webarchive</FileExtension>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <MediaSettings>
+                        <OriginalURL>http://blinkprotocol.org</OriginalURL>
+                    </MediaSettings>
+                </BinderItem>
             </Children>
         </BinderItem>
         <BinderItem ID="2" Type="TrashFolder" Created="2012-08-10 15:30:35 -0400" Modified="2012-08-10 15:30:35 -0400">
@@ -45852,7 +45863,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="0" Characters="0" Date="2013-02-06 16:43:08 -0500"></PreviousSession>
+        <PreviousSession Words="0" Characters="0" Date="2013-02-09 12:41:23 -0500"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>

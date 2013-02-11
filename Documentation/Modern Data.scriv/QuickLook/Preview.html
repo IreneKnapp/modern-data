@@ -28,9 +28,9 @@
 
 <ul>
 <li>
-<p class="binderItem"><strong>Introduction</strong><br/>Modern Data is a compact, binary, dependently-typed, self-describing data format for object graphs, and also a library.<br/>
+<p class="binderItem"><strong>Introduction</strong><br/>Modern Data is a self-describing binary data format for dependently-typed object graphs, and also a library.<br/>
 <br/>
-A self-describing data format is a format like XML, JSON, or Common Lisp’s s-expressions, which can be processed at a superficial level without knowledge of the specific type of data it contains.  The typical purpose of such formats is interchange across diverse software tools; for example, many tools for working with databases can produce output or accept input in XML.  They ...</p>
+A self-describing data format is a format like XML, JSON, YAML, or Common Lisp’s s-expressions, which can be processed at a superficial level without knowledge of the specific type of data it contains.  The typical purpose of such formats is interchange across diverse software tools; for example, many tools for working with databases can produce output or accept input in XML.  They can a...</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -167,7 +167,15 @@ modern_library_initialize<br/>
  void *client_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>Parameters</strong></p>
+<p class="binderItem"><strong>Parameters</strong><br/>Error handler<br/>
+<br/>
+Allocator<br/>
+<br/>
+Finalizer<br/>
+<br/>
+Client state<br/>
+<br/>
+Return</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
