@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFE0;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+
+div.navigation {
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.1em;
+    padding-top: 0.2em;
+    background-color: #60C060;
+    color: white;
+    font-size: 18pt;
+    text-shadow: 1pt 0pt 2pt black,
+                 0pt 1pt 2pt black,
+                 -1pt 0pt 2pt black,
+                 0pt -1pt 2pt black;
+}
+
+
+div.navigation > div {
+    text-align: center;
+}
+
+
+div.content {
+    padding: 0;
+    padding-left: 0.5em;
+    padding-right: 1em;
+}
+
+
+h1 {
+    margin: 0;
+    margin-top: 0.5em;
+}
+
+
+p {
+}
+
+
+div.copyright {
+    margin: 0;
+    margin-top: 1em;
+    font-size: 10pt;
+    font-style: italic;
+}
+
