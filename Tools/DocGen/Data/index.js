@@ -2,14 +2,13 @@
 
 var content = null;
 var node = null;
-var templates = [
-"loading",
-"page",
-"textItem",
-"bodyItem",
-];
+var templates = null;
 
 var Is = {
+    defined: function(object) {
+        return typeof object != "undefined";
+    },
+    
     string: function(object) {
         return typeof object == "string";
     },
@@ -30,21 +29,24 @@ var DOM = {
     
     Magic: {
         get: function(type, name) {
+            var results = {};
             var candidates = document.getElementsByTagName("script");
             for(var i = 0; i < candidates.length; i++) {
                 var candidate = candidates.item(i);
                 
                 var foundName = candidate.getAttributeNode("name");
                 foundName = foundName ? foundName.value : undefined;
-                if(foundName != name) continue;
+                if(Is.defined(name) && (foundName != name)) continue;
                 
                 var foundType = candidate.getAttributeNode("type");
                 foundType = foundType ? foundType.value : undefined;
                 if(foundType != type) continue;
                 
-                return candidate.innerHTML;
+                if(Is.defined(name)) return candidate.innerHTML;
+                else results[foundName] = candidate.innerHTML;
             }
-            return null;
+            if(Is.defined(name)) return null;
+            else return results;
         },
     },
 };
@@ -162,8 +164,8 @@ var loadContent = function() {
     xhr.onreadystatechange = function(event) {
         var xhr = event.target;
         if(xhr.readyState == 4) {
-            content = xhr.responseText;
-            content = content ? JSON.parse(content) : null;
+            var response = xhr.responseText;
+            content = response ? JSON.parse(response) : null;
             updatePage();
         }
     };
@@ -172,23 +174,20 @@ var loadContent = function() {
 };
 
 window.addEventListener("load", function() {
-    for(var i = 0; i < templates.length; i++) {
-        (function() {
-            var name = templates[i];
+    var templateSources = DOM.Magic.get("template");
+    
+    for(var name in templateSources) {
+        (function(name) {
             Handlebars.registerHelper(name, function(context) {
-                console.log(name, context);
                 return new Handlebars.SafeString(templates[name](context));
             });
-        })();
+        })(name);
     }
     
-    var result = {};
-    for(var i = 0; i < templates.length; i++) {
-        var name = templates[i];
-        var source = DOM.Magic.get("template", name);
-        result[name] = Handlebars.compile(source);
+    templates = {};
+    for(var name in templateSources) {
+        templates[name] = Handlebars.compile(templateSources[name]);
     }
-    templates = result;
     
     updatePage();
     loadContent();

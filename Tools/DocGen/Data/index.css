@@ -64,3 +64,16 @@ div.copyright {
     font-style: italic;
 }
 
+
+div.alert {
+    position: fixed;
+    top: 25vh;
+    left: 30vw;
+    right: 30vw;
+    width: auto;
+    height: auto;
+    padding: 2.0em;
+    box-shadow: 0 0 2.0em black;
+    border-radius: 2.0em;
+    background-color: white;
+}

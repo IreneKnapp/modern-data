@@ -9,12 +9,18 @@
 </head>
 <body>
 
-<noscript><h1>JavaScript required</h1></noscript>
+<noscript>
+<div class="alert">
+<h1>JavaScript required</h1>
+<p>Sorry!</p>
+</div>
+</noscript>
 
 <script name="loading" type="template">
+<div class="alert">
 <h1>Please wait...</h1>
-
 <p>The contents of the manual are currently loading.</p>
+</div>
 </script>
 
 <script name="page" type="template"><div class="navigation">{{#each navigation}}<div>{{#each this}}{{textItem this}}{{/each}}</div>{{/each}}</div>
