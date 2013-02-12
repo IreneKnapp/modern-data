@@ -149,9 +149,17 @@ var updatePage = function() {
     if(content == null) {
         DOM.replaceBody(templates.loading({}));
     } else {
-        var sectionID = content.toc;
+        var hash = window.location.hash;
+        if(Is.string(hash) && hash.length > 1) {
+            var sectionID = hash.substr(1);
+        } else {
+            var sectionID = content.toc;
+        }
+        
         var section = content.sections[sectionID];
+        
         DOM.setTitle(section.title);
+        
         DOM.replaceBody(templates.page({
             navigation: handleNavigation(section.navigation),
             body: handleBody(section.body),
@@ -167,6 +175,7 @@ var loadContent = function() {
             var response = xhr.responseText;
             content = response ? JSON.parse(response) : null;
             updatePage();
+            window.addEventListener("hashchange", updatePage);
         }
     };
     xhr.open("GET", "content.json");
