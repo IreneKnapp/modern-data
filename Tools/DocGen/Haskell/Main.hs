@@ -336,7 +336,7 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
                                         outputSectionTitle child) of
                                     (Just number, Just title) ->
                                       [Header
-                                        [Link (snd $ last title)
+                                        [Link (fst $ last title)
                                               [Text $ T.concat
                                                 [number, " ",
                                                  T.intercalate titleSeparator
@@ -345,7 +345,7 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
                                       [Header [Text number]]
                                     (Nothing, Just title) ->
                                       [Header
-                                        [Link (snd $ last title)
+                                        [Link (fst $ last title)
                                               [Text $ T.intercalate
                                                 titleSeparator
                                                 $ map snd title]]]

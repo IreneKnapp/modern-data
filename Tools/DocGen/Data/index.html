@@ -29,7 +29,7 @@
 </div>
 </script>
 
-<script name="textItem" type="template">{{#if string}}{{value}}{{/if}}{{#if link}}<a href="{{href}}">{{#each contents}}{{textItem this}}{{/each}}</a>{{/if}}</script>
+<script name="textItem" type="template">{{#if string}}{{value}}{{/if}}{{#if link}}<a href="#{{href}}">{{#each contents}}{{textItem this}}{{/each}}</a>{{/if}}</script>
 
 <script name="bodyItem" type="template">{{#if header}}
 <h1>{{#each contents}}{{textItem this}}{{/each}}</h1>{{/if}}{{#if paragraph}}
