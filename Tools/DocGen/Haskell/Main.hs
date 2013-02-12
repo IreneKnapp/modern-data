@@ -50,7 +50,8 @@ data OutputSection =
       outputSectionID :: T.Text,
       outputSectionNumber :: Maybe T.Text,
       outputSectionTitle :: Maybe [(T.Text, T.Text)],
-      outputSectionBody :: [BodyItem],
+      outputSectionParentBody :: [BodyItem],
+      outputSectionSelfBody :: [BodyItem],
       outputSectionChildren :: [OutputSection]
     }
 
@@ -154,7 +155,11 @@ process inputWrapperPath outputDirectoryPath = do
                putStrLn $ "Draft not found by that name in the binder."
                IO.exitFailure
              Just draft -> getOutputDraft draft
-           >>= return . computeFlattenedOutput Nothing
+           >>= return . (\draft -> computeFlattenedOutput
+                                     (outputSectionID draft)
+                                     (outputSectionID draft)
+                                     Nothing
+                                     draft)
   IO.createDirectory outputDirectoryPath
   LBS.writeFile (outputDirectoryPath ++ "/content.json")
                 (JSON.encode
@@ -282,7 +287,7 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
                      [fromMaybe "" numberSoFar,
                       T.pack [chr (ord 'A' + nextNumberPart - 1)],
                       "."]
-                 Anonymous -> Nothing
+                 Anonymous -> numberSoFar
                  InParent _ -> Nothing
       identifier = computeIdentifierHash $ sectionDocumentID section
       finalTitleComponent =
@@ -318,7 +323,7 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
                   (child, childInLine) <-
                     getOutputSection False
                                      childNumber
-                                     indexSoFar
+                                     indexHere
                                      (fromMaybe [] titleSoFar)
                                      childSection
                   let title =
@@ -327,30 +332,7 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
                           Nothing -> if childInLine
                                        then outputSectionTitle child
                                        else Nothing
-                      body =
-                        if childInLine
-                          then bodySoFar ++ outputSectionBody child
-                          else
-                            let header =
-                                  case (outputSectionNumber child,
-                                        outputSectionTitle child) of
-                                    (Just number, Just title) ->
-                                      [Header
-                                        [Link (fst $ last title)
-                                              [Text $ T.concat
-                                                [number, " ",
-                                                 T.intercalate titleSeparator
-                                                   $ map snd title]]]]
-                                    (Just number, Nothing) ->
-                                      [Header [Text number]]
-                                    (Nothing, Just title) ->
-                                      [Header
-                                        [Link (fst $ last title)
-                                              [Text $ T.intercalate
-                                                titleSeparator
-                                                $ map snd title]]]
-                                    (Nothing, Nothing) -> [Header [Text "?"]]
-                            in bodySoFar ++ header
+                      body = bodySoFar ++ outputSectionParentBody child
                       children =
                         if childInLine
                           then childrenSoFar
@@ -373,11 +355,26 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
                                    (init title),
                                [Text $ snd $ last title]]]
           else []
+      parentBody =
+        case (number, finalTitleComponent) of
+          (Just number, Just (_, title)) ->
+            [Header [Link identifier [Text number, Text " ", Text title]]]
+          (Just number, Nothing) ->
+            [Header [Link identifier [Text number]]]
+          (Nothing, Just (_, title)) ->
+            [Header [Link identifier [Text title]]]
+          (Nothing, Nothing) ->
+            [Header [Link identifier [Text "?"]]]
   return (OutputSection {
               outputSectionID = identifier,
               outputSectionNumber = number,
               outputSectionTitle = title,
-              outputSectionBody = bodyPrefix ++ body,
+              outputSectionParentBody = if inParent
+                                         then bodyPrefix ++ body
+                                         else parentBody,
+              outputSectionSelfBody = if inParent
+                                        then []
+                                        else bodyPrefix ++ body,
               outputSectionChildren = children
            }, inParent)
 
@@ -394,10 +391,16 @@ computeIdentifierHash documentID =
 
 
 computeFlattenedOutput
-  :: Maybe [(T.Text, T.Text)]
+  :: T.Text
+  -> T.Text
+  -> Maybe [(T.Text, T.Text)]
   -> OutputSection
   -> [(T.Text, FlattenedOutputSection)]
-computeFlattenedOutput maybeParentTitle section =
+computeFlattenedOutput
+    tableOfContentsIdentifier
+    symbolIndexIdentifier
+    maybeParentTitle
+    section =
   [(outputSectionID section,
     FlattenedOutputSection {
         flattenedOutputSectionTitle =
@@ -417,38 +420,47 @@ computeFlattenedOutput maybeParentTitle section =
                 map (\(identifier, name) ->
                          Link identifier [Text name])
                     title
+              linkIfNotHere identifier name =
+                if outputSectionID section == identifier
+                  then Text name
+                  else Link identifier [Text name]
               overallNavigation =
-                [Header [Link "..." [Text "Table of Contents"],
-                         Text " ",
-                         Link "..." [Text "Symbol Index"]]]
-          in case (outputSectionNumber section, outputSectionTitle section) of
-               (Just number, Just [(_, properTitle)]) ->
-                 (case maybeParentTitle of
-                    Nothing -> []
-                    Just parentTitle ->
-                      [intersperse (Text titleSeparator)
-                                   (titleParts parentTitle)])
-                 ++ [[Text number, Text " ", Text properTitle]]
-               (Nothing, Just [(_, properTitle)]) ->
-                 (case maybeParentTitle of
-                    Nothing -> []
-                    Just parentTitle ->
-                      [intersperse (Text titleSeparator)
-                                   (titleParts parentTitle)])
-                 ++ [[Text properTitle]]
-               (Just number, Just title) ->
-                 [[Text number, Text " "]
-                  ++ (intersperse (Text titleSeparator)
-                                  (titlePartsExceptLast title))]
-               (Just number, Nothing) -> [[Text number]]
-               (Nothing, Just title) ->
-                 [intersperse (Text titleSeparator)
-                              (titlePartsExceptLast title)]
-               (Nothing, Nothing) ->
-                 [[Text "Table of Contents"]],
-        flattenedOutputSectionBody = outputSectionBody section
+                [[linkIfNotHere tableOfContentsIdentifier "Table of Contents",
+                  Text titleSeparator,
+                  linkIfNotHere symbolIndexIdentifier "Symbol Index"]]
+          in overallNavigation
+             ++ case (outputSectionNumber section,
+                      outputSectionTitle section) of
+                  (Just number, Just [(_, properTitle)]) ->
+                    (case maybeParentTitle of
+                       Nothing -> []
+                       Just parentTitle ->
+                         [[Text number, Text " "]
+                          ++ (intersperse (Text titleSeparator)
+                                          (titleParts parentTitle))])
+                    ++ [[Text properTitle]]
+                  (Nothing, Just [(_, properTitle)]) ->
+                    (case maybeParentTitle of
+                       Nothing -> []
+                       Just parentTitle ->
+                         [intersperse (Text titleSeparator)
+                                      (titleParts parentTitle)])
+                    ++ [[Text properTitle]]
+                  (Just number, Just title) ->
+                    [[Text number, Text " "]
+                     ++ (intersperse (Text titleSeparator)
+                                     (titlePartsExceptLast title))]
+                  (Just number, Nothing) -> [[Text number]]
+                  (Nothing, Just title) ->
+                    [intersperse (Text titleSeparator)
+                                 (titlePartsExceptLast title)]
+                  (Nothing, Nothing) ->
+                    [[Text "Table of Contents"]],
+        flattenedOutputSectionBody = outputSectionSelfBody section
       })]
-  ++ concatMap (computeFlattenedOutput (outputSectionTitle section))
+  ++ concatMap (computeFlattenedOutput tableOfContentsIdentifier
+                                       symbolIndexIdentifier
+                                       (outputSectionTitle section))
                (outputSectionChildren section)
 
 
