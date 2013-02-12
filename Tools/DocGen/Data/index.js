@@ -174,6 +174,7 @@ var loadContent = function() {
         if(xhr.readyState == 4) {
             var response = xhr.responseText;
             content = response ? JSON.parse(response) : null;
+            window.location.hash = "#" + content.toc;
             updatePage();
             window.addEventListener("hashchange", updatePage);
         }
