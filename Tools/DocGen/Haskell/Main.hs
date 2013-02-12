@@ -16,6 +16,7 @@ import qualified System.FilePath as IO
 import qualified System.Directory as IO
 import qualified System.IO as IO
 import qualified Text.XML as XML
+import qualified Paths_docgen as Paths
 
 import Control.Monad.Identity
 import Data.Char
@@ -161,6 +162,17 @@ process inputWrapperPath outputDirectoryPath = do
                     ["toc" JSON..= (JSON.String $ fst $ head draft),
                      "sections" JSON..=
                        (JSON.object $ map (uncurry (JSON..=)) draft)])
+  mapM_ (\dataFileInputName -> do
+           dataFileInputPath <- Paths.getDataFileName dataFileInputName
+           data' <- BS.readFile dataFileInputPath
+           let dataFileOutputPath =
+                 outputDirectoryPath ++ "/"
+                 ++ IO.takeFileName dataFileInputName
+           BS.writeFile dataFileOutputPath data')
+        ["Data/handlebars.js",
+         "Data/index.css",
+         "Data/index.html",
+         "Data/index.js"]
 
 
 binderItemTitle :: XML.Node -> T.Text

@@ -3,8 +3,14 @@ version: 1.0
 build-type: Simple
 cabal-version: >= 1.10
 
+data-files: Data/handlebars.js,
+            Data/index.css,
+            Data/index.html,
+            Data/index.js
+
 Executable docgen
   main-is: Main.hs
+  other-modules: Paths_docgen
   hs-source-dirs: Haskell
   build-depends: aeson >= 0.6 && < 1,
                  base >= 4.1 && < 5,
