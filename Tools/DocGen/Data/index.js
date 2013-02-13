@@ -3,6 +3,7 @@
 var content = null;
 var node = null;
 var templates = null;
+var loadTimer = null;
 
 var Is = {
     defined: function(object) {
@@ -146,6 +147,11 @@ var handleTextItem = function(textItemIn) {
 };
 
 var updatePage = function() {
+    if(loadTimer) {
+        clearTimeout(loadTimer);
+        loadTimer = null;
+    }
+    
     if(content == null) {
         DOM.replaceBody(templates.loading({}));
     } else {
@@ -199,7 +205,8 @@ window.addEventListener("load", function() {
         templates[name] = Handlebars.compile(templateSources[name]);
     }
     
-    updatePage();
+    loadTimer = setTimeout(updatePage, 750);
+    
     loadContent();
 });
 
