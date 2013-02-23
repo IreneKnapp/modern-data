@@ -45609,7 +45609,27 @@
                         <NotesTextSelection>0,0</NotesTextSelection>
                     </MetaData>
                     <TextSettings>
-                        <TextSelection>7335,0</TextSelection>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="4635" Type="Text" Created="2013-02-22 20:43:48 -0500" Modified="2013-02-22 20:52:46 -0500">
+                    <Title>2013-02-22 Peaker, newsham, and shachaf in #haskell-blah</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>335,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="4634" Type="Text" Created="2013-02-22 20:42:29 -0500" Modified="2013-02-22 20:54:51 -0500">
+                    <Title>2013-02-22 shachaf in #haskell</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>6453,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
                 <BinderItem ID="4633" Type="WebArchive" Created="2013-02-09 00:48:44 -0500" Modified="2013-02-09 00:48:44 -0500">
@@ -45863,7 +45883,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="0" Characters="0" Date="2013-02-09 12:41:23 -0500"></PreviousSession>
+        <PreviousSession Words="0" Characters="0" Date="2013-02-22 20:40:49 -0500"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>
