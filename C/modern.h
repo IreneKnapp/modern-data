@@ -766,7 +766,7 @@ enum modern_builtin_identifier {
 
 
 struct modern_node_representation {
-    enum modern_node_representation_type
+    enum modern_node_type
       (*modern_node_representation_node_type_get)
       (modern_library *library,
        void *value);
@@ -1293,14 +1293,14 @@ struct modern_node_representation {
 extern modern_library *modern_library_initialize
   (struct modern_error_handler *error_handler,
    struct modern_allocator *allocator,
-   struct modern_node *node,
+   struct modern_node_representation *node_representation,
    void (*finalizer)(void *client_state),
    void *client_state);
 extern struct modern_error_handler *modern_library_error_handler_get
   (modern_library *library);
 extern struct modern_allocator *modern_library_allocator_get
   (modern_library *library);
-extern struct modern_node *modern_library_node_get
+extern struct modern_node_representation *modern_library_node_representation_get
   (modern_library *library);
 extern void *modern_library_client_state_get
   (modern_library *library);
@@ -1437,7 +1437,8 @@ extern struct modern_stream *modern_stream_explicatory_make
 extern struct modern_stream *modern_stream_documentation_make
   (modern_library *library);
 
-extern struct modern_node *modern_node_default_make
+extern struct modern_node_representation
+  *modern_node_representation_default_make
   (struct modern_allocator *allocator,
    void *client_state);
 
