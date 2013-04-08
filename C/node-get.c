@@ -16,7 +16,7 @@ INTERNAL modern *default_modern_value_type_get
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
-    if(!library->node) {
+    if(!library->node_representation) {
         library->error_handler->modern_error_handler_usage(library->client_state);
         return NULL;
     }
@@ -27,23 +27,23 @@ INTERNAL modern *default_modern_value_type_get
     
     switch(value->node_type) {
     case modern_node_type_bool_value_false:
-        value->value_type = library->node->modern_node_bool_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_bool_type_make(library_in);
         break;
     
     case modern_node_type_bool_value_true:
-        value->value_type = library->node->modern_node_bool_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_bool_type_make(library_in);
         break;
     
     case modern_node_type_ordering_value_less:
-        value->value_type = library->node->modern_node_ordering_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_ordering_type_make(library_in);
         break;
     
     case modern_node_type_ordering_value_equal:
-        value->value_type = library->node->modern_node_ordering_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_ordering_type_make(library_in);
         break;
     
     case modern_node_type_ordering_value_greater:
-        value->value_type = library->node->modern_node_ordering_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_ordering_type_make(library_in);
         break;
     
     case modern_node_type_maybe_value_nothing:
@@ -53,58 +53,58 @@ INTERNAL modern *default_modern_value_type_get
         break;
     
     case modern_node_type_int8_value:
-        value->value_type = library->node->modern_node_int8_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_int8_type_make(library_in);
         break;
     
     case modern_node_type_int16_value:
-        value->value_type = library->node->modern_node_int16_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_int16_type_make(library_in);
         break;
     
     case modern_node_type_int32_value:
-        value->value_type = library->node->modern_node_int32_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_int32_type_make(library_in);
         break;
     
     case modern_node_type_int64_value:
-        value->value_type = library->node->modern_node_int64_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_int64_type_make(library_in);
         break;
     
     case modern_node_type_nat8_value:
-        value->value_type = library->node->modern_node_nat8_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_nat8_type_make(library_in);
         break;
     
     case modern_node_type_nat16_value:
-        value->value_type = library->node->modern_node_nat16_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_nat16_type_make(library_in);
         break;
     
     case modern_node_type_nat32_value:
-        value->value_type = library->node->modern_node_nat32_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_nat32_type_make(library_in);
         break;
     
     case modern_node_type_nat64_value:
-        value->value_type = library->node->modern_node_nat64_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_nat64_type_make(library_in);
         break;
     
     case modern_node_type_float32_value:
-        value->value_type = library->node->modern_node_float32_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_float32_type_make(library_in);
         break;
     
     case modern_node_type_float64_value:
-        value->value_type = library->node->modern_node_float64_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_float64_type_make(library_in);
         break;
     
     case modern_node_type_utf8_value:
-        value->value_type = library->node->modern_node_utf8_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_utf8_type_make(library_in);
         break;
     
     case modern_node_type_blob_value:
-        value->value_type = library->node->modern_node_blob_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_blob_type_make(library_in);
         break;
     
     case modern_node_type_sigma_value:
         break;
     
     case modern_node_type_name_value:
-        value->value_type = library->node->modern_node_name_type_make(library_in);
+        value->value_type = library->node_representation->modern_node_representation_name_type_make(library_in);
     
     case modern_node_type_named_value:
         break;
@@ -128,12 +128,12 @@ INTERNAL modern *default_modern_value_type_get
     case modern_node_type_sigma_type:
     case modern_node_type_name_type:
     case modern_node_type_named_type:
-        value->value_type = library->node->modern_node_universe_type_make(library_in, 0);
+        value->value_type = library->node_representation->modern_node_representation_universe_type_make(library_in, 0);
         break;
     
     case modern_node_type_universe_type:
     {
-        uint64_t level = library->node->modern_node_universe_type_level_get
+        uint64_t level = library->node_representation->modern_node_representation_universe_type_level_get
             (library_in, value_in);
         if(level == UINT64_MAX) {
             library->error_handler->
@@ -141,7 +141,7 @@ INTERNAL modern *default_modern_value_type_get
                     (library->client_state);
         } else {
             modern *universe_type =
-                library->node->modern_node_universe_type_make(library_in, level + 1);
+                library->node_representation->modern_node_representation_universe_type_make(library_in, level + 1);
             if(!universe_type) return NULL;
             
             value->value_type = universe_type;
@@ -183,7 +183,7 @@ INTERNAL int8_t default_modern_int8_get
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
-    if(!library->node) {
+    if(!library->node_representation) {
         library->error_handler->modern_error_handler_usage(library->client_state);
         return 0;
     }

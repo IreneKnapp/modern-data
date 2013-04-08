@@ -983,6 +983,9 @@ HELPER int helper_visit_node_top_level
         
         return 1;
     }
+
+    default:
+        return 0;
     }
 }
 
@@ -1032,8 +1035,9 @@ INTERNAL int modern_node_canonical_hash
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
-    if(!library->node) {
-        library->error_handler->modern_error_handler_usage(library->client_state);
+    if(!library->node_representation) {
+        library->error_handler->modern_error_handler_usage
+            (library->client_state);
         return 0;
     }
     
@@ -1055,7 +1059,7 @@ INTERNAL int modern_node_canonical_hash
         }
         printf("\n");
         
-        modern_compute_hash
+        modern_hash_compute
             (canonical_form->data, canonical_form->count, &value->canonical_hash);
         
         value->canonical_hash_valid = 1;

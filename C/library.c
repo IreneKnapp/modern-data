@@ -5,7 +5,7 @@
 modern_library *modern_library_initialize
   (struct modern_error_handler *error_handler,
    struct modern_allocator *allocator,
-   struct modern_node *node,
+   struct modern_node_representation *node_representation,
    void (*finalizer)(void *client_state),
    void *client_state)
 {
@@ -20,7 +20,7 @@ modern_library *modern_library_initialize
     
     library->error_handler = error_handler;
     library->allocator = allocator;
-    library->node = node;
+    library->node_representation = node_representation;
     library->finalizer = finalizer;
     library->client_state = client_state;
     
@@ -44,25 +44,26 @@ struct modern_allocator *modern_library_allocator_get
 }
 
 
-struct modern_node *modern_library_node_get
+struct modern_node_representation *modern_library_node_representation_get
   (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
-    return library->node;
+    return library->node_representation;
 }
 
 
 void modern_library_node_set
-  (modern_library *library_in, struct modern_node *node)
+  (modern_library *library_in,
+   struct modern_node_representation *node_representation)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
-    if(library->node) {
+    if(library->node_representation) {
         library->error_handler->modern_error_handler_usage(library->client_state);
         return;
     }
     
-    library->node = node;
+    library->node_representation = node_representation;
 }
 
 

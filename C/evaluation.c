@@ -234,8 +234,9 @@ HELPER struct modern *helper_evaluate_application
     
     while(parameter_stack) {
         struct helper_parameter_stack_frame *frame = parameter_stack;
-        intermediate_result = library->node->modern_node_apply_make
-            (library, intermediate_result, frame->parameter);
+        intermediate_result =
+            library->node_representation->modern_node_representation_apply_make
+                (library, intermediate_result, frame->parameter);
         parameter_stack = frame->parent;
         helper_free_parameter_stack_frame(library, frame);        
     }
@@ -327,10 +328,6 @@ HELPER uint64_t helper_builtin_static_arity(uint16_t index) {
     case modern_builtin_identifier_divide_towards_negative_infinity_int16: return 2;
     case modern_builtin_identifier_divide_towards_negative_infinity_int32: return 2;
     case modern_builtin_identifier_divide_towards_negative_infinity_int64: return 2;
-    case modern_builtin_identifier_divide_towards_negative_infinity_nat8: return 2;
-    case modern_builtin_identifier_divide_towards_negative_infinity_nat16: return 2;
-    case modern_builtin_identifier_divide_towards_negative_infinity_nat32: return 2;
-    case modern_builtin_identifier_divide_towards_negative_infinity_nat64: return 2;
     case modern_builtin_identifier_divide_float32: return 2;
     case modern_builtin_identifier_divide_float64: return 2;
     case modern_builtin_identifier_modulus_towards_zero_int8: return 2;
@@ -345,10 +342,6 @@ HELPER uint64_t helper_builtin_static_arity(uint16_t index) {
     case modern_builtin_identifier_modulus_towards_negative_infinity_int16: return 2;
     case modern_builtin_identifier_modulus_towards_negative_infinity_int32: return 2;
     case modern_builtin_identifier_modulus_towards_negative_infinity_int64: return 2;
-    case modern_builtin_identifier_modulus_towards_negative_infinity_nat8: return 2;
-    case modern_builtin_identifier_modulus_towards_negative_infinity_nat16: return 2;
-    case modern_builtin_identifier_modulus_towards_negative_infinity_nat32: return 2;
-    case modern_builtin_identifier_modulus_towards_negative_infinity_nat64: return 2;
     case modern_builtin_identifier_negate_int8: return 1;
     case modern_builtin_identifier_negate_int16: return 1;
     case modern_builtin_identifier_negate_int32: return 1;

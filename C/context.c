@@ -11,8 +11,6 @@ modern_context *modern_make_initial_context
     struct modern_context *context =
         library->allocator->modern_allocator_alloc
             (library->client_state, sizeof(struct modern_context));
-    context->memory.retain_count = 1;
-    context->memory.is_autoreleased = 0;
     context->memory.finalizer = internal_context_finalizer;
     context->n_values = 0;
     context->n_buckets = 1024;
