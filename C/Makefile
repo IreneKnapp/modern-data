@@ -1,5 +1,6 @@
 CC=clang
 CFLAGS=-g -O0
+LIBRARIES=-lm
 OBJECTS=context.o \
         evaluation.o \
         hash.o \
@@ -58,19 +59,19 @@ test-out.o: test-out.c ${INCLUDES}
 	${CC} ${CFLAGS} -c test-out.c -o test-out.o
 
 test-canonical: ${OBJECTS} test-main.o test-canonical.o
-	${CC} ${CFLAGS} ${OBJECTS} test-main.o test-canonical.o -o test-canonical
+	${CC} ${CFLAGS} ${LIBRARIES} ${OBJECTS} test-main.o test-canonical.o -o test-canonical
 
 test-node: ${OBJECTS} test-main.o test-node.o
-	${CC} ${CFLAGS} ${OBJECTS} test-main.o test-node.o -o test-node
+	${CC} ${CFLAGS} ${LIBRARIES} ${OBJECTS} test-main.o test-node.o -o test-node
 
 test-out: ${OBJECTS} test-main.o test-out.o
-	${CC} ${CFLAGS} ${OBJECTS} test-main.o test-out.o -o test-out
+	${CC} ${CFLAGS} ${LIBRARIES} ${OBJECTS} test-main.o test-out.o -o test-out
 
 example-canonical.o: example-canonical.c ${INCLUDES}
 	${CC} ${CFLAGS} -c example-canonical.c -o example-canonical.o
 
 example-canonical: ${OBJECTS} example-canonical.o
-	${CC} ${CFLAGS} ${OBJECTS} example-canonical.o -o example-canonical
+	${CC} ${CFLAGS} ${LIBRARIES} ${OBJECTS} example-canonical.o -o example-canonical
 
 .dummy: default all
 

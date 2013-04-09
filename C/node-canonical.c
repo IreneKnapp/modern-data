@@ -1059,8 +1059,9 @@ INTERNAL int modern_node_canonical_hash
         }
         printf("\n");
         
-        modern_hash_compute
-            (canonical_form->data, canonical_form->count, &value->canonical_hash);
+        modern_node_canonical_hash
+            (canonical_form->data, canonical_form->count,
+             &value->canonical_hash);
         
         value->canonical_hash_valid = 1;
         

@@ -4,7 +4,7 @@
 #include "internal.h"
 
 
-struct modern_node_representation *modern_node_default_make
+struct modern_node_representation *modern_node_representation_default_make
   (struct modern_allocator *allocator,
    void *client_state)
 {
@@ -55,8 +55,8 @@ struct modern_node_representation *modern_node_default_make
         default_modern_node_representation_sigma_field_value_get;
     result->modern_node_representation_sigma_successor_get =
         default_modern_node_representation_sigma_successor_get;
-    result->modern_node_representation_get_name_hash =
-        default_modern_node_representation_get_name_hash;
+    result->modern_node_representation_name_value_hash_get =
+        default_modern_node_representation_name_value_hash_get;
     result->modern_node_representation_named_value_get =
         default_modern_node_representation_named_value_get;
     result->modern_node_representation_maybe_type_content_type_get =
