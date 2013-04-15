@@ -1041,15 +1041,16 @@ INTERNAL int modern_node_canonical_hash_compute
         return 0;
     }
     
-    struct modern *value = (struct modern *) value_in;
-    
-    if(!value->canonical_hash_valid) {
+    if(!library->node_representation
+        ->modern_node_representation_canonical_hash_valid_get
+        (library_in, value_in))
+    {
         struct helper_byte_buffer *canonical_form = NULL;
         if(!helper_byte_buffer_alloc(library, &canonical_form)) {
             return 0;
         }
         
-        if(!helper_visit_node_top_level(library, canonical_form, value)) {
+        if(!helper_visit_node_top_level(library, canonical_form, value_in)) {
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
@@ -1059,16 +1060,22 @@ INTERNAL int modern_node_canonical_hash_compute
         }
         printf("\n");
         
+        struct modern_hash hash;
         modern_hash_compute
-            (canonical_form->data, canonical_form->count,
-             &value->canonical_hash);
+            (canonical_form->data, canonical_form->count, &hash);
         
-        value->canonical_hash_valid = 1;
+        library->node_representation
+            ->modern_node_representation_canonical_hash_set
+            (library_in, value_in, hash);
         
         helper_byte_buffer_free(library, canonical_form);
     }
     
-    memcpy(out, &value->canonical_hash, sizeof(struct modern_hash));
+    struct modern_hash hash =
+        library->node_representation
+        ->modern_node_representation_canonical_hash_get
+        (library_in, value_in);
+    memcpy(out, &hash, sizeof(struct modern_hash));
     
     return 1;
 }
