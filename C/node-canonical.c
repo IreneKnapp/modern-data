@@ -1055,11 +1055,6 @@ INTERNAL int modern_node_canonical_hash_compute
             return 0;
         }
         
-        for(size_t i = 0; i < canonical_form->count; i++) {
-            printf(" %02x", canonical_form->data[i]);
-        }
-        printf("\n");
-        
         struct modern_hash hash;
         modern_hash_compute
             (canonical_form->data, canonical_form->count, &hash);
