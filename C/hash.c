@@ -26,7 +26,7 @@ uint64_t fmix(uint64_t k) {
 }
 
 
-void modern_compute_hash(uint8_t *data, size_t length, struct modern_hash *out) {
+void modern_hash_compute(uint8_t *data, size_t length, struct modern_hash *out) {
     const size_t nblocks = length / 16;
     
     uint64_t h1 = 0;
@@ -92,7 +92,7 @@ void modern_compute_hash(uint8_t *data, size_t length, struct modern_hash *out) 
 }
 
 
-void modern_compute_child_hash
+void modern_child_hash_compute
   (struct modern_hash *parent,
    uint8_t *data, size_t length, struct modern_hash *out)
 {
@@ -103,17 +103,17 @@ void modern_compute_child_hash
     ((uint64_t *) data_prime)[1] = parent->b;
     memcpy(data_prime + sizeof(uint64_t) * 2, data, length);
     
-    modern_compute_hash(data_prime, length_prime, out);
+    modern_hash_compute(data_prime, length_prime, out);
     
     free(data_prime);
 }
 
 
-extern void modern_compute_initial_namespace_hash
+extern void modern_initial_namespace_hash_compute
     (struct modern_hash *out)
 {
     uint8_t *initial_namespace = (uint8_t *) "com.ireneknapp.data.modern";
-    modern_compute_hash
+    modern_hash_compute
       (initial_namespace, strlen((char *) initial_namespace),
        out);
 }

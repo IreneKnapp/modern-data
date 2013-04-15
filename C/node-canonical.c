@@ -997,7 +997,7 @@ HELPER int helper_visit_node_interior
 {
     struct modern_hash hash;
     
-    if(!modern_node_canonical_hash
+    if(!modern_node_canonical_hash_compute
         ((modern_library *) library, (modern *) node, &hash))
         return 0;
     
@@ -1028,7 +1028,7 @@ HELPER int helper_visit_node_interior
 }
 
 
-INTERNAL int modern_node_canonical_hash
+INTERNAL int modern_node_canonical_hash_compute
   (modern_library *library_in,
    modern *value_in,
    struct modern_hash *out)
@@ -1059,7 +1059,7 @@ INTERNAL int modern_node_canonical_hash
         }
         printf("\n");
         
-        modern_node_canonical_hash
+        modern_hash_compute
             (canonical_form->data, canonical_form->count,
              &value->canonical_hash);
         

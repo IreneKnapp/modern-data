@@ -778,6 +778,10 @@ struct modern_node_representation {
       (*modern_node_representation_mutable_get)
       (modern_library *library,
        void *value);
+    int
+      (*modern_node_representation_canonical_hash_valid_get)
+      (modern_library *library,
+       modern *value);
     struct modern_hash
       (*modern_node_representation_canonical_hash_get)
       (modern_library *library,

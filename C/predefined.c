@@ -19,6 +19,8 @@ struct modern_node_representation *modern_node_representation_default_make
         default_modern_node_representation_value_type_get;
     result->modern_node_representation_mutable_get =
         default_modern_node_representation_mutable_get;
+    result->modern_node_representation_canonical_hash_valid_get =
+        default_modern_node_representation_canonical_hash_valid_get;
     result->modern_node_representation_canonical_hash_get =
         default_modern_node_representation_canonical_hash_get;
     result->modern_node_representation_maybe_just_content_get =

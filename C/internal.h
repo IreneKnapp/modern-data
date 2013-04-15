@@ -18,6 +18,7 @@ struct memory {
 
 struct modern {
     struct memory memory;
+    unsigned mutable : 1;
     enum modern_node_type node_type : 6;
     unsigned canonical_hash_valid : 1;
     struct modern *value_type;
@@ -120,414 +121,422 @@ INTERNAL int modern_node_canonical_hash
 
 // node-get.c
 INTERNAL enum modern_node_type
-    (*default_modern_node_representation_node_type_get)
+    default_modern_node_representation_node_type_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_value_type_get)
+    default_modern_node_representation_value_type_get
     (modern_library *library,
      void *value);
 INTERNAL int
-    (*default_modern_node_representation_mutable_get)
+    default_modern_node_representation_mutable_get
     (modern_library *library,
      void *value);
+INTERNAL int
+    default_modern_node_representation_canonical_hash_valid_get
+    (modern_library *library,
+     modern *value);
 INTERNAL struct modern_hash
-    (*default_modern_node_representation_canonical_hash_get)
+    default_modern_node_representation_canonical_hash_get
     (modern_library *library,
      modern *value);
 INTERNAL void *
-    (*default_modern_node_representation_maybe_just_content_get)
+    default_modern_node_representation_maybe_just_content_get
     (modern_library *library,
      void *value);
 INTERNAL int8_t 
-    (*default_modern_node_representation_int8_get)
+    default_modern_node_representation_int8_get
     (modern_library *library,
      void *value);
 INTERNAL int16_t 
-    (*default_modern_node_representation_int16_get)
+    default_modern_node_representation_int16_get
     (modern_library *library,
      void *value);
 INTERNAL int32_t 
-    (*default_modern_node_representation_int32_get)
+    default_modern_node_representation_int32_get
     (modern_library *library,
      void *value);
 INTERNAL int64_t 
-    (*default_modern_node_representation_int64_get)
+    default_modern_node_representation_int64_get
     (modern_library *library,
      void *value);
 INTERNAL uint8_t 
-    (*default_modern_node_representation_nat8_get)
+    default_modern_node_representation_nat8_get
     (modern_library *library,
      void *value);
 INTERNAL uint16_t 
-    (*default_modern_node_representation_nat16_get)
+    default_modern_node_representation_nat16_get
     (modern_library *library,
      void *value);
 INTERNAL uint32_t 
-    (*default_modern_node_representation_nat32_get)
+    default_modern_node_representation_nat32_get
     (modern_library *library,
      void *value);
 INTERNAL uint64_t 
-    (*default_modern_node_representation_nat64_get)
+    default_modern_node_representation_nat64_get
     (modern_library *library,
      void *value);
 INTERNAL float 
-    (*default_modern_node_representation_float32_get)
+    default_modern_node_representation_float32_get
     (modern_library *library,
      void *value);
 INTERNAL double 
-    (*default_modern_node_representation_float64_get)
+    default_modern_node_representation_float64_get
     (modern_library *library,
      void *value);
 INTERNAL size_t 
-    (*default_modern_node_representation_utf8_bytes_get)
+    default_modern_node_representation_utf8_bytes_get
     (modern_library *library,
      void *value);
 INTERNAL uint8_t *
-    (*default_modern_node_representation_utf8_data_piece_get)
+    default_modern_node_representation_utf8_data_piece_get
     (modern_library *library,
      void *value, size_t offset, size_t bytes);
 INTERNAL size_t 
-    (*default_modern_node_representation_blob_bytes_get)
+    default_modern_node_representation_blob_bytes_get
     (modern_library *library,
      void *value);
 INTERNAL uint8_t *
-    (*default_modern_node_representation_blob_data_piece_get)
+    default_modern_node_representation_blob_data_piece_get
     (modern_library *library,
      void *value, size_t offset, size_t bytes);
 INTERNAL void *
-    (*default_modern_node_representation_sigma_field_value_get)
+    default_modern_node_representation_sigma_field_value_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_sigma_successor_get)
+    default_modern_node_representation_sigma_successor_get
     (modern_library *library,
      void *value);
 INTERNAL struct modern_hash
-    (*default_modern_node_representation_name_value_hash_get)
+    default_modern_node_representation_name_value_hash_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_named_value_get)
+    default_modern_node_representation_named_value_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_maybe_type_content_type_get)
+    default_modern_node_representation_maybe_type_content_type_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_function_type_left_get)
+    default_modern_node_representation_maybe_type_content_type_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_function_type_right_get)
+    default_modern_node_representation_function_type_left_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_sigma_type_field_type_get)
+    default_modern_node_representation_function_type_right_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_sigma_type_successor_get)
+    default_modern_node_representation_sigma_type_field_type_get
+    (modern_library *library,
+     void *value);
+INTERNAL void *
+    default_modern_node_representation_sigma_type_successor_get
     (modern_library *library,
      void *value);
 INTERNAL struct modern_hash
-    (*default_modern_node_representation_named_type_name_get)
+    default_modern_node_representation_named_type_name_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_named_type_content_type_get)
+    default_modern_node_representation_named_type_content_type_get
     (modern_library *library,
      void *value);
 INTERNAL uint64_t 
-    (*default_modern_node_representation_universe_type_level_get)
+    default_modern_node_representation_universe_type_level_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_lambda_content_get)
+    default_modern_node_representation_lambda_content_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_apply_left_get)
+    default_modern_node_representation_apply_left_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_apply_right_get)
+    default_modern_node_representation_apply_right_get
     (modern_library *library,
      void *value);
 INTERNAL uint64_t 
-    (*default_modern_node_representation_type_family_count_get)
+    default_modern_node_representation_type_family_count_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_type_family_item_get)
+    default_modern_node_representation_type_family_item_get
     (modern_library *library,
      void *value, uint64_t index);
 INTERNAL uint64_t 
-    (*default_modern_node_representation_let_count_get)
+    default_modern_node_representation_let_count_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    (*default_modern_node_representation_let_item_get)
+    default_modern_node_representation_let_item_get
     (modern_library *library,
      void *value, uint64_t index);
 INTERNAL void *
-    (*default_modern_node_representation_let_content_get)
+    default_modern_node_representation_let_content_get
     (modern_library *library,
      void *value);
 INTERNAL uint64_t 
-    (*default_modern_node_representation_backreference_index_get)
+    default_modern_node_representation_backreference_index_get
     (modern_library *library,
      void *value);
 INTERNAL uint16_t 
-    (*default_modern_node_representation_builtin_identifier_get)
+    default_modern_node_representation_builtin_identifier_get
     (modern_library *library,
      void *value);
 
 
 // node-make.c
-INTERNAL void *
-    (*default_modern_node_representation_bool_false_make)
+INTERNAL modern *
+    default_modern_node_representation_bool_false_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_bool_true_make)
+INTERNAL modern *
+    default_modern_node_representation_bool_true_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_ordering_less_make)
+INTERNAL modern *
+    default_modern_node_representation_ordering_less_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_ordering_equal_make)
+INTERNAL modern *
+    default_modern_node_representation_ordering_equal_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_ordering_greater_make)
+INTERNAL modern *
+    default_modern_node_representation_ordering_greater_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_maybe_nothing_make)
+INTERNAL modern *
+    default_modern_node_representation_maybe_nothing_make
     (modern_library *library,
-     void *type);
-INTERNAL void *
-    (*default_modern_node_representation_maybe_just_make)
+     modern *type);
+INTERNAL modern *
+    default_modern_node_representation_maybe_just_make
     (modern_library *library,
-     void *type,
-     void *content_value);
-INTERNAL void *
-    (*default_modern_node_representation_int8_make)
+     modern *type,
+     modern *content_value);
+INTERNAL modern *
+    default_modern_node_representation_int8_make
     (modern_library *library,
      int8_t value);
-INTERNAL void *
-    (*default_modern_node_representation_int16_make)
+INTERNAL modern *
+    default_modern_node_representation_int16_make
     (modern_library *library,
      int16_t value);
-INTERNAL void *
-    (*default_modern_node_representation_int32_make)
+INTERNAL modern *
+    default_modern_node_representation_int32_make
     (modern_library *library,
      int32_t value);
-INTERNAL void *
-    (*default_modern_node_representation_int64_make)
+INTERNAL modern *
+    default_modern_node_representation_int64_make
     (modern_library *library,
      int64_t value);
-INTERNAL void *
-    (*default_modern_node_representation_nat8_make)
+INTERNAL modern *
+    default_modern_node_representation_nat8_make
     (modern_library *library,
      uint8_t value);
-INTERNAL void *
-    (*default_modern_node_representation_nat16_make)
+INTERNAL modern *
+    default_modern_node_representation_nat16_make
     (modern_library *library,
      uint16_t value);
-INTERNAL void *
-    (*default_modern_node_representation_nat32_make)
+INTERNAL modern *
+    default_modern_node_representation_nat32_make
     (modern_library *library,
      uint32_t value);
-INTERNAL void *
-    (*default_modern_node_representation_nat64_make)
+INTERNAL modern *
+    default_modern_node_representation_nat64_make
     (modern_library *library,
      uint64_t value);
-INTERNAL void *
-    (*default_modern_node_representation_float32_make)
+INTERNAL modern *
+    default_modern_node_representation_float32_make
     (modern_library *library,
      float value);
-INTERNAL void *
-    (*default_modern_node_representation_float64_make)
+INTERNAL modern *
+    default_modern_node_representation_float64_make
     (modern_library *library,
      double value);
-INTERNAL void *
-    (*default_modern_node_representation_utf8_make)
+INTERNAL modern *
+    default_modern_node_representation_utf8_make
     (modern_library *library,
      uint8_t *data);
-INTERNAL void *
-    (*default_modern_node_representation_blob_make)
+INTERNAL modern *
+    default_modern_node_representation_blob_make
     (modern_library *library,
      uint8_t *data, size_t bytes);
-INTERNAL void *
-    (*default_modern_node_representation_sigma_make)
+INTERNAL modern *
+    default_modern_node_representation_sigma_make
     (modern_library *library,
-     void *type, void *field_value, void *successor_value);
-INTERNAL void *
-    (*default_modern_node_representation_name_value_make)
+     modern *type, modern *field_value, modern *successor_value);
+INTERNAL modern *
+    default_modern_node_representation_name_value_make
     (modern_library *library,
      struct modern_hash name);
-INTERNAL void *
-    (*default_modern_node_representation_named_value_make)
+INTERNAL modern *
+    default_modern_node_representation_named_value_make
     (modern_library *library,
-     void *type, void *value);
-INTERNAL void *
-    (*default_modern_node_representation_bool_type_make)
+     modern *type, modern *value);
+INTERNAL modern *
+    default_modern_node_representation_bool_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_ordering_type_make)
+INTERNAL modern *
+    default_modern_node_representation_ordering_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_maybe_type_make)
+INTERNAL modern *
+    default_modern_node_representation_maybe_type_make
     (modern_library *library,
-     void *content_type);
-INTERNAL void *
-    (*default_modern_node_representation_int8_type_make)
+     modern *content_type);
+INTERNAL modern *
+    default_modern_node_representation_int8_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_int16_type_make)
+INTERNAL modern *
+    default_modern_node_representation_int16_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_int32_type_make)
+INTERNAL modern *
+    default_modern_node_representation_int32_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_int64_type_make)
+INTERNAL modern *
+    default_modern_node_representation_int64_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_nat8_type_make)
+INTERNAL modern *
+    default_modern_node_representation_nat8_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_nat16_type_make)
+INTERNAL modern *
+    default_modern_node_representation_nat16_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_nat32_type_make)
+INTERNAL modern *
+    default_modern_node_representation_nat32_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_nat64_type_make)
+INTERNAL modern *
+    default_modern_node_representation_nat64_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_float32_type_make)
+INTERNAL modern *
+    default_modern_node_representation_float32_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_float64_type_make)
+INTERNAL modern *
+    default_modern_node_representation_float64_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_utf8_type_make)
+INTERNAL modern *
+    default_modern_node_representation_utf8_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_blob_type_make)
+INTERNAL modern *
+    default_modern_node_representation_blob_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_function_type_make)
+INTERNAL modern *
+    default_modern_node_representation_function_type_make
     (modern_library *library,
-     void *left, void *right);
-INTERNAL void *
-    (*default_modern_node_representation_sigma_type_make)
+     modern *left, modern *right);
+INTERNAL modern *
+    default_modern_node_representation_sigma_type_make
     (modern_library *library,
-     void *field_type, void *successor);
-INTERNAL void *
-    (*default_modern_node_representation_name_type_make)
+     modern *field_type, modern *successor);
+INTERNAL modern *
+    default_modern_node_representation_name_type_make
     (modern_library *library);
-INTERNAL void *
-    (*default_modern_node_representation_named_type_make)
+INTERNAL modern *
+    default_modern_node_representation_named_type_make
     (modern_library *library,
-     struct modern_hash name, void *content_type);
-INTERNAL void *
-    (*default_modern_node_representation_universe_type_make)
+     struct modern_hash name, modern *content_type);
+INTERNAL modern *
+    default_modern_node_representation_universe_type_make
     (modern_library *library,
      uint64_t level);
-INTERNAL void *
-    (*default_modern_node_representation_lambda_make)
+INTERNAL modern *
+    default_modern_node_representation_lambda_make
     (modern_library *library,
-     void *content);
-INTERNAL void *
-    (*default_modern_node_representation_apply_make)
+     modern *content);
+INTERNAL modern *
+    default_modern_node_representation_apply_make
     (modern_library *library,
-     void *left, void *right);
-INTERNAL void *
-    (*default_modern_node_representation_type_family_make)
+     modern *left, modern *right);
+INTERNAL modern *
+    default_modern_node_representation_type_family_make
     (modern_library *library,
-     uint64_t n_items, void **types);
-INTERNAL void *
-    (*default_modern_node_representation_let_make)
+     uint64_t n_items, modern **types);
+INTERNAL modern *
+    default_modern_node_representation_let_make
     (modern_library *library,
-     uint64_t n_items, void **values, void *content);
-INTERNAL void *
-    (*default_modern_node_representation_backreference_make)
+     uint64_t n_items, modern **values, modern *content);
+INTERNAL modern *
+    default_modern_node_representation_backreference_make
     (modern_library *library,
      uint64_t index);
-INTERNAL void *
-    (*default_modern_node_representation_builtin_make)
+INTERNAL modern *
+    default_modern_node_representation_builtin_make
     (modern_library *library,
      uint16_t identifier);
 
 
 // node-set.c
 INTERNAL void 
-    (*default_modern_node_representation_immutable_set)
+    default_modern_node_representation_immutable_set
     (modern_library *library,
      void *value);
 INTERNAL void
-    (*default_modern_node_representation_canonical_hash_set)
+    default_modern_node_representation_canonical_hash_set
     (modern_library *library,
      void *value,
      struct modern_hash hash);
 INTERNAL void 
-    (*default_modern_node_representation_maybe_just_content_set)
+    default_modern_node_representation_maybe_just_content_set
     (modern_library *library,
      void *value,
      void *content_value);
 INTERNAL void 
-    (*default_modern_node_representation_int8_set)
+    default_modern_node_representation_int8_set
     (modern_library *library,
      void *node,
      int8_t value);
 INTERNAL void 
-    (*default_modern_node_representation_int16_set)
+    default_modern_node_representation_int16_set
     (modern_library *library,
      void *node,
      int16_t value);
 INTERNAL void 
-    (*default_modern_node_representation_int32_set)
+    default_modern_node_representation_int32_set
     (modern_library *library,
      void *node,
      int32_t value);
 INTERNAL void 
-    (*default_modern_node_representation_int64_set)
+    default_modern_node_representation_int64_set
     (modern_library *library,
      void *node,
      int64_t value);
 INTERNAL void 
-    (*default_modern_node_representation_nat8_set)
+    default_modern_node_representation_nat8_set
     (modern_library *library,
      void *node,
      uint8_t value);
 INTERNAL void 
-    (*default_modern_node_representation_nat16_set)
+    default_modern_node_representation_nat16_set
     (modern_library *library,
      void *node,
      uint16_t value);
 INTERNAL void 
-    (*default_modern_node_representation_nat32_set)
+    default_modern_node_representation_nat32_set
     (modern_library *library,
      void *node,
      uint32_t value);
 INTERNAL void 
-    (*default_modern_node_representation_nat64_set)
+    default_modern_node_representation_nat64_set
     (modern_library *library,
      void *node,
      uint64_t value);
 INTERNAL void 
-    (*default_modern_node_representation_float32_set)
+    default_modern_node_representation_float32_set
     (modern_library *library,
      void *node,
      float value);
 INTERNAL void 
-    (*default_modern_node_representation_float64_set)
+    default_modern_node_representation_float64_set
     (modern_library *library,
      void *node,
      double value);
 INTERNAL void 
-    (*default_modern_node_representation_utf8_data_piece_set)
+    default_modern_node_representation_utf8_data_piece_set
     (modern_library *library,
      void *value,
      uint8_t *data,
@@ -535,7 +544,7 @@ INTERNAL void
      size_t old_bytes,
      size_t new_bytes);
 INTERNAL void 
-    (*default_modern_node_representation_blob_data_piece_set)
+    default_modern_node_representation_blob_data_piece_set
     (modern_library *library,
      void *value,
      uint8_t *data,
@@ -543,106 +552,106 @@ INTERNAL void
      size_t old_bytes,
      size_t new_bytes);
 INTERNAL void 
-    (*default_modern_node_representation_sigma_set)
+    default_modern_node_representation_sigma_set
     (modern_library *library,
      void *value,
      void *field_value,
      void *successor);
 INTERNAL void 
-    (*default_modern_node_representation_named_value_set)
+    default_modern_node_representation_named_value_set
     (modern_library *library,
      void *node,
      void *type,
      void *value);
 INTERNAL void 
-    (*default_modern_node_representation_maybe_type_content_type_set)
+    default_modern_node_representation_maybe_type_content_type_set
     (modern_library *library,
      void *value,
      void *content_type);
 INTERNAL void 
-    (*default_modern_node_representation_function_type_left_set)
+    default_modern_node_representation_function_type_left_set
     (modern_library *library,
      void *value,
      void *left);
 INTERNAL void 
-    (*default_modern_node_representation_function_type_right_set)
+    default_modern_node_representation_function_type_right_set
     (modern_library *library,
      void *value,
      void *right);
 INTERNAL void 
-    (*default_modern_node_representation_sigma_type_field_type_set)
+    default_modern_node_representation_sigma_type_field_type_set
     (modern_library *library,
      void *value,
      void *field_type);
 INTERNAL void 
-    (*default_modern_node_representation_sigma_type_successor_set)
+    default_modern_node_representation_sigma_type_successor_set
     (modern_library *library,
      void *value,
      void *successor);
 INTERNAL void 
-    (*default_modern_node_representation_named_type_name_set)
+    default_modern_node_representation_named_type_name_set
     (modern_library *library,
      void *value,
      struct modern_hash name);
 INTERNAL void 
-    (*default_modern_node_representation_named_type_content_type_set)
+    default_modern_node_representation_named_type_content_type_set
     (modern_library *library,
      void *value,
      void *content_type);
 INTERNAL void 
-    (*default_modern_node_representation_universe_type_level_set)
+    default_modern_node_representation_universe_type_level_set
     (modern_library *library,
      void *value,
      uint64_t level);
 INTERNAL void 
-    (*default_modern_node_representation_lambda_content_set)
+    default_modern_node_representation_lambda_content_set
     (modern_library *library,
      void *value,
      void *content);
 INTERNAL void 
-    (*default_modern_node_representation_apply_left_set)
+    default_modern_node_representation_apply_left_set
     (modern_library *library,
      void *value,
      void *left);
 INTERNAL void 
-    (*default_modern_node_representation_apply_right_set)
+    default_modern_node_representation_apply_right_set
     (modern_library *library,
      void *value,
      void *right);
 INTERNAL void 
-    (*default_modern_node_representation_type_family_item_add)
+    default_modern_node_representation_type_family_item_add
     (modern_library *library,
      void *value,
      void *item,
      uint64_t index);
 INTERNAL void 
-    (*default_modern_node_representation_type_family_item_remove)
+    default_modern_node_representation_type_family_item_remove
     (modern_library *library,
      void *value,
      uint64_t index);
 INTERNAL void 
-    (*default_modern_node_representation_let_item_add)
+    default_modern_node_representation_let_item_add
     (modern_library *library,
      void *value,
      void *item,
      uint64_t index);
 INTERNAL void 
-    (*default_modern_node_representation_let_item_remove)
+    default_modern_node_representation_let_item_remove
     (modern_library *library,
      void *value,
      uint64_t index);
 INTERNAL void 
-    (*default_modern_node_representation_let_content_set)
+    default_modern_node_representation_let_content_set
     (modern_library *library,
      void *value,
      void *content);
 INTERNAL void 
-    (*default_modern_node_representation_backreference_index_set)
+    default_modern_node_representation_backreference_index_set
     (modern_library *library,
      void *value,
      uint64_t index);
 INTERNAL void 
-    (*default_modern_node_representation_builtin_identifier_set)
+    default_modern_node_representation_builtin_identifier_set
     (modern_library *library,
      void *value,
      uint16_t identifier);
