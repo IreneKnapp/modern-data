@@ -71,12 +71,14 @@ int main(int argc, char **argv) {
     all_nodes[all_nodes_count++] = float32_node;
     
     for(size_t i = 0; i < all_nodes_count; i++) {
-        struct modern_hash hash =
-            representation->modern_node_representation_canonical_hash_get
-                (library, all_nodes[i]);
-        printf("%016llx%016llx\n",
-               (unsigned long long) hash.a,
-               (unsigned long long) hash.b);
+        struct modern_hash hash;
+        if(!modern_node_canonical_hash_compute(library, all_nodes[i], &hash)) {
+            printf("Error...");
+        } else {
+            printf("%016llx%016llx\n",
+                   (unsigned long long) hash.a,
+                   (unsigned long long) hash.b);
+        }
 	}
 	
     for(size_t i = 0; i < all_nodes_count; i++) {
