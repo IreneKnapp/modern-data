@@ -8,6 +8,7 @@ INTERNAL void default_modern_node_representation_immutable_set
     (modern_library *library,
      void *value)
 {
+    // TODO
 }
 
 
@@ -24,6 +25,7 @@ INTERNAL void default_modern_node_representation_maybe_just_content_set
      void *value,
      void *content_value)
 {
+    // TODO
 }
 
 
@@ -32,6 +34,7 @@ INTERNAL void default_modern_node_representation_int8_set
      void *node,
      int8_t value)
 {
+    // TODO
 }
 
 
@@ -40,6 +43,7 @@ INTERNAL void default_modern_node_representation_int16_set
      void *node,
      int16_t value)
 {
+    // TODO
 }
 
 
@@ -48,6 +52,7 @@ INTERNAL void default_modern_node_representation_int32_set
      void *node,
      int32_t value)
 {
+    // TODO
 }
 
 
@@ -56,6 +61,7 @@ INTERNAL void default_modern_node_representation_int64_set
      void *node,
      int64_t value)
 {
+    // TODO
 }
 
 
@@ -64,6 +70,7 @@ INTERNAL void default_modern_node_representation_nat8_set
      void *node,
      uint8_t value)
 {
+    // TODO
 }
 
 
@@ -72,6 +79,7 @@ INTERNAL void default_modern_node_representation_nat16_set
      void *node,
      uint16_t value)
 {
+    // TODO
 }
 
 
@@ -80,6 +88,7 @@ INTERNAL void default_modern_node_representation_nat32_set
      void *node,
      uint32_t value)
 {
+    // TODO
 }
 
 
@@ -88,6 +97,7 @@ INTERNAL void default_modern_node_representation_nat64_set
      void *node,
      uint64_t value)
 {
+    // TODO
 }
 
 
@@ -96,6 +106,7 @@ INTERNAL void default_modern_node_representation_float32_set
      void *node,
      float value)
 {
+    // TODO
 }
 
 
@@ -104,6 +115,7 @@ INTERNAL void default_modern_node_representation_float64_set
      void *node,
      double value)
 {
+    // TODO
 }
 
 
@@ -115,6 +127,7 @@ INTERNAL void default_modern_node_representation_utf8_data_piece_set
      size_t old_bytes,
      size_t new_bytes)
 {
+    // TODO
 }
 
 
@@ -126,6 +139,7 @@ INTERNAL void default_modern_node_representation_blob_data_piece_set
      size_t old_bytes,
      size_t new_bytes)
 {
+    // TODO
 }
 
 
@@ -135,6 +149,7 @@ INTERNAL void default_modern_node_representation_sigma_set
      void *field_value,
      void *successor)
 {
+    // TODO
 }
 
 
@@ -144,6 +159,7 @@ INTERNAL void default_modern_node_representation_named_value_set
      void *type,
      void *value)
 {
+    // TODO
 }
 
 
@@ -152,6 +168,7 @@ INTERNAL void default_modern_node_representation_maybe_type_content_type_set
      void *value,
      void *content_type)
 {
+    // TODO
 }
 
 
@@ -160,6 +177,7 @@ INTERNAL void default_modern_node_representation_function_type_left_set
      void *value,
      void *left)
 {
+    // TODO
 }
 
 
@@ -168,6 +186,7 @@ INTERNAL void default_modern_node_representation_function_type_right_set
      void *value,
      void *right)
 {
+    // TODO
 }
 
 
@@ -176,6 +195,7 @@ INTERNAL void default_modern_node_representation_sigma_type_field_type_set
      void *value,
      void *field_type)
 {
+    // TODO
 }
 
 
@@ -184,6 +204,7 @@ INTERNAL void default_modern_node_representation_sigma_type_successor_set
      void *value,
      void *successor)
 {
+    // TODO
 }
 
 
@@ -192,6 +213,7 @@ INTERNAL void default_modern_node_representation_named_type_name_set
      void *value,
      struct modern_hash name)
 {
+    // TODO
 }
 
 
@@ -200,6 +222,7 @@ INTERNAL void default_modern_node_representation_named_type_content_type_set
      void *value,
      void *content_type)
 {
+    // TODO
 }
 
 
@@ -208,6 +231,7 @@ INTERNAL void default_modern_node_representation_universe_type_level_set
      void *value,
      uint64_t level)
 {
+    // TODO
 }
 
 
@@ -216,6 +240,7 @@ INTERNAL void default_modern_node_representation_lambda_content_set
      void *value,
      void *content)
 {
+    // TODO
 }
 
 
@@ -224,6 +249,7 @@ INTERNAL void default_modern_node_representation_apply_left_set
      void *value,
      void *left)
 {
+    // TODO
 }
 
 
@@ -232,6 +258,7 @@ INTERNAL void default_modern_node_representation_apply_right_set
      void *value,
      void *right)
 {
+    // TODO
 }
 
 
@@ -241,6 +268,7 @@ INTERNAL void default_modern_node_representation_type_family_item_add
      void *item,
      uint64_t index)
 {
+    // TODO
 }
 
 
@@ -249,6 +277,7 @@ INTERNAL void default_modern_node_representation_type_family_item_remove
      void *value,
      uint64_t index)
 {
+    // TODO
 }
 
 
@@ -258,6 +287,7 @@ INTERNAL void default_modern_node_representation_let_item_add
      void *item,
      uint64_t index)
 {
+    // TODO
 }
 
 
@@ -266,6 +296,7 @@ INTERNAL void default_modern_node_representation_let_item_remove
      void *value,
      uint64_t index)
 {
+    // TODO
 }
 
 
@@ -274,6 +305,7 @@ INTERNAL void default_modern_node_representation_let_content_set
      void *value,
      void *content)
 {
+    // TODO
 }
 
 
@@ -282,6 +314,7 @@ INTERNAL void default_modern_node_representation_backreference_index_set
      void *value,
      uint64_t index)
 {
+    // TODO
 }
 
 
@@ -290,5 +323,6 @@ INTERNAL void default_modern_node_representation_builtin_identifier_set
      void *value,
      uint16_t identifier)
 {
+    // TODO
 }
 
