@@ -6,7 +6,6 @@
 struct test_context {
     test_suite *test_suite;
     modern_library *library;
-    modern_autorelease_pool *pool;
     modern_context *context;
     void *value;
 };
@@ -1394,11 +1393,13 @@ static int test_utf8_node_create_and_readback
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(modern_node_get_value_type(library, node) != type)
+            succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(modern_node_get_value_type(library, type) != universe)
+            succeeded = 0;
     }
     
     allow_deallocation(test_suite);
