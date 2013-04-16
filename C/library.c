@@ -11,9 +11,9 @@ modern_library *modern_library_initialize
 {
     size_t size = sizeof(struct modern_library);
     struct modern_library *library =
-        allocator->modern_allocator_alloc(client_state, size);
+        allocator->alloc(client_state, size);
     if(!library) {
-        error_handler->modern_error_handler_memory
+        error_handler->memory
             (client_state, size);
         return NULL;
     }
@@ -59,7 +59,7 @@ void modern_library_node_set
     struct modern_library *library = (struct modern_library *) library_in;
     
     if(library->node_representation) {
-        library->error_handler->modern_error_handler_usage(library->client_state);
+        library->error_handler->usage(library->client_state);
         return;
     }
     
@@ -82,7 +82,7 @@ void modern_library_finalize(modern_library *library_in)
     void (*finalizer)(void *client_state) = library->finalizer;
     void *client_state = library->client_state;
     
-    library->allocator->modern_allocator_free(client_state, library);
+    library->allocator->free(client_state, library);
     
     finalizer(client_state);
 }

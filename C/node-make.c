@@ -102,17 +102,17 @@ HELPER void helper_builtin_finalize
   (struct modern_library *library, void *retainable);
 
 
-INTERNAL modern *default_modern_node_representation_bool_false_make
+INTERNAL modern *default_bool_false_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -137,17 +137,17 @@ HELPER void helper_bool_false_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_bool_true_make
+INTERNAL modern *default_bool_true_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -172,17 +172,17 @@ HELPER void helper_bool_true_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_ordering_less_make
+INTERNAL modern *default_ordering_less_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -207,17 +207,17 @@ HELPER void helper_ordering_less_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_ordering_equal_make
+INTERNAL modern *default_ordering_equal_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -242,17 +242,17 @@ HELPER void helper_ordering_equal_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_ordering_greater_make
+INTERNAL modern *default_ordering_greater_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -277,7 +277,7 @@ HELPER void helper_ordering_greater_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_maybe_nothing_make
+INTERNAL modern *default_maybe_nothing_make
     (modern_library *library_in,
      void *type)
 {
@@ -285,10 +285,10 @@ INTERNAL modern *default_modern_node_representation_maybe_nothing_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -313,7 +313,7 @@ HELPER void helper_maybe_nothing_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_maybe_just_make
+INTERNAL modern *default_maybe_just_make
     (modern_library *library_in,
      void *type,
      void *content_value)
@@ -322,10 +322,10 @@ INTERNAL modern *default_modern_node_representation_maybe_just_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -353,7 +353,7 @@ HELPER void helper_maybe_just_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_int8_make
+INTERNAL modern *default_int8_make
     (modern_library *library_in,
      int8_t value)
 {
@@ -361,10 +361,10 @@ INTERNAL modern *default_modern_node_representation_int8_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -390,7 +390,7 @@ HELPER void helper_int8_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_int16_make
+INTERNAL modern *default_int16_make
     (modern_library *library_in,
      int16_t value)
 {
@@ -398,10 +398,10 @@ INTERNAL modern *default_modern_node_representation_int16_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -427,7 +427,7 @@ HELPER void helper_int16_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_int32_make
+INTERNAL modern *default_int32_make
     (modern_library *library_in,
      int32_t value)
 {
@@ -435,10 +435,10 @@ INTERNAL modern *default_modern_node_representation_int32_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -464,7 +464,7 @@ HELPER void helper_int32_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_int64_make
+INTERNAL modern *default_int64_make
     (modern_library *library_in,
      int64_t value)
 {
@@ -472,10 +472,10 @@ INTERNAL modern *default_modern_node_representation_int64_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -501,7 +501,7 @@ HELPER void helper_int64_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_nat8_make
+INTERNAL modern *default_nat8_make
     (modern_library *library_in,
      uint8_t value)
 {
@@ -509,10 +509,10 @@ INTERNAL modern *default_modern_node_representation_nat8_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -538,7 +538,7 @@ HELPER void helper_nat8_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_nat16_make
+INTERNAL modern *default_nat16_make
     (modern_library *library_in,
      uint16_t value)
 {
@@ -546,10 +546,10 @@ INTERNAL modern *default_modern_node_representation_nat16_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -575,7 +575,7 @@ HELPER void helper_nat16_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_nat32_make
+INTERNAL modern *default_nat32_make
     (modern_library *library_in,
      uint32_t value)
 {
@@ -583,10 +583,10 @@ INTERNAL modern *default_modern_node_representation_nat32_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -612,7 +612,7 @@ HELPER void helper_nat32_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_nat64_make
+INTERNAL modern *default_nat64_make
     (modern_library *library_in,
      uint64_t value)
 {
@@ -620,10 +620,10 @@ INTERNAL modern *default_modern_node_representation_nat64_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -649,7 +649,7 @@ HELPER void helper_nat64_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_float32_make
+INTERNAL modern *default_float32_make
     (modern_library *library_in,
      float value)
 {
@@ -670,17 +670,17 @@ INTERNAL modern *default_modern_node_representation_float32_make
         break;
     }
     default:
-        library->error_handler->modern_error_handler_non_numeric_float
+        library->error_handler->non_numeric_float
             (library->client_state);
         return NULL;
     }
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -706,7 +706,7 @@ HELPER void helper_float32_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_float64_make
+INTERNAL modern *default_float64_make
     (modern_library *library_in,
      double value)
 {
@@ -727,17 +727,17 @@ INTERNAL modern *default_modern_node_representation_float64_make
         break;
     }
     default:
-        library->error_handler->modern_error_handler_non_numeric_float
+        library->error_handler->non_numeric_float
             (library->client_state);
         return NULL;
     }
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -763,7 +763,7 @@ HELPER void helper_float64_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_utf8_make
+INTERNAL modern *default_utf8_make
     (modern_library *library_in,
      uint8_t *data)
 {
@@ -771,22 +771,22 @@ INTERNAL modern *default_modern_node_representation_utf8_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
     
     size_t bytes = strlen((char *) data) + 1;
     uint8_t *copied_data =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, bytes);
     if(!copied_data) {
-        library->allocator->modern_allocator_free
+        library->allocator->free
             (library->client_state, result);
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, bytes);
         return NULL;
     }
@@ -810,14 +810,14 @@ HELPER void helper_utf8_finalize
 {
     struct modern *node = (struct modern *) retainable;
     
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, node->specifics.utf8_value.data);
     
     if(node->value_type) modern_finalize(library, node->value_type);
 }
 
 
-INTERNAL modern *default_modern_node_representation_blob_make
+INTERNAL modern *default_blob_make
     (modern_library *library_in,
      uint8_t *data, size_t bytes)
 {
@@ -825,21 +825,21 @@ INTERNAL modern *default_modern_node_representation_blob_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
     
     uint8_t *copied_data =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, bytes);
     if(!copied_data) {
-        library->allocator->modern_allocator_free
+        library->allocator->free
             (library->client_state, result);
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, bytes);
         return NULL;
     }
@@ -863,14 +863,14 @@ HELPER void helper_blob_finalize
 {
     struct modern *node = (struct modern *) retainable;
     
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, node->specifics.blob_value.data);
     
     if(node->value_type) modern_finalize(library, node->value_type);
 }
 
 
-INTERNAL modern *default_modern_node_representation_sigma_make
+INTERNAL modern *default_sigma_make
     (modern_library *library_in,
      modern *type_in,
      modern *field_value_in,
@@ -890,10 +890,10 @@ INTERNAL modern *default_modern_node_representation_sigma_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -923,7 +923,7 @@ HELPER void helper_sigma_value_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_name_value_make
+INTERNAL modern *default_name_value_make
     (modern_library *library_in,
      struct modern_hash name)
 {
@@ -931,10 +931,10 @@ INTERNAL modern *default_modern_node_representation_name_value_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -960,7 +960,7 @@ HELPER void helper_name_value_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_named_value_make
+INTERNAL modern *default_named_value_make
     (modern_library *library_in,
      modern *type_in, modern *value_in)
 {
@@ -970,10 +970,10 @@ INTERNAL modern *default_modern_node_representation_named_value_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1001,17 +1001,17 @@ HELPER void helper_named_value_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_bool_type_make
+INTERNAL modern *default_bool_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1036,17 +1036,17 @@ HELPER void helper_bool_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_ordering_type_make
+INTERNAL modern *default_ordering_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1071,23 +1071,23 @@ HELPER void helper_ordering_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_maybe_type_make
+INTERNAL modern *default_maybe_type_make
     (modern_library *library_in,
      modern *content_type)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     if(!content_type) {
-        library->error_handler->modern_error_handler_usage
+        library->error_handler->usage
             (library->client_state);
     }
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1115,17 +1115,17 @@ HELPER void helper_maybe_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_int8_type_make
+INTERNAL modern *default_int8_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1150,17 +1150,17 @@ HELPER void helper_int8_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_int16_type_make
+INTERNAL modern *default_int16_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1185,17 +1185,17 @@ HELPER void helper_int16_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_int32_type_make
+INTERNAL modern *default_int32_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1220,17 +1220,17 @@ HELPER void helper_int32_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_int64_type_make
+INTERNAL modern *default_int64_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1255,17 +1255,17 @@ HELPER void helper_int64_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_nat8_type_make
+INTERNAL modern *default_nat8_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1290,17 +1290,17 @@ HELPER void helper_nat8_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_nat16_type_make
+INTERNAL modern *default_nat16_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1325,17 +1325,17 @@ HELPER void helper_nat16_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_nat32_type_make
+INTERNAL modern *default_nat32_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1360,17 +1360,17 @@ HELPER void helper_nat32_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_nat64_type_make
+INTERNAL modern *default_nat64_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1395,17 +1395,17 @@ HELPER void helper_nat64_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_float32_type_make
+INTERNAL modern *default_float32_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1430,17 +1430,17 @@ HELPER void helper_float32_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_float64_type_make
+INTERNAL modern *default_float64_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1465,17 +1465,17 @@ HELPER void helper_float64_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_utf8_type_make
+INTERNAL modern *default_utf8_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1500,17 +1500,17 @@ HELPER void helper_utf8_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_blob_type_make
+INTERNAL modern *default_blob_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1535,7 +1535,7 @@ HELPER void helper_blob_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_function_type_make
+INTERNAL modern *default_function_type_make
     (modern_library *library_in,
      modern *left_in, modern *right_in)
 {
@@ -1545,10 +1545,10 @@ INTERNAL modern *default_modern_node_representation_function_type_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1579,7 +1579,7 @@ HELPER void helper_function_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_sigma_type_make
+INTERNAL modern *default_sigma_type_make
     (modern_library *library_in,
      modern *field_type, modern *successor)
 {
@@ -1587,10 +1587,10 @@ INTERNAL modern *default_modern_node_representation_sigma_type_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1621,17 +1621,17 @@ HELPER void helper_sigma_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_name_type_make
+INTERNAL modern *default_name_type_make
     (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1656,7 +1656,7 @@ HELPER void helper_name_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_named_type_make
+INTERNAL modern *default_named_type_make
     (modern_library *library_in,
      struct modern_hash name, modern *content_type)
 {
@@ -1664,10 +1664,10 @@ INTERNAL modern *default_modern_node_representation_named_type_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1696,7 +1696,7 @@ HELPER void helper_named_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_universe_type_make
+INTERNAL modern *default_universe_type_make
     (modern_library *library_in,
      uint64_t level)
 {
@@ -1704,10 +1704,10 @@ INTERNAL modern *default_modern_node_representation_universe_type_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1733,7 +1733,7 @@ HELPER void helper_universe_type_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_lambda_make
+INTERNAL modern *default_lambda_make
     (modern_library *library_in,
      modern *content_in)
 {
@@ -1742,10 +1742,10 @@ INTERNAL modern *default_modern_node_representation_lambda_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1773,7 +1773,7 @@ HELPER void helper_lambda_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_apply_make
+INTERNAL modern *default_apply_make
     (modern_library *library_in,
      modern *left_in, modern *right_in)
 {
@@ -1783,10 +1783,10 @@ INTERNAL modern *default_modern_node_representation_apply_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1816,7 +1816,7 @@ HELPER void helper_apply_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_type_family_make
+INTERNAL modern *default_type_family_make
     (modern_library *library_in,
      uint64_t n_items, modern **types_in)
 {
@@ -1824,21 +1824,21 @@ INTERNAL modern *default_modern_node_representation_type_family_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
     
     size_t bytes = sizeof(modern **) * n_items;
-    modern **copied_data = library->allocator->modern_allocator_alloc
+    modern **copied_data = library->allocator->alloc
         (library->client_state, bytes);
     if(!copied_data) {
-        library->allocator->modern_allocator_free
+        library->allocator->free
             (library->client_state, result);
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, bytes);
         return NULL;
     }
@@ -1866,14 +1866,14 @@ HELPER void helper_type_family_finalize
         modern_finalize(library, node->specifics.type_family.members[i]);
     }
     
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, node->specifics.type_family.members);
     
     if(node->value_type) modern_finalize(library, node->value_type);
 }
 
 
-INTERNAL modern *default_modern_node_representation_let_make
+INTERNAL modern *default_let_make
     (modern_library *library_in,
      uint64_t n_items, modern **values_in, modern *content_in)
 {
@@ -1881,21 +1881,21 @@ INTERNAL modern *default_modern_node_representation_let_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
     
     size_t bytes = sizeof(modern **) * n_items;
-    modern **copied_data = library->allocator->modern_allocator_alloc
+    modern **copied_data = library->allocator->alloc
         (library->client_state, bytes);
     if(!copied_data) {
-        library->allocator->modern_allocator_free
+        library->allocator->free
             (library->client_state, result);
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, bytes);
         return NULL;
     }
@@ -1926,14 +1926,14 @@ HELPER void helper_let_finalize
     
     modern_finalize(library, node->specifics.let.content);
     
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, node->specifics.type_family.members);
     
     if(node->value_type) modern_finalize(library, node->value_type);
 }
 
 
-INTERNAL modern *default_modern_node_representation_backreference_make
+INTERNAL modern *default_backreference_make
     (modern_library *library_in,
      uint64_t index)
 {
@@ -1941,10 +1941,10 @@ INTERNAL modern *default_modern_node_representation_backreference_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }
@@ -1970,7 +1970,7 @@ HELPER void helper_backreference_finalize
 }
 
 
-INTERNAL modern *default_modern_node_representation_builtin_make
+INTERNAL modern *default_builtin_make
     (modern_library *library_in,
      uint16_t identifier)
 {
@@ -1978,10 +1978,10 @@ INTERNAL modern *default_modern_node_representation_builtin_make
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, result_size);
     if(!result) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, result_size);
         return NULL;
     }

@@ -11,7 +11,7 @@ void modern_finalize
     
     if(memory->finalizer) memory->finalizer(library_in, finalizable);
     
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, finalizable);
 }
 
