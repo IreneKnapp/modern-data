@@ -5,17 +5,17 @@ build-type: Simple
 license: BSD3
 license-file: LICENSE
 copyright: Copyright (c) 2012 Irene Knapp
-author: Irene Knapp <ireney.knapp@gmail.com>
-maintainer: ireney.knapp@gmail.com
+author: Irene Knapp <irene.knapp@icloud.com>
+maintainer: irene.knapp@icloud.com
 homepage: http://ireneknapp.com/software/
-bug-reports: http://ireneknapp.com/issues/create/
+bug-reports: https://github.com/IreneKnapp/modern-data/issues
 category: Data
 synopsis: Efficient binary self-describing data with parametric types
 description:
 
 Source-Repository head
-  type: darcs
-  location: http://ireneknapp.com/software/darcs/modern-data/
+  type: git
+  location: https://github.com/IreneKnapp/modern-data.git
 
 Library
   exposed-modules: Data.Modern
@@ -32,10 +32,10 @@ Library
                  array >= 0.3.0.0 && < 1,
                  bytestring >= 0.9.1.5 && < 1,
                  containers >= 0.4.1.0 && < 1,
-                 utf8-string >= 0.3.6 && < 1,
-                 mtl >= 2.0.1.0 && < 3,
-                 BinaryFiles >= 1.0 && < 2,
-                 Murmur3 >= 1.0 && < 2
+                 direct-binary-files >= 1.0 && < 2,
+                 direct-murmur-hash >= 1.0 && < 2,
+                 text >= 0.11.2.3 && < 1,
+                 mtl >= 2.0.1.0 && < 3
   default-language: Haskell2010
 
 
@@ -55,9 +55,9 @@ Executable test
                  array >= 0.3.0.0 && < 1,
                  bytestring >= 0.9.1.5 && < 1,
                  containers >= 0.4.1.0 && < 1,
-                 utf8-string >= 0.3.6 && < 1,
-                 mtl >= 2.0.1.0 && < 3,
-                 BinaryFiles >= 1.0 && < 2,
-                 Murmur3 >= 1.0 && < 2
+                 direct-binary-files >= 1.0 && < 2,
+                 direct-murmur-hash >= 1.0 && < 2,
+                 text >= 0.11.2.3 && < 1,
+                 mtl >= 2.0.1.0 && < 3
   default-language: Haskell2010
 
