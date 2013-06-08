@@ -1,0 +1,51 @@
+(Potential collaborator's name is Daniel Martin, aka fizbin.)
+
+(Data) Canonical textual format for schemas
+
+(Haskell) Translators to/from textual format
+
+(Haskell) FFI binding between Haskell and C
+
+(Haskell) Haskell interface for inspecting a "debug view" of a file
+
+(C) Typechecker
+
+(C) Totality checker
+
+(C) Serializer
+
+(C) Deserializer
+
+(C) Fix bugs in accessors and allocators
+
+
+struct modern_processor is actually two interfaces smashed together.  Should
+they be separated?  .abort() and .flush() are the ones that probably belong
+elsewhere.
+
+Diagram 1 lies when it says the vfile is passed on processor callback
+acquisition - it's actually passed to initialize().  Initialize should be
+broken out as a separate step.
+... Furthermore, if we want to split our information across multiple files,
+then we need to not pass the vfile in this manner but rather only on
+.step() and .run().
+
+Diagram 2 has an analogous problem where it says the stream callbacks and
+data ... are at the wrong spot.
+
+Observe:
+    void (*step)
+      (void *processor_state,
+       struct modern_stream *stream, void *stream_state,
+       struct modern_vfile *vfile, void *vfile_state);
+And analogously for .run().
+Should the caller of step() and run() be required to have initialized stream_state already?  Or is the presence here a mistake?  Probably the former
+is cleaner.  But it makes more sense for the serialize case.
+
+Need to define the stream event codes.
+
+Do we want to shorten the length of names to max out at 65536?
+
+Do we want to handle utf8 in chunks like we do for blobs?
+
+Do we want to shorten the length of each blob_data event to 2 bytes?

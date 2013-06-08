@@ -60,8 +60,8 @@ struct modern {
             struct modern *content_type;
         } maybe_type;
         struct {
-            struct modern *left;
-            struct modern *right;
+            struct modern *parameter;
+            struct modern *result;
         } function_type;
         struct {
             struct modern *field_type;
@@ -78,8 +78,8 @@ struct modern {
             struct modern *content;
         } lambda;
         struct {
-            struct modern *left;
-            struct modern *right;
+            struct modern *function;
+            struct modern *parameter;
         } apply;
         struct {
             size_t n_items;

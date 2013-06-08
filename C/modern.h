@@ -51,12 +51,12 @@ struct modern_processor {
     void (*finalize)(void *processor_state);
     void (*step)
       (void *processor_state,
-       void *stream, void *stream_state,
-       void *vfile, void *vfile_state);
+       struct modern_stream *stream, void *stream_state,
+       struct modern_vfile *vfile, void *vfile_state);
     void (*run)
       (void *processor_state,
-       void *stream, void *stream_state,
-       void *vfile, void *vfile_state);
+       struct modern_stream *stream, void *stream_state,
+       struct modern_vfile *vfile, void *vfile_state);
     void (*abort)(void *processor_state);
     void (*flush)(void *processor_state);
 };
@@ -130,8 +130,7 @@ struct modern_stream {
        void *stream_state);
     void (*type_definition_sigma_is_next)
       (struct modern_processor *processor, void *processor_state,
-       void *stream_state,
-       struct modern_hash a, struct modern_hash b);
+       void *stream_state);
     void (*type_definition_named_is_next)
       (struct modern_processor *processor, void *processor_state,
        void *stream_state,
@@ -311,6 +310,7 @@ enum modern_node_type {
     modern_node_type_let = 46,
     modern_node_type_backreference = 47,
     modern_node_type_builtin = 48,
+    modern_node_type_satisfies = 49,
 };
 
 
@@ -662,8 +662,8 @@ enum modern_builtin_identifier {
     modern_builtin_identifier_get_sigma_field_value = 1984,
     modern_builtin_identifier_get_sigma_successor = 2016,
     modern_builtin_identifier_get_named_value = 2048,
-    modern_builtin_identifier_get_function_type_left = 2080,
-    modern_builtin_identifier_get_function_type_right = 2112,
+    modern_builtin_identifier_get_function_type_parameter = 2080,
+    modern_builtin_identifier_get_function_type_result = 2112,
     modern_builtin_identifier_get_sigma_type_field_type = 2144,
     modern_builtin_identifier_get_sigma_type_successor = 2176,
     modern_builtin_identifier_get_named_type_content_type = 2208,
@@ -867,11 +867,11 @@ struct modern_node_representation {
       (modern_library *library,
        void *value);
     void *
-      (*function_type_left_get)
+      (*function_type_parameter_get)
       (modern_library *library,
        void *value);
     void *
-      (*function_type_right_get)
+      (*function_type_result_get)
       (modern_library *library,
        void *value);
     void *
@@ -899,11 +899,11 @@ struct modern_node_representation {
       (modern_library *library,
        void *value);
     void *
-      (*apply_left_get)
+      (*apply_function_get)
       (modern_library *library,
        void *value);
     void *
-      (*apply_right_get)
+      (*apply_parameter_get)
       (modern_library *library,
        void *value);
     uint64_t 
@@ -1067,7 +1067,7 @@ struct modern_node_representation {
     void *
       (*function_type_make)
       (modern_library *library,
-       void *left, void *right);
+       void *parameter, void *result);
     void *
       (*sigma_type_make)
       (modern_library *library,
@@ -1090,7 +1090,7 @@ struct modern_node_representation {
     void *
       (*apply_make)
       (modern_library *library,
-       void *left, void *right);
+       void *function, void *parameter);
     void *
       (*type_family_make)
       (modern_library *library,
@@ -1205,12 +1205,12 @@ struct modern_node_representation {
        void *value,
        void *content_type);
     void 
-      (*function_type_left_set)
+      (*function_type_parameter_set)
       (modern_library *library,
        void *value,
        void *left);
     void 
-      (*function_type_right_set)
+      (*function_type_result_set)
       (modern_library *library,
        void *value,
        void *right);
@@ -1245,15 +1245,15 @@ struct modern_node_representation {
        void *value,
        void *content);
     void 
-      (*apply_left_set)
+      (*apply_function_set)
       (modern_library *library,
        void *value,
-       void *left);
+       void *function);
     void 
-      (*apply_right_set)
+      (*apply_parameter_set)
       (modern_library *library,
        void *value,
-       void *right);
+       void *function);
     void 
       (*type_family_item_add)
       (modern_library *library,

@@ -1,0 +1,44 @@
+sigma_type:
+    int8_type
+    sigma_type:
+        int8_type
+        lambda:
+            satisfies:
+                int8_type
+                lambda:
+                    apply:
+                        builtin not
+                        apply:
+                            apply:
+                                builtin equal
+                                apply:
+                                    apply:
+                                        builtin compare
+                                        backreference 1
+                                    backreference 0
+                            builtin less_than
+
+
+
+
+type_family 2:
+    sigma_type:
+        int8_type
+        lambda:
+            satisfies:
+                int8_type
+                lambda:
+                    apply:
+                        builtin not
+                        apply:
+                            apply:
+                                builtin equal
+                                apply:
+                                    apply:
+                                        builtin compare
+                                        backreference 1
+                                    backreference 0
+                            builtin less_than
+    sigma_type:
+        int8_type
+        backreference 0

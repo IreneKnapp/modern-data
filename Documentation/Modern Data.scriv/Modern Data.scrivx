@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ScrivenerProject Version="1.0" Creator="SCRMAC-2.3.1-20116">
+<ScrivenerProject Version="1.0" Creator="SCRMAC-2.4.1-22949" Modified="2013-06-07 20:19:57 -0400">
     <Binder>
         <BinderItem ID="0" Type="DraftFolder" Created="2012-08-10 15:30:35 -0400" Modified="2012-08-10 15:30:35 -0400">
             <Title>Draft</Title>
@@ -988,7 +988,7 @@
                         <SelectedSubdocumentIDs>897</SelectedSubdocumentIDs>
                     </CorkboardAndOutliner>
                     <Children>
-                        <BinderItem ID="260" Type="Text" Created="2012-08-13 16:44:18 -0400" Modified="2013-02-04 22:29:58 -0500">
+                        <BinderItem ID="260" Type="Text" Created="2012-08-13 16:44:18 -0400" Modified="2013-06-07 15:20:27 -0400">
                             <Title>Overview</Title>
                             <MetaData>
                                 <LabelID>3</LabelID>
@@ -45883,7 +45883,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="0" Characters="0" Date="2013-02-22 20:40:49 -0500"></PreviousSession>
+        <PreviousSession Words="0" Characters="0" Date="2013-06-07 15:16:53 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>
