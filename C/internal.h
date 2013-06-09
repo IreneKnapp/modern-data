@@ -94,6 +94,10 @@ struct modern {
             uint64_t index;
         } backreference;
         uint16_t builtin;
+        struct {
+            struct modern *type;
+            struct modern *predicate;
+        } satisfies;
     } specifics;
 };
 

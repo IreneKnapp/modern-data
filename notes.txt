@@ -49,3 +49,21 @@ Do we want to shorten the length of names to max out at 65536?
 Do we want to handle utf8 in chunks like we do for blobs?
 
 Do we want to shorten the length of each blob_data event to 2 bytes?
+
+Do we have void and unit?
+
+What is the type of builtin get_sigma_successor?
+  (sigmav (a :: at) (bt :: (at -> type))) -> (bt a)
+  But we don't know the value of a at typechecking time!
+  Two phases: "Get me the most general type of this whole thing", and "check
+  that it actually matches".
+
+Consider the function from integers > 10 to integers < 10.  What is the most
+  general type?  Will the typechecker return True for the function "id" with
+  this signature?
+
+If we answer yes, of course we need to answer "how?".  If our answer there is
+to push a proof obligation on the user, then we need to have an inventory of
+all the axioms for every builtin!  (It is helpful here that our arithmetic
+builtins all return results in Maybe, because otherwise things that we'd like
+to have as axioms would not in fact be true!)
