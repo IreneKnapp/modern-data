@@ -10,11 +10,16 @@ OBJECTS=context.o \
         node-get.o \
         node-make.o \
         node-set.o \
-        predefined.o
+        predefined.o \
+        processor-explicatory.o \
+        vfile-stdio.o
 INCLUDES=modern.h internal.h
 
 default: example-canonical
-all: test-node test-canonical test-out example-canonical
+all: test-node test-canonical test-out test-in example-canonical
+
+clean:
+	rm -f ${OBJECTS}
 
 context.o: context.c ${INCLUDES}
 	${CC} ${CFLAGS} -c context.c -o context.o
@@ -46,6 +51,12 @@ node-set.o: node-set.c ${INCLUDES}
 predefined.o: predefined.c ${INCLUDES}
 	${CC} ${CFLAGS} -c predefined.c -o predefined.o
 
+processor-explicatory.o: processor-explicatory.c ${INCLUDES}
+	${CC} ${CFLAGS} -c processor-explicatory.c -o processor-explicatory.o
+
+vfile-stdio.o: vfile-stdio.c ${INCLUDES}
+	${CC} ${CFLAGS} -c vfile-stdio.c -o vfile-stdio.o
+
 test-canonical.o: test-canonical.c ${INCLUDES}
 	${CC} ${CFLAGS} -c test-canonical.c -o test-canonical.o
 
@@ -58,6 +69,9 @@ test-node.o: test-node.c ${INCLUDES}
 test-out.o: test-out.c ${INCLUDES}
 	${CC} ${CFLAGS} -c test-out.c -o test-out.o
 
+test-in.o: test-in.c ${INCLUDES}
+	${CC} ${CFLAGS} -c test-in.c -o test-in.o
+
 test-canonical: ${OBJECTS} test-main.o test-canonical.o
 	${CC} ${CFLAGS} ${LIBRARIES} ${OBJECTS} test-main.o test-canonical.o -o test-canonical
 
@@ -67,11 +81,14 @@ test-node: ${OBJECTS} test-main.o test-node.o
 test-out: ${OBJECTS} test-main.o test-out.o
 	${CC} ${CFLAGS} ${LIBRARIES} ${OBJECTS} test-main.o test-out.o -o test-out
 
+test-in: ${OBJECTS} test-main.o test-in.o
+	${CC} ${CFLAGS} ${LIBRARIES} ${OBJECTS} test-main.o test-in.o -o test-in
+
 example-canonical.o: example-canonical.c ${INCLUDES}
 	${CC} ${CFLAGS} -c example-canonical.c -o example-canonical.o
 
 example-canonical: ${OBJECTS} example-canonical.o
 	${CC} ${CFLAGS} ${LIBRARIES} ${OBJECTS} example-canonical.o -o example-canonical
 
-.dummy: default all
+.dummy: clean default all
 
