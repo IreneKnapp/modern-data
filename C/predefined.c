@@ -142,3 +142,12 @@ struct modern_node_representation *modern_node_representation_default_make
     return result;
 }
 
+
+void modern_node_representation_default_finalize
+  (struct modern_allocator *allocator,
+   void *client_state,
+   struct modern_node_representation *node_representation)
+{
+    allocator->free(client_state, node_representation);
+}
+
