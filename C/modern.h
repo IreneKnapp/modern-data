@@ -54,7 +54,7 @@ struct modern_process {
 
 struct modern_stream {
     void *(*initialize)
-      ();
+      (modern_library *library);
     void (*finalize)
       (void *stream_state);
     void (*start)
@@ -252,8 +252,10 @@ struct modern_vfile {
 
 
 struct modern_processor {
-    void *(*initialize)();
-    void (*finalize)(void *process_state);
+    void *(*initialize)
+      (modern_library *library);
+    void (*finalize)
+      (void *process_state);
     void (*step)
       (void *process_state,
        struct modern_stream *stream, void *stream_state,
@@ -1345,7 +1347,7 @@ extern void modern_finalize
 
 extern modern_context *modern_initial_context_make
   (modern_library *library);
-extern modern_context *modern_copy_context
+extern modern_context *modern_context_copy
   (modern_library *library,
    modern_context *context);
 extern int modern_in_context_get
@@ -1462,12 +1464,12 @@ extern void modern_vfile_fd_finalize
 
 extern struct modern_processor *modern_processor_input_make
   (modern_library *library);
+extern struct modern_processor *modern_processor_explicatory_make
+  (modern_library *library);
 
 extern struct modern_stream *modern_stream_output_make
   (modern_library *library);
 extern struct modern_stream *modern_stream_explicatory_make
-  (modern_library *library);
-extern struct modern_stream *modern_stream_documentation_make
   (modern_library *library);
 
 extern struct modern_node_representation
