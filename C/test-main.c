@@ -348,6 +348,11 @@ int main(int argc, char **argv) {
                 modern_library_finalize(library);
                 disallow_deallocation(test_suite);
                 
+                allow_deallocation(test_suite);
+                modern_node_representation_default_finalize
+                    (&allocator, test_suite, node_representation);
+                disallow_deallocation(test_suite);
+                
                 check_for_memory_leaks(test_suite);
             } else {
                 printf("\n\n"
