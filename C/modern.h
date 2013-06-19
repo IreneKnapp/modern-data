@@ -1476,4 +1476,9 @@ extern struct modern_node_representation
   *modern_node_representation_default_make
   (struct modern_allocator *allocator,
    void *client_state);
+extern void
+  modern_node_representation_default_finalize
+  (struct modern_allocator *allocator,
+   void *client_state,
+   struct modern_node_representation *node_representation);
 
