@@ -165,9 +165,6 @@ struct test_suite {
 };
 
 
-extern void test_main
-  (test_suite test_suite, modern_library *library);
-
 static void *actually_malloc(size_t size);
 static void actually_free(void *data);
 static void *actually_realloc(void *data, size_t new_size);
@@ -279,25 +276,25 @@ static void library_finalizer
 
 int main(int argc, char **argv) {
     struct modern_error_handler error_handler;
-    error_handler.modern_error_handler_memory =
+    error_handler.memory =
         (void (*)(void *, size_t)) error_memory;
-    error_handler.modern_error_handler_type_mismatch =
+    error_handler.type_mismatch =
         (void (*)(void *, modern *, modern *)) error_type_mismatch;
-    error_handler.modern_error_handler_universe_level_overflow =
+    error_handler.universe_level_overflow =
         (void (*)(void *)) error_universe_level_overflow;
-    error_handler.modern_error_handler_buffer_index =
+    error_handler.buffer_index =
         (void (*)(void *)) error_buffer_index;
-    error_handler.modern_error_handler_not_applicable =
+    error_handler.not_applicable =
         (void (*)(void *)) error_not_applicable;
-    error_handler.modern_error_handler_non_numeric_float =
+    error_handler.non_numeric_float =
         (void (*)(void *)) error_non_numeric_float;
     
     struct modern_allocator allocator;
-    allocator.modern_allocator_alloc =
+    allocator.alloc =
         (void *(*)(void *, size_t)) allocator_malloc;
-    allocator.modern_allocator_free =
+    allocator.free =
         (void (*)(void *, void *)) allocator_free;
-    allocator.modern_allocator_realloc =
+    allocator.realloc =
         (void *(*)(void *, void *, size_t)) allocator_realloc;
     
     struct test_suite *test_suite =
@@ -396,7 +393,7 @@ int main(int argc, char **argv) {
 }
 
 
-int begin_fixtures(test_suite test_suite_in) {
+int begin_fixtures(test_suite *test_suite_in) {
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     
     if(test_suite->current_test_case) {
@@ -433,7 +430,7 @@ int begin_fixtures(test_suite test_suite_in) {
 }
 
 
-void end_fixtures(test_suite test_suite_in) {
+void end_fixtures(test_suite *test_suite_in) {
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     
     if(!test_suite->current_fixtures) {
@@ -451,7 +448,7 @@ void end_fixtures(test_suite test_suite_in) {
 
 
 void begin_test_case
-  (test_suite test_suite_in,
+  (test_suite *test_suite_in,
    int (*test_case)(void *test_context),
    void *test_context,
    char *format, ...)
@@ -530,13 +527,13 @@ void begin_test_case
 }
 
 
-void reset_allowances(test_suite test_suite) {
+void reset_allowances(test_suite *test_suite) {
     disallow_allocation(test_suite);
     disallow_deallocation(test_suite);
 }
 
 
-void allow_allocation(test_suite test_suite_in) {
+void allow_allocation(test_suite *test_suite_in) {
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     
     if(test_suite->allocation_invocation) return;
@@ -553,7 +550,7 @@ void allow_allocation(test_suite test_suite_in) {
 }
 
 
-void disallow_allocation(test_suite test_suite_in) {
+void disallow_allocation(test_suite *test_suite_in) {
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     
     if(!test_suite->allocation_invocation) return;
@@ -569,7 +566,7 @@ void disallow_allocation(test_suite test_suite_in) {
 }
 
 
-void allow_deallocation(test_suite test_suite_in) {
+void allow_deallocation(test_suite *test_suite_in) {
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     
     if(test_suite->deallocation_invocation) return;
@@ -586,7 +583,7 @@ void allow_deallocation(test_suite test_suite_in) {
 }
 
 
-void disallow_deallocation(test_suite test_suite_in) {
+void disallow_deallocation(test_suite *test_suite_in) {
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     
     if(!test_suite->deallocation_invocation) return;
@@ -603,7 +600,7 @@ void disallow_deallocation(test_suite test_suite_in) {
 
 
 void expect_error_memory
-  (test_suite test_suite_in,
+  (test_suite *test_suite_in,
    int (*test_case_helper)(void *test_context),
    void *test_context)
 {
@@ -640,7 +637,7 @@ void expect_error_memory
 
 
 void expect_error_type_mismatch
-  (test_suite test_suite_in,
+  (test_suite *test_suite_in,
    int (*test_case_helper)(void *test_context),
    void *test_context)
 {
@@ -677,7 +674,7 @@ void expect_error_type_mismatch
 
 
 void expect_error_universe_level_overflow
-  (test_suite test_suite_in,
+  (test_suite *test_suite_in,
    int (*test_case_helper)(void *test_context),
    void *test_context)
 {
@@ -714,7 +711,7 @@ void expect_error_universe_level_overflow
 
 
 void expect_error_buffer_index
-  (test_suite test_suite_in,
+  (test_suite *test_suite_in,
    int (*test_case_helper)(void *test_context),
    void *test_context)
 {
@@ -751,7 +748,7 @@ void expect_error_buffer_index
 
 
 void expect_error_not_applicable
-  (test_suite test_suite_in,
+  (test_suite *test_suite_in,
    int (*test_case_helper)(void *test_context),
    void *test_context)
 {
@@ -788,7 +785,7 @@ void expect_error_not_applicable
 
 
 void expect_error_non_numeric_float
-  (test_suite test_suite_in,
+  (test_suite *test_suite_in,
    int (*test_case_helper)(void *test_context),
    void *test_context)
 {
