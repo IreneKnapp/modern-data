@@ -48,17 +48,21 @@ struct modern_allocator {
 
 struct modern_processor {
     void *(*initialize)();
-    void (*finalize)(void *processor_state);
+    void (*finalize)(void *process_state);
     void (*step)
-      (void *processor_state,
+      (void *process_state,
        struct modern_stream *stream, void *stream_state,
        struct modern_vfile *vfile, void *vfile_state);
     void (*run)
-      (void *processor_state,
+      (void *process_state,
        struct modern_stream *stream, void *stream_state,
        struct modern_vfile *vfile, void *vfile_state);
-    void (*abort)(void *processor_state);
-    void (*flush)(void *processor_state);
+};
+
+
+struct modern_process {
+    void (*abort)(void *process_state);
+    void (*flush)(void *process_state);
 };
 
 
@@ -68,187 +72,187 @@ struct modern_stream {
     void (*finalize)
       (void *stream_state);
     void (*start)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*magic_number)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*name_definition)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        uint8_t *data, size_t length);
     void (*value_definition_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_bool)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_ordering)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_maybe_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_int8)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_int16)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_int32)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_int64)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_nat8)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_nat16)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_nat32)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_nat64)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_float32)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_float64)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_utf8)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_blob)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_function_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_sigma_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_definition_named_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        struct modern_hash name);
     void (*type_definition_universe)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*bool_false)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*bool_true)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*ordering_less)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*ordering_equal)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*ordering_greater)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*maybe_nothing)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*maybe_just_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*int8)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        int8_t value);
     void (*int16)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        int16_t value);
     void (*int32)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        int32_t value);
     void (*int64)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        int64_t value);
     void (*nat8)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        uint8_t value);
     void (*nat16)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        uint16_t value);
     void (*nat32)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        uint32_t value);
     void (*nat64)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        uint64_t value);
     void (*float32)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        float value);
     void (*float64)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        double value);
     void (*utf8_start)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*utf8_data)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        uint8_t *data, size_t length);
     void (*utf8_end)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*blob_start)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*blob_data)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        uint8_t *data, size_t length);
     void (*blob_end)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*sigma_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state,
        struct modern_hash *type);
     void (*named_value_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state, struct modern_hash name);
     void (*lambda_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*apply_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
     void (*type_family_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state, uint64_t n_items);
     void (*let_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state, uint64_t n_items);
     void (*backreference_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state, uint64_t index);
     void (*builtin_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state, uint16_t identifier);
     void (*item_from_context_is_next)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state, struct modern_hash type);
     void (*end)
-      (struct modern_processor *processor, void *processor_state,
+      (struct modern_process *process, void *process_state,
        void *stream_state);
 };
 
