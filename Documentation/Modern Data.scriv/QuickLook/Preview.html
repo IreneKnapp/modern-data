@@ -4187,13 +4187,13 @@ modern_vfile_fd_finalize<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_node_function_type_left_get</strong></p>
+<p class="binderItem"><strong>modern_node_function_type_parameter_get</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
 <p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
-(*modern_node_function_type_left_get)<br/>
+(*modern_node_function_type_parameter_get)<br/>
 (modern_library *library,<br/>
  void *value);</p>
 </li>
@@ -4206,13 +4206,13 @@ modern_vfile_fd_finalize<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_node_function_type_right_get</strong></p>
+<p class="binderItem"><strong>modern_node_function_type_result_get</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
 <p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
-(*modern_node_function_type_right_get)<br/>
+(*modern_node_function_type_result_get)<br/>
 (modern_library *library,<br/>
  void *value);</p>
 </li>
@@ -5271,8 +5271,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_function_type_make)<br/>
 (modern_library *library,<br/>
- void *left,<br/>
- void *right);</p>
+ void *parameter,<br/>
+ void *result);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5893,16 +5893,16 @@ modern_vfile_fd_finalize<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_node_function_type_left_set</strong></p>
+<p class="binderItem"><strong>modern_node_function_type_parameter_set</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
-(*modern_node_function_type_left_set)<br/>
+(*modern_node_function_type_parameter_set)<br/>
 (modern_library *library,<br/>
  void *value,<br/>
- void *left);</p>
+ void *parameter);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5913,16 +5913,16 @@ modern_vfile_fd_finalize<br/>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_node_function_type_right_set</strong></p>
+<p class="binderItem"><strong>modern_node_function_type_result_set</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
-(*modern_node_function_type_right_set)<br/>
+(*modern_node_function_type_result_set)<br/>
 (modern_library *library,<br/>
  void *value,<br/>
- void *right);</p>
+ void *result);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -15798,12 +15798,12 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>get_function_type_left</strong></p>
+<p class="binderItem"><strong>get_function_type_parameter</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>get_function_type_left = 2080<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_function_type_parameter = 2080<br/>
 <br/>
 Value type (abstract notation)<br/>
 universe 0 -> maybe (universe 0)<br/>
@@ -15811,7 +15811,7 @@ universe 0 -> maybe (universe 0)<br/>
 Value type (detailed notation)</p>
 </li>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_builtin_identifier_get_function_type_left = 2080</p>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_builtin_identifier_get_function_type_parameter = 2080</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -15819,12 +15819,12 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>get_function_type_right</strong></p>
+<p class="binderItem"><strong>get_function_type_result</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>get_function_type_right = 2112<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_function_type_result = 2112<br/>
 <br/>
 Value type (abstract notation)<br/>
 universe 0 -> maybe (universe 0)<br/>
@@ -15832,7 +15832,7 @@ universe 0 -> maybe (universe 0)<br/>
 Value type (detailed notation)</p>
 </li>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_builtin_identifier_get_function_type_right = 2112</p>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_builtin_identifier_get_function_type_result = 2112</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
