@@ -3,7 +3,7 @@
 #include "internal.h"
 
 
-modern_context *modern_make_initial_context
+modern_context *modern_initial_context_make
   (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -35,7 +35,7 @@ INTERNAL void internal_context_finalizer
 }
 
 
-modern_context *modern_copy_context
+modern_context *modern_context_copy
   (modern_library *library,
    modern_context *context)
 {
