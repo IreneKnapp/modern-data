@@ -6873,16 +6873,52 @@ Note t...</p>
 <p class="binderItem"><strong>Semantics</strong></p>
 </li>
 </ul>
+</ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_processor_abort</strong></p>
+<p class="binderItem"><strong>Predefined</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
-(*modern_processor_abort)<br/>
-(void *processor_state);</p>
+<p class="binderItem"><strong>modern_processor_input_make</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>struct modern_processor *<br/>
+modern_processor_input_make<br/>
+(modern_library *library);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Parameters</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+</ul>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>Processes</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Callbacks</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>modern_process</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>struct modern_process {<br/>
+    …<br/>
+};</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -6893,13 +6929,31 @@ Note t...</p>
 </ul>
 <hr/>
 <li>
-<p class="binderItem"><strong>modern_processor_flush</strong></p>
+<p class="binderItem"><strong>modern_process_abort</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>void (*modern_processor_flush)<br/>
-  (void *processor_state);</p>
+<p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
+(*modern_process_abort)<br/>
+(void *process_state);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Parameters</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_process_flush</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void (*modern_process_flush)<br/>
+  (void *process_state);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -6941,6 +6995,11 @@ modern_processor_input_make<br/>
 <hr/>
 <ul>
 <li>
+<p class="binderItem"><strong>Callbacks</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
 <p class="binderItem"><strong>modern_stream</strong></p>
 </li>
 <hr/>
@@ -6955,11 +7014,6 @@ modern_processor_input_make<br/>
 </li>
 </ul>
 <hr/>
-<li>
-<p class="binderItem"><strong>Callbacks</strong></p>
-</li>
-<hr/>
-<ul>
 <li>
 <p class="binderItem"><strong>modern_stream_initialize</strong></p>
 </li>
