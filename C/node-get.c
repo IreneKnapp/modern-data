@@ -2,7 +2,7 @@
 #include "internal.h"
 
 
-INTERNAL enum modern_node_type default_modern_node_type_get
+INTERNAL enum modern_node_type default_node_type_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern *value = (struct modern *) value_in;
@@ -10,14 +10,15 @@ INTERNAL enum modern_node_type default_modern_node_type_get
 }
 
 
-INTERNAL modern *default_modern_value_type_get
+INTERNAL modern *default_value_type_get
     (modern_library *library_in,
      modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
-    if(!library->node) {
-        library->error_handler->modern_error_handler_usage(library->client_state);
+    if(!library->node_representation) {
+        library->error_handler->usage
+            (library->client_state);
         return NULL;
     }
     
@@ -27,23 +28,28 @@ INTERNAL modern *default_modern_value_type_get
     
     switch(value->node_type) {
     case modern_node_type_bool_value_false:
-        value->value_type = library->node->modern_node_bool_type_make(library_in);
+        value->value_type = library->node_representation
+            ->bool_type_make(library_in);
         break;
     
     case modern_node_type_bool_value_true:
-        value->value_type = library->node->modern_node_bool_type_make(library_in);
+        value->value_type = library->node_representation
+            ->bool_type_make(library_in);
         break;
     
     case modern_node_type_ordering_value_less:
-        value->value_type = library->node->modern_node_ordering_type_make(library_in);
+        value->value_type = library->node_representation
+            ->ordering_type_make(library_in);
         break;
     
     case modern_node_type_ordering_value_equal:
-        value->value_type = library->node->modern_node_ordering_type_make(library_in);
+        value->value_type = library->node_representation
+            ->ordering_type_make(library_in);
         break;
     
     case modern_node_type_ordering_value_greater:
-        value->value_type = library->node->modern_node_ordering_type_make(library_in);
+        value->value_type = library->node_representation
+            ->ordering_type_make(library_in);
         break;
     
     case modern_node_type_maybe_value_nothing:
@@ -53,58 +59,72 @@ INTERNAL modern *default_modern_value_type_get
         break;
     
     case modern_node_type_int8_value:
-        value->value_type = library->node->modern_node_int8_type_make(library_in);
+        value->value_type = library->node_representation
+            ->int8_type_make(library_in);
         break;
     
     case modern_node_type_int16_value:
-        value->value_type = library->node->modern_node_int16_type_make(library_in);
+        value->value_type = library->node_representation
+            ->int16_type_make(library_in);
         break;
     
     case modern_node_type_int32_value:
-        value->value_type = library->node->modern_node_int32_type_make(library_in);
+        value->value_type = library->node_representation
+            ->int32_type_make(library_in);
         break;
     
     case modern_node_type_int64_value:
-        value->value_type = library->node->modern_node_int64_type_make(library_in);
+        value->value_type = library->node_representation
+            ->int64_type_make(library_in);
         break;
     
     case modern_node_type_nat8_value:
-        value->value_type = library->node->modern_node_nat8_type_make(library_in);
+        value->value_type = library->node_representation
+            ->nat8_type_make(library_in);
         break;
     
     case modern_node_type_nat16_value:
-        value->value_type = library->node->modern_node_nat16_type_make(library_in);
+        value->value_type = library->node_representation
+            ->nat16_type_make(library_in);
         break;
     
     case modern_node_type_nat32_value:
-        value->value_type = library->node->modern_node_nat32_type_make(library_in);
+        value->value_type = library->node_representation
+            ->nat32_type_make(library_in);
         break;
     
     case modern_node_type_nat64_value:
-        value->value_type = library->node->modern_node_nat64_type_make(library_in);
+        value->value_type = library->node_representation
+            ->nat64_type_make(library_in);
         break;
     
     case modern_node_type_float32_value:
-        value->value_type = library->node->modern_node_float32_type_make(library_in);
+        value->value_type = library->node_representation
+            ->float32_type_make(library_in);
         break;
     
     case modern_node_type_float64_value:
-        value->value_type = library->node->modern_node_float64_type_make(library_in);
+        value->value_type = library->node_representation
+            ->float64_type_make(library_in);
         break;
     
     case modern_node_type_utf8_value:
-        value->value_type = library->node->modern_node_utf8_type_make(library_in);
+        value->value_type = library->node_representation
+            ->utf8_type_make(library_in);
         break;
     
     case modern_node_type_blob_value:
-        value->value_type = library->node->modern_node_blob_type_make(library_in);
+        value->value_type = library->node_representation
+            ->blob_type_make(library_in);
         break;
     
     case modern_node_type_sigma_value:
         break;
     
     case modern_node_type_name_value:
-        value->value_type = library->node->modern_node_name_type_make(library_in);
+        value->value_type = library
+            ->node_representation->name_type_make
+            (library_in);
     
     case modern_node_type_named_value:
         break;
@@ -128,20 +148,24 @@ INTERNAL modern *default_modern_value_type_get
     case modern_node_type_sigma_type:
     case modern_node_type_name_type:
     case modern_node_type_named_type:
-        value->value_type = library->node->modern_node_universe_type_make(library_in, 0);
+        value->value_type = library->node_representation
+            ->universe_type_make(library_in, 0);
         break;
     
     case modern_node_type_universe_type:
     {
-        uint64_t level = library->node->modern_node_universe_type_level_get
+        uint64_t level = library->node_representation
+            ->universe_type_level_get
             (library_in, value_in);
         if(level == UINT64_MAX) {
             library->error_handler->
-                modern_error_handler_universe_level_overflow
+                universe_level_overflow
                     (library->client_state);
         } else {
             modern *universe_type =
-                library->node->modern_node_universe_type_make(library_in, level + 1);
+                library->node_representation
+                ->universe_type_make
+                (library_in, level + 1);
             if(!universe_type) return NULL;
             
             value->value_type = universe_type;
@@ -157,7 +181,7 @@ INTERNAL modern *default_modern_value_type_get
         break;
     
     case modern_node_type_type_family:
-        library->error_handler->modern_error_handler_not_applicable
+        library->error_handler->not_applicable
             (library->client_state);
     	break;
     
@@ -178,13 +202,54 @@ INTERNAL modern *default_modern_value_type_get
 }
 
 
-INTERNAL int8_t default_modern_int8_get
+INTERNAL int default_mutable_get
+    (modern_library *library_in,
+     void *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->mutable;
+}
+
+
+INTERNAL int default_canonical_hash_valid_get
+    (modern_library *library_in,
+     modern *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->canonical_hash_valid;
+}
+
+
+INTERNAL struct modern_hash
+    default_canonical_hash_get
+    (modern_library *library_in,
+     modern *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->canonical_hash;
+}
+
+
+INTERNAL void *default_maybe_just_content_get
+    (modern_library *library_in,
+     void *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.maybe_value.content_value;
+}
+
+
+INTERNAL int8_t default_int8_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
-    if(!library->node) {
-        library->error_handler->modern_error_handler_usage(library->client_state);
+    if(!library->node_representation) {
+        library->error_handler->usage(library->client_state);
         return 0;
     }
     
@@ -193,7 +258,7 @@ INTERNAL int8_t default_modern_int8_get
 }
 
 
-INTERNAL int16_t default_modern_int16_get
+INTERNAL int16_t default_int16_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -202,7 +267,7 @@ INTERNAL int16_t default_modern_int16_get
 }
 
 
-INTERNAL int32_t default_modern_int32_get
+INTERNAL int32_t default_int32_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -211,7 +276,7 @@ INTERNAL int32_t default_modern_int32_get
 }
 
 
-INTERNAL int64_t default_modern_int64_get
+INTERNAL int64_t default_int64_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -220,7 +285,7 @@ INTERNAL int64_t default_modern_int64_get
 }
 
 
-INTERNAL uint8_t default_modern_nat8_get
+INTERNAL uint8_t default_nat8_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -229,7 +294,7 @@ INTERNAL uint8_t default_modern_nat8_get
 }
 
 
-INTERNAL uint16_t default_modern_nat16_get
+INTERNAL uint16_t default_nat16_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -238,7 +303,7 @@ INTERNAL uint16_t default_modern_nat16_get
 }
 
 
-INTERNAL uint32_t default_modern_nat32_get
+INTERNAL uint32_t default_nat32_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -247,7 +312,7 @@ INTERNAL uint32_t default_modern_nat32_get
 }
 
 
-INTERNAL uint64_t default_modern_nat64_get
+INTERNAL uint64_t default_nat64_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -256,7 +321,7 @@ INTERNAL uint64_t default_modern_nat64_get
 }
 
 
-INTERNAL float default_modern_float32_get
+INTERNAL float default_float32_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -265,7 +330,7 @@ INTERNAL float default_modern_float32_get
 }
 
 
-INTERNAL double default_modern_float64_get
+INTERNAL double default_float64_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -274,7 +339,7 @@ INTERNAL double default_modern_float64_get
 }
 
 
-INTERNAL size_t default_modern_utf8_bytes_get
+INTERNAL size_t default_utf8_bytes_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -283,7 +348,7 @@ INTERNAL size_t default_modern_utf8_bytes_get
 }
 
 
-INTERNAL uint8_t *default_modern_utf8_data_piece_get
+INTERNAL uint8_t *default_utf8_data_piece_get
   (modern_library *library_in, modern *value_in,
    size_t offset, size_t bytes)
 {
@@ -292,14 +357,14 @@ INTERNAL uint8_t *default_modern_utf8_data_piece_get
     if(offset + bytes <= value->specifics.utf8_value.bytes) {
         return value->specifics.utf8_value.data + offset;
     } else {
-        library->error_handler->modern_error_handler_buffer_index
+        library->error_handler->buffer_index
             (library->client_state);
         return NULL;
     }
 }
 
 
-INTERNAL size_t default_modern_blob_bytes_get
+INTERNAL size_t default_blob_bytes_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -308,7 +373,7 @@ INTERNAL size_t default_modern_blob_bytes_get
 }
 
 
-INTERNAL uint8_t *default_modern_blob_data_piece_get
+INTERNAL uint8_t *default_blob_data_piece_get
   (modern_library *library_in, modern *value_in,
    size_t offset, size_t bytes)
 {
@@ -317,14 +382,14 @@ INTERNAL uint8_t *default_modern_blob_data_piece_get
     if(offset + bytes <= value->specifics.blob_value.bytes) {
         return value->specifics.blob_value.data + offset;
     } else {
-        library->error_handler->modern_error_handler_buffer_index
+        library->error_handler->buffer_index
             (library->client_state);
         return NULL;
     }
 }
 
 
-INTERNAL modern *default_modern_sigma_field_value_get
+INTERNAL modern *default_sigma_field_value_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -333,7 +398,7 @@ INTERNAL modern *default_modern_sigma_field_value_get
 }
 
 
-INTERNAL modern *default_modern_sigma_successor_get
+INTERNAL modern *default_sigma_successor_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -342,7 +407,18 @@ INTERNAL modern *default_modern_sigma_successor_get
 }
 
 
-INTERNAL modern *default_modern_named_value_get
+INTERNAL struct modern_hash
+    default_name_value_hash_get
+    (modern_library *library_in,
+     void *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.name_value.hash;
+}
+
+
+INTERNAL modern *default_named_value_get
     (modern_library *library_in,
      modern *value_in)
 {
@@ -352,7 +428,17 @@ INTERNAL modern *default_modern_named_value_get
 }
 
 
-INTERNAL modern *default_modern_function_type_left_get
+INTERNAL void *default_maybe_type_content_type_get
+    (modern_library *library_in,
+     void *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.maybe_type.content_type;
+}
+
+
+INTERNAL modern *default_function_type_left_get
   (modern_library *library_in,
    modern *value_in)
 {
@@ -362,7 +448,7 @@ INTERNAL modern *default_modern_function_type_left_get
 }
 
 
-INTERNAL modern *default_modern_function_type_right_get
+INTERNAL modern *default_function_type_right_get
   (modern_library *library_in,
    modern *value_in)
 {
@@ -372,7 +458,7 @@ INTERNAL modern *default_modern_function_type_right_get
 }
 
 
-INTERNAL modern *default_modern_sigma_type_field_type_get
+INTERNAL modern *default_sigma_type_field_type_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -381,7 +467,7 @@ INTERNAL modern *default_modern_sigma_type_field_type_get
 }
 
 
-INTERNAL modern *default_modern_sigma_type_successor_get
+INTERNAL modern *default_sigma_type_successor_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -390,7 +476,7 @@ INTERNAL modern *default_modern_sigma_type_successor_get
 }
 
 
-INTERNAL struct modern_hash default_modern_named_type_name_get
+INTERNAL struct modern_hash default_named_type_name_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -399,7 +485,7 @@ INTERNAL struct modern_hash default_modern_named_type_name_get
 }
 
 
-INTERNAL modern *default_modern_named_type_content_type_get
+INTERNAL modern *default_named_type_content_type_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -408,7 +494,7 @@ INTERNAL modern *default_modern_named_type_content_type_get
 }
 
 
-INTERNAL uint64_t default_modern_universe_type_level_get
+INTERNAL uint64_t default_universe_type_level_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -417,7 +503,7 @@ INTERNAL uint64_t default_modern_universe_type_level_get
 }
 
 
-INTERNAL modern *default_modern_lambda_content_get
+INTERNAL modern *default_lambda_content_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -426,7 +512,7 @@ INTERNAL modern *default_modern_lambda_content_get
 }
 
 
-INTERNAL modern *default_modern_apply_left_get
+INTERNAL modern *default_apply_left_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -435,7 +521,7 @@ INTERNAL modern *default_modern_apply_left_get
 }
 
 
-INTERNAL modern *default_modern_apply_right_get
+INTERNAL modern *default_apply_right_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -444,7 +530,7 @@ INTERNAL modern *default_modern_apply_right_get
 }
 
 
-INTERNAL uint64_t default_modern_type_family_count_get
+INTERNAL uint64_t default_type_family_count_get
   (modern_library *library_in,
    modern *value_in)
 {
@@ -454,7 +540,7 @@ INTERNAL uint64_t default_modern_type_family_count_get
 }
 
 
-INTERNAL modern *default_modern_type_family_item_get
+INTERNAL modern *default_type_family_item_get
   (modern_library *library_in,
    modern *value_in, uint64_t index)
 {
@@ -464,7 +550,7 @@ INTERNAL modern *default_modern_type_family_item_get
 }
 
 
-INTERNAL uint64_t default_modern_let_count_get
+INTERNAL uint64_t default_let_count_get
   (modern_library *library_in,
    modern *value_in)
 {
@@ -474,7 +560,7 @@ INTERNAL uint64_t default_modern_let_count_get
 }
 
 
-INTERNAL modern *default_modern_let_item_get
+INTERNAL modern *default_let_item_get
   (modern_library *library_in,
    modern *value_in, uint64_t index)
 {
@@ -484,7 +570,7 @@ INTERNAL modern *default_modern_let_item_get
 }
 
 
-INTERNAL modern *default_modern_let_content_get
+INTERNAL modern *default_let_content_get
   (modern_library *library_in,
    modern *value_in)
 {
@@ -494,7 +580,17 @@ INTERNAL modern *default_modern_let_content_get
 }
 
 
-INTERNAL uint16_t default_modern_builtin_identifier_get
+INTERNAL uint64_t default_backreference_index_get
+    (modern_library *library_in,
+     void *value_in)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    struct modern *value = (struct modern *) value_in;
+    return value->specifics.backreference.index;
+}
+
+
+INTERNAL uint16_t default_builtin_identifier_get
   (modern_library *library_in,
    modern *value_in)
 {

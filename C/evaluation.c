@@ -52,10 +52,10 @@ HELPER struct helper_target_stack_frame *helper_allocate_target_stack_frame
     struct helper_target_stack_frame *frame;
     {
         size_t size = sizeof(struct helper_target_stack_frame);
-        frame = library->allocator->modern_allocator_alloc
+        frame = library->allocator->alloc
             (library->client_state, size);
         if(!frame) {
-            library->error_handler->modern_error_handler_memory
+            library->error_handler->memory
                 (library->client_state, size);
             return NULL;
         }
@@ -64,10 +64,10 @@ HELPER struct helper_target_stack_frame *helper_allocate_target_stack_frame
     {
         size_t size = sizeof(struct modern *) * count;
         frame->members =
-            library->allocator->modern_allocator_alloc
+            library->allocator->alloc
                 (library->client_state, size);
         if(!frame->members) {
-            library->error_handler->modern_error_handler_memory
+            library->error_handler->memory
                 (library->client_state, size);
             return NULL;
         }
@@ -82,9 +82,9 @@ HELPER struct helper_target_stack_frame *helper_allocate_target_stack_frame
 HELPER void helper_free_target_stack_frame
   (struct modern_library *library, struct helper_target_stack_frame *frame)
 {
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, frame->members);
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, frame);
 }
 
@@ -95,10 +95,10 @@ HELPER struct helper_parameter_stack_frame *helper_allocate_parameter_stack_fram
     struct helper_parameter_stack_frame *frame;
     {
         size_t size = sizeof(struct helper_parameter_stack_frame);
-        frame = library->allocator->modern_allocator_alloc
+        frame = library->allocator->alloc
             (library->client_state, size);
         if(!frame) {
-            library->error_handler->modern_error_handler_memory
+            library->error_handler->memory
                 (library->client_state, size);
             return NULL;
         }
@@ -111,7 +111,7 @@ HELPER struct helper_parameter_stack_frame *helper_allocate_parameter_stack_fram
 HELPER void helper_free_parameter_stack_frame
   (struct modern_library *library, struct helper_parameter_stack_frame *frame)
 {
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, frame);
 }
 
@@ -234,8 +234,9 @@ HELPER struct modern *helper_evaluate_application
     
     while(parameter_stack) {
         struct helper_parameter_stack_frame *frame = parameter_stack;
-        intermediate_result = library->node->modern_node_apply_make
-            (library, intermediate_result, frame->parameter);
+        intermediate_result =
+            library->node_representation->apply_make
+                (library, intermediate_result, frame->parameter);
         parameter_stack = frame->parent;
         helper_free_parameter_stack_frame(library, frame);        
     }
@@ -327,10 +328,6 @@ HELPER uint64_t helper_builtin_static_arity(uint16_t index) {
     case modern_builtin_identifier_divide_towards_negative_infinity_int16: return 2;
     case modern_builtin_identifier_divide_towards_negative_infinity_int32: return 2;
     case modern_builtin_identifier_divide_towards_negative_infinity_int64: return 2;
-    case modern_builtin_identifier_divide_towards_negative_infinity_nat8: return 2;
-    case modern_builtin_identifier_divide_towards_negative_infinity_nat16: return 2;
-    case modern_builtin_identifier_divide_towards_negative_infinity_nat32: return 2;
-    case modern_builtin_identifier_divide_towards_negative_infinity_nat64: return 2;
     case modern_builtin_identifier_divide_float32: return 2;
     case modern_builtin_identifier_divide_float64: return 2;
     case modern_builtin_identifier_modulus_towards_zero_int8: return 2;
@@ -345,10 +342,6 @@ HELPER uint64_t helper_builtin_static_arity(uint16_t index) {
     case modern_builtin_identifier_modulus_towards_negative_infinity_int16: return 2;
     case modern_builtin_identifier_modulus_towards_negative_infinity_int32: return 2;
     case modern_builtin_identifier_modulus_towards_negative_infinity_int64: return 2;
-    case modern_builtin_identifier_modulus_towards_negative_infinity_nat8: return 2;
-    case modern_builtin_identifier_modulus_towards_negative_infinity_nat16: return 2;
-    case modern_builtin_identifier_modulus_towards_negative_infinity_nat32: return 2;
-    case modern_builtin_identifier_modulus_towards_negative_infinity_nat64: return 2;
     case modern_builtin_identifier_negate_int8: return 1;
     case modern_builtin_identifier_negate_int16: return 1;
     case modern_builtin_identifier_negate_int32: return 1;

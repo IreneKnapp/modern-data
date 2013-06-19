@@ -9,13 +9,13 @@ modern_context *modern_make_initial_context
     struct modern_library *library = (struct modern_library *) library_in;
     
     struct modern_context *context =
-        library->allocator->modern_allocator_alloc
+        library->allocator->alloc
             (library->client_state, sizeof(struct modern_context));
     context->memory.finalizer = internal_context_finalizer;
     context->n_values = 0;
     context->n_buckets = 1024;
     size_t hash_size = sizeof(struct modern *) * context->n_buckets;
-    context->hash = library->allocator->modern_allocator_alloc
+    context->hash = library->allocator->alloc
         (library->client_state, hash_size);
     bzero(context->hash, hash_size);
     
@@ -28,9 +28,9 @@ INTERNAL void internal_context_finalizer
    void *context_in)
 {
 	struct modern_context *context = (struct modern_context *) context_in;
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, context->hash);
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, context);
 }
 

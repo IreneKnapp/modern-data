@@ -23,9 +23,6 @@ enum callback_identifier {
     allocator_free_callback_identifier,
     allocator_realloc_callback_identifier,
     error_memory_callback_identifier,
-    error_retain_count_overflow_callback_identifier,
-    error_retain_count_underflow_callback_identifier,
-    error_double_autorelease_callback_identifier,
     error_type_mismatch_callback_identifier,
     error_universe_level_overflow_callback_identifier,
     error_buffer_index_callback_identifier,
@@ -54,15 +51,6 @@ struct callback_invocation {
         struct {
             size_t requested_size;
         } error_memory;
-        struct {
-            void *retainable;
-        } error_retain_count_overflow;
-        struct {
-            void *retainable;
-        } error_retain_count_underflow;
-        struct {
-            void *retainable;
-        } error_double_autorelease;
         struct {
             modern *expected;
             modern *actual;
@@ -107,15 +95,6 @@ struct callback_invocation_pattern {
         struct {
             size_t requested_size;
         } error_memory;
-        struct {
-            void *retainable;
-        } error_retain_count_overflow;
-        struct {
-            void *retainable;
-        } error_retain_count_underflow;
-        struct {
-            void *retainable;
-        } error_double_autorelease;
         struct {
             modern *expected;
             modern *actual;
@@ -284,12 +263,6 @@ static void *allocator_realloc
   (struct test_suite *test_suite, void *data, size_t size);
 static void error_memory
   (struct test_suite *test_suite, size_t requested_size);
-static void error_retain_count_overflow
-  (struct test_suite *test_suite, void *retainable);
-static void error_retain_count_underflow
-  (struct test_suite *test_suite, void *retainable);
-static void error_double_autorelease
-  (struct test_suite *test_suite, void *retainable);
 static void error_type_mismatch
   (struct test_suite *test_suite, modern *expected, modern *actual);
 static void error_universe_level_overflow
@@ -308,12 +281,6 @@ int main(int argc, char **argv) {
     struct modern_error_handler error_handler;
     error_handler.modern_error_handler_memory =
         (void (*)(void *, size_t)) error_memory;
-    error_handler.modern_error_handler_retain_count_overflow =
-        (void (*)(void *, void *)) error_retain_count_overflow;
-    error_handler.modern_error_handler_retain_count_underflow =
-        (void (*)(void *, void *)) error_retain_count_underflow;
-    error_handler.modern_error_handler_double_autorelease =
-        (void (*)(void *, void *)) error_double_autorelease;
     error_handler.modern_error_handler_type_mismatch =
         (void (*)(void *, modern *, modern *)) error_type_mismatch;
     error_handler.modern_error_handler_universe_level_overflow =
@@ -340,11 +307,24 @@ int main(int argc, char **argv) {
     if(!setjmp(test_suite->jmp_buf)) {
         reset_allowances(test_suite);
         allow_allocation(test_suite);
+        
+        struct modern_node_representation *node_representation =
+            modern_node_representation_default_make(&allocator, test_suite);
+        if(!node_representation) {
+            printf("\n\n"
+                   "*** The testing infrastructure itself failed.\n"
+                   "*** Specifically, couldn't get the default node\n"
+                   "*** representation.\n");
+                exit(1);
+        }
+        
         modern_library *library = modern_library_initialize
             (&error_handler,
              &allocator,
+             node_representation,
              (void (*)(void *)) library_finalizer,
              test_suite);
+        
         disallow_allocation(test_suite);
         
         if(!setjmp(test_suite->jmp_buf)) {
@@ -643,117 +623,6 @@ void expect_error_memory
         make_callback_invocation_pattern_in_buffer
             (&test_suite->expected_callbacks);
     invocation->identifier = error_memory_callback_identifier;
-    invocation->parameters_relevant = 0;
-    invocation->should_succeed = 1;
-    invocation->sticky = 0;
-    
-    test_suite->error_invocation = invocation;
-    
-    int succeeded = test_case_helper(test_context);
-    
-    if(succeeded) {
-        longjmp(test_suite->current_test_case->jmp_buf, 2);
-    } else {
-        longjmp(test_suite->current_test_case->jmp_buf, 1);
-    }
-}
-
-
-void expect_error_retain_count_overflow
-  (test_suite test_suite_in,
-   int (*test_case_helper)(void *test_context),
-   void *test_context)
-{
-    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
-    
-    if(!test_suite->current_test_case) {
-        printf("\n\n"
-               "*** The testing infrastructure itself failed.\n"
-               "*** Specifically, tried to expect an error "
-               "while not already in a test case.\n");
-        exit(1);
-    }
-    
-    if(test_suite->error_invocation) return;
-    
-    struct callback_invocation_pattern *invocation =
-        make_callback_invocation_pattern_in_buffer
-            (&test_suite->expected_callbacks);
-    invocation->identifier = error_retain_count_overflow_callback_identifier;
-    invocation->parameters_relevant = 0;
-    invocation->should_succeed = 1;
-    invocation->sticky = 0;
-    
-    test_suite->error_invocation = invocation;
-    
-    int succeeded = test_case_helper(test_context);
-    
-    if(succeeded) {
-        longjmp(test_suite->current_test_case->jmp_buf, 2);
-    } else {
-        longjmp(test_suite->current_test_case->jmp_buf, 1);
-    }
-}
-
-
-void expect_error_retain_count_underflow
-  (test_suite test_suite_in,
-   int (*test_case_helper)(void *test_context),
-   void *test_context)
-{
-    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
-    
-    if(!test_suite->current_test_case) {
-        printf("\n\n"
-               "*** The testing infrastructure itself failed.\n"
-               "*** Specifically, tried to expect an error "
-               "while not already in a test case.\n");
-        exit(1);
-    }
-    
-    if(test_suite->error_invocation) return;
-    
-    struct callback_invocation_pattern *invocation =
-        make_callback_invocation_pattern_in_buffer
-            (&test_suite->expected_callbacks);
-    invocation->identifier = error_retain_count_underflow_callback_identifier;
-    invocation->parameters_relevant = 0;
-    invocation->should_succeed = 1;
-    invocation->sticky = 0;
-    
-    test_suite->error_invocation = invocation;
-    
-    int succeeded = test_case_helper(test_context);
-    
-    if(succeeded) {
-        longjmp(test_suite->current_test_case->jmp_buf, 2);
-    } else {
-        longjmp(test_suite->current_test_case->jmp_buf, 1);
-    }
-}
-
-
-void expect_error_double_autorelease
-  (test_suite test_suite_in,
-   int (*test_case_helper)(void *test_context),
-   void *test_context)
-{
-    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
-    
-    if(!test_suite->current_test_case) {
-        printf("\n\n"
-               "*** The testing infrastructure itself failed.\n"
-               "*** Specifically, tried to expect an error "
-               "while not already in a test case.\n");
-        exit(1);
-    }
-    
-    if(test_suite->error_invocation) return;
-    
-    struct callback_invocation_pattern *invocation =
-        make_callback_invocation_pattern_in_buffer
-            (&test_suite->expected_callbacks);
-    invocation->identifier = error_double_autorelease_callback_identifier;
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
@@ -1371,24 +1240,6 @@ static void print_callback_invocation
                invocation->specifics.error_memory.requested_size);
         break;
     
-    case error_retain_count_overflow_callback_identifier:
-        printf("modern_error_handler_retain_count_overflow(0x%llx)\n",
-               (unsigned long long)
-               invocation->specifics.error_retain_count_overflow.retainable);
-        break;
-    
-    case error_retain_count_underflow_callback_identifier:
-        printf("modern_error_handler_retain_count_underflow(0x%llx)\n",
-               (unsigned long long)
-               invocation->specifics.error_retain_count_underflow.retainable);
-        break;
-    
-    case error_double_autorelease_callback_identifier:
-        printf("modern_error_handler_double_autorelease(0x%llx)\n",
-               (unsigned long long)
-               invocation->specifics.error_double_autorelease.retainable);
-        break;
-    
     case error_type_mismatch_callback_identifier:
         printf("modern_error_handler_type_mismatch(0x%llx, 0x%llx)\n",
                (unsigned long long)
@@ -1666,87 +1517,6 @@ static void error_memory
     invocation->identifier = error_memory_callback_identifier;
     invocation->succeeded = 0;
     invocation->specifics.error_memory.requested_size = requested_size;
-    
-    if(callback_should_succeed(test_suite)) {
-        longjmp(test_suite->current_test_case->jmp_buf, 2);
-    } else {
-        return;
-    }
-}
-
-
-static void error_retain_count_overflow
-  (struct test_suite *test_suite, void *retainable)
-{
-    if(!test_suite->current_test_case) {
-        printf("\n\n"
-               "*** The testing infrastructure itself failed.\n"
-               "*** Specifically, received an error callback "
-               "while not already in a test case.\n");
-        exit(1);
-    }
-    
-    test_suite->error_invocation = NULL;
-    
-    struct callback_invocation *invocation = begin_callback(test_suite);
-    
-    invocation->identifier = error_retain_count_overflow_callback_identifier;
-    invocation->succeeded = 0;
-    invocation->specifics.error_retain_count_overflow.retainable = retainable;
-    
-    if(callback_should_succeed(test_suite)) {
-        longjmp(test_suite->current_test_case->jmp_buf, 2);
-    } else {
-        return;
-    }
-}
-
-
-static void error_retain_count_underflow
-  (struct test_suite *test_suite, void *retainable)
-{
-    if(!test_suite->current_test_case) {
-        printf("\n\n"
-               "*** The testing infrastructure itself failed.\n"
-               "*** Specifically, received an error callback "
-               "while not already in a test case.\n");
-        exit(1);
-    }
-    
-    test_suite->error_invocation = NULL;
-    
-    struct callback_invocation *invocation = begin_callback(test_suite);
-    
-    invocation->identifier = error_retain_count_underflow_callback_identifier;
-    invocation->succeeded = 0;
-    invocation->specifics.error_retain_count_underflow.retainable = retainable;
-    
-    if(callback_should_succeed(test_suite)) {
-        longjmp(test_suite->current_test_case->jmp_buf, 2);
-    } else {
-        return;
-    }
-}
-
-
-static void error_double_autorelease
-  (struct test_suite *test_suite, void *retainable)
-{
-    if(!test_suite->current_test_case) {
-        printf("\n\n"
-               "*** The testing infrastructure itself failed.\n"
-               "*** Specifically, received an error callback "
-               "while not already in a test case.\n");
-        exit(1);
-    }
-    
-    test_suite->error_invocation = NULL;
-    
-    struct callback_invocation *invocation = begin_callback(test_suite);
-    
-    invocation->identifier = error_double_autorelease_callback_identifier;
-    invocation->succeeded = 0;
-    invocation->specifics.error_double_autorelease.retainable = retainable;
     
     if(callback_should_succeed(test_suite)) {
         longjmp(test_suite->current_test_case->jmp_buf, 2);

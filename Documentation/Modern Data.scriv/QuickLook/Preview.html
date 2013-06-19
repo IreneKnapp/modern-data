@@ -38,9 +38,7 @@ A self-describing data format is a format like XML, JSON, YAML, or Common Lisp�
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Overview</strong><br/>In Modern Data, the fundamental in-memory datatype is the “modern node”, which is a representation of, loosely, either a value or a type.  If we wish to specify further, we may occasionally refer to a “modern type” or “modern value”, but these concepts do not map to actual host-language datatypes; only “modern node” does.<br/>
-<br/>
-The operations on a modern node are serialization, deserialization, type-checking, evaluation, and traversal.  The concept of a “modern context” holding types and values is us...</p>
+<p class="binderItem"><strong>Overview</strong><br/>TODO structural equality not type equality</p>
 </li>
 <li>
 <p class="binderItem"><strong>Scoping</strong><br/>Importantly, a modern type must be in scope in the given context before a value of that type can be serialized or deserialized. The high-level “node-based” portion of the library will check whether a value’s type is in context when serializing, and emit additional instructions which bring it into context if it is not, mutating the context object which it is passed to make note of the fact.  Similarly, when deserializing, if a value’s type is not in context, an error is produced and processing ha...</p>

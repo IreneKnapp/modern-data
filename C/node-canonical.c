@@ -39,22 +39,22 @@ HELPER int helper_byte_buffer_alloc
 {
     size_t buffer_size = sizeof(struct helper_byte_buffer);
     struct helper_byte_buffer *buffer;
-    buffer = library->allocator->modern_allocator_alloc
+    buffer = library->allocator->alloc
         (library->client_state, buffer_size);
     if(!buffer) {
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, buffer_size);
         return 0;
     }
     buffer->count = 0;
     buffer->capacity = 8;
     size_t data_size = (sizeof(uint8_t) * buffer->capacity);
-    buffer->data = library->allocator->modern_allocator_alloc
+    buffer->data = library->allocator->alloc
         (library->client_state, data_size);
     if(!buffer->data) {
-        library->allocator->modern_allocator_free
+        library->allocator->free
             (library->client_state, buffer);
-        library->error_handler->modern_error_handler_memory
+        library->error_handler->memory
             (library->client_state, data_size);
         return 0;
     }
@@ -67,9 +67,9 @@ HELPER int helper_byte_buffer_free
   (struct modern_library *library,
    struct helper_byte_buffer *buffer)
 {
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, buffer->data);
-    library->allocator->modern_allocator_free
+    library->allocator->free
         (library->client_state, buffer);
     return 1;
 }
@@ -85,10 +85,10 @@ HELPER int helper_byte_buffer_append
         buffer->capacity *= 2;
         size_t data_size = sizeof(uint8_t) * buffer->capacity;
         uint8_t *new_data =
-            library->allocator->modern_allocator_realloc
+            library->allocator->realloc
                 (library->client_state, buffer->data, data_size);
         if(!new_data) {
-            library->error_handler->modern_error_handler_memory
+            library->error_handler->memory
                 (library->client_state, data_size);
             return 0;
         }
@@ -983,6 +983,9 @@ HELPER int helper_visit_node_top_level
         
         return 1;
     }
+
+    default:
+        return 0;
     }
 }
 
@@ -994,7 +997,7 @@ HELPER int helper_visit_node_interior
 {
     struct modern_hash hash;
     
-    if(!modern_node_canonical_hash
+    if(!modern_node_canonical_hash_compute
         ((modern_library *) library, (modern *) node, &hash))
         return 0;
     
@@ -1025,45 +1028,49 @@ HELPER int helper_visit_node_interior
 }
 
 
-INTERNAL int modern_node_canonical_hash
+INTERNAL int modern_node_canonical_hash_compute
   (modern_library *library_in,
    modern *value_in,
    struct modern_hash *out)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
-    if(!library->node) {
-        library->error_handler->modern_error_handler_usage(library->client_state);
+    if(!library->node_representation) {
+        library->error_handler->usage
+            (library->client_state);
         return 0;
     }
     
-    struct modern *value = (struct modern *) value_in;
-    
-    if(!value->canonical_hash_valid) {
+    if(!library->node_representation
+        ->canonical_hash_valid_get
+        (library_in, value_in))
+    {
         struct helper_byte_buffer *canonical_form = NULL;
         if(!helper_byte_buffer_alloc(library, &canonical_form)) {
             return 0;
         }
         
-        if(!helper_visit_node_top_level(library, canonical_form, value)) {
+        if(!helper_visit_node_top_level(library, canonical_form, value_in)) {
             helper_byte_buffer_free(library, canonical_form);
             return 0;
         }
         
-        for(size_t i = 0; i < canonical_form->count; i++) {
-            printf(" %02x", canonical_form->data[i]);
-        }
-        printf("\n");
+        struct modern_hash hash;
+        modern_hash_compute
+            (canonical_form->data, canonical_form->count, &hash);
         
-        modern_compute_hash
-            (canonical_form->data, canonical_form->count, &value->canonical_hash);
-        
-        value->canonical_hash_valid = 1;
+        library->node_representation
+            ->canonical_hash_set
+            (library_in, value_in, hash);
         
         helper_byte_buffer_free(library, canonical_form);
     }
     
-    memcpy(out, &value->canonical_hash, sizeof(struct modern_hash));
+    struct modern_hash hash =
+        library->node_representation
+        ->canonical_hash_get
+        (library_in, value_in);
+    memcpy(out, &hash, sizeof(struct modern_hash));
     
     return 1;
 }

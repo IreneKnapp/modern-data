@@ -7,11 +7,11 @@ void modern_finalize
    void *finalizable)
 {
     struct modern_library *library = (struct modern_library *) library_in;
-    struct memory *memory = (struct memory *) retainable;
+    struct memory *memory = (struct memory *) finalizable;
     
-    if(memory->finalizer) memory->finalizer(library_in, retainable);
+    if(memory->finalizer) memory->finalizer(library_in, finalizable);
     
-    library->allocator->modern_allocator_free
-        (library->client_state, retainable);
+    library->allocator->free
+        (library->client_state, finalizable);
 }
 

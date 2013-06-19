@@ -1,0 +1,69 @@
+(Potential collaborator's name is Daniel Martin, aka fizbin.)
+
+(Data) Canonical textual format for schemas
+
+(Haskell) Translators to/from textual format
+
+(Haskell) FFI binding between Haskell and C
+
+(Haskell) Haskell interface for inspecting a "debug view" of a file
+
+(C) Typechecker
+
+(C) Totality checker
+
+(C) Serializer
+
+(C) Deserializer
+
+(C) Fix bugs in accessors and allocators
+
+
+struct modern_processor is actually two interfaces smashed together.  Should
+they be separated?  .abort() and .flush() are the ones that probably belong
+elsewhere.
+
+Diagram 1 lies when it says the vfile is passed on processor callback
+acquisition - it's actually passed to initialize().  Initialize should be
+broken out as a separate step.
+... Furthermore, if we want to split our information across multiple files,
+then we need to not pass the vfile in this manner but rather only on
+.step() and .run().
+
+Diagram 2 has an analogous problem where it says the stream callbacks and
+data ... are at the wrong spot.
+
+Observe:
+    void (*step)
+      (void *processor_state,
+       struct modern_stream *stream, void *stream_state,
+       struct modern_vfile *vfile, void *vfile_state);
+And analogously for .run().
+Should the caller of step() and run() be required to have initialized stream_state already?  Or is the presence here a mistake?  Probably the former
+is cleaner.  But it makes more sense for the serialize case.
+
+Need to define the stream event codes.
+
+Do we want to shorten the length of names to max out at 65536?
+
+Do we want to handle utf8 in chunks like we do for blobs?
+
+Do we want to shorten the length of each blob_data event to 2 bytes?
+
+Do we have void and unit?
+
+What is the type of builtin get_sigma_successor?
+  (sigmav (a :: at) (bt :: (at -> type))) -> (bt a)
+  But we don't know the value of a at typechecking time!
+  Two phases: "Get me the most general type of this whole thing", and "check
+  that it actually matches".
+
+Consider the function from integers > 10 to integers < 10.  What is the most
+  general type?  Will the typechecker return True for the function "id" with
+  this signature?
+
+If we answer yes, of course we need to answer "how?".  If our answer there is
+to push a proof obligation on the user, then we need to have an inventory of
+all the axioms for every builtin!  (It is helpful here that our arithmetic
+builtins all return results in Maybe, because otherwise things that we'd like
+to have as axioms would not in fact be true!)

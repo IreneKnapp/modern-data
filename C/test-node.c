@@ -6,7 +6,6 @@
 struct test_context {
     test_suite *test_suite;
     modern_library *library;
-    modern_autorelease_pool *pool;
     modern_context *context;
     void *value;
 };
@@ -51,15 +50,13 @@ static int test_utf8_node_create_and_readback
 void test_main(test_suite *test_suite, modern_library *library) {
     if(!begin_fixtures(test_suite)) return;
     allow_allocation(test_suite);
-    modern_autorelease_pool *pool = modern_make_autorelease_pool(library);
-    modern_context *context = modern_make_initial_context(library);
+    modern_context *context = modern_initial_context_make(library);
     disallow_allocation(test_suite);
     end_fixtures(test_suite);
-    
+
     struct test_context test_context;
     test_context.test_suite = test_suite;
     test_context.library = library;
-    test_context.pool = pool;
     test_context.context = context;
     
     {
@@ -211,7 +208,7 @@ void test_main(test_suite *test_suite, modern_library *library) {
     }
     
     {
-        modern_float32 values[17] = {
+        float values[17] = {
           0.0,
           1.0, -1.0,
           0.5, -0.5,
@@ -223,7 +220,7 @@ void test_main(test_suite *test_suite, modern_library *library) {
         };
         
         for(int i = 0; i < 18; i++) {
-            modern_float32 value = values[i];
+            float value = values[i];
             test_context.value = &value;
             begin_test_case
                 (test_suite,
@@ -242,14 +239,14 @@ void test_main(test_suite *test_suite, modern_library *library) {
          "float32 node create-and-readback special case for negative zero");
     
     {
-        modern_float32 values[3] = {
+        float values[3] = {
             1.0 / 0.0,
             -1.0 / 0.0,
             0.0 /  0.0,
         };
         
         for(int i = 0; i < 3; i++) {
-            modern_float32 value = values[i];
+            float value = values[i];
             test_context.value = &value;
             begin_test_case
                 (test_suite,
@@ -261,7 +258,7 @@ void test_main(test_suite *test_suite, modern_library *library) {
     }
         
     {
-        modern_float64 values[21] = {
+        double values[21] = {
           0.0,
           1.0, -1.0,
           0.5, -0.5,
@@ -275,7 +272,7 @@ void test_main(test_suite *test_suite, modern_library *library) {
         };
         
         for(int i = 0; i < 22; i++) {
-            modern_float64 value = values[i];
+            double value = values[i];
             test_context.value = &value;
             begin_test_case
                 (test_suite,
@@ -294,14 +291,14 @@ void test_main(test_suite *test_suite, modern_library *library) {
          "float64 node create-and-readback special case for negative zero");
     
     {
-        modern_float64 values[3] = {
+        double values[3] = {
             1.0 / 0.0,
             -1.0 / 0.0,
             0.0 /  0.0,
         };
         
         for(int i = 0; i < 3; i++) {
-            modern_float64 value = values[i];
+            double value = values[i];
             test_context.value = &value;
             begin_test_case
                 (test_suite,
@@ -343,9 +340,12 @@ static int test_int8_node_create_and_readback
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     int8_t value = *(int8_t *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_int8(library, value);
+    modern *node = node_representation
+        ->modern_node_representation_int8_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -353,21 +353,24 @@ static int test_int8_node_create_and_readback
     int succeeded = 1;
     
     if(succeeded) {
-        enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != int8_value_modern_node_type)
+        enum modern_node_type node_type = node_representation
+            ->modern_node_representation_node_type_get(library, node);
+        if(node_type != modern_node_type_int8_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_int8(library, node) != value)
+        if(node_representation->modern_node_representation_int8_get
+            (library, node) != value)
+        {
             succeeded = 0;
+        }
     }
     
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->modern_node_representation_value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
@@ -958,7 +961,7 @@ static int test_float32_node_create_and_readback
         (struct test_context *) test_context_in;
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
-    modern_float32 value = *(modern_float32 *) test_context->value;
+    float value = *(float *) test_context->value;
     
     allow_allocation(test_suite);
     modern *node = modern_node_make_float32(library, value);
@@ -1036,8 +1039,8 @@ static int test_float32_node_create_and_readback_negative_zero
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     
-    modern_float32 value_in = -0.0;
-    modern_float32 value_out = 0.0;
+    float value_in = -0.0;
+    float value_out = 0.0;
     
     allow_allocation(test_suite);
     modern *node = modern_node_make_float32(library, value_in);
@@ -1055,7 +1058,7 @@ static int test_float32_node_create_and_readback_negative_zero
     }
     
     if(succeeded) {
-        modern_float32 actual_out = modern_node_get_float32(library, node);
+        float actual_out = modern_node_get_float32(library, node);
         int classification = fpclassify(actual_out);
         succeeded =
             (actual_out == value_out)
@@ -1132,7 +1135,7 @@ static int test_float32_node_create_expecting_error_helper
         (struct test_context *) test_context_in;
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
-    modern_float32 value_in = *(modern_float32 *) test_context->value;
+    float value_in = *(float *) test_context->value;
     
     modern *node = modern_node_make_float32(library, value_in);
     
@@ -1147,7 +1150,7 @@ static int test_float64_node_create_and_readback
         (struct test_context *) test_context_in;
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
-    modern_float64 value = *(modern_float64 *) test_context->value;
+    double value = *(double *) test_context->value;
     
     allow_allocation(test_suite);
     modern *node = modern_node_make_float64(library, value);
@@ -1225,8 +1228,8 @@ static int test_float64_node_create_and_readback_negative_zero
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     
-    modern_float64 value_in = -0.0;
-    modern_float64 value_out = 0.0;
+    double value_in = -0.0;
+    double value_out = 0.0;
     
     allow_allocation(test_suite);
     modern *node = modern_node_make_float64(library, value_in);
@@ -1244,7 +1247,7 @@ static int test_float64_node_create_and_readback_negative_zero
     }
     
     if(succeeded) {
-        modern_float64 actual_out = modern_node_get_float64(library, node);
+        double actual_out = modern_node_get_float64(library, node);
         int classification = fpclassify(actual_out);
         succeeded =
             (actual_out == value_out)
@@ -1321,7 +1324,7 @@ static int test_float64_node_create_expecting_error_helper
         (struct test_context *) test_context_in;
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
-    modern_float64 value_in = *(modern_float64 *) test_context->value;
+    double value_in = *(double *) test_context->value;
     
     modern *node = modern_node_make_float64(library, value_in);
     
@@ -1394,11 +1397,13 @@ static int test_utf8_node_create_and_readback
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(modern_node_get_value_type(library, node) != type)
+            succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(modern_node_get_value_type(library, type) != universe)
+            succeeded = 0;
     }
     
     allow_deallocation(test_suite);
