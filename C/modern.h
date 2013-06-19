@@ -1227,12 +1227,12 @@ struct modern_node_representation {
       (*function_type_parameter_set)
       (modern_library *library,
        void *value,
-       void *left);
+       void *parameter);
     void 
       (*function_type_result_set)
       (modern_library *library,
        void *value,
-       void *right);
+       void *result);
     void 
       (*sigma_type_field_type_set)
       (modern_library *library,
