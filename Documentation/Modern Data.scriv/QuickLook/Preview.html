@@ -165,15 +165,7 @@ modern_library_initialize<br/>
  void *client_state);</p>
 </li>
 <li>
-<p class="binderItem"><strong>Parameters</strong><br/>Error handler<br/>
-<br/>
-Allocator<br/>
-<br/>
-Finalizer<br/>
-<br/>
-Client state<br/>
-<br/>
-Return</p>
+<p class="binderItem"><strong>Parameters</strong></p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -3601,12 +3593,25 @@ modern_vfile_fd_finalize<br/>
 </ul>
 <hr/>
 <li>
+<p class="binderItem"><strong>modern_node_type_satisfies_type</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_satisfies_type = 43</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
 <p class="binderItem"><strong>modern_node_type_lambda</strong></p>
 </li>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_lambda = 43</p>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_lambda = 44</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -3619,7 +3624,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_apply = 44</p>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_apply = 45</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -3632,7 +3637,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_type_family = 45</p>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_type_family = 46</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -3645,7 +3650,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_let = 46</p>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_let = 47</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -3658,7 +3663,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_backreference = 47</p>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_backreference = 48</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -3671,7 +3676,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_builtin = 48</p>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_node_type_builtin = 49</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>
@@ -3718,7 +3723,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>enum modern_node_type<br/>
 (*modern_node_node_type_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3734,10 +3739,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_value_type_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3756,7 +3761,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>int<br/>
 (*modern_node_mutable_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3775,7 +3780,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>struct modern_hash<br/>
 (*modern_node_canonical_hash_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3797,10 +3802,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_maybe_just_content_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3819,7 +3824,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>int8_t<br/>
 (*modern_node_int8_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3838,7 +3843,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>int16_t<br/>
 (*modern_node_int16_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3857,7 +3862,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>int32_t<br/>
 (*modern_node_int32_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3876,7 +3881,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>int64_t<br/>
 (*modern_node_int64_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3895,7 +3900,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>uint8_t<br/>
 (*modern_node_nat8_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3914,7 +3919,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>uint16_t<br/>
 (*modern_node_nat16_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3933,7 +3938,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>uint32_t<br/>
 (*modern_node_nat32_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3952,7 +3957,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>uint64_t<br/>
 (*modern_node_nat64_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3971,7 +3976,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>float<br/>
 (*modern_node_float32_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -3990,7 +3995,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>double<br/>
 (*modern_node_float64_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4009,7 +4014,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>size_t<br/>
 (*modern_node_utf8_bytes_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4028,7 +4033,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>uint8_t *<br/>
 (*modern_node_utf8_data_piece_get)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  size_t offset,<br/>
  size_t bytes);</p>
 </li>
@@ -4049,7 +4054,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>size_t<br/>
 (*modern_node_blob_bytes_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4068,7 +4073,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>uint8_t *<br/>
 (*modern_node_blob_data_piece_get)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  size_t offset,<br/>
  size_t bytes);</p>
 </li>
@@ -4086,10 +4091,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_sigma_field_value_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4105,10 +4110,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_sigma_successor_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4127,7 +4132,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>struct modern_hash *<br/>
 (*modern_node_name_value_hash_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4143,10 +4148,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_named_value_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4168,10 +4173,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_maybe_type_content_type_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4187,10 +4192,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_function_type_left_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4206,10 +4211,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_function_type_right_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4225,10 +4230,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_sigma_type_field_type_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4244,10 +4249,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_sigma_type_successor_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4266,7 +4271,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>struct modern_hash *<br/>
 (*modern_node_named_type_name_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4282,10 +4287,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_named_type_content_type_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4304,7 +4309,45 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>uint64_t<br/>
 (*modern_node_universe_type_level_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Parameters</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_satisfies_type_supertype_get</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_satisfies_type_supertype_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Parameters</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_satisfies_type_predicate_get</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_satisfies_type_predicate_get)<br/>
+(modern_library *library,<br/>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4326,10 +4369,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_lambda_content_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4345,10 +4388,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_apply_left_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4364,10 +4407,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_apply_right_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4386,7 +4429,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>uint64_t<br/>
 (*modern_node_type_family_count_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4402,10 +4445,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_type_family_item_get)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  uint64_t index);</p>
 </li>
 <li>
@@ -4425,7 +4468,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>uint64_t<br/>
 (*modern_node_let_count_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4441,10 +4484,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_let_item_get)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  uint64_t index);</p>
 </li>
 <li>
@@ -4461,10 +4504,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_let_content_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4483,7 +4526,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>uint64_t<br/>
 (*modern_node_backreference_index_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4502,7 +4545,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>uint16_t<br/>
 (*modern_node_builtin_identifier_get)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4530,7 +4573,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_bool_false_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -4548,7 +4591,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_bool_true_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -4566,7 +4609,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_ordering_less_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -4584,7 +4627,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_ordering_equal_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -4602,7 +4645,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_ordering_greater_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -4620,10 +4663,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_maybe_nothing_make)<br/>
 (modern_library *library,<br/>
- modern *type);</p>
+ void *type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4639,11 +4682,11 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_maybe_just_make)<br/>
 (modern_library *library,<br/>
- modern *type,<br/>
- modern *content_value);</p>
+ void *type,<br/>
+ void *content_value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4659,7 +4702,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_int8_make)<br/>
 (modern_library *library,<br/>
  int8_t value);</p>
@@ -4678,7 +4721,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_int16_make)<br/>
 (modern_library *library,<br/>
  int16_t value);</p>
@@ -4697,7 +4740,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_int32_make)<br/>
 (modern_library *library,<br/>
  int32_t value);</p>
@@ -4716,7 +4759,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_int64_make)<br/>
 (modern_library *library,<br/>
  int64_t value);</p>
@@ -4735,7 +4778,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_nat8_make)<br/>
 (modern_library *library,<br/>
  uint8_t value);</p>
@@ -4754,7 +4797,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_nat16_make)<br/>
 (modern_library *library,<br/>
  uint16_t value);</p>
@@ -4773,7 +4816,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_nat32_make)<br/>
 (modern_library *library,<br/>
  uint32_t value);</p>
@@ -4792,7 +4835,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_nat64_make)<br/>
 (modern_library *library,<br/>
  uint64_t value);</p>
@@ -4811,7 +4854,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_float32_make)<br/>
 (modern_library *library,<br/>
  float value);</p>
@@ -4830,7 +4873,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_float64_make)<br/>
 (modern_library *library,<br/>
  double value);</p>
@@ -4849,7 +4892,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_utf8_make)<br/>
 (modern_library *library,<br/>
  uint8_t *data);</p>
@@ -4868,7 +4911,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_blob_make)<br/>
 (modern_library *library,<br/>
  uint8_t *data,<br/>
@@ -4888,12 +4931,12 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_sigma_make)<br/>
 (modern_library *library,<br/>
- modern *type,<br/>
- modern *field_value,<br/>
- modern *successor_value);</p>
+ void *type,<br/>
+ void *field_value,<br/>
+ void *successor_value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4909,7 +4952,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_name_value_make)<br/>
 (modern_library *library,<br/>
  struct modern_hash *name);</p>
@@ -4928,11 +4971,11 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_named_value_make)<br/>
 (modern_library *library,<br/>
- modern *type,<br/>
- modern *value);</p>
+ void *type,<br/>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -4954,7 +4997,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_bool_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -4972,7 +5015,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_ordering_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -4990,10 +5033,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_maybe_type_make)<br/>
 (modern_library *library,<br/>
- modern *content_type);</p>
+ void *content_type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5009,7 +5052,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_int8_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5027,7 +5070,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_int16_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5045,7 +5088,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_int32_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5063,7 +5106,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_int64_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5081,7 +5124,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_nat8_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5099,7 +5142,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_nat16_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5117,7 +5160,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_nat32_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5135,7 +5178,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_nat64_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5153,7 +5196,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_float32_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5171,7 +5214,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_float64_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5189,7 +5232,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_utf8_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5207,7 +5250,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_blob_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5225,11 +5268,11 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_function_type_make)<br/>
 (modern_library *library,<br/>
- modern *left,<br/>
- modern *right);</p>
+ void *left,<br/>
+ void *right);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5245,10 +5288,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_sigma_type_make)<br/>
 (modern_library *library,<br/>
- modern *field_type, modern *successor);</p>
+ void *field_type, void *successor);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5264,7 +5307,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_name_type_make)<br/>
 (modern_library *library);</p>
 </li>
@@ -5282,11 +5325,11 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_named_type_make)<br/>
 (modern_library *library,<br/>
  struct modern_hash *name,<br/>
- modern *content_type);</p>
+ void *content_type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5302,10 +5345,29 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_universe_type_make)<br/>
 (modern_library *library,<br/>
  uint64_t level);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Parameters</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_satisfies_type_make</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
+(*modern_node_satisfies_type_make)<br/>
+(modern_library *library,<br/>
+ void *supertype, void *predicate);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5327,10 +5389,10 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_lambda_make)<br/>
 (modern_library *library,<br/>
- modern *content);</p>
+ void *content);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5346,11 +5408,11 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_apply_make)<br/>
 (modern_library *library,<br/>
- modern *left,<br/>
- modern *right);</p>
+ void *left,<br/>
+ void *right);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5366,11 +5428,11 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_type_family_make)<br/>
 (modern_library *library,<br/>
  uint64_t n_items,<br/>
- modern **types);</p>
+ void **types);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5386,12 +5448,12 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_let_make)<br/>
 (modern_library *library,<br/>
  uint64_t n_items,<br/>
- modern **types,<br/>
- modern *content);</p>
+ void **types,<br/>
+ void *content);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5407,7 +5469,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_backreference_make)<br/>
 (modern_library *library,<br/>
  uint64_t index);</p>
@@ -5426,7 +5488,7 @@ modern_vfile_fd_finalize<br/>
 <hr/>
 <ul>
 <li>
-<p class="binderItem"><strong>Synopsis</strong><br/>modern *<br/>
+<p class="binderItem"><strong>Synopsis</strong><br/>void *<br/>
 (*modern_node_builtin_make)<br/>
 (modern_library *library,<br/>
  uint16_t identifier);</p>
@@ -5460,7 +5522,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_immutable_set)<br/>
 (modern_library *library,<br/>
- modern *value);</p>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5505,8 +5567,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_maybe_just_content_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *content_value);</p>
+ void *value,<br/>
+ void *content_value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5525,7 +5587,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_int8_set)<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
+ void *node,<br/>
  int8_t value);</p>
 </li>
 <li>
@@ -5545,7 +5607,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_int16_set)<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
+ void *node,<br/>
  int16_t value);</p>
 </li>
 <li>
@@ -5565,7 +5627,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_int32_set)<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
+ void *node,<br/>
  int32_t value);</p>
 </li>
 <li>
@@ -5585,7 +5647,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_int64_set)<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
+ void *node,<br/>
  int64_t value);</p>
 </li>
 <li>
@@ -5605,7 +5667,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_nat8_set)<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
+ void *node,<br/>
  uint8_t value);</p>
 </li>
 <li>
@@ -5625,7 +5687,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_nat16_set)<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
+ void *node,<br/>
  uint16_t value);</p>
 </li>
 <li>
@@ -5645,7 +5707,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_nat32_set)<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
+ void *node,<br/>
  uint32_t value);</p>
 </li>
 <li>
@@ -5665,7 +5727,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_nat64_set)<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
+ void *node,<br/>
  uint64_t value);</p>
 </li>
 <li>
@@ -5685,7 +5747,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_float32_set)<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
+ void *node,<br/>
  float value);</p>
 </li>
 <li>
@@ -5705,7 +5767,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_float64_set)<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
+ void *node,<br/>
  double value);</p>
 </li>
 <li>
@@ -5725,7 +5787,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_utf8_data_piece_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  uint8_t *data,<br/>
  size_t offset,<br/>
  size_t old_bytes,<br/>
@@ -5748,7 +5810,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_blob_data_piece_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  uint8_t *data,<br/>
  size_t offset,<br/>
  size_t old_bytes,<br/>
@@ -5771,9 +5833,9 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_sigma_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *field_value,<br/>
- modern *successor);</p>
+ void *value,<br/>
+ void *field_value,<br/>
+ void *successor);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5792,9 +5854,9 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_named_value_set)<br/>
 (modern_library *library,<br/>
- modern *node,<br/>
- modern *type,<br/>
- modern *value);</p>
+ void *node,<br/>
+ void *type,<br/>
+ void *value);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5819,8 +5881,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_maybe_type_content_type_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *content_type);</p>
+ void *value,<br/>
+ void *content_type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5839,8 +5901,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_function_type_left_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *left);</p>
+ void *value,<br/>
+ void *left);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5859,8 +5921,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_function_type_right_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *right);</p>
+ void *value,<br/>
+ void *right);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5879,8 +5941,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_sigma_type_field_type_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *field_type);</p>
+ void *value,<br/>
+ void *field_type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5899,8 +5961,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_sigma_type_successor_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *successor);</p>
+ void *value,<br/>
+ void *successor);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5919,7 +5981,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_named_type_name_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  struct modern_hash *name);</p>
 </li>
 <li>
@@ -5939,8 +6001,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_named_type_content_type_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *content_type);</p>
+ void *value,<br/>
+ void *content_type);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5959,8 +6021,48 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_universe_type_level_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  uint64_t level);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Parameters</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_satisfies_type_supertype_set</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
+(*modern_node_satisfies_type_supertype_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *supertype);</p>
+</li>
+<li>
+<p class="binderItem"><strong>Parameters</strong></p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>modern_node_satisfies_type_predicate_set</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
+(*modern_node_satisfies_type_predicate_set)<br/>
+(modern_library *library,<br/>
+ void *value,<br/>
+ void *predicate);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -5985,8 +6087,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_lambda_content_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *content);</p>
+ void *value,<br/>
+ void *content);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -6005,8 +6107,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_apply_left_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *left);</p>
+ void *value,<br/>
+ void *left);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -6025,8 +6127,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_apply_right_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *right);</p>
+ void *value,<br/>
+ void *right);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -6045,8 +6147,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_set_type_family_item_add)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *item,<br/>
+ void *value,<br/>
+ void *item,<br/>
  uint64_t index);</p>
 </li>
 <li>
@@ -6066,7 +6168,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_set_type_family_item_remove)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  uint64_t index);</p>
 </li>
 <li>
@@ -6086,8 +6188,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_set_let_item_add)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *item,<br/>
+ void *value,<br/>
+ void *item,<br/>
  uint64_t index);</p>
 </li>
 <li>
@@ -6107,7 +6209,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_set_let_item_remove)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  uint64_t index);</p>
 </li>
 <li>
@@ -6127,8 +6229,8 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_let_content_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
- modern *content);</p>
+ void *value,<br/>
+ void *content);</p>
 </li>
 <li>
 <p class="binderItem"><strong>Parameters</strong></p>
@@ -6147,7 +6249,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_backreference_index_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  uint64_t index);</p>
 </li>
 <li>
@@ -6167,7 +6269,7 @@ modern_vfile_fd_finalize<br/>
 <p class="binderItem"><strong>Synopsis</strong><br/>void<br/>
 (*modern_node_builtin_identifier_set)<br/>
 (modern_library *library,<br/>
- modern *value,<br/>
+ void *value,<br/>
  uint16_t identifier);</p>
 </li>
 <li>
@@ -15769,6 +15871,48 @@ Value type (detailed notation)</p>
 </ul>
 <hr/>
 <li>
+<p class="binderItem"><strong>get_satisfies_type_supertype</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_satisfies_type_supertype = 2256<br/>
+<br/>
+Value type (abstract notation)<br/>
+universe 0 -> maybe (universe 0)<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_builtin_identifier_get_satisfies_type_supertype = 2256</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>get_satisfies_type_predicate</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>get_satisfies_type_predicate = 2257<br/>
+<br/>
+Value type (abstract notation)<br/>
+universe 0 -> maybe (a -> bool)<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_builtin_identifier_get_satisfies_type_predicate = 2257</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
 <p class="binderItem"><strong>make_sigma</strong></p>
 </li>
 <hr/>
@@ -15919,6 +16063,27 @@ Value type (detailed notation)</p>
 </li>
 <li>
 <p class="binderItem"><strong>Synopsis</strong><br/>modern_builtin_identifier_make_universe_type = 2464</p>
+</li>
+<li>
+<p class="binderItem"><strong>Semantics</strong></p>
+</li>
+</ul>
+<hr/>
+<li>
+<p class="binderItem"><strong>make_satisfies_type</strong></p>
+</li>
+<hr/>
+<ul>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>make_satisfies_type = 2480<br/>
+<br/>
+Value type (abstract notation)<br/>
+(supertype : universe 0) -> (predicate : supertype -> bool) -> satisfies supertype predicate<br/>
+<br/>
+Value type (detailed notation)</p>
+</li>
+<li>
+<p class="binderItem"><strong>Synopsis</strong><br/>modern_builtin_identifier_make_satisfies_type = 2480</p>
 </li>
 <li>
 <p class="binderItem"><strong>Semantics</strong></p>

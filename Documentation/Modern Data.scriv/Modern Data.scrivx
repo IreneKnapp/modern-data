@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ScrivenerProject Version="1.0" Creator="SCRMAC-2.4.1-22949" Modified="2013-06-07 20:19:57 -0400">
+<ScrivenerProject Version="1.0" Creator="SCRMAC-2.4.1-22949" Modified="2013-06-19 11:16:26 -0400">
     <Binder>
         <BinderItem ID="0" Type="DraftFolder" Created="2012-08-10 15:30:35 -0400" Modified="2012-08-10 15:30:35 -0400">
             <Title>Draft</Title>
@@ -10248,6 +10248,44 @@
                                                 </BinderItem>
                                             </Children>
                                         </BinderItem>
+                                        <BinderItem ID="4636" Type="Folder" Created="2012-08-13 06:52:01 -0400" Modified="2013-06-19 11:02:24 -0400">
+                                            <Title>modern_node_type_satisfies_type</Title>
+                                            <MetaData>
+                                                <LabelID>9</LabelID>
+                                                <StatusID>0</StatusID>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                            <Children>
+                                                <BinderItem ID="4637" Type="Text" Created="2012-09-18 16:38:07 -0400" Modified="2013-06-19 11:02:33 -0400">
+                                                    <Title>Synopsis</Title>
+                                                    <MetaData>
+                                                        <LabelID>2</LabelID>
+                                                        <StatusID>1</StatusID>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>36,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                                <BinderItem ID="4638" Type="Text" Created="2012-09-18 16:44:04 -0400" Modified="2012-09-18 16:45:25 -0400">
+                                                    <Title>Semantics</Title>
+                                                    <MetaData>
+                                                        <LabelID>7</LabelID>
+                                                        <StatusID>0</StatusID>
+                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                    </MetaData>
+                                                    <TextSettings>
+                                                        <TextSelection>0,0</TextSelection>
+                                                    </TextSettings>
+                                                </BinderItem>
+                                            </Children>
+                                        </BinderItem>
                                         <BinderItem ID="99" Type="Folder" Created="2012-08-13 06:52:02 -0400" Modified="2012-09-18 16:41:17 -0400">
                                             <Title>modern_node_type_lambda</Title>
                                             <MetaData>
@@ -10260,7 +10298,7 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                             <Children>
-                                                <BinderItem ID="1192" Type="Text" Created="2012-09-18 16:38:09 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                <BinderItem ID="1192" Type="Text" Created="2012-09-18 16:38:09 -0400" Modified="2013-06-19 11:03:07 -0400">
                                                     <Title>Synopsis</Title>
                                                     <MetaData>
                                                         <LabelID>2</LabelID>
@@ -10298,7 +10336,7 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                             <Children>
-                                                <BinderItem ID="1193" Type="Text" Created="2012-09-18 16:38:11 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                <BinderItem ID="1193" Type="Text" Created="2012-09-18 16:38:11 -0400" Modified="2013-06-19 11:03:07 -0400">
                                                     <Title>Synopsis</Title>
                                                     <MetaData>
                                                         <LabelID>2</LabelID>
@@ -10336,7 +10374,7 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                             <Children>
-                                                <BinderItem ID="1194" Type="Text" Created="2012-09-18 16:38:13 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                <BinderItem ID="1194" Type="Text" Created="2012-09-18 16:38:13 -0400" Modified="2013-06-19 11:03:07 -0400">
                                                     <Title>Synopsis</Title>
                                                     <MetaData>
                                                         <LabelID>2</LabelID>
@@ -10374,7 +10412,7 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                             <Children>
-                                                <BinderItem ID="1195" Type="Text" Created="2012-09-18 16:38:15 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                <BinderItem ID="1195" Type="Text" Created="2012-09-18 16:38:15 -0400" Modified="2013-06-19 11:03:07 -0400">
                                                     <Title>Synopsis</Title>
                                                     <MetaData>
                                                         <LabelID>2</LabelID>
@@ -10412,7 +10450,7 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                             <Children>
-                                                <BinderItem ID="1196" Type="Text" Created="2012-09-18 16:38:17 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                <BinderItem ID="1196" Type="Text" Created="2012-09-18 16:38:17 -0400" Modified="2013-06-19 11:03:07 -0400">
                                                     <Title>Synopsis</Title>
                                                     <MetaData>
                                                         <LabelID>2</LabelID>
@@ -10453,7 +10491,7 @@
                                                 <Reference BinderID="1914" Destination="[Internal Link]">Semantics</Reference>
                                             </References>
                                             <Children>
-                                                <BinderItem ID="1197" Type="Text" Created="2012-09-18 16:38:20 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                <BinderItem ID="1197" Type="Text" Created="2012-09-18 16:38:20 -0400" Modified="2013-06-19 11:03:07 -0400">
                                                     <Title>Synopsis</Title>
                                                     <MetaData>
                                                         <LabelID>2</LabelID>
@@ -10481,7 +10519,7 @@
                                         </BinderItem>
                                     </Children>
                                 </BinderItem>
-                                <BinderItem ID="1247" Type="Folder" Created="2012-09-18 17:20:31 -0400" Modified="2012-09-19 11:49:27 -0400">
+                                <BinderItem ID="1247" Type="Folder" Created="2012-09-18 17:20:31 -0400" Modified="2013-06-19 11:08:25 -0400">
                                     <Title>Callbacks</Title>
                                     <MetaData>
                                         <LabelID>3</LabelID>
@@ -10577,7 +10615,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1268" Type="Text" Created="2012-09-19 12:05:50 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1268" Type="Text" Created="2012-09-19 12:05:50 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -10627,7 +10665,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1269" Type="Text" Created="2012-09-19 12:05:54 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1269" Type="Text" Created="2012-09-19 12:05:54 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -10677,7 +10715,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1270" Type="Text" Created="2012-09-19 12:05:57 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1270" Type="Text" Created="2012-09-19 12:05:57 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -10727,7 +10765,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1916" Type="Text" Created="2012-09-19 12:05:59 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1916" Type="Text" Created="2012-09-19 12:05:59 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -10792,7 +10830,7 @@
                                                                 <TextSelection>85,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1272" Type="Text" Created="2012-09-19 12:06:01 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1272" Type="Text" Created="2012-09-19 12:06:01 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -10842,7 +10880,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1273" Type="Text" Created="2012-09-19 12:06:03 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1273" Type="Text" Created="2012-09-19 12:06:03 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -10892,7 +10930,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1274" Type="Text" Created="2012-09-19 12:06:06 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1274" Type="Text" Created="2012-09-19 12:06:06 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -10942,7 +10980,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1275" Type="Text" Created="2012-09-19 12:06:08 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1275" Type="Text" Created="2012-09-19 12:06:08 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -10992,7 +11030,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1276" Type="Text" Created="2012-09-19 12:06:10 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1276" Type="Text" Created="2012-09-19 12:06:10 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11042,7 +11080,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1277" Type="Text" Created="2012-09-19 12:06:12 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1277" Type="Text" Created="2012-09-19 12:06:12 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11092,7 +11130,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1278" Type="Text" Created="2012-09-19 12:06:16 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1278" Type="Text" Created="2012-09-19 12:06:16 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11142,7 +11180,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1279" Type="Text" Created="2012-09-19 12:06:20 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1279" Type="Text" Created="2012-09-19 12:06:20 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11192,7 +11230,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1280" Type="Text" Created="2012-09-19 12:06:22 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1280" Type="Text" Created="2012-09-19 12:06:22 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11242,7 +11280,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1281" Type="Text" Created="2012-09-19 12:06:24 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1281" Type="Text" Created="2012-09-19 12:06:24 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11292,7 +11330,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1282" Type="Text" Created="2012-09-19 12:06:26 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1282" Type="Text" Created="2012-09-19 12:06:26 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11342,7 +11380,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1283" Type="Text" Created="2012-09-19 12:06:28 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1283" Type="Text" Created="2012-09-19 12:06:28 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11392,7 +11430,7 @@
                                                                 <TextSelection>88,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1284" Type="Text" Created="2012-09-19 12:06:29 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1284" Type="Text" Created="2012-09-19 12:06:29 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11442,7 +11480,7 @@
                                                                 <TextSelection>50,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1285" Type="Text" Created="2012-09-19 12:06:32 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1285" Type="Text" Created="2012-09-19 12:06:32 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11492,7 +11530,7 @@
                                                                 <TextSelection>88,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1286" Type="Text" Created="2012-09-19 12:06:34 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1286" Type="Text" Created="2012-09-19 12:06:34 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11542,7 +11580,7 @@
                                                                 <TextSelection>37,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1287" Type="Text" Created="2012-09-19 12:06:36 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1287" Type="Text" Created="2012-09-19 12:06:36 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11592,7 +11630,7 @@
                                                                 <TextSelection>62,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1288" Type="Text" Created="2012-09-19 12:06:39 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1288" Type="Text" Created="2012-09-19 12:06:39 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11642,7 +11680,7 @@
                                                                 <TextSelection>0,89</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1289" Type="Text" Created="2012-09-19 12:06:41 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1289" Type="Text" Created="2012-09-19 12:06:41 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11692,7 +11730,7 @@
                                                                 <TextSelection>8,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1290" Type="Text" Created="2012-09-19 12:06:45 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1290" Type="Text" Created="2012-09-19 12:06:45 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11757,7 +11795,7 @@
                                                                 <TextSelection>91,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1291" Type="Text" Created="2012-09-19 12:06:50 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1291" Type="Text" Created="2012-09-19 12:06:50 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11807,7 +11845,7 @@
                                                                 <TextSelection>74,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1292" Type="Text" Created="2012-09-19 12:06:52 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1292" Type="Text" Created="2012-09-19 12:06:52 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11857,7 +11895,7 @@
                                                                 <TextSelection>74,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1293" Type="Text" Created="2012-09-19 12:06:55 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1293" Type="Text" Created="2012-09-19 12:06:55 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11907,7 +11945,7 @@
                                                                 <TextSelection>74,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1294" Type="Text" Created="2012-09-19 12:06:56 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1294" Type="Text" Created="2012-09-19 12:06:56 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11957,7 +11995,7 @@
                                                                 <TextSelection>88,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1295" Type="Text" Created="2012-09-19 12:06:59 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1295" Type="Text" Created="2012-09-19 12:06:59 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12007,7 +12045,7 @@
                                                                 <TextSelection>74,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1296" Type="Text" Created="2012-09-19 12:07:01 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1296" Type="Text" Created="2012-09-19 12:07:01 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12057,7 +12095,7 @@
                                                                 <TextSelection>70,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1297" Type="Text" Created="2012-09-19 12:07:03 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1297" Type="Text" Created="2012-09-19 12:07:03 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12107,7 +12145,7 @@
                                                                 <TextSelection>1,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1298" Type="Text" Created="2012-09-19 12:07:05 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1298" Type="Text" Created="2012-09-19 12:07:05 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12132,6 +12170,106 @@
                                                                     </TextSettings>
                                                                 </BinderItem>
                                                                 <BinderItem ID="1544" Type="Text" Created="2012-09-19 13:36:58 -0400" Modified="2012-09-19 13:37:00 -0400">
+                                                                    <Title>Semantics</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>7</LabelID>
+                                                                        <StatusID>0</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                            </Children>
+                                                        </BinderItem>
+                                                        <BinderItem ID="4644" Type="Folder" Created="2012-08-13 06:55:42 -0400" Modified="2013-06-19 11:03:53 -0400">
+                                                            <Title>modern_node_satisfies_type_supertype_get</Title>
+                                                            <MetaData>
+                                                                <LabelID>9</LabelID>
+                                                                <StatusID>0</StatusID>
+                                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                                            </MetaData>
+                                                            <TextSettings>
+                                                                <TextSelection>1,0</TextSelection>
+                                                            </TextSettings>
+                                                            <Children>
+                                                                <BinderItem ID="4645" Type="Text" Created="2012-09-19 12:07:05 -0400" Modified="2013-06-19 11:08:13 -0400">
+                                                                    <Title>Synopsis</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>2</LabelID>
+                                                                        <StatusID>1</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                                <BinderItem ID="4646" Type="Text" Created="2012-09-19 13:36:56 -0400" Modified="2012-09-19 13:36:58 -0400">
+                                                                    <Title>Parameters</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>5</LabelID>
+                                                                        <StatusID>0</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                                <BinderItem ID="4647" Type="Text" Created="2012-09-19 13:36:58 -0400" Modified="2012-09-19 13:37:00 -0400">
+                                                                    <Title>Semantics</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>7</LabelID>
+                                                                        <StatusID>0</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                            </Children>
+                                                        </BinderItem>
+                                                        <BinderItem ID="4640" Type="Folder" Created="2012-08-13 06:55:42 -0400" Modified="2013-06-19 11:03:45 -0400">
+                                                            <Title>modern_node_satisfies_type_predicate_get</Title>
+                                                            <MetaData>
+                                                                <LabelID>9</LabelID>
+                                                                <StatusID>0</StatusID>
+                                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                                            </MetaData>
+                                                            <TextSettings>
+                                                                <TextSelection>1,0</TextSelection>
+                                                            </TextSettings>
+                                                            <Children>
+                                                                <BinderItem ID="4641" Type="Text" Created="2012-09-19 12:07:05 -0400" Modified="2013-06-19 11:08:13 -0400">
+                                                                    <Title>Synopsis</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>2</LabelID>
+                                                                        <StatusID>1</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                                <BinderItem ID="4642" Type="Text" Created="2012-09-19 13:36:56 -0400" Modified="2012-09-19 13:36:58 -0400">
+                                                                    <Title>Parameters</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>5</LabelID>
+                                                                        <StatusID>0</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                                <BinderItem ID="4643" Type="Text" Created="2012-09-19 13:36:58 -0400" Modified="2012-09-19 13:37:00 -0400">
                                                                     <Title>Semantics</Title>
                                                                     <MetaData>
                                                                         <LabelID>7</LabelID>
@@ -12172,7 +12310,7 @@
                                                                 <TextSelection>61,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1299" Type="Text" Created="2012-09-19 12:07:08 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1299" Type="Text" Created="2012-09-19 12:07:08 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12222,7 +12360,7 @@
                                                                 <TextSelection>57,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1300" Type="Text" Created="2012-09-19 12:07:12 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1300" Type="Text" Created="2012-09-19 12:07:12 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12272,7 +12410,7 @@
                                                                 <TextSelection>58,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1301" Type="Text" Created="2012-09-19 12:07:14 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1301" Type="Text" Created="2012-09-19 12:07:14 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12322,7 +12460,7 @@
                                                                 <TextSelection>58,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1302" Type="Text" Created="2012-09-19 12:07:16 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1302" Type="Text" Created="2012-09-19 12:07:16 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12372,7 +12510,7 @@
                                                                 <TextSelection>58,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1303" Type="Text" Created="2012-09-19 12:07:18 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1303" Type="Text" Created="2012-09-19 12:07:18 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12422,7 +12560,7 @@
                                                                 <TextSelection>58,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1304" Type="Text" Created="2012-09-19 12:07:27 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1304" Type="Text" Created="2012-09-19 12:07:27 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12472,7 +12610,7 @@
                                                                 <TextSelection>58,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1305" Type="Text" Created="2012-09-19 12:07:28 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1305" Type="Text" Created="2012-09-19 12:07:28 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12522,7 +12660,7 @@
                                                                 <TextSelection>58,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1306" Type="Text" Created="2012-09-19 12:07:30 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1306" Type="Text" Created="2012-09-19 12:07:30 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12572,7 +12710,7 @@
                                                                 <TextSelection>0,87</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1307" Type="Text" Created="2012-09-19 12:07:32 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1307" Type="Text" Created="2012-09-19 12:07:32 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12622,7 +12760,7 @@
                                                                 <TextSelection>58,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1308" Type="Text" Created="2012-09-19 12:07:34 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1308" Type="Text" Created="2012-09-19 12:07:34 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12707,7 +12845,7 @@
                                                                 <TextSelection>63,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1309" Type="Text" Created="2012-09-19 12:07:40 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1309" Type="Text" Created="2012-09-19 12:07:40 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12757,7 +12895,7 @@
                                                                 <TextSelection>35,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1310" Type="Text" Created="2012-09-19 12:07:42 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1310" Type="Text" Created="2012-09-19 12:07:42 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12807,7 +12945,7 @@
                                                                 <TextSelection>35,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1311" Type="Text" Created="2012-09-19 12:07:44 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1311" Type="Text" Created="2012-09-19 12:07:44 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12857,7 +12995,7 @@
                                                                 <TextSelection>35,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1312" Type="Text" Created="2012-09-19 12:07:45 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1312" Type="Text" Created="2012-09-19 12:07:45 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12907,7 +13045,7 @@
                                                                 <TextSelection>35,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1313" Type="Text" Created="2012-09-19 12:07:47 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1313" Type="Text" Created="2012-09-19 12:07:47 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -12957,7 +13095,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1314" Type="Text" Created="2012-09-19 12:07:50 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1314" Type="Text" Created="2012-09-19 12:07:50 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13007,7 +13145,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1315" Type="Text" Created="2012-09-19 12:07:52 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1315" Type="Text" Created="2012-09-19 12:07:52 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13057,7 +13195,7 @@
                                                                 <TextSelection>13,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1316" Type="Text" Created="2012-09-19 12:07:55 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1316" Type="Text" Created="2012-09-19 12:07:55 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13107,7 +13245,7 @@
                                                                 <TextSelection>53,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1317" Type="Text" Created="2012-09-19 12:07:57 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1317" Type="Text" Created="2012-09-19 12:07:57 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13157,7 +13295,7 @@
                                                                 <TextSelection>53,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1318" Type="Text" Created="2012-09-19 12:08:03 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1318" Type="Text" Created="2012-09-19 12:08:03 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13207,7 +13345,7 @@
                                                                 <TextSelection>53,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1319" Type="Text" Created="2012-09-19 12:08:05 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1319" Type="Text" Created="2012-09-19 12:08:05 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13257,7 +13395,7 @@
                                                                 <TextSelection>52,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1320" Type="Text" Created="2012-09-19 12:08:06 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1320" Type="Text" Created="2012-09-19 12:08:06 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13307,7 +13445,7 @@
                                                                 <TextSelection>54,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1321" Type="Text" Created="2012-09-19 12:08:08 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1321" Type="Text" Created="2012-09-19 12:08:08 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13357,7 +13495,7 @@
                                                                 <TextSelection>54,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1322" Type="Text" Created="2012-09-19 12:08:10 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1322" Type="Text" Created="2012-09-19 12:08:10 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13407,7 +13545,7 @@
                                                                 <TextSelection>54,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1323" Type="Text" Created="2012-09-19 12:08:13 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1323" Type="Text" Created="2012-09-19 12:08:13 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13457,7 +13595,7 @@
                                                                 <TextSelection>53,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1324" Type="Text" Created="2012-09-19 12:08:16 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1324" Type="Text" Created="2012-09-19 12:08:16 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13507,7 +13645,7 @@
                                                                 <TextSelection>54,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1325" Type="Text" Created="2012-09-19 12:08:26 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1325" Type="Text" Created="2012-09-19 12:08:26 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13557,7 +13695,7 @@
                                                                 <TextSelection>73,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1326" Type="Text" Created="2012-09-19 12:08:28 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1326" Type="Text" Created="2012-09-19 12:08:28 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13607,7 +13745,7 @@
                                                                 <TextSelection>66,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1327" Type="Text" Created="2012-09-19 12:08:30 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1327" Type="Text" Created="2012-09-19 12:08:30 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13657,7 +13795,7 @@
                                                                 <TextSelection>121,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1328" Type="Text" Created="2012-09-19 12:08:31 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1328" Type="Text" Created="2012-09-19 12:08:31 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13707,7 +13845,7 @@
                                                                 <TextSelection>84,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1329" Type="Text" Created="2012-09-19 12:08:33 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1329" Type="Text" Created="2012-09-19 12:08:33 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13757,7 +13895,7 @@
                                                                 <TextSelection>0,95</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1330" Type="Text" Created="2012-09-19 12:08:35 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1330" Type="Text" Created="2012-09-19 12:08:35 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13822,7 +13960,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1331" Type="Text" Created="2012-09-19 12:08:40 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1331" Type="Text" Created="2012-09-19 12:08:40 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13872,7 +14010,7 @@
                                                                 <TextSelection>66,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1332" Type="Text" Created="2012-09-19 12:08:42 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1332" Type="Text" Created="2012-09-19 12:08:42 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13922,7 +14060,7 @@
                                                                 <TextSelection>86,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1333" Type="Text" Created="2012-09-19 12:08:44 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1333" Type="Text" Created="2012-09-19 12:08:44 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -13972,7 +14110,7 @@
                                                                 <TextSelection>43,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1334" Type="Text" Created="2012-09-19 12:08:46 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1334" Type="Text" Created="2012-09-19 12:08:46 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14022,7 +14160,7 @@
                                                                 <TextSelection>44,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1335" Type="Text" Created="2012-09-19 12:08:48 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1335" Type="Text" Created="2012-09-19 12:08:48 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14072,7 +14210,7 @@
                                                                 <TextSelection>63,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1336" Type="Text" Created="2012-09-19 12:08:50 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1336" Type="Text" Created="2012-09-19 12:08:50 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14122,7 +14260,7 @@
                                                                 <TextSelection>44,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1337" Type="Text" Created="2012-09-19 12:08:54 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1337" Type="Text" Created="2012-09-19 12:08:54 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14172,7 +14310,7 @@
                                                                 <TextSelection>43,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1338" Type="Text" Created="2012-09-19 12:08:56 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1338" Type="Text" Created="2012-09-19 12:08:56 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14222,7 +14360,7 @@
                                                                 <TextSelection>63,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1339" Type="Text" Created="2012-09-19 12:08:58 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1339" Type="Text" Created="2012-09-19 12:08:58 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14272,7 +14410,7 @@
                                                                 <TextSelection>44,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1340" Type="Text" Created="2012-09-19 12:09:00 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1340" Type="Text" Created="2012-09-19 12:09:00 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14322,7 +14460,7 @@
                                                                 <TextSelection>44,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1341" Type="Text" Created="2012-09-19 12:09:02 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1341" Type="Text" Created="2012-09-19 12:09:02 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14372,7 +14510,7 @@
                                                                 <TextSelection>46,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1342" Type="Text" Created="2012-09-19 12:09:07 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1342" Type="Text" Created="2012-09-19 12:09:07 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14422,7 +14560,7 @@
                                                                 <TextSelection>46,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1343" Type="Text" Created="2012-09-19 12:09:11 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1343" Type="Text" Created="2012-09-19 12:09:11 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14472,7 +14610,7 @@
                                                                 <TextSelection>43,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1344" Type="Text" Created="2012-09-19 12:09:14 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1344" Type="Text" Created="2012-09-19 12:09:14 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14522,7 +14660,7 @@
                                                                 <TextSelection>43,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1345" Type="Text" Created="2012-09-19 12:09:17 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1345" Type="Text" Created="2012-09-19 12:09:17 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14572,7 +14710,7 @@
                                                                 <TextSelection>34,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1346" Type="Text" Created="2012-09-19 12:09:18 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1346" Type="Text" Created="2012-09-19 12:09:18 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14622,7 +14760,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1347" Type="Text" Created="2012-09-19 12:09:19 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1347" Type="Text" Created="2012-09-19 12:09:19 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14672,7 +14810,7 @@
                                                                 <TextSelection>60,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1348" Type="Text" Created="2012-09-19 12:09:21 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1348" Type="Text" Created="2012-09-19 12:09:21 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14722,7 +14860,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1349" Type="Text" Created="2012-09-19 12:09:23 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1349" Type="Text" Created="2012-09-19 12:09:23 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14772,7 +14910,7 @@
                                                                 <TextSelection>47,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1350" Type="Text" Created="2012-09-19 12:09:24 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1350" Type="Text" Created="2012-09-19 12:09:24 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14797,6 +14935,56 @@
                                                                     </TextSettings>
                                                                 </BinderItem>
                                                                 <BinderItem ID="1648" Type="Text" Created="2012-09-19 13:41:49 -0400" Modified="2012-09-19 13:41:51 -0400">
+                                                                    <Title>Semantics</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>7</LabelID>
+                                                                        <StatusID>0</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                            </Children>
+                                                        </BinderItem>
+                                                        <BinderItem ID="4648" Type="Folder" Created="2012-08-13 07:01:53 -0400" Modified="2013-06-19 11:05:26 -0400">
+                                                            <Title>modern_node_satisfies_type_make</Title>
+                                                            <MetaData>
+                                                                <LabelID>9</LabelID>
+                                                                <StatusID>0</StatusID>
+                                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                                            </MetaData>
+                                                            <TextSettings>
+                                                                <TextSelection>47,0</TextSelection>
+                                                            </TextSettings>
+                                                            <Children>
+                                                                <BinderItem ID="4649" Type="Text" Created="2012-09-19 12:09:24 -0400" Modified="2013-06-19 11:05:48 -0400">
+                                                                    <Title>Synopsis</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>2</LabelID>
+                                                                        <StatusID>1</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                                <BinderItem ID="4650" Type="Text" Created="2012-09-19 13:41:47 -0400" Modified="2012-09-19 13:41:48 -0400">
+                                                                    <Title>Parameters</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>5</LabelID>
+                                                                        <StatusID>0</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                                <BinderItem ID="4651" Type="Text" Created="2012-09-19 13:41:49 -0400" Modified="2012-09-19 13:41:51 -0400">
                                                                     <Title>Semantics</Title>
                                                                     <MetaData>
                                                                         <LabelID>7</LabelID>
@@ -14837,7 +15025,7 @@
                                                                 <TextSelection>56,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1351" Type="Text" Created="2012-09-19 12:09:26 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1351" Type="Text" Created="2012-09-19 12:09:26 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14887,7 +15075,7 @@
                                                                 <TextSelection>67,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1352" Type="Text" Created="2012-09-19 12:09:28 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1352" Type="Text" Created="2012-09-19 12:09:28 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14937,7 +15125,7 @@
                                                                 <TextSelection>98,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1353" Type="Text" Created="2012-09-19 12:09:29 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1353" Type="Text" Created="2012-09-19 12:09:29 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14987,7 +15175,7 @@
                                                                 <TextSelection>110,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1354" Type="Text" Created="2012-09-19 12:09:31 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1354" Type="Text" Created="2012-09-19 12:09:31 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15037,7 +15225,7 @@
                                                                 <TextSelection>81,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1355" Type="Text" Created="2012-09-19 12:09:33 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1355" Type="Text" Created="2012-09-19 12:09:33 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15087,7 +15275,7 @@
                                                                 <TextSelection>82,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1356" Type="Text" Created="2012-09-19 12:09:35 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1356" Type="Text" Created="2012-09-19 12:09:35 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15166,7 +15354,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1357" Type="Text" Created="2012-09-19 12:09:40 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1357" Type="Text" Created="2012-09-19 12:09:40 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15284,7 +15472,7 @@
                                                                 <TextSelection>106,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1358" Type="Text" Created="2012-09-19 12:09:42 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1358" Type="Text" Created="2012-09-19 12:09:42 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15334,7 +15522,7 @@
                                                                 <TextSelection>61,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1359" Type="Text" Created="2012-09-19 12:09:43 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1359" Type="Text" Created="2012-09-19 12:09:43 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15384,7 +15572,7 @@
                                                                 <TextSelection>63,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1360" Type="Text" Created="2012-09-19 12:09:45 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1360" Type="Text" Created="2012-09-19 12:09:45 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15434,7 +15622,7 @@
                                                                 <TextSelection>63,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1361" Type="Text" Created="2012-09-19 12:09:46 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1361" Type="Text" Created="2012-09-19 12:09:46 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15484,7 +15672,7 @@
                                                                 <TextSelection>63,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1362" Type="Text" Created="2012-09-19 12:09:48 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1362" Type="Text" Created="2012-09-19 12:09:48 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15534,7 +15722,7 @@
                                                                 <TextSelection>62,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1363" Type="Text" Created="2012-09-19 12:09:49 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1363" Type="Text" Created="2012-09-19 12:09:49 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15584,7 +15772,7 @@
                                                                 <TextSelection>64,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1364" Type="Text" Created="2012-09-19 12:09:51 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1364" Type="Text" Created="2012-09-19 12:09:51 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15634,7 +15822,7 @@
                                                                 <TextSelection>64,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1365" Type="Text" Created="2012-09-19 12:09:52 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1365" Type="Text" Created="2012-09-19 12:09:52 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15684,7 +15872,7 @@
                                                                 <TextSelection>64,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1366" Type="Text" Created="2012-09-19 12:09:53 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1366" Type="Text" Created="2012-09-19 12:09:53 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15734,7 +15922,7 @@
                                                                 <TextSelection>63,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1367" Type="Text" Created="2012-09-19 12:09:54 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1367" Type="Text" Created="2012-09-19 12:09:54 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15784,7 +15972,7 @@
                                                                 <TextSelection>64,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1368" Type="Text" Created="2012-09-19 12:09:56 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1368" Type="Text" Created="2012-09-19 12:09:56 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15834,7 +16022,7 @@
                                                                 <TextSelection>18,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1369" Type="Text" Created="2012-09-19 12:09:57 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1369" Type="Text" Created="2012-09-19 12:09:57 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15884,7 +16072,7 @@
                                                                 <TextSelection>88,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1370" Type="Text" Created="2012-09-19 12:09:58 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1370" Type="Text" Created="2012-09-19 12:09:58 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15934,7 +16122,7 @@
                                                                 <TextSelection>93,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1371" Type="Text" Created="2012-09-19 12:09:59 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1371" Type="Text" Created="2012-09-19 12:09:59 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -15984,7 +16172,7 @@
                                                                 <TextSelection>0,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1372" Type="Text" Created="2012-09-19 12:10:07 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1372" Type="Text" Created="2012-09-19 12:10:07 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16049,7 +16237,7 @@
                                                                 <TextSelection>110,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1373" Type="Text" Created="2012-09-19 12:10:09 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1373" Type="Text" Created="2012-09-19 12:10:09 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16099,7 +16287,7 @@
                                                                 <TextSelection>4,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1374" Type="Text" Created="2012-09-19 12:10:10 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1374" Type="Text" Created="2012-09-19 12:10:10 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16149,7 +16337,7 @@
                                                                 <TextSelection>74,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1375" Type="Text" Created="2012-09-19 12:10:11 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1375" Type="Text" Created="2012-09-19 12:10:11 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16199,7 +16387,7 @@
                                                                 <TextSelection>74,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1376" Type="Text" Created="2012-09-19 12:10:12 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1376" Type="Text" Created="2012-09-19 12:10:12 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16249,7 +16437,7 @@
                                                                 <TextSelection>74,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1377" Type="Text" Created="2012-09-19 12:10:13 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1377" Type="Text" Created="2012-09-19 12:10:13 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16299,7 +16487,7 @@
                                                                 <TextSelection>106,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1378" Type="Text" Created="2012-09-19 12:10:14 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1378" Type="Text" Created="2012-09-19 12:10:14 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16349,7 +16537,7 @@
                                                                 <TextSelection>70,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1379" Type="Text" Created="2012-09-19 12:10:15 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1379" Type="Text" Created="2012-09-19 12:10:15 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16399,7 +16587,7 @@
                                                                 <TextSelection>1,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1380" Type="Text" Created="2012-09-19 12:10:16 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1380" Type="Text" Created="2012-09-19 12:10:16 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16424,6 +16612,106 @@
                                                                     </TextSettings>
                                                                 </BinderItem>
                                                                 <BinderItem ID="1708" Type="Text" Created="2012-09-19 13:44:43 -0400" Modified="2012-09-19 13:44:45 -0400">
+                                                                    <Title>Semantics</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>7</LabelID>
+                                                                        <StatusID>0</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                            </Children>
+                                                        </BinderItem>
+                                                        <BinderItem ID="4652" Type="Folder" Created="2012-08-13 06:55:42 -0400" Modified="2013-06-19 11:06:26 -0400">
+                                                            <Title>modern_node_satisfies_type_supertype_set</Title>
+                                                            <MetaData>
+                                                                <LabelID>9</LabelID>
+                                                                <StatusID>0</StatusID>
+                                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                                            </MetaData>
+                                                            <TextSettings>
+                                                                <TextSelection>1,0</TextSelection>
+                                                            </TextSettings>
+                                                            <Children>
+                                                                <BinderItem ID="4653" Type="Text" Created="2012-09-19 12:10:16 -0400" Modified="2013-06-19 11:08:13 -0400">
+                                                                    <Title>Synopsis</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>2</LabelID>
+                                                                        <StatusID>1</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                                <BinderItem ID="4654" Type="Text" Created="2012-09-19 13:44:41 -0400" Modified="2012-09-19 13:44:43 -0400">
+                                                                    <Title>Parameters</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>5</LabelID>
+                                                                        <StatusID>0</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                                <BinderItem ID="4655" Type="Text" Created="2012-09-19 13:44:43 -0400" Modified="2012-09-19 13:44:45 -0400">
+                                                                    <Title>Semantics</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>7</LabelID>
+                                                                        <StatusID>0</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                            </Children>
+                                                        </BinderItem>
+                                                        <BinderItem ID="4656" Type="Folder" Created="2012-08-13 06:55:42 -0400" Modified="2013-06-19 11:06:57 -0400">
+                                                            <Title>modern_node_satisfies_type_predicate_set</Title>
+                                                            <MetaData>
+                                                                <LabelID>9</LabelID>
+                                                                <StatusID>0</StatusID>
+                                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                                            </MetaData>
+                                                            <TextSettings>
+                                                                <TextSelection>1,0</TextSelection>
+                                                            </TextSettings>
+                                                            <Children>
+                                                                <BinderItem ID="4657" Type="Text" Created="2012-09-19 12:10:16 -0400" Modified="2013-06-19 11:08:13 -0400">
+                                                                    <Title>Synopsis</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>2</LabelID>
+                                                                        <StatusID>1</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                                <BinderItem ID="4658" Type="Text" Created="2012-09-19 13:44:41 -0400" Modified="2012-09-19 13:44:43 -0400">
+                                                                    <Title>Parameters</Title>
+                                                                    <MetaData>
+                                                                        <LabelID>5</LabelID>
+                                                                        <StatusID>0</StatusID>
+                                                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                                                    </MetaData>
+                                                                    <TextSettings>
+                                                                        <TextSelection>0,0</TextSelection>
+                                                                    </TextSettings>
+                                                                </BinderItem>
+                                                                <BinderItem ID="4659" Type="Text" Created="2012-09-19 13:44:43 -0400" Modified="2012-09-19 13:44:45 -0400">
                                                                     <Title>Semantics</Title>
                                                                     <MetaData>
                                                                         <LabelID>7</LabelID>
@@ -16464,7 +16752,7 @@
                                                                 <TextSelection>61,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1382" Type="Text" Created="2012-09-19 12:10:24 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1382" Type="Text" Created="2012-09-19 12:10:24 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16514,7 +16802,7 @@
                                                                 <TextSelection>57,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1383" Type="Text" Created="2012-09-19 12:10:25 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1383" Type="Text" Created="2012-09-19 12:10:25 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16564,7 +16852,7 @@
                                                                 <TextSelection>58,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1384" Type="Text" Created="2012-09-19 12:10:26 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1384" Type="Text" Created="2012-09-19 12:10:26 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16614,7 +16902,7 @@
                                                                 <TextSelection>4,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1385" Type="Text" Created="2012-09-19 12:10:27 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1385" Type="Text" Created="2012-09-19 12:10:27 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16664,7 +16952,7 @@
                                                                 <TextSelection>9,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1386" Type="Text" Created="2012-09-19 12:10:28 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1386" Type="Text" Created="2012-09-19 12:10:28 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16714,7 +17002,7 @@
                                                                 <TextSelection>58,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1387" Type="Text" Created="2012-09-19 12:10:30 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1387" Type="Text" Created="2012-09-19 12:10:30 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16764,7 +17052,7 @@
                                                                 <TextSelection>17,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1388" Type="Text" Created="2012-09-19 12:10:31 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1388" Type="Text" Created="2012-09-19 12:10:31 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16814,7 +17102,7 @@
                                                                 <TextSelection>4,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1389" Type="Text" Created="2012-09-19 12:10:32 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1389" Type="Text" Created="2012-09-19 12:10:32 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16864,7 +17152,7 @@
                                                                 <TextSelection>50,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1390" Type="Text" Created="2012-09-19 12:10:35 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1390" Type="Text" Created="2012-09-19 12:10:35 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16914,7 +17202,7 @@
                                                                 <TextSelection>4,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1391" Type="Text" Created="2012-09-19 12:10:36 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                                                <BinderItem ID="1391" Type="Text" Created="2012-09-19 12:10:36 -0400" Modified="2013-06-19 11:08:13 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -18221,7 +18509,7 @@
                                                 <NotesTextSelection>0,0</NotesTextSelection>
                                             </MetaData>
                                             <TextSettings>
-                                                <TextSelection>495,207</TextSelection>
+                                                <TextSelection>495,0</TextSelection>
                                             </TextSettings>
                                             <References>
                                                 <Reference BinderID="964" Destination="[Internal Link]">Streaming model</Reference>
@@ -41035,6 +41323,106 @@
                                         </BinderItem>
                                     </Children>
                                 </BinderItem>
+                                <BinderItem ID="4665" Type="Folder" Created="2012-09-12 13:57:42 -0400" Modified="2013-06-19 11:12:16 -0400">
+                                    <Title>get_satisfies_type_supertype</Title>
+                                    <MetaData>
+                                        <LabelID>9</LabelID>
+                                        <StatusID>0</StatusID>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem ID="4666" Type="Text" Created="2012-09-19 16:05:20 -0400" Modified="2013-06-19 11:13:09 -0400">
+                                            <Title>Synopsis</Title>
+                                            <MetaData>
+                                                <LabelID>2</LabelID>
+                                                <StatusID>0</StatusID>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="4667" Type="Text" Created="2012-09-19 16:05:20 -0400" Modified="2013-06-19 11:12:44 -0400">
+                                            <Title>Synopsis</Title>
+                                            <MetaData>
+                                                <LabelID>2</LabelID>
+                                                <StatusID>1</StatusID>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="4668" Type="Text" Created="2012-09-19 16:05:22 -0400" Modified="2012-09-19 16:19:08 -0400">
+                                            <Title>Semantics</Title>
+                                            <MetaData>
+                                                <LabelID>7</LabelID>
+                                                <StatusID>0</StatusID>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
+                                <BinderItem ID="4669" Type="Folder" Created="2012-09-12 13:57:42 -0400" Modified="2013-06-19 11:15:42 -0400">
+                                    <Title>get_satisfies_type_predicate</Title>
+                                    <MetaData>
+                                        <LabelID>9</LabelID>
+                                        <StatusID>0</StatusID>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem ID="4670" Type="Text" Created="2012-09-19 16:05:20 -0400" Modified="2013-06-19 11:14:25 -0400">
+                                            <Title>Synopsis</Title>
+                                            <MetaData>
+                                                <LabelID>2</LabelID>
+                                                <StatusID>0</StatusID>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="4671" Type="Text" Created="2012-09-19 16:05:20 -0400" Modified="2013-06-19 11:13:44 -0400">
+                                            <Title>Synopsis</Title>
+                                            <MetaData>
+                                                <LabelID>2</LabelID>
+                                                <StatusID>1</StatusID>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="4672" Type="Text" Created="2012-09-19 16:05:22 -0400" Modified="2012-09-19 16:19:08 -0400">
+                                            <Title>Semantics</Title>
+                                            <MetaData>
+                                                <LabelID>7</LabelID>
+                                                <StatusID>0</StatusID>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
                                 <BinderItem ID="759" Type="Folder" Created="2012-09-12 13:57:43 -0400" Modified="2012-09-19 16:41:53 -0400">
                                     <Title>make_sigma</Title>
                                     <MetaData>
@@ -41422,6 +41810,56 @@
                                             </TextSettings>
                                         </BinderItem>
                                         <BinderItem ID="2672" Type="Text" Created="2012-09-19 16:05:51 -0400" Modified="2012-09-19 16:19:08 -0400">
+                                            <Title>Semantics</Title>
+                                            <MetaData>
+                                                <LabelID>7</LabelID>
+                                                <StatusID>0</StatusID>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
+                                <BinderItem ID="4660" Type="Folder" Created="2012-09-12 13:57:56 -0400" Modified="2013-06-19 11:09:33 -0400">
+                                    <Title>make_satisfies_type</Title>
+                                    <MetaData>
+                                        <LabelID>9</LabelID>
+                                        <StatusID>0</StatusID>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                        <NotesTextSelection>0,0</NotesTextSelection>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem ID="4661" Type="Text" Created="2012-09-19 16:05:49 -0400" Modified="2013-06-19 11:11:09 -0400">
+                                            <Title>Synopsis</Title>
+                                            <MetaData>
+                                                <LabelID>2</LabelID>
+                                                <StatusID>0</StatusID>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>117,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="4662" Type="Text" Created="2012-09-19 16:05:49 -0400" Modified="2013-06-19 11:11:56 -0400">
+                                            <Title>Synopsis</Title>
+                                            <MetaData>
+                                                <LabelID>2</LabelID>
+                                                <StatusID>1</StatusID>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                                <NotesTextSelection>0,0</NotesTextSelection>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem ID="4663" Type="Text" Created="2012-09-19 16:05:51 -0400" Modified="2012-09-19 16:19:08 -0400">
                                             <Title>Semantics</Title>
                                             <MetaData>
                                                 <LabelID>7</LabelID>
@@ -45832,6 +46270,26 @@
                         <TextSelection>0,0</TextSelection>
                     </TextSettings>
                 </BinderItem>
+                <BinderItem ID="4639" Type="Text" Created="2013-06-19 11:02:17 -0400" Modified="2013-06-19 11:02:17 -0400">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem ID="4664" Type="Text" Created="2013-06-19 11:09:28 -0400" Modified="2013-06-19 11:09:28 -0400">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <NotesTextSelection>0,0</NotesTextSelection>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
             </Children>
         </BinderItem>
     </Binder>
@@ -45883,7 +46341,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="0" Characters="0" Date="2013-06-07 15:16:53 -0400"></PreviousSession>
+        <PreviousSession Words="8" Characters="-255" Date="2013-06-19 10:52:47 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>
