@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ScrivenerProject Version="1.0" Creator="SCRMAC-2.4.1-22949" Modified="2013-06-19 11:32:15 -0400">
+<ScrivenerProject Version="1.0" Creator="SCRMAC-2.4.1-22949" Modified="2013-06-19 11:45:41 -0400">
     <Binder>
         <BinderItem ID="0" Type="DraftFolder" Created="2012-08-10 15:30:35 -0400" Modified="2012-08-10 15:30:35 -0400">
             <Title>Draft</Title>
@@ -11833,8 +11833,8 @@
                                                                 </BinderItem>
                                                             </Children>
                                                         </BinderItem>
-                                                        <BinderItem ID="356" Type="Folder" Created="2012-08-13 06:55:41 -0400" Modified="2012-09-19 13:31:06 -0400">
-                                                            <Title>modern_node_function_type_left_get</Title>
+                                                        <BinderItem ID="356" Type="Folder" Created="2012-08-13 06:55:41 -0400" Modified="2013-06-19 11:45:15 -0400">
+                                                            <Title>modern_node_function_type_parameter_get</Title>
                                                             <MetaData>
                                                                 <LabelID>9</LabelID>
                                                                 <StatusID>0</StatusID>
@@ -11845,7 +11845,7 @@
                                                                 <TextSelection>74,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1292" Type="Text" Created="2012-09-19 12:06:52 -0400" Modified="2013-06-19 11:08:13 -0400">
+                                                                <BinderItem ID="1292" Type="Text" Created="2012-09-19 12:06:52 -0400" Modified="2013-06-19 11:45:24 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -11883,8 +11883,8 @@
                                                                 </BinderItem>
                                                             </Children>
                                                         </BinderItem>
-                                                        <BinderItem ID="357" Type="Folder" Created="2012-08-13 06:55:41 -0400" Modified="2012-09-19 13:31:06 -0400">
-                                                            <Title>modern_node_function_type_right_get</Title>
+                                                        <BinderItem ID="357" Type="Folder" Created="2012-08-13 06:55:41 -0400" Modified="2013-06-19 11:45:18 -0400">
+                                                            <Title>modern_node_function_type_result_get</Title>
                                                             <MetaData>
                                                                 <LabelID>9</LabelID>
                                                                 <StatusID>0</StatusID>
@@ -11895,7 +11895,7 @@
                                                                 <TextSelection>74,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1293" Type="Text" Created="2012-09-19 12:06:55 -0400" Modified="2013-06-19 11:08:13 -0400">
+                                                                <BinderItem ID="1293" Type="Text" Created="2012-09-19 12:06:55 -0400" Modified="2013-06-19 11:45:29 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -14710,7 +14710,7 @@
                                                                 <TextSelection>34,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1346" Type="Text" Created="2012-09-19 12:09:18 -0400" Modified="2013-06-19 11:08:13 -0400">
+                                                                <BinderItem ID="1346" Type="Text" Created="2012-09-19 12:09:18 -0400" Modified="2013-06-19 11:44:11 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16275,8 +16275,8 @@
                                                                 </BinderItem>
                                                             </Children>
                                                         </BinderItem>
-                                                        <BinderItem ID="379" Type="Folder" Created="2012-08-13 06:55:41 -0400" Modified="2012-09-19 13:31:06 -0400">
-                                                            <Title>modern_node_function_type_left_set</Title>
+                                                        <BinderItem ID="379" Type="Folder" Created="2012-08-13 06:55:41 -0400" Modified="2013-06-19 11:44:50 -0400">
+                                                            <Title>modern_node_function_type_parameter_set</Title>
                                                             <MetaData>
                                                                 <LabelID>9</LabelID>
                                                                 <StatusID>0</StatusID>
@@ -16287,7 +16287,7 @@
                                                                 <TextSelection>4,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1374" Type="Text" Created="2012-09-19 12:10:10 -0400" Modified="2013-06-19 11:08:13 -0400">
+                                                                <BinderItem ID="1374" Type="Text" Created="2012-09-19 12:10:10 -0400" Modified="2013-06-19 11:44:44 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -16325,8 +16325,8 @@
                                                                 </BinderItem>
                                                             </Children>
                                                         </BinderItem>
-                                                        <BinderItem ID="380" Type="Folder" Created="2012-08-13 06:55:41 -0400" Modified="2012-09-19 13:31:06 -0400">
-                                                            <Title>modern_node_function_type_right_set</Title>
+                                                        <BinderItem ID="380" Type="Folder" Created="2012-08-13 06:55:41 -0400" Modified="2013-06-19 11:44:53 -0400">
+                                                            <Title>modern_node_function_type_result_set</Title>
                                                             <MetaData>
                                                                 <LabelID>9</LabelID>
                                                                 <StatusID>0</StatusID>
@@ -16337,7 +16337,7 @@
                                                                 <TextSelection>74,0</TextSelection>
                                                             </TextSettings>
                                                             <Children>
-                                                                <BinderItem ID="1375" Type="Text" Created="2012-09-19 12:10:11 -0400" Modified="2013-06-19 11:08:13 -0400">
+                                                                <BinderItem ID="1375" Type="Text" Created="2012-09-19 12:10:11 -0400" Modified="2013-06-19 11:44:59 -0400">
                                                                     <Title>Synopsis</Title>
                                                                     <MetaData>
                                                                         <LabelID>2</LabelID>
@@ -22854,7 +22854,7 @@
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
                                     <TextSettings>
-                                        <TextSelection>0,148</TextSelection>
+                                        <TextSelection>388,0</TextSelection>
                                     </TextSettings>
                                     <References>
                                         <Reference BinderID="1914" Destination="[Internal Link]">Semantics</Reference>
@@ -41169,8 +41169,8 @@
                                         </BinderItem>
                                     </Children>
                                 </BinderItem>
-                                <BinderItem ID="753" Type="Folder" Created="2012-09-12 13:57:29 -0400" Modified="2012-09-19 16:41:53 -0400">
-                                    <Title>get_function_type_left</Title>
+                                <BinderItem ID="753" Type="Folder" Created="2012-09-12 13:57:29 -0400" Modified="2013-06-19 11:41:55 -0400">
+                                    <Title>get_function_type_parameter</Title>
                                     <MetaData>
                                         <LabelID>9</LabelID>
                                         <StatusID>0</StatusID>
@@ -41181,7 +41181,7 @@
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
                                     <Children>
-                                        <BinderItem ID="3945" Type="Text" Created="2012-09-19 16:04:50 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                        <BinderItem ID="3945" Type="Text" Created="2012-09-19 16:04:50 -0400" Modified="2013-06-19 11:42:02 -0400">
                                             <Title>Synopsis</Title>
                                             <MetaData>
                                                 <LabelID>2</LabelID>
@@ -41193,7 +41193,7 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="2645" Type="Text" Created="2012-09-19 16:04:50 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                        <BinderItem ID="2645" Type="Text" Created="2012-09-19 16:04:50 -0400" Modified="2013-06-19 11:42:06 -0400">
                                             <Title>Synopsis</Title>
                                             <MetaData>
                                                 <LabelID>2</LabelID>
@@ -41219,8 +41219,8 @@
                                         </BinderItem>
                                     </Children>
                                 </BinderItem>
-                                <BinderItem ID="754" Type="Folder" Created="2012-09-12 13:57:38 -0400" Modified="2012-09-19 16:41:53 -0400">
-                                    <Title>get_function_type_right</Title>
+                                <BinderItem ID="754" Type="Folder" Created="2012-09-12 13:57:38 -0400" Modified="2013-06-19 11:42:13 -0400">
+                                    <Title>get_function_type_result</Title>
                                     <MetaData>
                                         <LabelID>9</LabelID>
                                         <StatusID>0</StatusID>
@@ -41231,7 +41231,7 @@
                                         <TextSelection>0,0</TextSelection>
                                     </TextSettings>
                                     <Children>
-                                        <BinderItem ID="3948" Type="Text" Created="2012-09-19 16:05:04 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                        <BinderItem ID="3948" Type="Text" Created="2012-09-19 16:05:04 -0400" Modified="2013-06-19 11:42:22 -0400">
                                             <Title>Synopsis</Title>
                                             <MetaData>
                                                 <LabelID>2</LabelID>
@@ -41243,7 +41243,7 @@
                                                 <TextSelection>0,0</TextSelection>
                                             </TextSettings>
                                         </BinderItem>
-                                        <BinderItem ID="2647" Type="Text" Created="2012-09-19 16:05:04 -0400" Modified="2013-02-05 10:53:34 -0500">
+                                        <BinderItem ID="2647" Type="Text" Created="2012-09-19 16:05:04 -0400" Modified="2013-06-19 11:42:22 -0400">
                                             <Title>Synopsis</Title>
                                             <MetaData>
                                                 <LabelID>2</LabelID>
@@ -46790,7 +46790,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="8" Characters="-265" Date="2013-06-19 11:29:22 -0400"></PreviousSession>
+        <PreviousSession Words="8" Characters="-229" Date="2013-06-19 11:41:01 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>

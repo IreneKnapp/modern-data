@@ -639,10 +639,10 @@ modern_stream_documentation_make
             <Title>Parameters</Title>
         </Document>
         <Document ID="356">
-            <Title>modern_node_function_type_left_get</Title>
+            <Title>modern_node_function_type_parameter_get</Title>
         </Document>
         <Document ID="357">
-            <Title>modern_node_function_type_right_get</Title>
+            <Title>modern_node_function_type_result_get</Title>
         </Document>
         <Document ID="2546">
             <Title>Synopsis</Title>
@@ -2327,7 +2327,7 @@ Value type (detailed notation)</Text>
         <Document ID="1292">
             <Title>Synopsis</Title>
             <Text>void *
-(*modern_node_function_type_left_get)
+(*modern_node_function_type_parameter_get)
 (modern_library *library,
  void *value);</Text>
         </Document>
@@ -2360,7 +2360,7 @@ Value type (detailed notation)</Text>
         <Document ID="1293">
             <Title>Synopsis</Title>
             <Text>void *
-(*modern_node_function_type_right_get)
+(*modern_node_function_type_result_get)
 (modern_library *library,
  void *value);</Text>
         </Document>
@@ -6335,11 +6335,11 @@ Value type (detailed notation)</Text>
         <Document ID="1946">
             <Title>Semantics</Title>
         </Document>
-        <Document ID="578">
-            <Title>round_away_from_zero_float64_int8</Title>
-        </Document>
         <Document ID="4683">
             <Title>modern_processor_finalize</Title>
+        </Document>
+        <Document ID="578">
+            <Title>round_away_from_zero_float64_int8</Title>
         </Document>
         <Document ID="2603">
             <Title>Semantics</Title>
@@ -9095,7 +9095,7 @@ Value type (detailed notation)</Text>
             <Title>Semantics</Title>
         </Document>
         <Document ID="753">
-            <Title>get_function_type_left</Title>
+            <Title>get_function_type_parameter</Title>
         </Document>
         <Document ID="1024">
             <Title>Semantics</Title>
@@ -9120,7 +9120,7 @@ Value type (detailed notation)</Text>
 (modern_library *library);</Text>
         </Document>
         <Document ID="754">
-            <Title>get_function_type_right</Title>
+            <Title>get_function_type_result</Title>
         </Document>
         <Document ID="71">
             <Title>modern_node_type_int64_value</Title>
@@ -11379,7 +11379,7 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3945">
             <Title>Synopsis</Title>
-            <Text>get_function_type_left = 2080
+            <Text>get_function_type_parameter = 2080
 
 Value type (abstract notation)
 universe 0 -> maybe (universe 0)
@@ -11531,7 +11531,7 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="3948">
             <Title>Synopsis</Title>
-            <Text>get_function_type_right = 2112
+            <Text>get_function_type_result = 2112
 
 Value type (abstract notation)
 universe 0 -> maybe (universe 0)
@@ -11976,7 +11976,7 @@ Value type (detailed notation)</Text>
             <Title>modern_node_type_blob_value</Title>
         </Document>
         <Document ID="379">
-            <Title>modern_node_function_type_left_set</Title>
+            <Title>modern_node_function_type_parameter_set</Title>
         </Document>
         <Document ID="2486">
             <Title>Semantics</Title>
@@ -12534,10 +12534,10 @@ Value type (detailed notation)</Text>
         <Document ID="1374">
             <Title>Synopsis</Title>
             <Text>void
-(*modern_node_function_type_left_set)
+(*modern_node_function_type_parameter_set)
 (modern_library *library,
  void *value,
- void *left);</Text>
+ void *parameter);</Text>
         </Document>
         <Document ID="2438">
             <Title>Semantics</Title>
@@ -12577,10 +12577,10 @@ Value type (detailed notation)</Text>
         <Document ID="1375">
             <Title>Synopsis</Title>
             <Text>void
-(*modern_node_function_type_right_set)
+(*modern_node_function_type_result_set)
 (modern_library *library,
  void *value,
- void *right);</Text>
+ void *result);</Text>
         </Document>
         <Document ID="2439">
             <Title>Synopsis</Title>
@@ -13632,7 +13632,7 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2645">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_get_function_type_left = 2080</Text>
+            <Text>modern_builtin_identifier_get_function_type_parameter = 2080</Text>
         </Document>
         <Document ID="1605">
             <Title>Parameters</Title>
@@ -13681,7 +13681,7 @@ Value type (detailed notation)</Text>
         </Document>
         <Document ID="2647">
             <Title>Synopsis</Title>
-            <Text>modern_builtin_identifier_get_function_type_right = 2112</Text>
+            <Text>modern_builtin_identifier_get_function_type_result = 2112</Text>
         </Document>
         <Document ID="1607">
             <Title>Parameters</Title>
@@ -16072,8 +16072,8 @@ Value type (detailed notation)</Text>
             <Text>void *
 (*modern_node_function_type_make)
 (modern_library *library,
- void *left,
- void *right);</Text>
+ void *parameter,
+ void *result);</Text>
         </Document>
         <Document ID="706">
             <Title>bit_and_int16</Title>
@@ -16700,7 +16700,7 @@ Value type (detailed notation)</Text>
             <Title>Semantics</Title>
         </Document>
         <Document ID="380">
-            <Title>modern_node_function_type_right_set</Title>
+            <Title>modern_node_function_type_result_set</Title>
         </Document>
         <Document ID="4363">
             <Title>modern_node_representation_sigma_type_successor_set </Title>
