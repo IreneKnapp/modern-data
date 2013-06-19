@@ -53,10 +53,6 @@ struct modern_process {
 
 
 struct modern_stream {
-    void *(*initialize)
-      (modern_library *library);
-    void (*finalize)
-      (void *stream_state);
     void (*start)
       (struct modern_process *process, void *process_state,
        void *stream_state);
@@ -1469,8 +1465,19 @@ extern struct modern_processor *modern_processor_explicatory_make
 
 extern struct modern_stream *modern_stream_output_make
   (modern_library *library);
+extern void *modern_stream_output_initialize
+  (modern_library *library);
+extern void modern_stream_output_finalize
+  (modern_library *library,
+   void *stream_state);
+
 extern struct modern_stream *modern_stream_explicatory_make
   (modern_library *library);
+extern void *modern_stream_explicatory_initialize
+  (modern_library *library);
+extern void modern_stream_explicatory_finalize
+  (modern_library *library,
+   void *stream_state);
 
 extern struct modern_node_representation
   *modern_node_representation_default_make
