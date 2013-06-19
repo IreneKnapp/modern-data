@@ -398,6 +398,26 @@ int main(int argc, char **argv) {
 }
 
 
+void test_message
+  (test_suite *test_suite_in,
+   char *format, ...)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(test_suite->output_on_header_line) {
+        printf("\n");
+        test_suite->output_on_header_line = 0;
+    }
+    
+    va_list ap;
+    va_start(ap, format);
+    printf("  ");
+    vprintf(format, ap);
+    printf("\n");
+    va_end(ap);
+}
+
+
 int begin_fixtures(test_suite *test_suite_in) {
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     

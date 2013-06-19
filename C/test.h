@@ -6,6 +6,10 @@ typedef void test_suite;
 extern void test_main
   (test_suite *test_suite, modern_library *library);
 
+extern void test_message
+  (test_suite *test_suite,
+   char *format, ...);
+
 extern int begin_fixtures(test_suite *test_suite);
 extern void end_fixtures(test_suite *test_suite);
 
