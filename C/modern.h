@@ -46,20 +46,6 @@ struct modern_allocator {
 };
 
 
-struct modern_processor {
-    void *(*initialize)();
-    void (*finalize)(void *process_state);
-    void (*step)
-      (void *process_state,
-       struct modern_stream *stream, void *stream_state,
-       struct modern_vfile *vfile, void *vfile_state);
-    void (*run)
-      (void *process_state,
-       struct modern_stream *stream, void *stream_state,
-       struct modern_vfile *vfile, void *vfile_state);
-};
-
-
 struct modern_process {
     void (*abort)(void *process_state);
     void (*flush)(void *process_state);
@@ -262,6 +248,20 @@ struct modern_vfile {
       (void *vfile_state, uint8_t *buffer, size_t length);
     ssize_t (*write)
       (void *vfile_state, uint8_t *buffer, size_t length);
+};
+
+
+struct modern_processor {
+    void *(*initialize)();
+    void (*finalize)(void *process_state);
+    void (*step)
+      (void *process_state,
+       struct modern_stream *stream, void *stream_state,
+       struct modern_vfile *vfile, void *vfile_state);
+    void (*run)
+      (void *process_state,
+       struct modern_stream *stream, void *stream_state,
+       struct modern_vfile *vfile, void *vfile_state);
 };
 
 
