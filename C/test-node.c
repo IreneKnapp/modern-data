@@ -344,8 +344,7 @@ static int test_int8_node_create_and_readback
         modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = node_representation
-        ->modern_node_representation_int8_make(library, value);
+    modern *node = node_representation ->int8_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -354,13 +353,13 @@ static int test_int8_node_create_and_readback
     
     if(succeeded) {
         enum modern_node_type node_type = node_representation
-            ->modern_node_representation_node_type_get(library, node);
+            ->node_type_get(library, node);
         if(node_type != modern_node_type_int8_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(node_representation->modern_node_representation_int8_get
+        if(node_representation->int8_get
             (library, node) != value)
         {
             succeeded = 0;
@@ -370,12 +369,12 @@ static int test_int8_node_create_and_readback
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = node_representation->modern_node_representation_value_type_get(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != int8_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_int8_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -383,32 +382,32 @@ static int test_int8_node_create_and_readback
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -423,9 +422,11 @@ static int test_int16_node_create_and_readback
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     int16_t value = *(int16_t *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_int16(library, value);
+    modern *node = node_representation->int16_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -434,25 +435,25 @@ static int test_int16_node_create_and_readback
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != int16_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_int16_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_int16(library, node) != value)
+        if(node_representation->int16_get(library, node) != value)
             succeeded = 0;
     }
     
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != int16_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_int16_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -460,32 +461,32 @@ static int test_int16_node_create_and_readback
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -500,9 +501,11 @@ static int test_int32_node_create_and_readback
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     int32_t value = *(int32_t *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_int32(library, value);
+    modern *node = node_representation->int32_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -511,25 +514,25 @@ static int test_int32_node_create_and_readback
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != int32_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_int32_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_int32(library, node) != value)
+        if(node_representation->int32_get(library, node) != value)
             succeeded = 0;
     }
     
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != int32_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_int32_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -537,32 +540,32 @@ static int test_int32_node_create_and_readback
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -577,9 +580,11 @@ static int test_int64_node_create_and_readback
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     int64_t value = *(int64_t *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_int64(library, value);
+    modern *node = node_representation->int64_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -588,25 +593,25 @@ static int test_int64_node_create_and_readback
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != int64_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_int64_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_int64(library, node) != value)
+        if(node_representation->int64_get(library, node) != value)
             succeeded = 0;
     }
     
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != int64_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_int64_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -614,32 +619,32 @@ static int test_int64_node_create_and_readback
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -654,9 +659,11 @@ static int test_nat8_node_create_and_readback
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     uint8_t value = *(uint8_t *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_nat8(library, value);
+    modern *node = node_representation->nat8_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -665,25 +672,25 @@ static int test_nat8_node_create_and_readback
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != nat8_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_nat8_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_nat8(library, node) != value)
+        if(node_representation->nat8_get(library, node) != value)
             succeeded = 0;
     }
     
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != nat8_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_nat8_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -691,32 +698,32 @@ static int test_nat8_node_create_and_readback
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -731,9 +738,11 @@ static int test_nat16_node_create_and_readback
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     uint16_t value = *(uint16_t *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_nat16(library, value);
+    modern *node = node_representation->nat16_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -742,25 +751,25 @@ static int test_nat16_node_create_and_readback
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != nat16_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_nat16_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_nat16(library, node) != value)
+        if(node_representation->nat16_get(library, node) != value)
             succeeded = 0;
     }
     
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != nat16_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_nat16_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -768,32 +777,32 @@ static int test_nat16_node_create_and_readback
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -808,9 +817,11 @@ static int test_nat32_node_create_and_readback
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     uint32_t value = *(uint32_t *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_nat32(library, value);
+    modern *node = node_representation->nat32_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -819,25 +830,25 @@ static int test_nat32_node_create_and_readback
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != nat32_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_nat32_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_nat32(library, node) != value)
+        if(node_representation->nat32_get(library, node) != value)
             succeeded = 0;
     }
     
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != nat32_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_nat32_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -845,32 +856,32 @@ static int test_nat32_node_create_and_readback
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -885,9 +896,11 @@ static int test_nat64_node_create_and_readback
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     uint64_t value = *(uint64_t *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_nat64(library, value);
+    modern *node = node_representation->nat64_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -896,25 +909,25 @@ static int test_nat64_node_create_and_readback
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != nat64_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_nat64_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_nat64(library, node) != value)
+        if(node_representation->nat64_get(library, node) != value)
             succeeded = 0;
     }
     
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != nat64_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_nat64_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -922,32 +935,32 @@ static int test_nat64_node_create_and_readback
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -962,9 +975,11 @@ static int test_float32_node_create_and_readback
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     float value = *(float *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_float32(library, value);
+    modern *node = node_representation->float32_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -973,25 +988,25 @@ static int test_float32_node_create_and_readback
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != float32_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_float32_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_float32(library, node) != value)
+        if(node_representation->float32_get(library, node) != value)
             succeeded = 0;
     }
     
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != float32_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_float32_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -999,32 +1014,32 @@ static int test_float32_node_create_and_readback
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -1038,12 +1053,14 @@ static int test_float32_node_create_and_readback_negative_zero
         (struct test_context *) test_context_in;
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     float value_in = -0.0;
     float value_out = 0.0;
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_float32(library, value_in);
+    modern *node = node_representation->float32_make(library, value_in);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -1052,13 +1069,13 @@ static int test_float32_node_create_and_readback_negative_zero
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != float32_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_float32_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        float actual_out = modern_node_get_float32(library, node);
+        float actual_out = node_representation->float32_get(library, node);
         int classification = fpclassify(actual_out);
         succeeded =
             (actual_out == value_out)
@@ -1068,12 +1085,12 @@ static int test_float32_node_create_and_readback_negative_zero
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != float32_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_float32_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -1081,32 +1098,32 @@ static int test_float32_node_create_and_readback_negative_zero
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -1136,8 +1153,10 @@ static int test_float32_node_create_expecting_error_helper
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     float value_in = *(float *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
-    modern *node = modern_node_make_float32(library, value_in);
+    modern *node = node_representation->float32_make(library, value_in);
     
     return !node;
 }
@@ -1151,9 +1170,11 @@ static int test_float64_node_create_and_readback
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     double value = *(double *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_float64(library, value);
+    modern *node = node_representation->float64_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -1162,25 +1183,25 @@ static int test_float64_node_create_and_readback
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != float64_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_float64_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_float64(library, node) != value)
+        if(node_representation->float64_get(library, node) != value)
             succeeded = 0;
     }
     
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != float64_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_float64_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -1188,32 +1209,32 @@ static int test_float64_node_create_and_readback
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -1227,12 +1248,14 @@ static int test_float64_node_create_and_readback_negative_zero
         (struct test_context *) test_context_in;
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     double value_in = -0.0;
     double value_out = 0.0;
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_float64(library, value_in);
+    modern *node = node_representation->float64_make(library, value_in);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -1241,13 +1264,13 @@ static int test_float64_node_create_and_readback_negative_zero
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != float64_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_float64_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        double actual_out = modern_node_get_float64(library, node);
+        double actual_out = node_representation->float64_get(library, node);
         int classification = fpclassify(actual_out);
         succeeded =
             (actual_out == value_out)
@@ -1257,12 +1280,12 @@ static int test_float64_node_create_and_readback_negative_zero
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != float64_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_float64_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -1270,32 +1293,32 @@ static int test_float64_node_create_and_readback_negative_zero
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type) succeeded = 0;
+        if(node_representation->value_type_get(library, node) != type) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe) succeeded = 0;
+        if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -1325,8 +1348,10 @@ static int test_float64_node_create_expecting_error_helper
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     double value_in = *(double *) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
-    modern *node = modern_node_make_float64(library, value_in);
+    modern *node = node_representation->float64_make(library, value_in);
     
     return !node;
 }
@@ -1340,9 +1365,11 @@ static int test_utf8_node_create_and_readback
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
     uint8_t *value = *(uint8_t **) test_context->value;
+    struct modern_node_representation *node_representation =
+        modern_library_node_representation_get(library);
     
     allow_allocation(test_suite);
-    modern *node = modern_node_make_utf8(library, value);
+    modern *node = node_representation->utf8_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -1351,15 +1378,15 @@ static int test_utf8_node_create_and_readback
     
     if(succeeded) {
         enum modern_node_type node_type =
-            modern_node_get_node_type(library, node);
-        if(node_type != utf8_value_modern_node_type)
+            node_representation->node_type_get(library, node);
+        if(node_type != modern_node_type_utf8_value)
             succeeded = 0;
     }
     
     if(succeeded) {
-        size_t actual_bytes = modern_node_get_utf8_bytes(library, node);
+        size_t actual_bytes = node_representation->utf8_bytes_get(library, node);
         uint8_t *actual_value =
-            modern_node_get_utf8_data_piece(library, node, 0, actual_bytes);
+            node_representation->utf8_data_piece_get(library, node, 0, actual_bytes);
         if(value == actual_value) succeeded = 0;
         if(strcmp((char *) value, (char *) actual_value)) succeeded = 0;
     }
@@ -1367,12 +1394,12 @@ static int test_utf8_node_create_and_readback
     modern *type = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        type = modern_node_get_value_type(library, node);
+        type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
             enum modern_node_type type_node_type =
-                modern_node_get_node_type(library, type);
-            if(type_node_type != utf8_type_modern_node_type)
+                node_representation->node_type_get(library, type);
+            if(type_node_type != modern_node_type_utf8_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
@@ -1380,34 +1407,34 @@ static int test_utf8_node_create_and_readback
     modern *universe = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
-        universe = modern_node_get_value_type(library, type);
+        universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
             enum modern_node_type universe_node_type =
-                modern_node_get_node_type(library, universe);
-            if(universe_node_type != universe_type_modern_node_type)
+                node_representation->node_type_get(library, universe);
+            if(universe_node_type != modern_node_type_universe_type)
                 succeeded = 0;
         } else succeeded = 0;
     }
     
     if(succeeded) {
-        uint64_t level = modern_node_get_universe_type_level
+        uint64_t level = node_representation->universe_type_level_get
             (library, universe);
         if(level != 0) succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, node) != type)
+        if(node_representation->value_type_get(library, node) != type)
             succeeded = 0;
     }
     
     if(succeeded) {
-        if(modern_node_get_value_type(library, type) != universe)
+        if(node_representation->value_type_get(library, type) != universe)
             succeeded = 0;
     }
     
     allow_deallocation(test_suite);
-    modern_release(library, node);
+    modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
