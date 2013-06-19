@@ -135,12 +135,12 @@ HELPER struct modern *helper_evaluate_node
             helper_allocate_parameter_stack_frame(library);
         if(!frame) return NULL;
         
-        frame->parameter = node->specifics.apply.right;
+        frame->parameter = node->specifics.apply.parameter;
         frame->parent = NULL;
         
         struct modern *result = helper_evaluate_application
             (library,
-             node->specifics.apply.left,
+             node->specifics.apply.function,
              target_stack,
              frame);
         
@@ -192,7 +192,7 @@ HELPER struct modern *helper_evaluate_application
                 helper_allocate_parameter_stack_frame(library);
             if(!frame) return NULL;
             
-            frame->parameter = intermediate_result->specifics.apply.right;
+            frame->parameter = intermediate_result->specifics.apply.parameter;
             frame->parent = parameter_stack;
             
             parameter_stack = frame;
@@ -604,8 +604,8 @@ HELPER uint64_t helper_builtin_static_arity(uint16_t index) {
     case modern_builtin_identifier_get_sigma_field_value: return 1;
     case modern_builtin_identifier_get_sigma_successor: return 1;
     case modern_builtin_identifier_get_named_value: return 1;
-    case modern_builtin_identifier_get_function_type_left: return 1;
-    case modern_builtin_identifier_get_function_type_right: return 1;
+    case modern_builtin_identifier_get_function_type_parameter: return 1;
+    case modern_builtin_identifier_get_function_type_result: return 1;
     case modern_builtin_identifier_get_sigma_type_field_type: return 1;
     case modern_builtin_identifier_get_sigma_type_successor: return 1;
     case modern_builtin_identifier_get_named_type_content_type: return 1;

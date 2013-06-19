@@ -1537,32 +1537,32 @@ HELPER void helper_blob_type_finalize
 
 INTERNAL modern *default_function_type_make
     (modern_library *library_in,
-     modern *left_in, modern *right_in)
+     modern *parameter_in, modern *result_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
-    struct modern *left = (struct modern *) left_in;
-    struct modern *right = (struct modern *) right_in;
+    struct modern *parameter = (struct modern *) parameter_in;
+    struct modern *result = (struct modern *) result_in;
     
-    size_t result_size = sizeof(struct modern);
-    struct modern *result =
+    size_t function_type_size = sizeof(struct modern);
+    struct modern *function_type =
         library->allocator->alloc
-            (library->client_state, result_size);
-    if(!result) {
+            (library->client_state, function_type_size);
+    if(!function_type) {
         library->error_handler->memory
-            (library->client_state, result_size);
+            (library->client_state, function_type_size);
         return NULL;
     }
     
     result->memory.finalizer = helper_function_type_finalize;
     
-    result->mutable = 1;
-    result->node_type = modern_node_type_function_type;
-    result->canonical_hash_valid = 0;
-    result->value_type = NULL;
-    result->specifics.function_type.left = left;
-    result->specifics.function_type.right = right;
+    function_type->mutable = 1;
+    function_type->node_type = modern_node_type_function_type;
+    function_type->canonical_hash_valid = 0;
+    function_type->value_type = NULL;
+    function_type->specifics.function_type.parameter = parameter;
+    function_type->specifics.function_type.result = result;
     
-    return (modern *) result;
+    return (modern *) function_type;
 }
 
 
@@ -1572,8 +1572,8 @@ HELPER void helper_function_type_finalize
 {
     struct modern *node = (struct modern *) retainable;
     
-    modern_finalize(library, node->specifics.function_type.left);
-    modern_finalize(library, node->specifics.function_type.right);
+    modern_finalize(library, node->specifics.function_type.parameter);
+    modern_finalize(library, node->specifics.function_type.result);
     
     if(node->value_type) modern_finalize(library, node->value_type);
 }
@@ -1775,11 +1775,11 @@ HELPER void helper_lambda_finalize
 
 INTERNAL modern *default_apply_make
     (modern_library *library_in,
-     modern *left_in, modern *right_in)
+     modern *function_in, modern *parameter_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
-    struct modern *left = (struct modern *) left_in;
-    struct modern *right = (struct modern *) right_in;
+    struct modern *function = (struct modern *) function_in;
+    struct modern *parameter = (struct modern *) parameter_in;
     
     size_t result_size = sizeof(struct modern);
     struct modern *result =
@@ -1797,8 +1797,8 @@ INTERNAL modern *default_apply_make
     result->node_type = modern_node_type_apply;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
-    result->specifics.apply.left = left;
-    result->specifics.apply.right = right;
+    result->specifics.apply.function = function;
+    result->specifics.apply.parameter = parameter;
     
     return (modern *) result;
 }
@@ -1809,8 +1809,8 @@ HELPER void helper_apply_finalize
 {
     struct modern *node = (struct modern *) retainable;
     
-    modern_finalize(library, node->specifics.apply.left);
-    modern_finalize(library, node->specifics.apply.right);
+    modern_finalize(library, node->specifics.apply.function);
+    modern_finalize(library, node->specifics.apply.parameter);
     
     if(node->value_type) modern_finalize(library, node->value_type);
 }

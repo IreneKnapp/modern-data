@@ -174,6 +174,9 @@ INTERNAL modern *default_value_type_get
         break;
     }
     
+    case modern_node_type_satisfies_type:
+        break;
+    
     case modern_node_type_lambda:
         break;
     
@@ -438,23 +441,23 @@ INTERNAL void *default_maybe_type_content_type_get
 }
 
 
-INTERNAL modern *default_function_type_left_get
+INTERNAL modern *default_function_type_parameter_get
   (modern_library *library_in,
    modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
-    return value->specifics.function_type.left;
+    return value->specifics.function_type.parameter;
 }
 
 
-INTERNAL modern *default_function_type_right_get
+INTERNAL modern *default_function_type_result_get
   (modern_library *library_in,
    modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
-    return value->specifics.function_type.right;
+    return value->specifics.function_type.result;
 }
 
 
@@ -512,21 +515,21 @@ INTERNAL modern *default_lambda_content_get
 }
 
 
-INTERNAL modern *default_apply_left_get
+INTERNAL modern *default_apply_function_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
-    return value->specifics.apply.left;
+    return value->specifics.apply.function;
 }
 
 
-INTERNAL modern *default_apply_right_get
+INTERNAL modern *default_apply_parameter_get
     (modern_library *library_in, modern *value_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     struct modern *value = (struct modern *) value_in;
-    return value->specifics.apply.right;
+    return value->specifics.apply.parameter;
 }
 
 

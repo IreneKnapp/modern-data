@@ -182,19 +182,19 @@ INTERNAL void default_maybe_type_content_type_set
 }
 
 
-INTERNAL void default_function_type_left_set
+INTERNAL void default_function_type_parameter_set
     (modern_library *library,
      void *value,
-     void *left)
+     void *parameter)
 {
     // TODO
 }
 
 
-INTERNAL void default_function_type_right_set
+INTERNAL void default_function_type_result_set
     (modern_library *library,
      void *value,
-     void *right)
+     void *result)
 {
     // TODO
 }
@@ -254,19 +254,19 @@ INTERNAL void default_lambda_content_set
 }
 
 
-INTERNAL void default_apply_left_set
+INTERNAL void default_apply_function_set
     (modern_library *library,
      void *value,
-     void *left)
+     void *function)
 {
     // TODO
 }
 
 
-INTERNAL void default_apply_right_set
+INTERNAL void default_apply_parameter_set
     (modern_library *library,
      void *value,
-     void *right)
+     void *parameter)
 {
     // TODO
 }

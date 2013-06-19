@@ -754,11 +754,11 @@ HELPER int helper_visit_node_top_level
             return 0;
         
         if(!helper_visit_node_interior
-            (library, canonical_form, node->specifics.function_type.left))
+            (library, canonical_form, node->specifics.function_type.parameter))
             return 0;
         
         if(!helper_visit_node_interior
-            (library, canonical_form, node->specifics.function_type.right))
+            (library, canonical_form, node->specifics.function_type.result))
             return 0;
         
         return 1;
@@ -880,11 +880,11 @@ HELPER int helper_visit_node_top_level
             return 0;
         
         if(!helper_visit_node_interior
-            (library, canonical_form, node->specifics.apply.left))
+            (library, canonical_form, node->specifics.apply.function))
             return 0;
         
         if(!helper_visit_node_interior
-            (library, canonical_form, node->specifics.apply.right))
+            (library, canonical_form, node->specifics.apply.parameter))
             return 0;
         
         return 1;

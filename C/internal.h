@@ -229,11 +229,11 @@ INTERNAL void *
     (modern_library *library,
      void *value);
 INTERNAL void *
-    default_function_type_left_get
+    default_function_type_parameter_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    default_function_type_right_get
+    default_function_type_result_get
     (modern_library *library,
      void *value);
 INTERNAL void *
@@ -261,11 +261,11 @@ INTERNAL void *
     (modern_library *library,
      void *value);
 INTERNAL void *
-    default_apply_left_get
+    default_apply_function_get
     (modern_library *library,
      void *value);
 INTERNAL void *
-    default_apply_right_get
+    default_apply_parameter_get
     (modern_library *library,
      void *value);
 INTERNAL uint64_t 
@@ -432,7 +432,7 @@ INTERNAL modern *
 INTERNAL modern *
     default_function_type_make
     (modern_library *library,
-     modern *left, modern *right);
+     modern *parameter, modern *result);
 INTERNAL modern *
     default_sigma_type_make
     (modern_library *library,
@@ -455,7 +455,7 @@ INTERNAL modern *
 INTERNAL modern *
     default_apply_make
     (modern_library *library,
-     modern *left, modern *right);
+     modern *function, modern *parameter);
 INTERNAL modern *
     default_type_family_make
     (modern_library *library,
@@ -573,15 +573,15 @@ INTERNAL void
      void *value,
      void *content_type);
 INTERNAL void 
-    default_function_type_left_set
+    default_function_type_parameter_set
     (modern_library *library,
      void *value,
-     void *left);
+     void *parameter);
 INTERNAL void 
-    default_function_type_right_set
+    default_function_type_result_set
     (modern_library *library,
      void *value,
-     void *right);
+     void *result);
 INTERNAL void 
     default_sigma_type_field_type_set
     (modern_library *library,
@@ -613,15 +613,15 @@ INTERNAL void
      void *value,
      void *content);
 INTERNAL void 
-    default_apply_left_set
+    default_apply_function_set
     (modern_library *library,
      void *value,
-     void *left);
+     void *function);
 INTERNAL void 
-    default_apply_right_set
+    default_apply_parameter_set
     (modern_library *library,
      void *value,
-     void *right);
+     void *parameter);
 INTERNAL void 
     default_type_family_item_add
     (modern_library *library,
