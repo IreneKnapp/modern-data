@@ -304,13 +304,13 @@ enum modern_node_type {
     modern_node_type_name_type = 40,
     modern_node_type_named_type = 41,
     modern_node_type_universe_type = 42,
-    modern_node_type_lambda = 43,
-    modern_node_type_apply = 44,
-    modern_node_type_type_family = 45,
-    modern_node_type_let = 46,
-    modern_node_type_backreference = 47,
-    modern_node_type_builtin = 48,
-    modern_node_type_satisfies = 49,
+    modern_node_type_satisfies_type = 43,
+    modern_node_type_lambda = 44,
+    modern_node_type_apply = 45,
+    modern_node_type_type_family = 46,
+    modern_node_type_let = 47,
+    modern_node_type_backreference = 48,
+    modern_node_type_builtin = 49,
 };
 
 
@@ -668,6 +668,8 @@ enum modern_builtin_identifier {
     modern_builtin_identifier_get_sigma_type_successor = 2176,
     modern_builtin_identifier_get_named_type_content_type = 2208,
     modern_builtin_identifier_get_universe_type_level = 2240,
+    modern_builtin_identifier_get_satisfies_type_supertype = 2256,
+    modern_builtin_identifier_get_satisfies_type_predicate = 2257,
     modern_builtin_identifier_make_sigma = 2272,
     modern_builtin_identifier_make_name = 2304,
     modern_builtin_identifier_make_named_value = 2336,
@@ -675,6 +677,7 @@ enum modern_builtin_identifier {
     modern_builtin_identifier_make_sigma_type = 2400,
     modern_builtin_identifier_make_named_type = 2432,
     modern_builtin_identifier_make_universe_type = 2464,
+    modern_builtin_identifier_make_satisfies_type = 2480,
     modern_builtin_identifier_make_maybe_type = 2496,
     modern_builtin_identifier_get_maybe_type_content_type = 2528,
     modern_builtin_identifier_maybe_is_just = 2560,
@@ -895,6 +898,14 @@ struct modern_node_representation {
       (modern_library *library,
        void *value);
     void *
+      (*satisfies_type_supertype_get)
+      (modern_library *library,
+       void *value);
+    void *
+      (*satisfies_type_predicate_get)
+      (modern_library *library,
+       void *value);
+    void *
       (*lambda_content_get)
       (modern_library *library,
        void *value);
@@ -1084,6 +1095,10 @@ struct modern_node_representation {
       (modern_library *library,
        uint64_t level);
     void *
+      (*satisfies_type_make)
+      (modern_library *library,
+       void *supertype, void *predicate);
+    void *
       (*lambda_make)
       (modern_library *library,
        void *content);
@@ -1239,6 +1254,16 @@ struct modern_node_representation {
       (modern_library *library,
        void *value,
        uint64_t level);
+    void
+      (*satisfies_type_supertype_set)
+      (modern_library *library,
+       void *value,
+       void *supertype);
+    void
+      (*satisfies_type_predicate_set)
+      (modern_library *library,
+       void *value,
+       void *predicate);
     void 
       (*lambda_content_set)
       (modern_library *library,

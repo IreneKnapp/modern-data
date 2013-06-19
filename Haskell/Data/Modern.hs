@@ -282,7 +282,7 @@ typecheck type'@(ModernNodeFunctionType { }) value@(ModernNodeFunctionValue {})
   -- type matches the return type (although we have to unify, of course)
   -- if it IS Apply:
   --   we have to check that the function of the Apply is a function type;
-  --   that the parameter of the Apply is of the function's paramater type;
+  --   that the parameter of the Apply is of the function's parameter type;
   --   that the result of the Apply is (unifies with) the overall return type
 typecheck type'@(ModernNodeUniverseType { }) value@{ModernNodeSigmaType {})
    = do

@@ -75,6 +75,10 @@ struct modern {
             uint64_t level;
         } universe_type;
         struct {
+            struct modern *supertype;
+            struct modern *predicate;
+        } satisfies_type;
+        struct {
             struct modern *content;
         } lambda;
         struct {
@@ -94,10 +98,6 @@ struct modern {
             uint64_t index;
         } backreference;
         uint16_t builtin;
-        struct {
-            struct modern *type;
-            struct modern *predicate;
-        } satisfies;
     } specifics;
 };
 
