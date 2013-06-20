@@ -10,8 +10,5 @@ void modern_finalize
     struct memory *memory = (struct memory *) finalizable;
     
     if(memory->finalizer) memory->finalizer(library_in, finalizable);
-    
-    library->allocator->free
-        (library->client_state, finalizable);
 }
 

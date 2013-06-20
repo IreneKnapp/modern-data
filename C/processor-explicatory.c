@@ -3,6 +3,7 @@
 
 
 struct processor_explicatory_state {
+    struct memory memory;
     struct modern_process process;
     struct modern_library *library;
     int started : 1;
@@ -12,7 +13,8 @@ struct processor_explicatory_state {
 
 
 HELPER void *processor_explicatory_initialize(modern_library *library);
-HELPER void processor_explicatory_finalize(void *process_state);
+HELPER void processor_explicatory_finalize
+  (struct modern_library *library, void *process_state);
 HELPER void processor_explicatory_abort(void *process_state);
 HELPER void processor_explicatory_flush(void *process_state);
 HELPER void processor_explicatory_step
@@ -39,21 +41,10 @@ struct modern_processor *modern_processor_explicatory_make
     }
     
     processor->initialize = processor_explicatory_initialize;
-    processor->finalize = processor_explicatory_finalize;
     processor->step = processor_explicatory_step;
     processor->run = processor_explicatory_run;
     
     return processor;
-}
-
-
-extern void modern_processor_explicatory_finalize
-  (modern_library *library_in,
-   struct modern_processor *processor)
-{
-    struct modern_library *library = (struct modern_library *) library_in;
-    
-    library->allocator->free(library->client_state, processor);
 }
 
 
@@ -70,6 +61,7 @@ HELPER void *processor_explicatory_initialize
         return NULL;
     }
     
+    state->memory.finalizer = processor_explicatory_finalize;
     state->process.abort = processor_explicatory_abort;
     state->process.flush = processor_explicatory_flush;
     state->library = library;
@@ -81,13 +73,10 @@ HELPER void *processor_explicatory_initialize
 }
 
 
-HELPER void processor_explicatory_finalize(void *process_state_in)
+HELPER void processor_explicatory_finalize
+  (struct modern_library *library, void *process_state_in)
 {
-    struct processor_explicatory_state *state =
-        (struct processor_explicatory_state *) process_state_in;
-    struct modern_library *library = state->library;
-    
-    library->allocator->free(library->client_state, state);
+    library->allocator->free(library->client_state, process_state_in);
 }
 
 
