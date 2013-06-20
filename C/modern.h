@@ -1460,8 +1460,15 @@ extern void modern_vfile_fd_finalize
 
 extern struct modern_processor *modern_processor_input_make
   (modern_library *library);
+extern void modern_processor_input_finalize
+  (modern_library *library,
+   struct modern_processor *processor);
+
 extern struct modern_processor *modern_processor_explicatory_make
   (modern_library *library);
+extern void modern_processor_explicatory_finalize
+  (modern_library *library,
+   struct modern_processor *processor);
 
 extern struct modern_stream *modern_stream_output_make
   (modern_library *library);
