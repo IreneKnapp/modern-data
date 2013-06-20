@@ -1204,8 +1204,12 @@ static void initialize_callback_invocation_pattern
 
 
 static void finalize_callback_invocation_pattern
-  (struct callback_invocation_pattern *patern)
+  (struct callback_invocation_pattern *pattern)
 {
+    if(pattern->tag) {
+        actually_free(pattern->tag);
+        pattern->tag = NULL;
+    }
 }
 
 
@@ -1410,7 +1414,7 @@ static int callback_should_succeed
         int should_succeed = expected->should_succeed;
 
         if(tag) {
-            *tag = expected->tag;
+            *tag = strdup(expected->tag);
         }
         
         if(!expected->sticky) {
