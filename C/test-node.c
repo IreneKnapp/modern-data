@@ -49,7 +49,7 @@ static int test_utf8_node_create_and_readback
 
 void test_main(test_suite *test_suite, modern_library *library) {
     if(!begin_fixtures(test_suite)) return;
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c initial context");
     modern_context *context = modern_initial_context_make(library);
     disallow_allocation(test_suite);
     end_fixtures(test_suite);
@@ -343,8 +343,8 @@ static int test_int8_node_create_and_readback
     struct modern_node_representation *node_representation =
         modern_library_node_representation_get(library);
     
-    allow_allocation(test_suite);
-    modern *node = node_representation ->int8_make(library, value);
+    allow_allocation(test_suite, "test-node.c node");
+    modern *node = node_representation->int8_make(library, value);
     disallow_allocation(test_suite);
     
     if(!node) return 0;
@@ -368,7 +368,7 @@ static int test_int8_node_create_and_readback
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -381,7 +381,7 @@ static int test_int8_node_create_and_readback
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -406,7 +406,7 @@ static int test_int8_node_create_and_readback
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -425,7 +425,7 @@ static int test_int16_node_create_and_readback
     struct modern_node_representation *node_representation =
         modern_library_node_representation_get(library);
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->int16_make(library, value);
     disallow_allocation(test_suite);
     
@@ -447,7 +447,7 @@ static int test_int16_node_create_and_readback
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -460,7 +460,7 @@ static int test_int16_node_create_and_readback
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -485,7 +485,7 @@ static int test_int16_node_create_and_readback
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -504,7 +504,7 @@ static int test_int32_node_create_and_readback
     struct modern_node_representation *node_representation =
         modern_library_node_representation_get(library);
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->int32_make(library, value);
     disallow_allocation(test_suite);
     
@@ -526,7 +526,7 @@ static int test_int32_node_create_and_readback
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -539,7 +539,7 @@ static int test_int32_node_create_and_readback
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -564,7 +564,7 @@ static int test_int32_node_create_and_readback
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -583,7 +583,7 @@ static int test_int64_node_create_and_readback
     struct modern_node_representation *node_representation =
         modern_library_node_representation_get(library);
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->int64_make(library, value);
     disallow_allocation(test_suite);
     
@@ -605,7 +605,7 @@ static int test_int64_node_create_and_readback
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -618,7 +618,7 @@ static int test_int64_node_create_and_readback
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -643,7 +643,7 @@ static int test_int64_node_create_and_readback
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -662,7 +662,7 @@ static int test_nat8_node_create_and_readback
     struct modern_node_representation *node_representation =
         modern_library_node_representation_get(library);
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->nat8_make(library, value);
     disallow_allocation(test_suite);
     
@@ -684,7 +684,7 @@ static int test_nat8_node_create_and_readback
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -697,7 +697,7 @@ static int test_nat8_node_create_and_readback
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -722,7 +722,7 @@ static int test_nat8_node_create_and_readback
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -741,7 +741,7 @@ static int test_nat16_node_create_and_readback
     struct modern_node_representation *node_representation =
         modern_library_node_representation_get(library);
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->nat16_make(library, value);
     disallow_allocation(test_suite);
     
@@ -763,7 +763,7 @@ static int test_nat16_node_create_and_readback
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -776,7 +776,7 @@ static int test_nat16_node_create_and_readback
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -801,7 +801,7 @@ static int test_nat16_node_create_and_readback
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -820,7 +820,7 @@ static int test_nat32_node_create_and_readback
     struct modern_node_representation *node_representation =
         modern_library_node_representation_get(library);
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->nat32_make(library, value);
     disallow_allocation(test_suite);
     
@@ -842,7 +842,7 @@ static int test_nat32_node_create_and_readback
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -855,7 +855,7 @@ static int test_nat32_node_create_and_readback
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -880,7 +880,7 @@ static int test_nat32_node_create_and_readback
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -899,7 +899,7 @@ static int test_nat64_node_create_and_readback
     struct modern_node_representation *node_representation =
         modern_library_node_representation_get(library);
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->nat64_make(library, value);
     disallow_allocation(test_suite);
     
@@ -921,7 +921,7 @@ static int test_nat64_node_create_and_readback
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -934,7 +934,7 @@ static int test_nat64_node_create_and_readback
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -959,7 +959,7 @@ static int test_nat64_node_create_and_readback
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -978,7 +978,7 @@ static int test_float32_node_create_and_readback
     struct modern_node_representation *node_representation =
         modern_library_node_representation_get(library);
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->float32_make(library, value);
     disallow_allocation(test_suite);
     
@@ -1000,7 +1000,7 @@ static int test_float32_node_create_and_readback
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -1013,7 +1013,7 @@ static int test_float32_node_create_and_readback
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -1038,7 +1038,7 @@ static int test_float32_node_create_and_readback
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -1059,7 +1059,7 @@ static int test_float32_node_create_and_readback_negative_zero
     float value_in = -0.0;
     float value_out = 0.0;
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->float32_make(library, value_in);
     disallow_allocation(test_suite);
     
@@ -1084,7 +1084,7 @@ static int test_float32_node_create_and_readback_negative_zero
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -1097,7 +1097,7 @@ static int test_float32_node_create_and_readback_negative_zero
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -1122,7 +1122,7 @@ static int test_float32_node_create_and_readback_negative_zero
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -1173,7 +1173,7 @@ static int test_float64_node_create_and_readback
     struct modern_node_representation *node_representation =
         modern_library_node_representation_get(library);
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->float64_make(library, value);
     disallow_allocation(test_suite);
     
@@ -1195,7 +1195,7 @@ static int test_float64_node_create_and_readback
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -1208,7 +1208,7 @@ static int test_float64_node_create_and_readback
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -1233,7 +1233,7 @@ static int test_float64_node_create_and_readback
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -1254,7 +1254,7 @@ static int test_float64_node_create_and_readback_negative_zero
     double value_in = -0.0;
     double value_out = 0.0;
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->float64_make(library, value_in);
     disallow_allocation(test_suite);
     
@@ -1279,7 +1279,7 @@ static int test_float64_node_create_and_readback_negative_zero
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -1292,7 +1292,7 @@ static int test_float64_node_create_and_readback_negative_zero
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -1317,7 +1317,7 @@ static int test_float64_node_create_and_readback_negative_zero
         if(node_representation->value_type_get(library, type) != universe) succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
@@ -1368,7 +1368,7 @@ static int test_utf8_node_create_and_readback
     struct modern_node_representation *node_representation =
         modern_library_node_representation_get(library);
     
-    allow_allocation(test_suite);
+    allow_allocation(test_suite, "test-node.c node");
     modern *node = node_representation->utf8_make(library, value);
     disallow_allocation(test_suite);
     
@@ -1393,7 +1393,7 @@ static int test_utf8_node_create_and_readback
     
     modern *type = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         type = node_representation->value_type_get(library, node);
         disallow_allocation(test_suite);
         if(type) {
@@ -1406,7 +1406,7 @@ static int test_utf8_node_create_and_readback
     
     modern *universe = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-node.c node");
         universe = node_representation->value_type_get(library, type);
         disallow_allocation(test_suite);
         if(universe) {
@@ -1433,7 +1433,7 @@ static int test_utf8_node_create_and_readback
             succeeded = 0;
     }
     
-    allow_deallocation(test_suite);
+    allow_deallocation(test_suite, "test-node.c node");
     modern_finalize(library, node);
     disallow_deallocation(test_suite);
     
