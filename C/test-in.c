@@ -7,7 +7,6 @@
 struct test_context {
     test_suite *test_suite;
     modern_library *library;
-    struct modern_processor *processor;
 };
 
 
@@ -206,19 +205,9 @@ static void stream_end
 
 
 void test_main(test_suite *test_suite, modern_library *library) {
-    if(!begin_fixtures(test_suite)) return;
-    
-    allow_allocation(test_suite);
-    struct modern_processor *processor =
-        modern_processor_explicatory_make(library);
-    disallow_allocation(test_suite);
-    
-    end_fixtures(test_suite);
-    
     struct test_context test_context;
     test_context.test_suite = test_suite;
     test_context.library = library;
-    test_context.processor = processor;
     
     begin_test_case
         (test_suite,
@@ -235,19 +224,30 @@ static int test_explicatory_file_input
         (struct test_context *) test_context_in;
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
-    struct modern_processor *processor = test_context->processor;
     
     int succeeded = 1;
+    
+    struct modern_processor *processor = NULL;
+    if(succeeded) {
+        allow_allocation(test_suite);
+        processor = modern_processor_explicatory_make(library);
+        disallow_allocation(test_suite);
+        if(!processor) {
+            test_message(test_context, "Unable to initialize the processor.");
+            succeeded = 0;
+        }
+    }
     
     void *process_state = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
         process_state = processor->initialize(library);
+        disallow_allocation(test_suite);
         if(!process_state) {
-            test_message(test_context, "Unable to initialize the processor.");
+            test_message(test_context,
+                "Unable to initialize the processor state.");
             succeeded = 0;
         }
-        disallow_allocation(test_suite);
     }
     
     struct modern_stream *stream = NULL;
@@ -321,7 +321,7 @@ static int test_explicatory_file_input
             stream->end = stream_end;
         }
     }
-
+    
     struct stream_state *stream_state = NULL;
     if(succeeded) {
         stream_state = malloc(sizeof(struct stream_state));
@@ -344,22 +344,35 @@ static int test_explicatory_file_input
         }
     }
     
+    struct modern_vfile *vfile = NULL;
     if(succeeded) {
         allow_allocation(test_suite);
         struct modern_vfile *vfile = modern_vfile_stdio_make(library);
         disallow_allocation(test_suite);
-        
+        if(!vfile) {
+            test_message(test_context, "Unable to initialize the vfile.");
+            succeeded = 0;
+        }
+    }
+    
+    void *vfile_state = NULL;
+    if(succeeded) {
         allow_allocation(test_suite);
         void *vfile_state = modern_vfile_stdio_initialize(library, file);
         disallow_allocation(test_suite);
-        
+        if(!vfile_state) succeeded = 0;
+    }
+    
+    if(succeeded) {
         processor->run(process_state, stream, stream_state, vfile, vfile_state);
         if(!stream_state->succeeded) {
             test_message(test_context,
               "The stream processor did not behave as expected.");
             succeeded = 0;
         }
-        
+    }
+    
+    if(vfile) {
         allow_deallocation(test_suite);
         modern_vfile_stdio_finalize(library, vfile);
         disallow_deallocation(test_suite);
@@ -370,9 +383,17 @@ static int test_explicatory_file_input
     if(stream_state) free(stream_state);
     if(stream) free(stream);
     
-    allow_deallocation(test_suite);
-    processor->finalize(process_state);
-    disallow_deallocation(test_suite);
+    if(process_state) {
+        allow_deallocation(test_suite);
+        processor->finalize(process_state);
+        disallow_deallocation(test_suite);
+    }
+
+    if(processor) {
+        allow_deallocation(test_suite);
+        modern_processor_explicatory_finalize(library, processor);
+        disallow_deallocation(test_suite);
+    }
     
     return succeeded;
 }
