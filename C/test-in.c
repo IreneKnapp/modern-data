@@ -224,12 +224,14 @@ static int test_explicatory_file_input
         (struct test_context *) test_context_in;
     test_suite *test_suite = test_context->test_suite;
     modern_library *library = test_context->library;    
+    struct modern_allocator *allocator = modern_library_allocator_get(library);
+    void *client_state = modern_library_client_state_get(library);
     
     int succeeded = 1;
     
     struct modern_processor *processor = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-in.c processor callbacks");
         processor = modern_processor_explicatory_make(library);
         disallow_allocation(test_suite);
         if(!processor) {
@@ -240,7 +242,7 @@ static int test_explicatory_file_input
     
     void *process_state = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
+        allow_allocation(test_suite, "test-in.c processor state");
         process_state = processor->initialize(library);
         disallow_allocation(test_suite);
         if(!process_state) {
@@ -346,8 +348,8 @@ static int test_explicatory_file_input
     
     struct modern_vfile *vfile = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
-        struct modern_vfile *vfile = modern_vfile_stdio_make(library);
+        allow_allocation(test_suite, "test-in.c vfile callbacks");
+        vfile = modern_vfile_stdio_make(library);
         disallow_allocation(test_suite);
         if(!vfile) {
             test_message(test_context, "Unable to initialize the vfile.");
@@ -357,8 +359,8 @@ static int test_explicatory_file_input
     
     void *vfile_state = NULL;
     if(succeeded) {
-        allow_allocation(test_suite);
-        void *vfile_state = modern_vfile_stdio_initialize(library, file);
+        allow_allocation(test_suite, "test-in.c vfile state");
+        vfile_state = modern_vfile_stdio_initialize(library, file);
         disallow_allocation(test_suite);
         if(!vfile_state) succeeded = 0;
     }
@@ -371,10 +373,16 @@ static int test_explicatory_file_input
             succeeded = 0;
         }
     }
+
+    if(vfile_state) {
+        allow_deallocation(test_suite, "test-in.c vfile state");
+        modern_finalize(library, vfile_state);
+        disallow_deallocation(test_suite);
+    }
     
     if(vfile) {
-        allow_deallocation(test_suite);
-        modern_vfile_stdio_finalize(library, vfile);
+        allow_deallocation(test_suite, "test-in.c vfile callbacks");
+        allocator->free(client_state, vfile);
         disallow_deallocation(test_suite);
     }
     
@@ -384,14 +392,14 @@ static int test_explicatory_file_input
     if(stream) free(stream);
     
     if(process_state) {
-        allow_deallocation(test_suite);
-        processor->finalize(process_state);
+        allow_deallocation(test_suite, "test-in.c processor state");
+        modern_finalize(library, process_state);
         disallow_deallocation(test_suite);
     }
-
+    
     if(processor) {
-        allow_deallocation(test_suite);
-        modern_processor_explicatory_finalize(library, processor);
+        allow_deallocation(test_suite, "test-in.c processor callbacks");
+        allocator->free(client_state, processor);
         disallow_deallocation(test_suite);
     }
     
