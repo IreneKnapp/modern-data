@@ -47,6 +47,16 @@ struct modern_processor *modern_processor_explicatory_make
 }
 
 
+extern void modern_processor_explicatory_finalize
+  (modern_library *library_in,
+   struct modern_processor *processor)
+{
+    struct modern_library *library = (struct modern_library *) library_in;
+    
+    library->allocator->free(library->client_state, processor);
+}
+
+
 HELPER void *processor_explicatory_initialize
   (modern_library *library_in)
 {
