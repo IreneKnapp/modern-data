@@ -21,10 +21,10 @@ extern void begin_test_case
 
 extern void reset_allowances(test_suite *test_suite);
 
-extern void allow_allocation(test_suite *test_suite);
+extern void allow_allocation(test_suite *test_suite, char *tag_format, ...);
 extern void disallow_allocation(test_suite *test_suite);
 
-extern void allow_deallocation(test_suite *test_suite);
+extern void allow_deallocation(test_suite *test_suite, char *tag_format, ...);
 extern void disallow_deallocation(test_suite *test_suite);
 
 extern void expect_error_memory

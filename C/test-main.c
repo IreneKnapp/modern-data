@@ -8,6 +8,7 @@
 struct allocated_data {
     void *data;
     size_t size;
+    char *tag;
 };
 
 
@@ -81,6 +82,7 @@ struct callback_invocation_pattern {
     unsigned parameters_relevant : 1;
     unsigned should_succeed : 1;
     unsigned sticky : 1;
+    char *tag;
     union {
         struct {
             size_t size;
@@ -91,6 +93,7 @@ struct callback_invocation_pattern {
         struct {
             void *data;
             size_t new_size;
+            char *tag;
         } allocator_realloc;
         struct {
             size_t requested_size;
@@ -246,6 +249,12 @@ static void print_callback_invocation
 static void print_callback_invocation_buffer
   (struct callback_invocation_buffer *buffer);
 
+static struct callback_invocation *begin_callback
+  (struct test_suite *test_suite);
+
+static int callback_should_succeed
+  (struct test_suite *test_suite, char **tag);
+
 static void fail
   (struct test_suite *test_suite);
 
@@ -303,10 +312,12 @@ int main(int argc, char **argv) {
     
     if(!setjmp(test_suite->jmp_buf)) {
         reset_allowances(test_suite);
-        allow_allocation(test_suite);
         
+        allow_allocation(test_suite,
+            "test-main.c default node representation");
         struct modern_node_representation *node_representation =
             modern_node_representation_default_make(&allocator, test_suite);
+        disallow_allocation(test_suite);
         if(!node_representation) {
             printf("\n\n"
                    "*** The testing infrastructure itself failed.\n"
@@ -315,13 +326,13 @@ int main(int argc, char **argv) {
                 exit(1);
         }
         
+        allow_allocation(test_suite, "test-main.c library");
         modern_library *library = modern_library_initialize
             (&error_handler,
              &allocator,
              node_representation,
              (void (*)(void *)) library_finalizer,
              test_suite);
-        
         disallow_allocation(test_suite);
         
         if(!setjmp(test_suite->jmp_buf)) {
@@ -344,11 +355,12 @@ int main(int argc, char **argv) {
             if(!setjmp(test_suite->jmp_buf)) {
                 reset_allowances(test_suite);
                 
-                allow_deallocation(test_suite);
+                allow_deallocation(test_suite, "test-main.c library");
                 modern_library_finalize(library);
                 disallow_deallocation(test_suite);
                 
-                allow_deallocation(test_suite);
+                allow_deallocation(test_suite,
+                    "test-main.c default node representation");
                 modern_node_representation_default_finalize
                     (&allocator, test_suite, node_representation);
                 disallow_deallocation(test_suite);
@@ -558,10 +570,25 @@ void reset_allowances(test_suite *test_suite) {
 }
 
 
-void allow_allocation(test_suite *test_suite_in) {
+void allow_allocation(test_suite *test_suite_in, char *tag_format, ...) {
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     
-    if(test_suite->allocation_invocation) return;
+    if(test_suite->allocation_invocation) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to allow allocation when it is\n"
+               "*** already allowed.\n");
+        exit(1);
+    }
+    
+    va_list ap;
+    va_start(ap, tag_format);
+    int tag_length = vsnprintf(NULL, 0, tag_format, ap);
+    va_end(ap);
+    char *tag = malloc(tag_length + 1);
+    va_start(ap, tag_format);
+    vsnprintf(tag, tag_length + 1, tag_format, ap);
+    va_end(ap);
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer
@@ -570,6 +597,7 @@ void allow_allocation(test_suite *test_suite_in) {
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 1;
+    invocation->tag = tag;
     
     test_suite->allocation_invocation = invocation;
 }
@@ -591,10 +619,25 @@ void disallow_allocation(test_suite *test_suite_in) {
 }
 
 
-void allow_deallocation(test_suite *test_suite_in) {
+void allow_deallocation(test_suite *test_suite_in, char *tag_format, ...) {
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     
-    if(test_suite->deallocation_invocation) return;
+    if(test_suite->deallocation_invocation) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to allow deallocation when it is\n"
+               "*** already allowed.\n");
+        exit(1);
+    }
+
+    va_list ap;
+    va_start(ap, tag_format);
+    int tag_length = vsnprintf(NULL, 0, tag_format, ap);
+    va_end(ap);
+    char *tag = malloc(tag_length + 1);
+    va_start(ap, tag_format);
+    vsnprintf(tag, tag_length + 1, tag_format, ap);
+    va_end(ap);
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer
@@ -603,6 +646,7 @@ void allow_deallocation(test_suite *test_suite_in) {
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 1;
+    invocation->tag = tag;
     
     test_suite->deallocation_invocation = invocation;
 }
@@ -648,6 +692,7 @@ void expect_error_memory
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
+    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -685,6 +730,7 @@ void expect_error_type_mismatch
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
+    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -722,6 +768,7 @@ void expect_error_universe_level_overflow
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
+    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -759,6 +806,7 @@ void expect_error_buffer_index
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
+    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -796,6 +844,7 @@ void expect_error_not_applicable
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
+    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -833,6 +882,7 @@ void expect_error_non_numeric_float
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
+    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -882,6 +932,7 @@ static void initialize_allocated_data
 {
     allocated_data->data = NULL;
     allocated_data->size = 0;
+    allocated_data->tag = NULL;
 }
 
 
@@ -891,6 +942,11 @@ static void finalize_allocated_data
     if(allocated_data->data) {
         actually_free(allocated_data->data);
         allocated_data->data = NULL;            
+    }
+
+    if(allocated_data->tag) {
+        actually_free(allocated_data->tag);
+        allocated_data->tag = NULL;
     }
 }
 
@@ -1322,7 +1378,7 @@ static struct callback_invocation *begin_callback
 
 
 static int callback_should_succeed
-  (struct test_suite *test_suite)
+  (struct test_suite *test_suite, char **tag)
 {
     struct callback_invocation *actual = test_suite->current_callback;
     
@@ -1352,6 +1408,10 @@ static int callback_should_succeed
             test_suite->expected_callbacks.patterns[expectation_index];
         
         int should_succeed = expected->should_succeed;
+
+        if(tag) {
+            *tag = expected->tag;
+        }
         
         if(!expected->sticky) {
             remove_callback_invocation_pattern_from_buffer
@@ -1411,6 +1471,14 @@ static void check_for_memory_leaks
             
             leak_count++;
             leak_size += allocation->size;
+
+            if(test_suite->output_on_header_line) {
+                printf("\n");
+                test_suite->output_on_header_line = 0;
+            }
+            printf("  Leak of %llu bytes in item tagged \"%s\"\n",
+                   (unsigned long long) allocation->size,
+                   allocation->tag);
             
             finalize_allocated_data(allocation);
             actually_free(allocation);
@@ -1438,7 +1506,8 @@ static void *allocator_malloc(struct test_suite *test_suite, size_t size) {
     invocation->succeeded = 0;
     invocation->specifics.allocator_malloc.size = size;
     
-    if(callback_should_succeed(test_suite)) {
+    char *tag;
+    if(callback_should_succeed(test_suite, &tag)) {
         void *data = actually_malloc(size);
                 
         struct allocated_data *allocation;
@@ -1455,6 +1524,7 @@ static void *allocator_malloc(struct test_suite *test_suite, size_t size) {
         
         allocation->data = data;
         allocation->size = size;
+        allocation->tag = tag;
         
         return data;
     } else {
@@ -1470,7 +1540,8 @@ static void allocator_free(struct test_suite *test_suite, void *data) {
     invocation->succeeded = 0;
     invocation->specifics.allocator_free.data = data;
     
-    if(callback_should_succeed(test_suite)) {
+    char *tag;
+    if(callback_should_succeed(test_suite, &tag)) {
         struct allocated_data_buffer *buffer;
         if(test_suite->current_test_case) {
             buffer = &test_suite->current_test_case->allocations;
@@ -1496,6 +1567,16 @@ static void allocator_free(struct test_suite *test_suite, void *data) {
             printf("  Deallocation in wrong context.\n");
             
             fail(test_suite); // Never returns.
+        } else if(strcmp(allocation->tag, tag)) {
+            if(test_suite->output_on_header_line) {
+                printf("\n");
+                test_suite->output_on_header_line = 0;
+            }
+            printf("  Deallocation of memory tagged \"%s\" when the expected "
+                   "tag is \"%s\".\n",
+                   allocation->tag, tag);
+            
+            fail(test_suite); // Never returns.
         } else {
             remove_allocated_data_from_buffer(buffer, allocation);
             finalize_allocated_data(allocation);
@@ -1515,7 +1596,7 @@ static void *allocator_realloc
     invocation->specifics.allocator_realloc.data = data;
     invocation->specifics.allocator_realloc.new_size = size;
     
-    if(callback_should_succeed(test_suite))
+    if(callback_should_succeed(test_suite, NULL))
         return actually_realloc(data, size);
     else return NULL;
 }
@@ -1540,7 +1621,7 @@ static void error_memory
     invocation->succeeded = 0;
     invocation->specifics.error_memory.requested_size = requested_size;
     
-    if(callback_should_succeed(test_suite)) {
+    if(callback_should_succeed(test_suite, NULL)) {
         longjmp(test_suite->current_test_case->jmp_buf, 2);
     } else {
         return;
@@ -1568,7 +1649,7 @@ static void error_type_mismatch
     invocation->specifics.error_type_mismatch.expected = expected;
     invocation->specifics.error_type_mismatch.actual = actual;
     
-    if(callback_should_succeed(test_suite)) {
+    if(callback_should_succeed(test_suite, NULL)) {
         longjmp(test_suite->current_test_case->jmp_buf, 2);
     } else {
         return;
@@ -1594,7 +1675,7 @@ static void error_universe_level_overflow
     invocation->identifier = error_universe_level_overflow_callback_identifier;
     invocation->succeeded = 0;
     
-    if(callback_should_succeed(test_suite)) {
+    if(callback_should_succeed(test_suite, NULL)) {
         longjmp(test_suite->current_test_case->jmp_buf, 2);
     } else {
         return;
@@ -1620,7 +1701,7 @@ static void error_buffer_index
     invocation->identifier = error_buffer_index_callback_identifier;
     invocation->succeeded = 0;
     
-    if(callback_should_succeed(test_suite)) {
+    if(callback_should_succeed(test_suite, NULL)) {
         longjmp(test_suite->current_test_case->jmp_buf, 2);
     } else {
         return;
@@ -1646,7 +1727,7 @@ static void error_not_applicable
     invocation->identifier = error_not_applicable_callback_identifier;
     invocation->succeeded = 0;
     
-    if(callback_should_succeed(test_suite)) {
+    if(callback_should_succeed(test_suite, NULL)) {
         longjmp(test_suite->current_test_case->jmp_buf, 2);
     } else {
         return;
@@ -1672,7 +1753,7 @@ static void error_non_numeric_float
     invocation->identifier = error_non_numeric_float_callback_identifier;
     invocation->succeeded = 0;
     
-    if(callback_should_succeed(test_suite)) {
+    if(callback_should_succeed(test_suite, NULL)) {
         longjmp(test_suite->current_test_case->jmp_buf, 2);
     } else {
         return;
