@@ -529,7 +529,7 @@ void begin_test_case
     
     if(!test_suite->fixtures.succeeded) {
         test_suite->current_test_case = NULL;
-        printf(" skip\n");
+        printf("  SKIP\n");
         test_suite->output_on_header_line = 0;
     } else {
         int jmp_result = setjmp(test_suite->current_test_case->jmp_buf);
@@ -553,9 +553,9 @@ void begin_test_case
         }
         
         if(test_suite->current_test_case->succeeded) {
-            printf(" pass\n");
+            printf("  PASS\n");
         } else {
-            printf(" fail\n");
+            printf("  FAIL\n");
         }
         test_suite->output_on_header_line = 0;
         
