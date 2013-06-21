@@ -63,3 +63,7 @@ extern void expect_error_non_numeric_float
   (test_suite *test_suite,
    int (*test_case_helper)(void *test_context),
    void *test_context);
+
+extern void flush_expectations
+  (test_suite *test_suite);
+

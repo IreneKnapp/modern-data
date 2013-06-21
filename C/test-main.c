@@ -20,7 +20,8 @@ struct allocated_data_buffer {
 
 
 enum callback_identifier {
-    allocator_malloc_callback_identifier = 1,
+    library_finalizer_callback_identifier = 1,
+    allocator_malloc_callback_identifier,
     allocator_free_callback_identifier,
     allocator_realloc_callback_identifier,
     error_memory_callback_identifier,
@@ -29,7 +30,62 @@ enum callback_identifier {
     error_buffer_index_callback_identifier,
     error_not_applicable_callback_identifier,
     error_non_numeric_float_callback_identifier,
-    library_finalizer_callback_identifier,
+    stream_start_callback_identifier,
+    stream_magic_number_callback_identifier,
+    stream_name_definition_callback_identifier,
+    stream_value_definition_is_next_callback_identifier,
+    stream_type_definition_bool_callback_identifier,
+    stream_type_definition_ordering_callback_identifier,
+    stream_type_definition_maybe_is_next_callback_identifier,
+    stream_type_definition_int8_callback_identifier,
+    stream_type_definition_int16_callback_identifier,
+    stream_type_definition_int32_callback_identifier,
+    stream_type_definition_int64_callback_identifier,
+    stream_type_definition_nat8_callback_identifier,
+    stream_type_definition_nat16_callback_identifier,
+    stream_type_definition_nat32_callback_identifier,
+    stream_type_definition_nat64_callback_identifier,
+    stream_type_definition_float32_callback_identifier,
+    stream_type_definition_float64_callback_identifier,
+    stream_type_definition_utf8_callback_identifier,
+    stream_type_definition_blob_callback_identifier,
+    stream_type_definition_function_is_next_callback_identifier,
+    stream_type_definition_sigma_is_next_callback_identifier,
+    stream_type_definition_named_is_next_callback_identifier,
+    stream_type_definition_universe_callback_identifier,
+    stream_bool_false_callback_identifier,
+    stream_bool_true_callback_identifier,
+    stream_ordering_less_callback_identifier,
+    stream_ordering_equal_callback_identifier,
+    stream_ordering_greater_callback_identifier,
+    stream_maybe_nothing_callback_identifier,
+    stream_maybe_just_is_next_callback_identifier,
+    stream_int8_callback_identifier,
+    stream_int16_callback_identifier,
+    stream_int32_callback_identifier,
+    stream_int64_callback_identifier,
+    stream_nat8_callback_identifier,
+    stream_nat16_callback_identifier,
+    stream_nat32_callback_identifier,
+    stream_nat64_callback_identifier,
+    stream_float32_callback_identifier,
+    stream_float64_callback_identifier,
+    stream_utf8_start_callback_identifier,
+    stream_utf8_data_callback_identifier,
+    stream_utf8_end_callback_identifier,
+    stream_blob_start_callback_identifier,
+    stream_blob_data_callback_identifier,
+    stream_blob_end_callback_identifier,
+    stream_sigma_is_next_callback_identifier,
+    stream_named_value_is_next_callback_identifier,
+    stream_lambda_is_next_callback_identifier,
+    stream_apply_is_next_callback_identifier,
+    stream_type_family_is_next_callback_identifier,
+    stream_let_is_next_callback_identifier,
+    stream_backreference_is_next_callback_identifier,
+    stream_builtin_is_next_callback_identifier,
+    stream_item_from_context_is_next_callback_identifier,
+    stream_end_callback_identifier,
 };
 
 
@@ -37,6 +93,8 @@ struct callback_invocation {
     enum callback_identifier identifier;
     unsigned succeeded : 1;
     union {
+        struct {
+        } library_finalizer;
         struct {
             size_t size;
             void *result;
@@ -65,7 +123,117 @@ struct callback_invocation {
         struct {
         } error_non_numeric_float;
         struct {
-        } library_finalizer;
+        } stream_start;
+        struct {
+        } stream_magic_number;
+        struct {
+        } stream_name_definition;
+        struct {
+        } stream_value_definition_is_next;
+        struct {
+        } stream_type_definition_bool;
+        struct {
+        } stream_type_definition_ordering;
+        struct {
+        } stream_type_definition_maybe_is_next;
+        struct {
+        } stream_type_definition_int8;
+        struct {
+        } stream_type_definition_int16;
+        struct {
+        } stream_type_definition_int32;
+        struct {
+        } stream_type_definition_int64;
+        struct {
+        } stream_type_definition_nat8;
+        struct {
+        } stream_type_definition_nat16;
+        struct {
+        } stream_type_definition_nat32;
+        struct {
+        } stream_type_definition_nat64;
+        struct {
+        } stream_type_definition_float32;
+        struct {
+        } stream_type_definition_float64;
+        struct {
+        } stream_type_definition_utf8;
+        struct {
+        } stream_type_definition_blob;
+        struct {
+        } stream_type_definition_function_is_next;
+        struct {
+        } stream_type_definition_sigma_is_next;
+        struct {
+        } stream_type_definition_named_is_next;
+        struct {
+        } stream_type_definition_universe;
+        struct {
+        } stream_bool_false;
+        struct {
+        } stream_bool_true;
+        struct {
+        } stream_ordering_less;
+        struct {
+        } stream_ordering_equal;
+        struct {
+        } stream_ordering_greater;
+        struct {
+        } stream_maybe_nothing;
+        struct {
+        } stream_maybe_just_is_next;
+        struct {
+        } stream_int8;
+        struct {
+        } stream_int16;
+        struct {
+        } stream_int32;
+        struct {
+        } stream_int64;
+        struct {
+        } stream_nat8;
+        struct {
+        } stream_nat16;
+        struct {
+        } stream_nat32;
+        struct {
+        } stream_nat64;
+        struct {
+        } stream_float32;
+        struct {
+        } stream_float64;
+        struct {
+        } stream_utf8_start;
+        struct {
+        } stream_utf8_data;
+        struct {
+        } stream_utf8_end;
+        struct {
+        } stream_blob_start;
+        struct {
+        } stream_blob_data;
+        struct {
+        } stream_blob_end;
+        struct {
+        } stream_sigma_is_next;
+        struct {
+        } stream_named_value_is_next;
+        struct {
+        } stream_lambda_is_next;
+        struct {
+        } stream_apply_is_next;
+        struct {
+        } stream_type_family_is_next;
+        struct {
+        } stream_let_is_next;
+        struct {
+        } stream_backreference_is_next;
+        struct {
+        } stream_builtin_is_next;
+        struct {
+        } stream_item_from_context_is_next;
+        struct {
+        } stream_end;
     } specifics;
 };
 
@@ -1296,6 +1464,10 @@ static void print_callback_invocation
   (struct callback_invocation *invocation)
 {
     switch(invocation->identifier) {
+    case library_finalizer_callback_identifier:
+        printf("modern_library_finalize()\n");
+        break;
+    
     case allocator_malloc_callback_identifier:
         printf("modern_allocator_malloc(%llu)\n",
                (unsigned long long)
@@ -1346,9 +1518,230 @@ static void print_callback_invocation
         printf("modern_error_handler_non_numeric_float()\n");
         break;
     
-    case library_finalizer_callback_identifier:
-        printf("modern_library_finalize()\n");
+    case stream_start_callback_identifier:
+        printf("stream_start_callback_identifier()\n");
         break;
+    
+    case stream_magic_number_callback_identifier:
+        printf("stream_magic_number_callback_identifier()\n");
+        break;
+    
+    case stream_name_definition_callback_identifier:
+        printf("stream_name_definition_callback_identifier()\n");
+        break;
+    
+    case stream_value_definition_is_next_callback_identifier:
+        printf("stream_value_definition_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_bool_callback_identifier:
+        printf("stream_type_definition_bool_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_ordering_callback_identifier:
+        printf("stream_type_definition_ordering_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_maybe_is_next_callback_identifier:
+        printf("stream_type_definition_maybe_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_int8_callback_identifier:
+        printf("stream_type_definition_int8_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_int16_callback_identifier:
+        printf("stream_type_definition_int16_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_int32_callback_identifier:
+        printf("stream_type_definition_int32_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_int64_callback_identifier:
+        printf("stream_type_definition_int64_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_nat8_callback_identifier:
+        printf("stream_type_definition_nat8_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_nat16_callback_identifier:
+        printf("stream_type_definition_nat16_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_nat32_callback_identifier:
+        printf("stream_type_definition_nat32_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_nat64_callback_identifier:
+        printf("stream_type_definition_nat64_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_float32_callback_identifier:
+        printf("stream_type_definition_float32_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_float64_callback_identifier:
+        printf("stream_type_definition_float64_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_utf8_callback_identifier:
+        printf("stream_type_definition_utf8_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_blob_callback_identifier:
+        printf("stream_type_definition_blob_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_function_is_next_callback_identifier:
+        printf("stream_type_definition_function_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_sigma_is_next_callback_identifier:
+        printf("stream_type_definition_sigma_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_named_is_next_callback_identifier:
+        printf("stream_type_definition_named_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_universe_callback_identifier:
+        printf("stream_type_definition_universe_callback_identifier()\n");
+        break;
+    
+    case stream_bool_false_callback_identifier:
+        printf("stream_bool_false_callback_identifier()\n");
+        break;
+    
+    case stream_bool_true_callback_identifier:
+        printf("stream_bool_true_callback_identifier()\n");
+        break;
+    
+    case stream_ordering_less_callback_identifier:
+        printf("stream_ordering_less_callback_identifier()\n");
+        break;
+    
+    case stream_ordering_equal_callback_identifier:
+        printf("stream_ordering_equal_callback_identifier()\n");
+        break;
+    
+    case stream_ordering_greater_callback_identifier:
+        printf("stream_ordering_greater_callback_identifier()\n");
+        break;
+    
+    case stream_maybe_nothing_callback_identifier:
+        printf("stream_maybe_nothing_callback_identifier()\n");
+        break;
+    
+    case stream_maybe_just_is_next_callback_identifier:
+        printf("stream_maybe_just_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_int8_callback_identifier:
+        printf("stream_int8_callback_identifier()\n");
+        break;
+    
+    case stream_int16_callback_identifier:
+        printf("stream_int16_callback_identifier()\n");
+        break;
+    
+    case stream_int32_callback_identifier:
+        printf("stream_int32_callback_identifier()\n");
+        break;
+    
+    case stream_int64_callback_identifier:
+        printf("stream_int64_callback_identifier()\n");
+        break;
+    
+    case stream_nat8_callback_identifier:
+        printf("stream_nat8_callback_identifier()\n");
+        break;
+    
+    case stream_nat16_callback_identifier:
+        printf("stream_nat16_callback_identifier()\n");
+        break;
+    
+    case stream_nat32_callback_identifier:
+        printf("stream_nat32_callback_identifier()\n");
+        break;
+    
+    case stream_nat64_callback_identifier:
+        printf("stream_nat64_callback_identifier()\n");
+        break;
+    
+    case stream_float32_callback_identifier:
+        printf("stream_float32_callback_identifier()\n");
+        break;
+    
+    case stream_float64_callback_identifier:
+        printf("stream_float64_callback_identifier()\n");
+        break;
+    
+    case stream_utf8_start_callback_identifier:
+        printf("stream_utf8_start_callback_identifier()\n");
+        break;
+    
+    case stream_utf8_data_callback_identifier:
+        printf("stream_utf8_data_callback_identifier()\n");
+        break;
+    
+    case stream_utf8_end_callback_identifier:
+        printf("stream_utf8_end_callback_identifier()\n");
+        break;
+    
+    case stream_blob_start_callback_identifier:
+        printf("stream_blob_start_callback_identifier()\n");
+        break;
+    
+    case stream_blob_data_callback_identifier:
+        printf("stream_blob_data_callback_identifier()\n");
+        break;
+    
+    case stream_blob_end_callback_identifier:
+        printf("stream_blob_end_callback_identifier()\n");
+        break;
+    
+    case stream_sigma_is_next_callback_identifier:
+        printf("stream_sigma_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_named_value_is_next_callback_identifier:
+        printf("stream_named_value_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_lambda_is_next_callback_identifier:
+        printf("stream_lambda_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_apply_is_next_callback_identifier:
+        printf("stream_apply_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_family_is_next_callback_identifier:
+        printf("stream_type_family_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_let_is_next_callback_identifier:
+        printf("stream_let_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_backreference_is_next_callback_identifier:
+        printf("stream_backreference_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_builtin_is_next_callback_identifier:
+        printf("stream_builtin_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_item_from_context_is_next_callback_identifier:
+        printf("stream_item_from_context_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_end_callback_identifier:
+        printf("stream_end_callback_identifier()\n");
+        break;
+    
     }
 }
 
@@ -1768,4 +2161,14 @@ static void error_non_numeric_float
 static void library_finalizer
   (struct test_suite *test_suite)
 {
+}
+
+
+static void flush_expectations
+  (struct stream_state *stream_state)
+{
+    if(stream_state->buffer_offset != stream_state->buffer_count) {
+        stream_state->succeeded = 0;
+        test_message(test_context, "Missing expected calls.");
+    }
 }

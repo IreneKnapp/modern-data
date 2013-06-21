@@ -19,6 +19,12 @@ struct stream_state {
 static int test_explicatory_file_input
   (void *test_context);
 
+static void enqueue_stream_event_invocation_pattern
+  (struct stream_state *stream_state,
+   struct stream_event_invocation_pattern *pattern);
+static void flush_queue_stream_event_invocation_pattern
+  (struct stream_state *stream_state);
+
 static void stream_start
   (struct modern_process *process, void *process_state,
    void *stream_state);
@@ -366,12 +372,16 @@ static int test_explicatory_file_input
     }
     
     if(succeeded) {
+        enqueue_stream_event_invocation_pattern(stream_state, ...);
+        
         processor->run(process_state, stream, stream_state, vfile, vfile_state);
         if(!stream_state->succeeded) {
             test_message(test_context,
               "The stream processor did not behave as expected.");
             succeeded = 0;
         }
+
+        flush_queue_stream_event_invocation_pattern(stream_state);
     }
 
     if(vfile_state) {
@@ -407,7 +417,7 @@ static int test_explicatory_file_input
 }
 
 
-void stream_start
+static void stream_start
   (struct modern_process *process, void *process_state,
    void *stream_state_in)
 {
@@ -415,18 +425,19 @@ void stream_start
       (struct stream_state *) stream_state_in;
     struct test_context *test_context = stream_state->test_context;
     
+    stream_state->succeeded = 0;
     test_message(test_context, "Unexpected call to stream_start().");
 }
 
 
-void stream_magic_number
+static void stream_magic_number
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_name_definition
+static void stream_name_definition
   (struct modern_process *process, void *process_state,
    void *stream_state,
    uint8_t *data, size_t length)
@@ -434,133 +445,133 @@ void stream_name_definition
 }
 
 
-void stream_value_definition_is_next
+static void stream_value_definition_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_bool
+static void stream_type_definition_bool
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_ordering
+static void stream_type_definition_ordering
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_maybe_is_next
+static void stream_type_definition_maybe_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_int8
+static void stream_type_definition_int8
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_int16
+static void stream_type_definition_int16
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_int32
+static void stream_type_definition_int32
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_int64
+static void stream_type_definition_int64
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_nat8
+static void stream_type_definition_nat8
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_nat16
+static void stream_type_definition_nat16
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_nat32
+static void stream_type_definition_nat32
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_nat64
+static void stream_type_definition_nat64
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_float32
+static void stream_type_definition_float32
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_float64
+static void stream_type_definition_float64
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_utf8
+static void stream_type_definition_utf8
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_blob
+static void stream_type_definition_blob
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_function_is_next
+static void stream_type_definition_function_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_sigma_is_next
+static void stream_type_definition_sigma_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_definition_named_is_next
+static void stream_type_definition_named_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state,
    struct modern_hash name)
@@ -568,63 +579,63 @@ void stream_type_definition_named_is_next
 }
 
 
-void stream_type_definition_universe
+static void stream_type_definition_universe
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_bool_false
+static void stream_bool_false
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_bool_true
+static void stream_bool_true
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_ordering_less
+static void stream_ordering_less
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_ordering_equal
+static void stream_ordering_equal
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_ordering_greater
+static void stream_ordering_greater
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_maybe_nothing
+static void stream_maybe_nothing
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_maybe_just_is_next
+static void stream_maybe_just_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_int8
+static void stream_int8
   (struct modern_process *process, void *process_state,
    void *stream_state,
    int8_t value)
@@ -632,7 +643,7 @@ void stream_int8
 }
 
 
-void stream_int16
+static void stream_int16
   (struct modern_process *process, void *process_state,
    void *stream_state,
    int16_t value)
@@ -640,7 +651,7 @@ void stream_int16
 }
 
 
-void stream_int32
+static void stream_int32
   (struct modern_process *process, void *process_state,
    void *stream_state,
    int32_t value)
@@ -648,7 +659,7 @@ void stream_int32
 }
 
 
-void stream_int64
+static void stream_int64
   (struct modern_process *process, void *process_state,
    void *stream_state,
    int64_t value)
@@ -656,7 +667,7 @@ void stream_int64
 }
 
 
-void stream_nat8
+static void stream_nat8
   (struct modern_process *process, void *process_state,
    void *stream_state,
    uint8_t value)
@@ -664,7 +675,7 @@ void stream_nat8
 }
 
 
-void stream_nat16
+static void stream_nat16
   (struct modern_process *process, void *process_state,
    void *stream_state,
    uint16_t value)
@@ -672,7 +683,7 @@ void stream_nat16
 }
 
 
-void stream_nat32
+static void stream_nat32
   (struct modern_process *process, void *process_state,
    void *stream_state,
    uint32_t value)
@@ -680,7 +691,7 @@ void stream_nat32
 }
 
 
-void stream_nat64
+static void stream_nat64
   (struct modern_process *process, void *process_state,
    void *stream_state,
    uint64_t value)
@@ -688,7 +699,7 @@ void stream_nat64
 }
 
 
-void stream_float32
+static void stream_float32
   (struct modern_process *process, void *process_state,
    void *stream_state,
    float value)
@@ -696,7 +707,7 @@ void stream_float32
 }
 
 
-void stream_float64
+static void stream_float64
   (struct modern_process *process, void *process_state,
    void *stream_state,
    double value)
@@ -704,14 +715,14 @@ void stream_float64
 }
 
 
-void stream_utf8_start
+static void stream_utf8_start
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_utf8_data
+static void stream_utf8_data
   (struct modern_process *process, void *process_state,
    void *stream_state,
    uint8_t *data, size_t length)
@@ -719,21 +730,21 @@ void stream_utf8_data
 }
 
 
-void stream_utf8_end
+static void stream_utf8_end
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_blob_start
+static void stream_blob_start
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_blob_data
+static void stream_blob_data
   (struct modern_process *process, void *process_state,
    void *stream_state,
    uint8_t *data, size_t length)
@@ -741,14 +752,14 @@ void stream_blob_data
 }
 
 
-void stream_blob_end
+static void stream_blob_end
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_sigma_is_next
+static void stream_sigma_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state,
    struct modern_hash *type)
@@ -756,63 +767,63 @@ void stream_sigma_is_next
 }
 
 
-void stream_named_value_is_next
+static void stream_named_value_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state, struct modern_hash name)
 {
 }
 
 
-void stream_lambda_is_next
+static void stream_lambda_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_apply_is_next
+static void stream_apply_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
 }
 
 
-void stream_type_family_is_next
+static void stream_type_family_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state, uint64_t n_items)
 {
 }
 
 
-void stream_let_is_next
+static void stream_let_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state, uint64_t n_items)
 {
 }
 
 
-void stream_backreference_is_next
+static void stream_backreference_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state, uint64_t index)
 {
 }
 
 
-void stream_builtin_is_next
+static void stream_builtin_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state, uint16_t identifier)
 {
 }
 
 
-void stream_item_from_context_is_next
+static void stream_item_from_context_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state, struct modern_hash type)
 {
 }
 
 
-void stream_end
+static void stream_end
   (struct modern_process *process, void *process_state,
    void *stream_state)
 {
