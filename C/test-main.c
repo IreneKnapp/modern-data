@@ -301,18 +301,215 @@ struct callback_invocation_buffer {
 };
 
 
+union callback_behavior {
+    struct {
+    } library_finalizer;
+    struct {
+        char *tag;
+    } allocator_malloc;
+    struct {
+        char *tag;
+    } allocator_free;
+    struct {
+        char *tag;
+    } allocator_realloc;
+    struct {
+    } error_memory;
+    struct {
+    } error_type_mismatch;
+    struct {
+    } error_universe_level_overflow;
+    struct {
+    } error_buffer_index;
+    struct {
+    } error_not_applicable;
+    struct {
+    } error_non_numeric_float;
+    struct {
+        unsigned fail : 1;
+    } stream_start;
+    struct {
+        unsigned fail : 1;
+    } stream_magic_number;
+    struct {
+        unsigned fail : 1;
+    } stream_name_definition;
+    struct {
+        unsigned fail : 1;
+    } stream_value_definition_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_bool;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_ordering;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_maybe_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_int8;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_int16;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_int32;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_int64;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_nat8;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_nat16;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_nat32;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_nat64;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_float32;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_float64;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_utf8;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_blob;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_function_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_sigma_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_named_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_type_definition_universe;
+    struct {
+        unsigned fail : 1;
+    } stream_bool_false;
+    struct {
+        unsigned fail : 1;
+    } stream_bool_true;
+    struct {
+        unsigned fail : 1;
+    } stream_ordering_less;
+    struct {
+        unsigned fail : 1;
+    } stream_ordering_equal;
+    struct {
+        unsigned fail : 1;
+    } stream_ordering_greater;
+    struct {
+        unsigned fail : 1;
+    } stream_maybe_nothing;
+    struct {
+        unsigned fail : 1;
+    } stream_maybe_just_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_int8;
+    struct {
+        unsigned fail : 1;
+    } stream_int16;
+    struct {
+        unsigned fail : 1;
+    } stream_int32;
+    struct {
+        unsigned fail : 1;
+    } stream_int64;
+    struct {
+        unsigned fail : 1;
+    } stream_nat8;
+    struct {
+        unsigned fail : 1;
+    } stream_nat16;
+    struct {
+        unsigned fail : 1;
+    } stream_nat32;
+    struct {
+        unsigned fail : 1;
+    } stream_nat64;
+    struct {
+        unsigned fail : 1;
+    } stream_float32;
+    struct {
+        unsigned fail : 1;
+    } stream_float64;
+    struct {
+        unsigned fail : 1;
+    } stream_utf8_start;
+    struct {
+        unsigned fail : 1;
+    } stream_utf8_data;
+    struct {
+        unsigned fail : 1;
+    } stream_utf8_end;
+    struct {
+        unsigned fail : 1;
+    } stream_blob_start;
+    struct {
+        unsigned fail : 1;
+    } stream_blob_data;
+    struct {
+        unsigned fail : 1;
+    } stream_blob_end;
+    struct {
+        unsigned fail : 1;
+    } stream_sigma_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_named_value_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_lambda_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_apply_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_type_family_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_let_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_backreference_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_builtin_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_item_from_context_is_next;
+    struct {
+        unsigned fail : 1;
+    } stream_end;
+};
+
+
 struct callback_invocation_pattern {
     enum callback_identifier identifier;
     unsigned parameters_relevant : 1;
     unsigned should_succeed : 1;
     unsigned sticky : 1;
-    char *tag;
     union {
+        struct {
+        } library_finalizer;
         struct {
             size_t size;
         } allocator_malloc;
         struct {
             void *data;
+            char *tag;
         } allocator_free;
         struct {
             void *data;
@@ -335,8 +532,175 @@ struct callback_invocation_pattern {
         struct {
         } error_non_numeric_float;
         struct {
-        } library_finalizer;
+            struct stream_state *state;
+        } stream_start;
+        struct {
+            struct stream_state *state;
+        } stream_magic_number;
+        struct {
+            struct stream_state *state;
+        } stream_name_definition;
+        struct {
+            struct stream_state *state;
+        } stream_value_definition_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_bool;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_ordering;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_maybe_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_int8;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_int16;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_int32;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_int64;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_nat8;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_nat16;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_nat32;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_nat64;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_float32;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_float64;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_utf8;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_blob;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_function_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_sigma_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_named_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_universe;
+        struct {
+            struct stream_state *state;
+        } stream_bool_false;
+        struct {
+            struct stream_state *state;
+        } stream_bool_true;
+        struct {
+            struct stream_state *state;
+        } stream_ordering_less;
+        struct {
+            struct stream_state *state;
+        } stream_ordering_equal;
+        struct {
+            struct stream_state *state;
+        } stream_ordering_greater;
+        struct {
+            struct stream_state *state;
+        } stream_maybe_nothing;
+        struct {
+            struct stream_state *state;
+        } stream_maybe_just_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_int8;
+        struct {
+            struct stream_state *state;
+        } stream_int16;
+        struct {
+            struct stream_state *state;
+        } stream_int32;
+        struct {
+            struct stream_state *state;
+        } stream_int64;
+        struct {
+            struct stream_state *state;
+        } stream_nat8;
+        struct {
+            struct stream_state *state;
+        } stream_nat16;
+        struct {
+            struct stream_state *state;
+        } stream_nat32;
+        struct {
+            struct stream_state *state;
+        } stream_nat64;
+        struct {
+            struct stream_state *state;
+        } stream_float32;
+        struct {
+            struct stream_state *state;
+        } stream_float64;
+        struct {
+            struct stream_state *state;
+        } stream_utf8_start;
+        struct {
+            struct stream_state *state;
+        } stream_utf8_data;
+        struct {
+            struct stream_state *state;
+        } stream_utf8_end;
+        struct {
+            struct stream_state *state;
+        } stream_blob_start;
+        struct {
+            struct stream_state *state;
+        } stream_blob_data;
+        struct {
+            struct stream_state *state;
+        } stream_blob_end;
+        struct {
+            struct stream_state *state;
+        } stream_sigma_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_named_value_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_lambda_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_apply_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_type_family_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_let_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_backreference_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_builtin_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_item_from_context_is_next;
+        struct {
+            struct stream_state *state;
+        } stream_end;
     } specifics;
+    union callback_behavior behavior;
 };
 
 
@@ -466,6 +830,11 @@ static void remove_callback_invocation_pattern_from_buffer
   (struct callback_invocation_pattern_buffer *buffer,
    struct callback_invocation_pattern *allocation);
 
+static void copy_callback_behavior
+  (enum callback_identifier identifier,
+   union callback_behavior *destination,
+   union callback_behavior *source);
+
 static void print_test_case
   (struct test_case *test_case);
 
@@ -482,7 +851,7 @@ static struct callback_invocation *begin_callback
   (struct test_suite *test_suite);
 
 static int callback_should_succeed
-  (struct test_suite *test_suite, char **tag);
+  (struct test_suite *test_suite, union callback_behavior *behavior);
 
 static void fail
   (struct test_suite *test_suite);
@@ -1012,7 +1381,7 @@ void allow_allocation(test_suite *test_suite_in, char *tag_format, ...) {
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 1;
-    invocation->tag = tag;
+    invocation->behavior.allocator_malloc.tag = tag;
     
     test_suite->allocation_invocation = invocation;
 }
@@ -1061,7 +1430,7 @@ void allow_deallocation(test_suite *test_suite_in, char *tag_format, ...) {
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 1;
-    invocation->tag = tag;
+    invocation->specifics.allocator_free.tag = tag;
     
     test_suite->deallocation_invocation = invocation;
 }
@@ -1107,7 +1476,6 @@ void expect_error_memory
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
-    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -1145,7 +1513,6 @@ void expect_error_type_mismatch
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
-    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -1183,7 +1550,6 @@ void expect_error_universe_level_overflow
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
-    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -1221,7 +1587,6 @@ void expect_error_buffer_index
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
-    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -1259,7 +1624,6 @@ void expect_error_not_applicable
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
-    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -1297,7 +1661,6 @@ void expect_error_non_numeric_float
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
-    invocation->tag = NULL;
     
     test_suite->error_invocation = invocation;
     
@@ -1621,9 +1984,213 @@ static void initialize_callback_invocation_pattern
 static void finalize_callback_invocation_pattern
   (struct callback_invocation_pattern *pattern)
 {
-    if(pattern->tag) {
-        actually_free(pattern->tag);
-        pattern->tag = NULL;
+    switch(pattern->identifier) {
+    case library_finalizer_callback_identifier:
+        break;
+    
+    case allocator_malloc_callback_identifier:
+        break;
+    
+    case allocator_free_callback_identifier:
+        if(pattern->specifics.allocator_free.tag) {
+            actually_free(pattern->specifics.allocator_free.tag);
+            pattern->specifics.allocator_free.tag = NULL;
+        }
+        break;
+    
+    case allocator_realloc_callback_identifier:
+        if(pattern->specifics.allocator_realloc.tag) {
+            actually_free(pattern->specifics.allocator_realloc.tag);
+            pattern->specifics.allocator_realloc.tag = NULL;
+        }
+        break;
+    
+    case error_memory_callback_identifier:
+        break;
+    
+    case error_type_mismatch_callback_identifier:
+        break;
+    
+    case error_universe_level_overflow_callback_identifier:
+        break;
+    
+    case error_buffer_index_callback_identifier:
+        break;
+    
+    case error_not_applicable_callback_identifier:
+        break;
+    
+    case error_non_numeric_float_callback_identifier:
+        break;
+    
+    case stream_start_callback_identifier:
+        break;
+    
+    case stream_magic_number_callback_identifier:
+        break;
+    
+    case stream_name_definition_callback_identifier:
+        break;
+    
+    case stream_value_definition_is_next_callback_identifier:
+        break;
+    
+    case stream_type_definition_bool_callback_identifier:
+        break;
+    
+    case stream_type_definition_ordering_callback_identifier:
+        break;
+    
+    case stream_type_definition_maybe_is_next_callback_identifier:
+        break;
+    
+    case stream_type_definition_int8_callback_identifier:
+        break;
+    
+    case stream_type_definition_int16_callback_identifier:
+        break;
+    
+    case stream_type_definition_int32_callback_identifier:
+        break;
+    
+    case stream_type_definition_int64_callback_identifier:
+        break;
+    
+    case stream_type_definition_nat8_callback_identifier:
+        break;
+    
+    case stream_type_definition_nat16_callback_identifier:
+        break;
+    
+    case stream_type_definition_nat32_callback_identifier:
+        break;
+    
+    case stream_type_definition_nat64_callback_identifier:
+        break;
+    
+    case stream_type_definition_float32_callback_identifier:
+        break;
+    
+    case stream_type_definition_float64_callback_identifier:
+        break;
+    
+    case stream_type_definition_utf8_callback_identifier:
+        break;
+    
+    case stream_type_definition_blob_callback_identifier:
+        break;
+    
+    case stream_type_definition_function_is_next_callback_identifier:
+        break;
+    
+    case stream_type_definition_sigma_is_next_callback_identifier:
+        break;
+    
+    case stream_type_definition_named_is_next_callback_identifier:
+        break;
+    
+    case stream_type_definition_universe_callback_identifier:
+        break;
+    
+    case stream_bool_false_callback_identifier:
+        break;
+    
+    case stream_bool_true_callback_identifier:
+        break;
+    
+    case stream_ordering_less_callback_identifier:
+        break;
+    
+    case stream_ordering_equal_callback_identifier:
+        break;
+    
+    case stream_ordering_greater_callback_identifier:
+        break;
+    
+    case stream_maybe_nothing_callback_identifier:
+        break;
+    
+    case stream_maybe_just_is_next_callback_identifier:
+        break;
+    
+    case stream_int8_callback_identifier:
+        break;
+    
+    case stream_int16_callback_identifier:
+        break;
+    
+    case stream_int32_callback_identifier:
+        break;
+    
+    case stream_int64_callback_identifier:
+        break;
+    
+    case stream_nat8_callback_identifier:
+        break;
+    
+    case stream_nat16_callback_identifier:
+        break;
+    
+    case stream_nat32_callback_identifier:
+        break;
+    
+    case stream_nat64_callback_identifier:
+        break;
+    
+    case stream_float32_callback_identifier:
+        break;
+    
+    case stream_float64_callback_identifier:
+        break;
+    
+    case stream_utf8_start_callback_identifier:
+        break;
+    
+    case stream_utf8_data_callback_identifier:
+        break;
+    
+    case stream_utf8_end_callback_identifier:
+        break;
+    
+    case stream_blob_start_callback_identifier:
+        break;
+    
+    case stream_blob_data_callback_identifier:
+        break;
+    
+    case stream_blob_end_callback_identifier:
+        break;
+    
+    case stream_sigma_is_next_callback_identifier:
+        break;
+    
+    case stream_named_value_is_next_callback_identifier:
+        break;
+    
+    case stream_lambda_is_next_callback_identifier:
+        break;
+    
+    case stream_apply_is_next_callback_identifier:
+        break;
+    
+    case stream_type_family_is_next_callback_identifier:
+        break;
+    
+    case stream_let_is_next_callback_identifier:
+        break;
+    
+    case stream_backreference_is_next_callback_identifier:
+        break;
+    
+    case stream_builtin_is_next_callback_identifier:
+        break;
+    
+    case stream_item_from_context_is_next_callback_identifier:
+        break;
+    
+    case stream_end_callback_identifier:
+        break;
+    
     }
 }
 
@@ -1689,6 +2256,344 @@ static void remove_callback_invocation_pattern_from_buffer
                 sizeof(struct callback_invocation_pattern *)
                 * (buffer->count - (i + 1)));
         buffer->count--;
+    }
+}
+
+
+static void copy_callback_behavior
+  (enum callback_identifier identifier,
+   union callback_behavior *destination,
+   union callback_behavior *source)
+{
+    switch(identifier) {
+    case library_finalizer_callback_identifier:
+        break;
+    
+    case allocator_malloc_callback_identifier:
+        if(source->allocator_malloc.tag) {
+            destination->allocator_malloc.tag =
+                strdup(source->allocator_malloc.tag);
+        } else {
+            destination->allocator_malloc.tag = NULL;
+        }
+        break;
+    
+    case allocator_free_callback_identifier:
+        if(source->allocator_free.tag) {
+            destination->allocator_free.tag =
+                strdup(source->allocator_free.tag);
+        } else {
+            destination->allocator_free.tag = NULL;
+        }
+        break;
+    
+    case allocator_realloc_callback_identifier:
+        if(source->allocator_realloc.tag) {
+            destination->allocator_realloc.tag =
+                strdup(source->allocator_realloc.tag);
+        } else {
+            destination->allocator_realloc.tag = NULL;
+        }
+        break;
+    
+    case error_memory_callback_identifier:
+        break;
+    
+    case error_type_mismatch_callback_identifier:
+        break;
+    
+    case error_universe_level_overflow_callback_identifier:
+        break;
+    
+    case error_buffer_index_callback_identifier:
+        break;
+    
+    case error_not_applicable_callback_identifier:
+        break;
+    
+    case error_non_numeric_float_callback_identifier:
+        break;
+    
+    case stream_start_callback_identifier:
+        destination->stream_start.fail =
+            source->stream_start.fail;
+        break;
+    
+    case stream_magic_number_callback_identifier:
+        destination->stream_magic_number.fail =
+            source->stream_magic_number.fail;
+        break;
+    
+    case stream_name_definition_callback_identifier:
+        destination->stream_name_definition.fail =
+            source->stream_name_definition.fail;
+        break;
+    
+    case stream_value_definition_is_next_callback_identifier:
+        destination->stream_value_definition_is_next.fail =
+            source->stream_value_definition_is_next.fail;
+        break;
+    
+    case stream_type_definition_bool_callback_identifier:
+        destination->stream_type_definition_bool.fail =
+            source->stream_type_definition_bool.fail;
+        break;
+    
+    case stream_type_definition_ordering_callback_identifier:
+        destination->stream_type_definition_ordering.fail =
+            source->stream_type_definition_ordering.fail;
+        break;
+    
+    case stream_type_definition_maybe_is_next_callback_identifier:
+        destination->stream_type_definition_maybe_is_next.fail =
+            source->stream_type_definition_maybe_is_next.fail;
+        break;
+    
+    case stream_type_definition_int8_callback_identifier:
+        destination->stream_type_definition_int8.fail =
+            source->stream_type_definition_int8.fail;
+        break;
+    
+    case stream_type_definition_int16_callback_identifier:
+        destination->stream_type_definition_int16.fail =
+            source->stream_type_definition_int16.fail;
+        break;
+    
+    case stream_type_definition_int32_callback_identifier:
+        destination->stream_type_definition_int32.fail =
+            source->stream_type_definition_int32.fail;
+        break;
+    
+    case stream_type_definition_int64_callback_identifier:
+        destination->stream_type_definition_int64.fail =
+            source->stream_type_definition_int64.fail;
+        break;
+    
+    case stream_type_definition_nat8_callback_identifier:
+        destination->stream_type_definition_nat8.fail =
+            source->stream_type_definition_nat8.fail;
+        break;
+    
+    case stream_type_definition_nat16_callback_identifier:
+        destination->stream_type_definition_nat16.fail =
+            source->stream_type_definition_nat16.fail;
+        break;
+    
+    case stream_type_definition_nat32_callback_identifier:
+        destination->stream_type_definition_nat32.fail =
+            source->stream_type_definition_nat32.fail;
+        break;
+    
+    case stream_type_definition_nat64_callback_identifier:
+        destination->stream_type_definition_nat64.fail =
+            source->stream_type_definition_nat64.fail;
+        break;
+    
+    case stream_type_definition_float32_callback_identifier:
+        destination->stream_type_definition_float32.fail =
+            source->stream_type_definition_float32.fail;
+        break;
+    
+    case stream_type_definition_float64_callback_identifier:
+        destination->stream_type_definition_float64.fail =
+            source->stream_type_definition_float64.fail;
+        break;
+    
+    case stream_type_definition_utf8_callback_identifier:
+        destination->stream_type_definition_utf8.fail =
+            source->stream_type_definition_utf8.fail;
+        break;
+    
+    case stream_type_definition_blob_callback_identifier:
+        destination->stream_type_definition_blob.fail =
+            source->stream_type_definition_blob.fail;
+        break;
+    
+    case stream_type_definition_function_is_next_callback_identifier:
+        destination->stream_type_definition_function_is_next.fail =
+            source->stream_type_definition_function_is_next.fail;
+        break;
+    
+    case stream_type_definition_sigma_is_next_callback_identifier:
+        destination->stream_type_definition_sigma_is_next.fail =
+            source->stream_type_definition_sigma_is_next.fail;
+        break;
+    
+    case stream_type_definition_named_is_next_callback_identifier:
+        destination->stream_type_definition_named_is_next.fail =
+            source->stream_type_definition_named_is_next.fail;
+        break;
+    
+    case stream_type_definition_universe_callback_identifier:
+        destination->stream_type_definition_universe.fail =
+            source->stream_type_definition_universe.fail;
+        break;
+    
+    case stream_bool_false_callback_identifier:
+        destination->stream_bool_false.fail =
+            source->stream_bool_false.fail;
+        break;
+    
+    case stream_bool_true_callback_identifier:
+        destination->stream_bool_true.fail =
+            source->stream_bool_true.fail;
+        break;
+    
+    case stream_ordering_less_callback_identifier:
+        destination->stream_ordering_less.fail =
+            source->stream_ordering_less.fail;
+        break;
+    
+    case stream_ordering_equal_callback_identifier:
+        destination->stream_ordering_equal.fail =
+            source->stream_ordering_equal.fail;
+        break;
+    
+    case stream_ordering_greater_callback_identifier:
+        destination->stream_ordering_greater.fail =
+            source->stream_ordering_greater.fail;
+        break;
+    
+    case stream_maybe_nothing_callback_identifier:
+        destination->stream_maybe_nothing.fail =
+            source->stream_maybe_nothing.fail;
+        break;
+    
+    case stream_maybe_just_is_next_callback_identifier:
+        destination->stream_maybe_just_is_next.fail =
+            source->stream_maybe_just_is_next.fail;
+        break;
+    
+    case stream_int8_callback_identifier:
+        destination->stream_int8.fail =
+            source->stream_int8.fail;
+        break;
+    
+    case stream_int16_callback_identifier:
+        destination->stream_int16.fail =
+            source->stream_int16.fail;
+        break;
+    
+    case stream_int32_callback_identifier:
+        destination->stream_int32.fail =
+            source->stream_int32.fail;
+        break;
+    
+    case stream_int64_callback_identifier:
+        destination->stream_int64.fail =
+            source->stream_int64.fail;
+        break;
+    
+    case stream_nat8_callback_identifier:
+        destination->stream_nat8.fail =
+            source->stream_nat8.fail;
+        break;
+    
+    case stream_nat16_callback_identifier:
+        destination->stream_nat16.fail =
+            source->stream_nat16.fail;
+        break;
+    
+    case stream_nat32_callback_identifier:
+        destination->stream_nat32.fail =
+            source->stream_nat32.fail;
+        break;
+    
+    case stream_nat64_callback_identifier:
+        destination->stream_nat64.fail =
+            source->stream_nat64.fail;
+        break;
+    
+    case stream_float32_callback_identifier:
+        destination->stream_float32.fail =
+            source->stream_float32.fail;
+        break;
+    
+    case stream_float64_callback_identifier:
+        destination->stream_float64.fail =
+            source->stream_float64.fail;
+        break;
+    
+    case stream_utf8_start_callback_identifier:
+        destination->stream_utf8_start.fail =
+            source->stream_utf8_start.fail;
+        break;
+    
+    case stream_utf8_data_callback_identifier:
+        destination->stream_utf8_data.fail =
+            source->stream_utf8_data.fail;
+        break;
+    
+    case stream_utf8_end_callback_identifier:
+        destination->stream_utf8_end.fail =
+            source->stream_utf8_end.fail;
+        break;
+    
+    case stream_blob_start_callback_identifier:
+        destination->stream_blob_start.fail =
+            source->stream_blob_start.fail;
+        break;
+    
+    case stream_blob_data_callback_identifier:
+        destination->stream_blob_data.fail =
+            source->stream_blob_data.fail;
+        break;
+    
+    case stream_blob_end_callback_identifier:
+        destination->stream_blob_end.fail =
+            source->stream_blob_end.fail;
+        break;
+    
+    case stream_sigma_is_next_callback_identifier:
+        destination->stream_sigma_is_next.fail =
+            source->stream_sigma_is_next.fail;
+        break;
+    
+    case stream_named_value_is_next_callback_identifier:
+        destination->stream_named_value_is_next.fail =
+            source->stream_named_value_is_next.fail;
+        break;
+    
+    case stream_lambda_is_next_callback_identifier:
+        destination->stream_lambda_is_next.fail =
+            source->stream_lambda_is_next.fail;
+        break;
+    
+    case stream_apply_is_next_callback_identifier:
+        destination->stream_apply_is_next.fail =
+            source->stream_apply_is_next.fail;
+        break;
+    
+    case stream_type_family_is_next_callback_identifier:
+        destination->stream_type_family_is_next.fail =
+            source->stream_type_family_is_next.fail;
+        break;
+    
+    case stream_let_is_next_callback_identifier:
+        destination->stream_let_is_next.fail =
+            source->stream_let_is_next.fail;
+        break;
+    
+    case stream_backreference_is_next_callback_identifier:
+        destination->stream_backreference_is_next.fail =
+            source->stream_backreference_is_next.fail;
+        break;
+    
+    case stream_builtin_is_next_callback_identifier:
+        destination->stream_builtin_is_next.fail =
+            source->stream_builtin_is_next.fail;
+        break;
+    
+    case stream_item_from_context_is_next_callback_identifier:
+        destination->stream_item_from_context_is_next.fail =
+            source->stream_item_from_context_is_next.fail;
+        break;
+    
+    case stream_end_callback_identifier:
+        destination->stream_end.fail =
+            source->stream_end.fail;
+        break;
+    
     }
 }
 
@@ -2022,7 +2927,7 @@ static struct callback_invocation *begin_callback
 
 
 static int callback_should_succeed
-  (struct test_suite *test_suite, char **tag)
+  (struct test_suite *test_suite, union callback_behavior *behavior)
 {
     struct callback_invocation *actual = test_suite->current_callback;
     
@@ -2037,7 +2942,334 @@ static int callback_should_succeed
         {
             int matches = 0;
             switch(expected->identifier) {
-            default: matches = 1;
+            case library_finalizer_callback_identifier:
+                matches = 1;
+                break;
+    
+            case allocator_malloc_callback_identifier:
+                matches = 1;
+                break;
+    
+            case allocator_free_callback_identifier:
+            {
+                struct allocated_data_buffer *buffer;
+                if(test_suite->current_test_case) {
+                    buffer = &test_suite->current_test_case->allocations;
+                } else if(test_suite->current_fixtures) {
+                    buffer = &test_suite->current_fixtures->allocations;
+                } else {
+                    buffer = &test_suite->allocations;
+                }
+                
+                struct allocated_data *allocation = NULL;
+                for(size_t i = 0; i < buffer->count; i++) {
+                    if(buffer->allocated_data[i]->data
+                       == actual->specifics.allocator_free.data)
+                    {
+                        allocation = buffer->allocated_data[i];
+                        break;
+                    }
+                }
+                
+                if(!allocation) {
+                    matches = 0;
+                } else {
+                    matches = 1;
+                    if(expected->specifics.allocator_free.tag) {
+                        if(strcmp(allocation->tag,
+                                 expected->specifics.allocator_free.tag))
+                        {
+                            matches = 0;
+                        }
+                    }
+                }
+                break;
+            }
+            
+            case allocator_realloc_callback_identifier:
+            {
+                struct allocated_data_buffer *buffer;
+                if(test_suite->current_test_case) {
+                    buffer = &test_suite->current_test_case->allocations;
+                } else if(test_suite->current_fixtures) {
+                    buffer = &test_suite->current_fixtures->allocations;
+                } else {
+                    buffer = &test_suite->allocations;
+                }
+                
+                struct allocated_data *allocation = NULL;
+                for(size_t i = 0; i < buffer->count; i++) {
+                    if(buffer->allocated_data[i]->data ==
+                       actual->specifics.allocator_free.data)
+                    {
+                        allocation = buffer->allocated_data[i];
+                        break;
+                    }
+                }
+                
+                if(!allocation) {
+                    matches = 0;
+                } else {
+                    matches = 1;
+                    if(expected->specifics.allocator_realloc.tag) {
+                        if(strcmp(allocation->tag,
+                                 expected->specifics.allocator_realloc.tag))
+                        {
+                            matches = 0;
+                        }
+                    }
+                }
+                break;
+            }
+    
+            case error_memory_callback_identifier:
+                matches = 1;
+                break;
+    
+            case error_type_mismatch_callback_identifier:
+                matches = 1;
+                break;
+    
+            case error_universe_level_overflow_callback_identifier:
+                matches = 1;
+                break;
+    
+            case error_buffer_index_callback_identifier:
+                matches = 1;
+                break;
+    
+            case error_not_applicable_callback_identifier:
+                matches = 1;
+                break;
+    
+            case error_non_numeric_float_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_start_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_magic_number_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_name_definition_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_value_definition_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_bool_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_ordering_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_maybe_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_int8_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_int16_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_int32_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_int64_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_nat8_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_nat16_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_nat32_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_nat64_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_float32_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_float64_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_utf8_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_blob_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_function_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_sigma_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_named_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_definition_universe_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_bool_false_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_bool_true_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_ordering_less_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_ordering_equal_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_ordering_greater_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_maybe_nothing_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_maybe_just_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_int8_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_int16_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_int32_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_int64_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_nat8_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_nat16_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_nat32_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_nat64_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_float32_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_float64_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_utf8_start_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_utf8_data_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_utf8_end_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_blob_start_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_blob_data_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_blob_end_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_sigma_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_named_value_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_lambda_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_apply_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_type_family_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_let_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_backreference_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_builtin_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_item_from_context_is_next_callback_identifier:
+                matches = 1;
+                break;
+    
+            case stream_end_callback_identifier:
+                matches = 1;
+                break;
+    
             }
             if(matches) break;
         }
@@ -2052,9 +3284,10 @@ static int callback_should_succeed
             test_suite->expected_callbacks.patterns[expectation_index];
         
         int should_succeed = expected->should_succeed;
-
-        if(tag) {
-            *tag = strdup(expected->tag);
+        
+        if(behavior) {
+            memcpy(behavior, &expected->behavior,
+                sizeof(union callback_behavior));
         }
         
         if(!expected->sticky) {
@@ -2167,8 +3400,8 @@ static void *allocator_malloc(struct test_suite *test_suite, size_t size) {
     invocation->succeeded = 0;
     invocation->specifics.allocator_malloc.size = size;
     
-    char *tag;
-    if(callback_should_succeed(test_suite, &tag)) {
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
         void *data = actually_malloc(size);
                 
         struct allocated_data *allocation;
@@ -2185,7 +3418,7 @@ static void *allocator_malloc(struct test_suite *test_suite, size_t size) {
         
         allocation->data = data;
         allocation->size = size;
-        allocation->tag = tag;
+        allocation->tag = behavior.allocator_malloc.tag;
         
         return data;
     } else {
@@ -2201,8 +3434,8 @@ static void allocator_free(struct test_suite *test_suite, void *data) {
     invocation->succeeded = 0;
     invocation->specifics.allocator_free.data = data;
     
-    char *tag;
-    if(callback_should_succeed(test_suite, &tag)) {
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
         struct allocated_data_buffer *buffer;
         if(test_suite->current_test_case) {
             buffer = &test_suite->current_test_case->allocations;
@@ -2221,28 +3454,16 @@ static void allocator_free(struct test_suite *test_suite, void *data) {
         }
         
         if(!allocation) {
-            if(test_suite->output_on_header_line) {
-                printf("\n");
-                test_suite->output_on_header_line = 0;
-            }
-            printf("  Deallocation in wrong context.\n");
-            
-            fail(test_suite); // Never returns.
-        } else if(strcmp(allocation->tag, tag)) {
-            if(test_suite->output_on_header_line) {
-                printf("\n");
-                test_suite->output_on_header_line = 0;
-            }
-            printf("  Deallocation of memory tagged \"%s\" when the expected "
-                   "tag is \"%s\".\n",
-                   allocation->tag, tag);
-            
-            fail(test_suite); // Never returns.
-        } else {
-            remove_allocated_data_from_buffer(buffer, allocation);
-            finalize_allocated_data(allocation);
-            actually_free(allocation);
+            printf("\n\n"
+                   "*** The testing infrastructure itself failed.\n"
+                   "*** Specifically, got as far as trying to perform a free, "
+                   "but no allocation information for the memory in question could be found.\n");
+            exit(1);
         }
+        
+        remove_allocated_data_from_buffer(buffer, allocation);
+        finalize_allocated_data(allocation);
+        actually_free(allocation);
     }
 }
 
@@ -2516,7 +3737,8 @@ static void stream_start
     invocation->succeeded = 0;
     invocation->specifics.stream_start.state = stream_state_in;
     
-    if(callback_should_succeed(test_suite, NULL)) {
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
         return;
     } else {
         return;
