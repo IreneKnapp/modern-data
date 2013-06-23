@@ -86,6 +86,8 @@ enum callback_identifier {
     stream_builtin_is_next_callback_identifier,
     stream_item_from_context_is_next_callback_identifier,
     stream_end_callback_identifier,
+    combinator_parallel_callback_identifier,
+    combinator_sequential_callback_identifier,
 };
 
 
@@ -496,6 +498,13 @@ union callback_behavior {
 };
 
 
+struct callback_invocation_pattern_buffer {
+    size_t count;
+    size_t capacity;
+    struct callback_invocation_pattern **patterns;
+};
+
+
 struct callback_invocation_pattern {
     enum callback_identifier identifier;
     unsigned parameters_relevant : 1;
@@ -699,17 +708,15 @@ struct callback_invocation_pattern {
         struct {
             struct stream_state *state;
         } stream_end;
+        struct {
+            struct callback_invocation_pattern_buffer children;
+        } combinator_parallel;
+        struct {
+            struct callback_invocation_pattern_buffer children;
+        } combinator_sequential;
     } specifics;
     union callback_behavior behavior;
 };
-
-
-struct callback_invocation_pattern_buffer {
-    size_t count;
-    size_t capacity;
-    struct callback_invocation_pattern **patterns;
-};
-
 
 
 struct test_case {
@@ -750,7 +757,7 @@ struct test_suite {
     struct test_case_buffer test_cases;
     struct fixtures fixtures;
     struct callback_invocation_buffer actual_callbacks;
-    struct callback_invocation_pattern_buffer expected_callbacks;
+    struct callback_invocation_pattern *expected_callbacks;
     struct allocated_data_buffer allocations;
     unsigned output_on_header_line : 1;
 };
@@ -813,6 +820,12 @@ static void finalize_callback_invocation_buffer
   (struct callback_invocation_buffer *buffer);
 static struct callback_invocation *make_callback_invocation_in_buffer
   (struct callback_invocation_buffer *buffer);
+static void move_callback_invocation_pattern_into_buffer
+  (struct callback_invocation_pattern_buffer *buffer,
+   struct callback_invocation_pattern *pattern);
+static struct callback_invocation_pattern_buffer
+  *get_buffer_for_parallel_callback_invocation_pattern
+  (struct test_suite *test_suite);
 
 static void initialize_callback_invocation_pattern
   (struct callback_invocation_pattern *pattern);
@@ -849,6 +862,19 @@ static void print_callback_invocation_buffer
 
 static struct callback_invocation *begin_callback
   (struct test_suite *test_suite);
+
+static int match_callback_invocation_against_pattern
+  (struct test_suite *test_suite,
+   struct callback_invocation *invocation,
+   struct callback_invocation_pattern *pattern,
+   struct callback_invocation_pattern_buffer **buffer_result,
+   struct callback_invocation_pattern **pattern_result,
+   union callback_behavior *behavior);
+static int match_callback_invocation_against_pattern_helper
+  (struct test_suite *test_suite,
+   struct callback_invocation *invocation,
+   struct callback_invocation_pattern *pattern,
+   union callback_behavior *behavior);
 
 static int callback_should_succeed
   (struct test_suite *test_suite, union callback_behavior *behavior);
@@ -1374,9 +1400,11 @@ void allow_allocation(test_suite *test_suite_in, char *tag_format, ...) {
     vsnprintf(tag, tag_length + 1, tag_format, ap);
     va_end(ap);
     
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
     struct callback_invocation_pattern *invocation =
-        make_callback_invocation_pattern_in_buffer
-            (&test_suite->expected_callbacks);
+        make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = allocator_malloc_callback_identifier;
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
@@ -1392,10 +1420,12 @@ void disallow_allocation(test_suite *test_suite_in) {
     
     if(!test_suite->allocation_invocation) return;
     
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
     struct callback_invocation_pattern *invocation =
         test_suite->allocation_invocation;
-    remove_callback_invocation_pattern_from_buffer
-        (&test_suite->expected_callbacks, invocation);
+    remove_callback_invocation_pattern_from_buffer(buffer, invocation);
     finalize_callback_invocation_pattern(invocation);
     actually_free(invocation);
     
@@ -1423,9 +1453,11 @@ void allow_deallocation(test_suite *test_suite_in, char *tag_format, ...) {
     vsnprintf(tag, tag_length + 1, tag_format, ap);
     va_end(ap);
     
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
     struct callback_invocation_pattern *invocation =
-        make_callback_invocation_pattern_in_buffer
-            (&test_suite->expected_callbacks);
+        make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = allocator_free_callback_identifier;
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
@@ -1441,10 +1473,12 @@ void disallow_deallocation(test_suite *test_suite_in) {
     
     if(!test_suite->deallocation_invocation) return;
     
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
     struct callback_invocation_pattern *invocation =
         test_suite->deallocation_invocation;
-    remove_callback_invocation_pattern_from_buffer
-        (&test_suite->expected_callbacks, invocation);
+    remove_callback_invocation_pattern_from_buffer(buffer, invocation);
     finalize_callback_invocation_pattern(invocation);
     actually_free(invocation);
     
@@ -1469,9 +1503,11 @@ void expect_error_memory
     
     if(test_suite->error_invocation) return;
     
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
     struct callback_invocation_pattern *invocation =
-        make_callback_invocation_pattern_in_buffer
-            (&test_suite->expected_callbacks);
+        make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_memory_callback_identifier;
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
@@ -1506,9 +1542,11 @@ void expect_error_type_mismatch
     
     if(test_suite->error_invocation) return;
     
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
     struct callback_invocation_pattern *invocation =
-        make_callback_invocation_pattern_in_buffer
-            (&test_suite->expected_callbacks);
+        make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_type_mismatch_callback_identifier;
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
@@ -1543,9 +1581,11 @@ void expect_error_universe_level_overflow
     
     if(test_suite->error_invocation) return;
     
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
     struct callback_invocation_pattern *invocation =
-        make_callback_invocation_pattern_in_buffer
-            (&test_suite->expected_callbacks);
+        make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_universe_level_overflow_callback_identifier;
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
@@ -1580,9 +1620,11 @@ void expect_error_buffer_index
     
     if(test_suite->error_invocation) return;
     
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
     struct callback_invocation_pattern *invocation =
-        make_callback_invocation_pattern_in_buffer
-            (&test_suite->expected_callbacks);
+        make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_buffer_index_callback_identifier;
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
@@ -1617,9 +1659,11 @@ void expect_error_not_applicable
     
     if(test_suite->error_invocation) return;
     
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
     struct callback_invocation_pattern *invocation =
-        make_callback_invocation_pattern_in_buffer
-            (&test_suite->expected_callbacks);
+        make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_not_applicable_callback_identifier;
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
@@ -1654,9 +1698,11 @@ void expect_error_non_numeric_float
     
     if(test_suite->error_invocation) return;
     
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
     struct callback_invocation_pattern *invocation =
-        make_callback_invocation_pattern_in_buffer
-            (&test_suite->expected_callbacks);
+        make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_non_numeric_float_callback_identifier;
     invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
@@ -1803,8 +1849,7 @@ static void initialize_test_suite
     initialize_test_case_buffer(&test_suite->test_cases);
     initialize_fixtures(&test_suite->fixtures);
     initialize_callback_invocation_buffer(&test_suite->actual_callbacks);
-    initialize_callback_invocation_pattern_buffer
-        (&test_suite->expected_callbacks);
+    test_suite->expected_callbacks = NULL;
     initialize_allocated_data_buffer(&test_suite->allocations);
     test_suite->output_on_header_line = 0;
 }
@@ -1816,8 +1861,9 @@ static void finalize_test_suite
     finalize_test_case_buffer(&test_suite->test_cases);
     finalize_fixtures(&test_suite->fixtures);
     finalize_callback_invocation_buffer(&test_suite->actual_callbacks);
-    finalize_callback_invocation_pattern_buffer
-        (&test_suite->expected_callbacks);
+    if(test_suite->expected_callbacks) {
+        finalize_callback_invocation_pattern(test_suite->expected_callbacks);
+    }
     finalize_allocated_data_buffer(&test_suite->allocations);
 }
 
@@ -2191,6 +2237,16 @@ static void finalize_callback_invocation_pattern
     case stream_end_callback_identifier:
         break;
     
+    case combinator_parallel_callback_identifier:
+        finalize_callback_invocation_pattern_buffer
+            (&pattern->specifics.combinator_parallel.children);
+        break;
+    
+    case combinator_sequential_callback_identifier:
+        finalize_callback_invocation_pattern_buffer
+            (&pattern->specifics.combinator_sequential.children);
+        break;
+    
     }
 }
 
@@ -2239,6 +2295,71 @@ static struct callback_invocation_pattern
     initialize_callback_invocation_pattern(result);
     
     return result;
+}
+
+
+static void move_callback_invocation_pattern_into_buffer
+  (struct callback_invocation_pattern_buffer *buffer,
+   struct callback_invocation_pattern *pattern)
+{
+    size_t original_capacity = buffer->capacity;
+    while(buffer->count + 1 >= buffer->capacity) {
+        buffer->capacity *= 2;
+    }
+    if(buffer->capacity != original_capacity) {
+        buffer->patterns = actually_realloc
+            (buffer->patterns,
+             sizeof(struct callback_invocation_pattern *) * buffer->capacity);
+    }
+    
+    buffer->patterns[buffer->count] = pattern;
+    
+    buffer->count++;
+}
+
+
+static struct callback_invocation_pattern_buffer
+  *get_buffer_for_parallel_callback_invocation_pattern
+  (struct test_suite *test_suite)
+{
+    if(!test_suite->expected_callbacks) {
+        test_suite->expected_callbacks =
+            actually_malloc(sizeof(struct callback_invocation_pattern));
+        initialize_callback_invocation_pattern(test_suite->expected_callbacks);
+        test_suite->expected_callbacks->identifier =
+            combinator_parallel_callback_identifier;
+        initialize_callback_invocation_pattern_buffer
+            (&test_suite->expected_callbacks->specifics.combinator_parallel
+             .children);
+        return &test_suite->expected_callbacks->specifics.combinator_parallel
+               .children;
+    } else switch(test_suite->expected_callbacks->identifier) {
+    case combinator_parallel_callback_identifier:
+        return &test_suite->expected_callbacks->specifics.combinator_parallel
+               .children;
+        break;
+    
+    default:
+    {
+        struct callback_invocation_pattern *temporary =
+            test_suite->expected_callbacks;
+        test_suite->expected_callbacks =
+            actually_malloc(sizeof(struct callback_invocation_pattern));
+        initialize_callback_invocation_pattern(test_suite->expected_callbacks);
+        test_suite->expected_callbacks->identifier =
+            combinator_parallel_callback_identifier;
+        initialize_callback_invocation_pattern_buffer
+            (&test_suite->expected_callbacks->specifics.combinator_parallel
+             .children);
+        move_callback_invocation_pattern_into_buffer
+            (&test_suite->expected_callbacks->specifics.combinator_parallel
+             .children,
+             temporary);
+        return &test_suite->expected_callbacks->specifics.combinator_parallel
+               .children;
+        break;
+    }
+    }
 }
 
 
@@ -2594,6 +2715,12 @@ static void copy_callback_behavior
             source->stream_end.fail;
         break;
     
+    case combinator_parallel_callback_identifier:
+        break;
+    
+    case combinator_sequential_callback_identifier:
+        break;
+    
     }
 }
 
@@ -2894,6 +3021,22 @@ static void print_callback_invocation
         printf("stream_end_callback_identifier()\n");
         break;
     
+    case combinator_parallel_callback_identifier:
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to describe a callback invocation, "
+               "but it wasn't a real one, it was combinator_parallel.\n");
+        exit(1);
+        break;
+    
+    case combinator_sequential_callback_identifier:
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to describe a callback invocation, "
+               "but it wasn't a real one, it was combinator_sequential.\n");
+        exit(1);
+        break;
+    
     }
 }
 
@@ -2926,363 +3069,450 @@ static struct callback_invocation *begin_callback
 }
 
 
+static int match_callback_invocation_against_pattern
+  (struct test_suite *test_suite,
+   struct callback_invocation *invocation,
+   struct callback_invocation_pattern *pattern,
+   struct callback_invocation_pattern_buffer **buffer_result,
+   struct callback_invocation_pattern **pattern_result,
+   union callback_behavior *behavior)
+{
+    switch(invocation->identifier) {
+    case combinator_parallel_callback_identifier:
+    {
+        struct callback_invocation_pattern_buffer *buffer =
+            &pattern->specifics.combinator_parallel.children;
+        size_t expectation_index;
+        for(expectation_index = 0;
+            expectation_index < buffer->count;
+            expectation_index++)
+        {
+            struct callback_invocation_pattern *expected =
+                buffer->patterns[expectation_index];
+            int matches =
+                match_callback_invocation_against_pattern_helper
+                    (test_suite, invocation, expected, behavior);
+            if(matches) {
+                *buffer_result = buffer;
+                *pattern_result = expected;
+                return 1;
+            }
+        }
+        
+        return 0;
+    }
+    
+    case combinator_sequential_callback_identifier:
+    {
+        struct callback_invocation_pattern_buffer *buffer =
+            &pattern->specifics.combinator_sequential.children;
+        if(buffer->count < 1) return 0;
+        struct callback_invocation_pattern *expected = buffer->patterns[0];
+        int matches =
+            match_callback_invocation_against_pattern_helper
+                (test_suite, invocation, expected, behavior);
+        if(matches) {
+            *buffer_result = buffer;
+            *pattern_result = expected;
+            return 1;
+        } else return 0;
+    }
+    
+    default:
+    {
+        int matches =
+            match_callback_invocation_against_pattern_helper
+                (test_suite, invocation, pattern, behavior);
+        if(matches) {
+            *buffer_result = NULL;
+            *pattern_result = pattern;
+            return 1;
+        } else return 0;
+    }
+    }
+}  
+
+
+static int match_callback_invocation_against_pattern_helper
+  (struct test_suite *test_suite,
+   struct callback_invocation *invocation,
+   struct callback_invocation_pattern *pattern,
+   union callback_behavior *behavior)
+{
+    if(pattern->identifier != invocation->identifier) return 0;
+    
+    int matches = 0;
+    switch(pattern->identifier) {
+    case library_finalizer_callback_identifier:
+        matches = 1;
+        break;
+
+    case allocator_malloc_callback_identifier:
+        matches = 1;
+        break;
+
+    case allocator_free_callback_identifier:
+    {
+        struct allocated_data_buffer *buffer;
+        if(test_suite->current_test_case) {
+            buffer = &test_suite->current_test_case->allocations;
+        } else if(test_suite->current_fixtures) {
+            buffer = &test_suite->current_fixtures->allocations;
+        } else {
+            buffer = &test_suite->allocations;
+        }
+        
+        struct allocated_data *allocation = NULL;
+        for(size_t i = 0; i < buffer->count; i++) {
+            if(buffer->allocated_data[i]->data
+               == invocation->specifics.allocator_free.data)
+            {
+                allocation = buffer->allocated_data[i];
+                break;
+            }
+        }
+        
+        if(!allocation) {
+            matches = 0;
+        } else {
+            matches = 1;
+            if(pattern->specifics.allocator_free.tag) {
+                if(strcmp(allocation->tag,
+                          pattern->specifics.allocator_free.tag))
+                {
+                    matches = 0;
+                }
+            }
+        }
+        break;
+    }
+    
+    case allocator_realloc_callback_identifier:
+    {
+        struct allocated_data_buffer *buffer;
+        if(test_suite->current_test_case) {
+            buffer = &test_suite->current_test_case->allocations;
+        } else if(test_suite->current_fixtures) {
+            buffer = &test_suite->current_fixtures->allocations;
+        } else {
+            buffer = &test_suite->allocations;
+        }
+        
+        struct allocated_data *allocation = NULL;
+        for(size_t i = 0; i < buffer->count; i++) {
+            if(buffer->allocated_data[i]->data ==
+               invocation->specifics.allocator_free.data)
+            {
+                allocation = buffer->allocated_data[i];
+                break;
+            }
+        }
+        
+        if(!allocation) {
+            matches = 0;
+        } else {
+            matches = 1;
+            if(pattern->specifics.allocator_realloc.tag) {
+                if(strcmp(allocation->tag,
+                          pattern->specifics.allocator_realloc.tag))
+                {
+                    matches = 0;
+                }
+            }
+        }
+        break;
+    }
+
+    case error_memory_callback_identifier:
+        matches = 1;
+        break;
+
+    case error_type_mismatch_callback_identifier:
+        matches = 1;
+        break;
+
+    case error_universe_level_overflow_callback_identifier:
+        matches = 1;
+        break;
+
+    case error_buffer_index_callback_identifier:
+        matches = 1;
+        break;
+
+    case error_not_applicable_callback_identifier:
+        matches = 1;
+        break;
+
+    case error_non_numeric_float_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_start_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_magic_number_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_name_definition_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_value_definition_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_bool_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_ordering_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_maybe_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_int8_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_int16_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_int32_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_int64_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_nat8_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_nat16_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_nat32_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_nat64_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_float32_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_float64_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_utf8_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_blob_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_function_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_sigma_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_named_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_definition_universe_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_bool_false_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_bool_true_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_ordering_less_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_ordering_equal_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_ordering_greater_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_maybe_nothing_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_maybe_just_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_int8_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_int16_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_int32_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_int64_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_nat8_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_nat16_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_nat32_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_nat64_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_float32_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_float64_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_utf8_start_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_utf8_data_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_utf8_end_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_blob_start_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_blob_data_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_blob_end_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_sigma_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_named_value_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_lambda_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_apply_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_type_family_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_let_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_backreference_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_builtin_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_item_from_context_is_next_callback_identifier:
+        matches = 1;
+        break;
+
+    case stream_end_callback_identifier:
+        matches = 1;
+        break;
+    
+    case combinator_parallel_callback_identifier:
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to do a low-level comparison against "
+               "a callback invocation pattern, but it wasn't a real one, it "
+               "was combinator_parallel.\n");
+        exit(1);
+        break;
+    
+    case combinator_sequential_callback_identifier:
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to do a low-level comparison against "
+               "a callback invocation pattern, but it wasn't a real one, it "
+               "was combinator_sequential.\n");
+        exit(1);
+        break;
+    }
+    
+    return matches;
+}
+
+
 static int callback_should_succeed
   (struct test_suite *test_suite, union callback_behavior *behavior)
 {
     struct callback_invocation *actual = test_suite->current_callback;
     
-    size_t expectation_index;
-    for(expectation_index = 0;
-        expectation_index < test_suite->expected_callbacks.count;
-        expectation_index++)
-    {
-        struct callback_invocation_pattern *expected =
-            test_suite->expected_callbacks.patterns[expectation_index];
-        if(expected->identifier == actual->identifier)
-        {
-            int matches = 0;
-            switch(expected->identifier) {
-            case library_finalizer_callback_identifier:
-                matches = 1;
-                break;
-    
-            case allocator_malloc_callback_identifier:
-                matches = 1;
-                break;
-    
-            case allocator_free_callback_identifier:
-            {
-                struct allocated_data_buffer *buffer;
-                if(test_suite->current_test_case) {
-                    buffer = &test_suite->current_test_case->allocations;
-                } else if(test_suite->current_fixtures) {
-                    buffer = &test_suite->current_fixtures->allocations;
-                } else {
-                    buffer = &test_suite->allocations;
-                }
-                
-                struct allocated_data *allocation = NULL;
-                for(size_t i = 0; i < buffer->count; i++) {
-                    if(buffer->allocated_data[i]->data
-                       == actual->specifics.allocator_free.data)
-                    {
-                        allocation = buffer->allocated_data[i];
-                        break;
-                    }
-                }
-                
-                if(!allocation) {
-                    matches = 0;
-                } else {
-                    matches = 1;
-                    if(expected->specifics.allocator_free.tag) {
-                        if(strcmp(allocation->tag,
-                                 expected->specifics.allocator_free.tag))
-                        {
-                            matches = 0;
-                        }
-                    }
-                }
-                break;
-            }
-            
-            case allocator_realloc_callback_identifier:
-            {
-                struct allocated_data_buffer *buffer;
-                if(test_suite->current_test_case) {
-                    buffer = &test_suite->current_test_case->allocations;
-                } else if(test_suite->current_fixtures) {
-                    buffer = &test_suite->current_fixtures->allocations;
-                } else {
-                    buffer = &test_suite->allocations;
-                }
-                
-                struct allocated_data *allocation = NULL;
-                for(size_t i = 0; i < buffer->count; i++) {
-                    if(buffer->allocated_data[i]->data ==
-                       actual->specifics.allocator_free.data)
-                    {
-                        allocation = buffer->allocated_data[i];
-                        break;
-                    }
-                }
-                
-                if(!allocation) {
-                    matches = 0;
-                } else {
-                    matches = 1;
-                    if(expected->specifics.allocator_realloc.tag) {
-                        if(strcmp(allocation->tag,
-                                 expected->specifics.allocator_realloc.tag))
-                        {
-                            matches = 0;
-                        }
-                    }
-                }
-                break;
-            }
-    
-            case error_memory_callback_identifier:
-                matches = 1;
-                break;
-    
-            case error_type_mismatch_callback_identifier:
-                matches = 1;
-                break;
-    
-            case error_universe_level_overflow_callback_identifier:
-                matches = 1;
-                break;
-    
-            case error_buffer_index_callback_identifier:
-                matches = 1;
-                break;
-    
-            case error_not_applicable_callback_identifier:
-                matches = 1;
-                break;
-    
-            case error_non_numeric_float_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_start_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_magic_number_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_name_definition_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_value_definition_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_bool_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_ordering_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_maybe_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_int8_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_int16_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_int32_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_int64_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_nat8_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_nat16_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_nat32_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_nat64_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_float32_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_float64_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_utf8_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_blob_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_function_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_sigma_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_named_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_definition_universe_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_bool_false_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_bool_true_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_ordering_less_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_ordering_equal_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_ordering_greater_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_maybe_nothing_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_maybe_just_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_int8_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_int16_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_int32_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_int64_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_nat8_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_nat16_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_nat32_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_nat64_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_float32_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_float64_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_utf8_start_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_utf8_data_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_utf8_end_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_blob_start_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_blob_data_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_blob_end_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_sigma_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_named_value_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_lambda_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_apply_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_type_family_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_let_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_backreference_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_builtin_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_item_from_context_is_next_callback_identifier:
-                matches = 1;
-                break;
-    
-            case stream_end_callback_identifier:
-                matches = 1;
-                break;
-    
-            }
-            if(matches) break;
-        }
-    }
-    int expectation_found =
-        expectation_index < test_suite->expected_callbacks.count;
-    
     test_suite->current_callback = NULL;
     
-    if(expectation_found) {
-        struct callback_invocation_pattern *expected =
-            test_suite->expected_callbacks.patterns[expectation_index];
-        
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    struct callback_invocation_pattern *expected = NULL;
+    int matches = 0;
+    if(!test_suite->expected_callbacks) matches = 0;
+    else matches = match_callback_invocation_against_pattern
+        (test_suite,
+         actual,
+         test_suite->expected_callbacks,
+         &buffer,
+         &expected,
+         behavior);
+    if(matches) {
         int should_succeed = expected->should_succeed;
         
         if(behavior) {
@@ -3291,10 +3521,17 @@ static int callback_should_succeed
         }
         
         if(!expected->sticky) {
-            remove_callback_invocation_pattern_from_buffer
-                (&test_suite->expected_callbacks, expected);
-            finalize_callback_invocation_pattern(expected);
-            actually_free(expected);
+            if(!buffer) {
+                finalize_callback_invocation_pattern
+                    (test_suite->expected_callbacks);
+                actually_free(test_suite->expected_callbacks);
+                test_suite->expected_callbacks = NULL;
+            } else {
+                remove_callback_invocation_pattern_from_buffer
+                    (buffer, expected);
+                finalize_callback_invocation_pattern(expected);
+                actually_free(expected);
+            }
         }
         
         return should_succeed;
@@ -3380,7 +3617,7 @@ void flush_expectations(test_suite *test_suite_in)
 {
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     
-    if(test_suite->expected_callbacks.count > 0) {
+    if(test_suite->expected_callbacks) {
         test_message(test_suite, "Missing expected calls.");
         fail(test_suite); // Never returns.
     }
