@@ -123,116 +123,172 @@ struct callback_invocation {
         struct {
         } error_non_numeric_float;
         struct {
+            struct stream_state *state;
         } stream_start;
         struct {
+            struct stream_state *state;
         } stream_magic_number;
         struct {
+            struct stream_state *state;
         } stream_name_definition;
         struct {
+            struct stream_state *state;
         } stream_value_definition_is_next;
         struct {
+            struct stream_state *state;
         } stream_type_definition_bool;
         struct {
+            struct stream_state *state;
         } stream_type_definition_ordering;
         struct {
+            struct stream_state *state;
         } stream_type_definition_maybe_is_next;
         struct {
+            struct stream_state *state;
         } stream_type_definition_int8;
         struct {
+            struct stream_state *state;
         } stream_type_definition_int16;
         struct {
+            struct stream_state *state;
         } stream_type_definition_int32;
         struct {
+            struct stream_state *state;
         } stream_type_definition_int64;
         struct {
+            struct stream_state *state;
         } stream_type_definition_nat8;
         struct {
+            struct stream_state *state;
         } stream_type_definition_nat16;
         struct {
+            struct stream_state *state;
         } stream_type_definition_nat32;
         struct {
+            struct stream_state *state;
         } stream_type_definition_nat64;
         struct {
+            struct stream_state *state;
         } stream_type_definition_float32;
         struct {
+            struct stream_state *state;
         } stream_type_definition_float64;
         struct {
+            struct stream_state *state;
         } stream_type_definition_utf8;
         struct {
+            struct stream_state *state;
         } stream_type_definition_blob;
         struct {
+            struct stream_state *state;
         } stream_type_definition_function_is_next;
         struct {
+            struct stream_state *state;
         } stream_type_definition_sigma_is_next;
         struct {
+            struct stream_state *state;
         } stream_type_definition_named_is_next;
         struct {
+            struct stream_state *state;
         } stream_type_definition_universe;
         struct {
+            struct stream_state *state;
         } stream_bool_false;
         struct {
+            struct stream_state *state;
         } stream_bool_true;
         struct {
+            struct stream_state *state;
         } stream_ordering_less;
         struct {
+            struct stream_state *state;
         } stream_ordering_equal;
         struct {
+            struct stream_state *state;
         } stream_ordering_greater;
         struct {
+            struct stream_state *state;
         } stream_maybe_nothing;
         struct {
+            struct stream_state *state;
         } stream_maybe_just_is_next;
         struct {
+            struct stream_state *state;
         } stream_int8;
         struct {
+            struct stream_state *state;
         } stream_int16;
         struct {
+            struct stream_state *state;
         } stream_int32;
         struct {
+            struct stream_state *state;
         } stream_int64;
         struct {
+            struct stream_state *state;
         } stream_nat8;
         struct {
+            struct stream_state *state;
         } stream_nat16;
         struct {
+            struct stream_state *state;
         } stream_nat32;
         struct {
+            struct stream_state *state;
         } stream_nat64;
         struct {
+            struct stream_state *state;
         } stream_float32;
         struct {
+            struct stream_state *state;
         } stream_float64;
         struct {
+            struct stream_state *state;
         } stream_utf8_start;
         struct {
+            struct stream_state *state;
         } stream_utf8_data;
         struct {
+            struct stream_state *state;
         } stream_utf8_end;
         struct {
+            struct stream_state *state;
         } stream_blob_start;
         struct {
+            struct stream_state *state;
         } stream_blob_data;
         struct {
+            struct stream_state *state;
         } stream_blob_end;
         struct {
+            struct stream_state *state;
         } stream_sigma_is_next;
         struct {
+            struct stream_state *state;
         } stream_named_value_is_next;
         struct {
+            struct stream_state *state;
         } stream_lambda_is_next;
         struct {
+            struct stream_state *state;
         } stream_apply_is_next;
         struct {
+            struct stream_state *state;
         } stream_type_family_is_next;
         struct {
+            struct stream_state *state;
         } stream_let_is_next;
         struct {
+            struct stream_state *state;
         } stream_backreference_is_next;
         struct {
+            struct stream_state *state;
         } stream_builtin_is_next;
         struct {
+            struct stream_state *state;
         } stream_item_from_context_is_next;
         struct {
+            struct stream_state *state;
         } stream_end;
     } specifics;
 };
@@ -2454,8 +2510,17 @@ static void stream_start
     struct stream_state *stream_state =
       (struct stream_state *) stream_state_in;
     struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
     
-    test_message(test_suite, "Unexpected call to stream_start().");
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_start.state = stream_state_in;
+    
+    if(callback_should_succeed(test_suite, NULL)) {
+        return;
+    } else {
+        return;
+    }
 }
 
 
