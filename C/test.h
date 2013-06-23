@@ -64,6 +64,7 @@ extern void expect_error_non_numeric_float
    int (*test_case_helper)(void *test_context),
    void *test_context);
 
-extern void flush_expectations
-  (test_suite *test_suite);
+extern void flush_expectations(test_suite *test_suite);
 
+extern struct modern_stream *test_stream_make(test_suite *test_suite);
+extern void *test_stream_initialize(test_suite *test_suite);
