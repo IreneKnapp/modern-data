@@ -15,7 +15,7 @@ OBJECTS=context.o \
         vfile-stdio.o
 INCLUDES=modern.h internal.h
 
-default: example-canonical
+default: all
 all: test-node test-canonical test-out test-in example-canonical
 
 clean:
