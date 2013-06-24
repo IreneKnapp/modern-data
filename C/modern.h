@@ -206,8 +206,7 @@ struct modern_stream {
        void *stream_state);
     void (*sigma_is_next)
       (struct modern_process *process, void *process_state,
-       void *stream_state,
-       struct modern_hash *type);
+       void *stream_state);
     void (*named_value_is_next)
       (struct modern_process *process, void *process_state,
        void *stream_state,
