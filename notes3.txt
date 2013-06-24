@@ -1,2 +1,5 @@
 It sure would be nice if finalizing nodes were a method of the node
 representation!
+
+The important parts of computing the value type of a node need to be in the
+library always, even with a user-provided node representation.
