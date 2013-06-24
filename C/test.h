@@ -219,8 +219,7 @@ extern void expect_stream_blob_end
    void *stream_state);
 extern void expect_stream_sigma_is_next
   (test_suite *test_suite,
-   void *stream_state,
-   struct modern_hash *type);
+   void *stream_state);
 extern void expect_stream_named_value_is_next
   (test_suite *test_suite,
    void *stream_state,

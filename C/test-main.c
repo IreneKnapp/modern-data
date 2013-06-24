@@ -281,7 +281,6 @@ struct callback_invocation {
         } stream_blob_end;
         struct {
             struct stream_state *state;
-            struct modern_hash type;
         } stream_sigma_is_next;
         struct {
             struct stream_state *state;
@@ -795,9 +794,7 @@ struct callback_invocation_pattern {
         } stream_blob_end;
         struct {
             unsigned state_relevant : 1;
-            unsigned type_relevant : 1;
             struct stream_state *state;
-            struct modern_hash type;
         } stream_sigma_is_next;
         struct {
             unsigned state_relevant : 1;
@@ -1203,8 +1200,7 @@ static void stream_blob_end
    void *stream_state);
 static void stream_sigma_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state,
-   struct modern_hash *type);
+   void *stream_state);
 static void stream_named_value_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state, struct modern_hash *name);
@@ -4200,8 +4196,7 @@ extern void expect_stream_blob_end
 
 extern void expect_stream_sigma_is_next
   (test_suite *test_suite_in,
-   void *stream_state,
-   struct modern_hash *type)
+   void *stream_state)
 {
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     
@@ -4244,14 +4239,6 @@ extern void expect_stream_sigma_is_next
     } else {
         invocation->specifics.stream_sigma_is_next.state_relevant = 0;
         invocation->specifics.stream_sigma_is_next.state = NULL;
-    }
-    if(type) {
-        invocation->specifics.stream_sigma_is_next.type_relevant = 1;
-        invocation->specifics.stream_sigma_is_next.type = *type;
-    } else {
-        invocation->specifics.stream_sigma_is_next.type_relevant = 0;
-        invocation->specifics.stream_sigma_is_next.type.a = 0;
-        invocation->specifics.stream_sigma_is_next.type.b = 0;
     }
 }
 
@@ -7192,20 +7179,8 @@ static int match_callback_invocation_against_pattern_helper
 
     case stream_sigma_is_next_callback_identifier:
         matches = 1;
-        if(pattern->specifics.stream_sigma_is_next.type_relevant)
-        {
-            if((invocation->specifics.stream_sigma_is_next.type.a !=
-                pattern->specifics.stream_sigma_is_next.type.a)
-               || (invocation->specifics.stream_sigma_is_next.type.b !=
-                   pattern->specifics.stream_sigma_is_next.type.b))
-            {
-                matches = 0;
-            }
-        }
-        if(matches) {
-            copy_callback_behavior
-                (pattern->identifier, behavior_result, &pattern->behavior);
-        }
+        copy_callback_behavior
+            (pattern->identifier, behavior_result, &pattern->behavior);
         break;
 
     case stream_named_value_is_next_callback_identifier:
@@ -9001,8 +8976,7 @@ static void stream_blob_end
 
 static void stream_sigma_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state_in,
-   struct modern_hash *type)
+   void *stream_state_in)
 {
     struct stream_state *stream_state =
       (struct stream_state *) stream_state_in;
@@ -9012,7 +8986,6 @@ static void stream_sigma_is_next
     invocation->identifier = stream_sigma_is_next_callback_identifier;
     invocation->succeeded = 0;
     invocation->specifics.stream_sigma_is_next.state = stream_state_in;
-    invocation->specifics.stream_sigma_is_next.type = *type;
     
     union callback_behavior behavior;
     if(callback_should_succeed(test_suite, &behavior)) {
