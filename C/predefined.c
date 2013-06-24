@@ -103,12 +103,14 @@ struct modern_node_representation *modern_node_representation_default_make
     result->backreference_make = default_backreference_make;
     result->builtin_make = default_builtin_make;
     result->canonical_hash_set = default_canonical_hash_set;
+    result->finalize = default_finalize;
     
     return result;
 }
 
 
-void modern_node_representation_default_finalize
+void
+  modern_node_representation_default_finalize
   (struct modern_allocator *allocator,
    void *client_state,
    struct modern_node_representation *node_representation)

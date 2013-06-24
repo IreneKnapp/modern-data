@@ -2,13 +2,13 @@
 #include "internal.h"
 
 
-void modern_finalize
+INTERNAL void default_finalize
   (modern_library *library_in,
-   void *finalizable)
+   modern *node_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
-    struct memory *memory = (struct memory *) finalizable;
+    struct modern *node = (struct modern *) node_in;
     
-    if(memory->finalizer) memory->finalizer(library_in, finalizable);
+    if(node->finalizer) node->finalizer(library, node);
 }
 

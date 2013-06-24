@@ -3,7 +3,6 @@
 
 
 struct processor_explicatory_state {
-    struct memory memory;
     struct modern_process process;
     struct modern_library *library;
     int started : 1;
@@ -61,7 +60,6 @@ HELPER void *processor_explicatory_initialize
         return NULL;
     }
     
-    state->memory.finalizer = processor_explicatory_finalize;
     state->process.abort = processor_explicatory_abort;
     state->process.flush = processor_explicatory_flush;
     state->library = library;

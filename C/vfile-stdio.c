@@ -4,7 +4,6 @@
 
 
 struct vfile_stdio_state {
-    struct memory memory;
     FILE *stream;
 };
 
@@ -51,7 +50,6 @@ void *modern_vfile_stdio_initialize
         return NULL;
     }
     
-    vfile_state->memory.finalizer = vfile_stdio_finalize;
     vfile_state->stream = stream;
     
     return vfile_state;

@@ -407,7 +407,7 @@ static int test_int8_node_create_and_readback
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -486,7 +486,7 @@ static int test_int16_node_create_and_readback
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -565,7 +565,7 @@ static int test_int32_node_create_and_readback
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -644,7 +644,7 @@ static int test_int64_node_create_and_readback
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -723,7 +723,7 @@ static int test_nat8_node_create_and_readback
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -802,7 +802,7 @@ static int test_nat16_node_create_and_readback
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -881,7 +881,7 @@ static int test_nat32_node_create_and_readback
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -960,7 +960,7 @@ static int test_nat64_node_create_and_readback
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -1039,7 +1039,7 @@ static int test_float32_node_create_and_readback
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -1123,7 +1123,7 @@ static int test_float32_node_create_and_readback_negative_zero
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -1234,7 +1234,7 @@ static int test_float64_node_create_and_readback
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -1318,7 +1318,7 @@ static int test_float64_node_create_and_readback_negative_zero
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;
@@ -1434,7 +1434,7 @@ static int test_utf8_node_create_and_readback
     }
     
     allow_deallocation(test_suite, "test-node.c node");
-    modern_finalize(library, node);
+    node_representation->finalize(library, node);
     disallow_deallocation(test_suite);
     
     return succeeded;

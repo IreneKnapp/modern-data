@@ -11,7 +11,7 @@ modern_context *modern_initial_context_make
     struct modern_context *context =
         library->allocator->alloc
             (library->client_state, sizeof(struct modern_context));
-    context->memory.finalizer = internal_context_finalizer;
+    context->finalizer = internal_context_finalizer;
     context->n_values = 0;
     context->n_buckets = 1024;
     size_t hash_size = sizeof(struct modern *) * context->n_buckets;
@@ -25,9 +25,8 @@ modern_context *modern_initial_context_make
 
 INTERNAL void internal_context_finalizer
   (struct modern_library *library,
-   void *context_in)
+   struct modern_context *context)
 {
-	struct modern_context *context = (struct modern_context *) context_in;
     library->allocator->free
         (library->client_state, context->hash);
     library->allocator->free

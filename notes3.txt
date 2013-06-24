@@ -11,3 +11,6 @@ value_from_context if one prefers the compactness of the hash.  In particular,
 forcing this the way it is presently might cause trouble for Teaquel down the
 line...
 
+We should allow for context representations the same way that we allow for
+node representations.
+
