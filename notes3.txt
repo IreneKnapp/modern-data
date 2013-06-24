@@ -1,0 +1,2 @@
+It sure would be nice if finalizing nodes were a method of the node
+representation!
