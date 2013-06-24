@@ -328,172 +328,172 @@ union callback_behavior {
     struct {
     } error_non_numeric_float;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_start;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_magic_number;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_name_definition;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_value_definition_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_bool;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_ordering;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_maybe_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_int8;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_int16;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_int32;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_int64;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_nat8;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_nat16;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_nat32;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_nat64;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_float32;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_float64;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_utf8;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_blob;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_function_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_sigma_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_named_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_definition_universe;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_bool_false;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_bool_true;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_ordering_less;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_ordering_equal;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_ordering_greater;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_maybe_nothing;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_maybe_just_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_int8;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_int16;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_int32;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_int64;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_nat8;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_nat16;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_nat32;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_nat64;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_float32;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_float64;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_utf8_start;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_utf8_data;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_utf8_end;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_blob_start;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_blob_data;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_blob_end;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_sigma_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_named_value_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_lambda_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_apply_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_type_family_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_let_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_backreference_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_builtin_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_item_from_context_is_next;
     struct {
-        unsigned fail : 1;
+        unsigned abort : 1;
     } stream_end;
 };
 
@@ -848,17 +848,14 @@ static void copy_callback_behavior
    union callback_behavior *destination,
    union callback_behavior *source);
 
-static void print_test_case
-  (struct test_case *test_case);
-
-static void print_test_case_buffer
-  (struct test_case_buffer *buffer);
-
 static void print_callback_invocation
   (struct callback_invocation *callback_invocation);
 
-static void print_callback_invocation_buffer
-  (struct callback_invocation_buffer *buffer);
+static void print_callback_invocation_pattern
+  (size_t indent, struct callback_invocation_pattern *pattern);
+
+static void print_callback_invocation_pattern_buffer
+  (size_t indent, struct callback_invocation_pattern_buffer *buffer);
 
 static struct callback_invocation *begin_callback
   (struct test_suite *test_suite);
@@ -2436,283 +2433,283 @@ static void copy_callback_behavior
         break;
     
     case stream_start_callback_identifier:
-        destination->stream_start.fail =
-            source->stream_start.fail;
+        destination->stream_start.abort =
+            source->stream_start.abort;
         break;
     
     case stream_magic_number_callback_identifier:
-        destination->stream_magic_number.fail =
-            source->stream_magic_number.fail;
+        destination->stream_magic_number.abort =
+            source->stream_magic_number.abort;
         break;
     
     case stream_name_definition_callback_identifier:
-        destination->stream_name_definition.fail =
-            source->stream_name_definition.fail;
+        destination->stream_name_definition.abort =
+            source->stream_name_definition.abort;
         break;
     
     case stream_value_definition_is_next_callback_identifier:
-        destination->stream_value_definition_is_next.fail =
-            source->stream_value_definition_is_next.fail;
+        destination->stream_value_definition_is_next.abort =
+            source->stream_value_definition_is_next.abort;
         break;
     
     case stream_type_definition_bool_callback_identifier:
-        destination->stream_type_definition_bool.fail =
-            source->stream_type_definition_bool.fail;
+        destination->stream_type_definition_bool.abort =
+            source->stream_type_definition_bool.abort;
         break;
     
     case stream_type_definition_ordering_callback_identifier:
-        destination->stream_type_definition_ordering.fail =
-            source->stream_type_definition_ordering.fail;
+        destination->stream_type_definition_ordering.abort =
+            source->stream_type_definition_ordering.abort;
         break;
     
     case stream_type_definition_maybe_is_next_callback_identifier:
-        destination->stream_type_definition_maybe_is_next.fail =
-            source->stream_type_definition_maybe_is_next.fail;
+        destination->stream_type_definition_maybe_is_next.abort =
+            source->stream_type_definition_maybe_is_next.abort;
         break;
     
     case stream_type_definition_int8_callback_identifier:
-        destination->stream_type_definition_int8.fail =
-            source->stream_type_definition_int8.fail;
+        destination->stream_type_definition_int8.abort =
+            source->stream_type_definition_int8.abort;
         break;
     
     case stream_type_definition_int16_callback_identifier:
-        destination->stream_type_definition_int16.fail =
-            source->stream_type_definition_int16.fail;
+        destination->stream_type_definition_int16.abort =
+            source->stream_type_definition_int16.abort;
         break;
     
     case stream_type_definition_int32_callback_identifier:
-        destination->stream_type_definition_int32.fail =
-            source->stream_type_definition_int32.fail;
+        destination->stream_type_definition_int32.abort =
+            source->stream_type_definition_int32.abort;
         break;
     
     case stream_type_definition_int64_callback_identifier:
-        destination->stream_type_definition_int64.fail =
-            source->stream_type_definition_int64.fail;
+        destination->stream_type_definition_int64.abort =
+            source->stream_type_definition_int64.abort;
         break;
     
     case stream_type_definition_nat8_callback_identifier:
-        destination->stream_type_definition_nat8.fail =
-            source->stream_type_definition_nat8.fail;
+        destination->stream_type_definition_nat8.abort =
+            source->stream_type_definition_nat8.abort;
         break;
     
     case stream_type_definition_nat16_callback_identifier:
-        destination->stream_type_definition_nat16.fail =
-            source->stream_type_definition_nat16.fail;
+        destination->stream_type_definition_nat16.abort =
+            source->stream_type_definition_nat16.abort;
         break;
     
     case stream_type_definition_nat32_callback_identifier:
-        destination->stream_type_definition_nat32.fail =
-            source->stream_type_definition_nat32.fail;
+        destination->stream_type_definition_nat32.abort =
+            source->stream_type_definition_nat32.abort;
         break;
     
     case stream_type_definition_nat64_callback_identifier:
-        destination->stream_type_definition_nat64.fail =
-            source->stream_type_definition_nat64.fail;
+        destination->stream_type_definition_nat64.abort =
+            source->stream_type_definition_nat64.abort;
         break;
     
     case stream_type_definition_float32_callback_identifier:
-        destination->stream_type_definition_float32.fail =
-            source->stream_type_definition_float32.fail;
+        destination->stream_type_definition_float32.abort =
+            source->stream_type_definition_float32.abort;
         break;
     
     case stream_type_definition_float64_callback_identifier:
-        destination->stream_type_definition_float64.fail =
-            source->stream_type_definition_float64.fail;
+        destination->stream_type_definition_float64.abort =
+            source->stream_type_definition_float64.abort;
         break;
     
     case stream_type_definition_utf8_callback_identifier:
-        destination->stream_type_definition_utf8.fail =
-            source->stream_type_definition_utf8.fail;
+        destination->stream_type_definition_utf8.abort =
+            source->stream_type_definition_utf8.abort;
         break;
     
     case stream_type_definition_blob_callback_identifier:
-        destination->stream_type_definition_blob.fail =
-            source->stream_type_definition_blob.fail;
+        destination->stream_type_definition_blob.abort =
+            source->stream_type_definition_blob.abort;
         break;
     
     case stream_type_definition_function_is_next_callback_identifier:
-        destination->stream_type_definition_function_is_next.fail =
-            source->stream_type_definition_function_is_next.fail;
+        destination->stream_type_definition_function_is_next.abort =
+            source->stream_type_definition_function_is_next.abort;
         break;
     
     case stream_type_definition_sigma_is_next_callback_identifier:
-        destination->stream_type_definition_sigma_is_next.fail =
-            source->stream_type_definition_sigma_is_next.fail;
+        destination->stream_type_definition_sigma_is_next.abort =
+            source->stream_type_definition_sigma_is_next.abort;
         break;
     
     case stream_type_definition_named_is_next_callback_identifier:
-        destination->stream_type_definition_named_is_next.fail =
-            source->stream_type_definition_named_is_next.fail;
+        destination->stream_type_definition_named_is_next.abort =
+            source->stream_type_definition_named_is_next.abort;
         break;
     
     case stream_type_definition_universe_callback_identifier:
-        destination->stream_type_definition_universe.fail =
-            source->stream_type_definition_universe.fail;
+        destination->stream_type_definition_universe.abort =
+            source->stream_type_definition_universe.abort;
         break;
     
     case stream_bool_false_callback_identifier:
-        destination->stream_bool_false.fail =
-            source->stream_bool_false.fail;
+        destination->stream_bool_false.abort =
+            source->stream_bool_false.abort;
         break;
     
     case stream_bool_true_callback_identifier:
-        destination->stream_bool_true.fail =
-            source->stream_bool_true.fail;
+        destination->stream_bool_true.abort =
+            source->stream_bool_true.abort;
         break;
     
     case stream_ordering_less_callback_identifier:
-        destination->stream_ordering_less.fail =
-            source->stream_ordering_less.fail;
+        destination->stream_ordering_less.abort =
+            source->stream_ordering_less.abort;
         break;
     
     case stream_ordering_equal_callback_identifier:
-        destination->stream_ordering_equal.fail =
-            source->stream_ordering_equal.fail;
+        destination->stream_ordering_equal.abort =
+            source->stream_ordering_equal.abort;
         break;
     
     case stream_ordering_greater_callback_identifier:
-        destination->stream_ordering_greater.fail =
-            source->stream_ordering_greater.fail;
+        destination->stream_ordering_greater.abort =
+            source->stream_ordering_greater.abort;
         break;
     
     case stream_maybe_nothing_callback_identifier:
-        destination->stream_maybe_nothing.fail =
-            source->stream_maybe_nothing.fail;
+        destination->stream_maybe_nothing.abort =
+            source->stream_maybe_nothing.abort;
         break;
     
     case stream_maybe_just_is_next_callback_identifier:
-        destination->stream_maybe_just_is_next.fail =
-            source->stream_maybe_just_is_next.fail;
+        destination->stream_maybe_just_is_next.abort =
+            source->stream_maybe_just_is_next.abort;
         break;
     
     case stream_int8_callback_identifier:
-        destination->stream_int8.fail =
-            source->stream_int8.fail;
+        destination->stream_int8.abort =
+            source->stream_int8.abort;
         break;
     
     case stream_int16_callback_identifier:
-        destination->stream_int16.fail =
-            source->stream_int16.fail;
+        destination->stream_int16.abort =
+            source->stream_int16.abort;
         break;
     
     case stream_int32_callback_identifier:
-        destination->stream_int32.fail =
-            source->stream_int32.fail;
+        destination->stream_int32.abort =
+            source->stream_int32.abort;
         break;
     
     case stream_int64_callback_identifier:
-        destination->stream_int64.fail =
-            source->stream_int64.fail;
+        destination->stream_int64.abort =
+            source->stream_int64.abort;
         break;
     
     case stream_nat8_callback_identifier:
-        destination->stream_nat8.fail =
-            source->stream_nat8.fail;
+        destination->stream_nat8.abort =
+            source->stream_nat8.abort;
         break;
     
     case stream_nat16_callback_identifier:
-        destination->stream_nat16.fail =
-            source->stream_nat16.fail;
+        destination->stream_nat16.abort =
+            source->stream_nat16.abort;
         break;
     
     case stream_nat32_callback_identifier:
-        destination->stream_nat32.fail =
-            source->stream_nat32.fail;
+        destination->stream_nat32.abort =
+            source->stream_nat32.abort;
         break;
     
     case stream_nat64_callback_identifier:
-        destination->stream_nat64.fail =
-            source->stream_nat64.fail;
+        destination->stream_nat64.abort =
+            source->stream_nat64.abort;
         break;
     
     case stream_float32_callback_identifier:
-        destination->stream_float32.fail =
-            source->stream_float32.fail;
+        destination->stream_float32.abort =
+            source->stream_float32.abort;
         break;
     
     case stream_float64_callback_identifier:
-        destination->stream_float64.fail =
-            source->stream_float64.fail;
+        destination->stream_float64.abort =
+            source->stream_float64.abort;
         break;
     
     case stream_utf8_start_callback_identifier:
-        destination->stream_utf8_start.fail =
-            source->stream_utf8_start.fail;
+        destination->stream_utf8_start.abort =
+            source->stream_utf8_start.abort;
         break;
     
     case stream_utf8_data_callback_identifier:
-        destination->stream_utf8_data.fail =
-            source->stream_utf8_data.fail;
+        destination->stream_utf8_data.abort =
+            source->stream_utf8_data.abort;
         break;
     
     case stream_utf8_end_callback_identifier:
-        destination->stream_utf8_end.fail =
-            source->stream_utf8_end.fail;
+        destination->stream_utf8_end.abort =
+            source->stream_utf8_end.abort;
         break;
     
     case stream_blob_start_callback_identifier:
-        destination->stream_blob_start.fail =
-            source->stream_blob_start.fail;
+        destination->stream_blob_start.abort =
+            source->stream_blob_start.abort;
         break;
     
     case stream_blob_data_callback_identifier:
-        destination->stream_blob_data.fail =
-            source->stream_blob_data.fail;
+        destination->stream_blob_data.abort =
+            source->stream_blob_data.abort;
         break;
     
     case stream_blob_end_callback_identifier:
-        destination->stream_blob_end.fail =
-            source->stream_blob_end.fail;
+        destination->stream_blob_end.abort =
+            source->stream_blob_end.abort;
         break;
     
     case stream_sigma_is_next_callback_identifier:
-        destination->stream_sigma_is_next.fail =
-            source->stream_sigma_is_next.fail;
+        destination->stream_sigma_is_next.abort =
+            source->stream_sigma_is_next.abort;
         break;
     
     case stream_named_value_is_next_callback_identifier:
-        destination->stream_named_value_is_next.fail =
-            source->stream_named_value_is_next.fail;
+        destination->stream_named_value_is_next.abort =
+            source->stream_named_value_is_next.abort;
         break;
     
     case stream_lambda_is_next_callback_identifier:
-        destination->stream_lambda_is_next.fail =
-            source->stream_lambda_is_next.fail;
+        destination->stream_lambda_is_next.abort =
+            source->stream_lambda_is_next.abort;
         break;
     
     case stream_apply_is_next_callback_identifier:
-        destination->stream_apply_is_next.fail =
-            source->stream_apply_is_next.fail;
+        destination->stream_apply_is_next.abort =
+            source->stream_apply_is_next.abort;
         break;
     
     case stream_type_family_is_next_callback_identifier:
-        destination->stream_type_family_is_next.fail =
-            source->stream_type_family_is_next.fail;
+        destination->stream_type_family_is_next.abort =
+            source->stream_type_family_is_next.abort;
         break;
     
     case stream_let_is_next_callback_identifier:
-        destination->stream_let_is_next.fail =
-            source->stream_let_is_next.fail;
+        destination->stream_let_is_next.abort =
+            source->stream_let_is_next.abort;
         break;
     
     case stream_backreference_is_next_callback_identifier:
-        destination->stream_backreference_is_next.fail =
-            source->stream_backreference_is_next.fail;
+        destination->stream_backreference_is_next.abort =
+            source->stream_backreference_is_next.abort;
         break;
     
     case stream_builtin_is_next_callback_identifier:
-        destination->stream_builtin_is_next.fail =
-            source->stream_builtin_is_next.fail;
+        destination->stream_builtin_is_next.abort =
+            source->stream_builtin_is_next.abort;
         break;
     
     case stream_item_from_context_is_next_callback_identifier:
-        destination->stream_item_from_context_is_next.fail =
-            source->stream_item_from_context_is_next.fail;
+        destination->stream_item_from_context_is_next.abort =
+            source->stream_item_from_context_is_next.abort;
         break;
     
     case stream_end_callback_identifier:
-        destination->stream_end.fail =
-            source->stream_end.fail;
+        destination->stream_end.abort =
+            source->stream_end.abort;
         break;
     
     case combinator_parallel_callback_identifier:
@@ -2722,20 +2719,6 @@ static void copy_callback_behavior
         break;
     
     }
-}
-
-
-static void print_test_case
-  (struct test_case *test_case)
-{
-    // TODO
-}
-
-
-static void print_test_case_buffer
-  (struct test_case_buffer *buffer)
-{
-    // TODO
 }
 
 
@@ -3041,10 +3024,385 @@ static void print_callback_invocation
 }
 
 
-static void print_callback_invocation_buffer
-  (struct callback_invocation_buffer *buffer)
+static void print_callback_invocation_pattern
+  (size_t indent, struct callback_invocation_pattern *pattern)
 {
-    // TODO
+    switch(pattern->identifier) {
+    case library_finalizer_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_library_finalize()\n");
+        break;
+    
+    case allocator_malloc_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_allocator_malloc(%llu)\n",
+               (unsigned long long)
+               pattern->specifics.allocator_malloc.size);
+        break;
+    
+    case allocator_free_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_allocator_free(0x%llx)\n",
+               (unsigned long long)
+               pattern->specifics.allocator_free.data);
+        break;
+    
+    case allocator_realloc_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_allocator_realloc(0x%llx, %llu)\n",
+               (unsigned long long)
+               pattern->specifics.allocator_realloc.data,
+               (unsigned long long)
+               pattern->specifics.allocator_realloc.new_size);
+        break;
+    
+    case error_memory_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_error_handler_memory(%llu)\n",
+               (unsigned long long)
+               pattern->specifics.error_memory.requested_size);
+        break;
+    
+    case error_type_mismatch_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_error_handler_type_mismatch(0x%llx, 0x%llx)\n",
+               (unsigned long long)
+               pattern->specifics.error_type_mismatch.expected,
+               (unsigned long long)
+               pattern->specifics.error_type_mismatch.actual);
+        break;
+    
+    case error_universe_level_overflow_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_error_handler_universe_level_overflow()\n");
+        break;
+    
+    case error_buffer_index_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_error_handler_buffer_index()\n");
+        break;
+    
+    case error_not_applicable_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_error_handler_not_applicable()\n");
+        break;
+    
+    case error_non_numeric_float_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_error_handler_non_numeric_float()\n");
+        break;
+    
+    case stream_start_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_start_callback_identifier()\n");
+        break;
+    
+    case stream_magic_number_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_magic_number_callback_identifier()\n");
+        break;
+    
+    case stream_name_definition_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_name_definition_callback_identifier()\n");
+        break;
+    
+    case stream_value_definition_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_value_definition_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_bool_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_bool_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_ordering_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_ordering_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_maybe_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_maybe_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_int8_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_int8_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_int16_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_int16_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_int32_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_int32_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_int64_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_int64_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_nat8_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_nat8_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_nat16_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_nat16_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_nat32_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_nat32_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_nat64_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_nat64_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_float32_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_float32_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_float64_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_float64_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_utf8_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_utf8_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_blob_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_blob_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_function_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf
+            ("stream_type_definition_function_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_sigma_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_sigma_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_named_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_named_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_definition_universe_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_definition_universe_callback_identifier()\n");
+        break;
+    
+    case stream_bool_false_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_bool_false_callback_identifier()\n");
+        break;
+    
+    case stream_bool_true_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_bool_true_callback_identifier()\n");
+        break;
+    
+    case stream_ordering_less_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_ordering_less_callback_identifier()\n");
+        break;
+    
+    case stream_ordering_equal_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_ordering_equal_callback_identifier()\n");
+        break;
+    
+    case stream_ordering_greater_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_ordering_greater_callback_identifier()\n");
+        break;
+    
+    case stream_maybe_nothing_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_maybe_nothing_callback_identifier()\n");
+        break;
+    
+    case stream_maybe_just_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_maybe_just_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_int8_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_int8_callback_identifier()\n");
+        break;
+    
+    case stream_int16_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_int16_callback_identifier()\n");
+        break;
+    
+    case stream_int32_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_int32_callback_identifier()\n");
+        break;
+    
+    case stream_int64_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_int64_callback_identifier()\n");
+        break;
+    
+    case stream_nat8_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_nat8_callback_identifier()\n");
+        break;
+    
+    case stream_nat16_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_nat16_callback_identifier()\n");
+        break;
+    
+    case stream_nat32_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_nat32_callback_identifier()\n");
+        break;
+    
+    case stream_nat64_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_nat64_callback_identifier()\n");
+        break;
+    
+    case stream_float32_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_float32_callback_identifier()\n");
+        break;
+    
+    case stream_float64_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_float64_callback_identifier()\n");
+        break;
+    
+    case stream_utf8_start_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_utf8_start_callback_identifier()\n");
+        break;
+    
+    case stream_utf8_data_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_utf8_data_callback_identifier()\n");
+        break;
+    
+    case stream_utf8_end_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_utf8_end_callback_identifier()\n");
+        break;
+    
+    case stream_blob_start_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_blob_start_callback_identifier()\n");
+        break;
+    
+    case stream_blob_data_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_blob_data_callback_identifier()\n");
+        break;
+    
+    case stream_blob_end_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_blob_end_callback_identifier()\n");
+        break;
+    
+    case stream_sigma_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_sigma_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_named_value_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_named_value_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_lambda_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_lambda_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_apply_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_apply_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_type_family_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_type_family_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_let_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_let_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_backreference_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_backreference_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_builtin_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_builtin_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_item_from_context_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_item_from_context_is_next_callback_identifier()\n");
+        break;
+    
+    case stream_end_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("stream_end_callback_identifier()\n");
+        break;
+    
+    case combinator_parallel_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("One of:\n");
+        print_callback_invocation_pattern_buffer
+            (indent + 2, &pattern->specifics.combinator_parallel.children);
+        break;
+    
+    case combinator_sequential_callback_identifier:
+        if(pattern->specifics.combinator_sequential.children.count < 1) {
+            for(size_t i = 0; i < indent; i++) printf(" ");
+            printf("(An empty sequence.)\n");
+        } else {
+            for(size_t i = 0; i < indent; i++) printf(" ");
+            printf("The following, in sequence:\n");
+            print_callback_invocation_pattern_buffer
+                (indent + 2,
+                 &pattern->specifics.combinator_sequential.children);
+        }
+        break;
+    
+    }
+}
+
+
+static void print_callback_invocation_pattern_buffer
+  (size_t indent, struct callback_invocation_pattern_buffer *buffer)
+{
+    for(size_t i = 0; i < buffer->count; i++) {
+        print_callback_invocation_pattern(indent, buffer->patterns[i]);
+    }
 }
 
 
@@ -3542,6 +3900,13 @@ static int callback_should_succeed
         }
         printf("  Unexpected: ");
         print_callback_invocation(actual);
+        printf("  Expected:\n");
+        if(!test_suite->expected_callbacks) {
+            printf("    (Nothing.)\n");
+        } else {
+            print_callback_invocation_pattern
+                (4, test_suite->expected_callbacks);
+        }
         
         fail(test_suite); // Never returns.
         return 0;
