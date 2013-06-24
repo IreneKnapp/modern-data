@@ -27,8 +27,6 @@ struct modern_error_handler {
       (void *client_state);
     void (*non_numeric_float)
       (void *client_state);
-    void (*immutable)
-      (void *client_state, modern *node);
     void (*builtin_identifier)
       (void *client_state, uint16_t identifier);
     void (*usage)
@@ -775,10 +773,6 @@ struct modern_node_representation {
        void *value);
     void *
       (*value_type_get)
-      (modern_library *library,
-       void *value);
-    int
-      (*mutable_get)
       (modern_library *library,
        void *value);
     int
