@@ -1122,6 +1122,10 @@ struct modern_node_representation {
       (modern_library *library,
        void *value,
        struct modern_hash hash);
+    void
+      (*finalize)
+      (modern_library *library,
+       void *value);
 };
 
 
@@ -1140,10 +1144,6 @@ extern struct modern_node_representation *modern_library_node_representation_get
 extern void *modern_library_client_state_get
   (modern_library *library);
 extern void modern_library_finalize(modern_library *library);
-
-extern void modern_finalize
-  (modern_library *library,
-   void *finalizable);
 
 extern modern_context *modern_initial_context_make
   (modern_library *library);
