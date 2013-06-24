@@ -82,9 +82,9 @@ enum callback_identifier {
     stream_apply_is_next_callback_identifier,
     stream_type_family_is_next_callback_identifier,
     stream_let_is_next_callback_identifier,
-    stream_backreference_is_next_callback_identifier,
-    stream_builtin_is_next_callback_identifier,
-    stream_item_from_context_is_next_callback_identifier,
+    stream_backreference_callback_identifier,
+    stream_builtin_callback_identifier,
+    stream_item_from_context_callback_identifier,
     stream_end_callback_identifier,
     combinator_parallel_callback_identifier,
     combinator_sequential_callback_identifier,
@@ -130,6 +130,8 @@ struct callback_invocation {
         } stream_magic_number;
         struct {
             struct stream_state *state;
+            uint8_t *data;
+            size_t length;
         } stream_name_definition;
         struct {
             struct stream_state *state;
@@ -184,12 +186,15 @@ struct callback_invocation {
         } stream_type_definition_function_is_next;
         struct {
             struct stream_state *state;
+            struct modern_hash type;
         } stream_type_definition_sigma_is_next;
         struct {
             struct stream_state *state;
+            struct modern_hash name;
         } stream_type_definition_named_is_next;
         struct {
             struct stream_state *state;
+            uint64_t level;
         } stream_type_definition_universe;
         struct {
             struct stream_state *state;
@@ -214,39 +219,51 @@ struct callback_invocation {
         } stream_maybe_just_is_next;
         struct {
             struct stream_state *state;
+            int8_t value;
         } stream_int8;
         struct {
             struct stream_state *state;
+            int16_t value;
         } stream_int16;
         struct {
             struct stream_state *state;
+            int32_t value;
         } stream_int32;
         struct {
             struct stream_state *state;
+            int64_t value;
         } stream_int64;
         struct {
             struct stream_state *state;
+            uint8_t value;
         } stream_nat8;
         struct {
             struct stream_state *state;
+            uint16_t value;
         } stream_nat16;
         struct {
             struct stream_state *state;
+            uint32_t value;
         } stream_nat32;
         struct {
             struct stream_state *state;
+            uint64_t value;
         } stream_nat64;
         struct {
             struct stream_state *state;
+            float value;
         } stream_float32;
         struct {
             struct stream_state *state;
+            double value;
         } stream_float64;
         struct {
             struct stream_state *state;
         } stream_utf8_start;
         struct {
             struct stream_state *state;
+            uint8_t *data;
+            size_t length;
         } stream_utf8_data;
         struct {
             struct stream_state *state;
@@ -256,15 +273,19 @@ struct callback_invocation {
         } stream_blob_start;
         struct {
             struct stream_state *state;
+            uint8_t *data;
+            size_t length;
         } stream_blob_data;
         struct {
             struct stream_state *state;
         } stream_blob_end;
         struct {
             struct stream_state *state;
+            struct modern_hash type;
         } stream_sigma_is_next;
         struct {
             struct stream_state *state;
+            struct modern_hash name;
         } stream_named_value_is_next;
         struct {
             struct stream_state *state;
@@ -274,19 +295,24 @@ struct callback_invocation {
         } stream_apply_is_next;
         struct {
             struct stream_state *state;
+            uint64_t n_items;
         } stream_type_family_is_next;
         struct {
             struct stream_state *state;
+            uint64_t n_items;
         } stream_let_is_next;
         struct {
             struct stream_state *state;
-        } stream_backreference_is_next;
+            uint64_t index;
+        } stream_backreference;
         struct {
             struct stream_state *state;
-        } stream_builtin_is_next;
+            uint16_t identifier;
+        } stream_builtin;
         struct {
             struct stream_state *state;
-        } stream_item_from_context_is_next;
+            struct modern_hash hash;
+        } stream_item_from_context;
         struct {
             struct stream_state *state;
         } stream_end;
@@ -487,13 +513,13 @@ union callback_behavior {
     } stream_let_is_next;
     struct {
         unsigned abort : 1;
-    } stream_backreference_is_next;
+    } stream_backreference;
     struct {
         unsigned abort : 1;
-    } stream_builtin_is_next;
+    } stream_builtin;
     struct {
         unsigned abort : 1;
-    } stream_item_from_context_is_next;
+    } stream_item_from_context;
     struct {
         unsigned abort : 1;
     } stream_end;
@@ -509,7 +535,6 @@ struct callback_invocation_pattern_buffer {
 
 struct callback_invocation_pattern {
     enum callback_identifier identifier;
-    unsigned parameters_relevant : 1;
     unsigned should_succeed : 1;
     unsigned sticky : 1;
     union {
@@ -561,7 +586,10 @@ struct callback_invocation_pattern {
         } stream_magic_number;
         struct {
             unsigned state_relevant : 1;
+            unsigned data_relevant : 1;
             struct stream_state *state;
+            uint8_t *data;
+            size_t length;
         } stream_name_definition;
         struct {
             unsigned state_relevant : 1;
@@ -641,7 +669,9 @@ struct callback_invocation_pattern {
         } stream_type_definition_named_is_next;
         struct {
             unsigned state_relevant : 1;
+            unsigned level_relevant : 1;
             struct stream_state *state;
+            uint64_t level;
         } stream_type_definition_universe;
         struct {
             unsigned state_relevant : 1;
@@ -737,11 +767,15 @@ struct callback_invocation_pattern {
         } stream_blob_end;
         struct {
             unsigned state_relevant : 1;
+            unsigned type_relevant : 1;
             struct stream_state *state;
+            struct modern_hash type;
         } stream_sigma_is_next;
         struct {
             unsigned state_relevant : 1;
+            unsigned name_relevant : 1;
             struct stream_state *state;
+            struct modern_hash name;
         } stream_named_value_is_next;
         struct {
             unsigned state_relevant : 1;
@@ -753,24 +787,34 @@ struct callback_invocation_pattern {
         } stream_apply_is_next;
         struct {
             unsigned state_relevant : 1;
+            unsigned n_items_relevant : 1;
             struct stream_state *state;
+            uint64_t n_items;
         } stream_type_family_is_next;
         struct {
             unsigned state_relevant : 1;
+            unsigned n_items_relevant : 1;
             struct stream_state *state;
+            uint64_t n_items;
         } stream_let_is_next;
         struct {
             unsigned state_relevant : 1;
+            unsigned index_relevant : 1;
             struct stream_state *state;
-        } stream_backreference_is_next;
+            uint64_t index;
+        } stream_backreference;
         struct {
             unsigned state_relevant : 1;
+            unsigned identifier_relevant : 1;
             struct stream_state *state;
-        } stream_builtin_is_next;
+            uint16_t identifier;
+        } stream_builtin;
         struct {
             unsigned state_relevant : 1;
+            unsigned hash_relevant : 1;
             struct stream_state *state;
-        } stream_item_from_context_is_next;
+            struct modern_hash hash;
+        } stream_item_from_context;
         struct {
             unsigned state_relevant : 1;
             struct stream_state *state;
@@ -822,6 +866,7 @@ struct test_suite {
     struct callback_invocation_pattern *allocation_invocation;
     struct callback_invocation_pattern *deallocation_invocation;
     struct callback_invocation_pattern *error_invocation;
+    struct callback_invocation_pattern *stream_invocation;
     jmp_buf jmp_buf;
     struct test_case_buffer test_cases;
     struct fixtures fixtures;
@@ -1042,10 +1087,11 @@ static void stream_type_definition_sigma_is_next
 static void stream_type_definition_named_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state,
-   struct modern_hash name);
+   struct modern_hash *name);
 static void stream_type_definition_universe
   (struct modern_process *process, void *process_state,
-   void *stream_state);
+   void *stream_state,
+   uint64_t level);
 static void stream_bool_false
   (struct modern_process *process, void *process_state,
    void *stream_state);
@@ -1133,7 +1179,7 @@ static void stream_sigma_is_next
    struct modern_hash *type);
 static void stream_named_value_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state, struct modern_hash name);
+   void *stream_state, struct modern_hash *name);
 static void stream_lambda_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state);
@@ -1146,15 +1192,15 @@ static void stream_type_family_is_next
 static void stream_let_is_next
   (struct modern_process *process, void *process_state,
    void *stream_state, uint64_t n_items);
-static void stream_backreference_is_next
+static void stream_backreference
   (struct modern_process *process, void *process_state,
    void *stream_state, uint64_t index);
-static void stream_builtin_is_next
+static void stream_builtin
   (struct modern_process *process, void *process_state,
    void *stream_state, uint16_t identifier);
-static void stream_item_from_context_is_next
+static void stream_item_from_context
   (struct modern_process *process, void *process_state,
-   void *stream_state, struct modern_hash type);
+   void *stream_state, struct modern_hash *type);
 static void stream_end
   (struct modern_process *process, void *process_state,
    void *stream_state);
@@ -1476,7 +1522,6 @@ void allow_allocation(test_suite *test_suite_in, char *tag_format, ...) {
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = allocator_malloc_callback_identifier;
-    invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 1;
     if(tag) {
@@ -1536,7 +1581,6 @@ void allow_deallocation(test_suite *test_suite_in, char *tag_format, ...) {
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = allocator_free_callback_identifier;
-    invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 1;
     invocation->specifics.allocator_free.data_relevant = 0;
@@ -1594,7 +1638,6 @@ void expect_error_memory
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_memory_callback_identifier;
-    invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     invocation->specifics.error_memory.requested_size_relevant = 0;
@@ -1635,7 +1678,6 @@ void expect_error_type_mismatch
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_type_mismatch_callback_identifier;
-    invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     invocation->specifics.error_type_mismatch.expected_relevant = 0;
@@ -1678,7 +1720,6 @@ void expect_error_universe_level_overflow
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_universe_level_overflow_callback_identifier;
-    invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     
@@ -1717,7 +1758,6 @@ void expect_error_buffer_index
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_buffer_index_callback_identifier;
-    invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     
@@ -1756,7 +1796,6 @@ void expect_error_not_applicable
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_not_applicable_callback_identifier;
-    invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     
@@ -1795,7 +1834,6 @@ void expect_error_non_numeric_float
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_non_numeric_float_callback_identifier;
-    invocation->parameters_relevant = 0;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     
@@ -1807,6 +1845,2861 @@ void expect_error_non_numeric_float
         longjmp(test_suite->current_test_case->jmp_buf, 2);
     } else {
         longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+extern void expect_stream_start
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_start.state_relevant = 1;
+        invocation->specifics.stream_start.state = stream_state;
+    } else {
+        invocation->specifics.stream_start.state_relevant = 0;
+        invocation->specifics.stream_start.state = NULL;
+    }
+}
+
+
+extern void expect_stream_magic_number
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_magic_number.state_relevant = 1;
+        invocation->specifics.stream_magic_number.state = stream_state;
+    } else {
+        invocation->specifics.stream_magic_number.state_relevant = 0;
+        invocation->specifics.stream_magic_number.state = NULL;
+    }
+}
+
+
+extern void expect_stream_name_definition
+  (test_suite *test_suite_in,
+   void *stream_state,
+   uint8_t *data, size_t length)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_name_definition.state_relevant = 1;
+        invocation->specifics.stream_name_definition.state = stream_state;
+    } else {
+        invocation->specifics.stream_name_definition.state_relevant = 0;
+        invocation->specifics.stream_name_definition.state = NULL;
+    }
+    if(data) {
+        invocation->specifics.stream_name_definition.data_relevant = 1;
+        invocation->specifics.stream_name_definition.data = data;
+        invocation->specifics.stream_name_definition.length = length;
+    } else {
+        invocation->specifics.stream_name_definition.data_relevant = 0;
+        invocation->specifics.stream_name_definition.data = NULL;
+        invocation->specifics.stream_name_definition.length = 0;
+    }
+}
+
+
+extern void expect_stream_value_definition_is_next
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_value_definition_is_next.state_relevant
+            = 1;
+        invocation->specifics.stream_value_definition_is_next.state
+            = stream_state;
+    } else {
+        invocation->specifics.stream_value_definition_is_next.state_relevant
+            = 0;
+        invocation->specifics.stream_value_definition_is_next.state
+            = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_bool
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_bool.state_relevant = 1;
+        invocation->specifics.stream_type_definition_bool.state = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_bool.state_relevant = 0;
+        invocation->specifics.stream_type_definition_bool.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_ordering
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_ordering.state_relevant
+            = 1;
+        invocation->specifics.stream_type_definition_ordering.state
+            = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_ordering.state_relevant
+            = 0;
+        invocation->specifics.stream_type_definition_ordering.state
+            = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_maybe_is_next
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_maybe_is_next
+            .state_relevant = 1;
+        invocation->specifics.stream_type_definition_maybe_is_next
+            .state = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_maybe_is_next
+            .state_relevant = 0;
+        invocation->specifics.stream_type_definition_maybe_is_next
+            .state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_int8
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_int8.state_relevant = 1;
+        invocation->specifics.stream_type_definition_int8.state = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_int8.state_relevant = 0;
+        invocation->specifics.stream_type_definition_int8.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_int16
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_int16.state_relevant = 1;
+        invocation->specifics.stream_type_definition_int16.state
+            = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_int16.state_relevant = 0;
+        invocation->specifics.stream_type_definition_int16.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_int32
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_int32.state_relevant = 1;
+        invocation->specifics.stream_type_definition_int32.state
+            = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_int32.state_relevant = 0;
+        invocation->specifics.stream_type_definition_int32.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_int64
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_int64.state_relevant = 1;
+        invocation->specifics.stream_type_definition_int64.state
+            = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_int64.state_relevant = 0;
+        invocation->specifics.stream_type_definition_int64.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_nat8
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_nat8.state_relevant = 1;
+        invocation->specifics.stream_type_definition_nat8.state = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_nat8.state_relevant = 0;
+        invocation->specifics.stream_type_definition_nat8.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_nat16
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_nat16.state_relevant = 1;
+        invocation->specifics.stream_type_definition_nat16.state
+            = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_nat16.state_relevant = 0;
+        invocation->specifics.stream_type_definition_nat16.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_nat32
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_nat32.state_relevant = 1;
+        invocation->specifics.stream_type_definition_nat32.state
+            = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_nat32.state_relevant = 0;
+        invocation->specifics.stream_type_definition_nat32.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_nat64
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_nat64.state_relevant = 1;
+        invocation->specifics.stream_type_definition_nat64.state
+            = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_nat64.state_relevant = 0;
+        invocation->specifics.stream_type_definition_nat64.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_float32
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_float32.state_relevant
+            = 1;
+        invocation->specifics.stream_type_definition_float32.state
+            = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_float32.state_relevant
+            = 0;
+        invocation->specifics.stream_type_definition_float32.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_float64
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_float64.state_relevant
+            = 1;
+        invocation->specifics.stream_type_definition_float64.state
+            = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_float64.state_relevant
+            = 0;
+        invocation->specifics.stream_type_definition_float64.state
+            = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_utf8
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_utf8.state_relevant = 1;
+        invocation->specifics.stream_type_definition_utf8.state = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_utf8.state_relevant = 0;
+        invocation->specifics.stream_type_definition_utf8.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_blob
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_blob.state_relevant = 1;
+        invocation->specifics.stream_type_definition_blob.state = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_blob.state_relevant = 0;
+        invocation->specifics.stream_type_definition_blob.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_function_is_next
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_function_is_next
+            .state_relevant = 1;
+        invocation->specifics.stream_type_definition_function_is_next
+            .state = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_function_is_next
+            .state_relevant = 0;
+        invocation->specifics.stream_type_definition_function_is_next
+            .state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_sigma_is_next
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_sigma_is_next
+            .state_relevant = 1;
+        invocation->specifics.stream_type_definition_sigma_is_next
+            .state = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_sigma_is_next
+            .state_relevant = 0;
+        invocation->specifics.stream_type_definition_sigma_is_next
+            .state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_named_is_next
+  (test_suite *test_suite_in,
+   void *stream_state,
+   struct modern_hash name)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_named_is_next
+            .state_relevant = 1;
+        invocation->specifics.stream_type_definition_named_is_next
+            .state = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_named_is_next
+            .state_relevant = 0;
+        invocation->specifics.stream_type_definition_named_is_next
+            .state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_definition_universe
+  (test_suite *test_suite_in,
+   void *stream_state,
+   uint64_t level)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_universe
+            .state_relevant = 1;
+        invocation->specifics.stream_type_definition_universe
+            .state = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_universe
+            .state_relevant = 0;
+        invocation->specifics.stream_type_definition_universe
+            .state = NULL;
+    }
+    invocation->specifics.stream_type_definition_universe.level_relevant = 1;
+    invocation->specifics.stream_type_definition_universe.level = level;
+}
+
+
+extern void expect_stream_bool_false
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_bool_false.state_relevant = 1;
+        invocation->specifics.stream_bool_false.state = stream_state;
+    } else {
+        invocation->specifics.stream_bool_false.state_relevant = 0;
+        invocation->specifics.stream_bool_false.state = NULL;
+    }
+}
+
+
+extern void expect_stream_bool_true
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_bool_true.state_relevant = 1;
+        invocation->specifics.stream_bool_true.state = stream_state;
+    } else {
+        invocation->specifics.stream_bool_true.state_relevant = 0;
+        invocation->specifics.stream_bool_true.state = NULL;
+    }
+}
+
+
+extern void expect_stream_ordering_less
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_ordering_less.state_relevant = 1;
+        invocation->specifics.stream_ordering_less.state = stream_state;
+    } else {
+        invocation->specifics.stream_ordering_less.state_relevant = 0;
+        invocation->specifics.stream_ordering_less.state = NULL;
+    }
+}
+
+
+extern void expect_stream_ordering_equal
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_ordering_equal.state_relevant = 1;
+        invocation->specifics.stream_ordering_equal.state = stream_state;
+    } else {
+        invocation->specifics.stream_ordering_equal.state_relevant = 0;
+        invocation->specifics.stream_ordering_equal.state = NULL;
+    }
+}
+
+
+extern void expect_stream_ordering_greater
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_ordering_greater.state_relevant = 1;
+        invocation->specifics.stream_ordering_greater.state = stream_state;
+    } else {
+        invocation->specifics.stream_ordering_greater.state_relevant = 0;
+        invocation->specifics.stream_ordering_greater.state = NULL;
+    }
+}
+
+
+extern void expect_stream_maybe_nothing
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_maybe_nothing.state_relevant = 1;
+        invocation->specifics.stream_maybe_nothing.state = stream_state;
+    } else {
+        invocation->specifics.stream_maybe_nothing.state_relevant = 0;
+        invocation->specifics.stream_maybe_nothing.state = NULL;
+    }
+}
+
+
+extern void expect_stream_maybe_just_is_next
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_maybe_just_is_next.state_relevant = 1;
+        invocation->specifics.stream_maybe_just_is_next.state = stream_state;
+    } else {
+        invocation->specifics.stream_maybe_just_is_next.state_relevant = 0;
+        invocation->specifics.stream_maybe_just_is_next.state = NULL;
+    }
+}
+
+
+extern void expect_stream_int8
+  (test_suite *test_suite_in,
+   void *stream_state,
+   int8_t value)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_int8.state_relevant = 1;
+        invocation->specifics.stream_int8.state = stream_state;
+    } else {
+        invocation->specifics.stream_int8.state_relevant = 0;
+        invocation->specifics.stream_int8.state = NULL;
+    }
+}
+
+
+extern void expect_stream_int16
+  (test_suite *test_suite_in,
+   void *stream_state,
+   int16_t value)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_int16.state_relevant = 1;
+        invocation->specifics.stream_int16.state = stream_state;
+    } else {
+        invocation->specifics.stream_int16.state_relevant = 0;
+        invocation->specifics.stream_int16.state = NULL;
+    }
+}
+
+
+extern void expect_stream_int32
+  (test_suite *test_suite_in,
+   void *stream_state,
+   int32_t value)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_int32.state_relevant = 1;
+        invocation->specifics.stream_int32.state = stream_state;
+    } else {
+        invocation->specifics.stream_int32.state_relevant = 0;
+        invocation->specifics.stream_int32.state = NULL;
+    }
+}
+
+
+extern void expect_stream_int64
+  (test_suite *test_suite_in,
+   void *stream_state,
+   int64_t value)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_int64.state_relevant = 1;
+        invocation->specifics.stream_int64.state = stream_state;
+    } else {
+        invocation->specifics.stream_int64.state_relevant = 0;
+        invocation->specifics.stream_int64.state = NULL;
+    }
+}
+
+
+extern void expect_stream_nat8
+  (test_suite *test_suite_in,
+   void *stream_state,
+   uint8_t value)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_nat8.state_relevant = 1;
+        invocation->specifics.stream_nat8.state = stream_state;
+    } else {
+        invocation->specifics.stream_nat8.state_relevant = 0;
+        invocation->specifics.stream_nat8.state = NULL;
+    }
+}
+
+
+extern void expect_stream_nat16
+  (test_suite *test_suite_in,
+   void *stream_state,
+   uint16_t value)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_nat16.state_relevant = 1;
+        invocation->specifics.stream_nat16.state = stream_state;
+    } else {
+        invocation->specifics.stream_nat16.state_relevant = 0;
+        invocation->specifics.stream_nat16.state = NULL;
+    }
+}
+
+
+extern void expect_stream_nat32
+  (test_suite *test_suite_in,
+   void *stream_state,
+   uint32_t value)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_nat32.state_relevant = 1;
+        invocation->specifics.stream_nat32.state = stream_state;
+    } else {
+        invocation->specifics.stream_nat32.state_relevant = 0;
+        invocation->specifics.stream_nat32.state = NULL;
+    }
+}
+
+
+extern void expect_stream_nat64
+  (test_suite *test_suite_in,
+   void *stream_state,
+   uint64_t value)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_nat64.state_relevant = 1;
+        invocation->specifics.stream_nat64.state = stream_state;
+    } else {
+        invocation->specifics.stream_nat64.state_relevant = 0;
+        invocation->specifics.stream_nat64.state = NULL;
+    }
+}
+
+
+extern void expect_stream_float32
+  (test_suite *test_suite_in,
+   void *stream_state,
+   float value)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_float32.state_relevant = 1;
+        invocation->specifics.stream_float32.state = stream_state;
+    } else {
+        invocation->specifics.stream_float32.state_relevant = 0;
+        invocation->specifics.stream_float32.state = NULL;
+    }
+}
+
+
+extern void expect_stream_float64
+  (test_suite *test_suite_in,
+   void *stream_state,
+   double value)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_float64.state_relevant = 1;
+        invocation->specifics.stream_float64.state = stream_state;
+    } else {
+        invocation->specifics.stream_float64.state_relevant = 0;
+        invocation->specifics.stream_float64.state = NULL;
+    }
+}
+
+
+extern void expect_stream_utf8_start
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_utf8_start.state_relevant = 1;
+        invocation->specifics.stream_utf8_start.state = stream_state;
+    } else {
+        invocation->specifics.stream_utf8_start.state_relevant = 0;
+        invocation->specifics.stream_utf8_start.state = NULL;
+    }
+}
+
+
+extern void expect_stream_utf8_data
+  (test_suite *test_suite_in,
+   void *stream_state,
+   uint8_t *data, size_t length)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_utf8_data.state_relevant = 1;
+        invocation->specifics.stream_utf8_data.state = stream_state;
+    } else {
+        invocation->specifics.stream_utf8_data.state_relevant = 0;
+        invocation->specifics.stream_utf8_data.state = NULL;
+    }
+}
+
+
+extern void expect_stream_utf8_end
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_utf8_end.state_relevant = 1;
+        invocation->specifics.stream_utf8_end.state = stream_state;
+    } else {
+        invocation->specifics.stream_utf8_end.state_relevant = 0;
+        invocation->specifics.stream_utf8_end.state = NULL;
+    }
+}
+
+
+extern void expect_stream_blob_start
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_blob_start.state_relevant = 1;
+        invocation->specifics.stream_blob_start.state = stream_state;
+    } else {
+        invocation->specifics.stream_blob_start.state_relevant = 0;
+        invocation->specifics.stream_blob_start.state = NULL;
+    }
+}
+
+
+extern void expect_stream_blob_data
+  (test_suite *test_suite_in,
+   void *stream_state,
+   uint8_t *data, size_t length)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_blob_data.state_relevant = 1;
+        invocation->specifics.stream_blob_data.state = stream_state;
+    } else {
+        invocation->specifics.stream_blob_data.state_relevant = 0;
+        invocation->specifics.stream_blob_data.state = NULL;
+    }
+}
+
+
+extern void expect_stream_blob_end
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_blob_end.state_relevant = 1;
+        invocation->specifics.stream_blob_end.state = stream_state;
+    } else {
+        invocation->specifics.stream_blob_end.state_relevant = 0;
+        invocation->specifics.stream_blob_end.state = NULL;
+    }
+}
+
+
+extern void expect_stream_sigma_is_next
+  (test_suite *test_suite_in,
+   void *stream_state,
+   struct modern_hash *type)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_sigma_is_next.state_relevant = 1;
+        invocation->specifics.stream_sigma_is_next.state = stream_state;
+    } else {
+        invocation->specifics.stream_sigma_is_next.state_relevant = 0;
+        invocation->specifics.stream_sigma_is_next.state = NULL;
+    }
+    if(type) {
+        invocation->specifics.stream_sigma_is_next.type_relevant = 1;
+        invocation->specifics.stream_sigma_is_next.type = *type;
+    } else {
+        invocation->specifics.stream_sigma_is_next.type_relevant = 0;
+        invocation->specifics.stream_sigma_is_next.type.a = 0;
+        invocation->specifics.stream_sigma_is_next.type.b = 0;
+    }
+}
+
+
+extern void expect_stream_named_value_is_next
+  (test_suite *test_suite_in,
+   void *stream_state,
+   struct modern_hash *name)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_named_value_is_next.state_relevant = 1;
+        invocation->specifics.stream_named_value_is_next.state = stream_state;
+    } else {
+        invocation->specifics.stream_named_value_is_next.state_relevant = 0;
+        invocation->specifics.stream_named_value_is_next.state = NULL;
+    }
+    if(name) {
+        invocation->specifics.stream_named_value_is_next.name_relevant = 1;
+        invocation->specifics.stream_named_value_is_next.name = *name;
+    } else {
+        invocation->specifics.stream_named_value_is_next.name_relevant = 0;
+        invocation->specifics.stream_named_value_is_next.name.a = 0;
+        invocation->specifics.stream_named_value_is_next.name.a = 1;
+    }
+}
+
+
+extern void expect_stream_lambda_is_next
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_lambda_is_next.state_relevant = 1;
+        invocation->specifics.stream_lambda_is_next.state = stream_state;
+    } else {
+        invocation->specifics.stream_lambda_is_next.state_relevant = 0;
+        invocation->specifics.stream_lambda_is_next.state = NULL;
+    }
+}
+
+
+extern void expect_stream_apply_is_next
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_apply_is_next.state_relevant = 1;
+        invocation->specifics.stream_apply_is_next.state = stream_state;
+    } else {
+        invocation->specifics.stream_apply_is_next.state_relevant = 0;
+        invocation->specifics.stream_apply_is_next.state = NULL;
+    }
+}
+
+
+extern void expect_stream_type_family_is_next
+  (test_suite *test_suite_in,
+   void *stream_state, uint64_t n_items)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_family_is_next.state_relevant = 1;
+        invocation->specifics.stream_type_family_is_next.state = stream_state;
+    } else {
+        invocation->specifics.stream_type_family_is_next.state_relevant = 0;
+        invocation->specifics.stream_type_family_is_next.state = NULL;
+    }
+    if(n_items > 0) {
+        invocation->specifics.stream_type_family_is_next.n_items_relevant = 1;
+        invocation->specifics.stream_type_family_is_next.n_items = n_items;
+    } else {
+        invocation->specifics.stream_type_family_is_next.n_items_relevant = 0;
+        invocation->specifics.stream_type_family_is_next.n_items = 0;
+    }
+}
+
+
+extern void expect_stream_let_is_next
+  (test_suite *test_suite_in,
+   void *stream_state, uint64_t n_items)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_let_is_next.state_relevant = 1;
+        invocation->specifics.stream_let_is_next.state = stream_state;
+    } else {
+        invocation->specifics.stream_let_is_next.state_relevant = 0;
+        invocation->specifics.stream_let_is_next.state = NULL;
+    }
+    if(n_items > 0) {
+        invocation->specifics.stream_let_is_next.n_items_relevant = 1;
+        invocation->specifics.stream_let_is_next.n_items = n_items;
+    } else {
+        invocation->specifics.stream_let_is_next.n_items_relevant = 0;
+        invocation->specifics.stream_let_is_next.n_items = 0;
+    }
+}
+
+
+extern void expect_stream_backreference
+  (test_suite *test_suite_in,
+   void *stream_state, uint64_t index)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_backreference.state_relevant = 1;
+        invocation->specifics.stream_backreference.state = stream_state;
+    } else {
+        invocation->specifics.stream_backreference.state_relevant = 0;
+        invocation->specifics.stream_backreference.state = NULL;
+    }
+    invocation->specifics.stream_backreference.index_relevant = 1;
+    invocation->specifics.stream_backreference.index = index;
+}
+
+
+extern void expect_stream_builtin
+  (test_suite *test_suite_in,
+   void *stream_state, uint16_t identifier)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_builtin.state_relevant = 1;
+        invocation->specifics.stream_builtin.state = stream_state;
+    } else {
+        invocation->specifics.stream_builtin.state_relevant = 0;
+        invocation->specifics.stream_builtin.state = NULL;
+    }
+    invocation->specifics.stream_builtin.identifier_relevant = 1;
+    invocation->specifics.stream_builtin.identifier = identifier;
+}
+
+
+extern void expect_stream_item_from_context
+  (test_suite *test_suite_in,
+   void *stream_state, struct modern_hash *hash)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_item_from_context.state_relevant = 1;
+        invocation->specifics.stream_item_from_context.state = stream_state;
+    } else {
+        invocation->specifics.stream_item_from_context.state_relevant = 0;
+        invocation->specifics.stream_item_from_context.state = NULL;
+    }
+    if(hash) {
+        invocation->specifics.stream_item_from_context.hash_relevant = 1;
+        invocation->specifics.stream_item_from_context.hash = *hash;
+    } else {
+        invocation->specifics.stream_item_from_context.hash_relevant = 0;
+        invocation->specifics.stream_item_from_context.hash.a = 0;
+        invocation->specifics.stream_item_from_context.hash.b = 0;
+    }
+}
+
+
+extern void expect_stream_end
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = stream_start_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_end.state_relevant = 1;
+        invocation->specifics.stream_end.state = stream_state;
+    } else {
+        invocation->specifics.stream_end.state_relevant = 0;
+        invocation->specifics.stream_end.state = NULL;
     }
 }
 
@@ -1937,6 +4830,7 @@ static void initialize_test_suite
     test_suite->allocation_invocation = NULL;
     test_suite->deallocation_invocation = NULL;
     test_suite->error_invocation = NULL;
+    test_suite->stream_invocation = NULL;
     initialize_test_case_buffer(&test_suite->test_cases);
     initialize_fixtures(&test_suite->fixtures);
     initialize_callback_invocation_buffer(&test_suite->actual_callbacks);
@@ -2112,7 +5006,6 @@ static void initialize_callback_invocation_pattern
   (struct callback_invocation_pattern *pattern)
 {
     pattern->identifier = 0;
-    pattern->parameters_relevant = 0;
     pattern->should_succeed = 1;
     pattern->sticky = 0;
 }
@@ -2316,13 +5209,13 @@ static void finalize_callback_invocation_pattern
     case stream_let_is_next_callback_identifier:
         break;
     
-    case stream_backreference_is_next_callback_identifier:
+    case stream_backreference_callback_identifier:
         break;
     
-    case stream_builtin_is_next_callback_identifier:
+    case stream_builtin_callback_identifier:
         break;
     
-    case stream_item_from_context_is_next_callback_identifier:
+    case stream_item_from_context_callback_identifier:
         break;
     
     case stream_end_callback_identifier:
@@ -2789,19 +5682,19 @@ static void copy_callback_behavior
             source->stream_let_is_next.abort;
         break;
     
-    case stream_backreference_is_next_callback_identifier:
-        destination->stream_backreference_is_next.abort =
-            source->stream_backreference_is_next.abort;
+    case stream_backreference_callback_identifier:
+        destination->stream_backreference.abort =
+            source->stream_backreference.abort;
         break;
     
-    case stream_builtin_is_next_callback_identifier:
-        destination->stream_builtin_is_next.abort =
-            source->stream_builtin_is_next.abort;
+    case stream_builtin_callback_identifier:
+        destination->stream_builtin.abort =
+            source->stream_builtin.abort;
         break;
     
-    case stream_item_from_context_is_next_callback_identifier:
-        destination->stream_item_from_context_is_next.abort =
-            source->stream_item_from_context_is_next.abort;
+    case stream_item_from_context_callback_identifier:
+        destination->stream_item_from_context.abort =
+            source->stream_item_from_context.abort;
         break;
     
     case stream_end_callback_identifier:
@@ -3154,16 +6047,16 @@ static void print_callback_invocation
         printf("stream_let_is_next_callback_identifier()\n");
         break;
     
-    case stream_backreference_is_next_callback_identifier:
-        printf("stream_backreference_is_next_callback_identifier()\n");
+    case stream_backreference_callback_identifier:
+        printf("stream_backreference_callback_identifier()\n");
         break;
     
-    case stream_builtin_is_next_callback_identifier:
-        printf("stream_builtin_is_next_callback_identifier()\n");
+    case stream_builtin_callback_identifier:
+        printf("stream_builtin_callback_identifier()\n");
         break;
     
-    case stream_item_from_context_is_next_callback_identifier:
-        printf("stream_item_from_context_is_next_callback_identifier()\n");
+    case stream_item_from_context_callback_identifier:
+        printf("stream_item_from_context_callback_identifier()\n");
         break;
     
     case stream_end_callback_identifier:
@@ -3559,19 +6452,19 @@ static void print_callback_invocation_pattern
         printf("stream_let_is_next_callback_identifier()\n");
         break;
     
-    case stream_backreference_is_next_callback_identifier:
+    case stream_backreference_callback_identifier:
         for(size_t i = 0; i < indent; i++) printf(" ");
-        printf("stream_backreference_is_next_callback_identifier()\n");
+        printf("stream_backreference_callback_identifier()\n");
         break;
     
-    case stream_builtin_is_next_callback_identifier:
+    case stream_builtin_callback_identifier:
         for(size_t i = 0; i < indent; i++) printf(" ");
-        printf("stream_builtin_is_next_callback_identifier()\n");
+        printf("stream_builtin_callback_identifier()\n");
         break;
     
-    case stream_item_from_context_is_next_callback_identifier:
+    case stream_item_from_context_callback_identifier:
         for(size_t i = 0; i < indent; i++) printf(" ");
-        printf("stream_item_from_context_is_next_callback_identifier()\n");
+        printf("stream_item_from_context_callback_identifier()\n");
         break;
     
     case stream_end_callback_identifier:
@@ -4153,19 +7046,19 @@ static int match_callback_invocation_against_pattern_helper
             (pattern->identifier, behavior_result, &pattern->behavior);
         break;
 
-    case stream_backreference_is_next_callback_identifier:
+    case stream_backreference_callback_identifier:
         matches = 1;
         copy_callback_behavior
             (pattern->identifier, behavior_result, &pattern->behavior);
         break;
 
-    case stream_builtin_is_next_callback_identifier:
+    case stream_builtin_callback_identifier:
         matches = 1;
         copy_callback_behavior
             (pattern->identifier, behavior_result, &pattern->behavior);
         break;
 
-    case stream_item_from_context_is_next_callback_identifier:
+    case stream_item_from_context_callback_identifier:
         matches = 1;
         copy_callback_behavior
             (pattern->identifier, behavior_result, &pattern->behavior);
@@ -4643,10 +7536,9 @@ struct modern_stream *test_stream_make(test_suite *test_suite)
     stream->apply_is_next = stream_apply_is_next;
     stream->type_family_is_next = stream_type_family_is_next;
     stream->let_is_next = stream_let_is_next;
-    stream->backreference_is_next = stream_backreference_is_next;
-    stream->builtin_is_next = stream_builtin_is_next;
-    stream->item_from_context_is_next =
-      stream_item_from_context_is_next;
+    stream->backreference = stream_backreference;
+    stream->builtin = stream_builtin;
+    stream->item_from_context = stream_item_from_context;
     stream->end = stream_end;
     
     return stream;
@@ -4678,6 +7570,9 @@ static void stream_start
     
     union callback_behavior behavior;
     if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_start.abort) {
+            process->abort(process_state);
+        }
         return;
     } else {
         return;
@@ -4687,399 +7582,1424 @@ static void stream_start
 
 static void stream_magic_number
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_magic_number_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_magic_number.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_magic_number.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_name_definition
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    uint8_t *data, size_t length)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_name_definition_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_name_definition.state = stream_state_in;
+    invocation->specifics.stream_name_definition.data = data;
+    invocation->specifics.stream_name_definition.length = length;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_name_definition.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_value_definition_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier =
+        stream_value_definition_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_value_definition_is_next.state
+        = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_value_definition_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_bool
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_bool_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_bool.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_bool.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_ordering
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_ordering_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_ordering.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_ordering.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_maybe_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_maybe_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_maybe_is_next.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_maybe_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_int8
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_int8_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_int8.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_int8.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_int16
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_int16_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_int16.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_int16.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_int32
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_int32_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_int32.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_int32.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_int64
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_int64_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_int64.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_int64.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_nat8
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_nat8_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_nat8.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_nat8.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_nat16
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_nat16_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_nat16.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_nat16.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_nat32
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_nat32_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_nat32.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_nat32.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_nat64
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_nat64_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_nat64.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_nat64.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_float32
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_float32_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_float32.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_float32.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_float64
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_float64_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_float64.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_float64.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_utf8
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_utf8_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_utf8.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_utf8.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_blob
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_blob_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_blob.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_blob.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_function_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_function_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_function_is_next.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_function_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_sigma_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_sigma_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_sigma_is_next.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_sigma_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_named_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state,
-   struct modern_hash name)
+   void *stream_state_in,
+   struct modern_hash *name)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_named_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_named_is_next.state = stream_state_in;
+    invocation->specifics.stream_type_definition_named_is_next.name = *name;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_named_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_definition_universe
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in,
+   uint64_t level)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_universe_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_universe.state = stream_state_in;
+    invocation->specifics.stream_type_definition_universe.level = level;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_universe.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_bool_false
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_bool_false_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_bool_false.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_bool_false.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_bool_true
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_bool_true_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_bool_true.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_bool_true.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_ordering_less
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_ordering_less_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_ordering_less.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_ordering_less.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_ordering_equal
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_ordering_equal_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_ordering_equal.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_ordering_equal.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_ordering_greater
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_ordering_greater_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_ordering_greater.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_ordering_greater.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_maybe_nothing
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_maybe_nothing_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_maybe_nothing.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_maybe_nothing.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_maybe_just_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_maybe_just_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_maybe_just_is_next.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_maybe_just_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_int8
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    int8_t value)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_int8_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_int8.state = stream_state_in;
+    invocation->specifics.stream_int8.value = value;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_int8.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_int16
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    int16_t value)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_int16_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_int16.state = stream_state_in;
+    invocation->specifics.stream_int16.value = value;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_int16.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_int32
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    int32_t value)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_int32_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_int32.state = stream_state_in;
+    invocation->specifics.stream_int32.value = value;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_int32.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_int64
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    int64_t value)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_int64_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_int64.state = stream_state_in;
+    invocation->specifics.stream_int64.value = value;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_int64.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_nat8
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    uint8_t value)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_nat8_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_nat8.state = stream_state_in;
+    invocation->specifics.stream_nat8.value = value;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_nat8.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_nat16
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    uint16_t value)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_nat16_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_nat16.state = stream_state_in;
+    invocation->specifics.stream_nat16.value = value;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_nat16.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_nat32
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    uint32_t value)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_nat32_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_nat32.state = stream_state_in;
+    invocation->specifics.stream_nat32.value = value;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_nat32.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_nat64
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    uint64_t value)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_nat64_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_nat64.state = stream_state_in;
+    invocation->specifics.stream_nat64.value = value;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_nat64.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_float32
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    float value)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_float32_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_float32.state = stream_state_in;
+    invocation->specifics.stream_float32.value = value;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_float32.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_float64
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    double value)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_float64_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_float64.state = stream_state_in;
+    invocation->specifics.stream_float64.value = value;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_float64.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_utf8_start
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_utf8_start_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_utf8_start.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_utf8_start.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_utf8_data
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    uint8_t *data, size_t length)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_utf8_data_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_utf8_data.state = stream_state_in;
+    
+    uint8_t *data_copied = actually_malloc(length);
+    memcpy(data_copied, data, length);
+    invocation->specifics.stream_utf8_data.data = data_copied;
+    invocation->specifics.stream_utf8_data.length = length;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_utf8_data.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_utf8_end
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_utf8_end_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_utf8_end.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_utf8_end.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_blob_start
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_blob_start_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_blob_start.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_blob_start.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_blob_data
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    uint8_t *data, size_t length)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_blob_data_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_blob_data.state = stream_state_in;
+    
+    uint8_t *data_copied = actually_malloc(length);
+    memcpy(data_copied, data, length);
+    invocation->specifics.stream_blob_data.data = data_copied;
+    invocation->specifics.stream_blob_data.length = length;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_blob_data.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_blob_end
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_blob_end_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_blob_end.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_blob_end.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_sigma_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state,
+   void *stream_state_in,
    struct modern_hash *type)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_sigma_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_sigma_is_next.state = stream_state_in;
+    invocation->specifics.stream_sigma_is_next.type = *type;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_sigma_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_named_value_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state, struct modern_hash name)
+   void *stream_state_in, struct modern_hash *name)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_named_value_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_named_value_is_next.state = stream_state_in;
+    invocation->specifics.stream_named_value_is_next.name = *name;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_named_value_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_lambda_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_lambda_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_lambda_is_next.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_lambda_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_apply_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_apply_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_apply_is_next.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_apply_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_type_family_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state, uint64_t n_items)
+   void *stream_state_in, uint64_t n_items)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_family_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_family_is_next.state = stream_state_in;
+    invocation->specifics.stream_type_family_is_next.n_items = n_items;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_family_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_let_is_next
   (struct modern_process *process, void *process_state,
-   void *stream_state, uint64_t n_items)
+   void *stream_state_in, uint64_t n_items)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_let_is_next_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_let_is_next.state = stream_state_in;
+    invocation->specifics.stream_let_is_next.n_items = n_items;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_let_is_next.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
-static void stream_backreference_is_next
+static void stream_backreference
   (struct modern_process *process, void *process_state,
-   void *stream_state, uint64_t index)
+   void *stream_state_in, uint64_t index)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_backreference_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_backreference.state = stream_state_in;
+    invocation->specifics.stream_backreference.index = index;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_backreference.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
-static void stream_builtin_is_next
+static void stream_builtin
   (struct modern_process *process, void *process_state,
-   void *stream_state, uint16_t identifier)
+   void *stream_state_in, uint16_t identifier)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_builtin_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_builtin.state = stream_state_in;
+    invocation->specifics.stream_builtin.identifier = identifier;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_builtin.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
-static void stream_item_from_context_is_next
+static void stream_item_from_context
   (struct modern_process *process, void *process_state,
-   void *stream_state, struct modern_hash type)
+   void *stream_state_in, struct modern_hash *hash)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_item_from_context_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_item_from_context.state = stream_state_in;
+    invocation->specifics.stream_item_from_context.hash = *hash;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_item_from_context.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
 
 
 static void stream_end
   (struct modern_process *process, void *process_state,
-   void *stream_state)
+   void *stream_state_in)
 {
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_end_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_end.state = stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_end.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
 }
+
