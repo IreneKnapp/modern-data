@@ -665,7 +665,9 @@ struct callback_invocation_pattern {
         } stream_type_definition_sigma_is_next;
         struct {
             unsigned state_relevant : 1;
+            unsigned name_relevant : 1;
             struct stream_state *state;
+            struct modern_hash name;
         } stream_type_definition_named_is_next;
         struct {
             unsigned state_relevant : 1;
@@ -703,43 +705,63 @@ struct callback_invocation_pattern {
         } stream_maybe_just_is_next;
         struct {
             unsigned state_relevant : 1;
+            unsigned value_relevant : 1;
             struct stream_state *state;
+            int8_t value;
         } stream_int8;
         struct {
             unsigned state_relevant : 1;
+            unsigned value_relevant : 1;
             struct stream_state *state;
+            int16_t value;
         } stream_int16;
         struct {
             unsigned state_relevant : 1;
+            unsigned value_relevant : 1;
             struct stream_state *state;
+            int32_t value;
         } stream_int32;
         struct {
             unsigned state_relevant : 1;
+            unsigned value_relevant : 1;
             struct stream_state *state;
+            int64_t value;
         } stream_int64;
         struct {
             unsigned state_relevant : 1;
+            unsigned value_relevant : 1;
             struct stream_state *state;
+            uint8_t value;
         } stream_nat8;
         struct {
             unsigned state_relevant : 1;
+            unsigned value_relevant : 1;
             struct stream_state *state;
+            uint16_t value;
         } stream_nat16;
         struct {
             unsigned state_relevant : 1;
+            unsigned value_relevant : 1;
             struct stream_state *state;
+            uint32_t value;
         } stream_nat32;
         struct {
             unsigned state_relevant : 1;
+            unsigned value_relevant : 1;
             struct stream_state *state;
+            uint64_t value;
         } stream_nat64;
         struct {
             unsigned state_relevant : 1;
+            unsigned value_relevant : 1;
             struct stream_state *state;
+            float value;
         } stream_float32;
         struct {
             unsigned state_relevant : 1;
+            unsigned value_relevant : 1;
             struct stream_state *state;
+            double value;
         } stream_float64;
         struct {
             unsigned state_relevant : 1;
@@ -747,7 +769,10 @@ struct callback_invocation_pattern {
         } stream_utf8_start;
         struct {
             unsigned state_relevant : 1;
+            unsigned data_relevant : 1;
             struct stream_state *state;
+            uint8_t *data;
+            size_t length;
         } stream_utf8_data;
         struct {
             unsigned state_relevant : 1;
@@ -759,7 +784,10 @@ struct callback_invocation_pattern {
         } stream_blob_start;
         struct {
             unsigned state_relevant : 1;
+            unsigned data_relevant : 1;
             struct stream_state *state;
+            uint8_t *data;
+            size_t length;
         } stream_blob_data;
         struct {
             unsigned state_relevant : 1;
@@ -6748,8 +6776,20 @@ static int match_callback_invocation_against_pattern_helper
 
     case stream_name_definition_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_name_definition.data_relevant) {
+            if((invocation->specifics.stream_name_definition.length
+                != pattern->specifics.stream_name_definition.length)
+               || memcmp(invocation->specifics.stream_name_definition.data,
+                         pattern->specifics.stream_name_definition.data,
+                         pattern->specifics.stream_name_definition.length))
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_value_definition_is_next_callback_identifier:
@@ -6862,14 +6902,40 @@ static int match_callback_invocation_against_pattern_helper
 
     case stream_type_definition_named_is_next_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_type_definition_named_is_next
+           .name_relevant)
+        {
+            if((invocation->specifics.stream_type_definition_named_is_next
+                .name.a !=
+                pattern->specifics.stream_type_definition_named_is_next
+                .name.a)
+               || (invocation->specifics.stream_type_definition_named_is_next
+                   .name.b !=
+                   pattern->specifics.stream_type_definition_named_is_next
+                   .name.b))
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_type_definition_universe_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_type_definition_universe.level_relevant) {
+            if(invocation->specifics.stream_type_definition_universe.level
+               != pattern->specifics.stream_type_definition_universe.level)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_bool_false_callback_identifier:
@@ -6916,62 +6982,152 @@ static int match_callback_invocation_against_pattern_helper
 
     case stream_int8_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_int8.value_relevant) {
+            if(invocation->specifics.stream_int8.value
+               != pattern->specifics.stream_int8.value)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_int16_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_int16.value_relevant) {
+            if(invocation->specifics.stream_int16.value
+               != pattern->specifics.stream_int16.value)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_int32_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_int32.value_relevant) {
+            if(invocation->specifics.stream_int32.value
+               != pattern->specifics.stream_int32.value)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_int64_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_int64.value_relevant) {
+            if(invocation->specifics.stream_int64.value
+               != pattern->specifics.stream_int64.value)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_nat8_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_nat8.value_relevant) {
+            if(invocation->specifics.stream_nat8.value
+               != pattern->specifics.stream_nat8.value)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_nat16_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_nat16.value_relevant) {
+            if(invocation->specifics.stream_nat16.value
+               != pattern->specifics.stream_nat16.value)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_nat32_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_nat32.value_relevant) {
+            if(invocation->specifics.stream_nat32.value
+               != pattern->specifics.stream_nat32.value)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_nat64_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_nat64.value_relevant) {
+            if(invocation->specifics.stream_nat64.value
+               != pattern->specifics.stream_nat64.value)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_float32_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_float32.value_relevant) {
+            if(invocation->specifics.stream_float32.value
+               != pattern->specifics.stream_float32.value)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_float64_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_float64.value_relevant) {
+            if(invocation->specifics.stream_float64.value
+               != pattern->specifics.stream_float64.value)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_utf8_start_callback_identifier:
@@ -6982,8 +7138,20 @@ static int match_callback_invocation_against_pattern_helper
 
     case stream_utf8_data_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_utf8_data.data_relevant) {
+            if((invocation->specifics.stream_utf8_data.length
+                != pattern->specifics.stream_utf8_data.length)
+               || memcmp(invocation->specifics.stream_utf8_data.data,
+                         pattern->specifics.stream_utf8_data.data,
+                         pattern->specifics.stream_utf8_data.length))
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_utf8_end_callback_identifier:
@@ -7000,8 +7168,20 @@ static int match_callback_invocation_against_pattern_helper
 
     case stream_blob_data_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_blob_data.data_relevant) {
+            if((invocation->specifics.stream_blob_data.length
+                != pattern->specifics.stream_blob_data.length)
+               || memcmp(invocation->specifics.stream_blob_data.data,
+                         pattern->specifics.stream_blob_data.data,
+                         pattern->specifics.stream_blob_data.length))
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_blob_end_callback_identifier:
@@ -7012,14 +7192,39 @@ static int match_callback_invocation_against_pattern_helper
 
     case stream_sigma_is_next_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_sigma_is_next.type_relevant)
+        {
+            if((invocation->specifics.stream_sigma_is_next.type.a !=
+                pattern->specifics.stream_sigma_is_next.type.a)
+               || (invocation->specifics.stream_sigma_is_next.type.b !=
+                   pattern->specifics.stream_sigma_is_next.type.b))
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_named_value_is_next_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_named_value_is_next
+           .name_relevant)
+        {
+            if((invocation->specifics.stream_named_value_is_next.name.a !=
+                pattern->specifics.stream_named_value_is_next.name.a)
+               || (invocation->specifics.stream_named_value_is_next.name.b !=
+                   pattern->specifics.stream_named_value_is_next.name.b))
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_lambda_is_next_callback_identifier:
@@ -7036,32 +7241,80 @@ static int match_callback_invocation_against_pattern_helper
 
     case stream_type_family_is_next_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_type_family_is_next.n_items_relevant) {
+            if(invocation->specifics.stream_type_family_is_next.n_items
+               != pattern->specifics.stream_type_family_is_next.n_items)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_let_is_next_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_let_is_next.n_items_relevant) {
+            if(invocation->specifics.stream_let_is_next.n_items
+               != pattern->specifics.stream_let_is_next.n_items)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_backreference_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_backreference.index_relevant) {
+            if(invocation->specifics.stream_backreference.index
+               != pattern->specifics.stream_backreference.index)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
-
+    
     case stream_builtin_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_builtin.identifier_relevant) {
+            if(invocation->specifics.stream_builtin.identifier
+               != pattern->specifics.stream_builtin.identifier)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_item_from_context_callback_identifier:
         matches = 1;
-        copy_callback_behavior
-            (pattern->identifier, behavior_result, &pattern->behavior);
+        if(pattern->specifics.stream_item_from_context.hash_relevant)
+        {
+            if((invocation->specifics.stream_item_from_context.hash.a !=
+                pattern->specifics.stream_item_from_context.hash.a)
+               || (invocation->specifics.stream_item_from_context.hash.b !=
+                   pattern->specifics.stream_item_from_context.hash.b))
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
         break;
 
     case stream_end_callback_identifier:
