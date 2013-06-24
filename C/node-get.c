@@ -205,16 +205,6 @@ INTERNAL modern *default_value_type_get
 }
 
 
-INTERNAL int default_mutable_get
-    (modern_library *library_in,
-     void *value_in)
-{
-    struct modern_library *library = (struct modern_library *) library_in;
-    struct modern *value = (struct modern *) value_in;
-    return value->mutable;
-}
-
-
 INTERNAL int default_canonical_hash_valid_get
     (modern_library *library_in,
      modern *value_in)

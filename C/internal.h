@@ -18,8 +18,7 @@ struct memory {
 
 struct modern {
     struct memory memory;
-    unsigned mutable : 1;
-    enum modern_node_type node_type : 6;
+    enum modern_node_type node_type;
     unsigned canonical_hash_valid : 1;
     struct modern *value_type;
     struct modern_hash canonical_hash;

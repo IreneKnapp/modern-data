@@ -119,7 +119,6 @@ INTERNAL modern *default_bool_false_make
     
     result->memory.finalizer = helper_bool_false_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_bool_value_false;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -156,7 +155,6 @@ INTERNAL modern *default_bool_true_make
     
     result->memory.finalizer = helper_bool_true_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_bool_value_true;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -193,7 +191,6 @@ INTERNAL modern *default_ordering_less_make
     
     result->memory.finalizer = helper_ordering_less_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_ordering_value_less;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -230,7 +227,6 @@ INTERNAL modern *default_ordering_equal_make
     
     result->memory.finalizer = helper_ordering_equal_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_ordering_value_equal;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -267,7 +263,6 @@ INTERNAL modern *default_ordering_greater_make
     
     result->memory.finalizer = helper_ordering_greater_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_ordering_value_greater;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -305,7 +300,6 @@ INTERNAL modern *default_maybe_nothing_make
     
     result->memory.finalizer = helper_maybe_nothing_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_maybe_value_nothing;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -344,7 +338,6 @@ INTERNAL modern *default_maybe_just_make
     
     result->memory.finalizer = helper_maybe_just_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_maybe_value_just;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -385,7 +378,6 @@ INTERNAL modern *default_int8_make
     
     result->memory.finalizer = helper_int8_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_int8_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -424,7 +416,6 @@ INTERNAL modern *default_int16_make
     
     result->memory.finalizer = helper_int16_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_int16_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -463,7 +454,6 @@ INTERNAL modern *default_int32_make
     
     result->memory.finalizer = helper_int32_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_int32_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -502,7 +492,6 @@ INTERNAL modern *default_int64_make
     
     result->memory.finalizer = helper_int64_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_int64_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -541,7 +530,6 @@ INTERNAL modern *default_nat8_make
     
     result->memory.finalizer = helper_nat8_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_nat8_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -580,7 +568,6 @@ INTERNAL modern *default_nat16_make
     
     result->memory.finalizer = helper_nat16_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_nat16_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -619,7 +606,6 @@ INTERNAL modern *default_nat32_make
     
     result->memory.finalizer = helper_nat32_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_nat32_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -658,7 +644,6 @@ INTERNAL modern *default_nat64_make
     
     result->memory.finalizer = helper_nat64_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_nat64_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -717,7 +702,6 @@ INTERNAL modern *default_float32_make
     
     result->memory.finalizer = helper_float32_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_float32_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -776,7 +760,6 @@ INTERNAL modern *default_float64_make
     
     result->memory.finalizer = helper_float64_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_float64_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -828,7 +811,6 @@ INTERNAL modern *default_utf8_make
     
     result->memory.finalizer = helper_utf8_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_utf8_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -883,7 +865,6 @@ INTERNAL modern *default_blob_make
     
     result->memory.finalizer = helper_blob_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_blob_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -938,7 +919,6 @@ INTERNAL modern *default_sigma_make
     
     result->memory.finalizer = helper_sigma_value_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_sigma_value;
     result->canonical_hash_valid = 0;
     result->value_type = type;
@@ -981,7 +961,6 @@ INTERNAL modern *default_name_value_make
     
     result->memory.finalizer = helper_name_value_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_name_value;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1022,7 +1001,6 @@ INTERNAL modern *default_named_value_make
     
     result->memory.finalizer = helper_named_value_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_named_value;
     result->canonical_hash_valid = 0;
     result->value_type = type;
@@ -1062,7 +1040,6 @@ INTERNAL modern *default_bool_type_make
     
     result->memory.finalizer = helper_bool_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_bool_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1099,7 +1076,6 @@ INTERNAL modern *default_ordering_type_make
     
     result->memory.finalizer = helper_ordering_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_ordering_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1142,7 +1118,6 @@ INTERNAL modern *default_maybe_type_make
     
     result->memory.finalizer = helper_maybe_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_maybe_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1182,7 +1157,6 @@ INTERNAL modern *default_int8_type_make
     
     result->memory.finalizer = helper_int8_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_int8_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1219,7 +1193,6 @@ INTERNAL modern *default_int16_type_make
     
     result->memory.finalizer = helper_int16_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_int16_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1256,7 +1229,6 @@ INTERNAL modern *default_int32_type_make
     
     result->memory.finalizer = helper_int32_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_int32_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1293,7 +1265,6 @@ INTERNAL modern *default_int64_type_make
     
     result->memory.finalizer = helper_int64_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_int64_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1330,7 +1301,6 @@ INTERNAL modern *default_nat8_type_make
     
     result->memory.finalizer = helper_nat8_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_nat8_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1367,7 +1337,6 @@ INTERNAL modern *default_nat16_type_make
     
     result->memory.finalizer = helper_nat16_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_nat16_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1404,7 +1373,6 @@ INTERNAL modern *default_nat32_type_make
     
     result->memory.finalizer = helper_nat32_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_nat32_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1441,7 +1409,6 @@ INTERNAL modern *default_nat64_type_make
     
     result->memory.finalizer = helper_nat64_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_nat64_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1478,7 +1445,6 @@ INTERNAL modern *default_float32_type_make
     
     result->memory.finalizer = helper_float32_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_float32_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1515,7 +1481,6 @@ INTERNAL modern *default_float64_type_make
     
     result->memory.finalizer = helper_float64_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_float64_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1552,7 +1517,6 @@ INTERNAL modern *default_utf8_type_make
     
     result->memory.finalizer = helper_utf8_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_utf8_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1589,7 +1553,6 @@ INTERNAL modern *default_blob_type_make
     
     result->memory.finalizer = helper_blob_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_blob_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1629,7 +1592,6 @@ INTERNAL modern *default_function_type_make
     
     result->memory.finalizer = helper_function_type_finalize;
     
-    function_type->mutable = 1;
     function_type->node_type = modern_node_type_function_type;
     function_type->canonical_hash_valid = 0;
     function_type->value_type = NULL;
@@ -1673,7 +1635,6 @@ INTERNAL modern *default_sigma_type_make
     
     result->memory.finalizer = helper_sigma_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_sigma_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1716,7 +1677,6 @@ INTERNAL modern *default_name_type_make
     
     result->memory.finalizer = helper_name_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_name_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1754,7 +1714,6 @@ INTERNAL modern *default_named_type_make
     
     result->memory.finalizer = helper_named_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_named_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1796,7 +1755,6 @@ INTERNAL modern *default_universe_type_make
     
     result->memory.finalizer = helper_universe_type_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_universe_type;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1836,7 +1794,6 @@ INTERNAL modern *default_lambda_make
     
     result->memory.finalizer = helper_lambda_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_lambda;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1879,7 +1836,6 @@ INTERNAL modern *default_apply_make
     
     result->memory.finalizer = helper_apply_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_apply;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1934,7 +1890,6 @@ INTERNAL modern *default_type_family_make
     
     result->memory.finalizer = helper_type_family_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_type_family;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -1993,7 +1948,6 @@ INTERNAL modern *default_let_make
     
     result->memory.finalizer = helper_let_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_type_family;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -2043,7 +1997,6 @@ INTERNAL modern *default_backreference_make
     
     result->memory.finalizer = helper_backreference_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_backreference;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;
@@ -2082,7 +2035,6 @@ INTERNAL modern *default_builtin_make
     
     result->memory.finalizer = helper_builtin_finalize;
     
-    result->mutable = 1;
     result->node_type = modern_node_type_backreference;
     result->canonical_hash_valid = 0;
     result->value_type = NULL;

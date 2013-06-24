@@ -15,7 +15,6 @@ struct modern_node_representation *modern_node_representation_default_make
     
     result->node_type_get = default_node_type_get;
     result->value_type_get = default_value_type_get;
-    result->mutable_get = default_mutable_get;
     result->canonical_hash_valid_get = default_canonical_hash_valid_get;
     result->canonical_hash_get = default_canonical_hash_get;
     result->maybe_just_content_get = default_maybe_just_content_get;
