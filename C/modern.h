@@ -118,10 +118,11 @@ struct modern_stream {
     void (*type_definition_named_is_next)
       (struct modern_process *process, void *process_state,
        void *stream_state,
-       struct modern_hash name);
+       struct modern_hash *name);
     void (*type_definition_universe)
       (struct modern_process *process, void *process_state,
-       void *stream_state);
+       void *stream_state,
+       uint64_t level);
     void (*bool_false)
       (struct modern_process *process, void *process_state,
        void *stream_state);
@@ -209,7 +210,8 @@ struct modern_stream {
        struct modern_hash *type);
     void (*named_value_is_next)
       (struct modern_process *process, void *process_state,
-       void *stream_state, struct modern_hash name);
+       void *stream_state,
+       struct modern_hash *name);
     void (*lambda_is_next)
       (struct modern_process *process, void *process_state,
        void *stream_state);
@@ -222,15 +224,15 @@ struct modern_stream {
     void (*let_is_next)
       (struct modern_process *process, void *process_state,
        void *stream_state, uint64_t n_items);
-    void (*backreference_is_next)
+    void (*backreference)
       (struct modern_process *process, void *process_state,
        void *stream_state, uint64_t index);
-    void (*builtin_is_next)
+    void (*builtin)
       (struct modern_process *process, void *process_state,
        void *stream_state, uint16_t identifier);
-    void (*item_from_context_is_next)
+    void (*item_from_context)
       (struct modern_process *process, void *process_state,
-       void *stream_state, struct modern_hash type);
+       void *stream_state, struct modern_hash *hash);
     void (*end)
       (struct modern_process *process, void *process_state,
        void *stream_state);
