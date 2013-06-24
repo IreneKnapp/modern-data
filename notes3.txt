@@ -3,3 +3,11 @@ representation!
 
 The important parts of computing the value type of a node need to be in the
 library always, even with a user-provided node representation.
+
+Several nodes and stream events, for no good reason, express their children
+as hashes instead of arbitrary nodes.  Using arbitrary nodes leaves this
+choice up to the client programmer, since one can always use a
+value_from_context if one prefers the compactness of the hash.  In particular,
+forcing this the way it is presently might cause trouble for Teaquel down the
+line...
+
