@@ -11,13 +11,8 @@ struct modern_library {
 };
 
 
-struct memory {
-	void (*finalizer)(struct modern_library *library, void *retainable);
-};
-
-
 struct modern {
-    struct memory memory;
+	void (*finalizer)(struct modern_library *library, struct modern *node);
     enum modern_node_type node_type;
     unsigned canonical_hash_valid : 1;
     struct modern *value_type;
@@ -102,7 +97,8 @@ struct modern {
 
 
 struct modern_context {
-    struct memory memory;
+	void (*finalizer)(struct modern_library *library,
+                      struct modern_context *context);
     size_t n_values;
     size_t n_buckets;
     struct modern *hash;
@@ -112,7 +108,13 @@ struct modern_context {
 // context.c
 INTERNAL void internal_context_finalizer
   (struct modern_library *library,
-   void *context);
+   struct modern_context *context);
+
+
+// memory.c
+INTERNAL void default_finalize
+  (modern_library *library_in,
+   modern *node_in);
 
 
 // node-canonical.c
