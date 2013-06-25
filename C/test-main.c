@@ -6562,13 +6562,10 @@ static int match_callback_invocation_against_pattern
             struct callback_invocation_pattern *expected =
                 buffer->patterns[expectation_index];
             int matches =
-                match_callback_invocation_against_pattern_helper
-                    (test_suite, invocation, expected, behavior_result);
-            if(matches) {
-                *buffer_result = buffer;
-                *pattern_result = expected;
-                return 1;
-            }
+                match_callback_invocation_against_pattern
+                    (test_suite, invocation, expected,
+                     buffer_result, pattern_result, behavior_result);
+            if(matches) return 1;
         }
         
         return 0;
@@ -6581,13 +6578,11 @@ static int match_callback_invocation_against_pattern
         if(buffer->count < 1) return 0;
         struct callback_invocation_pattern *expected = buffer->patterns[0];
         int matches =
-            match_callback_invocation_against_pattern_helper
-                (test_suite, invocation, expected, behavior_result);
-        if(matches) {
-            *buffer_result = buffer;
-            *pattern_result = expected;
-            return 1;
-        } else return 0;
+            match_callback_invocation_against_pattern
+                (test_suite, invocation, expected,
+                 buffer_result, pattern_result, behavior_result);
+        if(matches) return 1;
+        else return 0;
     }
     
     default:
