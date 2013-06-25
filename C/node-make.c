@@ -129,7 +129,9 @@ INTERNAL modern *default_bool_false_make
 HELPER void helper_bool_false_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -162,7 +164,9 @@ INTERNAL modern *default_bool_true_make
 HELPER void helper_bool_true_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -195,7 +199,9 @@ INTERNAL modern *default_ordering_less_make
 HELPER void helper_ordering_less_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -228,7 +234,9 @@ INTERNAL modern *default_ordering_equal_make
 HELPER void helper_ordering_equal_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -261,7 +269,9 @@ INTERNAL modern *default_ordering_greater_make
 HELPER void helper_ordering_greater_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -295,7 +305,9 @@ INTERNAL modern *default_maybe_nothing_make
 HELPER void helper_maybe_nothing_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -334,7 +346,9 @@ HELPER void helper_maybe_just_finalize
     node->specifics.maybe_value.content_value->finalizer
         (library, node->specifics.maybe_value.content_value);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -369,7 +383,9 @@ INTERNAL modern *default_int8_make
 HELPER void helper_int8_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -404,7 +420,9 @@ INTERNAL modern *default_int16_make
 HELPER void helper_int16_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -439,7 +457,9 @@ INTERNAL modern *default_int32_make
 HELPER void helper_int32_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -474,7 +494,9 @@ INTERNAL modern *default_int64_make
 HELPER void helper_int64_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -509,7 +531,9 @@ INTERNAL modern *default_nat8_make
 HELPER void helper_nat8_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -544,7 +568,9 @@ INTERNAL modern *default_nat16_make
 HELPER void helper_nat16_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -579,7 +605,9 @@ INTERNAL modern *default_nat32_make
 HELPER void helper_nat32_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -614,7 +642,9 @@ INTERNAL modern *default_nat64_make
 HELPER void helper_nat64_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -669,7 +699,9 @@ INTERNAL modern *default_float32_make
 HELPER void helper_float32_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -724,7 +756,9 @@ INTERNAL modern *default_float64_make
 HELPER void helper_float64_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -777,7 +811,9 @@ HELPER void helper_utf8_finalize
     library->allocator->free
         (library->client_state, node->specifics.utf8_value.data);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -828,7 +864,9 @@ HELPER void helper_blob_finalize
     library->allocator->free
         (library->client_state, node->specifics.blob_value.data);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -881,7 +919,9 @@ HELPER void helper_sigma_value_finalize
     node->specifics.sigma_value.successor->finalizer
         (library, node->specifics.sigma_value.successor);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -916,7 +956,9 @@ INTERNAL modern *default_name_value_make
 HELPER void helper_name_value_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -956,7 +998,9 @@ HELPER void helper_named_value_finalize
     node->specifics.named_value.value->finalizer
         (library, node->specifics.named_value.value);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -989,7 +1033,9 @@ INTERNAL modern *default_bool_type_make
 HELPER void helper_bool_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1022,7 +1068,9 @@ INTERNAL modern *default_ordering_type_make
 HELPER void helper_ordering_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1062,7 +1110,9 @@ INTERNAL modern *default_maybe_type_make
 HELPER void helper_maybe_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     node->specifics.maybe_type.content_type->finalizer
         (library, node->specifics.maybe_type.content_type);
@@ -1098,7 +1148,9 @@ INTERNAL modern *default_int8_type_make
 HELPER void helper_int8_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1131,7 +1183,9 @@ INTERNAL modern *default_int16_type_make
 HELPER void helper_int16_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1164,7 +1218,9 @@ INTERNAL modern *default_int32_type_make
 HELPER void helper_int32_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1197,7 +1253,9 @@ INTERNAL modern *default_int64_type_make
 HELPER void helper_int64_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1230,7 +1288,9 @@ INTERNAL modern *default_nat8_type_make
 HELPER void helper_nat8_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1263,7 +1323,9 @@ INTERNAL modern *default_nat16_type_make
 HELPER void helper_nat16_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1296,7 +1358,9 @@ INTERNAL modern *default_nat32_type_make
 HELPER void helper_nat32_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1329,7 +1393,9 @@ INTERNAL modern *default_nat64_type_make
 HELPER void helper_nat64_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1362,7 +1428,9 @@ INTERNAL modern *default_float32_type_make
 HELPER void helper_float32_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1395,7 +1463,9 @@ INTERNAL modern *default_float64_type_make
 HELPER void helper_float64_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1428,7 +1498,9 @@ INTERNAL modern *default_utf8_type_make
 HELPER void helper_utf8_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1461,7 +1533,9 @@ INTERNAL modern *default_blob_type_make
 HELPER void helper_blob_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1505,7 +1579,9 @@ HELPER void helper_function_type_finalize
     node->specifics.function_type.result->finalizer
         (library, node->specifics.function_type.result);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1547,7 +1623,9 @@ HELPER void helper_sigma_type_finalize
     node->specifics.sigma_type.successor->finalizer
         (library, node->specifics.sigma_type.successor);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1580,7 +1658,9 @@ INTERNAL modern *default_name_type_make
 HELPER void helper_name_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1619,7 +1699,9 @@ HELPER void helper_named_type_finalize
     node->specifics.named_type.content_type->finalizer
         (library, node->specifics.named_type.content_type);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1654,7 +1736,9 @@ INTERNAL modern *default_universe_type_make
 HELPER void helper_universe_type_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1693,7 +1777,9 @@ HELPER void helper_lambda_finalize
     node->specifics.lambda.content->finalizer
         (library, node->specifics.lambda.content);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1736,7 +1822,9 @@ HELPER void helper_apply_finalize
     node->specifics.apply.parameter->finalizer
         (library, node->specifics.apply.parameter);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1792,7 +1880,9 @@ HELPER void helper_type_family_finalize
     library->allocator->free
         (library->client_state, node->specifics.type_family.members);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1852,7 +1942,9 @@ HELPER void helper_let_finalize
     library->allocator->free
         (library->client_state, node->specifics.type_family.members);
     
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1887,7 +1979,9 @@ INTERNAL modern *default_backreference_make
 HELPER void helper_backreference_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
@@ -1922,7 +2016,9 @@ INTERNAL modern *default_builtin_make
 HELPER void helper_builtin_finalize
   (struct modern_library *library, struct modern *node)
 {
-    if(node->value_type) node->finalizer(library, node->value_type);
+    if(node->value_type) {
+        node->value_type->finalizer(library, node->value_type);
+    }
     
     library->allocator->free(library->client_state, node);
 }
