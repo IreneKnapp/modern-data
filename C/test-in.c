@@ -109,7 +109,9 @@ static int test_explicatory_file_input
     }
     
     if(succeeded) {
+        expect_stream_start(test_suite, stream_state);
         // IAK TODO NOW enqueue the expectations 
+        expect_stream_end(test_suite, stream_state);
         processor->run(process_state, stream, stream_state, vfile, vfile_state);
         
         flush_expectations(test_suite);
