@@ -7475,7 +7475,7 @@ static void *allocator_malloc(struct test_suite *test_suite, size_t size) {
     union callback_behavior behavior;
     if(callback_should_succeed(test_suite, &behavior)) {
         void *data = actually_malloc(size);
-                
+        
         struct allocated_data *allocation;
         if(test_suite->current_test_case) {
             allocation = make_allocated_data_in_buffer
