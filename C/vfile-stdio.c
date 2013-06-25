@@ -8,8 +8,6 @@ struct vfile_stdio_state {
 };
 
 
-HELPER void vfile_stdio_finalize
-  (struct modern_library *library, void *vfile_state);
 HELPER ssize_t vfile_stdio_read
   (void *vfile_state, uint8_t *buffer, size_t length);
 HELPER ssize_t vfile_stdio_write
@@ -56,9 +54,11 @@ void *modern_vfile_stdio_initialize
 }
 
 
-HELPER void vfile_stdio_finalize
-  (struct modern_library *library, void *vfile_state)
+void modern_vfile_stdio_finalize
+  (modern_library *library_in, void *vfile_state)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
+    
     library->allocator->free(library->client_state, vfile_state);
 }
 

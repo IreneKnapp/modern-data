@@ -13,7 +13,7 @@ struct processor_explicatory_state {
 
 HELPER void *processor_explicatory_initialize(modern_library *library);
 HELPER void processor_explicatory_finalize
-  (struct modern_library *library, void *process_state);
+  (modern_library *library_in, void *process_state);
 HELPER void processor_explicatory_abort(void *process_state);
 HELPER void processor_explicatory_flush(void *process_state);
 HELPER void processor_explicatory_step
@@ -40,6 +40,7 @@ struct modern_processor *modern_processor_explicatory_make
     }
     
     processor->initialize = processor_explicatory_initialize;
+    processor->finalize = processor_explicatory_finalize;
     processor->step = processor_explicatory_step;
     processor->run = processor_explicatory_run;
     
@@ -72,8 +73,10 @@ HELPER void *processor_explicatory_initialize
 
 
 HELPER void processor_explicatory_finalize
-  (struct modern_library *library, void *process_state_in)
+  (modern_library *library_in, void *process_state_in)
 {
+    struct modern_library *library = (struct modern_library *) library_in;
+    
     library->allocator->free(library->client_state, process_state_in);
 }
 

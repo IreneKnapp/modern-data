@@ -249,6 +249,9 @@ struct modern_vfile {
 struct modern_processor {
     void *(*initialize)
       (modern_library *library);
+    void (*finalize)
+      (modern_library *library,
+       void *process_state);
     void (*step)
       (void *process_state,
        struct modern_stream *stream, void *stream_state,
@@ -1225,11 +1228,17 @@ extern void *modern_vfile_memory_buffer_initialize
   (modern_library *library,
    uint8_t *data,
    size_t length);
+extern void modern_vfile_memory_buffer_finalize
+  (modern_library *library,
+   void *vfile_state);
 
 extern struct modern_vfile *modern_vfile_memory_allocating_make
   (modern_library *library);
 extern void *modern_vfile_memory_allocating_initialize
   (modern_library *library);
+extern void modern_vfile_memory_allocating_finalize
+  (modern_library *library,
+   void *vfile_state);
 extern size_t modern_vfile_memory_allocating_bytes_get
   (modern_library *library,
    void *vfile_state);
@@ -1243,12 +1252,18 @@ extern struct modern_vfile *modern_vfile_stdio_make
 extern void *modern_vfile_stdio_initialize
   (modern_library *library,
    FILE *stream);
+extern void modern_vfile_stdio_finalize
+  (modern_library *library,
+   void *vfile_state);
 
 extern struct modern_vfile *modern_vfile_fd_make
   (modern_library *library);
 extern void *modern_vfile_fd_initialize
   (modern_library *library,
    int fd);
+extern void modern_vfile_fd_finalize
+  (modern_library *library,
+   void *vfile_state);
 
 extern struct modern_processor *modern_processor_input_make
   (modern_library *library);

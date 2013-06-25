@@ -117,7 +117,7 @@ static int test_explicatory_file_input
 
     if(vfile_state) {
         allow_deallocation(test_suite, "test-in.c vfile state");
-        modern_finalize(library, vfile_state);
+        modern_vfile_stdio_finalize(library, vfile_state);
         disallow_deallocation(test_suite);
     }
     
@@ -134,7 +134,7 @@ static int test_explicatory_file_input
     
     if(process_state) {
         allow_deallocation(test_suite, "test-in.c processor state");
-        modern_finalize(library, process_state);
+        processor->finalize(library, process_state);
         disallow_deallocation(test_suite);
     }
     
