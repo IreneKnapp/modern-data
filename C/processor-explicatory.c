@@ -107,6 +107,7 @@ HELPER void processor_explicatory_step
         stream->start(&process_state->process, process_state_in, stream_state);
     } else if(!process_state->ended) {
         process_state->ended = 1;
+        stream->end(&process_state->process, process_state_in, stream_state);
     }
 }
 
