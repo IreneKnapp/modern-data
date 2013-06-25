@@ -1004,6 +1004,7 @@ static int match_callback_invocation_against_pattern
   (struct test_suite *test_suite,
    struct callback_invocation *invocation,
    struct callback_invocation_pattern *pattern,
+   struct callback_invocation_pattern_buffer *parent_buffer,
    struct callback_invocation_pattern_buffer **buffer_result,
    struct callback_invocation_pattern **pattern_result,
    union callback_behavior *behavior_result);
@@ -4716,6 +4717,7 @@ extern void expect_stream_end
         invocation->specifics.stream_end.state_relevant = 0;
         invocation->specifics.stream_end.state = NULL;
     }
+    print_callback_invocation_pattern(0, test_suite->expected_callbacks);
 }
 
 
@@ -6545,6 +6547,7 @@ static int match_callback_invocation_against_pattern
   (struct test_suite *test_suite,
    struct callback_invocation *invocation,
    struct callback_invocation_pattern *pattern,
+   struct callback_invocation_pattern_buffer *parent_buffer,
    struct callback_invocation_pattern_buffer **buffer_result,
    struct callback_invocation_pattern **pattern_result,
    union callback_behavior *behavior_result)
@@ -6563,7 +6566,7 @@ static int match_callback_invocation_against_pattern
                 buffer->patterns[expectation_index];
             int matches =
                 match_callback_invocation_against_pattern
-                    (test_suite, invocation, expected,
+                    (test_suite, invocation, expected, buffer,
                      buffer_result, pattern_result, behavior_result);
             if(matches) return 1;
         }
@@ -6579,7 +6582,7 @@ static int match_callback_invocation_against_pattern
         struct callback_invocation_pattern *expected = buffer->patterns[0];
         int matches =
             match_callback_invocation_against_pattern
-                (test_suite, invocation, expected,
+                (test_suite, invocation, expected, buffer,
                  buffer_result, pattern_result, behavior_result);
         if(matches) return 1;
         else return 0;
@@ -6591,7 +6594,7 @@ static int match_callback_invocation_against_pattern
             match_callback_invocation_against_pattern_helper
                 (test_suite, invocation, pattern, behavior_result);
         if(matches) {
-            *buffer_result = NULL;
+            *buffer_result = parent_buffer;
             *pattern_result = pattern;
             return 1;
         } else return 0;
@@ -7332,6 +7335,7 @@ static int callback_should_succeed
         (test_suite,
          actual,
          test_suite->expected_callbacks,
+         NULL,
          &buffer,
          &expected,
          &behavior);
