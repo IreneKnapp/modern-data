@@ -123,6 +123,9 @@ struct modern_stream {
       (struct modern_process *process, void *process_state,
        void *stream_state,
        uint64_t level);
+    void (*type_definition_satisfies_is_next)
+      (struct modern_process *process, void *process_state,
+       void *stream_state);
     void (*bool_false)
       (struct modern_process *process, void *process_state,
        void *stream_state);
