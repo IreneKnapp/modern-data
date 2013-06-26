@@ -1959,7 +1959,7 @@ extern void expect_stream_magic_number
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_magic_number_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2009,7 +2009,7 @@ extern void expect_stream_name_definition
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_name_definition_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2067,7 +2067,8 @@ extern void expect_stream_value_definition_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier =
+        stream_value_definition_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2120,7 +2121,7 @@ extern void expect_stream_type_definition_bool
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_definition_bool_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2169,7 +2170,8 @@ extern void expect_stream_type_definition_ordering
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier =
+        stream_type_definition_ordering_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2222,7 +2224,8 @@ extern void expect_stream_type_definition_maybe_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier =
+        stream_type_definition_maybe_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2275,7 +2278,7 @@ extern void expect_stream_type_definition_int8
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_definition_int8_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2324,7 +2327,7 @@ extern void expect_stream_type_definition_int16
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_definition_int16_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2374,7 +2377,7 @@ extern void expect_stream_type_definition_int32
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_definition_int32_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2424,7 +2427,7 @@ extern void expect_stream_type_definition_int64
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_definition_int64_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2474,7 +2477,7 @@ extern void expect_stream_type_definition_nat8
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_definition_nat8_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2523,7 +2526,7 @@ extern void expect_stream_type_definition_nat16
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_definition_nat16_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2573,7 +2576,7 @@ extern void expect_stream_type_definition_nat32
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_definition_nat32_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2623,7 +2626,7 @@ extern void expect_stream_type_definition_nat64
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_definition_nat64_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2673,7 +2676,8 @@ extern void expect_stream_type_definition_float32
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier =
+        stream_type_definition_float32_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2725,7 +2729,8 @@ extern void expect_stream_type_definition_float64
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier =
+        stream_type_definition_float64_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2778,7 +2783,7 @@ extern void expect_stream_type_definition_utf8
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_definition_utf8_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2827,7 +2832,7 @@ extern void expect_stream_type_definition_blob
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_definition_blob_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2876,7 +2881,8 @@ extern void expect_stream_type_definition_function_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier =
+        stream_type_definition_function_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2929,7 +2935,8 @@ extern void expect_stream_type_definition_sigma_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier =
+        stream_type_definition_sigma_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -2983,7 +2990,8 @@ extern void expect_stream_type_definition_named_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier =
+        stream_type_definition_named_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3037,7 +3045,8 @@ extern void expect_stream_type_definition_universe
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier =
+        stream_type_definition_universe_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3092,7 +3101,7 @@ extern void expect_stream_bool_false
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_bool_false_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3141,7 +3150,7 @@ extern void expect_stream_bool_true
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_bool_true_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3190,7 +3199,7 @@ extern void expect_stream_ordering_less
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_ordering_less_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3239,7 +3248,7 @@ extern void expect_stream_ordering_equal
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_ordering_equal_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3288,7 +3297,7 @@ extern void expect_stream_ordering_greater
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_ordering_greater_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3337,7 +3346,7 @@ extern void expect_stream_maybe_nothing
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_maybe_nothing_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3386,7 +3395,7 @@ extern void expect_stream_maybe_just_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_maybe_just_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3436,7 +3445,7 @@ extern void expect_stream_int8
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_int8_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3486,7 +3495,7 @@ extern void expect_stream_int16
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_int16_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3536,7 +3545,7 @@ extern void expect_stream_int32
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_int32_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3586,7 +3595,7 @@ extern void expect_stream_int64
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_int64_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3636,7 +3645,7 @@ extern void expect_stream_nat8
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_nat8_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3686,7 +3695,7 @@ extern void expect_stream_nat16
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_nat16_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3736,7 +3745,7 @@ extern void expect_stream_nat32
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_nat32_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3786,7 +3795,7 @@ extern void expect_stream_nat64
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_nat64_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3836,7 +3845,7 @@ extern void expect_stream_float32
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_float32_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3886,7 +3895,7 @@ extern void expect_stream_float64
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_float64_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3935,7 +3944,7 @@ extern void expect_stream_utf8_start
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_utf8_start_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -3985,7 +3994,7 @@ extern void expect_stream_utf8_data
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_utf8_data_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4034,7 +4043,7 @@ extern void expect_stream_utf8_end
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_utf8_end_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4083,7 +4092,7 @@ extern void expect_stream_blob_start
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_blob_start_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4133,7 +4142,7 @@ extern void expect_stream_blob_data
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_blob_data_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4182,7 +4191,7 @@ extern void expect_stream_blob_end
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_blob_end_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4231,7 +4240,7 @@ extern void expect_stream_sigma_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_sigma_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4281,7 +4290,7 @@ extern void expect_stream_named_value_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_named_value_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4338,7 +4347,7 @@ extern void expect_stream_lambda_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_lambda_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4387,7 +4396,7 @@ extern void expect_stream_apply_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_apply_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4436,7 +4445,7 @@ extern void expect_stream_type_family_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_type_family_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4492,7 +4501,7 @@ extern void expect_stream_let_is_next
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_let_is_next_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4548,7 +4557,7 @@ extern void expect_stream_backreference
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_backreference_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4599,7 +4608,7 @@ extern void expect_stream_builtin
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_builtin_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4650,7 +4659,7 @@ extern void expect_stream_item_from_context
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_item_from_context_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -4707,7 +4716,7 @@ extern void expect_stream_end
     
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
-    invocation->identifier = stream_start_callback_identifier;
+    invocation->identifier = stream_end_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     if(stream_state) {
@@ -7348,6 +7357,8 @@ static int callback_should_succeed
         }
         
         if(!expected->sticky) {
+            printf("\n\nNot sticky, so...\n");
+            print_callback_invocation_pattern(2, test_suite->expected_callbacks);
             if(!buffer) {
                 finalize_callback_invocation_pattern
                     (test_suite->expected_callbacks);
@@ -7359,6 +7370,8 @@ static int callback_should_succeed
                 finalize_callback_invocation_pattern(expected);
                 actually_free(expected);
             }
+            printf("And after:\n");
+            print_callback_invocation_pattern(2, test_suite->expected_callbacks);
         }
         
         return should_succeed;
