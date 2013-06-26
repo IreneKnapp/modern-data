@@ -1,22 +1,22 @@
 type_family 2:
     sigma_type:
-        int8_type
+        int8_type;
         lambda:
             satisfies:
-                int8_type
+                int8_type;
                 lambda:
                     apply:
-                        builtin not
+                        builtin not;
                         apply:
                             apply:
-                                builtin equal
+                                builtin equal;
                                 apply:
                                     apply:
-                                        builtin compare
-                                        backreference 1
-                                    backreference 0
-                            builtin less_than
+                                        builtin compare;
+                                        backreference 1;
+                                    backreference 0;
+                            builtin less_than;
     sigma_type:
-        int8_type
-        backreference 0
+        int8_type;
+        backreference 0;
 
