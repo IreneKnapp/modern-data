@@ -1902,6 +1902,7 @@ extern void expect_stream_start
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -1951,6 +1952,7 @@ extern void expect_stream_magic_number
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2001,6 +2003,7 @@ extern void expect_stream_name_definition
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2059,6 +2062,7 @@ extern void expect_stream_value_definition_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2113,6 +2117,7 @@ extern void expect_stream_type_definition_bool
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2162,6 +2167,7 @@ extern void expect_stream_type_definition_ordering
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2216,6 +2222,7 @@ extern void expect_stream_type_definition_maybe_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2270,6 +2277,7 @@ extern void expect_stream_type_definition_int8
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2319,6 +2327,7 @@ extern void expect_stream_type_definition_int16
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2369,6 +2378,7 @@ extern void expect_stream_type_definition_int32
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2419,6 +2429,7 @@ extern void expect_stream_type_definition_int64
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2469,6 +2480,7 @@ extern void expect_stream_type_definition_nat8
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2518,6 +2530,7 @@ extern void expect_stream_type_definition_nat16
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2568,6 +2581,7 @@ extern void expect_stream_type_definition_nat32
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2618,6 +2632,7 @@ extern void expect_stream_type_definition_nat64
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2668,6 +2683,7 @@ extern void expect_stream_type_definition_float32
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2721,6 +2737,7 @@ extern void expect_stream_type_definition_float64
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2775,6 +2792,7 @@ extern void expect_stream_type_definition_utf8
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2824,6 +2842,7 @@ extern void expect_stream_type_definition_blob
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2873,6 +2892,7 @@ extern void expect_stream_type_definition_function_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2927,6 +2947,7 @@ extern void expect_stream_type_definition_sigma_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -2982,6 +3003,7 @@ extern void expect_stream_type_definition_named_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3037,6 +3059,7 @@ extern void expect_stream_type_definition_universe
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3093,6 +3116,7 @@ extern void expect_stream_bool_false
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3142,6 +3166,7 @@ extern void expect_stream_bool_true
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3191,6 +3216,7 @@ extern void expect_stream_ordering_less
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3240,6 +3266,7 @@ extern void expect_stream_ordering_equal
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3289,6 +3316,7 @@ extern void expect_stream_ordering_greater
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3338,6 +3366,7 @@ extern void expect_stream_maybe_nothing
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3387,6 +3416,7 @@ extern void expect_stream_maybe_just_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3437,6 +3467,7 @@ extern void expect_stream_int8
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3487,6 +3518,7 @@ extern void expect_stream_int16
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3537,6 +3569,7 @@ extern void expect_stream_int32
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3587,6 +3620,7 @@ extern void expect_stream_int64
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3637,6 +3671,7 @@ extern void expect_stream_nat8
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3687,6 +3722,7 @@ extern void expect_stream_nat16
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3737,6 +3773,7 @@ extern void expect_stream_nat32
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3787,6 +3824,7 @@ extern void expect_stream_nat64
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3837,6 +3875,7 @@ extern void expect_stream_float32
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3887,6 +3926,7 @@ extern void expect_stream_float64
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3936,6 +3976,7 @@ extern void expect_stream_utf8_start
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -3986,6 +4027,7 @@ extern void expect_stream_utf8_data
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4035,6 +4077,7 @@ extern void expect_stream_utf8_end
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4084,6 +4127,7 @@ extern void expect_stream_blob_start
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4134,6 +4178,7 @@ extern void expect_stream_blob_data
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4183,6 +4228,7 @@ extern void expect_stream_blob_end
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4232,6 +4278,7 @@ extern void expect_stream_sigma_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4282,6 +4329,7 @@ extern void expect_stream_named_value_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4339,6 +4387,7 @@ extern void expect_stream_lambda_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4388,6 +4437,7 @@ extern void expect_stream_apply_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4437,6 +4487,7 @@ extern void expect_stream_type_family_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4493,6 +4544,7 @@ extern void expect_stream_let_is_next
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4549,6 +4601,7 @@ extern void expect_stream_backreference
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4600,6 +4653,7 @@ extern void expect_stream_builtin
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4651,6 +4705,7 @@ extern void expect_stream_item_from_context
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
@@ -4708,6 +4763,7 @@ extern void expect_stream_end
         initialize_callback_invocation_pattern_buffer
             (&parent_invocation->specifics.combinator_sequential.children);
         
+        test_suite->stream_invocation = parent_invocation;
         buffer = &parent_invocation->specifics.combinator_sequential.children;
     } else {
         buffer = &test_suite->stream_invocation->specifics
