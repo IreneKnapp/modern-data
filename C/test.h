@@ -136,6 +136,9 @@ extern void expect_stream_type_definition_universe
   (test_suite *test_suite,
    void *stream_state,
    uint64_t level);
+extern void expect_stream_type_definition_satisfies_is_next
+  (test_suite *test_suite,
+   void *stream_state);
 extern void expect_stream_bool_false
   (test_suite *test_suite,
    void *stream_state);
