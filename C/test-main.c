@@ -53,6 +53,7 @@ enum callback_identifier {
     stream_type_definition_sigma_is_next_callback_identifier,
     stream_type_definition_named_is_next_callback_identifier,
     stream_type_definition_universe_callback_identifier,
+    stream_type_definition_satisfies_is_next_callback_identifier,
     stream_bool_false_callback_identifier,
     stream_bool_true_callback_identifier,
     stream_ordering_less_callback_identifier,
@@ -196,6 +197,9 @@ struct callback_invocation {
             struct stream_state *state;
             uint64_t level;
         } stream_type_definition_universe;
+        struct {
+            struct stream_state *state;
+        } stream_type_definition_satisfies_is_next;
         struct {
             struct stream_state *state;
         } stream_bool_false;
@@ -423,6 +427,9 @@ union callback_behavior {
     struct {
         unsigned abort : 1;
     } stream_type_definition_universe;
+    struct {
+        unsigned abort : 1;
+    } stream_type_definition_satisfies_is_next;
     struct {
         unsigned abort : 1;
     } stream_bool_false;
@@ -674,6 +681,10 @@ struct callback_invocation_pattern {
             struct stream_state *state;
             uint64_t level;
         } stream_type_definition_universe;
+        struct {
+            unsigned state_relevant : 1;
+            struct stream_state *state;
+        } stream_type_definition_satisfies_is_next;
         struct {
             unsigned state_relevant : 1;
             struct stream_state *state;
@@ -1118,6 +1129,9 @@ static void stream_type_definition_universe
   (struct modern_process *process, void *process_state,
    void *stream_state,
    uint64_t level);
+static void stream_type_definition_satisfies_is_next
+  (struct modern_process *process, void *process_state,
+   void *stream_state);
 static void stream_bool_false
   (struct modern_process *process, void *process_state,
    void *stream_state);
@@ -3081,6 +3095,61 @@ extern void expect_stream_type_definition_universe
     }
     invocation->specifics.stream_type_definition_universe.level_relevant = 1;
     invocation->specifics.stream_type_definition_universe.level = level;
+}
+
+
+extern void expect_stream_type_definition_satisfies_is_next
+  (test_suite *test_suite_in,
+   void *stream_state)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect a stream event "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    struct callback_invocation_pattern_buffer *buffer = NULL;
+    if(!test_suite->stream_invocation) {
+        struct callback_invocation_pattern_buffer *parent_buffer =
+            get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+
+        struct callback_invocation_pattern *parent_invocation =
+            make_callback_invocation_pattern_in_buffer(parent_buffer);
+        parent_invocation->identifier =
+            combinator_sequential_callback_identifier;
+        parent_invocation->should_succeed = 1;
+        parent_invocation->sticky = 1;
+        initialize_callback_invocation_pattern_buffer
+            (&parent_invocation->specifics.combinator_sequential.children);
+        
+        test_suite->stream_invocation = parent_invocation;
+        buffer = &parent_invocation->specifics.combinator_sequential.children;
+    } else {
+        buffer = &test_suite->stream_invocation->specifics
+            .combinator_sequential.children;
+    }
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier =
+        stream_type_definition_satisfies_is_next_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    if(stream_state) {
+        invocation->specifics.stream_type_definition_satisfies_is_next
+            .state_relevant = 1;
+        invocation->specifics.stream_type_definition_satisfies_is_next
+            .state = stream_state;
+    } else {
+        invocation->specifics.stream_type_definition_satisfies_is_next
+            .state_relevant = 0;
+        invocation->specifics.stream_type_definition_satisfies_is_next
+            .state = NULL;
+    }
 }
 
 
@@ -5198,6 +5267,9 @@ static void finalize_callback_invocation_pattern
     
     case stream_type_definition_universe_callback_identifier:
         break;
+
+    case stream_type_definition_satisfies_is_next_callback_identifier:
+        break;
     
     case stream_bool_false_callback_identifier:
         break;
@@ -5647,6 +5719,11 @@ static void copy_callback_behavior
         destination->stream_type_definition_universe.abort =
             source->stream_type_definition_universe.abort;
         break;
+
+    case stream_type_definition_satisfies_is_next_callback_identifier:
+        destination->stream_type_definition_satisfies_is_next.abort =
+            source->stream_type_definition_satisfies_is_next.abort;
+        break;
     
     case stream_bool_false_callback_identifier:
         destination->stream_bool_false.abort =
@@ -6041,6 +6118,11 @@ static void print_callback_invocation
     case stream_type_definition_universe_callback_identifier:
         printf("stream_type_definition_universe_callback_identifier()\n");
         break;
+
+    case stream_type_definition_satisfies_is_next_callback_identifier:
+        printf(
+          "stream_type_definition_satisfies_is_next_callback_identifier()\n");
+        break;
     
     case stream_bool_false_callback_identifier:
         printf("stream_bool_false_callback_identifier()\n");
@@ -6416,6 +6498,12 @@ static void print_callback_invocation_pattern
     case stream_type_definition_universe_callback_identifier:
         for(size_t i = 0; i < indent; i++) printf(" ");
         printf("stream_type_definition_universe_callback_identifier()\n");
+        break;
+
+    case stream_type_definition_satisfies_is_next_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf(
+          "stream_type_definition_satisfies_is_next_callback_identifier()\n");
         break;
     
     case stream_bool_false_callback_identifier:
@@ -7015,6 +7103,12 @@ static int match_callback_invocation_against_pattern_helper
             copy_callback_behavior
                 (pattern->identifier, behavior_result, &pattern->behavior);
         }
+        break;
+    
+    case stream_type_definition_satisfies_is_next_callback_identifier:
+        matches = 1;
+        copy_callback_behavior
+            (pattern->identifier, behavior_result, &pattern->behavior);
         break;
 
     case stream_bool_false_callback_identifier:
@@ -7829,6 +7923,8 @@ struct modern_stream *test_stream_make(test_suite *test_suite)
     stream->type_definition_named_is_next =
       stream_type_definition_named_is_next;
     stream->type_definition_universe = stream_type_definition_universe;
+    stream->type_definition_satisfies_is_next =
+      stream_type_definition_satisfies_is_next;
     stream->bool_false = stream_bool_false;
     stream->bool_true = stream_bool_true;
     stream->ordering_less = stream_ordering_less;
@@ -8452,6 +8548,32 @@ static void stream_type_definition_universe
     union callback_behavior behavior;
     if(callback_should_succeed(test_suite, &behavior)) {
         if(behavior.stream_type_definition_universe.abort) {
+            process->abort(process_state);
+        }
+        return;
+    } else {
+        return;
+    }
+}
+
+
+static void stream_type_definition_satisfies_is_next
+  (struct modern_process *process, void *process_state,
+   void *stream_state_in)
+{
+    struct stream_state *stream_state =
+      (struct stream_state *) stream_state_in;
+    struct test_suite *test_suite = stream_state->test_suite;
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = stream_type_definition_universe_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.stream_type_definition_satisfies_is_next.state =
+        stream_state_in;
+    
+    union callback_behavior behavior;
+    if(callback_should_succeed(test_suite, &behavior)) {
+        if(behavior.stream_type_definition_satisfies_is_next.abort) {
             process->abort(process_state);
         }
         return;
