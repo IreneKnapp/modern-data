@@ -105,9 +105,14 @@ HELPER void processor_explicatory_step
     if(!process_state->started) {
         process_state->started = 1;
         stream->start(&process_state->process, process_state_in, stream_state);
-    } else if(!process_state->ended) {
-        process_state->ended = 1;
-        stream->end(&process_state->process, process_state_in, stream_state);
+    } else {
+        
+        
+        if(!process_state->ended) {
+            process_state->ended = 1;
+            stream->end
+                (&process_state->process, process_state_in, stream_state);
+        }
     }
 }
 
