@@ -110,7 +110,33 @@ static int test_explicatory_file_input
     
     if(succeeded) {
         expect_stream_start(test_suite, stream_state);
-        // IAK TODO NOW enqueue the expectations 
+        expect_stream_type_family_is_next(test_suite, stream_state, 2);
+        expect_stream_type_definition_sigma_is_next(test_suite, stream_state);
+        expect_stream_type_definition_int8(test_suite, stream_state);
+        expect_stream_lambda_is_next(test_suite, stream_state);
+        expect_stream_type_definition_int8(test_suite, stream_state);
+        expect_stream_lambda_is_next(test_suite, stream_state);
+        expect_stream_type_definition_satisfies_is_next
+          (test_suite, stream_state);
+        expect_stream_type_definition_int8(test_suite, stream_state);
+        expect_stream_lambda_is_next(test_suite, stream_state);
+        expect_stream_apply_is_next(test_suite, stream_state);
+        expect_stream_builtin(test_suite, stream_state,
+            modern_builtin_identifier_not_bool);
+        expect_stream_apply_is_next(test_suite, stream_state);
+        expect_stream_apply_is_next(test_suite, stream_state);
+        expect_stream_builtin(test_suite, stream_state,
+            modern_builtin_identifier_equal_to_int8);
+        expect_stream_apply_is_next(test_suite, stream_state);
+        expect_stream_apply_is_next(test_suite, stream_state);
+        expect_stream_builtin(test_suite, stream_state,
+            modern_builtin_identifier_compare_int8);
+        expect_stream_backreference(test_suite, stream_state, 1);
+        expect_stream_backreference(test_suite, stream_state, 0);
+        expect_stream_ordering_less(test_suite, stream_state);
+        expect_stream_type_definition_sigma_is_next(test_suite, stream_state);
+        expect_stream_type_definition_int8(test_suite, stream_state);
+        expect_stream_backreference(test_suite, stream_state, 0);
         expect_stream_end(test_suite, stream_state);
         processor->run(process_state, stream, stream_state, vfile, vfile_state);
         
