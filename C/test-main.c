@@ -969,7 +969,7 @@ static struct callback_invocation_pattern_buffer
 static void initialize_callback_invocation_pattern
   (struct callback_invocation_pattern *pattern);
 static void finalize_callback_invocation_pattern
-  (struct callback_invocation_pattern *patern);
+  (struct callback_invocation_pattern *pattern);
 
 static void initialize_callback_invocation_pattern_buffer
   (struct callback_invocation_pattern_buffer *buffer);
@@ -978,9 +978,9 @@ static void finalize_callback_invocation_pattern_buffer
 static struct callback_invocation_pattern
   *make_callback_invocation_pattern_in_buffer
   (struct callback_invocation_pattern_buffer *buffer);
-static void remove_callback_invocation_pattern_from_buffer
-  (struct callback_invocation_pattern_buffer *buffer,
-   struct callback_invocation_pattern *allocation);
+static void remove_callback_invocation_pattern
+  (struct callback_invocation_pattern **root,
+   struct callback_invocation_pattern *pattern);
 
 static void copy_callback_behavior
   (enum callback_identifier identifier,
@@ -1564,12 +1564,10 @@ void disallow_allocation(test_suite *test_suite_in) {
     
     if(!test_suite->allocation_invocation) return;
     
-    struct callback_invocation_pattern_buffer *buffer =
-        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
-    
     struct callback_invocation_pattern *invocation =
         test_suite->allocation_invocation;
-    remove_callback_invocation_pattern_from_buffer(buffer, invocation);
+    remove_callback_invocation_pattern
+        (&test_suite->expected_callbacks, invocation);
     finalize_callback_invocation_pattern(invocation);
     actually_free(invocation);
     
@@ -1627,12 +1625,10 @@ void disallow_deallocation(test_suite *test_suite_in) {
     
     if(!test_suite->deallocation_invocation) return;
     
-    struct callback_invocation_pattern_buffer *buffer =
-        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
-    
     struct callback_invocation_pattern *invocation =
         test_suite->deallocation_invocation;
-    remove_callback_invocation_pattern_from_buffer(buffer, invocation);
+    remove_callback_invocation_pattern
+        (&test_suite->expected_callbacks, invocation);
     finalize_callback_invocation_pattern(invocation);
     actually_free(invocation);
     
@@ -4782,7 +4778,6 @@ extern void expect_stream_end
         invocation->specifics.stream_end.state_relevant = 0;
         invocation->specifics.stream_end.state = NULL;
     }
-    print_callback_invocation_pattern(0, test_suite->expected_callbacks);
 }
 
 
@@ -5429,20 +5424,54 @@ static struct callback_invocation_pattern_buffer
 }
 
 
-static void remove_callback_invocation_pattern_from_buffer
-  (struct callback_invocation_pattern_buffer *buffer,
-   struct callback_invocation_pattern *allocation)
+static void remove_callback_invocation_pattern
+  (struct callback_invocation_pattern **root,
+   struct callback_invocation_pattern *pattern)
 {
-    size_t i;
-    for(i = 0; i < buffer->count; i++) {
-        if(buffer->patterns[i] == allocation) break;
+    struct callback_invocation_pattern_buffer *buffer;
+    switch((*root)->identifier) {
+    case combinator_parallel_callback_identifier:
+        buffer = &(*root)->specifics.combinator_parallel.children;
+        break;
+    case combinator_sequential_callback_identifier:
+        buffer = &(*root)->specifics.combinator_sequential.children;
+        break;
+    default:
+        buffer = NULL;
+        break;
     }
-    if(i < buffer->count) {
-        memmove(buffer->patterns + i,
-                buffer->patterns + i + 1,
-                sizeof(struct callback_invocation_pattern *)
-                * (buffer->count - (i + 1)));
-        buffer->count--;
+    
+    if(buffer) {
+        size_t i;
+        for(i = 0; i < buffer->count; i++) {
+            if(buffer->patterns[i] == pattern) break;
+        }
+        if(i < buffer->count) {
+            memmove(buffer->patterns + i,
+                    buffer->patterns + i + 1,
+                    sizeof(struct callback_invocation_pattern *)
+                    * (buffer->count - (i + 1)));
+            buffer->count--;
+        } else {
+            for(i = 0; i < buffer->count; i++) {
+                remove_callback_invocation_pattern
+                    (&buffer->patterns[i], pattern);
+                
+                if(!buffer->patterns[i]) {
+                    memmove(buffer->patterns + i,
+                            buffer->patterns + i + 1,
+                            sizeof(struct callback_invocation_pattern *)
+                            * (buffer->count - (i + 1)));
+                    buffer->count--;
+                    i--;
+                }
+            }
+        }
+        
+        if(!buffer->count) {
+            finalize_callback_invocation_pattern(*root);
+            *root = NULL;
+        }
     }
 }
 
@@ -7413,21 +7442,17 @@ static int callback_should_succeed
         }
         
         if(!expected->sticky) {
-            printf("\n\nNot sticky, so...\n");
-            print_callback_invocation_pattern(2, test_suite->expected_callbacks);
             if(!buffer) {
                 finalize_callback_invocation_pattern
                     (test_suite->expected_callbacks);
                 actually_free(test_suite->expected_callbacks);
                 test_suite->expected_callbacks = NULL;
             } else {
-                remove_callback_invocation_pattern_from_buffer
-                    (buffer, expected);
+                remove_callback_invocation_pattern
+                    (&test_suite->expected_callbacks, expected);
                 finalize_callback_invocation_pattern(expected);
                 actually_free(expected);
             }
-            printf("And after:\n");
-            print_callback_invocation_pattern(2, test_suite->expected_callbacks);
         }
         
         return should_succeed;
@@ -7521,7 +7546,8 @@ void flush_expectations(test_suite *test_suite_in)
     struct test_suite *test_suite = (struct test_suite *) test_suite_in;
     
     if(test_suite->expected_callbacks) {
-        test_message(test_suite, "Missing expected calls.");
+        test_message(test_suite, "Missing expected calls:");
+        print_callback_invocation_pattern(4, test_suite->expected_callbacks);
         fail(test_suite); // Never returns.
     }
 }
