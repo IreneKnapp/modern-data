@@ -31,6 +31,8 @@ struct modern_error_handler {
       (void *client_state, uint16_t identifier);
     void (*usage)
       (void *client_state);
+    void (*data)
+      (void *client_data);
  };
 
 
@@ -193,7 +195,7 @@ struct modern_stream {
     void (*utf8_data)
       (struct modern_process *process, void *process_state,
        void *stream_state,
-       uint8_t *data, size_t length);
+       uint8_t *data, uint16_t length);
     void (*utf8_end)
       (struct modern_process *process, void *process_state,
        void *stream_state);
@@ -203,7 +205,7 @@ struct modern_stream {
     void (*blob_data)
       (struct modern_process *process, void *process_state,
        void *stream_state,
-       uint8_t *data, size_t length);
+       uint8_t *data, uint16_t length);
     void (*blob_end)
       (struct modern_process *process, void *process_state,
        void *stream_state);
