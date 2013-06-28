@@ -1,3 +1,5 @@
+#include <ctype.h>
+#include <string.h>
 #include "modern.h"
 #include "internal.h"
 
@@ -8,6 +10,8 @@ struct processor_explicatory_state {
     int started : 1;
     int ended : 1;
     int aborted : 1;
+    size_t buffer_length;
+    uint8_t buffer[64];
 };
 
 
@@ -24,6 +28,9 @@ HELPER void processor_explicatory_run
   (void *process_state,
    struct modern_stream *stream, void *stream_state,
    struct modern_vfile *vfile, void *vfile_state);
+HELPER void processor_explicatory_extend_buffer
+  (struct processor_explicatory_state *process_state,
+   size_t desired_size);
 
 
 struct modern_processor *modern_processor_explicatory_make
@@ -104,14 +111,51 @@ HELPER void processor_explicatory_step
     
     if(!process_state->started) {
         process_state->started = 1;
+        process_state->buffer_length = 0;
+        
         stream->start(&process_state->process, process_state_in, stream_state);
     } else {
+        while(1) {
+            if(!process_state->buffer_length) {
+                size_t bytes_read = vfile->read
+                    (vfile_state,
+                     &process_state->buffer, sizeof(process_state->buffer));
+                
+                if(!bytes_read) {
+                    if(!process_state->ended) {
+                    process_state->ended = 1;
+                    
+                    stream->end(&process_state->process, process_state_in,
+                                stream_state);
+                    
+                    break;
+                } else {
+                    process_state->buffer_length += bytes_read;
+                }
+            }
         
-        
-        if(!process_state->ended) {
-            process_state->ended = 1;
-            stream->end
-                (&process_state->process, process_state_in, stream_state);
+            if(process_state->buffer_length) {
+                uint8_t c = process_state->buffer[0];
+                if(isspace(c)) {
+                    process_state->buffer_length--;
+                    if(process_state->buffer_length) {
+                        memmove(&process_state->buffer[0],
+                                &process_state->buffer[1],
+                                process_state->buffer_length);
+                    }
+                } else if(isalpha(c) || isdigit(c) || (c == '_')) {
+                    size_t token_length = 1;
+                    while(1) {
+                        while(token_length < process_state->buffer_length) {
+                            c = process_state->buffer[token_length];
+                            if(!(isalpha(c) || isdigit(c) || (c == '_')))
+                                break;
+                            token_length++;
+                        }
+                        if(token_length < process_state->buffer_length) break;
+                    }
+                }
+            }
         }
     }
 }
@@ -132,5 +176,12 @@ HELPER void processor_explicatory_run
         processor_explicatory_step
             (process_state_in, stream, stream_state, vfile, vfile_state);
     }
+}
+
+
+HELPER void processor_explicatory_extend_buffer
+  (struct processor_explicatory_state *process_state,
+   size_t desired_size)
+{
 }
 
