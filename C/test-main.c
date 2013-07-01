@@ -1199,7 +1199,7 @@ static void stream_utf8_start
 static void stream_utf8_data
   (struct modern_process *process, void *process_state,
    void *stream_state,
-   uint8_t *data, size_t length);
+   uint8_t *data, uint16_t length);
 static void stream_utf8_end
   (struct modern_process *process, void *process_state,
    void *stream_state);
@@ -1209,7 +1209,7 @@ static void stream_blob_start
 static void stream_blob_data
   (struct modern_process *process, void *process_state,
    void *stream_state,
-   uint8_t *data, size_t length);
+   uint8_t *data, uint16_t length);
 static void stream_blob_end
   (struct modern_process *process, void *process_state,
    void *stream_state);
@@ -9056,7 +9056,7 @@ static void stream_utf8_start
 static void stream_utf8_data
   (struct modern_process *process, void *process_state,
    void *stream_state_in,
-   uint8_t *data, size_t length)
+   uint8_t *data, uint16_t length)
 {
     struct stream_state *stream_state =
       (struct stream_state *) stream_state_in;
@@ -9137,7 +9137,7 @@ static void stream_blob_start
 static void stream_blob_data
   (struct modern_process *process, void *process_state,
    void *stream_state_in,
-   uint8_t *data, size_t length)
+   uint8_t *data, uint16_t length)
 {
     struct stream_state *stream_state =
       (struct stream_state *) stream_state_in;
