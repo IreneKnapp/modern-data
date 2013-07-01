@@ -119,14 +119,15 @@ HELPER void processor_explicatory_step
             if(!process_state->buffer_length) {
                 size_t bytes_read = vfile->read
                     (vfile_state,
-                     &process_state->buffer, sizeof(process_state->buffer));
+                     process_state->buffer, sizeof(process_state->buffer));
                 
                 if(!bytes_read) {
                     if(!process_state->ended) {
-                    process_state->ended = 1;
+                        process_state->ended = 1;
                     
-                    stream->end(&process_state->process, process_state_in,
-                                stream_state);
+                        stream->end(&process_state->process, process_state_in,
+                                    stream_state);
+                    }
                     
                     break;
                 } else {
