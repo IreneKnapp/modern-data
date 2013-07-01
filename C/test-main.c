@@ -5559,8 +5559,11 @@ static void copy_callback_behavior
     
     case allocator_malloc_callback_identifier:
         if(source->allocator_malloc.tag) {
-            destination->allocator_malloc.tag =
-                strdup(source->allocator_malloc.tag);
+            size_t bytes = strlen(source->allocator_malloc.tag) + 1;
+            destination->allocator_malloc.tag = actually_malloc(bytes);
+            memcpy(destination->allocator_malloc.tag,
+                   source->allocator_malloc.tag,
+                   bytes);
         } else {
             destination->allocator_malloc.tag = NULL;
         }
@@ -5568,8 +5571,11 @@ static void copy_callback_behavior
     
     case allocator_free_callback_identifier:
         if(source->allocator_free.tag) {
-            destination->allocator_free.tag =
-                strdup(source->allocator_free.tag);
+            size_t bytes = strlen(source->allocator_free.tag) + 1;
+            destination->allocator_free.tag = actually_malloc(bytes);
+            memcpy(destination->allocator_free.tag,
+                   source->allocator_free.tag,
+                   bytes);
         } else {
             destination->allocator_free.tag = NULL;
         }
@@ -5580,8 +5586,11 @@ static void copy_callback_behavior
     
     case allocator_realloc_callback_identifier:
         if(source->allocator_realloc.tag) {
-            destination->allocator_realloc.tag =
-                strdup(source->allocator_realloc.tag);
+            size_t bytes = strlen(source->allocator_realloc.tag) + 1;
+            destination->allocator_realloc.tag = actually_malloc(bytes);
+            memcpy(destination->allocator_realloc.tag,
+                   source->allocator_realloc.tag,
+                   bytes);
         } else {
             destination->allocator_realloc.tag = NULL;
         }
@@ -6840,6 +6849,13 @@ static int match_callback_invocation_against_pattern_helper
         
         if(allocation) {
             matches = 1;
+            
+            size_t bytes = strlen(pattern->specifics.allocator_free.tag) + 1;
+            pattern->behavior.allocator_free.tag = actually_malloc(bytes);
+            memcpy(pattern->behavior.allocator_free.tag,
+                   pattern->specifics.allocator_free.tag,
+                   bytes);
+            
             copy_callback_behavior
                 (pattern->identifier, behavior_result, &pattern->behavior);
             behavior_result->allocator_free.buffer = buffer;
@@ -6883,6 +6899,13 @@ static int match_callback_invocation_against_pattern_helper
         
         if(allocation) {
             matches = 1;
+            
+            size_t bytes = strlen(pattern->specifics.allocator_realloc.tag) + 1;
+            pattern->behavior.allocator_realloc.tag = actually_malloc(bytes);
+            memcpy(pattern->behavior.allocator_realloc.tag,
+                   pattern->specifics.allocator_realloc.tag,
+                   bytes);
+            
             copy_callback_behavior
                 (pattern->identifier, behavior_result, &pattern->behavior);
             behavior_result->allocator_realloc.buffer = buffer;

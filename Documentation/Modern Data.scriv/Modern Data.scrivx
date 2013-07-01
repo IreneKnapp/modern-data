@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ScrivenerProject Version="1.0" Creator="SCRMAC-2.4.1-22949" Modified="2013-06-19 11:45:41 -0400">
+<ScrivenerProject Version="1.0" Creator="SCRMAC-2.4.1-22949" Modified="2013-06-28 23:31:17 -0400">
     <Binder>
         <BinderItem ID="0" Type="DraftFolder" Created="2012-08-10 15:30:35 -0400" Modified="2012-08-10 15:30:35 -0400">
             <Title>Draft</Title>
@@ -1222,12 +1222,11 @@
                                         <Reference BinderID="4244" Destination="[Internal Link]">Overview</Reference>
                                     </References>
                                 </BinderItem>
-                                <BinderItem ID="4233" Type="Text" Created="2012-09-20 15:55:51 -0400" Modified="2013-02-07 09:13:28 -0500">
+                                <BinderItem ID="4233" Type="Text" Created="2012-09-20 15:55:51 -0400" Modified="2013-06-28 22:32:13 -0400">
                                     <Title>Predefined values</Title>
                                     <MetaData>
                                         <LabelID>3</LabelID>
                                         <StatusID>0</StatusID>
-                                        <IncludeInCompile>Yes</IncludeInCompile>
                                         <NotesTextSelection>0,0</NotesTextSelection>
                                     </MetaData>
                                     <TextSettings>
@@ -46790,7 +46789,7 @@
     <ProjectTargets Notify="No">
         <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2012-08-10 15:30:35 -0400" IgnoreDeadline="Yes">0</DraftTarget>
         <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" ResetType="Midnight" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
-        <PreviousSession Words="8" Characters="-229" Date="2013-06-19 11:41:01 -0400"></PreviousSession>
+        <PreviousSession Words="0" Characters="0" Date="2013-06-28 20:38:07 -0400"></PreviousSession>
     </ProjectTargets>
     <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"></PrintSettings>
 </ScrivenerProject>

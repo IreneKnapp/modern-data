@@ -48,6 +48,8 @@
 	<false/>
 	<key>SCRCompileConvertSpacingToPlainTextKey</key>
 	<false/>
+	<key>SCRCompileConvertTablesToImagesKey</key>
+	<false/>
 	<key>SCRCompileConvertUnderlineToItalicsKey</key>
 	<false/>
 	<key>SCRCompileCountFirstPageKey</key>
@@ -113,6 +115,8 @@
 	<true/>
 	<key>SCRCompileEBookHTMLToCTitleKey</key>
 	<string>Contents</string>
+	<key>SCRCompileEBookIncludeXPGTKey</key>
+	<false/>
 	<key>SCRCompileEBookIncludeiTunesCoverArtFileKey</key>
 	<false/>
 	<key>SCRCompileEBookKindleUniqueIdentifierKey</key>
@@ -135,6 +139,8 @@ p.parenthetical {text-align:center; text-indent:0; margin: 0 0 0 0; font-family:
 p.dialogue {text-align:left; text-indent:0; margin: 0 20% 0 20%; font-family: monospace;}
 p.transition {text-align:right; text-indent:0; margin: 12pt 0 0 0; text-transform:uppercase; font-family: monospace;}
 p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform:uppercase; font-family: monospace;}</string>
+	<key>SCRCompileEBookStartsAfterFrontMatterKey</key>
+	<true/>
 	<key>SCRCompileEBookSubjectKey</key>
 	<array/>
 	<key>SCRCompileEBookTitleKey</key>
@@ -156,6 +162,10 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileFDXFirstPageIsTitleKey</key>
 	<false/>
 	<key>SCRCompileFDXIncludeCommentsAndAnnotationsAsScriptNotesKey</key>
+	<true/>
+	<key>SCRCompileFDXIncludeDocumentSynopsesKey</key>
+	<true/>
+	<key>SCRCompileFDXIncludeDocumentTitlesKey</key>
 	<true/>
 	<key>SCRCompileFDXIncludeFootnotesAsScriptNotesKey</key>
 	<true/>
@@ -191,7 +201,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileFolderAndTextCustomSeparatorStringKey</key>
 	<string></string>
 	<key>SCRCompileFolderAndTextSectionSeparatorKey</key>
-	<integer>2</integer>
+	<integer>1</integer>
 	<key>SCRCompileFolderCustomSeparatorStringKey</key>
 	<string></string>
 	<key>SCRCompileFolderFormattingLevelsKey</key>
@@ -319,7 +329,7 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 		</dict>
 	</array>
 	<key>SCRCompileFolderSectionSeparatorKey</key>
-	<integer>2</integer>
+	<integer>3</integer>
 	<key>SCRCompileFooterFontKey</key>
 	<data>
 	BAtzdHJlYW10eXBlZIHoA4QBQISEhAZOU0ZvbnQehIQITlNPYmplY3QAhYQBaRiEBVsy
@@ -337,7 +347,24 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<key>SCRCompileFootnotesStyleKey</key>
 	<integer>0</integer>
 	<key>SCRCompileFormatKey</key>
-	<integer>30</integer>
+	<integer>9</integer>
+	<key>SCRCompileFountainHeadersUsesBinderIndentsKey</key>
+	<false/>
+	<key>SCRCompileFountainTitlePageMetaDataKey</key>
+	<array>
+		<dict>
+			<key>Key</key>
+			<string>Title</string>
+			<key>Value</key>
+			<string>&lt;$projecttitle&gt;</string>
+		</dict>
+		<dict>
+			<key>Key</key>
+			<string>Author</string>
+			<key>Value</key>
+			<string>&lt;$author&gt;</string>
+		</dict>
+	</array>
 	<key>SCRCompileFrontMatterIDKey</key>
 	<integer>4631</integer>
 	<key>SCRCompileGeneratePDFWithAspose</key>
@@ -427,12 +454,6 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 			<string>&lt;$projecttitle&gt;</string>
 			<key>key</key>
 			<string>Title</string>
-		</dict>
-		<dict>
-			<key>data</key>
-			<string>xhtml-toc-h2.xslt</string>
-			<key>key</key>
-			<string>XHTML XSLT</string>
 		</dict>
 		<dict>
 			<key>data</key>
@@ -565,6 +586,10 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<true/>
 	<key>SCRCompileRemoveTextColorKey</key>
 	<false/>
+	<key>SCRCompileRemoveTrailingWhitespaceKey</key>
+	<false/>
+	<key>SCRCompileResampleImagesKey</key>
+	<false/>
 	<key>SCRCompileRestrictWidthOfStitchedTablesKey</key>
 	<false/>
 	<key>SCRCompileRightAlternateFooterStringKey</key>
@@ -607,6 +632,8 @@ p.shot {text-align:left; text-indent:0; margin: 12pt 0pt 0pt 0pt; text-transform
 	<false/>
 	<key>SCRCompileStraightenTypographersQuotesKey</key>
 	<false/>
+	<key>SCRCompileTableImagesMaxWidthKey</key>
+	<integer>600</integer>
 	<key>SCRCompileTextAndFolderCustomSeparatorStringKey</key>
 	<string></string>
 	<key>SCRCompileTextAndFolderSectionSeparatorKey</key>
