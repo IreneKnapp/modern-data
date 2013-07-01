@@ -186,9 +186,9 @@
 	<key>SCRSelectedCompileOptionsInfoSaveName</key>
 	<dict>
 		<key>Tag</key>
-		<integer>3</integer>
+		<integer>0</integer>
 		<key>Title</key>
-		<string>Software Documentation</string>
+		<string>Custom</string>
 	</dict>
 	<key>binderIsCollapsed</key>
 	<false/>
@@ -204,6 +204,7 @@
 	<key>binderState</key>
 	<array>
 		<integer>0</integer>
+		<integer>1002</integer>
 	</array>
 	<key>binderWidth</key>
 	<real>439</real>
@@ -283,8 +284,8 @@
 	<integer>0</integer>
 	<key>inspectorSplitFrames</key>
 	<array>
-		<string>{{0, 0}, {510, 716}}</string>
-		<string>{{511, 0}, {457, 716}}</string>
+		<string>{{0, 0}, {480, 716}}</string>
+		<string>{{481, 0}, {487, 716}}</string>
 	</array>
 	<key>inspectorWidth</key>
 	<real>227</real>
@@ -1201,7 +1202,7 @@
 		<integer>4356</integer>
 	</array>
 	<key>mainDocumentEditor.scrollRect</key>
-	<string>{{0, 0}, {621, 304}}</string>
+	<string>{{0, 0}, {606, 304}}</string>
 	<key>mainDocumentEditor.selectedItemIDs</key>
 	<array/>
 	<key>mainDocumentEditor.textEditorState</key>
@@ -1218,7 +1219,7 @@
 	<key>mainDocumentView</key>
 	<string>supportingDocumentEditor</string>
 	<key>mainWindowFrame</key>
-	<string>442 191 1408 764 0 0 2560 1418 </string>
+	<string>450 303 1408 764 0 0 2560 1418 </string>
 	<key>searchResultsTable</key>
 	<dict>
 		<key>order</key>
@@ -1272,26 +1273,6 @@
 		<integer>99</integer>
 		<key>NavigationHistoryArray</key>
 		<array>
-			<dict>
-				<key>AggregateSelection</key>
-				<string>{0, 0}</string>
-				<key>BinderDocIDs</key>
-				<array>
-					<integer>126</integer>
-				</array>
-				<key>ViewMode</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
-				<key>AggregateSelection</key>
-				<string>{0, 0}</string>
-				<key>BinderDocIDs</key>
-				<array>
-					<integer>973</integer>
-				</array>
-				<key>ViewMode</key>
-				<integer>1</integer>
-			</dict>
 			<dict>
 				<key>AggregateSelection</key>
 				<string>{0, 0}</string>
@@ -2255,6 +2236,24 @@
 				</array>
 				<key>ViewMode</key>
 				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>AggregateSelection</key>
+				<string>{783, 0}</string>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>1002</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>BinderDocIDs</key>
+				<array>
+					<integer>260</integer>
+				</array>
+				<key>ViewMode</key>
+				<integer>0</integer>
 			</dict>
 			<dict>
 				<key>BinderDocIDs</key>
@@ -3242,9 +3241,9 @@
 		<integer>287</integer>
 	</array>
 	<key>supportingDocumentEditor.scrollRect</key>
-	<string>{{0, 0}, {340, 446.66666}}</string>
+	<string>{{0, 0}, {310, 446.66666}}</string>
 	<key>supportingDocumentEditor.selectedRanges</key>
-	<string>{0, 0}</string>
+	<string>{1036, 0}</string>
 	<key>supportingDocumentEditor.textEditorState</key>
 	<dict>
 		<key>hasMultiplePages</key>

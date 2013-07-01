@@ -24,7 +24,7 @@
             <Text>subtract_float32 = 232
 
 Value type (abstract notation)
-float32 -> float32 -> maybe float32
+float32 -&gt; float32 -&gt; maybe float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -95,7 +95,7 @@ Value type (detailed notation)</Text>
             <Text>tangent_float64 = 833
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -162,8 +162,8 @@ Value type (detailed notation)</Text>
 
 Value type (abstract notation)
 universe 0
--> name
--> universe 0
+-&gt; name
+-&gt; universe 0
 
 Value type (detailed notation)</Text>
         </Document>
@@ -172,7 +172,7 @@ Value type (detailed notation)</Text>
             <Text>compare_float64 = 169
 
 Value type (abstract notation)
-float64 -> float64 -> ordering
+float64 -&gt; float64 -&gt; ordering
 
 Value type (detailed notation)</Text>
         </Document>
@@ -201,7 +201,7 @@ Value type (detailed notation)</Text>
             <Text>arcsine_float32 = 864
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -259,7 +259,7 @@ Value type (detailed notation)</Text>
             <Text>make_universe_type = 2464
 
 Value type (abstract notation)
-(level : nat64) -> universe level
+(level : nat64) -&gt; universe level
 
 Value type (detailed notation)</Text>
         </Document>
@@ -303,7 +303,7 @@ Value type (detailed notation)</Text>
             <Text>arcsine_float64 = 865
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -312,7 +312,7 @@ Value type (detailed notation)</Text>
             <Text>add_int8 = 192
 
 Value type (abstract notation)
-int8 -> int8 -> maybe int8
+int8 -&gt; int8 -&gt; maybe int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -345,7 +345,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float32_int64 = 1350
 
 Value type (abstract notation)
-float32 -> int64
+float32 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -422,7 +422,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int8_int16 = 10240
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -431,7 +431,7 @@ Value type (detailed notation)</Text>
             <Text>add_int16 = 193
 
 Value type (abstract notation)
-int16 -> int16 -> maybe int16
+int16 -&gt; int16 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -446,7 +446,7 @@ Value type (detailed notation)</Text>
             <Text>arccosine_float32 = 896
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -468,7 +468,7 @@ Value type (detailed notation)</Text>
             <Text>ceiling_float64_float64 = 1329
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -483,7 +483,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float64_int64 = 1351
 
 Value type (abstract notation)
-float64 -> int64
+float64 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -565,7 +565,7 @@ modern_hash_initial_namespace_compute
             <Text>floor_float32_int8 = 1344
 
 Value type (abstract notation)
-float32 -> int8
+float32 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -587,7 +587,7 @@ modern_stream_explicatory_make
             <Text>floor_float32_nat8 = 1352
 
 Value type (abstract notation)
-float32 -> nat8
+float32 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -609,7 +609,7 @@ Value type (detailed notation)</Text>
             <Text>square_root_float64 = 577
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -669,7 +669,7 @@ modern_stream_output_make
 
 Value type (abstract notation)
 (a : universe 0)
--> maybe a -> bool
+-&gt; maybe a -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -681,7 +681,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float64_int8 = 1345
 
 Value type (abstract notation)
-float64 -> int8
+float64 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -715,7 +715,7 @@ Value type (detailed notation)</Text>
             <Text>natural_logarithm_float32 = 608
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -767,7 +767,7 @@ Value type (detailed notation)</Text>
             <Text>sign_int64 = 515
 
 Value type (abstract notation)
-int64 -> int64
+int64 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -786,8 +786,8 @@ Value type (detailed notation)</Text>
 
 Value type (abstract notation)
 (a : universe 0)
--> (a : universe 0)
--> maybe a -> (a -> b) -> maybe b
+-&gt; (a : universe 0)
+-&gt; maybe a -&gt; (a -&gt; b) -&gt; maybe b
 
 Value type (detailed notation)</Text>
         </Document>
@@ -799,7 +799,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_int8 = 129
 
 Value type (abstract notation)
-int8 -> int8 -> bool
+int8 -&gt; int8 -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -833,7 +833,7 @@ Value type (detailed notation)</Text>
             <Text>natural_logarithm_float64 = 609
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -900,7 +900,7 @@ modern_vfile_fd_finalize
             <Text>ceiling_float32_int8 = 1312
 
 Value type (abstract notation)
-float32 -> int8
+float32 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -912,7 +912,7 @@ Value type (detailed notation)</Text>
             <Text>sign_float32 = 516
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -929,7 +929,7 @@ Value type (detailed notation)</Text>
 
 Value type (abstract notation)
 (a : universe 0)
--> a -> maybe a -> a
+-&gt; a -&gt; maybe a -&gt; a
 
 Value type (detailed notation)</Text>
         </Document>
@@ -956,7 +956,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_int16 = 130
 
 Value type (abstract notation)
-int16 -> int16 -> bool
+int16 -&gt; int16 -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1021,7 +1021,7 @@ modern_vfile_fd_initialize
             <Text>ceiling_float64_int8 = 1313
 
 Value type (abstract notation)
-float64 -> int8
+float64 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1033,7 +1033,7 @@ Value type (detailed notation)</Text>
             <Text>sign_float64 = 517
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1064,7 +1064,7 @@ modern_hash_child_compute
             <Text>equal_to_int32 = 131
 
 Value type (abstract notation)
-int32 -> int32 -> bool
+int32 -&gt; int32 -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1139,7 +1139,7 @@ Value type (detailed notation)</Text>
             <Text>ceiling_float32_int16 = 1314
 
 Value type (abstract notation)
-float32 -> int16
+float32 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1199,7 +1199,7 @@ Value type (detailed notation)</Text>
             <Text>cast_float64_float32 = 10301
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1215,7 +1215,7 @@ Value type (detailed notation)</Text>
             <Text>ceiling_float64_int16 = 1315
 
 Value type (abstract notation)
-float64 -> int16
+float64 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1256,7 +1256,7 @@ Value type (detailed notation)</Text>
             <Text>bit_not_int32 = 1666
 
 Value type (abstract notation)
-int32 -> int32
+int32 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1287,7 +1287,7 @@ Value type (detailed notation)</Text>
             <Text>cast_blob_int8 = 10302
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1373,7 +1373,7 @@ Value type (detailed notation)</Text>
             <Text>bit_not_int64 = 1667
 
 Value type (abstract notation)
-int64 -> int64
+int64 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1394,7 +1394,7 @@ Value type (detailed notation)</Text>
             <Text>cast_blob_int16 = 10303
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1403,7 +1403,7 @@ Value type (detailed notation)</Text>
             <Text>negate_int8 = 448
 
 Value type (abstract notation)
-int8 -> maybe int8
+int8 -&gt; maybe int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1463,7 +1463,7 @@ Value type (detailed notation)</Text>
             <Text>bit_not_nat8 = 1668
 
 Value type (abstract notation)
-nat8 -> nat8
+nat8 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1479,7 +1479,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float64_nat32 = 1261
 
 Value type (abstract notation)
-float64 -> nat32
+float64 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1544,7 +1544,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat32_int32 = 10284
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1573,7 +1573,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float32_nat64 = 1262
 
 Value type (abstract notation)
-float32 -> nat64
+float32 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1618,7 +1618,7 @@ Value type (detailed notation)</Text>
             <Text>bit_or_int16 = 1601
 
 Value type (abstract notation)
-int16 -> int16 -> int16
+int16 -&gt; int16 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1644,7 +1644,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat32_int64 = 10285
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1668,7 +1668,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float64_nat64 = 1263
 
 Value type (abstract notation)
-float64 -> nat64
+float64 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1697,7 +1697,7 @@ Value type (detailed notation)</Text>
             <Text>bit_and_int32 = 1570
 
 Value type (abstract notation)
-int32 -> int32 -> int32
+int32 -&gt; int32 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1706,7 +1706,7 @@ Value type (detailed notation)</Text>
             <Text>bit_or_int32 = 1602
 
 Value type (abstract notation)
-int32 -> int32 -> int32
+int32 -&gt; int32 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1740,7 +1740,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat32_nat8 = 10286
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1755,7 +1755,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_negative_infinity_int16 = 321
 
 Value type (abstract notation)
-int16 -> int16 -> maybe int16
+int16 -&gt; int16 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1794,7 +1794,7 @@ Value type (detailed notation)</Text>
             <Text>bit_and_int64 = 1571
 
 Value type (abstract notation)
-int64 -> int64 -> int64
+int64 -&gt; int64 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1803,7 +1803,7 @@ Value type (detailed notation)</Text>
             <Text>bit_or_int64 = 1603
 
 Value type (abstract notation)
-int64 -> int64 -> int64
+int64 -&gt; int64 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1842,7 +1842,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float32_nat64 = 1230
 
 Value type (abstract notation)
-float32 -> nat64
+float32 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1851,7 +1851,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat32_nat16 = 10287
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1874,7 +1874,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_negative_infinity_int32 = 322
 
 Value type (abstract notation)
-int32 -> int32 -> maybe int32
+int32 -&gt; int32 -&gt; maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -1954,7 +1954,7 @@ Please, come on in - and enjoy the type system!</Text>
             <Text>bit_and_nat8 = 1572
 
 Value type (abstract notation)
-nat8 -> nat8 -> nat8
+nat8 -&gt; nat8 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2032,7 +2032,7 @@ However, the type system has been simplified now - instead of array, union, and 
             <Text>round_away_from_zero_float64_nat64 = 1231
 
 Value type (abstract notation)
-float64 -> nat64
+float64 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2047,7 +2047,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_negative_infinity_int64 = 323
 
 Value type (abstract notation)
-int64 -> int64 -> maybe int64
+int64 -&gt; int64 -&gt; maybe int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2123,7 +2123,7 @@ Value type (detailed notation)</Text>
             <Text>bit_and_nat16 = 1573
 
 Value type (abstract notation)
-nat16 -> nat16 -> nat16
+nat16 -&gt; nat16 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2154,7 +2154,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float32_float32 = 1232
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2175,7 +2175,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float32_nat8 = 1224
 
 Value type (abstract notation)
-float32 -> nat8
+float32 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2242,7 +2242,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int64_int8 = 10261
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2251,7 +2251,7 @@ Value type (detailed notation)</Text>
             <Text>multiply_int32 = 258
 
 Value type (abstract notation)
-int32 -> int32 -> maybe int32
+int32 -&gt; int32 -&gt; maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2269,7 +2269,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float64_float64 = 1233
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2293,7 +2293,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float64_nat8 = 1225
 
 Value type (abstract notation)
-float64 -> nat8
+float64 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2339,7 +2339,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_left_int32 = 1506
 
 Value type (abstract notation)
-int32 -> nat8 -> int32
+int32 -&gt; nat8 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2369,7 +2369,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int64_int16 = 10262
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2378,7 +2378,7 @@ Value type (detailed notation)</Text>
             <Text>multiply_int64 = 259
 
 Value type (abstract notation)
-int64 -> int64 -> maybe int64
+int64 -&gt; int64 -&gt; maybe int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2394,7 +2394,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float32_nat16 = 1226
 
 Value type (abstract notation)
-float32 -> nat16
+float32 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2471,7 +2471,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_left_int64 = 1507
 
 Value type (abstract notation)
-int64 -> nat8 -> int64
+int64 -&gt; nat8 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2500,7 +2500,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int64_int32 = 10263
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2509,7 +2509,7 @@ Value type (detailed notation)</Text>
             <Text>multiply_nat8 = 260
 
 Value type (abstract notation)
-nat8 -> nat8 -> maybe nat8
+nat8 -&gt; nat8 -&gt; maybe nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2584,7 +2584,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_left_nat8 = 1508
 
 Value type (abstract notation)
-nat8 -> nat8 -> nat8
+nat8 -&gt; nat8 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2609,7 +2609,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float64_nat8 = 1193
 
 Value type (abstract notation)
-float64 -> nat8
+float64 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2684,7 +2684,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int8_nat16 = 10244
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2724,7 +2724,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float32_nat16 = 1194
 
 Value type (abstract notation)
-float32 -> nat16
+float32 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2807,7 +2807,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int8_nat32 = 10245
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2831,7 +2831,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float64_nat16 = 1195
 
 Value type (abstract notation)
-float64 -> nat16
+float64 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2915,7 +2915,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int8_nat64 = 10246
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -2991,7 +2991,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int16_int8 = 10247
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3104,7 +3104,7 @@ Value type (detailed notation)</Text>
             <Text>arctangent_fraction_float32 = 960
 
 Value type (abstract notation)
-float32 -> float32 -> float32
+float32 -&gt; float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3125,7 +3125,7 @@ Value type (detailed notation)</Text>
             <Text>add_nat16 = 197
 
 Value type (abstract notation)
-nat16 -> nat16 -> maybe nat16
+nat16 -&gt; nat16 -&gt; maybe nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3172,7 +3172,7 @@ Value type (detailed notation)</Text>
             <Text>arctangent_fraction_float64 = 961
 
 Value type (abstract notation)
-float64 -> float64 -> float64
+float64 -&gt; float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3196,7 +3196,7 @@ Value type (detailed notation)</Text>
             <Text>add_nat32 = 198
 
 Value type (abstract notation)
-nat32 -> nat32 -> maybe nat32
+nat32 -&gt; nat32 -&gt; maybe nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3211,7 +3211,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float32_nat32 = 1356
 
 Value type (abstract notation)
-float32 -> nat32
+float32 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3236,7 +3236,7 @@ Value type (detailed notation)</Text>
             <Text>make_satisfies_type = 2480
 
 Value type (abstract notation)
-(supertype : universe 0) -> (predicate : supertype -> bool) -> satisfies supertype predicate
+(supertype : universe 0) -&gt; (predicate : supertype -&gt; bool) -&gt; satisfies supertype predicate
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3261,7 +3261,7 @@ Value type (detailed notation)</Text>
             <Text>hyperbolic_sine_float32 = 992
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3283,7 +3283,7 @@ Value type (detailed notation)</Text>
             <Text>add_nat64 = 199
 
 Value type (abstract notation)
-nat64 -> nat64 -> maybe nat64
+nat64 -&gt; nat64 -&gt; maybe nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3295,7 +3295,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float64_nat32 = 1357
 
 Value type (abstract notation)
-float64 -> nat32
+float64 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3365,7 +3365,7 @@ Value type (detailed notation)</Text>
             <Text>add_float32 = 200
 
 Value type (abstract notation)
-float32 -> float32 -> maybe float32
+float32 -&gt; float32 -&gt; maybe float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3377,7 +3377,7 @@ Value type (detailed notation)</Text>
             <Text>get_satisfies_type_supertype = 2256
 
 Value type (abstract notation)
-universe 0 -> maybe (universe 0)
+universe 0 -&gt; maybe (universe 0)
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3386,7 +3386,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float32_nat64 = 1358
 
 Value type (abstract notation)
-float32 -> nat64
+float32 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3455,7 +3455,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_ordering = 151
 
 Value type (abstract notation)
-ordering -> ordering -> bool
+ordering -&gt; ordering -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3470,7 +3470,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float64_nat64 = 1359
 
 Value type (abstract notation)
-float64 -> nat64
+float64 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3491,7 +3491,7 @@ Value type (detailed notation)</Text>
             <Text>get_sigma_type_field_type = 2144
 
 Value type (abstract notation)
-universe 0 -> maybe (universe 0)
+universe 0 -&gt; maybe (universe 0)
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3500,7 +3500,7 @@ Value type (detailed notation)</Text>
             <Text>x_to_the_y_float32 = 704
 
 Value type (abstract notation)
-float32 -> float32 -> float32
+float32 -&gt; float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3574,8 +3574,8 @@ Value type (detailed notation)</Text>
             <Text>get_sigma_type_successor = 2176
 
 Value type (abstract notation)
-universe 0 -> (a : universe 0)
--> maybe (a -> universe 0)
+universe 0 -&gt; (a : universe 0)
+-&gt; maybe (a -&gt; universe 0)
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3584,7 +3584,7 @@ Value type (detailed notation)</Text>
             <Text>compare_int8 = 160
 
 Value type (abstract notation)
-int8 -> int8 -> ordering
+int8 -&gt; int8 -&gt; ordering
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3593,7 +3593,7 @@ Value type (detailed notation)</Text>
             <Text>x_to_the_y_float64 = 705
 
 Value type (abstract notation)
-float64 -> float64 -> float64
+float64 -&gt; float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3662,7 +3662,7 @@ modern_vfile_memory_allocating_data_piece_get
             <Text>equal_to_nat64 = 136
 
 Value type (abstract notation)
-nat64 -> nat64 -> bool
+nat64 -&gt; nat64 -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3692,7 +3692,7 @@ Value type (detailed notation)</Text>
             <Text>get_named_type_content_type = 2208
 
 Value type (abstract notation)
-universe 0 -> maybe (universe 0)
+universe 0 -&gt; maybe (universe 0)
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3701,7 +3701,7 @@ Value type (detailed notation)</Text>
             <Text>compare_int16 = 161
 
 Value type (abstract notation)
-int16 -> int16 -> ordering
+int16 -&gt; int16 -&gt; ordering
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3710,7 +3710,7 @@ Value type (detailed notation)</Text>
             <Text>logarithm_base_x_float32 = 736
 
 Value type (abstract notation)
-float32 -> float32 -> float32
+float32 -&gt; float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3782,7 +3782,7 @@ modern_vfile_memory_allocating_bytes_get
             <Text>ceiling_float64_int64 = 1319
 
 Value type (abstract notation)
-float64 -> int64
+float64 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3800,7 +3800,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_float32 = 137
 
 Value type (abstract notation)
-float32 -> float32 -> bool
+float32 -&gt; float32 -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3880,7 +3880,7 @@ modern_vfile_memory_allocating_finalize
             <Text>cast_int32_blob = 10314
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3900,7 +3900,7 @@ Value type (detailed notation)</Text>
             <Text>ceiling_float32_nat8 = 1320
 
 Value type (abstract notation)
-float32 -> nat8
+float32 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -3939,7 +3939,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_float64 = 138
 
 Value type (abstract notation)
-float64 -> float64 -> bool
+float64 -&gt; float64 -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4007,7 +4007,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int64_blob = 10315
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4016,7 +4016,7 @@ Value type (detailed notation)</Text>
             <Text>get_data_piece_utf8 = 1888
 
 Value type (abstract notation)
-utf8 -> nat64 -> nat64 -> maybe utf8
+utf8 -&gt; nat64 -&gt; nat64 -&gt; maybe utf8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4028,7 +4028,7 @@ Value type (detailed notation)</Text>
             <Text>ceiling_float64_nat8 = 1321
 
 Value type (abstract notation)
-float64 -> nat8
+float64 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4117,7 +4117,7 @@ Value type (detailed notation)</Text>
             <Text>cast_blob_nat32 = 10308
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4126,7 +4126,7 @@ Value type (detailed notation)</Text>
             <Text>negate_float64 = 453
 
 Value type (abstract notation)
-float64 -> maybe float64
+float64 -&gt; maybe float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4138,7 +4138,7 @@ Value type (detailed notation)</Text>
             <Text>get_data_piece_blob = 1889
 
 Value type (abstract notation)
-blob -> nat64 -> nat64 -> maybe blob
+blob -&gt; nat64 -&gt; nat64 -&gt; maybe blob
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4147,7 +4147,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat8_blob = 10316
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4175,7 +4175,7 @@ The final important task is to handle primitive operations on the representation
             <Text>decode_utf8 = 1696
 
 Value type (abstract notation)
-utf8 -> maybe nat32
+utf8 -&gt; maybe nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4276,7 +4276,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float32_nat8 = 1288
 
 Value type (abstract notation)
-float32 -> nat8
+float32 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4285,7 +4285,7 @@ Value type (detailed notation)</Text>
             <Text>cast_blob_nat64 = 10309
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4294,7 +4294,7 @@ Value type (detailed notation)</Text>
             <Text>absolute_value_int8 = 480
 
 Value type (abstract notation)
-int8 -> maybe int8
+int8 -&gt; maybe int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4313,7 +4313,7 @@ Value type (detailed notation)</Text>
             <Text>replace_data_piece_utf8 = 1920
 
 Value type (abstract notation)
-utf8 -> nat64 -> nat64 -> utf8 -> maybe utf8
+utf8 -&gt; nat64 -&gt; nat64 -&gt; utf8 -&gt; maybe utf8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4340,7 +4340,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat16_blob = 10317
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4364,7 +4364,7 @@ In order to be considerate about namespace, all symbols that the library exports
             <Text>encode_utf8 = 1728
 
 Value type (abstract notation)
-nat32 -> maybe utf8
+nat32 -&gt; maybe utf8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4427,7 +4427,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float64_nat8 = 1289
 
 Value type (abstract notation)
-float64 -> nat8
+float64 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4439,7 +4439,7 @@ Value type (detailed notation)</Text>
             <Text>cast_blob_float32 = 10310
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4448,7 +4448,7 @@ Value type (detailed notation)</Text>
             <Text>absolute_value_int16 = 481
 
 Value type (abstract notation)
-int16 -> maybe int16
+int16 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4483,7 +4483,7 @@ The human-readable names, numeric values, and semantics are given, in order to a
             <Text>character_offset_to_byte_offset_utf8 = 1760
 
 Value type (abstract notation)
-utf8 -> nat64 -> maybe nat64
+utf8 -&gt; nat64 -&gt; maybe nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4573,7 +4573,7 @@ modern_resolve_backreferences
             <Text>round_towards_odd_float32_nat16 = 1290
 
 Value type (abstract notation)
-float32 -> nat16
+float32 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4597,7 +4597,7 @@ modern_deserialize_memory
             <Text>round_towards_odd_float32_int16 = 1282
 
 Value type (abstract notation)
-float32 -> int16
+float32 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4682,7 +4682,7 @@ modern_deserialize_fd
             <Text>cast_nat64_int32 = 10291
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4691,7 +4691,7 @@ Value type (detailed notation)</Text>
             <Text>modulus_towards_zero_nat8 = 388
 
 Value type (abstract notation)
-nat8 -> nat8 -> maybe nat8
+nat8 -&gt; nat8 -&gt; maybe nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4706,7 +4706,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float64_nat16 = 1291
 
 Value type (abstract notation)
-float64 -> nat16
+float64 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4731,7 +4731,7 @@ modern_deserialize_vfile
             <Text>round_towards_odd_float64_int16 = 1283
 
 Value type (abstract notation)
-float64 -> int16
+float64 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4769,7 +4769,7 @@ modern_deserialize_input_stream
             <Text>bit_xor_int8 = 1632
 
 Value type (abstract notation)
-int8 -> int8 -> int8
+int8 -&gt; int8 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4806,7 +4806,7 @@ modern_serialize_memory_buffer
             <Text>cast_nat64_int64 = 10292
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4815,7 +4815,7 @@ Value type (detailed notation)</Text>
             <Text>modulus_towards_zero_nat16 = 389
 
 Value type (abstract notation)
-nat16 -> nat16 -> maybe nat16
+nat16 -&gt; nat16 -&gt; maybe nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4833,7 +4833,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float32_int32 = 1284
 
 Value type (abstract notation)
-float32 -> int32
+float32 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4935,7 +4935,7 @@ modern_serialize_memory_allocating
             <Text>bit_xor_int16 = 1633
 
 Value type (abstract notation)
-int16 -> int16 -> int16
+int16 -&gt; int16 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4958,7 +4958,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat64_nat8 = 10293
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4967,7 +4967,7 @@ Value type (detailed notation)</Text>
             <Text>modulus_towards_zero_nat32 = 390
 
 Value type (abstract notation)
-nat32 -> nat32 -> maybe nat32
+nat32 -&gt; nat32 -&gt; maybe nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -4993,7 +4993,7 @@ Value type (detailed notation)</Text>
             <Text>divide_float32 = 352
 
 Value type (abstract notation)
-float32 -> float32 -> maybe float32
+float32 -&gt; float32 -&gt; maybe float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5070,7 +5070,7 @@ Value type (detailed notation)</Text>
             <Text>bit_xor_int32 = 1634
 
 Value type (abstract notation)
-int32 -> int32 -> int32
+int32 -&gt; int32 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5096,7 +5096,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float64_int16 = 1251
 
 Value type (abstract notation)
-float64 -> int16
+float64 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5120,7 +5120,7 @@ Value type (detailed notation)</Text>
             <Text>divide_float64 = 353
 
 Value type (abstract notation)
-float64 -> float64 -> maybe float64
+float64 -&gt; float64 -&gt; maybe float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5203,7 +5203,7 @@ modern_library_initialize
             <Text>round_towards_even_float32_int32 = 1252
 
 Value type (abstract notation)
-float32 -> int32
+float32 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5238,7 +5238,7 @@ Return</Text>
             <Text>modulus_towards_zero_int8 = 384
 
 Value type (abstract notation)
-int8 -> int8 -> maybe int8
+int8 -&gt; int8 -&gt; maybe int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5326,7 +5326,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float64_int32 = 1253
 
 Value type (abstract notation)
-float64 -> int32
+float64 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5372,7 +5372,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_right_int8 = 1536
 
 Value type (abstract notation)
-int8 -> nat8 -> int8
+int8 -&gt; nat8 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5403,7 +5403,7 @@ Value type (detailed notation)</Text>
             <Text>multiply_float64 = 265
 
 Value type (abstract notation)
-float64 -> float64 -> maybe float64
+float64 -&gt; float64 -&gt; maybe float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5416,7 +5416,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat8_int8 = 10268
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5456,7 +5456,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_right_int16 = 1537
 
 Value type (abstract notation)
-int16 -> nat8 -> int16
+int16 -&gt; nat8 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5485,7 +5485,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat8_int16 = 10269
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5494,7 +5494,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_zero_int8 = 288
 
 Value type (abstract notation)
-int8 -> int8 -> maybe int8
+int8 -&gt; int8 -&gt; maybe int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5536,7 +5536,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_right_int32 = 1538
 
 Value type (abstract notation)
-int32 -> nat8 -> int32
+int32 -&gt; nat8 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5554,7 +5554,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat8_int32 = 10270
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5563,7 +5563,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_zero_int16 = 289
 
 Value type (abstract notation)
-int16 -> int16 -> maybe int16
+int16 -&gt; int16 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5611,7 +5611,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_right_int64 = 1539
 
 Value type (abstract notation)
-int64 -> nat8 -> int64
+int64 -&gt; nat8 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5644,7 +5644,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float32_float32 = 1200
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5697,7 +5697,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int16_nat16 = 10251
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5724,7 +5724,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float64_float64 = 1201
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5765,7 +5765,7 @@ Value type (detailed notation)</Text>
             <Text>shift_right_int8 = 1472
 
 Value type (abstract notation)
-int8 -> nat8 -> int8
+int8 -&gt; nat8 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5799,7 +5799,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int16_nat32 = 10252
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5814,7 +5814,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float32_int8 = 1216
 
 Value type (abstract notation)
-float32 -> int8
+float32 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5864,7 +5864,7 @@ Value type (detailed notation)</Text>
             <Text>shift_left_int16 = 1441
 
 Value type (abstract notation)
-int16 -> nat8 -> int16
+int16 -&gt; nat8 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5880,7 +5880,7 @@ Value type (detailed notation)</Text>
             <Text>shift_right_int16 = 1473
 
 Value type (abstract notation)
-int16 -> nat8 -> int16
+int16 -&gt; nat8 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5951,7 +5951,7 @@ Unlike some of the other object types in Modern Data, such as the node and strea
             <Text>hyperbolic_arctangent_float64 = 1153
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5963,7 +5963,7 @@ Value type (detailed notation)</Text>
             <Text>shift_left_int32 = 1442
 
 Value type (abstract notation)
-int32 -> nat8 -> int32
+int32 -&gt; nat8 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -5981,7 +5981,7 @@ Value type (detailed notation)</Text>
             <Text>shift_right_int32 = 1474
 
 Value type (abstract notation)
-int32 -> nat8 -> int32
+int32 -&gt; nat8 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6044,7 +6044,7 @@ Value type (detailed notation)</Text>
             <Text>shift_left_int64 = 1443
 
 Value type (abstract notation)
-int64 -> nat8 -> int64
+int64 -&gt; nat8 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6073,7 +6073,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float32_int8 = 1184
 
 Value type (abstract notation)
-float32 -> int8
+float32 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6121,7 +6121,7 @@ Value type (detailed notation)</Text>
             <Text>hyperbolic_tangent_float64 = 1057
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6144,7 +6144,7 @@ Value type (detailed notation)</Text>
             <Text>subtract_int32 = 226
 
 Value type (abstract notation)
-int32 -> int32 -> maybe int32
+int32 -&gt; int32 -&gt; maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6168,7 +6168,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float64_int8 = 1185
 
 Value type (abstract notation)
-float64 -> int8
+float64 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6232,7 +6232,7 @@ Value type (detailed notation)</Text>
             <Text>hyperbolic_arcsine_float32 = 1088
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6257,7 +6257,7 @@ Value type (detailed notation)</Text>
             <Text>subtract_int64 = 227
 
 Value type (abstract notation)
-int64 -> int64 -> maybe int64
+int64 -&gt; int64 -&gt; maybe int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6352,7 +6352,7 @@ Value type (detailed notation)</Text>
             <Text>hyperbolic_arcsine_float64 = 1089
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6379,7 +6379,7 @@ Value type (detailed notation)</Text>
             <Text>subtract_nat8 = 228
 
 Value type (abstract notation)
-nat8 -> nat8 -> maybe nat8
+nat8 -&gt; nat8 -&gt; maybe nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6538,7 +6538,7 @@ Value type (detailed notation)</Text>
             <Text>cosine_float32 = 800
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6597,7 +6597,7 @@ Value type (detailed notation)</Text>
             <Text>make_function_type = 2368
 
 Value type (abstract notation)
-universe 0 -> universe 0 -> universe 0
+universe 0 -&gt; universe 0 -&gt; universe 0
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6606,7 +6606,7 @@ Value type (detailed notation)</Text>
             <Text>compare_nat32 = 166
 
 Value type (abstract notation)
-nat32 -> nat32 -> ordering
+nat32 -&gt; nat32 -&gt; ordering
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6636,7 +6636,7 @@ Value type (detailed notation)</Text>
             <Text>cosine_float64 = 801
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6841,7 +6841,7 @@ oh right, so what I was about to say but I distracted myself
 I need to write up notes on possible applications
 stylesheet languages, "fake typeclasses" (because you don't need real typeclasses with dependent types)
 for defined file formats, I expect the normal top-level data structure to be
-MyFancyDocumentFormat (a : Type) (a -> SomeExportFormat) a
+MyFancyDocumentFormat (a : Type) (a -&gt; SomeExportFormat) a
 in other words, a three-tuple of a description of the actual format, a function converting that to the desired format, and the actual format
 it's essentially saying "anything that is convertible to this format" instead of "anything that's in this exact format", to allow programs to interoperate but still store things their own way
 when I figure out how dictionaries are going to work (I think I can build them on the primitives I have already - but I need to do that), I may change that recommendation to be a dictionary one field of which is the exporter
@@ -6898,7 +6898,7 @@ I've talked your ear off enough :) hehe</Text>
             <Text>make_named_value = 2336
 
 Value type (abstract notation)
-universe 0 -> name -> universe 0 TODO … ???
+universe 0 -&gt; name -&gt; universe 0 TODO … ???
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6907,7 +6907,7 @@ Value type (detailed notation)</Text>
             <Text>compare_nat64 = 167
 
 Value type (abstract notation)
-nat64 -> nat64 -> ordering
+nat64 -&gt; nat64 -&gt; ordering
 
 Value type (detailed notation)</Text>
         </Document>
@@ -6942,7 +6942,7 @@ Value type (detailed notation)</Text>
             <Text>tangent_float32 = 832
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -7105,7 +7105,7 @@ if you like to measure exe sizes, at least take two data points and do linear re
 k0001 [~k0001@186.153.74.218] entered the room.
 8:27
 shachaf
-In (exists a. (a, (a -> String, a -> Foo, a -> Bar))), the "vtable" can be shared.
+In (exists a. (a, (a -&gt; String, a -&gt; Foo, a -&gt; Bar))), the "vtable" can be shared.
 In (String, Foo, Bar), it can't.
 8:27
 irene-knapp
@@ -7155,7 +7155,7 @@ that's just how I came up with the concept
 SolidResolve left the room (quit: Max SendQ exceeded).
 8:29
 bitonic
-let’s say I have `class Foo f g | f -> g' and then `instance (Foo f f) => Foo (Bar f) f'.  can I express this with type families?  `class Foo f where; Inner f :: * -> *' and `instance (Foo f, f ~ Inner f) => Foo (Bar f)' requires UndecidableInstances
+let’s say I have `class Foo f g | f -&gt; g' and then `instance (Foo f f) =&gt; Foo (Bar f) f'.  can I express this with type families?  `class Foo f where; Inner f :: * -&gt; *' and `instance (Foo f, f ~ Inner f) =&gt; Foo (Bar f)' requires UndecidableInstances
 8:29
 irene-knapp
 I mean that the relationship between what I am doing and typeclasses is all in my head and shouldn't be pushed on others :)
@@ -7175,7 +7175,7 @@ shachaf: have I resolved your confusion now?
 slink_ left the room (quit: Ping timeout: 255 seconds).
 8:30
 shachaf
-irene-knapp: OK, other than performance concerns, why would you have ((a:Type), a, a -> Foo, a -> Bar), rather than (Foo, Bar)?
+irene-knapp: OK, other than performance concerns, why would you have ((a:Type), a, a -&gt; Foo, a -&gt; Bar), rather than (Foo, Bar)?
 8:30
 irene-knapp
 oh
@@ -7347,8 +7347,8 @@ This decision was not made casually; in fact, an early version of the design fea
 
 Value type (abstract notation)
 (a : universe 0)
--> (b : a -> universe 0)
--> universe 0
+-&gt; (b : a -&gt; universe 0)
+-&gt; universe 0
 
 Value type (detailed notation)</Text>
         </Document>
@@ -7357,7 +7357,7 @@ Value type (detailed notation)</Text>
             <Text>compare_float32 = 168
 
 Value type (abstract notation)
-float32 -> float32 -> ordering
+float32 -&gt; float32 -&gt; ordering
 
 Value type (detailed notation)</Text>
         </Document>
@@ -7426,12 +7426,12 @@ Peaker
 monochrom, same as Haskell record syntax?
 7:45
 newsham
-or actually num a => a -> a
+or actually num a =&gt; a -&gt; a
 7:46
 Peaker
 newsham, well, the arg is shown as Int, and the result is shown as Int
-newsham, so we thought repeating the whole Int -> Int is more noise than its worth
-we don't have type-classes yet for "Num a => .."
+newsham, so we thought repeating the whole Int -&gt; Int is more noise than its worth
+we don't have type-classes yet for "Num a =&gt; .."
 (we implement our own type system)
 7:47
 newsham
@@ -7716,7 +7716,7 @@ newsham, because then you have to import it back from text
 newsham, yeah, it's lossy, and you get all the bad conflicts/etc from the textual revision control
 8:05
 `Jake`
-rm: cannot remove &lt;whatever file it was trying to remove>: Operation not permitted
+rm: cannot remove &lt;whatever file it was trying to remove&gt;: Operation not permitted
 8:06
 newsham
 you can still get some of the rev control benefits
@@ -7893,14 +7893,14 @@ well, worse is better worked for a while for Nokia, but then the iPhone was bett
 irene-knapp
 that's equivalent, really
 the difference is just
-:: (HTMLifiable a) => a
+:: (HTMLifiable a) =&gt; a
 vs
 8:15
 Peaker
 newsham, we see current programming envs as the Nokia of the software world :)
 8:15
 irene-knapp
-:: (a -> HTML, a)
+:: (a -&gt; HTML, a)
 8:15
 shachaf
 ?
@@ -7968,7 +7968,7 @@ irene-knapp
 let me reread what I wrote with your last in mind
 8:17
 shachaf
-irene-knapp: Anyway, if you have, in Haskell, class HTMLy a where htmlify :: a -> HTML; data HTMLThing = forall a. HTMLy a => HTMLThing a
+irene-knapp: Anyway, if you have, in Haskell, class HTMLy a where htmlify :: a -&gt; HTML; data HTMLThing = forall a. HTMLy a =&gt; HTMLThing a
 8:17
 newsham
 until some 3rd party does what i need
@@ -7999,7 +7999,7 @@ and i guess if your system is compelling enough people will fix the rest
 and if not, at least we'll see how far it goes and learn from it
 8:19
 irene-knapp
-which is that by using a dictionary of functions to store the (a -> HTML) thing, instead of putting it out on its own, you can store arbitrarily many (a -> Foo) methods
+which is that by using a dictionary of functions to store the (a -&gt; HTML) thing, instead of putting it out on its own, you can store arbitrarily many (a -&gt; Foo) methods
 8:19
 `Jake`
 Peaker: Maybe you should add in your lambdu tutorial that you need to have the ftgl c library installed?
@@ -8160,7 +8160,7 @@ I'm there now</Text>
             <Text>ceiling_float32_nat64 = 1326
 
 Value type (abstract notation)
-float32 -> nat64
+float32 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8242,7 +8242,7 @@ Value type (detailed notation)</Text>
             <Text>cast_float64_blob = 10321
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8254,7 +8254,7 @@ Value type (detailed notation)</Text>
             <Text>ceiling_float64_nat64 = 1327
 
 Value type (abstract notation)
-float64 -> nat64
+float64 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8281,8 +8281,8 @@ Value type (detailed notation)</Text>
 
 Value type (abstract notation)
 (a : universe 0)
--> (b : a -> universe 0)
--> sigma a b -> a
+-&gt; (b : a -&gt; universe 0)
+-&gt; sigma a b -&gt; a
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8342,7 +8342,7 @@ Value type (detailed notation)</Text>
             <Text>absolute_value_float64 = 485
 
 Value type (abstract notation)
-float64 -> maybe float64
+float64 -&gt; maybe float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8357,7 +8357,7 @@ Value type (detailed notation)</Text>
             <Text>ceiling_float32_float32 = 1328
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8396,8 +8396,8 @@ Value type (detailed notation)</Text>
 
 Value type (abstract notation)
 (a : universe 0)
--> (b : a -> universe 0)
--> sigma a b -> b
+-&gt; (b : a -&gt; universe 0)
+-&gt; sigma a b -&gt; b
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8448,7 +8448,7 @@ modern_library_node_representation_get
             <Text>or_bool = 64
 
 Value type (abstract notation)
-bool -> bool -> bool
+bool -&gt; bool -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8472,7 +8472,7 @@ Value type (detailed notation)</Text>
             <Text>sign_int8 = 512
 
 Value type (abstract notation)
-int8 -> int8
+int8 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8548,8 +8548,8 @@ The low-level “stream-based” portion of the library does no such checking, a
 
 Value type (abstract notation)
 (a : universe 0)
--> (b : name)
--> named b a -> a
+-&gt; (b : name)
+-&gt; named b a -&gt; a
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8561,7 +8561,7 @@ Value type (detailed notation)</Text>
             <Text>not_bool = 96
 
 Value type (abstract notation)
-bool -> bool
+bool -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8576,7 +8576,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float64_nat64 = 1295
 
 Value type (abstract notation)
-float64 -> nat64
+float64 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8588,7 +8588,7 @@ Value type (detailed notation)</Text>
             <Text>sign_int16 = 513
 
 Value type (abstract notation)
-int16 -> int16
+int16 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8657,7 +8657,7 @@ modern_finalize
             <Text>round_towards_odd_float32_float32 = 1296
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8675,7 +8675,7 @@ modern_processor_input_make
             <Text>sign_int32 = 514
 
 Value type (abstract notation)
-int32 -> int32
+int32 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8694,7 +8694,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_bool = 128
 
 Value type (abstract notation)
-bool -> bool -> bool
+bool -&gt; bool -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8748,7 +8748,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float64_float64 = 1297
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8791,7 +8791,7 @@ Value type (detailed notation)</Text>
             <Text>bit_xor_nat32 = 1638
 
 Value type (abstract notation)
-nat32 -> nat32 -> nat32
+nat32 -&gt; nat32 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8844,7 +8844,7 @@ In addition to and built on top of the built-in values, Modern Data also include
             <Text>cast_name_blob = 10298
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8853,7 +8853,7 @@ Value type (detailed notation)</Text>
             <Text>modulus_towards_negative_infinity_int64 = 419
 
 Value type (abstract notation)
-int64 -> int64 -> maybe int64
+int64 -&gt; int64 -&gt; maybe int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8929,7 +8929,7 @@ Value type (detailed notation)</Text>
             <Text>bit_xor_nat64 = 1639
 
 Value type (abstract notation)
-nat64 -> nat64 -> nat64
+nat64 -&gt; nat64 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -8962,7 +8962,7 @@ Value type (detailed notation)</Text>
             <Text>cast_blob_name = 10299
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9069,7 +9069,7 @@ modern_library_client_state_get
             <Text>bit_not_int8 = 1664
 
 Value type (abstract notation)
-int8 -> int8
+int8 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9084,7 +9084,7 @@ Value type (detailed notation)</Text>
             <Text>cast_float32_float64 = 10300
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9199,7 +9199,7 @@ modern_library_finalize
             <Text>bit_not_int16 = 1665
 
 Value type (abstract notation)
-int16 -> int16
+int16 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9224,7 +9224,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float32_nat16 = 1258
 
 Value type (abstract notation)
-float32 -> nat16
+float32 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9323,7 +9323,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat16_nat64 = 10281
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9359,7 +9359,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float64_nat16 = 1259
 
 Value type (abstract notation)
-float64 -> nat16
+float64 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9401,7 +9401,7 @@ Value type (detailed notation)</Text>
             <Text>bit_and_nat32 = 1574
 
 Value type (abstract notation)
-nat32 -> nat32 -> nat32
+nat32 -&gt; nat32 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9435,7 +9435,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat8_nat64 = 10274
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9444,7 +9444,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat32_int8 = 10282
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9457,7 +9457,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_zero_nat16 = 293
 
 Value type (abstract notation)
-nat16 -> nat16 -> maybe nat16
+nat16 -&gt; nat16 -&gt; maybe nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9488,7 +9488,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float32_nat32 = 1260
 
 Value type (abstract notation)
-float32 -> nat32
+float32 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9524,7 +9524,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_right_nat64 = 1543
 
 Value type (abstract notation)
-nat64 -> nat8 -> nat64
+nat64 -&gt; nat8 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9533,7 +9533,7 @@ Value type (detailed notation)</Text>
             <Text>bit_and_nat64 = 1575
 
 Value type (abstract notation)
-nat64 -> nat64 -> nat64
+nat64 -&gt; nat64 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9559,7 +9559,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat16_int8 = 10275
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9568,7 +9568,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat32_int16 = 10283
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9586,7 +9586,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_zero_nat32 = 294
 
 Value type (abstract notation)
-nat32 -> nat32 -> maybe nat32
+nat32 -&gt; nat32 -&gt; maybe nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9638,7 +9638,7 @@ Value type (detailed notation)</Text>
             <Text>bit_and_int8 = 1568
 
 Value type (abstract notation)
-int8 -> int8 -> int8
+int8 -&gt; int8 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9647,7 +9647,7 @@ Value type (detailed notation)</Text>
             <Text>bit_or_int8 = 1600
 
 Value type (abstract notation)
-int8 -> int8 -> int8
+int8 -&gt; int8 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9687,7 +9687,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float64_nat16 = 1227
 
 Value type (abstract notation)
-float64 -> nat16
+float64 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9699,7 +9699,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat16_int16 = 10276
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9708,7 +9708,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_zero_nat64 = 295
 
 Value type (abstract notation)
-nat64 -> nat64 -> maybe nat64
+nat64 -&gt; nat64 -&gt; maybe nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9765,7 +9765,7 @@ Value type (detailed notation)</Text>
             <Text>bit_and_int16 = 1569
 
 Value type (abstract notation)
-int16 -> int16 -> int16
+int16 -&gt; int16 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9797,7 +9797,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float32_nat32 = 1228
 
 Value type (abstract notation)
-float32 -> nat32
+float32 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9816,7 +9816,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float32_int32 = 1220
 
 Value type (abstract notation)
-float32 -> int32
+float32 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9825,7 +9825,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat16_int32 = 10277
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9850,7 +9850,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_negative_infinity_int8 = 320
 
 Value type (abstract notation)
-int8 -> int8 -> maybe int8
+int8 -&gt; int8 -&gt; maybe int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9921,7 +9921,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float64_nat32 = 1229
 
 Value type (abstract notation)
-float64 -> nat32
+float64 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -9942,7 +9942,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float64_int32 = 1221
 
 Value type (abstract notation)
-float64 -> int32
+float64 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10004,7 +10004,7 @@ Note that the diagram also shows a vfile being obtained from the system.  This i
             <Text>shift_right_nat32 = 1478
 
 Value type (abstract notation)
-nat32 -> nat8 -> nat32
+nat32 -&gt; nat8 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10049,7 +10049,7 @@ Note that the diagram also shows a vfile being obtained from the system.  This i
             <Text>cast_int32_nat16 = 10258
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10058,7 +10058,7 @@ Value type (detailed notation)</Text>
             <Text>subtract_float64 = 233
 
 Value type (abstract notation)
-float64 -> float64 -> maybe float64
+float64 -&gt; float64 -&gt; maybe float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10070,7 +10070,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float32_int64 = 1222
 
 Value type (abstract notation)
-float32 -> int64
+float32 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10129,7 +10129,7 @@ Value type (detailed notation)</Text>
             <Text>shift_right_nat64 = 1479
 
 Value type (abstract notation)
-nat64 -> nat8 -> nat64
+nat64 -&gt; nat8 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10160,7 +10160,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int32_nat32 = 10259
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10169,7 +10169,7 @@ Value type (detailed notation)</Text>
             <Text>multiply_int8 = 256
 
 Value type (abstract notation)
-int8 -> int8 -> maybe int8
+int8 -&gt; int8 -&gt; maybe int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10187,7 +10187,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float64_int64 = 1223
 
 Value type (abstract notation)
-float64 -> int64
+float64 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10244,7 +10244,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_left_int8 = 1504
 
 Value type (abstract notation)
-int8 -> nat8 -> int8
+int8 -&gt; nat8 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10266,7 +10266,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int32_nat64 = 10260
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10275,7 +10275,7 @@ Value type (detailed notation)</Text>
             <Text>multiply_int16 = 257
 
 Value type (abstract notation)
-int16 -> int16 -> maybe int16
+int16 -&gt; int16 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10333,7 +10333,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_left_int16 = 1505
 
 Value type (abstract notation)
-int16 -> nat8 -> int16
+int16 -&gt; nat8 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10348,7 +10348,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float32_int64 = 1190
 
 Value type (abstract notation)
-float32 -> int64
+float32 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10419,7 +10419,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float64_int64 = 1191
 
 Value type (abstract notation)
-float64 -> int64
+float64 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10491,7 +10491,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float32_nat8 = 1192
 
 Value type (abstract notation)
-float32 -> nat8
+float32 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10736,7 +10736,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int8_int32 = 10241
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10749,7 +10749,7 @@ Value type (detailed notation)</Text>
             <Text>arccosine_float64 = 897
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10764,7 +10764,7 @@ Value type (detailed notation)</Text>
             <Text>add_int32 = 194
 
 Value type (abstract notation)
-int32 -> int32 -> maybe int32
+int32 -&gt; int32 -&gt; maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10808,7 +10808,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int8_int64 = 10242
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10817,7 +10817,7 @@ Value type (detailed notation)</Text>
             <Text>add_int64 = 195
 
 Value type (abstract notation)
-int64 -> int64 -> maybe int64
+int64 -&gt; int64 -&gt; maybe int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10829,7 +10829,7 @@ Value type (detailed notation)</Text>
             <Text>arctangent_float32 = 928
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10858,7 +10858,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float64_nat8 = 1353
 
 Value type (abstract notation)
-float64 -> nat8
+float64 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10924,7 +10924,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int8_nat8 = 10243
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10933,7 +10933,7 @@ Value type (detailed notation)</Text>
             <Text>add_nat8 = 196
 
 Value type (abstract notation)
-nat8 -> nat8 -> maybe nat8
+nat8 -&gt; nat8 -&gt; maybe nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10952,7 +10952,7 @@ Value type (detailed notation)</Text>
             <Text>arctangent_float64 = 929
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10971,7 +10971,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float32_int16 = 1346
 
 Value type (abstract notation)
-float32 -> int16
+float32 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -10980,7 +10980,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float32_nat16 = 1354
 
 Value type (abstract notation)
-float32 -> nat16
+float32 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11091,7 +11091,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float64_int16 = 1347
 
 Value type (abstract notation)
-float64 -> int16
+float64 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11106,7 +11106,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float64_nat16 = 1355
 
 Value type (abstract notation)
-float64 -> nat16
+float64 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11143,7 +11143,7 @@ Value type (detailed notation)</Text>
             <Text>e_to_the_x_float32 = 640
 
 Value type (abstract notation)
-float32 -> float32 -> float32
+float32 -&gt; float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11208,7 +11208,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_name = 139
 
 Value type (abstract notation)
-name -> name -> bool
+name -&gt; name -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11217,7 +11217,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float32_int32 = 1348
 
 Value type (abstract notation)
-float32 -> int32
+float32 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11239,7 +11239,7 @@ Value type (detailed notation)</Text>
             <Text>get_maybe_type_content_type = 2528
 
 Value type (abstract notation)
-universe 0 -> maybe (universe 0)
+universe 0 -&gt; maybe (universe 0)
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11248,7 +11248,7 @@ Value type (detailed notation)</Text>
             <Text>e_to_the_x_float64 = 641
 
 Value type (abstract notation)
-float64 -> float64 -> float64
+float64 -&gt; float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11318,7 +11318,7 @@ modern_vfile_fd_make
             <Text>equal_to_utf8 = 140
 
 Value type (abstract notation)
-utf8 -> uft8 -> bool
+utf8 -&gt; uft8 -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11330,7 +11330,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_int64 = 132
 
 Value type (abstract notation)
-int64 -> int64 -> bool
+int64 -&gt; int64 -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11345,7 +11345,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float64_int32 = 1349
 
 Value type (abstract notation)
-float64 -> int32
+float64 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11382,7 +11382,7 @@ Value type (detailed notation)</Text>
             <Text>get_function_type_parameter = 2080
 
 Value type (abstract notation)
-universe 0 -> maybe (universe 0)
+universe 0 -&gt; maybe (universe 0)
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11391,7 +11391,7 @@ Value type (detailed notation)</Text>
             <Text>two_to_the_x_float32 = 672
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11463,7 +11463,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_blob = 150
 
 Value type (abstract notation)
-blob -> blob -> bool
+blob -&gt; blob -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11481,7 +11481,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_nat8 = 133
 
 Value type (abstract notation)
-nat8 -> nat8 -> bool
+nat8 -&gt; nat8 -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11534,7 +11534,7 @@ Value type (detailed notation)</Text>
             <Text>get_function_type_result = 2112
 
 Value type (abstract notation)
-universe 0 -> maybe (universe 0)
+universe 0 -&gt; maybe (universe 0)
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11546,7 +11546,7 @@ Value type (detailed notation)</Text>
             <Text>two_to_the_x_float64 = 673
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11604,7 +11604,7 @@ modern_vfile_stdio_initialize
             <Text>ceiling_float32_int32 = 1316
 
 Value type (abstract notation)
-float32 -> int32
+float32 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11637,7 +11637,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_nat16 = 134
 
 Value type (abstract notation)
-nat16 -> nat16 -> bool
+nat16 -&gt; nat16 -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11661,7 +11661,7 @@ Value type (detailed notation)</Text>
             <Text>square_root_float32 = 576
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11741,7 +11741,7 @@ modern_vfile_stdio_make
             <Text>cast_blob_float64 = 10311
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11756,7 +11756,7 @@ Value type (detailed notation)</Text>
             <Text>ceiling_float64_int32 = 1317
 
 Value type (abstract notation)
-float64 -> int32
+float64 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11795,7 +11795,7 @@ Value type (detailed notation)</Text>
             <Text>equal_to_nat32 = 135
 
 Value type (abstract notation)
-nat32 -> nat32 -> bool
+nat32 -&gt; nat32 -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11867,7 +11867,7 @@ Value type (detailed notation)</Text>
             <Text>cast_blob_int32 = 10304
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11876,7 +11876,7 @@ Value type (detailed notation)</Text>
             <Text>negate_int16 = 449
 
 Value type (abstract notation)
-int16 -> maybe int16
+int16 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11885,7 +11885,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int8_blob = 10312
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11906,7 +11906,7 @@ Value type (detailed notation)</Text>
             <Text>ceiling_float32_int64 = 1318
 
 Value type (abstract notation)
-float32 -> int64
+float32 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -11961,7 +11961,7 @@ Value type (detailed notation)</Text>
             <Text>bit_not_nat16 = 1669
 
 Value type (abstract notation)
-nat16 -> nat16
+nat16 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12006,7 +12006,7 @@ Value type (detailed notation)</Text>
             <Text>cast_blob_int64 = 10305
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12015,7 +12015,7 @@ Value type (detailed notation)</Text>
             <Text>negate_int32 = 450
 
 Value type (abstract notation)
-int32 -> maybe int32
+int32 -&gt; maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12024,7 +12024,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int16_blob = 10313
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12138,7 +12138,7 @@ Value type (detailed notation)</Text>
             <Text>bit_not_nat32 = 1670
 
 Value type (abstract notation)
-nat32 -> nat32
+nat32 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12168,7 +12168,7 @@ Value type (detailed notation)</Text>
             <Text>cast_blob_nat8 = 10306
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12177,7 +12177,7 @@ Value type (detailed notation)</Text>
             <Text>negate_int64 = 451
 
 Value type (abstract notation)
-int64 -> maybe int64
+int64 -&gt; maybe int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12269,7 +12269,7 @@ Value type (detailed notation)</Text>
             <Text>bit_not_nat64 = 1671
 
 Value type (abstract notation)
-nat64 -> nat64
+nat64 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12290,7 +12290,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float32_float32 = 1264
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12299,7 +12299,7 @@ Value type (detailed notation)</Text>
             <Text>cast_blob_nat16 = 10307
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12308,7 +12308,7 @@ Value type (detailed notation)</Text>
             <Text>negate_float32 = 452
 
 Value type (abstract notation)
-float32 -> maybe float32
+float32 -&gt; maybe float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12399,7 +12399,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float64_float64 = 1265
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12454,7 +12454,7 @@ Value type (detailed notation)</Text>
             <Text>bit_or_nat8 = 1604
 
 Value type (abstract notation)
-nat8 -> nat8 -> nat8
+nat8 -&gt; nat8 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12482,7 +12482,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat32_nat64 = 10288
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12491,7 +12491,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float32_int8 = 1280
 
 Value type (abstract notation)
-float32 -> int8
+float32 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12524,7 +12524,7 @@ Value type (detailed notation)</Text>
             <Text>bit_or_nat16 = 1605
 
 Value type (abstract notation)
-nat16 -> nat16 -> nat16
+nat16 -&gt; nat16 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12547,7 +12547,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat64_int8 = 10289
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12570,7 +12570,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float64_int8 = 1281
 
 Value type (abstract notation)
-float64 -> int8
+float64 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12617,7 +12617,7 @@ Value type (detailed notation)</Text>
             <Text>bit_or_nat32 = 1606
 
 Value type (abstract notation)
-nat32 -> nat32 -> nat32
+nat32 -&gt; nat32 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12651,7 +12651,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat64_int16 = 10290
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12718,7 +12718,7 @@ Value type (detailed notation)</Text>
             <Text>bit_or_nat64 = 1607
 
 Value type (abstract notation)
-nat64 -> nat64 -> nat64
+nat64 -&gt; nat64 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12742,7 +12742,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float32_int8 = 1248
 
 Value type (abstract notation)
-float32 -> int8
+float32 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12804,7 +12804,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float64_int8 = 1249
 
 Value type (abstract notation)
-float64 -> int8
+float64 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12866,7 +12866,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int64_nat8 = 10264
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12875,7 +12875,7 @@ Value type (detailed notation)</Text>
             <Text>multiply_nat16 = 261
 
 Value type (abstract notation)
-nat16 -> nat16 -> maybe nat16
+nat16 -&gt; nat16 -&gt; maybe nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12890,7 +12890,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float32_int16 = 1250
 
 Value type (abstract notation)
-float32 -> int16
+float32 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12929,7 +12929,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_left_nat16 = 1509
 
 Value type (abstract notation)
-nat16 -> nat8 -> nat16
+nat16 -&gt; nat8 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12958,7 +12958,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int64_nat16 = 10265
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -12967,7 +12967,7 @@ Value type (detailed notation)</Text>
             <Text>multiply_nat32 = 262
 
 Value type (abstract notation)
-nat32 -> nat32 -> maybe nat32
+nat32 -&gt; nat32 -&gt; maybe nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13023,7 +13023,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_left_nat32 = 1510
 
 Value type (abstract notation)
-nat32 -> nat8 -> nat32
+nat32 -&gt; nat8 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13046,7 +13046,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int64_nat32 = 10266
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13055,7 +13055,7 @@ Value type (detailed notation)</Text>
             <Text>multiply_nat64 = 263
 
 Value type (abstract notation)
-nat64 -> nat64 -> maybe nat64
+nat64 -&gt; nat64 -&gt; maybe nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13105,7 +13105,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_left_nat64 = 1511
 
 Value type (abstract notation)
-nat64 -> nat8 -> nat64
+nat64 -&gt; nat8 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13135,7 +13135,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float32_nat32 = 1196
 
 Value type (abstract notation)
-float32 -> nat32
+float32 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13147,7 +13147,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int64_nat64 = 10267
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13156,7 +13156,7 @@ Value type (detailed notation)</Text>
             <Text>multiply_float32 = 264
 
 Value type (abstract notation)
-float32 -> float32 -> maybe float32
+float32 -&gt; float32 -&gt; maybe float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13239,7 +13239,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float64_nat32 = 1197
 
 Value type (abstract notation)
-float64 -> nat32
+float64 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13301,7 +13301,7 @@ Value type (detailed notation)</Text>
             <Text>shift_left_nat8 = 1444
 
 Value type (abstract notation)
-nat8 -> nat8 -> nat8
+nat8 -&gt; nat8 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13339,7 +13339,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int16_int32 = 10248
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13366,7 +13366,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float32_nat64 = 1198
 
 Value type (abstract notation)
-float32 -> nat64
+float32 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13403,7 +13403,7 @@ Value type (detailed notation)</Text>
             <Text>shift_left_nat16 = 1445
 
 Value type (abstract notation)
-nat16 -> nat8 -> nat16
+nat16 -&gt; nat8 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13436,7 +13436,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int16_int64 = 10249
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13477,7 +13477,7 @@ modern_node_default_make
             <Text>round_towards_zero_float64_nat64 = 1199
 
 Value type (abstract notation)
-float64 -> nat64
+float64 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13531,7 +13531,7 @@ Value type (detailed notation)</Text>
             <Text>shift_left_nat32 = 1456
 
 Value type (abstract notation)
-nat32 -> nat8 -> nat32
+nat32 -&gt; nat8 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13553,7 +13553,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int16_nat8 = 10250
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13623,7 +13623,7 @@ Value type (detailed notation)</Text>
             <Text>hyperbolic_arccosine_float32 = 1120
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13648,7 +13648,7 @@ Value type (detailed notation)</Text>
             <Text>shift_left_nat64 = 1457
 
 Value type (abstract notation)
-nat64 -> nat8 -> nat64
+nat64 -&gt; nat8 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13697,7 +13697,7 @@ Value type (detailed notation)</Text>
             <Text>hyperbolic_sine_float64 = 993
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13716,7 +13716,7 @@ Value type (detailed notation)</Text>
             <Text>hyperbolic_arccosine_float64 = 1121
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13728,7 +13728,7 @@ Value type (detailed notation)</Text>
             <Text>shift_left_int8 = 1440
 
 Value type (abstract notation)
-int8 -> nat8 -> int8
+int8 -&gt; nat8 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13803,7 +13803,7 @@ Value type (detailed notation)</Text>
             <Text>hyperbolic_cosine_float32 = 1024
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13821,7 +13821,7 @@ Value type (detailed notation)</Text>
             <Text>hyperbolic_arctangent_float32 = 1152
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13836,7 +13836,7 @@ Value type (detailed notation)</Text>
             <Text>add_float64 = 201
 
 Value type (abstract notation)
-float64 -> float64 -> maybe float64
+float64 -&gt; float64 -&gt; maybe float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13887,7 +13887,7 @@ Value type (detailed notation)</Text>
             <Text>get_satisfies_type_predicate = 2257
 
 Value type (abstract notation)
-universe 0 -> maybe (a -> bool)
+universe 0 -&gt; maybe (a -&gt; bool)
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13937,7 +13937,7 @@ Value type (detailed notation)</Text>
             <Text>hyperbolic_cosine_float64 = 1025
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13964,7 +13964,7 @@ Value type (detailed notation)</Text>
             <Text>subtract_int8 = 224
 
 Value type (abstract notation)
-int8 -> int8 -> maybe int8
+int8 -&gt; int8 -&gt; maybe int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -13976,7 +13976,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float32_float32 = 1360
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14038,7 +14038,7 @@ Value type (detailed notation)</Text>
             <Text>hyperbolic_tangent_float32 = 1056
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14060,7 +14060,7 @@ Value type (detailed notation)</Text>
             <Text>subtract_int16 = 225
 
 Value type (abstract notation)
-int16 -> int16 -> maybe int16
+int16 -&gt; int16 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14075,7 +14075,7 @@ Value type (detailed notation)</Text>
             <Text>floor_float64_float64 = 1361
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14172,7 +14172,7 @@ Value type (detailed notation)</Text>
             <Text>logarithm_base_x_float64 = 737
 
 Value type (abstract notation)
-float64 -> float64 -> float64
+float64 -&gt; float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14181,7 +14181,7 @@ Value type (detailed notation)</Text>
             <Text>compare_int32 = 162
 
 Value type (abstract notation)
-int32 -> int32 -> ordering
+int32 -&gt; int32 -&gt; ordering
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14190,7 +14190,7 @@ Value type (detailed notation)</Text>
             <Text>get_universe_type_level = 2240
 
 Value type (abstract notation)
-universe 0 -> maybe nat64
+universe 0 -&gt; maybe nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14257,7 +14257,7 @@ Value type (detailed notation)</Text>
             <Text>compare_int64 = 163
 
 Value type (abstract notation)
-int64 -> int64 -> ordering
+int64 -&gt; int64 -&gt; ordering
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14275,8 +14275,8 @@ Value type (detailed notation)</Text>
 
 Value type (abstract notation)
 (a : universe 0)
--> (b : a -> universe 0)
--> universe 0
+-&gt; (b : a -&gt; universe 0)
+-&gt; universe 0
 TODO this probably comes out, doesn’t it?
 
 Value type (detailed notation)</Text>
@@ -14307,7 +14307,7 @@ Value type (detailed notation)</Text>
             <Text>sine_float32 = 768
 
 Value type (abstract notation)
-float32 -> float32
+float32 -&gt; float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14367,7 +14367,7 @@ modern_vfile_memory_allocating_initialize
             <Text>compare_nat8 = 164
 
 Value type (abstract notation)
-nat8 -> nat8 -> ordering
+nat8 -&gt; nat8 -&gt; ordering
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14383,7 +14383,7 @@ Value type (detailed notation)</Text>
             <Text>make_name = 2304
 
 Value type (abstract notation)
-universe 0 -> maybe (universe 0) TODO … ???
+universe 0 -&gt; maybe (universe 0) TODO … ???
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14398,7 +14398,7 @@ Value type (detailed notation)</Text>
             <Text>sine_float64 = 769
 
 Value type (abstract notation)
-float64 -> float64
+float64 -&gt; float64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14420,7 +14420,7 @@ modern_vfile_memory_allocating_make
             <Text>ceiling_float32_nat16 = 1322
 
 Value type (abstract notation)
-float32 -> nat16
+float32 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14462,7 +14462,7 @@ Value type (detailed notation)</Text>
             <Text>compare_nat16 = 165
 
 Value type (abstract notation)
-nat16 -> nat16 -> ordering
+nat16 -&gt; nat16 -&gt; ordering
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14481,7 +14481,7 @@ Value type (detailed notation)</Text>
             <Text>make_maybe_type = 2496
 
 Value type (abstract notation)
-universe 0 -> universe 0
+universe 0 -&gt; universe 0
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14515,7 +14515,7 @@ modern_vfile_memory_buffer_finalize
             <Text>ceiling_float64_nat16 = 1323
 
 Value type (abstract notation)
-float64 -> nat16
+float64 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14607,7 +14607,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat32_blob = 10318
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14622,7 +14622,7 @@ Value type (detailed notation)</Text>
             <Text>replace_data_piece_blob = 1921
 
 Value type (abstract notation)
-blob -> nat64 -> nat64 -> blob -> maybe blob
+blob -&gt; nat64 -&gt; nat64 -&gt; blob -&gt; maybe blob
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14634,7 +14634,7 @@ Value type (detailed notation)</Text>
             <Text>ceiling_float32_nat32 = 1324
 
 Value type (abstract notation)
-float32 -> nat32
+float32 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14711,7 +14711,7 @@ Value type (detailed notation)</Text>
             <Text>absolute_value_int32 = 482
 
 Value type (abstract notation)
-int32 -> maybe int32
+int32 -&gt; maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14733,7 +14733,7 @@ Value type (detailed notation)</Text>
             <Text>length_bytes_utf8 = 1792
 
 Value type (abstract notation)
-utf8 -> nat64
+utf8 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14751,7 +14751,7 @@ Value type (detailed notation)</Text>
             <Text>ceiling_float64_nat32 = 1325
 
 Value type (abstract notation)
-float64 -> nat32
+float64 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14771,7 +14771,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat64_blob = 10319
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14835,7 +14835,7 @@ Value type (detailed notation)</Text>
             <Text>absolute_value_int64 = 483
 
 Value type (abstract notation)
-int64 -> maybe int64
+int64 -&gt; maybe int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14856,7 +14856,7 @@ Value type (detailed notation)</Text>
             <Text>length_bytes_blob = 1793
 
 Value type (abstract notation)
-blob -> nat64
+blob -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14874,7 +14874,7 @@ Value type (detailed notation)</Text>
             <Text>cast_float32_blob = 10320
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14919,7 +14919,7 @@ Value type (detailed notation)</Text>
             <Text>if_bool = 0
 
 Value type (abstract notation)
-a : universe 0 -> bool -> a -> a -> a
+a : universe 0 -&gt; bool -&gt; a -&gt; a -&gt; a
 
 Value type
 (lambda
@@ -14976,7 +14976,7 @@ Value type
             <Text>round_towards_odd_float32_nat32 = 1292
 
 Value type (abstract notation)
-float32 -> nat32
+float32 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -14988,7 +14988,7 @@ Value type (detailed notation)</Text>
             <Text>absolute_value_float32 = 484
 
 Value type (abstract notation)
-float32 -> maybe float32
+float32 -&gt; maybe float32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15010,7 +15010,7 @@ Value type (detailed notation)</Text>
             <Text>get_byte_blob = 1824
 
 Value type (abstract notation)
-blob -> nat64 -> maybe nat8
+blob -&gt; nat64 -&gt; maybe nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15079,7 +15079,7 @@ modern_serialize_fd
             <Text>and_bool = 32
 
 Value type (abstract notation)
-bool -> bool -> bool
+bool -&gt; bool -&gt; bool
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15091,7 +15091,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float64_nat32 = 1293
 
 Value type (abstract notation)
-float64 -> nat32
+float64 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15114,7 +15114,7 @@ modern_serialize_vfile
             <Text>round_towards_odd_float64_int32 = 1285
 
 Value type (abstract notation)
-float64 -> int32
+float64 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15123,7 +15123,7 @@ Value type (detailed notation)</Text>
             <Text>replace_byte_blob = 1856
 
 Value type (abstract notation)
-blob -> nat64 -> nat8 -> maybe blob
+blob -&gt; nat64 -&gt; nat8 -&gt; maybe blob
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15189,7 +15189,7 @@ modern_serialize_output_stream
             <Text>cast_nat64_nat16 = 10294
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15198,7 +15198,7 @@ Value type (detailed notation)</Text>
             <Text>modulus_towards_zero_nat64 = 391
 
 Value type (abstract notation)
-nat64 -> nat64 -> maybe nat64
+nat64 -&gt; nat64 -&gt; maybe nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15222,7 +15222,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float32_nat64 = 1294
 
 Value type (abstract notation)
-float32 -> nat64
+float32 -&gt; nat64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15240,7 +15240,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float32_int64 = 1286
 
 Value type (abstract notation)
-float32 -> int64
+float32 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15289,7 +15289,7 @@ Value type (detailed notation)</Text>
             <Text>bit_xor_int64 = 1635
 
 Value type (abstract notation)
-int64 -> int64 -> int64
+int64 -&gt; int64 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15328,7 +15328,7 @@ modern_node_canonical_hash_compute
             <Text>cast_nat64_nat32 = 10295
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15337,7 +15337,7 @@ Value type (detailed notation)</Text>
             <Text>modulus_towards_negative_infinity_int8 = 416
 
 Value type (abstract notation)
-int8 -> int8 -> maybe int8
+int8 -&gt; int8 -&gt; maybe int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15353,7 +15353,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_odd_float64_int64 = 1287
 
 Value type (abstract notation)
-float64 -> int64
+float64 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15427,7 +15427,7 @@ modern_initial_context_make
             <Text>bit_xor_nat8 = 1636
 
 Value type (abstract notation)
-nat8 -> nat8 -> nat8
+nat8 -&gt; nat8 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15469,7 +15469,7 @@ modern_copy_context
             <Text>modulus_towards_zero_int16 = 385
 
 Value type (abstract notation)
-int16 -> int16 -> maybe int16
+int16 -&gt; int16 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15478,7 +15478,7 @@ Value type (detailed notation)</Text>
             <Text>modulus_towards_negative_infinity_int16 = 417
 
 Value type (abstract notation)
-int16 -> int16 -> maybe int16
+int16 -&gt; int16 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15499,7 +15499,7 @@ Value type (detailed notation)</Text>
             <Text>cast_utf8_blob = 10296
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15562,7 +15562,7 @@ modern_in_context_get
             <Text>bit_xor_nat16 = 1637
 
 Value type (abstract notation)
-nat16 -> nat16 -> nat16
+nat16 -&gt; nat16 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15605,7 +15605,7 @@ modern_to_context_add
             <Text>round_towards_even_float32_int64 = 1254
 
 Value type (abstract notation)
-float32 -> int64
+float32 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15614,7 +15614,7 @@ Value type (detailed notation)</Text>
             <Text>modulus_towards_zero_int32 = 386
 
 Value type (abstract notation)
-int32 -> int32 -> maybe int32
+int32 -&gt; int32 -&gt; maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15626,7 +15626,7 @@ Value type (detailed notation)</Text>
             <Text>modulus_towards_negative_infinity_int32 = 418
 
 Value type (abstract notation)
-int32 -> int32 -> maybe int32
+int32 -&gt; int32 -&gt; maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15646,7 +15646,7 @@ Value type (detailed notation)</Text>
             <Text>cast_blob_utf8 = 10297
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15740,7 +15740,7 @@ modern_library_error_handler_get
             <Text>round_towards_even_float64_int64 = 1255
 
 Value type (abstract notation)
-float64 -> int64
+float64 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15749,7 +15749,7 @@ Value type (detailed notation)</Text>
             <Text>modulus_towards_zero_int64 = 387
 
 Value type (abstract notation)
-int64 -> int64 -> maybe int64
+int64 -&gt; int64 -&gt; maybe int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15847,7 +15847,7 @@ modern_library_allocator_get
             <Text>cast_nat16_int64 = 10278
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15886,7 +15886,7 @@ It’s worth noting in passing that it is bad style but technically possible in 
             <Text>round_towards_even_float32_nat8 = 1256
 
 Value type (abstract notation)
-float32 -> nat8
+float32 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -15993,7 +15993,7 @@ To apply a node (also called the left node), given a target stack and a paramete
             <Text>cast_nat8_int64 = 10271
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16002,7 +16002,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_zero_int32 = 290
 
 Value type (abstract notation)
-int32 -> int32 -> maybe int32
+int32 -&gt; int32 -&gt; maybe int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16020,7 +16020,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat16_nat8 = 10279
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16046,7 +16046,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_even_float64_nat8 = 1257
 
 Value type (abstract notation)
-float64 -> nat8
+float64 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16083,7 +16083,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_right_nat8 = 1540
 
 Value type (abstract notation)
-nat8 -> nat8 -> nat8
+nat8 -&gt; nat8 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16115,7 +16115,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat8_nat16 = 10272
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16124,7 +16124,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_zero_int64 = 291
 
 Value type (abstract notation)
-int64 -> int64 -> maybe int64
+int64 -&gt; int64 -&gt; maybe int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16147,7 +16147,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat16_nat32 = 10280
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16205,7 +16205,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_right_nat16 = 1541
 
 Value type (abstract notation)
-nat16 -> nat8 -> nat16
+nat16 -&gt; nat8 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16235,7 +16235,7 @@ Value type (detailed notation)</Text>
             <Text>cast_nat8_nat32 = 10273
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16244,7 +16244,7 @@ Value type (detailed notation)</Text>
             <Text>divide_towards_zero_nat8 = 292
 
 Value type (abstract notation)
-nat8 -> nat8 -> maybe nat8
+nat8 -&gt; nat8 -&gt; maybe nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16299,7 +16299,7 @@ Value type (detailed notation)</Text>
             <Text>rotate_right_nat32 = 1542
 
 Value type (abstract notation)
-nat32 -> nat8 -> nat32
+nat32 -&gt; nat8 -&gt; nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16326,7 +16326,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float64_int8 = 1217
 
 Value type (abstract notation)
-float64 -> int8
+float64 -&gt; int8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16380,7 +16380,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int32_int8 = 10254
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16406,7 +16406,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float32_int16 = 1218
 
 Value type (abstract notation)
-float32 -> int16
+float32 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16448,7 +16448,7 @@ Value type (detailed notation)</Text>
             <Text>shift_right_int64 = 1475
 
 Value type (abstract notation)
-int64 -> nat8 -> int64
+int64 -&gt; nat8 -&gt; int64
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16473,7 +16473,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int32_int16 = 10255
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16485,7 +16485,7 @@ Value type (detailed notation)</Text>
             <Text>round_away_from_zero_float64_int16 = 1219
 
 Value type (abstract notation)
-float64 -> int16
+float64 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16524,7 +16524,7 @@ Value type (detailed notation)</Text>
             <Text>shift_right_nat8 = 1476
 
 Value type (abstract notation)
-nat8 -> nat8 -> nat8
+nat8 -&gt; nat8 -&gt; nat8
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16556,7 +16556,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int32_int64 = 10256
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16601,7 +16601,7 @@ Value type (detailed notation)</Text>
             <Text>shift_right_nat16 = 1477
 
 Value type (abstract notation)
-nat16 -> nat8 -> nat16
+nat16 -&gt; nat8 -&gt; nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16627,7 +16627,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float32_int16 = 1186
 
 Value type (abstract notation)
-float32 -> int16
+float32 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16645,7 +16645,7 @@ Value type (detailed notation)</Text>
             <Text>cast_int32_nat8 = 10257
 
 Value type (abstract notation)
-int8 -> maybe int16
+int8 -&gt; maybe int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16710,7 +16710,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float64_int16 = 1187
 
 Value type (abstract notation)
-float64 -> int16
+float64 -&gt; int16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16784,7 +16784,7 @@ Value type (detailed notation)</Text>
             <Text>subtract_nat16 = 229
 
 Value type (abstract notation)
-nat16 -> nat16 -> maybe nat16
+nat16 -&gt; nat16 -&gt; maybe nat16
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16816,7 +16816,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float32_int32 = 1188
 
 Value type (abstract notation)
-float32 -> int32
+float32 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16870,7 +16870,7 @@ Value type (detailed notation)</Text>
             <Text>subtract_nat32 = 230
 
 Value type (abstract notation)
-nat32 -> nat32 -> maybe nat32
+nat32 -&gt; nat32 -&gt; maybe nat32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16907,7 +16907,7 @@ Value type (detailed notation)</Text>
             <Text>round_towards_zero_float64_int32 = 1189
 
 Value type (abstract notation)
-float64 -> int32
+float64 -&gt; int32
 
 Value type (detailed notation)</Text>
         </Document>
@@ -16992,7 +16992,7 @@ Value type (detailed notation)</Text>
             <Text>subtract_nat64 = 231
 
 Value type (abstract notation)
-nat64 -> nat64 -> maybe nat64
+nat64 -&gt; nat64 -&gt; maybe nat64
 
 Value type (detailed notation)</Text>
         </Document>
