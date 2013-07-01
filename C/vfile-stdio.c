@@ -69,7 +69,7 @@ HELPER ssize_t vfile_stdio_read
     struct vfile_stdio_state *vfile_state =
         (struct vfile_stdio_state *) vfile_state_in;
     
-    return fread(buffer, length, 1, vfile_state->stream);
+    return fread(buffer, 1, length, vfile_state->stream);
 }
 
 
@@ -79,6 +79,6 @@ HELPER ssize_t vfile_stdio_write
     struct vfile_stdio_state *vfile_state =
         (struct vfile_stdio_state *) vfile_state_in;
     
-    return fwrite(buffer, length, 1, vfile_state->stream);
+    return fwrite(buffer, 1, length, vfile_state->stream);
 }
 
