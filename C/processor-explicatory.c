@@ -134,7 +134,7 @@ HELPER void processor_explicatory_step
                     process_state->buffer_length += bytes_read;
                 }
             }
-        
+            
             if(process_state->buffer_length) {
                 uint8_t c = process_state->buffer[0];
                 if(isspace(c)) {
@@ -147,8 +147,10 @@ HELPER void processor_explicatory_step
                 } else if(isalpha(c) || isdigit(c) || (c == '_')) {
                     size_t token_length = 1;
                     while(1) {
+                        printf("token length %llu; buffer length %llu\n", (unsigned long long) token_length, (unsigned long long) process_state->buffer_length);
                         while(token_length < process_state->buffer_length) {
                             c = process_state->buffer[token_length];
+                            printf("'%c'\n", c);
                             if(!(isalpha(c) || isdigit(c) || (c == '_')))
                                 break;
                             token_length++;
