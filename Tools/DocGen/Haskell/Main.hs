@@ -315,7 +315,7 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
                  bodySoFar)
                 childSection -> do
                   let (indexHere, letteredMode) =
-                        case sectionType section of
+                        case sectionType childSection of
                           Lettered -> if letteredModeSoFar
                                         then (indexSoFar, True)
                                         else (1, True)
