@@ -425,9 +425,9 @@ computeFlattenedOutput
                   then Text name
                   else Link identifier [Text name]
               overallNavigation =
-                [[linkIfNotHere tableOfContentsIdentifier "Table of Contents",
-                  Text titleSeparator,
-                  linkIfNotHere symbolIndexIdentifier "Symbol Index"]]
+                [[linkIfNotHere tableOfContentsIdentifier "Table of Contents"
+                  {- Text titleSeparator,
+                     linkIfNotHere symbolIndexIdentifier "Symbol Index" -}]]
           in overallNavigation
              ++ case (outputSectionNumber section,
                       outputSectionTitle section) of
