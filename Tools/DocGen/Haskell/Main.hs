@@ -50,6 +50,7 @@ data OutputSection =
       outputSectionID :: T.Text,
       outputSectionNumber :: Maybe T.Text,
       outputSectionTitle :: Maybe [(T.Text, T.Text)],
+      outputSectionProperTitle :: Maybe T.Text,
       outputSectionParentBody :: [BodyItem],
       outputSectionSelfBody :: [BodyItem],
       outputSectionChildren :: [OutputSection]
@@ -158,6 +159,7 @@ process inputWrapperPath outputDirectoryPath = do
            >>= return . (\draft -> computeFlattenedOutput
                                      (outputSectionID draft)
                                      (outputSectionID draft)
+                                     Nothing
                                      Nothing
                                      draft)
   IO.createDirectory outputDirectoryPath
@@ -287,7 +289,7 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
                      [fromMaybe "" numberSoFar,
                       T.pack [chr (ord 'A' + nextNumberPart - 1)],
                       "."]
-                 Anonymous -> numberSoFar
+                 Anonymous -> Nothing
                  InParent _ -> Nothing
       identifier = computeIdentifierHash $ sectionDocumentID section
       finalTitleComponent =
@@ -298,10 +300,14 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
         case sectionType section of
           InParent False -> Nothing
           InParent True -> fmap (\item -> [item]) finalTitleComponent
-          Anonymous -> fmap (\item -> [item]) finalTitleComponent
+          Anonymous -> Just titleSoFar
           _ -> case titleSoFar ++ maybeToList finalTitleComponent of
                  [] -> Nothing
                  result -> Just result
+      properTitle =
+        case sectionType section of
+          Anonymous -> fmap snd finalTitleComponent
+          _ -> Nothing
       inParent =
         case sectionType section of
           InParent _ -> True
@@ -369,6 +375,7 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
               outputSectionID = identifier,
               outputSectionNumber = number,
               outputSectionTitle = title,
+              outputSectionProperTitle = properTitle,
               outputSectionParentBody = if inParent
                                          then bodyPrefix ++ body
                                          else parentBody,
@@ -393,12 +400,14 @@ computeIdentifierHash documentID =
 computeFlattenedOutput
   :: T.Text
   -> T.Text
+  -> Maybe T.Text
   -> Maybe [(T.Text, T.Text)]
   -> OutputSection
   -> [(T.Text, FlattenedOutputSection)]
 computeFlattenedOutput
     tableOfContentsIdentifier
     symbolIndexIdentifier
+    maybeParentNumber
     maybeParentTitle
     section =
   [(outputSectionID section,
@@ -408,61 +417,59 @@ computeFlattenedOutput
             (Just number, Just title) ->
               T.concat [number,
                         " ",
-                        T.intercalate titleSeparator $ map snd title]
-            (Just number, Nothing) -> number
+                        T.intercalate titleSeparator $ map snd title,
+                        " | Modern Data the Reference"]
+            (Just number, Nothing) ->
+              T.concat [number,
+                        " | Modern Data the Reference"]
             (Nothing, Just title) ->
-              T.intercalate titleSeparator $ map snd title
-            (Nothing, Nothing) -> "Table of Contents",
+              T.concat [T.intercalate titleSeparator $ map snd title,
+                        " | Modern Data the Reference"]
+            (Nothing, Nothing) -> "Modern Data the Reference",
         flattenedOutputSectionNavigation =
-          let titlePartsExceptLast title =
-                titleParts (init title) ++ [Text $ snd $ last title]
-              titleParts title =
+          let titleParts title =
                 map (\(identifier, name) ->
-                         Link identifier [Text name])
+                        linkIfNotHere identifier name)
                     title
               linkIfNotHere identifier name =
                 if outputSectionID section == identifier
                   then Text name
                   else Link identifier [Text name]
               overallNavigation =
-                [[linkIfNotHere tableOfContentsIdentifier "Table of Contents"
-                  {- Text titleSeparator,
-                     linkIfNotHere symbolIndexIdentifier "Symbol Index" -}]]
+                [[linkIfNotHere tableOfContentsIdentifier
+                                "Modern Data the Reference"]]
+              maybeDrillDownNumber =
+                case outputSectionNumber section of
+                  Nothing ->
+                    case maybeParentNumber of
+                      Nothing -> Nothing
+                      Just parentNumber -> Just [Text parentNumber]
+                  Just number -> Just [Text number]
+              maybeDrillDownParts =
+                case outputSectionTitle section of
+                  Just title -> Just $
+                    intersperse (Text titleSeparator)
+                                (titleParts title)
+                  Nothing -> Nothing
+              maybeDrillDownLine =
+                case (maybeDrillDownNumber, maybeDrillDownParts) of
+                  (Nothing, Nothing) -> Nothing
+                  (Just number, Nothing) -> Just number
+                  (Nothing, Just parts) -> Just parts
+                  (Just number, Just parts) ->
+                    Just $ number ++ [Text " "] ++ parts
+              maybeProperLine =
+                case outputSectionProperTitle section of
+                  Just properTitle -> Just [Text properTitle]
+                  Nothing -> Nothing
           in overallNavigation
-             ++ case (outputSectionNumber section,
-                      outputSectionTitle section) of
-                  (Just number, Just [(_, properTitle)]) ->
-                    case maybeParentTitle of
-                      Nothing ->
-                        [[Text number, Text " ", Text properTitle]]
-                      Just parentTitle ->
-                        [[Text number, Text " "]
-                         ++ (intersperse (Text titleSeparator)
-                                         (titleParts parentTitle)),
-                         [Text properTitle]]
-                  (Nothing, Just [(_, properTitle)]) ->
-                    case maybeParentTitle of
-                      Nothing ->
-                        [[Text properTitle]]
-                      Just parentTitle ->
-                        [intersperse (Text titleSeparator)
-                                     (titleParts parentTitle),
-                         [Text properTitle]]
-                  (Just number, Just title) ->
-                    [[Text number, Text " "]
-                     ++ (intersperse (Text titleSeparator)
-                                     (titlePartsExceptLast title))]
-                  (Just number, Nothing) ->
-                    [[Text number]]
-                  (Nothing, Just title) ->
-                    [intersperse (Text titleSeparator)
-                                 (titlePartsExceptLast title)]
-                  (Nothing, Nothing) ->
-                    [],
+             ++ maybeToList maybeDrillDownLine
+             ++ maybeToList maybeProperLine,
         flattenedOutputSectionBody = outputSectionSelfBody section
       })]
   ++ concatMap (computeFlattenedOutput tableOfContentsIdentifier
                                        symbolIndexIdentifier
+                                       (outputSectionNumber section)
                                        (outputSectionTitle section))
                (outputSectionChildren section)
 
