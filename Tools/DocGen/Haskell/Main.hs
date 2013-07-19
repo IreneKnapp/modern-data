@@ -164,6 +164,7 @@ process inputWrapperPath outputDirectoryPath = do
                                      Nothing
                                      Nothing
                                      draft)
+  putStrLn "Writing output..."
   IO.createDirectory outputDirectoryPath
   LBS.writeFile (outputDirectoryPath ++ "/content.json")
                 (JSON.encode
@@ -413,7 +414,16 @@ getSectionBody inputWrapperPath documentID = do
   if exists
     then do
       rtf <- RTF.readFile inputDocumentPath
-      return [Paragraph [Text "Hmm..."]]
+      case rtf of
+        Nothing -> do
+          putStrLn $ "Unable to read from " ++ inputDocumentPath
+          IO.exitFailure
+        Just rtf -> do
+          let paragraphs =
+                map (\paragraphIn ->
+                       Paragraph [Text $ RTF.paragraphText paragraphIn])
+                    (RTF.rtfParagraphs rtf)
+          return paragraphs
     else return []
 
 
