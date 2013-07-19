@@ -432,30 +432,33 @@ computeFlattenedOutput
              ++ case (outputSectionNumber section,
                       outputSectionTitle section) of
                   (Just number, Just [(_, properTitle)]) ->
-                    (case maybeParentTitle of
-                       Nothing -> []
-                       Just parentTitle ->
-                         [[Text number, Text " "]
-                          ++ (intersperse (Text titleSeparator)
-                                          (titleParts parentTitle))])
-                    ++ [[Text properTitle]]
+                    case maybeParentTitle of
+                      Nothing ->
+                        [[Text number, Text " ", Text properTitle]]
+                      Just parentTitle ->
+                        [[Text number, Text " "]
+                         ++ (intersperse (Text titleSeparator)
+                                         (titleParts parentTitle)),
+                         [Text properTitle]]
                   (Nothing, Just [(_, properTitle)]) ->
-                    (case maybeParentTitle of
-                       Nothing -> []
-                       Just parentTitle ->
-                         [intersperse (Text titleSeparator)
-                                      (titleParts parentTitle)])
-                    ++ [[Text properTitle]]
+                    case maybeParentTitle of
+                      Nothing ->
+                        [[Text properTitle]]
+                      Just parentTitle ->
+                        [intersperse (Text titleSeparator)
+                                     (titleParts parentTitle),
+                         [Text properTitle]]
                   (Just number, Just title) ->
                     [[Text number, Text " "]
                      ++ (intersperse (Text titleSeparator)
                                      (titlePartsExceptLast title))]
-                  (Just number, Nothing) -> [[Text number]]
+                  (Just number, Nothing) ->
+                    [[Text number]]
                   (Nothing, Just title) ->
                     [intersperse (Text titleSeparator)
                                  (titlePartsExceptLast title)]
                   (Nothing, Nothing) ->
-                    [[Text "Table of Contents"]],
+                    [],
         flattenedOutputSectionBody = outputSectionSelfBody section
       })]
   ++ concatMap (computeFlattenedOutput tableOfContentsIdentifier
