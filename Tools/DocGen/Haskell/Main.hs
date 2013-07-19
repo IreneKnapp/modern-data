@@ -15,6 +15,7 @@ import qualified System.Exit as IO
 import qualified System.FilePath as IO
 import qualified System.Directory as IO
 import qualified System.IO as IO
+import qualified Text.RTF as RTF
 import qualified Text.XML as XML
 import qualified Paths_docgen as Paths
 
@@ -119,6 +120,7 @@ main = do
 
 process :: FilePath -> FilePath -> IO ()
 process inputWrapperPath outputDirectoryPath = do
+  putStrLn "Processing the binder..."
   let inputBinderPath =
         fromString $ inputWrapperPath ++ "/"
                      ++ (IO.takeBaseName inputWrapperPath) ++ ".scrivx"
@@ -155,7 +157,7 @@ process inputWrapperPath outputDirectoryPath = do
              Nothing -> do
                putStrLn $ "Draft not found by that name in the binder."
                IO.exitFailure
-             Just draft -> getOutputDraft draft
+             Just draft -> getOutputDraft inputWrapperPath draft
            >>= return . (\draft -> computeFlattenedOutput
                                      (outputSectionID draft)
                                      (outputSectionID draft)
@@ -266,16 +268,17 @@ computeDraft binder =
           maybeDraft
 
 
-getOutputDraft :: Section -> IO OutputSection
-getOutputDraft draft = do
-  (result, _) <- getOutputSection True Nothing 1 [] draft
+getOutputDraft :: FilePath -> Section -> IO OutputSection
+getOutputDraft inputWrapperPath draft = do
+  (result, _) <- getOutputSection inputWrapperPath True Nothing 1 [] draft
   return result
 
 
 getOutputSection
-  :: Bool -> Maybe T.Text -> Int -> [(T.Text, T.Text)] -> Section
+  :: FilePath -> Bool -> Maybe T.Text -> Int -> [(T.Text, T.Text)] -> Section
   -> IO (OutputSection, Bool)
-getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
+getOutputSection inputWrapperPath isRoot numberSoFar nextNumberPart titleSoFar
+                 section = do
   let number =
         if isRoot
           then Nothing
@@ -327,7 +330,8 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
                                         else (1, True)
                           _ -> (indexSoFar, letteredModeSoFar)
                   (child, childInLine) <-
-                    getOutputSection False
+                    getOutputSection inputWrapperPath
+                                     False
                                      childNumber
                                      indexHere
                                      (fromMaybe [] titleSoFar)
@@ -371,19 +375,46 @@ getOutputSection isRoot numberSoFar nextNumberPart titleSoFar section = do
             [Header [Link identifier [Text title]]]
           (Nothing, Nothing) ->
             [Header [Link identifier [Text "?"]]]
+  putStrLn $ "Processing "
+             ++ (case number of
+                   Nothing -> ""
+                   Just number -> T.unpack number ++ " ")
+             ++ (case title of
+                   Nothing -> "(Untitled)"
+                   Just title -> T.unpack $ T.intercalate titleSeparator
+                                                          $ map snd title)
+             ++ (case properTitle of
+                   Nothing -> ""
+                   Just properTitle ->
+                     T.unpack titleSeparator ++ T.unpack properTitle)
+             ++ "..."
+  bodyMain <- getSectionBody inputWrapperPath (sectionDocumentID section)
   return (OutputSection {
               outputSectionID = identifier,
               outputSectionNumber = number,
               outputSectionTitle = title,
               outputSectionProperTitle = properTitle,
               outputSectionParentBody = if inParent
-                                         then bodyPrefix ++ body
+                                         then bodyPrefix ++ bodyMain ++ body
                                          else parentBody,
               outputSectionSelfBody = if inParent
                                         then []
-                                        else bodyPrefix ++ body,
+                                        else bodyPrefix ++ bodyMain ++ body,
               outputSectionChildren = children
            }, inParent)
+
+
+getSectionBody :: FilePath -> T.Text -> IO [BodyItem]
+getSectionBody inputWrapperPath documentID = do
+  let inputDocumentPath =
+        fromString $ inputWrapperPath ++ "/Files/Docs/"
+                     ++ (T.unpack documentID) ++ ".rtf"
+  exists <- IO.doesFileExist inputDocumentPath
+  if exists
+    then do
+      rtf <- RTF.readFile inputDocumentPath
+      return [Paragraph [Text "Hmm..."]]
+    else return []
 
 
 computeIdentifierHash :: T.Text -> T.Text
