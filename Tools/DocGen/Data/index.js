@@ -180,7 +180,12 @@ var loadContent = function() {
         if(xhr.readyState == 4) {
             var response = xhr.responseText;
             content = response ? JSON.parse(response) : null;
-            window.location.hash = "#" + content.toc;
+            
+            var hash = window.location.hash;
+            if(!Is.string(hash) || (hash.length == 0)) {
+                window.location.hash = "#" + content.toc;
+            }
+            
             updatePage();
             window.addEventListener("hashchange", updatePage);
         }
