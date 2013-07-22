@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="index.css" rel="stylesheet">
+<script src="handlebars.js"></script>
+<script src="index.js"></script>
+<title>Modern Data</title>
+</head>
+<body>
+
+<noscript>
+<div class="alert">
+<h1>JavaScript required</h1>
+<p>Sorry!</p>
+</div>
+</noscript>
+
+<script name="loading" type="template">
+<div class="alert">
+<h1>Please wait...</h1>
+<p>The contents of the manual are currently loading.</p>
+</div>
+</script>
+
+<script name="page" type="template"><div class="navigation">{{#each navigation}}<div>{{#each this}}{{textItem this}}{{/each}}</div>{{/each}}</div>
+<div class="content">{{#each body}}{{bodyItem this}}{{/each}}
+<div class="copyright">Copyright 2013 Irene Knapp.  All rights reserved.</div>
+</div>
+</script>
+
+<script name="textItem" type="template">{{#if string}}{{value}}{{/if}}{{#if link}}<a href="#{{href}}">{{#each contents}}{{textItem this}}{{/each}}</a>{{/if}}</script>
+
+<script name="bodyItem" type="template">{{#if header}}
+<h1>{{#each contents}}{{textItem this}}{{/each}}</h1>{{/if}}{{#if paragraph}}
+<p>{{#each contents}}{{textItem this}}{{/each}}</p>{{/if}}</script>
+
+</body>
+</html>
