@@ -19,6 +19,7 @@ import qualified Text.RTF as RTF
 import qualified Text.XML as XML
 import qualified Paths_docgen as Paths
 
+import Control.DeepSeq
 import Control.Monad.Identity
 import Data.Char
 import Data.List
@@ -37,6 +38,13 @@ data Section =
       sectionDocumentID :: T.Text,
       sectionChildren :: [Section]
     }
+instance NFData Section where
+  rnf section =
+    (sectionPath section)
+    `deepseq` (sectionType section)
+    `deepseq` (sectionDocumentID section)
+    `deepseq` (sectionChildren section)
+    `deepseq` ()
 
 
 data SectionType
@@ -44,6 +52,15 @@ data SectionType
   | Lettered
   | Anonymous
   | InParent Bool
+instance NFData SectionType where
+  rnf Numbered =
+    Numbered `seq` ()
+  rnf Lettered =
+    Lettered `seq` ()
+  rnf Anonymous =
+    Anonymous `seq` ()
+  rnf (InParent flag) =
+    InParent `seq` flag `deepseq` ()
 
 
 data OutputSection =
@@ -56,6 +73,16 @@ data OutputSection =
       outputSectionSelfBody :: [BodyItem],
       outputSectionChildren :: [OutputSection]
     }
+instance NFData OutputSection where
+  rnf section =
+    (outputSectionID section)
+    `deepseq` (outputSectionNumber section)
+    `deepseq` (outputSectionTitle section)
+    `deepseq` (outputSectionProperTitle section)
+    `deepseq` (outputSectionParentBody section)
+    `deepseq` (outputSectionSelfBody section)
+    `deepseq` (outputSectionChildren section)
+    `deepseq` ()
 
 
 data FlattenedOutputSection =
@@ -71,6 +98,12 @@ instance JSON.ToJSON FlattenedOutputSection where
        "navigation" JSON..= 
          (JSON.toJSON $ flattenedOutputSectionNavigation section),
        "body" JSON..= (JSON.toJSON $ flattenedOutputSectionBody section)]
+instance NFData FlattenedOutputSection where
+  rnf section =
+    (flattenedOutputSectionTitle section)
+    `deepseq` (flattenedOutputSectionNavigation section)
+    `deepseq` (flattenedOutputSectionBody section)
+    `deepseq` ()
 
 
 data BodyItem
@@ -81,6 +114,12 @@ instance JSON.ToJSON BodyItem where
     JSON.toJSON $ JSON.String "header" : map JSON.toJSON items
   toJSON (Paragraph items) =
     JSON.toJSON $ JSON.String "paragraph" : map JSON.toJSON items 
+instance NFData BodyItem where
+   rnf (Header items) =
+     items `deepseq` ()
+   rnf (Paragraph items) =
+     items `deepseq` ()
+
 
 data TextItem
   = Link T.Text [TextItem]
@@ -91,6 +130,11 @@ instance JSON.ToJSON TextItem where
                   : JSON.String identifier
                   : map JSON.toJSON items
   toJSON (Text text) = JSON.String text
+instance NFData TextItem where
+  rnf (Link destination items) =
+    destination `deepseq` items `deepseq` ()
+  rnf (Text item) =
+    item `deepseq` ()
 
 
 main :: IO ()
@@ -164,6 +208,7 @@ process inputWrapperPath outputDirectoryPath = do
                                      Nothing
                                      Nothing
                                      draft)
+  return $!! draft
   putStrLn "Writing output..."
   IO.createDirectory outputDirectoryPath
   LBS.writeFile (outputDirectoryPath ++ "/content.json")
@@ -220,12 +265,12 @@ collectBinderItem labels binderItem path = do
           _ -> Numbered
       documentID = T.concat ((fromNode binderItem)
                              $| attribute "ID")
-  return Section {
-             sectionPath = path,
-             sectionType = sectionType',
-             sectionDocumentID = documentID,
-             sectionChildren = children
-           }
+  return $!! Section {
+                 sectionPath = path,
+                 sectionType = sectionType',
+                 sectionDocumentID = documentID,
+                 sectionChildren = children
+               }
 
 
 visitSectionTree :: (Monad m) => ([a] -> Section -> m a) -> Section -> m a
@@ -352,7 +397,7 @@ getOutputSection inputWrapperPath isRoot numberSoFar nextNumberPart titleSoFar
                         if childInLine
                           then indexHere
                           else indexHere + 1
-                  return (index, letteredMode, title, children, body))
+                  return $!! (index, letteredMode, title, children, body))
               (1, False, initialTitle, [], [])
               (sectionChildren section)
   let bodyPrefix =
@@ -390,19 +435,21 @@ getOutputSection inputWrapperPath isRoot numberSoFar nextNumberPart titleSoFar
                      T.unpack titleSeparator ++ T.unpack properTitle)
              ++ "..."
   bodyMain <- getSectionBody inputWrapperPath (sectionDocumentID section)
-  return (OutputSection {
-              outputSectionID = identifier,
-              outputSectionNumber = number,
-              outputSectionTitle = title,
-              outputSectionProperTitle = properTitle,
-              outputSectionParentBody = if inParent
-                                         then bodyPrefix ++ bodyMain ++ body
-                                         else parentBody,
-              outputSectionSelfBody = if inParent
-                                        then []
-                                        else bodyPrefix ++ bodyMain ++ body,
-              outputSectionChildren = children
-           }, inParent)
+  return $!! (OutputSection {
+                  outputSectionID = identifier,
+                  outputSectionNumber = number,
+                  outputSectionTitle = title,
+                  outputSectionProperTitle = properTitle,
+                  outputSectionParentBody =
+                    if inParent
+                      then bodyPrefix ++ bodyMain ++ body
+                      else parentBody,
+                  outputSectionSelfBody =
+                    if inParent
+                      then []
+                      else bodyPrefix ++ bodyMain ++ body,
+                  outputSectionChildren = children
+               }, inParent)
 
 
 getSectionBody :: FilePath -> T.Text -> IO [BodyItem]
@@ -423,7 +470,7 @@ getSectionBody inputWrapperPath documentID = do
                 map (\paragraphIn ->
                        Paragraph [Text $ RTF.paragraphText paragraphIn])
                     (RTF.rtfParagraphs rtf)
-          return paragraphs
+          return $!! paragraphs
     else return []
 
 
