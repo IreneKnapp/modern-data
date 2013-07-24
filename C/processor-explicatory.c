@@ -4,17 +4,6 @@
 #include "internal.h"
 
 
-struct processor_explicatory_state {
-    struct modern_process process;
-    struct modern_library *library;
-    int started : 1;
-    int ended : 1;
-    int aborted : 1;
-    size_t buffer_length;
-    uint8_t buffer[64];
-};
-
-
 HELPER void *processor_explicatory_initialize(modern_library *library);
 HELPER void processor_explicatory_finalize
   (modern_library *library_in, void *process_state);
@@ -31,6 +20,73 @@ HELPER void processor_explicatory_run
 HELPER void processor_explicatory_extend_buffer
   (struct processor_explicatory_state *process_state,
    size_t desired_size);
+
+
+HELPER uint8_t *raw_keywords[] = {
+    (uint8_t *) "name_definition",
+    (uint8_t *) "value_definition_is_next",
+    (uint8_t *) "type_definition_bool",
+    (uint8_t *) "type_definition_ordering",
+    (uint8_t *) "type_definition_maybe_is_next",
+    (uint8_t *) "type_definition_int8",
+    (uint8_t *) "type_definition_int16",
+    (uint8_t *) "type_definition_int32",
+    (uint8_t *) "type_definition_int64",
+    (uint8_t *) "type_definition_nat8",
+    (uint8_t *) "type_definition_nat16",
+    (uint8_t *) "type_definition_nat32",
+    (uint8_t *) "type_definition_nat64",
+    (uint8_t *) "type_definition_float32",
+    (uint8_t *) "type_definition_float64",
+    (uint8_t *) "type_definition_utf8",
+    (uint8_t *) "type_definition_blob",
+    (uint8_t *) "type_definition_function_is_next",
+    (uint8_t *) "type_definition_sigma_is_next",
+    (uint8_t *) "type_definition_named_is_next",
+    (uint8_t *) "type_definition_universe",
+    (uint8_t *) "type_definition_satisfies_is_next",
+    (uint8_t *) "bool_false",
+    (uint8_t *) "bool_true",
+    (uint8_t *) "ordering_less",
+    (uint8_t *) "ordering_equal",
+    (uint8_t *) "ordering_greater",
+    (uint8_t *) "maybe_nothing",
+    (uint8_t *) "maybe_just_is_next",
+    (uint8_t *) "int8",
+    (uint8_t *) "int16",
+    (uint8_t *) "int32",
+    (uint8_t *) "int64",
+    (uint8_t *) "nat8",
+    (uint8_t *) "nat16",
+    (uint8_t *) "nat32",
+    (uint8_t *) "nat64",
+    (uint8_t *) "float32",
+    (uint8_t *) "float64",
+    (uint8_t *) "utf8_start",
+    (uint8_t *) "utf8_data",
+    (uint8_t *) "utf8_end",
+    (uint8_t *) "blob_start",
+    (uint8_t *) "blob_data",
+    (uint8_t *) "blob_end",
+    (uint8_t *) "sigma_is_next",
+    (uint8_t *) "named_value_is_next",
+    (uint8_t *) "lambda_is_next",
+    (uint8_t *) "apply_is_next",
+    (uint8_t *) "type_family_is_next",
+    (uint8_t *) "let_is_next",
+    (uint8_t *) "backreference",
+    (uint8_t *) "builtin",
+    (uint8_t *) "item_from_context",
+    NULL,
+};
+
+
+INTERNAL void
+    initialize_processor_explicatory
+    (struct modern_library *library)
+{
+    printf("Hmm\n");
+}
 
 
 struct modern_processor *modern_processor_explicatory_make
@@ -146,16 +202,12 @@ HELPER void processor_explicatory_step
                     }
                 } else if(isalpha(c) || isdigit(c) || (c == '_')) {
                     size_t token_length = 1;
-                    while(1) {
-                        printf("token length %llu; buffer length %llu\n", (unsigned long long) token_length, (unsigned long long) process_state->buffer_length);
-                        while(token_length < process_state->buffer_length) {
-                            c = process_state->buffer[token_length];
-                            printf("'%c'\n", c);
-                            if(!(isalpha(c) || isdigit(c) || (c == '_')))
-                                break;
-                            token_length++;
-                        }
-                        if(token_length < process_state->buffer_length) break;
+                    while(token_length < process_state->buffer_length) {
+                        c = process_state->buffer[token_length];
+                        printf("'%c'\n", c);
+                        if(!(isalpha(c) || isdigit(c) || (c == '_')))
+                            break;
+                        token_length++;
                     }
                 }
             }

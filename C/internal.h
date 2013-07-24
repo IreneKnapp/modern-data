@@ -8,6 +8,7 @@ struct modern_library {
     struct modern_node_representation *node_representation;
     void (*finalizer)(void *client_state);
     void *client_state;
+    struct processor_explicatory_keyword_tree *processor_explicatory_keywords;
 };
 
 
@@ -102,6 +103,33 @@ struct modern_context {
     size_t n_values;
     size_t n_buckets;
     struct modern *hash;
+};
+
+
+struct processor_explicatory_state {
+    struct modern_process process;
+    struct modern_library *library;
+    int started : 1;
+    int ended : 1;
+    int aborted : 1;
+    size_t buffer_length;
+    uint8_t buffer[64];
+};
+
+
+struct processor_explicatory_keyword_tree {
+    unsigned is_leaf : 1;
+    union {
+        struct {
+            struct processor_explicatory_keyword_tree_edge **edges;
+        } internal_node;
+        struct {
+            void (*emit)
+                 (struct processor_explicatory_state *process_state,
+                  struct modern_stream *stream, void *stream_state,
+                  struct modern_vfile *vfile, void *vfile_state);
+        } leaf_node;
+    } specifics;
 };
 
 
@@ -481,4 +509,10 @@ INTERNAL void
     (modern_library *library,
      void *value,
      struct modern_hash hash);
+
+
+// processor-explicatory.c
+INTERNAL void
+    initialize_processor_explicatory
+    (struct modern_library *library);
 

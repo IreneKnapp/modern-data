@@ -23,6 +23,8 @@ modern_library *modern_library_initialize
     library->node_representation = node_representation;
     library->finalizer = finalizer;
     library->client_state = client_state;
+
+    initialize_processor_explicatory(library);
     
     return (modern_library *) library;
 }
