@@ -3,6 +3,9 @@
 #define HELPER static
 
 
+#define PROCESSOR_EXPLICATORY_KEYWORD_TREE_EDGES_PER_NODE 8
+
+
 struct modern_library {
     struct modern_error_handler *error_handler;
     struct modern_allocator *allocator;
@@ -118,11 +121,19 @@ struct processor_explicatory_state {
 };
 
 
+struct processor_explicatory_keyword_tree_edge {
+    uint8_t *text;
+    struct processor_explicatory_keyword_tree *node;
+};
+
+
 struct processor_explicatory_keyword_tree {
     unsigned is_leaf : 1;
     union {
         struct {
-            struct processor_explicatory_keyword_tree_edge **edges;
+            uint8_t edge_count;
+            struct processor_explicatory_keyword_tree_edge edges
+                [PROCESSOR_EXPLICATORY_KEYWORD_TREE_EDGES_PER_NODE];
         } internal_node;
         struct {
             void (*emit)
