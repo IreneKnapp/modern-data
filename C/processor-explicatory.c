@@ -89,7 +89,14 @@ INTERNAL void
 }
 
 
-struct modern_processor *modern_processor_explicatory_make
+INTERNAL void
+    finalize_processor_explicatory
+    (struct modern_library *library)
+{
+}
+
+
+PUBLIC struct modern_processor *modern_processor_explicatory_make
   (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;

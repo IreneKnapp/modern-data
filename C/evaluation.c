@@ -718,7 +718,7 @@ HELPER struct modern *helper_builtin_apply
 }
 
 
-modern *modern_evaluate
+PUBLIC modern *modern_evaluate
   (modern_library *library_in, modern *node_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -730,7 +730,7 @@ modern *modern_evaluate
 }
 
 
-modern *modern_resolve_backreferences
+PUBLIC modern *modern_resolve_backreferences
   (modern_library *library_in, modern *node_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;

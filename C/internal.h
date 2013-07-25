@@ -1,3 +1,4 @@
+#define PUBLIC
 #define INTERNAL __attribute__ ((visibility ("hidden")))
 #define HELPER static
 
@@ -514,5 +515,8 @@ INTERNAL void
 // processor-explicatory.c
 INTERNAL void
     initialize_processor_explicatory
+    (struct modern_library *library);
+INTERNAL void
+    finalize_processor_explicatory
     (struct modern_library *library);
 

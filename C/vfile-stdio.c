@@ -14,7 +14,7 @@ HELPER ssize_t vfile_stdio_write
   (void *vfile_state, uint8_t *buffer, size_t length);
 
 
-struct modern_vfile *modern_vfile_stdio_make
+PUBLIC struct modern_vfile *modern_vfile_stdio_make
   (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -34,7 +34,7 @@ struct modern_vfile *modern_vfile_stdio_make
 }
 
 
-void *modern_vfile_stdio_initialize
+PUBLIC void *modern_vfile_stdio_initialize
   (modern_library *library_in,
    FILE *stream)
 {
@@ -54,7 +54,7 @@ void *modern_vfile_stdio_initialize
 }
 
 
-void modern_vfile_stdio_finalize
+PUBLIC void modern_vfile_stdio_finalize
   (modern_library *library_in, void *vfile_state)
 {
     struct modern_library *library = (struct modern_library *) library_in;

@@ -1,5 +1,6 @@
 #include <string.h>
 #include "modern.h"
+#include "internal.h"
 
 
 __attribute__((always_inline))
@@ -26,7 +27,9 @@ uint64_t fmix(uint64_t k) {
 }
 
 
-void modern_hash_compute(uint8_t *data, size_t length, struct modern_hash *out) {
+PUBLIC void modern_hash_compute
+    (uint8_t *data, size_t length, struct modern_hash *out)
+{
     const size_t nblocks = length / 16;
     
     uint64_t h1 = 0;
@@ -92,9 +95,9 @@ void modern_hash_compute(uint8_t *data, size_t length, struct modern_hash *out) 
 }
 
 
-void modern_child_hash_compute
-  (struct modern_hash *parent,
-   uint8_t *data, size_t length, struct modern_hash *out)
+PUBLIC void modern_child_hash_compute
+    (struct modern_hash *parent,
+     uint8_t *data, size_t length, struct modern_hash *out)
 {
     size_t length_prime = sizeof(uint64_t) * 2 + length;
     uint8_t *data_prime = malloc(length_prime);
@@ -109,7 +112,7 @@ void modern_child_hash_compute
 }
 
 
-extern void modern_initial_namespace_hash_compute
+PUBLIC void modern_initial_namespace_hash_compute
     (struct modern_hash *out)
 {
     uint8_t *initial_namespace = (uint8_t *) "com.ireneknapp.data.modern";
@@ -117,3 +120,4 @@ extern void modern_initial_namespace_hash_compute
       (initial_namespace, strlen((char *) initial_namespace),
        out);
 }
+

@@ -2,7 +2,7 @@
 #include "internal.h"
 
 
-modern_library *modern_library_initialize
+PUBLIC modern_library *modern_library_initialize
   (struct modern_error_handler *error_handler,
    struct modern_allocator *allocator,
    struct modern_node_representation *node_representation,
@@ -30,7 +30,7 @@ modern_library *modern_library_initialize
 }
 
 
-struct modern_error_handler *modern_library_error_handler_get
+PUBLIC struct modern_error_handler *modern_library_error_handler_get
   (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -38,7 +38,7 @@ struct modern_error_handler *modern_library_error_handler_get
 }
 
 
-struct modern_allocator *modern_library_allocator_get
+PUBLIC struct modern_allocator *modern_library_allocator_get
   (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -46,7 +46,8 @@ struct modern_allocator *modern_library_allocator_get
 }
 
 
-struct modern_node_representation *modern_library_node_representation_get
+PUBLIC struct modern_node_representation *
+  modern_library_node_representation_get
   (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -54,7 +55,7 @@ struct modern_node_representation *modern_library_node_representation_get
 }
 
 
-void modern_library_node_set
+PUBLIC void modern_library_node_set
   (modern_library *library_in,
    struct modern_node_representation *node_representation)
 {
@@ -69,7 +70,7 @@ void modern_library_node_set
 }
 
 
-void *modern_library_client_state_get
+PUBLIC void *modern_library_client_state_get
   (modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
@@ -77,12 +78,14 @@ void *modern_library_client_state_get
 }
 
 
-void modern_library_finalize(modern_library *library_in)
+PUBLIC void modern_library_finalize(modern_library *library_in)
 {
     struct modern_library *library = (struct modern_library *) library_in;
     
     void (*finalizer)(void *client_state) = library->finalizer;
     void *client_state = library->client_state;
+
+    finalize_processor_explicatory(library);
     
     library->allocator->free(client_state, library);
     

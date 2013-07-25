@@ -4,9 +4,10 @@
 #include "internal.h"
 
 
-struct modern_node_representation *modern_node_representation_default_make
-  (struct modern_allocator *allocator,
-   void *client_state)
+PUBLIC struct modern_node_representation *
+    modern_node_representation_default_make
+    (struct modern_allocator *allocator,
+     void *client_state)
 {
     struct modern_node_representation *result =
         allocator->alloc
@@ -109,11 +110,11 @@ struct modern_node_representation *modern_node_representation_default_make
 }
 
 
-void
-  modern_node_representation_default_finalize
-  (struct modern_allocator *allocator,
-   void *client_state,
-   struct modern_node_representation *node_representation)
+PUBLIC void
+    modern_node_representation_default_finalize
+    (struct modern_allocator *allocator,
+     void *client_state,
+     struct modern_node_representation *node_representation)
 {
     allocator->free(client_state, node_representation);
 }
