@@ -13,7 +13,7 @@ OBJECTS=context.o \
         predefined.o \
         processor-explicatory.o \
         vfile-stdio.o
-INCLUDES=modern.h internal.h
+INCLUDES=modern.h internal.h keywords.h
 
 default: all
 all: test-node test-canonical test-out test-in example-canonical
@@ -89,6 +89,15 @@ example-canonical.o: example-canonical.c ${INCLUDES}
 
 example-canonical: ${OBJECTS} example-canonical.o
 	${CC} ${CFLAGS} ${LIBRARIES} ${OBJECTS} example-canonical.o -o example-canonical
+
+make-keywords.o: make-keywords.c
+	${CC} ${CFLAGS} -c make-keywords.c -o make-keywords.o
+
+make-keywords: make-keywords.o
+	${CC} ${CFLAGS} ${LIBRARIES} ${OBJECTS} make-keywords.o -o make-keywords
+
+keywords.h: make-keywords
+	./make-keywords > keywords.h
 
 .dummy: clean default all
 
