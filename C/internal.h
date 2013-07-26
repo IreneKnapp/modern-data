@@ -3,16 +3,12 @@
 #define HELPER static
 
 
-#define PROCESSOR_EXPLICATORY_KEYWORD_TREE_EDGES_PER_NODE 8
-
-
 struct modern_library {
     struct modern_error_handler *error_handler;
     struct modern_allocator *allocator;
     struct modern_node_representation *node_representation;
     void (*finalizer)(void *client_state);
     void *client_state;
-    struct processor_explicatory_keyword_tree *processor_explicatory_keywords;
 };
 
 
@@ -118,30 +114,6 @@ struct processor_explicatory_state {
     int aborted : 1;
     size_t buffer_length;
     uint8_t buffer[64];
-};
-
-
-struct processor_explicatory_keyword_tree_edge {
-    uint8_t *text;
-    struct processor_explicatory_keyword_tree *node;
-};
-
-
-struct processor_explicatory_keyword_tree {
-    unsigned is_leaf : 1;
-    union {
-        struct {
-            uint8_t edge_count;
-            struct processor_explicatory_keyword_tree_edge edges
-                [PROCESSOR_EXPLICATORY_KEYWORD_TREE_EDGES_PER_NODE];
-        } internal_node;
-        struct {
-            void (*emit)
-                 (struct processor_explicatory_state *process_state,
-                  struct modern_stream *stream, void *stream_state,
-                  struct modern_vfile *vfile, void *vfile_state);
-        } leaf_node;
-    } specifics;
 };
 
 
@@ -521,13 +493,4 @@ INTERNAL void
     (modern_library *library,
      void *value,
      struct modern_hash hash);
-
-
-// processor-explicatory.c
-INTERNAL void
-    initialize_processor_explicatory
-    (struct modern_library *library);
-INTERNAL void
-    finalize_processor_explicatory
-    (struct modern_library *library);
 

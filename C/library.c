@@ -24,8 +24,6 @@ PUBLIC modern_library *modern_library_initialize
     library->finalizer = finalizer;
     library->client_state = client_state;
 
-    initialize_processor_explicatory(library);
-    
     return (modern_library *) library;
 }
 
@@ -85,8 +83,6 @@ PUBLIC void modern_library_finalize(modern_library *library_in)
     void (*finalizer)(void *client_state) = library->finalizer;
     void *client_state = library->client_state;
 
-    finalize_processor_explicatory(library);
-    
     library->allocator->free(client_state, library);
     
     finalizer(client_state);

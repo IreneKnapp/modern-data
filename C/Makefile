@@ -13,7 +13,7 @@ OBJECTS=context.o \
         predefined.o \
         processor-explicatory.o \
         vfile-stdio.o
-INCLUDES=modern.h internal.h keywords.h
+INCLUDES=modern.h internal.h
 
 default: all
 all: test-node test-canonical test-out test-in example-canonical
@@ -51,7 +51,7 @@ node-set.o: node-set.c ${INCLUDES}
 predefined.o: predefined.c ${INCLUDES}
 	${CC} ${CFLAGS} -c predefined.c -o predefined.o
 
-processor-explicatory.o: processor-explicatory.c ${INCLUDES}
+processor-explicatory.o: processor-explicatory.c ${INCLUDES} keywords.h
 	${CC} ${CFLAGS} -c processor-explicatory.c -o processor-explicatory.o
 
 vfile-stdio.o: vfile-stdio.c ${INCLUDES}
@@ -93,8 +93,8 @@ example-canonical: ${OBJECTS} example-canonical.o
 make-keywords.o: make-keywords.c
 	${CC} ${CFLAGS} -c make-keywords.c -o make-keywords.o
 
-make-keywords: make-keywords.o
-	${CC} ${CFLAGS} ${LIBRARIES} ${OBJECTS} make-keywords.o -o make-keywords
+make-keywords: make-keywords.o hash.o modern.h
+	${CC} ${CFLAGS} ${LIBRARIES} make-keywords.o hash.o -o make-keywords
 
 keywords.h: make-keywords
 	./make-keywords > keywords.h
