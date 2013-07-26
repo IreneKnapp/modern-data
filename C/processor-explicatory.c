@@ -434,6 +434,7 @@ HELPER int keyword_insert
            >= PROCESSOR_EXPLICATORY_KEYWORD_TREE_EDGES_PER_NODE))
     {
        printf("OOPS!\n");
+       debug_trie(0, library->processor_explicatory_keywords);
        return 0;
     }
     
@@ -476,12 +477,23 @@ HELPER int keyword_insert
         if(text[0] == (*link)->specifics.internal_node.edges[i].text[0]) {
             edge = &(*link)->specifics.internal_node.edges[i];
             
-            for(uint8_t j = 0;
+            uint8_t j;
+            for(j = 0;
                 text[j] && edge->text[j] && (text[j] == edge->text[j]);
                 j++);
             if(edge->text[j]) {
-                size_t size = strlen(edge->text + j) + 1;
-                // TODO
+                size_t size = strlen((char *) (edge->text + j)) + 1;
+                uint8_t *new_text = library->allocator->alloc
+                    (library->client_state, size);
+                if(!new_text) {
+                    // TODO clean up better
+                    library->error_handler->memory
+                        (library->client_state, size);
+                    return 0;
+                }
+                memcpy(new_text, edge->text + j, size);
+                
+                edge->text[j] = '\0';
             }
             
             break;
@@ -492,7 +504,17 @@ HELPER int keyword_insert
             [(*link)->specifics.internal_node.edge_count];
         (*link)->specifics.internal_node.edge_count++;
         
-        edge->text = text;
+        size_t size = strlen((char *) text) + 1;
+        uint8_t *new_text = library->allocator->alloc
+            (library->client_state, size);
+        if(!new_text) {
+            // TODO clean up better
+            library->error_handler->memory(library->client_state, size);
+            return 0;
+        }
+        memcpy(new_text, text, size);
+        
+        edge->text = new_text;
         edge->node = leaf;
     }
     
