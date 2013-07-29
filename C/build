@@ -8,5 +8,5 @@ if [ ! -x dist/build ] || [ tools/build/build.c -nt dist/build ] ; then
     clang -O3 -o dist/build tools/build/build.c
 fi
 
-exec dist/build
+exec dist/build $@
 
