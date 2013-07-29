@@ -30,6 +30,9 @@ enum callback_identifier {
     error_buffer_index_callback_identifier,
     error_not_applicable_callback_identifier,
     error_non_numeric_float_callback_identifier,
+    error_builtin_identifier_callback_identifier,
+    error_usage_callback_identifier,
+    error_data_callback_identifier,
     stream_start_callback_identifier,
     stream_magic_number_callback_identifier,
     stream_name_definition_callback_identifier,
@@ -123,6 +126,13 @@ struct callback_invocation {
         } error_not_applicable;
         struct {
         } error_non_numeric_float;
+        struct {
+            uint16_t identifier;
+        } error_builtin_identifier;
+        struct {
+        } error_usage;
+        struct {
+        } error_data;
         struct {
             struct stream_state *state;
         } stream_start;
@@ -359,6 +369,12 @@ union callback_behavior {
     struct {
     } error_non_numeric_float;
     struct {
+    } error_builtin_identifier;
+    struct {
+    } error_usage;
+    struct {
+    } error_data;
+    struct {
         unsigned abort : 1;
     } stream_start;
     struct {
@@ -582,6 +598,14 @@ struct callback_invocation_pattern {
         } error_not_applicable;
         struct {
         } error_non_numeric_float;
+        struct {
+            unsigned identifier_relevant : 1;
+            uint16_t identifier;
+        } error_builtin_identifier;
+        struct {
+        } error_usage;
+        struct {
+        } error_data;
         struct {
             unsigned state_relevant : 1;
             struct stream_state *state;
@@ -1056,6 +1080,12 @@ static void error_not_applicable
   (struct test_suite *test_suite);
 static void error_non_numeric_float
   (struct test_suite *test_suite);
+static void error_builtin_identifier
+  (struct test_suite *test_suite, uint16_t identifier);
+static void error_usage
+  (struct test_suite *test_suite);
+static void error_data
+  (struct test_suite *test_suite);
 
 static void stream_start
   (struct modern_process *process, void *process_state,
@@ -1259,6 +1289,12 @@ int main(int argc, char **argv) {
         (void (*)(void *)) error_not_applicable;
     error_handler.non_numeric_float =
         (void (*)(void *)) error_non_numeric_float;
+    error_handler.builtin_identifier =
+        (void (*)(void *, uint16_t)) error_builtin_identifier;
+    error_handler.usage =
+        (void (*)(void *)) error_usage;
+    error_handler.data =
+        (void (*)(void *)) error_data;
     
     struct modern_allocator allocator;
     allocator.alloc =
@@ -1869,6 +1905,123 @@ void expect_error_non_numeric_float
     struct callback_invocation_pattern *invocation =
         make_callback_invocation_pattern_in_buffer(buffer);
     invocation->identifier = error_non_numeric_float_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+extern void expect_error_builtin_identifier
+  (test_suite *test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context,
+   uint16_t identifier)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = error_builtin_identifier_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    invocation->specifics.error_builtin_identifier.identifier_relevant = 1;
+    invocation->specifics.error_builtin_identifier.identifier = identifier;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+extern void expect_error_usage
+  (test_suite *test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = error_usage_callback_identifier;
+    invocation->should_succeed = 1;
+    invocation->sticky = 0;
+    
+    test_suite->error_invocation = invocation;
+    
+    int succeeded = test_case_helper(test_context);
+    
+    if(succeeded) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        longjmp(test_suite->current_test_case->jmp_buf, 1);
+    }
+}
+
+
+extern void expect_error_data
+  (test_suite *test_suite_in,
+   int (*test_case_helper)(void *test_context),
+   void *test_context)
+{
+    struct test_suite *test_suite = (struct test_suite *) test_suite_in;
+    
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, tried to expect an error "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    if(test_suite->error_invocation) return;
+    
+    struct callback_invocation_pattern_buffer *buffer =
+        get_buffer_for_parallel_callback_invocation_pattern(test_suite);
+    
+    struct callback_invocation_pattern *invocation =
+        make_callback_invocation_pattern_in_buffer(buffer);
+    invocation->identifier = error_data_callback_identifier;
     invocation->should_succeed = 1;
     invocation->sticky = 0;
     
@@ -5199,6 +5352,15 @@ static void finalize_callback_invocation_pattern
     case error_non_numeric_float_callback_identifier:
         break;
     
+    case error_builtin_identifier_callback_identifier:
+        break;
+    
+    case error_usage_callback_identifier:
+        break;
+    
+    case error_data_callback_identifier:
+        break;
+    
     case stream_start_callback_identifier:
         break;
     
@@ -5612,6 +5774,15 @@ static void copy_callback_behavior
         break;
     
     case error_non_numeric_float_callback_identifier:
+        break;
+    
+    case error_builtin_identifier_callback_identifier:
+        break;
+    
+    case error_usage_callback_identifier:
+        break;
+    
+    case error_data_callback_identifier:
         break;
     
     case stream_start_callback_identifier:
@@ -6036,6 +6207,20 @@ static void print_callback_invocation
         printf("modern_error_handler_non_numeric_float()\n");
         break;
     
+    case error_builtin_identifier_callback_identifier:
+        printf("modern_error_handler_builtin_identifier(0x%04x)\n",
+               (int)
+               invocation->specifics.error_builtin_identifier.identifier);
+        break;
+    
+    case error_usage_callback_identifier:
+        printf("modern_error_handler_usage()\n");
+        break;
+    
+    case error_data_callback_identifier:
+        printf("modern_error_handler_data()\n");
+        break;
+    
     case stream_start_callback_identifier:
         printf("stream_start_callback_identifier()\n");
         break;
@@ -6391,6 +6576,28 @@ static void print_callback_invocation_pattern
     case error_non_numeric_float_callback_identifier:
         for(size_t i = 0; i < indent; i++) printf(" ");
         printf("modern_error_handler_non_numeric_float()\n");
+        break;
+    
+    case error_builtin_identifier_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_error_handler_builtin_identifier()\n");
+        if(pattern->specifics.error_builtin_identifier.identifier_relevant) {
+            printf("modern_error_handler_builtin_identifier(0x%04x)\n",
+                   (int)
+                   pattern->specifics.error_builtin_identifier.identifier);
+        } else {
+            printf("modern_error_handler_builtin_identifier(*)\n");
+        }
+        break;
+    
+    case error_usage_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_error_handler_usage()\n");
+        break;
+    
+    case error_data_callback_identifier:
+        for(size_t i = 0; i < indent; i++) printf(" ");
+        printf("modern_error_handler_data()\n");
         break;
     
     case stream_start_callback_identifier:
@@ -6947,6 +7154,33 @@ static int match_callback_invocation_against_pattern_helper
         break;
 
     case error_non_numeric_float_callback_identifier:
+        matches = 1;
+        copy_callback_behavior
+            (pattern->identifier, behavior_result, &pattern->behavior);
+        break;
+
+    case error_builtin_identifier_callback_identifier:
+        matches = 1;
+        if(pattern->specifics.error_builtin_identifier.identifier_relevant) {
+            if(invocation->specifics.error_builtin_identifier.identifier
+               != pattern->specifics.error_builtin_identifier.identifier)
+            {
+                matches = 0;
+            }
+        }
+        if(matches) {
+            copy_callback_behavior
+                (pattern->identifier, behavior_result, &pattern->behavior);
+        }
+        break;
+
+    case error_usage_callback_identifier:
+        matches = 1;
+        copy_callback_behavior
+            (pattern->identifier, behavior_result, &pattern->behavior);
+        break;
+
+    case error_data_callback_identifier:
         matches = 1;
         copy_callback_behavior
             (pattern->identifier, behavior_result, &pattern->behavior);
@@ -7904,6 +8138,85 @@ static void error_non_numeric_float
     struct callback_invocation *invocation = begin_callback(test_suite);
     
     invocation->identifier = error_non_numeric_float_callback_identifier;
+    invocation->succeeded = 0;
+    
+    if(callback_should_succeed(test_suite, NULL)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
+}
+
+
+static void error_builtin_identifier
+  (struct test_suite *test_suite, uint16_t identifier)
+{
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_builtin_identifier_callback_identifier;
+    invocation->succeeded = 0;
+    invocation->specifics.error_builtin_identifier.identifier = identifier;
+    
+    if(callback_should_succeed(test_suite, NULL)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
+}
+
+
+static void error_usage
+  (struct test_suite *test_suite)
+{
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_usage_callback_identifier;
+    invocation->succeeded = 0;
+    
+    if(callback_should_succeed(test_suite, NULL)) {
+        longjmp(test_suite->current_test_case->jmp_buf, 2);
+    } else {
+        return;
+    }
+}
+
+
+static void error_data
+  (struct test_suite *test_suite)
+{
+    if(!test_suite->current_test_case) {
+        printf("\n\n"
+               "*** The testing infrastructure itself failed.\n"
+               "*** Specifically, received an error callback "
+               "while not already in a test case.\n");
+        exit(1);
+    }
+    
+    test_suite->error_invocation = NULL;
+    
+    struct callback_invocation *invocation = begin_callback(test_suite);
+    
+    invocation->identifier = error_data_callback_identifier;
     invocation->succeeded = 0;
     
     if(callback_should_succeed(test_suite, NULL)) {

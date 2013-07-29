@@ -63,6 +63,19 @@ extern void expect_error_non_numeric_float
   (test_suite *test_suite,
    int (*test_case_helper)(void *test_context),
    void *test_context);
+extern void expect_error_builtin_identifier
+  (test_suite *test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context,
+   uint16_t identifier);
+extern void expect_error_usage
+  (test_suite *test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context);
+extern void expect_error_data
+  (test_suite *test_suite,
+   int (*test_case_helper)(void *test_context),
+   void *test_context);
 
 extern void expect_stream_start
   (test_suite *test_suite,
