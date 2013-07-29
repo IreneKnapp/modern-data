@@ -1,6 +1,6 @@
 CC=clang
-CFLAGS=-g -O0
-LIBRARIES=-lm
+CFLAGS=-g -O0 --coverage
+LIBRARIES=-lm --coverage
 OBJECTS=context.o \
         evaluation.o \
         hash.o \
@@ -15,11 +15,25 @@ OBJECTS=context.o \
         vfile-stdio.o
 INCLUDES=modern.h internal.h
 
+COVERAGE_FILES=context.gcno context.gcda \
+               evaluation.gcno evaluation.gcda \
+               hash.gcno hash.gcda \
+               library.gcno library.gcda \
+               memory.gcno memory.gcda \
+               node-canonical.gcno node-canonical.gcda \
+               node-get.gcno node-get.gcda \
+               node-make.gcno node-make.gcda \
+               node-set.gcno node-set.gcda \
+               predefined.gcno predefined.gcda \
+               processor-explicatory.gcno processor-explicatory.gcda \
+               vfile-stdio.gcno vfile-stdio.gcda
+
 default: all
 all: test-node test-canonical test-out test-in example-canonical
 
 clean:
-	rm -f ${OBJECTS}
+	rm -f ${OBJECTS} make-keywords.o test-in.o test-main.o
+	rm -f ${COVERAGE_FILES}
 
 context.o: context.c ${INCLUDES}
 	${CC} ${CFLAGS} -c context.c -o context.o
