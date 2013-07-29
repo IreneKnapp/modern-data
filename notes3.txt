@@ -14,3 +14,5 @@ line...
 We should allow for context representations the same way that we allow for
 node representations.
 
+Should add descriptive messages to some of the error handlers, where it's
+appropriate.  Can use statically-allocated memory for the strings.
