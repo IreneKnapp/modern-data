@@ -149,11 +149,14 @@ HELPER void processor_explicatory_step
                          struct modern_vfile *vfile, void *vfile_state) =
                         get_keyword(process_state->buffer, token_length);
                     
+                    if(!emit) {
+                        library->error_handler->data(library->client_state);
+                    }
+                    
                     process_state->buffer_length -= token_length;
                     memmove(&process_state->buffer[0],
                             &process_state->buffer[token_length],
                             process_state->buffer_length);
-                    
                     // TODO actually call emit and do stuff!
                 }
             }
