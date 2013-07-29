@@ -32,7 +32,7 @@ struct modern_error_handler {
     void (*usage)
       (void *client_state);
     void (*data)
-      (void *client_data);
+      (void *client_state);
  };
 
 
