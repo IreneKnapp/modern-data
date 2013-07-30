@@ -41,6 +41,7 @@ struct project {
 struct executable {
     char *name;
     struct directory *directory;
+    struct executable **tools;
     struct library **libraries;
     struct object **objects;
 };
@@ -49,6 +50,7 @@ struct executable {
 struct library {
     char *base_name;
     struct directory *directory;
+    struct executable **tools;
     struct library **libraries;
     struct object **objects;
     struct header **headers;
@@ -129,17 +131,21 @@ void project_test(struct project *project);
 void project_debug(struct project *project);
 void project_clean(struct project *project);
 
+struct executable *executable_initialize(char *name, char *path);
+void executable_print(struct executable *executable);
+
 struct library *library_initialize(char *base_name, char *path);
 void library_print(struct library *library);
+void library_tool_add(struct library *library, struct executable *tool);
+void library_library_add(struct library *library, struct library *sub_library);
+void library_object_add(struct library *library, struct object *object);
+void library_header_add(struct library *library, struct header *header);
 
 struct directory *directory_initialize(char *path);
 void directory_print(struct directory *directory);
 void directory_scan(struct directory *directory);
 void directory_header_add(struct directory *directory, struct header *header);
 void directory_source_add(struct directory *directory, struct source *source);
-
-void executable_print
-    (struct executable *executable);
 
 void object_print(struct object *object);
 
@@ -302,9 +308,14 @@ void project_print(struct project *project) {
 
 struct project *project_prepare() {
     struct project *project = project_initialize("Modern Data");
-    struct library *library = library_initialize("modern", "library/");
-    project_library_add(project, library);
     
+    struct library *main_library = library_initialize("modern", "library/");
+    project_library_add(project, main_library);
+    
+    struct executable *make_keywords_executable =
+        executable_initialize("make-keywords", "tools/make-keywords/");
+    library_tool_add(main_library, make_keywords_executable);
+
     return project;
 }
 
@@ -331,10 +342,54 @@ void project_library_add(struct project *project, struct library *library) {
 }
 
 
+struct executable *executable_initialize(char *name, char *path) {
+    struct executable *executable = malloc(sizeof(struct executable));
+    executable->name = strdup(name);
+    executable->directory = directory_initialize(path);
+    executable->tools = malloc(sizeof(struct executable *) * 1);
+    executable->tools[0] = NULL;
+    executable->libraries = malloc(sizeof(struct library *) * 1);
+    executable->libraries[0] = NULL;
+    executable->objects = malloc(sizeof(struct object *) * 1);
+    executable->objects[0] = NULL;
+    return executable;
+}
+
+
+void executable_print(struct executable *executable) {
+    print_line("Executable: %s", executable->name);
+
+    print((void (*)(void *)) directory_print, executable->directory);
+
+    for(struct executable **tool = executable->tools;
+        *tool;
+        tool++)
+    {
+        print((void (*)(void *)) executable_print, *tool);
+    }
+    
+    for(struct library **library = executable->libraries;
+        *library;
+        library++)
+    {
+        print((void (*)(void *)) library_print, *library);
+    }
+    
+    for(struct object **object = executable->objects;
+        *object;
+        object++)
+    {
+        print((void (*)(void *)) object_print, *object);
+    }
+}
+
+
 struct library *library_initialize(char *base_name, char *path) {
     struct library *library = malloc(sizeof(struct library));
     library->base_name = strdup(base_name);
     library->directory = directory_initialize(path);
+    library->tools = malloc(sizeof(struct executable *) * 1);
+    library->tools[0] = NULL;
     library->libraries = malloc(sizeof(struct library *) * 1);
     library->libraries[0] = NULL;
     library->objects = malloc(sizeof(struct object *) * 1);
@@ -349,6 +404,13 @@ void library_print(struct library *library) {
     print_line("Library: %s", library->base_name);
     
     print((void (*)(void *)) directory_print, library->directory);
+
+    for(struct executable **tool = library->tools;
+        *tool;
+        tool++)
+    {
+        print((void (*)(void *)) executable_print, *tool);
+    }
     
     for(struct library **sub_library = library->libraries;
         *sub_library;
@@ -370,6 +432,47 @@ void library_print(struct library *library) {
     {
         print((void (*)(void *)) header_print, *header);
     }
+}
+
+
+void library_tool_add(struct library *library, struct executable *tool) {
+    size_t count = 0;
+    for(struct executable **i = library->tools; *i; i++, count++);
+    library->tools = realloc
+        (library->tools, sizeof(struct executable *) * (count + 2));
+    library->tools[count] = tool;
+    library->tools[count + 1] = NULL;
+}
+
+
+void library_library_add(struct library *library, struct library *sub_library)
+{
+    size_t count = 0;
+    for(struct library **i = library->libraries; *i; i++, count++);
+    library->libraries = realloc
+        (library->libraries, sizeof(struct library *) * (count + 2));
+    library->libraries[count] = sub_library;
+    library->libraries[count + 1] = NULL;
+}
+
+
+void library_object_add(struct library *library, struct object *object) {
+    size_t count = 0;
+    for(struct object **i = library->objects; *i; i++, count++);
+    library->objects = realloc
+        (library->objects, sizeof(struct object *) * (count + 2));
+    library->objects[count] = object;
+    library->objects[count + 1] = NULL;
+}
+
+
+void library_header_add(struct library *library, struct header *header) {
+    size_t count = 0;
+    for(struct header **i = library->headers; *i; i++, count++);
+    library->headers = realloc
+        (library->headers, sizeof(struct header *) * (count + 2));
+    library->headers[count] = header;
+    library->headers[count + 1] = NULL;
 }
 
 
@@ -493,27 +596,6 @@ void project_debug(struct project *project) {
 
 
 void project_clean(struct project *project) {
-}
-
-
-void executable_print(struct executable *executable) {
-    print_line("Executable: %s", executable->name);
-
-    print((void (*)(void *)) directory_print, executable->directory);
-    
-    for(struct library **library = executable->libraries;
-        *library;
-        library++)
-    {
-        print((void (*)(void *)) library_print, *library);
-    }
-    
-    for(struct object **object = executable->objects;
-        *object;
-        object++)
-    {
-        print((void (*)(void *)) object_print, *object);
-    }
 }
 
 
