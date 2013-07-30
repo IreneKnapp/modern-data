@@ -106,6 +106,7 @@ struct build_step {
 
 
 void help();
+
 struct project *project_initialize(char *name);
 void **project_print
     (int indent, struct project *project, void **backreferences);
@@ -454,7 +455,7 @@ void directory_scan(struct directory *directory) {
             source->provenance = provenance;
             source->headers = malloc(sizeof(struct header *) * 1);
             source->headers[0] = NULL;
-            //directory_source_add(directory, source);
+            directory_source_add(directory, source);
         }
     }
     closedir(handle);
