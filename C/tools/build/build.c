@@ -1,4 +1,5 @@
 #include <dirent.h>
+#include <stdarg.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,6 +22,13 @@ enum file_type {
     file_type_header,
     file_type_source,
 };
+
+
+struct print_state {
+    size_t indent;
+    void **backreferences;
+    struct print_state *parent;
+} *print_state = NULL;
 
 
 struct project {
@@ -106,10 +114,11 @@ struct build_step {
 
 
 void help();
+void print(void (*printer)(void *), void *scrutinant);
+void print_line(char *format, ...);
 
 struct project *project_initialize(char *name);
-void **project_print
-    (int indent, struct project *project, void **backreferences);
+void project_print(struct project *project);
 struct project *project_prepare();
 void project_executable_add
     (struct project *project, struct executable *executable);
@@ -121,32 +130,29 @@ void project_debug(struct project *project);
 void project_clean(struct project *project);
 
 struct library *library_initialize(char *base_name, char *path);
-void **library_print
-    (int indent, struct library *library, void **backreferences);
+void library_print(struct library *library);
 
 struct directory *directory_initialize(char *path);
-void **directory_print
-    (int indent, struct directory *directory, void **backreferences);
+void directory_print(struct directory *directory);
 void directory_scan(struct directory *directory);
 void directory_header_add(struct directory *directory, struct header *header);
 void directory_source_add(struct directory *directory, struct source *source);
 
-void **executable_print
-    (int indent, struct executable *executable, void **backreferences);
+void executable_print
+    (struct executable *executable);
 
-void **object_print(int indent, struct object *object, void **backreferences);
+void object_print(struct object *object);
 
-void **header_print(int indent, struct header *header, void **backreferences);
+void header_print(struct header *header);
 
-void **source_print(int indent, struct source *source, void **backreferences);
+void source_print(struct source *source);
 
 struct provenance *provenance_directory_initialize
     (struct directory *directory);
-void **provenance_print
-    (int indent, struct provenance *provenance, void **backreferences);
+void provenance_print
+    (struct provenance *provenance);
 
-void **build_step_print
-    (int indent, struct build_step *build_step, void **backreferences);
+void build_step_print(struct build_step *build_step);
 
 
 int main(int argc, char **argv) {
@@ -173,7 +179,7 @@ int main(int argc, char **argv) {
     
     struct project *project = NULL;
     if(mode != mode_help) project = project_prepare();
-    if(project) (void) project_print(0, project, NULL);
+    if(project) print((void (*)(void *)) project_print, project);
     
     switch(mode) {
     case mode_help: help(); break;
@@ -202,6 +208,68 @@ void help() {
 }
 
 
+void print(void (*printer)(void *), void *scrutinant) {
+    {
+        struct print_state *new_print_state =
+            malloc(sizeof(struct print_state));
+        new_print_state->parent = print_state;
+        print_state = new_print_state;
+    }
+
+    if(print_state->parent) {
+        print_state->indent = print_state->parent->indent + 1;
+        print_state->backreferences = print_state->parent->backreferences;
+    } else {
+        print_state->indent = 0;
+        print_state->backreferences = malloc(sizeof(void *) * 1);
+        print_state->backreferences[0] = NULL;
+    }
+
+    size_t i;
+    for(i = 0; print_state->backreferences[i]; i++) {
+        if(print_state->backreferences[i] == scrutinant) break;
+    }
+    if(print_state->backreferences[i]) {
+        print_line("#%llu#", (unsigned long long) i);
+    } else {
+        size_t count;
+        for(count = 0; print_state->backreferences[count]; count++);
+        print_state->backreferences =
+            realloc(print_state->backreferences, sizeof(void *) * (count + 2));
+        print_state->backreferences[count] = scrutinant;
+        print_state->backreferences[count + 1] = NULL;
+        
+        printer(scrutinant);
+    }
+
+    if(print_state->parent) {
+        print_state->parent->backreferences = print_state->backreferences;
+    } else {
+        free(print_state->backreferences);
+    }
+    
+    {
+        struct print_state *temporary_print_state = print_state->parent;
+        free(print_state);
+        print_state = temporary_print_state;
+    }
+}
+
+
+void print_line(char *format, ...) {
+    va_list ap;
+    va_start(ap, format);
+    
+    if(print_state) {
+        for(int i = 0; i < print_state->indent; i++) printf("    ");
+    }
+    vprintf(format, ap);
+    printf("\n");
+    
+    va_end(ap);
+}
+
+
 struct project *project_initialize(char *name) {
     struct project *project = malloc(sizeof(struct project));
     project->name = strdup(name);
@@ -213,46 +281,22 @@ struct project *project_initialize(char *name) {
 }
 
 
-void **project_print
-    (int indent, struct project *project, void **backreferences)
-{
-    if(!backreferences) {
-        backreferences = malloc(sizeof(void *) * 1);
-        backreferences[0] = NULL;
-    }
-    for(size_t i = 0; backreferences[i]; i++) {
-        if(backreferences[i] == project) {
-            for(int i = 0; i < indent; i++) printf("    ");
-            printf("Project: #%llu\n", (unsigned long long) i);
-            return backreferences;
-        }
-    }
-    {
-        size_t count;
-        for(count = 0; backreferences[count]; count++);
-        backreferences = realloc(backreferences, sizeof(void *) * (count + 2));
-        backreferences[count] = project;
-        backreferences[count + 1] = NULL;
-    }
-    
-    for(int i = 0; i < indent; i++) printf("    ");
-    printf("Project: %s\n", project->name);
+void project_print(struct project *project) {
+    print_line("Project: %s", project->name);
     
     for(struct executable **executable = project->executables;
         *executable;
         executable++)
     {
-        executable_print(indent + 1, *executable, backreferences);
+        print((void (*)(void *)) executable_print, *executable);
     }
     
     for(struct library **library = project->libraries;
         *library;
         library++)
     {
-        library_print(indent + 1, *library, backreferences);
+        print((void (*)(void *)) library_print, *library);
     }
-
-    return backreferences;
 }
 
 
@@ -301,57 +345,31 @@ struct library *library_initialize(char *base_name, char *path) {
 }
 
 
-void **library_print
-    (int indent, struct library *library, void **backreferences)
-{
-    if(!backreferences) {
-        backreferences = malloc(sizeof(void *) * 1);
-        backreferences[0] = NULL;
-    }
-    for(size_t i = 0; backreferences[i]; i++) {
-        if(backreferences[i] == library) {
-            for(int i = 0; i < indent; i++) printf("    ");
-            printf("Library: #%llu\n", (unsigned long long) i);
-            return backreferences;
-        }
-    }
-    {
-        size_t count;
-        for(count = 0; backreferences[count]; count++);
-        backreferences = realloc(backreferences, sizeof(void *) * (count + 2));
-        backreferences[count] = library;
-        backreferences[count + 1] = NULL;
-    }
-
-    for(int i = 0; i < indent; i++) printf("    ");
-    printf("Library: %s\n", library->base_name);
+void library_print(struct library *library) {
+    print_line("Library: %s", library->base_name);
     
-    backreferences =
-        directory_print(indent + 1, library->directory, backreferences);
+    print((void (*)(void *)) directory_print, library->directory);
     
     for(struct library **sub_library = library->libraries;
         *sub_library;
         sub_library++)
     {
-        backreferences =
-            library_print(indent + 1, *sub_library, backreferences);
+        print((void (*)(void *)) library_print, *sub_library);
     }
     
     for(struct object **object = library->objects;
         *object;
         object++)
     {
-        backreferences = object_print(indent + 1, *object, backreferences);
+        print((void (*)(void *)) object_print, *object);
     }
     
     for(struct header **header = library->headers;
         *header;
         header++)
     {
-        backreferences = header_print(indent + 1, *header, backreferences);
+        print((void (*)(void *)) header_print, *header);
     }
-
-    return backreferences;
 }
 
 
@@ -369,46 +387,22 @@ struct directory *directory_initialize(char *path) {
 }
 
 
-void **directory_print
-    (int indent, struct directory *directory, void **backreferences)
-{
-    if(!backreferences) {
-        backreferences = malloc(sizeof(void *) * 1);
-        backreferences[0] = NULL;
-    }
-    for(size_t i = 0; backreferences[i]; i++) {
-        if(backreferences[i] == directory) {
-            for(int i = 0; i < indent; i++) printf("    ");
-            printf("Directory: #%llu\n", (unsigned long long) i);
-            return backreferences;
-        }
-    }
-    {
-        size_t count;
-        for(count = 0; backreferences[count]; count++);
-        backreferences = realloc(backreferences, sizeof(void *) * (count + 2));
-        backreferences[count] = directory;
-        backreferences[count + 1] = NULL;
-    }
-
-    for(int i = 0; i < indent; i++) printf("    ");
-    printf("Directory: %s\n", directory->path);
+void directory_print(struct directory *directory) {
+    print_line("Directory: %s", directory->path);
     
     for(struct header **header = directory->headers;
         *header;
         header++)
     {
-        backreferences = header_print(indent + 1, *header, backreferences);
+        print((void (*)(void *)) header_print, *header);
     }
     
     for(struct source **source = directory->sources;
         *source;
         source++)
     {
-        backreferences = source_print(indent + 1, *source, backreferences);
+        print((void (*)(void *)) source_print, *source);
     }
-
-    return backreferences;
 }
 
 
@@ -502,172 +496,73 @@ void project_clean(struct project *project) {
 }
 
 
-void **executable_print
-    (int indent, struct executable *executable, void **backreferences)
-{
-    if(!backreferences) {
-        backreferences = malloc(sizeof(void *) * 1);
-        backreferences[0] = NULL;
-    }
-    for(size_t i = 0; backreferences[i]; i++) {
-        if(backreferences[i] == executable) {
-            for(int i = 0; i < indent; i++) printf("    ");
-            printf("Executable: #%llu\n", (unsigned long long) i);
-            return backreferences;
-        }
-    }
-    {
-        size_t count;
-        for(count = 0; backreferences[count]; count++);
-        backreferences = realloc(backreferences, sizeof(void *) * (count + 2));
-        backreferences[count] = executable;
-        backreferences[count + 1] = NULL;
-    }
-    
-    for(int i = 0; i < indent; i++) printf("    ");
-    printf("Executable: %s\n", executable->name);
+void executable_print(struct executable *executable) {
+    print_line("Executable: %s", executable->name);
 
-    backreferences =
-        directory_print(indent + 1, executable->directory, backreferences);
+    print((void (*)(void *)) directory_print, executable->directory);
     
     for(struct library **library = executable->libraries;
         *library;
         library++)
     {
-        backreferences = library_print(indent + 1, *library, backreferences);
+        print((void (*)(void *)) library_print, *library);
     }
     
     for(struct object **object = executable->objects;
         *object;
         object++)
     {
-        backreferences = object_print(indent + 1, *object, backreferences);
+        print((void (*)(void *)) object_print, *object);
     }
-
-    return backreferences;
 }
 
 
-void **object_print
-    (int indent, struct object *object, void **backreferences)
-{
-    if(!backreferences) {
-        backreferences = malloc(sizeof(void *) * 1);
-        backreferences[0] = NULL;
-    }
-    for(size_t i = 0; backreferences[i]; i++) {
-        if(backreferences[i] == object) {
-            for(int i = 0; i < indent; i++) printf("    ");
-            printf("Object: #%llu\n", (unsigned long long) i);
-            return backreferences;
-        }
-    }
-    {
-        size_t count;
-        for(count = 0; backreferences[count]; count++);
-        backreferences = realloc(backreferences, sizeof(void *) * (count + 2));
-        backreferences[count] = object;
-        backreferences[count + 1] = NULL;
-    }
-
-    for(int i = 0; i < indent; i++) printf("    ");
-    printf("Object: %s\n", object->base_name);
+void object_print(struct object *object) {
+    print_line("Object: %s", object->base_name);
     
-    backreferences =
-        provenance_print(indent + 1, object->provenance, backreferences);
+    print((void (*)(void *)) provenance_print, object->provenance);
     
     for(struct header **header = object->headers;
         *header;
         header++)
     {
-        backreferences = header_print(indent + 1, *header, backreferences);
+        print((void (*)(void *)) header_print, *header);
     }
     
     for(struct source **source = object->sources;
         *source;
         source++)
     {
-        backreferences = source_print(indent + 1, *source, backreferences);
+        print((void (*)(void *)) source_print, *source);
     }
-
-    return backreferences;
 }
 
 
-void **header_print
-    (int indent, struct header *header, void **backreferences)
-{
-    if(!backreferences) {
-        backreferences = malloc(sizeof(void *) * 1);
-        backreferences[0] = NULL;
-    }
-    for(size_t i = 0; backreferences[i]; i++) {
-        if(backreferences[i] == header) {
-            for(int i = 0; i < indent; i++) printf("    ");
-            printf("Header: #%llu\n", (unsigned long long) i);
-            return backreferences;
-        }
-    }
-    {
-        size_t count;
-        for(count = 0; backreferences[count]; count++);
-        backreferences = realloc(backreferences, sizeof(void *) * (count + 2));
-        backreferences[count] = header;
-        backreferences[count + 1] = NULL;
-    }
+void header_print(struct header *header) {
+    print_line("Header: %s", header->filename);
 
-    for(int i = 0; i < indent; i++) printf("    ");
-    printf("Header: %s\n", header->filename);
-
-    provenance_print(indent + 1, header->provenance, backreferences);
+    print((void (*)(void *)) provenance_print, header->provenance);
 
     for(struct header **sub_header = header->headers;
         *sub_header;
         sub_header++)
     {
-        backreferences = header_print(indent + 1, *sub_header, backreferences);
+        print((void (*)(void *)) header_print, *sub_header);
     }
-
-    return backreferences;
 }
 
 
-void **source_print
-    (int indent, struct source *source, void **backreferences)
-{
-    if(!backreferences) {
-        backreferences = malloc(sizeof(void *) * 1);
-        backreferences[0] = NULL;
-    }
-    for(size_t i = 0; backreferences[i]; i++) {
-        if(backreferences[i] == source) {
-            for(int i = 0; i < indent; i++) printf("    ");
-            printf("Source: #%llu\n", (unsigned long long) i);
-            return backreferences;
-        }
-    }
-    {
-        size_t count;
-        for(count = 0; backreferences[count]; count++);
-        backreferences = realloc(backreferences, sizeof(void *) * (count + 2));
-        backreferences[count] = source;
-        backreferences[count + 1] = NULL;
-    }
+void source_print(struct source *source) {
+    print_line("Source: %s", source->filename);
 
-    for(int i = 0; i < indent; i++) printf("    ");
-    printf("Source: %s\n", source->filename);
-
-    backreferences = provenance_print
-        (indent + 1, source->provenance, backreferences);
+    print((void (*)(void *)) provenance_print, source->provenance);
 
     for(struct header **header = source->headers;
         *header;
         header++)
     {
-        backreferences = header_print(indent + 1, *header, backreferences);
+        print((void (*)(void *)) header_print, *header);
     }
-
-    return backreferences;
 }
 
 
@@ -681,73 +576,23 @@ struct provenance *provenance_directory_initialize
 }
 
 
-void **provenance_print
-    (int indent, struct provenance *provenance, void **backreferences)
-{
-    if(!backreferences) {
-        backreferences = malloc(sizeof(void *) * 1);
-        backreferences[0] = NULL;
-    }
-    for(size_t i = 0; backreferences[i]; i++) {
-        if(backreferences[i] == provenance) {
-            for(int i = 0; i < indent; i++) printf("    ");
-            printf("Provenance: #%llu\n", (unsigned long long) i);
-            return backreferences;
-        }
-    }
-    {
-        size_t count;
-        for(count = 0; backreferences[count]; count++);
-        backreferences = realloc(backreferences, sizeof(void *) * (count + 2));
-        backreferences[count] = provenance;
-        backreferences[count + 1] = NULL;
-    }
-
-    for(int i = 0; i < indent; i++) printf("    ");
-    printf("Provenance:\n");
+void provenance_print(struct provenance *provenance) {
+    print_line("Provenance:");
 
     switch(provenance->type) {
     case provenance_type_directory:
-        directory_print
-            (indent + 1, provenance->specifics.directory.directory,
-             backreferences);
+        print((void (*)(void *)) directory_print,
+              provenance->specifics.directory.directory);
         break;
     case provenance_type_step:
-        build_step_print
-            (indent + 1, provenance->specifics.build_step.build_step,
-             backreferences);
+        print((void (*)(void *)) build_step_print,
+              provenance->specifics.build_step.build_step);
         break;
     }
-
-    return backreferences;
 }
 
 
-void **build_step_print
-    (int indent, struct build_step *build_step, void **backreferences)
-{
-    if(!backreferences) {
-        backreferences = malloc(sizeof(void *) * 1);
-        backreferences[0] = NULL;
-    }
-    for(size_t i = 0; backreferences[i]; i++) {
-        if(backreferences[i] == build_step) {
-            for(int i = 0; i < indent; i++) printf("    ");
-            printf("Build Step: #%llu\n", (unsigned long long) i);
-            return backreferences;
-        }
-    }
-    {
-        size_t count;
-        for(count = 0; backreferences[count]; count++);
-        backreferences = realloc(backreferences, sizeof(void *) * (count + 2));
-        backreferences[count] = build_step;
-        backreferences[count + 1] = NULL;
-    }
-
-    for(int i = 0; i < indent; i++) printf("    ");
-    printf("Build Step:\n");
-
-    return backreferences;
+void build_step_print(struct build_step *build_step) {
+    print_line("Build Step:");
 }
 
