@@ -133,6 +133,8 @@ void project_clean(struct project *project);
 
 struct executable *executable_initialize(char *name, char *path);
 void executable_print(struct executable *executable);
+void executable_binary(struct executable *executable);
+char *executable_path_get(struct executable *executable);
 
 struct library *library_initialize(char *base_name, char *path);
 void library_print(struct library *library);
@@ -140,25 +142,37 @@ void library_tool_add(struct library *library, struct executable *tool);
 void library_library_add(struct library *library, struct library *sub_library);
 void library_object_add(struct library *library, struct object *object);
 void library_header_add(struct library *library, struct header *header);
+void library_binary(struct library *library);
+char *library_path_get(struct library *library);
 
 struct directory *directory_initialize(char *path);
 void directory_print(struct directory *directory);
 void directory_scan(struct directory *directory);
 void directory_header_add(struct directory *directory, struct header *header);
 void directory_source_add(struct directory *directory, struct source *source);
+char *directory_path_get(struct directory *directory);
 
 void object_print(struct object *object);
+void object_binary(struct object *object, char *buildable_name);
+char *object_path_get(struct object *object, char *buildable_name);
 
 void header_print(struct header *header);
+void header_binary(struct header *header, char *buildable_name);
+char *header_source_path_get(struct header *header);
+char *header_product_path_get(struct header *header, char *buildable_name);
 
 void source_print(struct source *source);
 
 struct provenance *provenance_directory_initialize
     (struct directory *directory);
-void provenance_print
-    (struct provenance *provenance);
+void provenance_print(struct provenance *provenance);
+char *provenance_path_get(struct provenance *provenance);
 
 void build_step_print(struct build_step *build_step);
+
+void compiler_invoke(char **parameters);
+void libtool_invoke(char **parameters);
+void copy_file(char *destination, char *source);
 
 
 int main(int argc, char **argv) {
@@ -185,7 +199,7 @@ int main(int argc, char **argv) {
     
     struct project *project = NULL;
     if(mode != mode_help) project = project_prepare();
-    if(project) print((void (*)(void *)) project_print, project);
+    // if(project) print((void (*)(void *)) project_print, project);
     
     switch(mode) {
     case mode_help: help(); break;
@@ -342,6 +356,39 @@ void project_library_add(struct project *project, struct library *library) {
 }
 
 
+void project_amalgamation(struct project *project) {
+}
+
+
+void project_binary(struct project *project) {
+    for(struct executable **executable = project->executables;
+        *executable;
+        executable++)
+    {
+        executable_binary(*executable);
+    }
+    
+    for(struct library **library = project->libraries;
+        *library;
+        library++)
+    {
+        library_binary(*library);
+    }
+}
+
+
+void project_test(struct project *project) {
+}
+
+
+void project_debug(struct project *project) {
+}
+
+
+void project_clean(struct project *project) {
+}
+
+
 struct executable *executable_initialize(char *name, char *path) {
     struct executable *executable = malloc(sizeof(struct executable));
     executable->name = strdup(name);
@@ -381,6 +428,73 @@ void executable_print(struct executable *executable) {
     {
         print((void (*)(void *)) object_print, *object);
     }
+}
+
+
+void executable_binary(struct executable *executable) {
+    for(struct executable **tool = executable->tools; *tool; tool++) {
+        executable_binary(*tool);
+    }
+
+    size_t library_count = 0;
+    for(struct library **library = executable->libraries; *library; library++)
+    {
+        library_count++;
+        library_binary(*library);
+    }
+
+    size_t object_count = 0;
+    for(struct object **object = executable->objects; *object; object++) {
+        object_count++;
+        object_binary(*object, executable->name);
+    }
+
+    char **parameters = malloc
+        (sizeof(char *) * (4 + object_count + library_count));
+    size_t i = 0;
+    parameters[i++] = strdup("-O3");
+    parameters[i++] = strdup("-o");
+    parameters[i++] = executable_path_get(executable);
+
+    for(struct object **object = executable->objects; *object; object++) {
+        parameters[i++] = object_path_get(*object, executable->name);
+    }
+
+    for(struct library **library = executable->libraries; *library; library++)
+    {
+        parameters[i++] = library_path_get(*library);
+    }
+
+    parameters[i] = NULL;
+
+    compiler_invoke(parameters);
+
+    for(size_t i = 0; parameters[i]; i++) {
+        free(parameters[i]);
+    }
+    free(parameters);
+}
+
+
+char *executable_path_get(struct executable *executable) {
+    char **path_parts = malloc(sizeof(char *) * 5);
+    path_parts[0] = strdup("dist/");
+    path_parts[1] = strdup(executable->name);
+    path_parts[2] = strdup("/binary/products/");
+    path_parts[3] = strdup(executable->name);
+    path_parts[4] = NULL;
+    size_t path_length;
+    for(size_t j = 0; path_parts[j]; j++) {
+        path_length += strlen(path_parts[j]);
+    }
+    char *path = malloc(path_length + 1);
+    for(size_t j = 0; path_parts[j]; j++) {
+        if(!j) strcpy(path, path_parts[j]);
+        else strcat(path, path_parts[j]);
+        free(path_parts[j]);
+    }
+    free(path_parts);
+    return path;
 }
 
 
@@ -473,6 +587,81 @@ void library_header_add(struct library *library, struct header *header) {
         (library->headers, sizeof(struct header *) * (count + 2));
     library->headers[count] = header;
     library->headers[count + 1] = NULL;
+}
+
+
+void library_binary(struct library *library) {
+    for(struct executable **tool = library->tools; *tool; tool++) {
+        executable_binary(*tool);
+    }
+
+    size_t library_count = 0;
+    for(struct library **sub_library = library->libraries;
+        *sub_library;
+        sub_library++)
+    {
+        library_count++;
+        library_binary(*sub_library);
+    }
+
+    size_t object_count = 0;
+    for(struct object **object = library->objects; *object; object++) {
+        object_count++;
+        object_binary(*object, library->base_name);
+    }
+
+    char **parameters = malloc
+        (sizeof(char *) * (4 + object_count + library_count));
+    size_t i = 0;
+    parameters[i++] = strdup("-o");
+    parameters[i++] = library_path_get(library);
+
+    for(struct object **object = library->objects; *object; object++) {
+        parameters[i++] = object_path_get(*object, library->base_name);
+    }
+
+    for(struct library **sub_library = library->libraries;
+        *sub_library;
+        sub_library++)
+    {
+        parameters[i++] = library_path_get(*sub_library);
+    }
+
+    parameters[i] = NULL;
+
+    libtool_invoke(parameters);
+
+    for(size_t i = 0; parameters[i]; i++) {
+        free(parameters[i]);
+    }
+    free(parameters);
+
+    for(struct header **header = library->headers; *header; header++) {
+        header_binary(*header, library->base_name);
+    }
+}
+
+
+char *library_path_get(struct library *library) {
+    char **path_parts = malloc(sizeof(char *) * 6);
+    path_parts[0] = strdup("dist/");
+    path_parts[1] = strdup(library->base_name);
+    path_parts[2] = strdup("/binary/products/lib");
+    path_parts[3] = strdup(library->base_name);
+    path_parts[4] = strdup(".a");
+    path_parts[5] = NULL;
+    size_t path_length;
+    for(size_t j = 0; path_parts[j]; j++) {
+        path_length += strlen(path_parts[j]);
+    }
+    char *path = malloc(path_length + 1);
+    for(size_t j = 0; path_parts[j]; j++) {
+        if(!j) strcpy(path, path_parts[j]);
+        else strcat(path, path_parts[j]);
+        free(path_parts[j]);
+    }
+    free(path_parts);
+    return path;
 }
 
 
@@ -579,23 +768,8 @@ void directory_source_add(struct directory *directory, struct source *source) {
 }
 
 
-void project_amalgamation(struct project *project) {
-}
-
-
-void project_binary(struct project *project) {
-}
-
-
-void project_test(struct project *project) {
-}
-
-
-void project_debug(struct project *project) {
-}
-
-
-void project_clean(struct project *project) {
+char *directory_path_get(struct directory *directory) {
+    return strdup(directory->path);
 }
 
 
@@ -620,6 +794,34 @@ void object_print(struct object *object) {
 }
 
 
+void object_binary(struct object *object, char *buildable_name) {
+    // TODO
+}
+
+
+char *object_path_get(struct object *object, char *buildable_name) {
+    char **path_parts = malloc(sizeof(char *) * 6);
+    path_parts[0] = strdup("dist/");
+    path_parts[1] = strdup(buildable_name);
+    path_parts[2] = strdup("/binary/objects/");
+    path_parts[3] = strdup(object->base_name);
+    path_parts[4] = strdup(".o");
+    path_parts[5] = NULL;
+    size_t path_length;
+    for(size_t j = 0; path_parts[j]; j++) {
+        path_length += strlen(path_parts[j]);
+    }
+    char *path = malloc(path_length + 1);
+    for(size_t j = 0; path_parts[j]; j++) {
+        if(!j) strcpy(path, path_parts[j]);
+        else strcat(path, path_parts[j]);
+        free(path_parts[j]);
+    }
+    free(path_parts);
+    return path;
+}
+
+
 void header_print(struct header *header) {
     print_line("Header: %s", header->filename);
 
@@ -631,6 +833,57 @@ void header_print(struct header *header) {
     {
         print((void (*)(void *)) header_print, *sub_header);
     }
+}
+
+
+void header_binary(struct header *header, char *buildable_name) {
+    char *source_path = header_source_path_get(header);
+    char *product_path = header_product_path_get(header, buildable_name);
+    copy_file(product_path, source_path);
+    free(source_path);
+    free(product_path);
+}
+
+
+char *header_source_path_get(struct header *header) {
+    char **path_parts = malloc(sizeof(char *) * 3);
+    path_parts[0] = provenance_path_get(header->provenance);
+    path_parts[1] = strdup(header->filename);
+    path_parts[2] = NULL;
+    size_t path_length;
+    for(size_t j = 0; path_parts[j]; j++) {
+        path_length += strlen(path_parts[j]);
+    }
+    char *path = malloc(path_length + 1);
+    for(size_t j = 0; path_parts[j]; j++) {
+        if(!j) strcpy(path, path_parts[j]);
+        else strcat(path, path_parts[j]);
+        free(path_parts[j]);
+    }
+    free(path_parts);
+    return path;
+}
+
+
+char *header_product_path_get(struct header *header, char *buildable_name) {
+    char **path_parts = malloc(sizeof(char *) * 5);
+    path_parts[0] = strdup("dist/");
+    path_parts[1] = strdup(buildable_name);
+    path_parts[2] = strdup("/binary/products/");
+    path_parts[3] = strdup(header->filename);
+    path_parts[4] = NULL;
+    size_t path_length;
+    for(size_t j = 0; path_parts[j]; j++) {
+        path_length += strlen(path_parts[j]);
+    }
+    char *path = malloc(path_length + 1);
+    for(size_t j = 0; path_parts[j]; j++) {
+        if(!j) strcpy(path, path_parts[j]);
+        else strcat(path, path_parts[j]);
+        free(path_parts[j]);
+    }
+    free(path_parts);
+    return path;
 }
 
 
@@ -674,7 +927,40 @@ void provenance_print(struct provenance *provenance) {
 }
 
 
+char *provenance_path_get(struct provenance *provenance) {
+    switch(provenance->type) {
+    case provenance_type_directory:
+        return directory_path_get(provenance->specifics.directory.directory);
+    case provenance_type_step:
+        return NULL;
+    }
+}
+
+
 void build_step_print(struct build_step *build_step) {
     print_line("Build Step:");
+}
+
+
+void compiler_invoke(char **parameters) {
+    printf("clang");
+    for(char **parameter = parameters; *parameter; parameter++) {
+        printf(" %s", *parameter);
+    }
+    printf("\n");
+}
+
+
+void libtool_invoke(char **parameters) {
+    printf("libtool");
+    for(char **parameter = parameters; *parameter; parameter++) {
+        printf(" %s", *parameter);
+    }
+    printf("\n");
+}
+
+
+void copy_file(char *destination, char *source) {
+    printf("cp %s %s\n", source, destination);
 }
 
