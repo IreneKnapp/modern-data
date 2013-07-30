@@ -447,7 +447,6 @@ void directory_scan(struct directory *directory) {
             header->provenance = provenance;
             header->headers = malloc(sizeof(struct header *) * 1);
             header->headers[0] = NULL;
-printf("%s\n", filename);
             directory_header_add(directory, header);
         } else if(type == file_type_source) {
             struct source *source = malloc(sizeof(struct source));
