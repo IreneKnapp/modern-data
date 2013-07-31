@@ -59,7 +59,6 @@ struct library {
 
 struct object {
     char *base_name;
-    struct provenance *provenance;
     struct header **headers;
     struct source **sources;
 };
@@ -133,11 +132,19 @@ void project_clean(struct project *project);
 
 struct executable *executable_initialize(char *name, char *path);
 void executable_print(struct executable *executable);
+void executable_scan(struct executable *executable);
 void executable_binary(struct executable *executable);
+void executable_tool_add
+    (struct executable *executable, struct executable *tool);
+void executable_library_add
+    (struct executable *executable, struct library *library);
+void executable_object_add
+    (struct executable *executable, struct object *object);
 char *executable_path_get(struct executable *executable);
 
 struct library *library_initialize(char *base_name, char *path);
 void library_print(struct library *library);
+void library_scan(struct library *library);
 void library_tool_add(struct library *library, struct executable *tool);
 void library_library_add(struct library *library, struct library *sub_library);
 void library_object_add(struct library *library, struct object *object);
@@ -152,9 +159,13 @@ void directory_header_add(struct directory *directory, struct header *header);
 void directory_source_add(struct directory *directory, struct source *source);
 char *directory_path_get(struct directory *directory);
 
+struct object *object_initialize(struct source *source);
 void object_print(struct object *object);
+void object_scan(struct object *object);
 void object_binary(struct object *object, char *buildable_name);
 char *object_path_get(struct object *object, char *buildable_name);
+void object_header_add(struct object *object, struct header *header);
+void object_source_add(struct object *object, struct source *source);
 
 void header_print(struct header *header);
 void header_binary(struct header *header, char *buildable_name);
@@ -162,6 +173,7 @@ char *header_source_path_get(struct header *header);
 char *header_product_path_get(struct header *header, char *buildable_name);
 
 void source_print(struct source *source);
+char *source_path_get(struct source *source);
 
 struct provenance *provenance_directory_initialize
     (struct directory *directory);
@@ -399,6 +411,9 @@ struct executable *executable_initialize(char *name, char *path) {
     executable->libraries[0] = NULL;
     executable->objects = malloc(sizeof(struct object *) * 1);
     executable->objects[0] = NULL;
+    
+    executable_scan(executable);
+     
     return executable;
 }
 
@@ -427,6 +442,19 @@ void executable_print(struct executable *executable) {
         object++)
     {
         print((void (*)(void *)) object_print, *object);
+    }
+}
+
+
+void executable_scan(struct executable *executable) {
+    for(struct source **source = executable->directory->sources;
+        *source;
+        source++)
+    {
+        struct object *object = object_initialize(*source);
+        object_source_add(object, *source);
+        object_scan(object);
+        executable_object_add(executable, object);
     }
 }
 
@@ -476,6 +504,42 @@ void executable_binary(struct executable *executable) {
 }
 
 
+void executable_tool_add
+    (struct executable *executable, struct executable *tool)
+{
+    size_t count = 0;
+    for(struct executable **i = executable->tools; *i; i++, count++);
+    executable->tools = realloc
+        (executable->tools, sizeof(struct executable *) * (count + 2));
+    executable->tools[count] = tool;
+    executable->tools[count + 1] = NULL;
+}
+
+
+void executable_library_add
+    (struct executable *executable, struct library *library)
+{
+    size_t count = 0;
+    for(struct library **i = executable->libraries; *i; i++, count++);
+    executable->libraries = realloc
+        (executable->libraries, sizeof(struct library *) * (count + 2));
+    executable->libraries[count] = library;
+    executable->libraries[count + 1] = NULL;
+}
+
+
+void executable_object_add
+    (struct executable *executable, struct object *object)
+{
+    size_t count = 0;
+    for(struct object **i = executable->objects; *i; i++, count++);
+    executable->objects = realloc
+        (executable->objects, sizeof(struct object *) * (count + 2));
+    executable->objects[count] = object;
+    executable->objects[count + 1] = NULL;
+}
+
+
 char *executable_path_get(struct executable *executable) {
     char **path_parts = malloc(sizeof(char *) * 5);
     path_parts[0] = strdup("dist/");
@@ -510,6 +574,9 @@ struct library *library_initialize(char *base_name, char *path) {
     library->objects[0] = NULL;
     library->headers = malloc(sizeof(struct headers *) * 1);
     library->headers[0] = NULL;
+    
+    library_scan(library);
+    
     return library;
 }
 
@@ -545,6 +612,19 @@ void library_print(struct library *library) {
         header++)
     {
         print((void (*)(void *)) header_print, *header);
+    }
+}
+
+
+void library_scan(struct library *library) {
+    for(struct source **source = library->directory->sources;
+        *source;
+        source++)
+    {
+        struct object *object = object_initialize(*source);
+        object_source_add(object, *source);
+        object_scan(object);
+        library_object_add(library, object);
     }
 }
 
@@ -719,9 +799,7 @@ void directory_scan(struct directory *directory) {
         
         char *filename = NULL;
         if(type != file_type_unknown) {
-            filename = malloc(strlen(directory->path) + length + 1);
-            strcpy(filename, directory->path);
-            strcat(filename, entry->d_name);
+            filename = strdup(entry->d_name);
             
             if(!provenance) {
                 provenance = provenance_directory_initialize(directory);
@@ -773,10 +851,23 @@ char *directory_path_get(struct directory *directory) {
 }
 
 
+struct object *object_initialize(struct source *source) {
+    struct object *object = malloc(sizeof(struct object));
+    size_t base_name_length = strlen(source->filename) - 2;
+    object->base_name = malloc(base_name_length + 1);
+    strncpy(object->base_name, source->filename, base_name_length);
+    object->base_name[base_name_length] = '\0';
+    object->headers = malloc(sizeof(struct header *) * 1);
+    object->headers[0] = NULL;
+    object->sources = malloc(sizeof(struct source *) * 2);
+    object->sources[0] = source;
+    object->sources[1] = NULL;
+    return object;
+}
+
+
 void object_print(struct object *object) {
     print_line("Object: %s", object->base_name);
-    
-    print((void (*)(void *)) provenance_print, object->provenance);
     
     for(struct header **header = object->headers;
         *header;
@@ -794,8 +885,44 @@ void object_print(struct object *object) {
 }
 
 
-void object_binary(struct object *object, char *buildable_name) {
+void object_scan(struct object *object) {
     // TODO
+/*
+clang -MM -MG -MF basename.d basename.c
+
+processor-explicatory.o: library/processor-explicatory.c library/modern.h \
+      library/internal.h keywords.h
+
+or, when run on a header,
+internal.o: library/internal.h
+*/
+}
+
+
+void object_binary(struct object *object, char *buildable_name) {
+    size_t source_count = 0;
+    for(struct source **source = object->sources; *source; source++) {
+        source_count++;
+    }
+
+    char **parameters = malloc(sizeof(char *) * (4 + source_count));
+    size_t i = 0;
+    parameters[i++] = strdup("-O3");
+    parameters[i++] = strdup("-o");
+    parameters[i++] = object_path_get(object, buildable_name);
+
+    for(struct source **source = object->sources; *source; source++) {
+        parameters[i++] = source_path_get(*source);
+    }
+
+    parameters[i] = NULL;
+
+    compiler_invoke(parameters);
+
+    for(size_t i = 0; parameters[i]; i++) {
+        free(parameters[i]);
+    }
+    free(parameters);
 }
 
 
@@ -819,6 +946,26 @@ char *object_path_get(struct object *object, char *buildable_name) {
     }
     free(path_parts);
     return path;
+}
+
+
+void object_header_add(struct object *object, struct header *header) {
+    size_t count = 0;
+    for(struct header **i = object->headers; *i; i++, count++);
+    object->headers = realloc
+        (object->headers, sizeof(struct object *) * (count + 2));
+    object->headers[count] = header;
+    object->headers[count + 1] = NULL;
+}
+
+
+void object_source_add(struct object *object, struct source *source) {
+    size_t count = 0;
+    for(struct source **i = object->sources; *i; i++, count++);
+    object->sources = realloc
+        (object->sources, sizeof(struct source *) * (count + 2));
+    object->sources[count] = source;
+    object->sources[count + 1] = NULL;
 }
 
 
@@ -898,6 +1045,26 @@ void source_print(struct source *source) {
     {
         print((void (*)(void *)) header_print, *header);
     }
+}
+
+
+char *source_path_get(struct source *source) {
+    char **path_parts = malloc(sizeof(char *) * 3);
+    path_parts[0] = provenance_path_get(source->provenance);
+    path_parts[1] = strdup(source->filename);
+    path_parts[2] = NULL;
+    size_t path_length;
+    for(size_t j = 0; path_parts[j]; j++) {
+        path_length += strlen(path_parts[j]);
+    }
+    char *path = malloc(path_length + 1);
+    for(size_t j = 0; path_parts[j]; j++) {
+        if(!j) strcpy(path, path_parts[j]);
+        else strcat(path, path_parts[j]);
+        free(path_parts[j]);
+    }
+    free(path_parts);
+    return path;
 }
 
 
