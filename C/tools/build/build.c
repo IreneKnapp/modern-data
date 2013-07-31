@@ -42,6 +42,7 @@ struct executable {
     char *name;
     struct directory *directory;
     struct executable **tools;
+    struct tool_invocation **tool_invocations;
     struct library **libraries;
     struct object **objects;
 };
@@ -51,6 +52,7 @@ struct library {
     char *base_name;
     struct directory *directory;
     struct executable **tools;
+    struct tool_invocation **tool_invocations;
     struct library **libraries;
     struct object **objects;
     struct header **headers;
@@ -85,9 +87,16 @@ struct directory {
 };
 
 
+struct tool_invocation {
+    struct executable *tool;
+    char **parameters;
+    struct header **header_outputs;
+};
+
+
 enum provenance_type {
     provenance_type_directory,
-    provenance_type_step,
+    provenance_type_tool_invocation,
 };
 
 
@@ -98,8 +107,8 @@ struct provenance {
             struct directory *directory;
         } directory;
         struct {
-            struct build_step *build_step;
-        } build_step;
+            struct tool_invocation *tool_invocation;
+        } tool_invocation;
     } specifics;
 };
 
@@ -136,6 +145,8 @@ void executable_scan(struct executable *executable);
 void executable_binary(struct executable *executable);
 void executable_tool_add
     (struct executable *executable, struct executable *tool);
+void executable_tool_invocation_add
+    (struct executable *executable, struct tool_invocation *invocation);
 void executable_library_add
     (struct executable *executable, struct library *library);
 void executable_object_add
@@ -146,6 +157,8 @@ struct library *library_initialize(char *base_name, char *path);
 void library_print(struct library *library);
 void library_scan(struct library *library);
 void library_tool_add(struct library *library, struct executable *tool);
+void library_tool_invocation_add
+    (struct library *library, struct tool_invocation *invocation);
 void library_library_add(struct library *library, struct library *sub_library);
 void library_object_add(struct library *library, struct object *object);
 void library_header_add(struct library *library, struct header *header);
@@ -407,6 +420,9 @@ struct executable *executable_initialize(char *name, char *path) {
     executable->directory = directory_initialize(path);
     executable->tools = malloc(sizeof(struct executable *) * 1);
     executable->tools[0] = NULL;
+    executable->tool_invocations =
+        malloc(sizeof(struct tool_invocation *) * 1);
+    executable->tool_invocations[0] = NULL;
     executable->libraries = malloc(sizeof(struct library *) * 1);
     executable->libraries[0] = NULL;
     executable->objects = malloc(sizeof(struct object *) * 1);
@@ -428,6 +444,13 @@ void executable_print(struct executable *executable) {
         tool++)
     {
         print((void (*)(void *)) executable_print, *tool);
+    }
+
+    for(struct tool_invocation **invocation = executable->tool_invocations;
+        *invocation;
+        invocation++)
+    {
+        print((void (*)(void *)) tool_invocation_print, *invocation);
     }
     
     for(struct library **library = executable->libraries;
@@ -516,6 +539,21 @@ void executable_tool_add
 }
 
 
+void executable_tool_invocation_add
+    (struct executable *executable, struct tool_invocation *invocation)
+{
+    size_t count = 0;
+    for(struct tool_invocation **i = executable->tool_invocations;
+        *i;
+        i++, count++);
+    executable->tool_invocations = realloc
+        (executable->tool_invocations,
+         sizeof(struct tool_invocation *) * (count + 2));
+    executable->tool_invocations[count] = invocation;
+    executable->tool_invocations[count + 1] = NULL;
+}
+
+
 void executable_library_add
     (struct executable *executable, struct library *library)
 {
@@ -568,6 +606,10 @@ struct library *library_initialize(char *base_name, char *path) {
     library->directory = directory_initialize(path);
     library->tools = malloc(sizeof(struct executable *) * 1);
     library->tools[0] = NULL;
+        print((void (*)(void *)) tool_invocation_print, *invocation);
+    library->tool_invocations =
+        malloc(sizeof(struct tool_invocation *) * 1);
+    library->tool_invocations[0] = NULL;
     library->libraries = malloc(sizeof(struct library *) * 1);
     library->libraries[0] = NULL;
     library->objects = malloc(sizeof(struct object *) * 1);
@@ -591,6 +633,13 @@ void library_print(struct library *library) {
         tool++)
     {
         print((void (*)(void *)) executable_print, *tool);
+    }
+
+    for(struct tool_invocation **invocation = library->tool_invocations;
+        *invocation;
+        invocation++)
+    {
+        print((void (*)(void *)) tool_invocation_print, *invocation);
     }
     
     for(struct library **sub_library = library->libraries;
@@ -636,6 +685,21 @@ void library_tool_add(struct library *library, struct executable *tool) {
         (library->tools, sizeof(struct executable *) * (count + 2));
     library->tools[count] = tool;
     library->tools[count + 1] = NULL;
+}
+
+
+void library_tool_invocation_add
+    (struct library *library, struct tool_invocation *invocation)
+{
+    size_t count = 0;
+    for(struct tool_invocation **i = library->tool_invocations;
+        *i;
+        i++, count++);
+    library->tool_invocations = realloc
+        (library->tool_invocations,
+         sizeof(struct tool_invocation *) * (count + 2));
+    library->tool_invocations[count] = invocation;
+    library->tool_invocations[count + 1] = NULL;
 }
 
 
