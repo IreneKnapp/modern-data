@@ -4,7 +4,7 @@ CFLAGS=-O3
 
 uname=`uname`
 
-if [ ${uname} == "Darwin" ] ; then
+if [ ${uname} = "Darwin" ] ; then
     developer=`xcode-select --print-path`
     sdk_path="${developer}/Platforms/MacOSX.platform/Developer/SDKs/"
     sysroot="${sdk_path}MacOSX10.8.sdk"
