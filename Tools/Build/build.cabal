@@ -1,0 +1,27 @@
+name: build
+version: 1.0
+cabal-version: >= 1.12
+build-type: Simple
+license: BSD3
+license-file: LICENSE
+copyright: Copyright (c) 2013 Irene Knapp
+author: Irene Knapp <irene.knapp@icloud.com>
+maintainer: irene.knapp@icloud.com
+homepage: http://ireneknapp.com/software/
+bug-reports: https://github.com/IreneKnapp/modern-data/issues
+category: Distribution
+synopsis: Software-building infrastructure
+description:
+
+Source-Repository head
+  type: git
+  location: https://github.com/IreneKnapp/modern-data.git
+
+Executable build
+  main-is: Main.hs
+  hs-source-dirs: Haskell
+  build-depends: base >= 4.1 && < 5,
+                 containers >= 0.4.1.0 && < 1,
+                 text >= 0.11.2.3 && < 1
+  default-language: Haskell2010
+
