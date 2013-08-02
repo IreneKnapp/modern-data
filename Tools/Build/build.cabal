@@ -23,6 +23,7 @@ Executable build
   build-depends: base >= 4.1 && < 5,
                  containers >= 0.4.1.0 && < 1,
                  directory >= 1.1.0.2 && < 2,
+                 lens >= 3.9.0.2 && < 4,
                  text >= 0.11.2.3 && < 1
   default-language: Haskell2010
 
