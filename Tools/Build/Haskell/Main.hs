@@ -56,7 +56,12 @@ class (TextShow file, Eq file, Ord file, Typeable file) => File file where
 
 data AnyFile = forall file . File file => AnyFile file
   deriving (Typeable)
-makeLenses ''AnyFile
+anyFile :: (File file) => Simple Lens AnyFile (Maybe file)
+anyFile = lens (\(AnyFile file) -> cast file)
+               (\original maybeValue ->
+                  case maybeValue of
+                    Nothing -> original
+                    Just value -> AnyFile value)
 instance Eq AnyFile where
   (==) a b =
     case a of
@@ -71,9 +76,9 @@ instance Ord AnyFile where
                       Nothing -> on compare (view fileType) a b
 instance File AnyFile where
   fromAnyFile (AnyFile file) = cast file
-  fileType (AnyFile file) = fileType . anyFile
-  path (AnyFile file) = path . anyFile
-  provenance (AnyFile file) = provenance . anyFile
+  fileType = anyFile . fileType
+  path = anyFile . path
+  provenance = anyFile . provenance
 instance TextShow AnyFile where
   textShow (AnyFile file) = textShow file
 
@@ -106,18 +111,18 @@ instance Ord HeaderFile where
              on compare (view provenance) a b]
 instance File HeaderFile where
   fromAnyFile (AnyFile file) = cast file
-  fileType file = HeaderFileType $ file^.language
-  filePath = view path
-  fileProvenance = view provenance
+  fileType = to (\file -> HeaderFileType $ file ^. language)
+  path = headerFilePath
+  provenance = headerFileProvenance
 instance TextShow HeaderFile where
   textShow file =
     Text.concat $
       ["(header-file \"",
-       file^.path,
+       file ^. path,
        "\" ",
-       textShow $ file^.provenance,
+       textShow $ file ^. provenance,
        " ",
-       textShow $ file^.language,
+       textShow $ file ^. language,
        ")"]
 
 data SourceFile =
@@ -131,28 +136,28 @@ makeLenses ''SourceFile
 instance Eq SourceFile where
   (==) a b =
     foldl1 (&&)
-           [on (==) sourceFileLanguage a b,
-            on (==) sourceFilePath a b,
-            on (==) sourceFileProvenance a b]
+           [on (==) (view language) a b,
+            on (==) (view path) a b,
+            on (==) (view provenance) a b]
 instance Ord SourceFile where
   compare a b =
-    mconcat [on compare sourceFileLanguage a b,
-             on compare sourceFilePath a b,
-             on compare sourceFileProvenance a b]
+    mconcat [on compare (view language) a b,
+             on compare (view path) a b,
+             on compare (view provenance) a b]
 instance File SourceFile where
   fromAnyFile (AnyFile file) = cast file
-  fileType file = SourceFileType $ sourceFileLanguage file
-  filePath = sourceFilePath
-  fileProvenance = sourceFileProvenance
+  fileType = to (\file -> SourceFileType $ file ^. language)
+  path = sourceFilePath
+  provenance = sourceFileProvenance
 instance TextShow SourceFile where
   textShow file =
     Text.concat $
       ["(source-file \"",
-       sourceFilePath file,
+       file ^. path,
        "\" ",
-       textShow $ sourceFileProvenance file,
+       textShow $ file ^. provenance,
        " ",
-       textShow $ sourceFileLanguage file,
+       textShow $ file ^. language,
        ")"]
 
 data ObjectFile =
@@ -165,24 +170,24 @@ makeLenses ''ObjectFile
 instance Eq ObjectFile where
   (==) a b =
     foldl1 (&&)
-           [on (==) objectFilePath a b,
-            on (==) objectFileProvenance a b]
+           [on (==) (view path) a b,
+            on (==) (view provenance) a b]
 instance Ord ObjectFile where
   compare a b =
-    mconcat [on compare objectFilePath a b,
-             on compare objectFileProvenance a b]
+    mconcat [on compare (view path) a b,
+             on compare (view provenance) a b]
 instance File ObjectFile where
   fromAnyFile (AnyFile file) = cast file
-  fileType _ = ObjectFileType
-  filePath = objectFilePath
-  fileProvenance = objectFileProvenance
+  fileType = to (\_ -> ObjectFileType)
+  path = objectFilePath
+  provenance = objectFileProvenance
 instance TextShow ObjectFile where
   textShow file =
     Text.concat $
       ["(object-file \"",
-       objectFilePath file,
+       file ^. path,
        "\" ",
-       textShow $ objectFileProvenance file,
+       textShow $ file ^. provenance,
        ")"]
 
 data ExecutableFile =
@@ -195,24 +200,24 @@ makeLenses ''ExecutableFile
 instance Eq ExecutableFile where
   (==) a b =
     foldl1 (&&)
-           [on (==) executableFilePath a b,
-            on (==) executableFileProvenance a b]
+           [on (==) (view path) a b,
+            on (==) (view provenance) a b]
 instance Ord ExecutableFile where
   compare a b =
-    mconcat [on compare executableFilePath a b,
-             on compare executableFileProvenance a b]
+    mconcat [on compare (view path) a b,
+             on compare (view provenance) a b]
 instance File ExecutableFile where
   fromAnyFile (AnyFile file) = cast file
-  fileType _ = ExecutableFileType
-  filePath = executableFilePath
-  fileProvenance = executableFileProvenance
+  fileType = to (\_ -> ExecutableFileType)
+  path = executableFilePath
+  provenance = executableFileProvenance
 instance TextShow ExecutableFile where
   textShow file =
     Text.concat $
       ["(executable-file \"",
-       executableFilePath file,
+       file ^. path,
        "\" ",
-       textShow $ executableFileProvenance file,
+       textShow $ file ^. provenance,
        ")"]
 
 data LibraryFile =
@@ -225,37 +230,44 @@ makeLenses ''LibraryFile
 instance Eq LibraryFile where
   (==) a b =
     foldl1 (&&)
-           [on (==) libraryFilePath a b,
-            on (==) libraryFileProvenance a b]
+           [on (==) (view path) a b,
+            on (==) (view provenance) a b]
 instance Ord LibraryFile where
   compare a b =
-    mconcat [on compare libraryFilePath a b,
-             on compare libraryFileProvenance a b]
+    mconcat [on compare (view path) a b,
+             on compare (view provenance) a b]
 instance File LibraryFile where
   fromAnyFile (AnyFile file) = cast file
-  fileType _ = LibraryFileType
-  filePath = libraryFilePath
-  fileProvenance = libraryFileProvenance
+  fileType = to (\_ -> LibraryFileType)
+  path = libraryFilePath
+  provenance = libraryFileProvenance
 instance TextShow LibraryFile where
   textShow file =
     Text.concat $
       ["(library-file \"",
-       libraryFilePath file,
+       file ^. path,
        "\" ",
-       textShow $ libraryFileProvenance file,
+       textShow $ file ^. provenance,
        ")"]
 
 class (TextShow buildStep) => BuildStep buildStep where
-  buildStepInputs :: buildStep -> Set.Set AnyFile
-  buildStepOutputs :: buildStep -> Set.Set AnyFile
+  buildStepInputs :: Simple Lens buildStep (Set.Set AnyFile)
+  buildStepOutputs :: Simple Lens buildStep (Set.Set AnyFile)
   explainBuildStep :: buildStep -> Text.Text
   performBuildStep :: buildStep -> IO ()
 
 data AnyBuildStep =
   forall buildStep . BuildStep buildStep => AnyBuildStep buildStep
+anyBuildStep :: (BuildStep buildStep) => Getter AnyBuildStep (Maybe buildStep)
+anyBuildStep =
+  lens (\(AnyBuildStep buildStep) -> cast buildStep)
+       (\original maybeValue ->
+          case maybeValue of
+            Nothing -> original
+            Just value -> AnyBuildStep value)
 instance BuildStep AnyBuildStep where
-  buildStepInputs (AnyBuildStep buildStep) = buildStepInputs buildStep
-  buildStepOutputs (AnyBuildStep buildStep) = buildStepOutputs buildStep
+  buildStepInputs = anyBuildStep . buildStepInputs
+  buildStepOutputs = anyBuildStep . buildStepOutputs
   explainBuildStep (AnyBuildStep buildStep) = explainBuildStep buildStep
   performBuildStep (AnyBuildStep buildStep) = performBuildStep buildStep
 instance TextShow AnyBuildStep where
@@ -263,21 +275,34 @@ instance TextShow AnyBuildStep where
 
 class (HasName target, TextShow target) => Target target where
   targetBuildSteps :: Task -> target -> [AnyBuildStep]
-  targetPrerequisites :: target -> Set.Set AnyTarget
-  targetProducts :: target -> Set.Set AnyFile
+  targetPrerequisites :: Getter target (Set.Set AnyTarget)
+  targetProducts :: Getter target (Set.Set AnyFile)
 
 data AnyTarget = forall target . Target target => AnyTarget target
-makeLenses ''AnyTarget
+anyTarget :: (Target target) => Simple Lens AnyTarget (Maybe target)
+anyTarget = lens (\(AnyTarget target) -> cast target)
+                 (\original maybeValue ->
+                    case maybeValue of
+                      Nothing -> original
+                      Just value -> AnyTarget value)
 instance Eq AnyTarget where
   (==) a b = on (==) (view name) a b
 instance Ord AnyTarget where
   compare a b = on compare (view name) a b
 instance HasName AnyTarget where
-  name (AnyTarget target) = name . target
+  name = anyTarget . name
 instance Target AnyTarget where
   targetBuildSteps task (AnyTarget target) = targetBuildSteps task target
-  targetPrerequisites (AnyTarget target) = targetPrerequisites target
-  targetProducts (AnyTarget target) = targetProducts target
+  targetPrerequisites =
+    to (\target ->
+           case target ^. anyTarget of
+             Nothing -> Set.empty
+             Just target -> target ^. targetPrerequisites)
+  targetProducts =
+    to (\target ->
+           case target ^. anyTarget of
+             Nothing -> Set.empty
+             Just target -> target ^. targetProducts)
 instance TextShow AnyTarget where
   textShow (AnyTarget target) = textShow target
 
@@ -290,34 +315,39 @@ data ExecutableTarget =
     }
 makeLenses ''ExecutableTarget
 instance HasName ExecutableTarget where
-  nameOf = executableTargetName
+  name = executableTargetName
 instance Target ExecutableTarget where
-  targetBuildSteps = computeExecutableBuildSteps
+  targetBuildSteps AmalgamationTask executable = []
+  targetBuildSteps BinaryTask executable = []
+  targetBuildSteps TestTask executable = []
+  targetBuildSteps DebugTask executable = []
+  targetBuildSteps CleanTask executable = []
   targetPrerequisites = executableTargetPrerequisites
-  targetProducts executable =
-    Set.fromList
-      [AnyFile $ ExecutableFile {
-           executableFilePath =
-             Text.concat ["dist/",
-                          executableTargetName executable,
-                          "/binary/products/",
-                          executableTargetName executable],
-           executableFileProvenance = BuiltProvenance
-         }]
+  targetProducts =
+    to (\executable ->
+          Set.fromList
+            [AnyFile $ ExecutableFile {
+                 _executableFilePath =
+                   Text.concat ["dist/",
+                                executable ^. name,
+                                "/binary/products/",
+                                executable ^. name],
+                 _executableFileProvenance = BuiltProvenance
+               }])
 instance TextShow ExecutableTarget where
   textShow target =
     Text.concat $
       ["(executable-target ",
-       executableTargetName target,
+       target ^. name,
        " (",
-       Text.intercalate " " $ map textShow $ Set.toList
-        $ executableTargetPrerequisites target,
+       Text.intercalate " " $ map textShow $ Set.toList $
+         target ^. executableTargetPrerequisites,
        ") (",
-       Text.intercalate " " $ map textShow $ Set.toList
-        $ executableTargetPrivateHeaders target,
+       Text.intercalate " " $ map textShow $ Set.toList $
+         target ^. executableTargetPrivateHeaders,
        ") (",
-       Text.intercalate " " $ map textShow $ Set.toList
-        $ executableTargetSources target,
+       Text.intercalate " " $ map textShow $ Set.toList $
+         target ^. executableTargetSources,
        "))"]
 
 data LibraryTarget =
@@ -330,38 +360,43 @@ data LibraryTarget =
     }
 makeLenses ''LibraryTarget
 instance HasName LibraryTarget where
-  nameOf = libraryTargetName
+  name = libraryTargetName
 instance Target LibraryTarget where
-  targetBuildSteps = computeLibraryBuildSteps
+  targetBuildSteps AmalgamationTask library = []
+  targetBuildSteps BinaryTask library = []
+  targetBuildSteps TestTask library = []
+  targetBuildSteps DebugTask library = []
+  targetBuildSteps CleanTask library = []
   targetPrerequisites = libraryTargetPrerequisites
-  targetProducts library =
-    Set.fromList
-      [AnyFile $ LibraryFile {
-           libraryFilePath =
-             Text.concat ["dist/",
-                          libraryTargetName library,
-                          "/binary/products/lib",
-                          libraryTargetName library,
-                          ".a"],
-           libraryFileProvenance = BuiltProvenance
-         }]
+  targetProducts =
+    to (\library ->
+          Set.fromList
+            [AnyFile $ LibraryFile {
+                 _libraryFilePath =
+                   Text.concat ["dist/",
+                                library ^. name,
+                                "/binary/products/lib",
+                                library ^. name,
+                                ".a"],
+                 _libraryFileProvenance = BuiltProvenance
+               }])
 instance TextShow LibraryTarget where
   textShow target =
     Text.concat $
       ["(library-target ",
-       libraryTargetName target,
+       target ^. name,
        " (",
        Text.intercalate " " $ map textShow $ Set.toList
-        $ libraryTargetPrerequisites target,
+        $ target ^. libraryTargetPrerequisites,
        ") (",
        Text.intercalate " " $ map textShow $ Set.toList
-        $ libraryTargetPublicHeaders target,
+        $ target ^. libraryTargetPublicHeaders,
        ") (",
        Text.intercalate " " $ map textShow $ Set.toList
-        $ libraryTargetPrivateHeaders target,
+        $ target ^. libraryTargetPrivateHeaders,
        ") (",
        Text.intercalate " " $ map textShow $ Set.toList
-        $ libraryTargetSources target,
+        $ target ^. libraryTargetSources,
        "))"]
 
 data Invocation =
@@ -375,21 +410,25 @@ makeLenses ''Invocation
 instance BuildStep Invocation where
   buildStepInputs = invocationInputs
   buildStepOutputs = invocationOutputs
-  explainBuildStep = computeInvocationExplanation
-  performBuildStep = performInvocation
+  explainBuildStep invocation =
+    Text.intercalate " "
+      ((invocation ^. invocationExecutable . path)
+       : invocation ^. invocationParameters)
+  performBuildStep invocation = do
+    putStrLn $ Text.unpack $ explainBuildStep invocation
 instance TextShow Invocation where
   textShow invocation =
     Text.concat $
       ["(invocation ",
-       textShow $ invocationExecutable invocation,
+       textShow $ invocation ^. invocationExecutable,
        " (",
-       Text.intercalate " " $ invocationParameters invocation,
+       Text.intercalate " " $ invocation ^. invocationParameters,
        ") (",
        Text.intercalate " " $ map textShow $ Set.toList
-        $ invocationInputs invocation,
+        $ invocation ^. invocationInputs,
        ") (",
        Text.intercalate " " $ map textShow $ Set.toList
-        $ invocationOutputs invocation,
+        $ invocation ^. invocationOutputs,
        "))"]
 
 data Mode
@@ -429,19 +468,17 @@ main = do
 makeProject :: Text.Text -> IO Project
 makeProject name = do
   return $ Project {
-               projectName = name,
-               projectDefaultTarget = Nothing,
-               projectTargets = Set.empty
+               _projectName = name,
+               _projectDefaultTarget = Nothing,
+               _projectTargets = Set.empty
              }
 
 
 projectLibraryAdd :: Project -> LibraryTarget -> IO Project
 projectLibraryAdd project library = do
-  return $ project {
-               projectTargets =
-                 Set.union (Set.singleton $ AnyTarget library)
-                           (projectTargets project)
-             }
+  return $ set projectTargets
+    (Set.union (Set.singleton $ AnyTarget library) (project ^. projectTargets))
+    project
 
 
 makeExecutable :: Text.Text -> Text.Text -> IO ExecutableTarget
@@ -452,55 +489,27 @@ makeExecutable name directory = do
       sources =
         Set.fromList $ catMaybes $ map fromAnyFile $ Set.toList files
   return $ ExecutableTarget {
-               executableTargetName = name,
-               executableTargetPrerequisites = Set.empty,
-               executableTargetPrivateHeaders = headers,
-               executableTargetSources = sources
+               _executableTargetName = name,
+               _executableTargetPrerequisites = Set.empty,
+               _executableTargetPrivateHeaders = headers,
+               _executableTargetSources = sources
              }
 
 
 makeLibrary :: Text.Text -> Text.Text -> IO LibraryTarget
 makeLibrary name directory = do
   return $ LibraryTarget {
-               libraryTargetName = name,
-               libraryTargetPrerequisites = Set.empty,
-               libraryTargetPublicHeaders = Set.empty,
-               libraryTargetPrivateHeaders = Set.empty,
-               libraryTargetSources = Set.empty
+               _libraryTargetName = name,
+               _libraryTargetPrerequisites = Set.empty,
+               _libraryTargetPublicHeaders = Set.empty,
+               _libraryTargetPrivateHeaders = Set.empty,
+               _libraryTargetSources = Set.empty
              }
 
 
 libraryPrerequisiteAdd :: LibraryTarget -> AnyTarget -> IO LibraryTarget
 libraryPrerequisiteAdd library prerequisite = do
   return library
-
-
-computeExecutableBuildSteps :: Task -> ExecutableTarget -> [AnyBuildStep]
-computeExecutableBuildSteps AmalgamationTask executable = []
-computeExecutableBuildSteps BinaryTask executable = []
-computeExecutableBuildSteps TestTask executable = []
-computeExecutableBuildSteps DebugTask executable = []
-computeExecutableBuildSteps CleanTask executable = []
-
-
-computeLibraryBuildSteps :: Task -> LibraryTarget -> [AnyBuildStep]
-computeLibraryBuildSteps AmalgamationTask library = []
-computeLibraryBuildSteps BinaryTask library = []
-computeLibraryBuildSteps TestTask library = []
-computeLibraryBuildSteps DebugTask library = []
-computeLibraryBuildSteps CleanTask library = []
-
-
-computeInvocationExplanation :: Invocation -> Text.Text
-computeInvocationExplanation invocation =
-  Text.intercalate " "
-    ((filePath $ invocationExecutable invocation)
-     : invocationParameters invocation)
-
-
-performInvocation :: Invocation -> IO ()
-performInvocation invocation = do
-  putStrLn $ Text.unpack $ computeInvocationExplanation invocation
 
 
 scanDirectory :: Text.Text -> IO (Set.Set AnyFile)
@@ -536,16 +545,16 @@ scanDirectory path = do
                       Nothing -> return soFar
                       Just (HeaderFileType language) -> do
                         let file = HeaderFile {
-                                       headerFileLanguage = language,
-                                       headerFilePath = filePath,
-                                       headerFileProvenance = InputProvenance
+                                       _headerFileLanguage = language,
+                                       _headerFilePath = filePath,
+                                       _headerFileProvenance = InputProvenance
                                      }
                         return $ Set.insert (AnyFile file) soFar
                       Just (SourceFileType language) -> do
                         let file = SourceFile {
-                                       sourceFileLanguage = language,
-                                       sourceFilePath = filePath,
-                                       sourceFileProvenance = InputProvenance
+                                       _sourceFileLanguage = language,
+                                       _sourceFilePath = filePath,
+                                       _sourceFileProvenance = InputProvenance
                                      }
                         return $ Set.insert (AnyFile file) soFar
                   else do
