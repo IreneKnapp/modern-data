@@ -282,7 +282,7 @@ instance TextShow AnyBuildStep where
 
 class (HasName target, TextShow target, Typeable target) => Target target where
   targetBuildSteps :: Task -> target -> [AnyBuildStep]
-  targetPrerequisites :: Getter target (Set.Set AnyTarget)
+  targetPrerequisites :: Simple Lens target (Set.Set AnyTarget)
   targetProducts :: Getter target (Set.Set AnyFile)
 
 data AnyTarget = forall target . Target target => AnyTarget target
@@ -460,11 +460,13 @@ main = do
   mainLibrary <- makeLibrary "modern" "../../C/library/"
   makeKeywordsExecutable <-
     makeExecutable "make-keywords" "../../C/tools/make-keywords/"
-  mainLibrary <-
-    libraryPrerequisiteAdd mainLibrary (AnyTarget makeKeywordsExecutable)
-  project <- projectLibraryAdd project mainLibrary
+  mainLibrary <- return $ over targetPrerequisites $
+    Set.insert $ AnyTarget makeKeywordsExecutable
+  project <- return $ over projectTargets $
+    Set.insert $ AnyTarget mainLibrary
   let buildSteps = targetBuildSteps BinaryTask mainLibrary
       explanation = map explainBuildStep buildSteps
+  putStrLn $ Text.unpack $ textShow mainLibrary
   mapM_ (putStrLn . Text.unpack) explanation
 
 
@@ -501,18 +503,18 @@ makeExecutable name directory = do
 
 makeLibrary :: Text.Text -> Text.Text -> IO LibraryTarget
 makeLibrary name directory = do
+  files <- scanDirectory directory
+  let privateHeaders =
+        Set.fromList $ catMaybes $ map fromAnyFile $ Set.toList files
+      sources =
+        Set.fromList $ catMaybes $ map fromAnyFile $ Set.toList files
   return $ LibraryTarget {
                _libraryTargetName = name,
                _libraryTargetPrerequisites = Set.empty,
                _libraryTargetPublicHeaders = Set.empty,
-               _libraryTargetPrivateHeaders = Set.empty,
-               _libraryTargetSources = Set.empty
+               _libraryTargetPrivateHeaders = privateHeaders,
+               _libraryTargetSources = sources
              }
-
-
-libraryPrerequisiteAdd :: LibraryTarget -> AnyTarget -> IO LibraryTarget
-libraryPrerequisiteAdd library prerequisite = do
-  return library
 
 
 scanDirectory :: Text.Text -> IO (Set.Set AnyFile)
