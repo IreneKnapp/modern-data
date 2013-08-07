@@ -1,5 +1,6 @@
 {-# LANGUAGE ExistentialQuantification, OverloadedStrings,
-             DeriveDataTypeable, TemplateHaskell #-}
+             DeriveDataTypeable, TemplateHaskell, LiberalTypeSynonyms,
+             Rank2Types #-}
 module Main (main) where
 
 import qualified Data.Set as Set
@@ -56,12 +57,8 @@ class (TextShow file, Eq file, Ord file, Typeable file) => File file where
 
 data AnyFile = forall file . File file => AnyFile file
   deriving (Typeable)
-anyFile :: (File file) => Simple Lens AnyFile (Maybe file)
-anyFile = lens (\(AnyFile file) -> cast file)
-               (\original maybeValue ->
-                  case maybeValue of
-                    Nothing -> original
-                    Just value -> AnyFile value)
+anyFile :: (File file) => Simple Lens AnyFile file
+anyFile = to (\(AnyFile file) -> file)
 instance Eq AnyFile where
   (==) a b =
     case a of
@@ -259,12 +256,7 @@ class (TextShow buildStep) => BuildStep buildStep where
 data AnyBuildStep =
   forall buildStep . BuildStep buildStep => AnyBuildStep buildStep
 anyBuildStep :: (BuildStep buildStep) => Getter AnyBuildStep (Maybe buildStep)
-anyBuildStep =
-  lens (\(AnyBuildStep buildStep) -> cast buildStep)
-       (\original maybeValue ->
-          case maybeValue of
-            Nothing -> original
-            Just value -> AnyBuildStep value)
+anyBuildStep = to (\(AnyBuildStep buildStep) -> cast buildStep)
 instance BuildStep AnyBuildStep where
   buildStepInputs = anyBuildStep . buildStepInputs
   buildStepOutputs = anyBuildStep . buildStepOutputs
@@ -273,36 +265,30 @@ instance BuildStep AnyBuildStep where
 instance TextShow AnyBuildStep where
   textShow (AnyBuildStep buildStep) = textShow buildStep
 
-class (HasName target, TextShow target) => Target target where
+class (HasName target, TextShow target, Typeable target) => Target target where
   targetBuildSteps :: Task -> target -> [AnyBuildStep]
   targetPrerequisites :: Getter target (Set.Set AnyTarget)
   targetProducts :: Getter target (Set.Set AnyFile)
 
 data AnyTarget = forall target . Target target => AnyTarget target
-anyTarget :: (Target target) => Simple Lens AnyTarget (Maybe target)
-anyTarget = lens (\(AnyTarget target) -> cast target)
-                 (\original maybeValue ->
-                    case maybeValue of
-                      Nothing -> original
-                      Just value -> AnyTarget value)
+  deriving (Typeable)
+anyTarget
+    :: forall f a . (Contravariant f, Functor f)
+    => (forall target . Target target => Simple (LensLike f) target a)
+    -> Simple (LensLike f) AnyTarget a
+anyTarget underlying =
+  lens (\(AnyTarget target) -> view underlying target)
+       (\(AnyTarget target) value -> AnyTarget $ set underlying value target)
 instance Eq AnyTarget where
   (==) a b = on (==) (view name) a b
 instance Ord AnyTarget where
   compare a b = on compare (view name) a b
 instance HasName AnyTarget where
-  name = anyTarget . name
+  name = anyTarget name
 instance Target AnyTarget where
   targetBuildSteps task (AnyTarget target) = targetBuildSteps task target
-  targetPrerequisites =
-    to (\target ->
-           case target ^. anyTarget of
-             Nothing -> Set.empty
-             Just target -> target ^. targetPrerequisites)
-  targetProducts =
-    to (\target ->
-           case target ^. anyTarget of
-             Nothing -> Set.empty
-             Just target -> target ^. targetProducts)
+  targetPrerequisites = anyTarget targetPrerequisites
+  targetProducts = anyTarget targetProducts
 instance TextShow AnyTarget where
   textShow (AnyTarget target) = textShow target
 
@@ -313,6 +299,7 @@ data ExecutableTarget =
       _executableTargetPrivateHeaders :: Set.Set HeaderFile,
       _executableTargetSources :: Set.Set SourceFile
     }
+  deriving (Typeable)
 makeLenses ''ExecutableTarget
 instance HasName ExecutableTarget where
   name = executableTargetName
@@ -358,6 +345,7 @@ data LibraryTarget =
       _libraryTargetPrivateHeaders :: Set.Set HeaderFile,
       _libraryTargetSources :: Set.Set SourceFile
     }
+  deriving (Typeable)
 makeLenses ''LibraryTarget
 instance HasName LibraryTarget where
   name = libraryTargetName
