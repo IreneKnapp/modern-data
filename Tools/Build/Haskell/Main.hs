@@ -10,6 +10,7 @@ import qualified System.Directory as IO
 import Control.Lens
 import Control.Monad
 import Data.Function
+import Data.Functor
 import Data.List
 import Data.Maybe
 import Data.Monoid
@@ -51,14 +52,19 @@ data FileType
 
 class (TextShow file, Eq file, Ord file, Typeable file) => File file where
   fromAnyFile :: AnyFile -> Maybe file
-  fileType :: Simple Lens file FileType
+  fileType :: Getter file FileType
   path :: Simple Lens file Text.Text
   provenance :: Simple Lens file Provenance
 
 data AnyFile = forall file . File file => AnyFile file
   deriving (Typeable)
-anyFile :: (File file) => Simple Lens AnyFile file
-anyFile = to (\(AnyFile file) -> file)
+anyFile
+    :: forall a f . (Functor f)
+    => (forall file . (File file)
+        => (a -> f a) -> file -> f file)
+    -> ((a -> f a) -> AnyFile -> f AnyFile)
+anyFile underlying f (AnyFile file) =
+  AnyFile <$> underlying f file
 instance Eq AnyFile where
   (==) a b =
     case a of
@@ -73,9 +79,9 @@ instance Ord AnyFile where
                       Nothing -> on compare (view fileType) a b
 instance File AnyFile where
   fromAnyFile (AnyFile file) = cast file
-  fileType = anyFile . fileType
-  path = anyFile . path
-  provenance = anyFile . provenance
+  fileType = anyFile fileType
+  path = anyFile path
+  provenance = anyFile provenance
 instance TextShow AnyFile where
   textShow (AnyFile file) = textShow file
 
@@ -95,6 +101,8 @@ data HeaderFile =
     }
   deriving (Typeable)
 makeLenses ''HeaderFile
+instance HasLanguage HeaderFile where
+  language = headerFileLanguage
 instance Eq HeaderFile where
   (==) a b =
     foldl1 (&&)
@@ -130,6 +138,8 @@ data SourceFile =
     }
   deriving (Typeable)
 makeLenses ''SourceFile
+instance HasLanguage SourceFile where
+  language = sourceFileLanguage
 instance Eq SourceFile where
   (==) a b =
     foldl1 (&&)
@@ -255,11 +265,16 @@ class (TextShow buildStep) => BuildStep buildStep where
 
 data AnyBuildStep =
   forall buildStep . BuildStep buildStep => AnyBuildStep buildStep
-anyBuildStep :: (BuildStep buildStep) => Getter AnyBuildStep (Maybe buildStep)
-anyBuildStep = to (\(AnyBuildStep buildStep) -> cast buildStep)
+anyBuildStep
+    :: forall a f . (Functor f)
+    => (forall buildStep . (BuildStep buildStep)
+        => (a -> f a) -> buildStep -> f buildStep)
+    -> ((a -> f a) -> AnyBuildStep -> f AnyBuildStep)
+anyBuildStep underlying f (AnyBuildStep buildStep) =
+  AnyBuildStep <$> underlying f buildStep
 instance BuildStep AnyBuildStep where
-  buildStepInputs = anyBuildStep . buildStepInputs
-  buildStepOutputs = anyBuildStep . buildStepOutputs
+  buildStepInputs = anyBuildStep buildStepInputs
+  buildStepOutputs = anyBuildStep buildStepOutputs
   explainBuildStep (AnyBuildStep buildStep) = explainBuildStep buildStep
   performBuildStep (AnyBuildStep buildStep) = performBuildStep buildStep
 instance TextShow AnyBuildStep where
@@ -273,18 +288,18 @@ class (HasName target, TextShow target, Typeable target) => Target target where
 data AnyTarget = forall target . Target target => AnyTarget target
   deriving (Typeable)
 anyTarget
-    :: forall f a . (Contravariant f, Functor f)
-    => (forall target . Target target => Simple (LensLike f) target a)
-    -> Simple (LensLike f) AnyTarget a
-anyTarget underlying =
-  lens (\(AnyTarget target) -> view underlying target)
-       (\(AnyTarget target) value -> AnyTarget $ set underlying value target)
+    :: forall a f . (Functor f)
+    => (forall target . (Target target)
+        => (a -> f a) -> target -> f target)
+    -> ((a -> f a) -> AnyTarget -> f AnyTarget)
+anyTarget underlying f (AnyTarget target) =
+  AnyTarget <$> underlying f target
+instance HasName AnyTarget where
+  name = anyTarget name
 instance Eq AnyTarget where
   (==) a b = on (==) (view name) a b
 instance Ord AnyTarget where
   compare a b = on compare (view name) a b
-instance HasName AnyTarget where
-  name = anyTarget name
 instance Target AnyTarget where
   targetBuildSteps task (AnyTarget target) = targetBuildSteps task target
   targetPrerequisites = anyTarget targetPrerequisites
