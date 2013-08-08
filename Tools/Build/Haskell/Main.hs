@@ -462,8 +462,7 @@ main = do
     makeExecutable "make-keywords" "../../C/tools/make-keywords/"
   mainLibrary <- return $ over targetPrerequisites $
     Set.insert $ AnyTarget makeKeywordsExecutable
-  project <- return $ over projectTargets $
-    Set.insert $ AnyTarget mainLibrary
+  project <- return $ over projectTargets $ Set.insert (AnyTarget mainLibrary)
   let buildSteps = targetBuildSteps BinaryTask mainLibrary
       explanation = map explainBuildStep buildSteps
   putStrLn $ Text.unpack $ textShow mainLibrary
