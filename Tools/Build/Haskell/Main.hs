@@ -460,9 +460,14 @@ main = do
   mainLibrary <- makeLibrary "modern" "../../C/library/"
   makeKeywordsExecutable <-
     makeExecutable "make-keywords" "../../C/tools/make-keywords/"
-  mainLibrary <- return $ over targetPrerequisites $
-    Set.insert $ AnyTarget makeKeywordsExecutable
-  project <- return $ over projectTargets $ Set.insert (AnyTarget mainLibrary)
+  mainLibrary <- return $
+    over targetPrerequisites
+         (Set.insert $ AnyTarget makeKeywordsExecutable)
+         mainLibrary
+  project <- return $
+    over projectTargets
+         (Set.insert $ AnyTarget mainLibrary)
+         project
   let buildSteps = targetBuildSteps BinaryTask mainLibrary
       explanation = map explainBuildStep buildSteps
   putStrLn $ Text.unpack $ textShow mainLibrary
