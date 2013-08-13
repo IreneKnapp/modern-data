@@ -1,11 +1,12 @@
 {-# LANGUAGE ExistentialQuantification, OverloadedStrings,
-             DeriveDataTypeable, TemplateHaskell, LiberalTypeSynonyms,
-             Rank2Types #-}
+             DeriveDataTypeable, LiberalTypeSynonyms, Rank2Types,
+             StandaloneDeriving #-}
 module Main (main) where
 
 import qualified Data.Set as Set
 import qualified Data.Text as Text
 import qualified System.Directory as IO
+import qualified System.FilePath.Posix as IO
 
 import Control.Lens
 import Control.Monad
@@ -16,48 +17,41 @@ import Data.Maybe
 import Data.Monoid
 import Data.Typeable
 
+import Build.Types
 
-class TextShow textShow where
-  textShow :: textShow -> Text.Text
 
-class HasName hasName where
-  name :: Simple Lens hasName Text.Text
-class HasLanguage hasLanguage where
-  language :: Simple Lens hasLanguage Language
+deriving instance Eq Language
+deriving instance Eq FileType
+deriving instance Eq Task
+deriving instance Eq Mode
+deriving instance Eq Provenance
 
-data Language
-  = CLanguage
-  | HaskellLanguage
-  deriving (Eq, Ord)
+deriving instance Ord Language
+deriving instance Ord FileType
+deriving instance Ord Task
+deriving instance Ord Mode
+deriving instance Ord Provenance
+
+deriving instance Typeable AnyFile
+deriving instance Typeable HeaderFile
+deriving instance Typeable SourceFile
+deriving instance Typeable ObjectFile
+deriving instance Typeable ExecutableFile
+deriving instance Typeable LibraryFile
+deriving instance Typeable AnyTarget
+deriving instance Typeable ExecutableTarget
+deriving instance Typeable LibraryTarget
+
+
 instance TextShow Language where
   textShow CLanguage = "c-language"
   textShow HaskellLanguage = "haskell-language"
 
-data Provenance
-  = InputProvenance
-  | BuiltProvenance
-  | SystemProvenance
-  deriving (Eq, Ord)
+
 instance TextShow Provenance where
   textShow InputProvenance = "input-provenance"
 
-data FileType
-  = UnknownFileType
-  | HeaderFileType Language
-  | SourceFileType Language
-  | ObjectFileType
-  | ExecutableFileType
-  | LibraryFileType
-  deriving (Eq, Ord)
 
-class (TextShow file, Eq file, Ord file, Typeable file) => File file where
-  fromAnyFile :: AnyFile -> Maybe file
-  fileType :: Getter file FileType
-  path :: Simple Lens file Text.Text
-  provenance :: Simple Lens file Provenance
-
-data AnyFile = forall file . File file => AnyFile file
-  deriving (Typeable)
 anyFile
     :: forall a f . (Functor f)
     => (forall file . (File file)
@@ -85,22 +79,6 @@ instance File AnyFile where
 instance TextShow AnyFile where
   textShow (AnyFile file) = textShow file
 
-data Task
-  = AmalgamationTask
-  | BinaryTask
-  | TestTask
-  | DebugTask
-  | CleanTask
-  deriving (Eq, Ord)
-
-data HeaderFile =
-  HeaderFile {
-      _headerFileLanguage :: Language,
-      _headerFilePath :: Text.Text,
-      _headerFileProvenance :: Provenance
-    }
-  deriving (Typeable)
-makeLenses ''HeaderFile
 instance HasLanguage HeaderFile where
   language = headerFileLanguage
 instance Eq HeaderFile where
@@ -130,14 +108,6 @@ instance TextShow HeaderFile where
        textShow $ file ^. language,
        ")"]
 
-data SourceFile =
-  SourceFile {
-      _sourceFileLanguage :: Language,
-      _sourceFilePath :: Text.Text,
-      _sourceFileProvenance :: Provenance
-    }
-  deriving (Typeable)
-makeLenses ''SourceFile
 instance HasLanguage SourceFile where
   language = sourceFileLanguage
 instance Eq SourceFile where
@@ -167,13 +137,6 @@ instance TextShow SourceFile where
        textShow $ file ^. language,
        ")"]
 
-data ObjectFile =
-  ObjectFile {
-      _objectFilePath :: Text.Text,
-      _objectFileProvenance :: Provenance
-    }
-  deriving (Typeable)
-makeLenses ''ObjectFile
 instance Eq ObjectFile where
   (==) a b =
     foldl1 (&&)
@@ -190,20 +153,13 @@ instance File ObjectFile where
   provenance = objectFileProvenance
 instance TextShow ObjectFile where
   textShow file =
-    Text.concat $
+    Text.concat
       ["(object-file \"",
        file ^. path,
        "\" ",
        textShow $ file ^. provenance,
        ")"]
 
-data ExecutableFile =
-  ExecutableFile {
-      _executableFilePath :: Text.Text,
-      _executableFileProvenance :: Provenance
-    }
-  deriving (Typeable)
-makeLenses ''ExecutableFile
 instance Eq ExecutableFile where
   (==) a b =
     foldl1 (&&)
@@ -227,13 +183,6 @@ instance TextShow ExecutableFile where
        textShow $ file ^. provenance,
        ")"]
 
-data LibraryFile =
-  LibraryFile {
-      _libraryFilePath :: Text.Text,
-      _libraryFileProvenance :: Provenance
-    }
-  deriving (Typeable)
-makeLenses ''LibraryFile
 instance Eq LibraryFile where
   (==) a b =
     foldl1 (&&)
@@ -257,14 +206,6 @@ instance TextShow LibraryFile where
        textShow $ file ^. provenance,
        ")"]
 
-class (TextShow buildStep) => BuildStep buildStep where
-  buildStepInputs :: Simple Lens buildStep (Set.Set AnyFile)
-  buildStepOutputs :: Simple Lens buildStep (Set.Set AnyFile)
-  explainBuildStep :: buildStep -> Text.Text
-  performBuildStep :: buildStep -> IO ()
-
-data AnyBuildStep =
-  forall buildStep . BuildStep buildStep => AnyBuildStep buildStep
 anyBuildStep
     :: forall a f . (Functor f)
     => (forall buildStep . (BuildStep buildStep)
@@ -280,13 +221,6 @@ instance BuildStep AnyBuildStep where
 instance TextShow AnyBuildStep where
   textShow (AnyBuildStep buildStep) = textShow buildStep
 
-class (HasName target, TextShow target, Typeable target) => Target target where
-  targetBuildSteps :: Task -> target -> [AnyBuildStep]
-  targetPrerequisites :: Simple Lens target (Set.Set AnyTarget)
-  targetProducts :: Getter target (Set.Set AnyFile)
-
-data AnyTarget = forall target . Target target => AnyTarget target
-  deriving (Typeable)
 anyTarget
     :: forall a f . (Functor f)
     => (forall target . (Target target)
@@ -294,12 +228,12 @@ anyTarget
     -> ((a -> f a) -> AnyTarget -> f AnyTarget)
 anyTarget underlying f (AnyTarget target) =
   AnyTarget <$> underlying f target
-instance HasName AnyTarget where
-  name = anyTarget name
 instance Eq AnyTarget where
   (==) a b = on (==) (view name) a b
 instance Ord AnyTarget where
   compare a b = on compare (view name) a b
+instance HasName AnyTarget where
+  name = anyTarget name
 instance Target AnyTarget where
   targetBuildSteps task (AnyTarget target) = targetBuildSteps task target
   targetPrerequisites = anyTarget targetPrerequisites
@@ -307,15 +241,7 @@ instance Target AnyTarget where
 instance TextShow AnyTarget where
   textShow (AnyTarget target) = textShow target
 
-data ExecutableTarget =
-  ExecutableTarget {
-      _executableTargetName :: Text.Text,
-      _executableTargetPrerequisites :: Set.Set AnyTarget,
-      _executableTargetPrivateHeaders :: Set.Set HeaderFile,
-      _executableTargetSources :: Set.Set SourceFile
-    }
-  deriving (Typeable)
-makeLenses ''ExecutableTarget
+
 instance HasName ExecutableTarget where
   name = executableTargetName
 instance Target ExecutableTarget where
@@ -352,21 +278,18 @@ instance TextShow ExecutableTarget where
          target ^. executableTargetSources,
        "))"]
 
-data LibraryTarget =
-  LibraryTarget {
-      _libraryTargetName :: Text.Text,
-      _libraryTargetPrerequisites :: Set.Set AnyTarget,
-      _libraryTargetPublicHeaders :: Set.Set HeaderFile,
-      _libraryTargetPrivateHeaders :: Set.Set HeaderFile,
-      _libraryTargetSources :: Set.Set SourceFile
-    }
-  deriving (Typeable)
-makeLenses ''LibraryTarget
 instance HasName LibraryTarget where
   name = libraryTargetName
 instance Target LibraryTarget where
   targetBuildSteps AmalgamationTask library = []
-  targetBuildSteps BinaryTask library = []
+  targetBuildSteps BinaryTask library =
+    concat (map (targetBuildSteps BinaryTask)
+                (Set.toList $ view targetPrerequisites library))
+           ++ (map (compileFileBuildStep $ AnyTarget library)
+                   (Set.toList $ view libraryTargetSources library))
+           ++ (map (installFileBuildStep "include/")
+                   (map AnyFile $ Set.toList $
+                     view libraryTargetPublicHeaders library))
   targetBuildSteps TestTask library = []
   targetBuildSteps DebugTask library = []
   targetBuildSteps CleanTask library = []
@@ -402,14 +325,6 @@ instance TextShow LibraryTarget where
         $ target ^. libraryTargetSources,
        "))"]
 
-data Invocation =
-  Invocation {
-      _invocationExecutable :: ExecutableFile,
-      _invocationParameters :: [Text.Text],
-      _invocationInputs :: Set.Set AnyFile,
-      _invocationOutputs :: Set.Set AnyFile
-    }
-makeLenses ''Invocation
 instance BuildStep Invocation where
   buildStepInputs = invocationInputs
   buildStepOutputs = invocationOutputs
@@ -434,18 +349,34 @@ instance TextShow Invocation where
         $ invocation ^. invocationOutputs,
        "))"]
 
-data Mode
-  = HelpMode
-  | TaskMode Task AnyTarget
-  deriving (Eq, Ord)
 
-data Project =
-  Project {
-      _projectName :: Text.Text,
-      _projectDefaultTarget :: Maybe AnyTarget,
-      _projectTargets :: Set.Set AnyTarget
-    }
-makeLenses ''Project
+instance BuildStep CopyFile where
+  buildStepInputs =
+    to (\copy -> Set.fromList [copy ^. copyFileInput])
+  buildStepOutputs =
+    to (\copy ->
+          Set.fromList
+            [set path
+                 (Text.concat
+                   [copy ^. copyFileOutputPath,
+                    Text.pack $ IO.takeFileName $ Text.unpack $
+                      copy ^. copyFileInput . path])
+                 (copy ^. copyFileInput)])
+  explainBuildStep copy =
+    Text.intercalate " "
+      ["cp", copy ^. copyFileInput . path, copy ^. copyFileOutputPath]
+  performBuildStep copy = do
+    putStrLn $ Text.unpack $ explainBuildStep copy
+instance TextShow CopyFile where
+  textShow copy =
+    Text.concat $
+      ["(copy-file ",
+       textShow $ copy ^. copyFileInput,
+       " \"",
+       copy ^. copyFileOutputPath,
+       "\")"]
+
+
 instance Eq Project where
   (==) a b = on (==) _projectName a b
 instance Ord Project where
@@ -457,7 +388,8 @@ instance HasName Project where
 main :: IO ()
 main = do
   project <- makeProject "Modern Data"
-  mainLibrary <- makeLibrary "modern" "../../C/library/"
+  mainLibrary <- makeLibrary "modern" "../../C/library/" $
+    Set.fromList ["../../C/library/modern.h"]
   makeKeywordsExecutable <-
     makeExecutable "make-keywords" "../../C/tools/make-keywords/"
   mainLibrary <- return $
@@ -483,13 +415,6 @@ makeProject name = do
              }
 
 
-projectLibraryAdd :: Project -> LibraryTarget -> IO Project
-projectLibraryAdd project library = do
-  return $ set projectTargets
-    (Set.union (Set.singleton $ AnyTarget library) (project ^. projectTargets))
-    project
-
-
 makeExecutable :: Text.Text -> Text.Text -> IO ExecutableTarget
 makeExecutable name directory = do
   files <- scanDirectory directory
@@ -505,20 +430,31 @@ makeExecutable name directory = do
              }
 
 
-makeLibrary :: Text.Text -> Text.Text -> IO LibraryTarget
-makeLibrary name directory = do
+makeLibrary :: Text.Text -> Text.Text -> Set.Set Text.Text -> IO LibraryTarget
+makeLibrary name directory publicHeadersIn = do
   files <- scanDirectory directory
-  let privateHeaders =
+  let allHeaders =
         Set.fromList $ catMaybes $ map fromAnyFile $ Set.toList files
       sources =
         Set.fromList $ catMaybes $ map fromAnyFile $ Set.toList files
-  return $ LibraryTarget {
-               _libraryTargetName = name,
-               _libraryTargetPrerequisites = Set.empty,
-               _libraryTargetPublicHeaders = Set.empty,
-               _libraryTargetPrivateHeaders = privateHeaders,
-               _libraryTargetSources = sources
-             }
+      publicHeaders =
+        Set.filter (\header -> Set.member (view path header) publicHeadersIn)
+                   allHeaders
+      privateHeaders = Set.difference allHeaders publicHeaders
+      missingHeaders =
+        Set.difference publicHeadersIn $ Set.map (view path) allHeaders
+  if Set.null missingHeaders
+    then return $ LibraryTarget {
+                      _libraryTargetName = name,
+                      _libraryTargetPrerequisites = Set.empty,
+                      _libraryTargetPublicHeaders = Set.empty,
+                      _libraryTargetPrivateHeaders = privateHeaders,
+                      _libraryTargetSources = sources
+                    }
+    else fail $ Text.unpack $
+      Text.concat ["Headers not found: ",
+                   Text.intercalate ", " $ Set.toList $ missingHeaders,
+                   "."]
 
 
 scanDirectory :: Text.Text -> IO (Set.Set AnyFile)
@@ -575,4 +511,34 @@ scanDirectory path = do
                       else return soFar)
          Set.empty
          (map Text.pack contents)
+
+
+compileFileBuildStep :: AnyTarget -> SourceFile -> AnyBuildStep
+compileFileBuildStep target input =
+  let output = ObjectFile {
+          _objectFilePath =
+            Text.concat ["dist/",
+                         target ^. name,
+                         "/binary/objects/",
+                         Text.pack $ IO.takeFileName $ Text.unpack $
+                           input ^. path],
+          _objectFileProvenance = BuiltProvenance
+        }
+  in AnyBuildStep $ Invocation {
+         _invocationExecutable = ExecutableFile {
+             _executableFilePath = "clang",
+             _executableFileProvenance = SystemProvenance
+           },
+         _invocationParameters = ["-O3", "-o", output ^. path, input ^. path],
+         _invocationInputs = Set.singleton $ AnyFile input,
+         _invocationOutputs = Set.singleton $ AnyFile output
+       }
+
+
+installFileBuildStep :: Text.Text -> AnyFile -> AnyBuildStep
+installFileBuildStep path input =
+  AnyBuildStep $ CopyFile {
+      _copyFileInput = input,
+      _copyFileOutputPath = path
+    }
 
