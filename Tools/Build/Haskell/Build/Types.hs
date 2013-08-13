@@ -49,6 +49,19 @@ module Build.Types
    CopyFile(..),
    copyFileInput,
    copyFileOutputPath,
+   MakeDirectory(..),
+   makeDirectoryPath,
+   Conditional(..),
+   conditionalCondition,
+   conditionalWhenTrue,
+   conditionalWhenFalse,
+   AnyCondition(..),
+   PathExists(..),
+   pathExistsPath,
+   FileExists(..),
+   fileExistsPath,
+   DirectoryExists(..),
+   directoryExistsPath,
    Mode(..),
    Project(..),
    projectName,
@@ -105,6 +118,15 @@ class (HasName target, TextShow target, Typeable target) => Target target where
   targetBuildSteps :: Task -> target -> [AnyBuildStep]
   targetPrerequisites :: Simple Lens target (Set.Set AnyTarget)
   targetProducts :: Getter target (Set.Set AnyFile)
+
+
+data AnyCondition =
+  forall condition . Condition condition => AnyCondition condition
+
+
+class (TextShow condition, Typeable condition) => Condition condition where
+  explainCondition :: condition -> Text.Text
+  testCondition :: condition -> IO Bool
 
 
 data Language
@@ -214,6 +236,43 @@ data CopyFile =
       _copyFileOutputPath :: Text.Text
     }
 makeLenses ''CopyFile
+
+
+data MakeDirectory =
+  MakeDirectory {
+      _makeDirectoryPath :: Text.Text
+    }
+makeLenses ''MakeDirectory
+
+
+data Conditional =
+  Conditional {
+      _conditionalCondition :: AnyCondition,
+      _conditionalWhenTrue :: [AnyBuildStep],
+      _conditionalWhenFalse :: [AnyBuildStep]
+    }
+makeLenses ''Conditional
+
+
+data PathExists =
+  PathExists {
+      _pathExistsPath :: Text.Text
+    }
+makeLenses ''PathExists
+
+
+data FileExists =
+  FileExists {
+      _fileExistsPath :: Text.Text
+    }
+makeLenses ''FileExists
+
+
+data DirectoryExists =
+  DirectoryExists {
+      _directoryExistsPath :: Text.Text
+    }
+makeLenses ''DirectoryExists
 
 
 data Mode

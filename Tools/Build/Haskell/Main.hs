@@ -402,7 +402,6 @@ main = do
          project
   let buildSteps = targetBuildSteps BinaryTask mainLibrary
       explanation = map explainBuildStep buildSteps
-  putStrLn $ Text.unpack $ textShow mainLibrary
   mapM_ (putStrLn . Text.unpack) explanation
 
 
@@ -511,6 +510,16 @@ scanDirectory path = do
                       else return soFar)
          Set.empty
          (map Text.pack contents)
+
+
+buildStepDirectories
+    :: (BuildStep buildStep) => Getter buildStep (Set.Set Text.Text)
+buildStepDirectories = to $ \buildStep ->
+  let inputs = view buildStepInputs buildStep
+      outputs = view buildStepOutputs buildStep
+      paths = Set.union (Set.map (view path) inputs)
+                        (Set.map (view path) outputs)
+  in Set.map (Text.pack . IO.dropFileName . Text.unpack) paths
 
 
 compileFileBuildStep :: AnyTarget -> SourceFile -> AnyBuildStep
