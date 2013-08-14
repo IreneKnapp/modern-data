@@ -41,11 +41,17 @@ deriving instance Typeable LibraryFile
 deriving instance Typeable AnyTarget
 deriving instance Typeable ExecutableTarget
 deriving instance Typeable LibraryTarget
+deriving instance Typeable AnyCondition
+deriving instance Typeable AndCondition
+deriving instance Typeable OrCondition
+deriving instance Typeable NotCondition
+deriving instance Typeable PathExistsCondition
+deriving instance Typeable FileExistsCondition
+deriving instance Typeable DirectoryExistsCondition
 
 
 instance TextShow Language where
   textShow CLanguage = "c-language"
-  textShow HaskellLanguage = "haskell-language"
 
 
 instance TextShow Provenance where
@@ -216,7 +222,6 @@ anyBuildStep underlying f (AnyBuildStep buildStep) =
 instance BuildStep AnyBuildStep where
   buildStepInputs = anyBuildStep buildStepInputs
   buildStepOutputs = anyBuildStep buildStepOutputs
-  explainBuildStep (AnyBuildStep buildStep) = explainBuildStep buildStep
   performBuildStep (AnyBuildStep buildStep) = performBuildStep buildStep
 instance TextShow AnyBuildStep where
   textShow (AnyBuildStep buildStep) = textShow buildStep
@@ -283,13 +288,14 @@ instance HasName LibraryTarget where
 instance Target LibraryTarget where
   targetBuildSteps AmalgamationTask library = []
   targetBuildSteps BinaryTask library =
-    concat (map (targetBuildSteps BinaryTask)
-                (Set.toList $ view targetPrerequisites library))
-           ++ (map (compileFileBuildStep $ AnyTarget library)
-                   (Set.toList $ view libraryTargetSources library))
-           ++ (map (installFileBuildStep "include/")
-                   (map AnyFile $ Set.toList $
-                     view libraryTargetPublicHeaders library))
+    outputtingBuildSteps $
+      concat (map (targetBuildSteps BinaryTask)
+                  (Set.toList $ view targetPrerequisites library))
+             ++ (map (compileFileBuildStep $ AnyTarget library)
+                     (Set.toList $ view libraryTargetSources library))
+             ++ (map (installFileBuildStep "include/")
+                     (map AnyFile $ Set.toList $
+                       view libraryTargetPublicHeaders library))
   targetBuildSteps TestTask library = []
   targetBuildSteps DebugTask library = []
   targetBuildSteps CleanTask library = []
@@ -325,56 +331,209 @@ instance TextShow LibraryTarget where
         $ target ^. libraryTargetSources,
        "))"]
 
-instance BuildStep Invocation where
-  buildStepInputs = invocationInputs
-  buildStepOutputs = invocationOutputs
-  explainBuildStep invocation =
-    Text.intercalate " "
-      ((invocation ^. invocationExecutable . path)
-       : invocation ^. invocationParameters)
+instance BuildStep InvocationBuildStep where
+  buildStepInputs = invocationBuildStepInputs
+  buildStepOutputs = invocationBuildStepOutputs
   performBuildStep invocation = do
-    putStrLn $ Text.unpack $ explainBuildStep invocation
-instance TextShow Invocation where
+    putStrLn $ Text.unpack $ Text.intercalate " "
+      ((invocation ^. invocationBuildStepExecutable . path)
+       : invocation ^. invocationBuildStepParameters)
+instance TextShow InvocationBuildStep where
   textShow invocation =
     Text.concat $
       ["(invocation ",
-       textShow $ invocation ^. invocationExecutable,
+       textShow $ invocation ^. invocationBuildStepExecutable,
        " (",
-       Text.intercalate " " $ invocation ^. invocationParameters,
+       Text.intercalate " " $ invocation ^. invocationBuildStepParameters,
        ") (",
        Text.intercalate " " $ map textShow $ Set.toList
-        $ invocation ^. invocationInputs,
+        $ invocation ^. invocationBuildStepInputs,
        ") (",
        Text.intercalate " " $ map textShow $ Set.toList
-        $ invocation ^. invocationOutputs,
+        $ invocation ^. invocationBuildStepOutputs,
        "))"]
 
 
-instance BuildStep CopyFile where
+instance BuildStep CopyFileBuildStep where
   buildStepInputs =
-    to (\copy -> Set.fromList [copy ^. copyFileInput])
+    to (\copy -> Set.fromList [copy ^. copyFileBuildStepInput])
   buildStepOutputs =
     to (\copy ->
           Set.fromList
             [set path
                  (Text.concat
-                   [copy ^. copyFileOutputPath,
+                   [copy ^. copyFileBuildStepOutputPath,
                     Text.pack $ IO.takeFileName $ Text.unpack $
-                      copy ^. copyFileInput . path])
-                 (copy ^. copyFileInput)])
-  explainBuildStep copy =
-    Text.intercalate " "
-      ["cp", copy ^. copyFileInput . path, copy ^. copyFileOutputPath]
+                      copy ^. copyFileBuildStepInput . path])
+                 (copy ^. copyFileBuildStepInput)])
   performBuildStep copy = do
-    putStrLn $ Text.unpack $ explainBuildStep copy
-instance TextShow CopyFile where
+    putStrLn $ Text.unpack $ Text.intercalate " "
+      ["cp",
+       copy ^. copyFileBuildStepInput . path,
+       copy ^. copyFileBuildStepOutputPath]
+instance TextShow CopyFileBuildStep where
   textShow copy =
     Text.concat $
       ["(copy-file ",
-       textShow $ copy ^. copyFileInput,
+       textShow $ copy ^. copyFileBuildStepInput,
        " \"",
-       copy ^. copyFileOutputPath,
+       copy ^. copyFileBuildStepOutputPath,
        "\")"]
+
+
+instance BuildStep MakeDirectoryBuildStep where
+  buildStepInputs = to (\_ -> Set.empty)
+  buildStepOutputs = to (\_ -> Set.empty)
+  performBuildStep make = do
+    putStrLn $ Text.unpack $ Text.intercalate " "
+      ["mkdir", make ^. makeDirectoryBuildStepPath]
+instance TextShow MakeDirectoryBuildStep where
+  textShow make =
+    Text.concat $
+      ["(make-directory ",
+       " \"",
+       make ^. makeDirectoryBuildStepPath,
+       "\")"]
+
+
+instance BuildStep ConditionalBuildStep where
+  buildStepInputs =
+    to (\conditional ->
+          foldl' (\soFar field ->
+                    foldl' Set.union
+                           soFar
+                           (map (view buildStepInputs)
+                                (conditional ^. field)))
+                 Set.empty
+                 [conditionalBuildStepWhenTrue, conditionalBuildStepWhenFalse])
+  buildStepOutputs =
+    to (\conditional ->
+          foldl' (\soFar field ->
+                    foldl' Set.union
+                           soFar
+                           (map (view buildStepOutputs)
+                                (conditional ^. field)))
+                 Set.empty
+                 [conditionalBuildStepWhenTrue, conditionalBuildStepWhenFalse])
+  performBuildStep conditional = do
+    value <- testCondition $ conditional ^. conditionalBuildStepCondition
+    let field =
+          if value
+            then conditionalBuildStepWhenTrue
+            else conditionalBuildStepWhenFalse
+    mapM_ performBuildStep (conditional ^. field)
+instance TextShow ConditionalBuildStep where
+  textShow conditional =
+    Text.concat $
+      ["(if ",
+       explainCondition $ conditional ^. conditionalBuildStepCondition,
+       " ("]
+      ++ (map textShow $ conditional ^. conditionalBuildStepWhenTrue)
+      ++ [") ("]
+      ++ (map textShow $ conditional ^. conditionalBuildStepWhenFalse)
+      ++ ["))"]
+
+
+instance Condition AnyCondition where
+  explainCondition (AnyCondition condition) = explainCondition condition
+  testCondition (AnyCondition condition) = testCondition condition
+instance TextShow AnyCondition where
+  textShow (AnyCondition condition) = textShow condition
+
+
+instance Condition AndCondition where
+  explainCondition condition =
+    Text.concat
+      ["(and ",
+       Text.intercalate " "
+        $ map explainCondition (condition ^. andConditionItems),
+       ")"]
+  testCondition condition = do
+    foldM (\result item -> do
+             case result of
+               True -> testCondition item
+               False -> return False)
+          True
+          (condition ^. andConditionItems)
+instance TextShow AndCondition where
+  textShow condition =
+    Text.concat
+      ["(and ",
+       Text.intercalate " "
+        $ map explainCondition (condition ^. andConditionItems),
+       ")"]
+
+
+instance Condition OrCondition where
+  explainCondition condition =
+    Text.concat
+      ["(or ",
+       Text.intercalate " "
+        $ map explainCondition (condition ^. orConditionItems),
+       ")"]
+  testCondition condition = do
+    foldM (\result item -> do
+             case result of
+               True -> return True
+               False -> testCondition item)
+          False
+          (condition ^. orConditionItems)
+instance TextShow OrCondition where
+  textShow condition =
+    Text.concat
+      ["(or ",
+       Text.intercalate " "
+        $ map explainCondition (condition ^. orConditionItems),
+       ")"]
+
+
+instance Condition NotCondition where
+  explainCondition condition =
+    Text.concat
+      ["(not ", explainCondition $ condition ^. notConditionItem, ")"]
+  testCondition condition = do
+    result <- testCondition $ condition ^. notConditionItem
+    return $ not result
+instance TextShow NotCondition where
+  textShow condition =
+    Text.concat
+      ["(not ", explainCondition $ condition ^. notConditionItem, ")"]
+
+
+instance Condition PathExistsCondition where
+  explainCondition condition =
+    Text.concat
+      ["(path-exists ", condition ^. pathExistsConditionPath, ")"]
+  testCondition condition = do
+    return False
+instance TextShow PathExistsCondition where
+  textShow condition =
+    Text.concat
+      ["(path-exists ", condition ^. pathExistsConditionPath, ")"]
+
+
+instance Condition FileExistsCondition where
+  explainCondition condition =
+    Text.concat
+      ["(file-exists ", condition ^. fileExistsConditionPath, ")"]
+  testCondition condition = do
+    return False
+instance TextShow FileExistsCondition where
+  textShow condition =
+    Text.concat
+      ["(file-exists ", condition ^. fileExistsConditionPath, ")"]
+
+
+instance Condition DirectoryExistsCondition where
+  explainCondition condition =
+    Text.concat
+      ["(directory-exists ", condition ^. directoryExistsConditionPath, ")"]
+  testCondition condition = do
+    return False
+instance TextShow DirectoryExistsCondition where
+  textShow condition =
+    Text.concat
+      ["(directory-exists ", condition ^. directoryExistsConditionPath, ")"]
 
 
 instance Eq Project where
@@ -400,9 +559,7 @@ main = do
     over projectTargets
          (Set.insert $ AnyTarget mainLibrary)
          project
-  let buildSteps = targetBuildSteps BinaryTask mainLibrary
-      explanation = map explainBuildStep buildSteps
-  mapM_ (putStrLn . Text.unpack) explanation
+  mapM_ performBuildStep (targetBuildSteps BinaryTask mainLibrary)
 
 
 makeProject :: Text.Text -> IO Project
@@ -483,8 +640,7 @@ scanDirectory path = do
                                       else Nothing)
                           Nothing
                           [(".h", HeaderFileType CLanguage),
-                           (".c", SourceFileType CLanguage),
-                           (".hs", SourceFileType HaskellLanguage)]
+                           (".c", SourceFileType CLanguage)]
                     case maybeFileType of
                       Nothing -> return soFar
                       Just (HeaderFileType language) -> do
@@ -512,14 +668,43 @@ scanDirectory path = do
          (map Text.pack contents)
 
 
-buildStepDirectories
+buildStepOutputDirectories
     :: (BuildStep buildStep) => Getter buildStep (Set.Set Text.Text)
-buildStepDirectories = to $ \buildStep ->
-  let inputs = view buildStepInputs buildStep
-      outputs = view buildStepOutputs buildStep
-      paths = Set.union (Set.map (view path) inputs)
-                        (Set.map (view path) outputs)
-  in Set.map (Text.pack . IO.dropFileName . Text.unpack) paths
+buildStepOutputDirectories = to $ \buildStep ->
+  Set.map (Text.pack . IO.dropFileName . Text.unpack . view path)
+          (buildStep ^. buildStepOutputs)
+
+
+outputtingBuildSteps :: [AnyBuildStep] -> [AnyBuildStep]
+outputtingBuildSteps steps =
+  let ensureDirectory path =
+        [AnyBuildStep $ ConditionalBuildStep {
+             _conditionalBuildStepCondition =
+               AnyCondition $ NotCondition {
+                   _notConditionItem =
+                     AnyCondition $ DirectoryExistsCondition {
+                         _directoryExistsConditionPath = path
+                       }
+                 },
+             _conditionalBuildStepWhenTrue =
+               [AnyBuildStep $ MakeDirectoryBuildStep {
+                    _makeDirectoryBuildStepPath = path
+                  }],
+             _conditionalBuildStepWhenFalse = []
+           }]
+      (result, _) =
+        foldl' (\(soFar, directoriesSoFar) step ->
+                  let directoriesHere =
+                        Set.difference (step ^. buildStepOutputDirectories)
+                                       directoriesSoFar
+                  in (soFar
+                      ++ (concatMap ensureDirectory
+                                    (Set.toList directoriesHere))
+                      ++ [step],
+                      Set.union directoriesSoFar directoriesHere))
+               ([], Set.empty)
+               steps
+  in result
 
 
 compileFileBuildStep :: AnyTarget -> SourceFile -> AnyBuildStep
@@ -533,21 +718,22 @@ compileFileBuildStep target input =
                            input ^. path],
           _objectFileProvenance = BuiltProvenance
         }
-  in AnyBuildStep $ Invocation {
-         _invocationExecutable = ExecutableFile {
+  in AnyBuildStep $ InvocationBuildStep {
+         _invocationBuildStepExecutable = ExecutableFile {
              _executableFilePath = "clang",
              _executableFileProvenance = SystemProvenance
            },
-         _invocationParameters = ["-O3", "-o", output ^. path, input ^. path],
-         _invocationInputs = Set.singleton $ AnyFile input,
-         _invocationOutputs = Set.singleton $ AnyFile output
+         _invocationBuildStepParameters =
+           ["-O3", "-o", output ^. path, input ^. path],
+         _invocationBuildStepInputs = Set.singleton $ AnyFile input,
+         _invocationBuildStepOutputs = Set.singleton $ AnyFile output
        }
 
 
 installFileBuildStep :: Text.Text -> AnyFile -> AnyBuildStep
 installFileBuildStep path input =
-  AnyBuildStep $ CopyFile {
-      _copyFileInput = input,
-      _copyFileOutputPath = path
+  AnyBuildStep $ CopyFileBuildStep {
+      _copyFileBuildStepInput = input,
+      _copyFileBuildStepOutputPath = path
     }
 

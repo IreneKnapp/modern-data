@@ -6,67 +6,74 @@ module Build.Types
    File(..),
    BuildStep(..),
    Target(..),
+   Condition(..),
    Language(..),
    Provenance(..),
    FileType(..),
    AnyFile(..),
    Task(..),
    HeaderFile(..),
-   headerFileLanguage,
-   headerFilePath,
-   headerFileProvenance,
+     headerFileLanguage,
+     headerFilePath,
+     headerFileProvenance,
    SourceFile(..),
-   sourceFileLanguage,
-   sourceFilePath,
-   sourceFileProvenance,
+     sourceFileLanguage,
+     sourceFilePath,
+     sourceFileProvenance,
    ObjectFile(..),
-   objectFilePath,
-   objectFileProvenance,
+     objectFilePath,
+     objectFileProvenance,
    ExecutableFile(..),
-   executableFilePath,
-   executableFileProvenance,
+     executableFilePath,
+     executableFileProvenance,
    LibraryFile(..),
-   libraryFilePath,
-   libraryFileProvenance,
+     libraryFilePath,
+     libraryFileProvenance,
    AnyBuildStep(..),
    AnyTarget(..),
    ExecutableTarget(..),
-   executableTargetName,
-   executableTargetPrerequisites,
-   executableTargetPrivateHeaders,
-   executableTargetSources,
+     executableTargetName,
+     executableTargetPrerequisites,
+     executableTargetPrivateHeaders,
+     executableTargetSources,
    LibraryTarget(..),
-   libraryTargetName,
-   libraryTargetPrerequisites,
-   libraryTargetPublicHeaders,
-   libraryTargetPrivateHeaders,
-   libraryTargetSources,
-   Invocation(..),
-   invocationExecutable,
-   invocationParameters,
-   invocationInputs,
-   invocationOutputs,
-   CopyFile(..),
-   copyFileInput,
-   copyFileOutputPath,
-   MakeDirectory(..),
-   makeDirectoryPath,
-   Conditional(..),
-   conditionalCondition,
-   conditionalWhenTrue,
-   conditionalWhenFalse,
+     libraryTargetName,
+     libraryTargetPrerequisites,
+     libraryTargetPublicHeaders,
+     libraryTargetPrivateHeaders,
+     libraryTargetSources,
+   InvocationBuildStep(..),
+     invocationBuildStepExecutable,
+     invocationBuildStepParameters,
+     invocationBuildStepInputs,
+     invocationBuildStepOutputs,
+   CopyFileBuildStep(..),
+     copyFileBuildStepInput,
+     copyFileBuildStepOutputPath,
+   MakeDirectoryBuildStep(..),
+     makeDirectoryBuildStepPath,
+   ConditionalBuildStep(..),
+     conditionalBuildStepCondition,
+     conditionalBuildStepWhenTrue,
+     conditionalBuildStepWhenFalse,
    AnyCondition(..),
-   PathExists(..),
-   pathExistsPath,
-   FileExists(..),
-   fileExistsPath,
-   DirectoryExists(..),
-   directoryExistsPath,
+   AndCondition(..),
+     andConditionItems,
+   OrCondition(..),
+     orConditionItems,
+   NotCondition(..),
+     notConditionItem,
+   PathExistsCondition(..),
+     pathExistsConditionPath,
+   FileExistsCondition(..),
+     fileExistsConditionPath,
+   DirectoryExistsCondition(..),
+     directoryExistsConditionPath,
    Mode(..),
    Project(..),
-   projectName,
-   projectDefaultTarget,
-   projectTargets)
+     projectName,
+     projectDefaultTarget,
+     projectTargets)
   where
 
 
@@ -107,7 +114,6 @@ data AnyBuildStep =
 class (TextShow buildStep) => BuildStep buildStep where
   buildStepInputs :: Getter buildStep (Set.Set AnyFile)
   buildStepOutputs :: Getter buildStep (Set.Set AnyFile)
-  explainBuildStep :: buildStep -> Text.Text
   performBuildStep :: buildStep -> IO ()
 
 
@@ -220,59 +226,80 @@ data LibraryTarget =
 makeLenses ''LibraryTarget
 
 
-data Invocation =
-  Invocation {
-      _invocationExecutable :: ExecutableFile,
-      _invocationParameters :: [Text.Text],
-      _invocationInputs :: Set.Set AnyFile,
-      _invocationOutputs :: Set.Set AnyFile
+data InvocationBuildStep =
+  InvocationBuildStep {
+      _invocationBuildStepExecutable :: ExecutableFile,
+      _invocationBuildStepParameters :: [Text.Text],
+      _invocationBuildStepInputs :: Set.Set AnyFile,
+      _invocationBuildStepOutputs :: Set.Set AnyFile
     }
-makeLenses ''Invocation
+makeLenses ''InvocationBuildStep
 
 
-data CopyFile =
-  CopyFile {
-      _copyFileInput :: AnyFile,
-      _copyFileOutputPath :: Text.Text
+data CopyFileBuildStep =
+  CopyFileBuildStep {
+      _copyFileBuildStepInput :: AnyFile,
+      _copyFileBuildStepOutputPath :: Text.Text
     }
-makeLenses ''CopyFile
+makeLenses ''CopyFileBuildStep
 
 
-data MakeDirectory =
-  MakeDirectory {
-      _makeDirectoryPath :: Text.Text
+data MakeDirectoryBuildStep =
+  MakeDirectoryBuildStep {
+      _makeDirectoryBuildStepPath :: Text.Text
     }
-makeLenses ''MakeDirectory
+makeLenses ''MakeDirectoryBuildStep
 
 
-data Conditional =
-  Conditional {
-      _conditionalCondition :: AnyCondition,
-      _conditionalWhenTrue :: [AnyBuildStep],
-      _conditionalWhenFalse :: [AnyBuildStep]
+data ConditionalBuildStep =
+  ConditionalBuildStep {
+      _conditionalBuildStepCondition :: AnyCondition,
+      _conditionalBuildStepWhenTrue :: [AnyBuildStep],
+      _conditionalBuildStepWhenFalse :: [AnyBuildStep]
     }
-makeLenses ''Conditional
+makeLenses ''ConditionalBuildStep
 
 
-data PathExists =
-  PathExists {
-      _pathExistsPath :: Text.Text
+data AndCondition =
+  AndCondition {
+      _andConditionItems :: [AnyCondition]
     }
-makeLenses ''PathExists
+makeLenses ''AndCondition
 
 
-data FileExists =
-  FileExists {
-      _fileExistsPath :: Text.Text
+data OrCondition =
+  OrCondition {
+      _orConditionItems :: [AnyCondition]
     }
-makeLenses ''FileExists
+makeLenses ''OrCondition
 
 
-data DirectoryExists =
-  DirectoryExists {
-      _directoryExistsPath :: Text.Text
+data NotCondition =
+  NotCondition {
+      _notConditionItem :: AnyCondition
     }
-makeLenses ''DirectoryExists
+makeLenses ''NotCondition
+
+
+data PathExistsCondition =
+  PathExistsCondition {
+      _pathExistsConditionPath :: Text.Text
+    }
+makeLenses ''PathExistsCondition
+
+
+data FileExistsCondition =
+  FileExistsCondition {
+      _fileExistsConditionPath :: Text.Text
+    }
+makeLenses ''FileExistsCondition
+
+
+data DirectoryExistsCondition =
+  DirectoryExistsCondition {
+      _directoryExistsConditionPath :: Text.Text
+    }
+makeLenses ''DirectoryExistsCondition
 
 
 data Mode
