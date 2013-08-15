@@ -261,7 +261,7 @@ instance Target ExecutableTarget where
           Set.fromList
             [AnyFile $ ExecutableFile {
                  _executableFilePath =
-                   Text.concat ["dist/",
+                   Text.concat ["build/",
                                 executable ^. name,
                                 "/binary/products/",
                                 executable ^. name],
@@ -305,7 +305,7 @@ instance Target LibraryTarget where
           Set.fromList
             [AnyFile $ LibraryFile {
                  _libraryFilePath =
-                   Text.concat ["dist/",
+                   Text.concat ["build/",
                                 library ^. name,
                                 "/binary/products/lib",
                                 library ^. name,
@@ -671,8 +671,20 @@ scanDirectory path = do
 buildStepOutputDirectories
     :: (BuildStep buildStep) => Getter buildStep (Set.Set Text.Text)
 buildStepOutputDirectories = to $ \buildStep ->
-  Set.map (Text.pack . IO.dropFileName . Text.unpack . view path)
-          (buildStep ^. buildStepOutputs)
+  let innermostDirectories =
+        Set.map (Text.pack . IO.dropFileName . Text.unpack . view path)
+                (buildStep ^. buildStepOutputs)
+      andParents soFar directory =
+        let parentOf directory =
+              Text.pack $ IO.takeDirectory $ Text.unpack directory
+            parent = parentOf directory
+        in if parentOf parent == parent
+          then soFar
+          else andParents (Set.insert parent soFar) parent
+  in Set.foldl (\soFar directory ->
+                  Set.union soFar (andParents Set.empty directory))
+               Set.empty
+               innermostDirectories
 
 
 outputtingBuildSteps :: [AnyBuildStep] -> [AnyBuildStep]
@@ -711,7 +723,7 @@ compileFileBuildStep :: AnyTarget -> SourceFile -> AnyBuildStep
 compileFileBuildStep target input =
   let output = ObjectFile {
           _objectFilePath =
-            Text.concat ["dist/",
+            Text.concat ["build/",
                          target ^. name,
                          "/binary/objects/",
                          Text.pack $ IO.takeFileName $ Text.unpack $
