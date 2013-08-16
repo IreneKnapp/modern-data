@@ -29,6 +29,7 @@ module Build.Types
    LibraryFile(..),
      libraryFilePath,
      libraryFileProvenance,
+   BuildStepType(..),
    AnyBuildStep(..),
    AnyTarget(..),
    ExecutableTarget(..),
@@ -56,6 +57,7 @@ module Build.Types
      conditionalBuildStepCondition,
      conditionalBuildStepWhenTrue,
      conditionalBuildStepWhenFalse,
+   ConditionType(..),
    AnyCondition(..),
    AndCondition(..),
      andConditionItems,
@@ -107,11 +109,21 @@ class (TextShow file, Eq file, Ord file, Typeable file) => File file where
   provenance :: Simple Lens file Provenance
 
 
+data BuildStepType
+  = InvocationBuildStepType
+  | CopyFileBuildStepType
+  | MakeDirectoryBuildStepType
+  | ConditionalBuildStepType
+
+
 data AnyBuildStep =
   forall buildStep . BuildStep buildStep => AnyBuildStep buildStep
 
 
-class (TextShow buildStep) => BuildStep buildStep where
+class (TextShow buildStep, Eq buildStep, Ord buildStep, Typeable buildStep)
+      => BuildStep buildStep where
+  fromAnyBuildStep :: AnyBuildStep -> Maybe buildStep
+  buildStepType :: Getter buildStep BuildStepType
   buildStepInputs :: Getter buildStep (Set.Set AnyFile)
   buildStepOutputs :: Getter buildStep (Set.Set AnyFile)
   performBuildStep :: buildStep -> IO ()
@@ -126,11 +138,23 @@ class (HasName target, TextShow target, Typeable target) => Target target where
   targetProducts :: Getter target (Set.Set AnyFile)
 
 
+data ConditionType
+  = AndConditionType
+  | OrConditionType
+  | NotConditionType
+  | PathExistsConditionType
+  | FileExistsConditionType
+  | DirectoryExistsConditionType
+
+
 data AnyCondition =
   forall condition . Condition condition => AnyCondition condition
 
 
-class (TextShow condition, Typeable condition) => Condition condition where
+class (TextShow condition, Eq condition, Ord condition, Typeable condition)
+      => Condition condition where
+  fromAnyCondition :: AnyCondition -> Maybe condition
+  conditionType :: Getter condition ConditionType
   explainCondition :: condition -> Text.Text
   testCondition :: condition -> IO Bool
 

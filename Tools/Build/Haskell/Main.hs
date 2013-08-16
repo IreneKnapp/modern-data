@@ -25,12 +25,16 @@ deriving instance Eq FileType
 deriving instance Eq Task
 deriving instance Eq Mode
 deriving instance Eq Provenance
+deriving instance Eq BuildStepType
+deriving instance Eq ConditionType
 
 deriving instance Ord Language
 deriving instance Ord FileType
 deriving instance Ord Task
 deriving instance Ord Mode
 deriving instance Ord Provenance
+deriving instance Ord BuildStepType
+deriving instance Ord ConditionType
 
 deriving instance Typeable AnyFile
 deriving instance Typeable HeaderFile
@@ -41,6 +45,11 @@ deriving instance Typeable LibraryFile
 deriving instance Typeable AnyTarget
 deriving instance Typeable ExecutableTarget
 deriving instance Typeable LibraryTarget
+deriving instance Typeable AnyBuildStep
+deriving instance Typeable InvocationBuildStep
+deriving instance Typeable CopyFileBuildStep
+deriving instance Typeable MakeDirectoryBuildStep
+deriving instance Typeable ConditionalBuildStep
 deriving instance Typeable AnyCondition
 deriving instance Typeable AndCondition
 deriving instance Typeable OrCondition
@@ -219,7 +228,21 @@ anyBuildStep
     -> ((a -> f a) -> AnyBuildStep -> f AnyBuildStep)
 anyBuildStep underlying f (AnyBuildStep buildStep) =
   AnyBuildStep <$> underlying f buildStep
+instance Eq AnyBuildStep where
+  (==) a b =
+    case a of
+      AnyBuildStep a' -> case fromAnyBuildStep b of
+                           Just b' -> (==) a' b'
+                           Nothing -> False
+instance Ord AnyBuildStep where
+  compare a b =
+    case a of
+      AnyBuildStep a' -> case fromAnyBuildStep b of
+                           Just b' -> compare a' b'
+                           Nothing -> on compare (view buildStepType) a b
 instance BuildStep AnyBuildStep where
+  fromAnyBuildStep (AnyBuildStep buildStep) = cast buildStep
+  buildStepType = anyBuildStep buildStepType
   buildStepInputs = anyBuildStep buildStepInputs
   buildStepOutputs = anyBuildStep buildStepOutputs
   performBuildStep (AnyBuildStep buildStep) = performBuildStep buildStep
@@ -251,7 +274,19 @@ instance HasName ExecutableTarget where
   name = executableTargetName
 instance Target ExecutableTarget where
   targetBuildSteps AmalgamationTask executable = []
-  targetBuildSteps BinaryTask executable = []
+  targetBuildSteps BinaryTask executable =
+    let compilationSteps =
+          (map (compileFileBuildStep $ AnyTarget executable)
+               (Set.toList $ view executableTargetSources executable))
+    in concat (map (targetBuildSteps BinaryTask)
+                   (Set.toList $ view targetPrerequisites executable))
+              ++ compilationSteps
+              ++ [linkExecutableFileBuildStep
+                   (AnyTarget executable)
+                   (concatMap
+                     (view $ anyBuildStep buildStepOutputs . to Set.toList
+                             . to (map fromAnyFile) . to catMaybes)
+                     compilationSteps)]
   targetBuildSteps TestTask executable = []
   targetBuildSteps DebugTask executable = []
   targetBuildSteps CleanTask executable = []
@@ -288,14 +323,13 @@ instance HasName LibraryTarget where
 instance Target LibraryTarget where
   targetBuildSteps AmalgamationTask library = []
   targetBuildSteps BinaryTask library =
-    outputtingBuildSteps $
-      concat (map (targetBuildSteps BinaryTask)
-                  (Set.toList $ view targetPrerequisites library))
-             ++ (map (compileFileBuildStep $ AnyTarget library)
-                     (Set.toList $ view libraryTargetSources library))
-             ++ (map (installFileBuildStep "include/")
-                     (map AnyFile $ Set.toList $
-                       view libraryTargetPublicHeaders library))
+    concat (map (targetBuildSteps BinaryTask)
+                (Set.toList $ view targetPrerequisites library))
+           ++ (map (compileFileBuildStep $ AnyTarget library)
+                   (Set.toList $ view libraryTargetSources library))
+           ++ (map (installFileBuildStep "include/")
+                   (map AnyFile $ Set.toList $
+                     view libraryTargetPublicHeaders library))
   targetBuildSteps TestTask library = []
   targetBuildSteps DebugTask library = []
   targetBuildSteps CleanTask library = []
@@ -331,7 +365,22 @@ instance TextShow LibraryTarget where
         $ target ^. libraryTargetSources,
        "))"]
 
+instance Eq InvocationBuildStep where
+  (==) a b =
+    foldl1 (&&)
+           [on (==) (view invocationBuildStepExecutable) a b,
+            on (==) (view invocationBuildStepParameters) a b,
+            on (==) (view invocationBuildStepInputs) a b,
+            on (==) (view invocationBuildStepOutputs) a b]
+instance Ord InvocationBuildStep where
+  compare a b =
+    mconcat [on compare (view invocationBuildStepExecutable) a b,
+             on compare (view invocationBuildStepParameters) a b,
+             on compare (view invocationBuildStepInputs) a b,
+             on compare (view invocationBuildStepOutputs) a b]
 instance BuildStep InvocationBuildStep where
+  fromAnyBuildStep (AnyBuildStep buildStep) = cast buildStep
+  buildStepType = to (\_ -> InvocationBuildStepType)
   buildStepInputs = invocationBuildStepInputs
   buildStepOutputs = invocationBuildStepOutputs
   performBuildStep invocation = do
@@ -354,7 +403,18 @@ instance TextShow InvocationBuildStep where
        "))"]
 
 
+instance Eq CopyFileBuildStep where
+  (==) a b =
+    foldl1 (&&)
+           [on (==) (view copyFileBuildStepInput) a b,
+            on (==) (view copyFileBuildStepOutputPath) a b]
+instance Ord CopyFileBuildStep where
+  compare a b =
+    mconcat [on compare (view copyFileBuildStepInput) a b,
+             on compare (view copyFileBuildStepOutputPath) a b]
 instance BuildStep CopyFileBuildStep where
+  fromAnyBuildStep (AnyBuildStep buildStep) = cast buildStep
+  buildStepType = to (\_ -> CopyFileBuildStepType)
   buildStepInputs =
     to (\copy -> Set.fromList [copy ^. copyFileBuildStepInput])
   buildStepOutputs =
@@ -381,7 +441,16 @@ instance TextShow CopyFileBuildStep where
        "\")"]
 
 
+instance Eq MakeDirectoryBuildStep where
+  (==) a b =
+    foldl1 (&&)
+           [on (==) (view makeDirectoryBuildStepPath) a b]
+instance Ord MakeDirectoryBuildStep where
+  compare a b =
+    mconcat [on compare (view makeDirectoryBuildStepPath) a b]
 instance BuildStep MakeDirectoryBuildStep where
+  fromAnyBuildStep (AnyBuildStep buildStep) = cast buildStep
+  buildStepType = to (\_ -> MakeDirectoryBuildStepType)
   buildStepInputs = to (\_ -> Set.empty)
   buildStepOutputs = to (\_ -> Set.empty)
   performBuildStep make = do
@@ -396,7 +465,20 @@ instance TextShow MakeDirectoryBuildStep where
        "\")"]
 
 
+instance Eq ConditionalBuildStep where
+  (==) a b =
+    foldl1 (&&)
+           [on (==) (view conditionalBuildStepCondition) a b,
+            on (==) (view conditionalBuildStepWhenTrue) a b,
+            on (==) (view conditionalBuildStepWhenFalse) a b]
+instance Ord ConditionalBuildStep where
+  compare a b =
+    mconcat [on compare (view conditionalBuildStepCondition) a b,
+             on compare (view conditionalBuildStepWhenTrue) a b,
+             on compare (view conditionalBuildStepWhenFalse) a b]
 instance BuildStep ConditionalBuildStep where
+  fromAnyBuildStep (AnyBuildStep buildStep) = cast buildStep
+  buildStepType = to (\_ -> ConditionalBuildStepType)
   buildStepInputs =
     to (\conditional ->
           foldl' (\soFar field ->
@@ -434,14 +516,44 @@ instance TextShow ConditionalBuildStep where
       ++ ["))"]
 
 
+anyCondition
+    :: forall a f . (Functor f)
+    => (forall condition . (Condition condition)
+        => (a -> f a) -> condition -> f condition)
+    -> ((a -> f a) -> AnyCondition -> f AnyCondition)
+anyCondition underlying f (AnyCondition condition) =
+  AnyCondition <$> underlying f condition
+instance Eq AnyCondition where
+  (==) a b =
+    case a of
+      AnyCondition a' -> case fromAnyCondition b of
+                           Just b' -> (==) a' b'
+                           Nothing -> False
+instance Ord AnyCondition where
+  compare a b =
+    case a of
+      AnyCondition a' -> case fromAnyCondition b of
+                           Just b' -> compare a' b'
+                           Nothing -> on compare (view conditionType) a b
 instance Condition AnyCondition where
+  fromAnyCondition (AnyCondition condition) = cast condition
+  conditionType = anyCondition conditionType
   explainCondition (AnyCondition condition) = explainCondition condition
   testCondition (AnyCondition condition) = testCondition condition
 instance TextShow AnyCondition where
   textShow (AnyCondition condition) = textShow condition
 
 
+instance Eq AndCondition where
+  (==) a b =
+    foldl1 (&&)
+           [on (==) (view andConditionItems) a b]
+instance Ord AndCondition where
+  compare a b =
+    mconcat [on compare (view andConditionItems) a b]
 instance Condition AndCondition where
+  fromAnyCondition (AnyCondition condition) = cast condition
+  conditionType = to (\_ -> AndConditionType)
   explainCondition condition =
     Text.concat
       ["(and ",
@@ -464,7 +576,16 @@ instance TextShow AndCondition where
        ")"]
 
 
+instance Eq OrCondition where
+  (==) a b =
+    foldl1 (&&)
+           [on (==) (view orConditionItems) a b]
+instance Ord OrCondition where
+  compare a b =
+    mconcat [on compare (view orConditionItems) a b]
 instance Condition OrCondition where
+  fromAnyCondition (AnyCondition condition) = cast condition
+  conditionType = to (\_ -> OrConditionType)
   explainCondition condition =
     Text.concat
       ["(or ",
@@ -487,7 +608,16 @@ instance TextShow OrCondition where
        ")"]
 
 
+instance Eq NotCondition where
+  (==) a b =
+    foldl1 (&&)
+           [on (==) (view notConditionItem) a b]
+instance Ord NotCondition where
+  compare a b =
+    mconcat [on compare (view notConditionItem) a b]
 instance Condition NotCondition where
+  fromAnyCondition (AnyCondition condition) = cast condition
+  conditionType = to (\_ -> NotConditionType)
   explainCondition condition =
     Text.concat
       ["(not ", explainCondition $ condition ^. notConditionItem, ")"]
@@ -500,7 +630,16 @@ instance TextShow NotCondition where
       ["(not ", explainCondition $ condition ^. notConditionItem, ")"]
 
 
+instance Eq PathExistsCondition where
+  (==) a b =
+    foldl1 (&&)
+           [on (==) (view pathExistsConditionPath) a b]
+instance Ord PathExistsCondition where
+  compare a b =
+    mconcat [on compare (view pathExistsConditionPath) a b]
 instance Condition PathExistsCondition where
+  fromAnyCondition (AnyCondition condition) = cast condition
+  conditionType = to (\_ -> PathExistsConditionType)
   explainCondition condition =
     Text.concat
       ["(path-exists ", condition ^. pathExistsConditionPath, ")"]
@@ -512,7 +651,16 @@ instance TextShow PathExistsCondition where
       ["(path-exists ", condition ^. pathExistsConditionPath, ")"]
 
 
+instance Eq FileExistsCondition where
+  (==) a b =
+    foldl1 (&&)
+           [on (==) (view fileExistsConditionPath) a b]
+instance Ord FileExistsCondition where
+  compare a b =
+    mconcat [on compare (view fileExistsConditionPath) a b]
 instance Condition FileExistsCondition where
+  fromAnyCondition (AnyCondition condition) = cast condition
+  conditionType = to (\_ -> FileExistsConditionType)
   explainCondition condition =
     Text.concat
       ["(file-exists ", condition ^. fileExistsConditionPath, ")"]
@@ -524,7 +672,16 @@ instance TextShow FileExistsCondition where
       ["(file-exists ", condition ^. fileExistsConditionPath, ")"]
 
 
+instance Eq DirectoryExistsCondition where
+  (==) a b =
+    foldl1 (&&)
+           [on (==) (view directoryExistsConditionPath) a b]
+instance Ord DirectoryExistsCondition where
+  compare a b =
+    mconcat [on compare (view directoryExistsConditionPath) a b]
 instance Condition DirectoryExistsCondition where
+  fromAnyCondition (AnyCondition condition) = cast condition
+  conditionType = to (\_ -> DirectoryExistsConditionType)
   explainCondition condition =
     Text.concat
       ["(directory-exists ", condition ^. directoryExistsConditionPath, ")"]
@@ -559,7 +716,8 @@ main = do
     over projectTargets
          (Set.insert $ AnyTarget mainLibrary)
          project
-  mapM_ performBuildStep (targetBuildSteps BinaryTask mainLibrary)
+  mapM_ performBuildStep
+        (outputtingBuildSteps $ targetBuildSteps BinaryTask mainLibrary)
 
 
 makeProject :: Text.Text -> IO Project
@@ -719,6 +877,20 @@ outputtingBuildSteps steps =
   in result
 
 
+compileInvocationBuildStep :: [AnyFile] -> AnyFile -> AnyBuildStep
+compileInvocationBuildStep inputs output =
+  AnyBuildStep $ InvocationBuildStep {
+      _invocationBuildStepExecutable = ExecutableFile {
+          _executableFilePath = "clang",
+          _executableFileProvenance = SystemProvenance
+        },
+      _invocationBuildStepParameters =
+        ["-O3", "-o", output ^. path] ++ map (view path) inputs,
+      _invocationBuildStepInputs = Set.fromList inputs,
+      _invocationBuildStepOutputs = Set.singleton output
+    }
+
+
 compileFileBuildStep :: AnyTarget -> SourceFile -> AnyBuildStep
 compileFileBuildStep target input =
   let output = ObjectFile {
@@ -726,20 +898,25 @@ compileFileBuildStep target input =
             Text.concat ["build/",
                          target ^. name,
                          "/binary/objects/",
-                         Text.pack $ IO.takeFileName $ Text.unpack $
-                           input ^. path],
+                         Text.pack $ IO.takeBaseName $ Text.unpack $
+                           input ^. path,
+                         ".o"],
           _objectFileProvenance = BuiltProvenance
         }
-  in AnyBuildStep $ InvocationBuildStep {
-         _invocationBuildStepExecutable = ExecutableFile {
-             _executableFilePath = "clang",
-             _executableFileProvenance = SystemProvenance
-           },
-         _invocationBuildStepParameters =
-           ["-O3", "-o", output ^. path, input ^. path],
-         _invocationBuildStepInputs = Set.singleton $ AnyFile input,
-         _invocationBuildStepOutputs = Set.singleton $ AnyFile output
-       }
+  in compileInvocationBuildStep [AnyFile input] (AnyFile output)
+
+
+linkExecutableFileBuildStep :: AnyTarget -> [ObjectFile] -> AnyBuildStep
+linkExecutableFileBuildStep target inputs =
+  let output = ExecutableFile {
+          _executableFilePath =
+            Text.concat ["build/",
+                         target ^. name,
+                         "/binary/bin/",
+                         target ^. name],
+          _executableFileProvenance = BuiltProvenance
+        }
+  in compileInvocationBuildStep (map AnyFile inputs) (AnyFile output)
 
 
 installFileBuildStep :: Text.Text -> AnyFile -> AnyBuildStep
