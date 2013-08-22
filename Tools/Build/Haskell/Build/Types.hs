@@ -78,10 +78,23 @@ module Build.Types
    Project(..),
      projectName,
      projectDefaultTarget,
-     projectTargets)
+     projectTargets,
+   ProjectSpecification(..),
+     projectSpecificationName,
+     projectSpecificationDefaultTarget,
+     projectSpecificationTargets,
+   ExecutableSpecification(..),
+     executableSpecificationName,
+     executableSpecificationPrerequisites,
+     executableSpecificationBuildPhases,
+   LibrarySpecification(..),
+     librarySpecificationName,
+     librarySpecificationPrerequisites,
+     librarySpecificationBuildPhases)
   where
 
 
+import qualified Data.Map as Map
 import qualified Data.Set as Set
 import qualified Data.Text as Text
 
@@ -351,3 +364,35 @@ data Project =
     }
 makeLenses ''Project
 
+
+data ProjectSpecification =
+  ProjectSpecification {
+      _projectSpecificationName :: Text.Text,
+      _projectSpecificationDefaultTarget :: Maybe Text.Text,
+      _projectSpecificationTargets :: Set.Set Text.Text
+    }
+makeLenses ''ProjectSpecification
+
+
+data ExecutableSpecification =
+  ExecutableSpecification {
+      _executableSpecificationName :: Text.Text,
+      _executableSpecificationPrerequisites :: Set.Set Text.Text,
+      _executableSpecificationBuildPhases :: [BuildPhaseSpecification]
+    }
+makeLenses ''ExecutableSpecification
+
+
+data LibrarySpecification =
+  LibrarySpecification {
+      _librarySpecificationName :: Text.Text,
+      _librarySpecificationPrerequisites :: Set.Set Text.Text,
+      _librarySpecificationBuildPhases :: [BuildPhaseSpecification]
+    }
+makeLenses ''LibrarySpecification
+
+
+data BuildPhaseSpecification =
+  BuildPhaseSpecification {
+    }
+makeLenses ''BuildPhaseSpecification
