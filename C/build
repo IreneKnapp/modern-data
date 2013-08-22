@@ -1,6 +1,7 @@
 #!/bin/sh
 
 cd ../Tools/Build
+cabal configure
 cabal build
 result=$?
 cd ../../C
