@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include "modern.h"
+#include "../../library/modern.h"
 
 
 uint8_t *raw_keywords[] = {
