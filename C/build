@@ -1,27 +1,13 @@
 #!/bin/sh
 
-CFLAGS=-O3
+cd ../Tools/Build
+cabal build
+result=$?
+cd ../../C
 
-uname=`uname`
-
-if [ ${uname} = "Darwin" ] ; then
-    developer=`xcode-select --print-path`
-    sdk_path="${developer}/Platforms/MacOSX.platform/Developer/SDKs/"
-    sysroot="${sdk_path}MacOSX10.8.sdk"
-    CFLAGS="${CFLAGS} -I${sysroot}/usr/include"
-fi
-
-if [ ! -d dist ] ; then
-    mkdir dist
-fi
-
-if [ ! -x dist/build ] || [ tools/build/build.c -nt dist/build ] ; then
-    clang ${CFLAGS} -o dist/build tools/build/build.c
-fi
-
-if [ -x dist/build ] && [ dist/build -nt tools/build/build.c ] ; then
-    exec dist/build $@
+if [ $result -eq "0" ] && [ -x ../Tools/Build/dist/build/build/build ] ; then
+    exec ../Tools/Build/dist/build/build/build $@
 else
-    echo "Can't build the build tool!"
+    echo "\nCan't build the build tool!"
 fi
 
