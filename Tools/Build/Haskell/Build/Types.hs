@@ -48,6 +48,9 @@ module Build.Types
      invocationBuildStepParameters,
      invocationBuildStepInputs,
      invocationBuildStepOutputs,
+   AmalgamateFilesBuildStep(..),
+     amalgamateFilesBuildStepOutput,
+     amalgamateFilesBuildStepInputs,
    CopyFileBuildStep(..),
      copyFileBuildStepInput,
      copyFileBuildStepOutputPath,
@@ -111,6 +114,7 @@ class (TextShow file, Eq file, Ord file, Typeable file) => File file where
 
 data BuildStepType
   = InvocationBuildStepType
+  | AmalgamateFilesBuildStepType
   | CopyFileBuildStepType
   | MakeDirectoryBuildStepType
   | ConditionalBuildStepType
@@ -126,7 +130,7 @@ class (TextShow buildStep, Eq buildStep, Ord buildStep, Typeable buildStep)
   buildStepType :: Getter buildStep BuildStepType
   buildStepInputs :: Getter buildStep (Set.Set AnyFile)
   buildStepOutputs :: Getter buildStep (Set.Set AnyFile)
-  performBuildStep :: buildStep -> IO ()
+  performBuildStep :: buildStep -> IO Bool
 
 
 data AnyTarget = forall target . Target target => AnyTarget target
@@ -258,6 +262,14 @@ data InvocationBuildStep =
       _invocationBuildStepOutputs :: Set.Set AnyFile
     }
 makeLenses ''InvocationBuildStep
+
+
+data AmalgamateFilesBuildStep =
+  AmalgamateFilesBuildStep {
+     _amalgamateFilesBuildStepOutput :: SourceFile,
+     _amalgamateFilesBuildStepInputs :: [SourceFile]
+   }
+makeLenses ''AmalgamateFilesBuildStep
 
 
 data CopyFileBuildStep =

@@ -6,7 +6,9 @@ module Main (main) where
 import qualified Data.Set as Set
 import qualified Data.Text as Text
 import qualified System.Directory as IO
+import qualified System.Exit as IO
 import qualified System.FilePath.Posix as IO
+import qualified System.Process as IO
 
 import Control.Lens
 import Control.Monad
@@ -47,6 +49,7 @@ deriving instance Typeable ExecutableTarget
 deriving instance Typeable LibraryTarget
 deriving instance Typeable AnyBuildStep
 deriving instance Typeable InvocationBuildStep
+deriving instance Typeable AmalgamateFilesBuildStep
 deriving instance Typeable CopyFileBuildStep
 deriving instance Typeable MakeDirectoryBuildStep
 deriving instance Typeable ConditionalBuildStep
@@ -296,7 +299,7 @@ instance Target ExecutableTarget where
           Set.fromList
             [AnyFile $ ExecutableFile {
                  _executableFilePath =
-                   Text.concat ["build/",
+                   Text.concat ["_build/",
                                 executable ^. name,
                                 "/binary/products/",
                                 executable ^. name],
@@ -321,7 +324,22 @@ instance TextShow ExecutableTarget where
 instance HasName LibraryTarget where
   name = libraryTargetName
 instance Target LibraryTarget where
-  targetBuildSteps AmalgamationTask library = []
+  targetBuildSteps AmalgamationTask library =
+    let amalgamationFile = SourceFile {
+            _sourceFileLanguage = CLanguage,
+            _sourceFilePath =
+              Text.concat ["_build/",
+                           library ^. name,
+                           "/amalgamation/",
+                           library ^. name,
+                           ".c"],
+            _sourceFileProvenance = BuiltProvenance
+          }
+    in concat
+      (map (targetBuildSteps BinaryTask)
+           (Set.toList $ view targetPrerequisites library))
+      ++ [amalgamateFilesBuildStep amalgamationFile
+            (Set.toList $ view libraryTargetSources library)]
   targetBuildSteps BinaryTask library =
     concat (map (targetBuildSteps BinaryTask)
                 (Set.toList $ view targetPrerequisites library))
@@ -339,7 +357,7 @@ instance Target LibraryTarget where
           Set.fromList
             [AnyFile $ LibraryFile {
                  _libraryFilePath =
-                   Text.concat ["build/",
+                   Text.concat ["_build/",
                                 library ^. name,
                                 "/binary/products/lib",
                                 library ^. name,
@@ -387,6 +405,10 @@ instance BuildStep InvocationBuildStep where
     putStrLn $ Text.unpack $ Text.intercalate " "
       ((invocation ^. invocationBuildStepExecutable . path)
        : invocation ^. invocationBuildStepParameters)
+    exitCode <- IO.rawSystem
+      (Text.unpack $ invocation ^. invocationBuildStepExecutable . path)
+      (map Text.unpack $ invocation ^. invocationBuildStepParameters)
+    return $ exitCode == IO.ExitSuccess
 instance TextShow InvocationBuildStep where
   textShow invocation =
     Text.concat $
@@ -400,6 +422,41 @@ instance TextShow InvocationBuildStep where
        ") (",
        Text.intercalate " " $ map textShow $ Set.toList
         $ invocation ^. invocationBuildStepOutputs,
+       "))"]
+
+
+instance Eq AmalgamateFilesBuildStep where
+  (==) a b =
+    foldl1 (&&)
+           [on (==) (view amalgamateFilesBuildStepOutput) a b,
+            on (==) (view amalgamateFilesBuildStepInputs) a b]
+instance Ord AmalgamateFilesBuildStep where
+  compare a b =
+    mconcat [on compare (view amalgamateFilesBuildStepOutput) a b,
+             on compare (view amalgamateFilesBuildStepInputs) a b]
+instance BuildStep AmalgamateFilesBuildStep where
+  fromAnyBuildStep (AnyBuildStep buildStep) = cast buildStep
+  buildStepType = to (\_ -> AmalgamateFilesBuildStepType)
+  buildStepInputs =
+    to (\amalgamation -> Set.fromList $ map AnyFile $
+          amalgamation ^. amalgamateFilesBuildStepInputs)
+  buildStepOutputs =
+    to (\amalgamation -> Set.singleton $ AnyFile $
+          amalgamation ^. amalgamateFilesBuildStepOutput)
+  performBuildStep amalgamation = do
+    putStrLn $ Text.unpack $ Text.intercalate " "
+      ("amalgamate"
+       : amalgamation ^. amalgamateFilesBuildStepOutput . path
+       : amalgamation ^. amalgamateFilesBuildStepInputs . to (map (view path)))
+    return True
+instance TextShow AmalgamateFilesBuildStep where
+  textShow amalgamation =
+    Text.concat $
+      ["(amalgamation ",
+       textShow $ amalgamation ^. amalgamateFilesBuildStepOutput,
+       " (",
+       Text.intercalate " " $ map textShow
+        $ amalgamation ^. amalgamateFilesBuildStepInputs,
        "))"]
 
 
@@ -431,6 +488,7 @@ instance BuildStep CopyFileBuildStep where
       ["cp",
        copy ^. copyFileBuildStepInput . path,
        copy ^. copyFileBuildStepOutputPath]
+    return True
 instance TextShow CopyFileBuildStep where
   textShow copy =
     Text.concat $
@@ -454,8 +512,13 @@ instance BuildStep MakeDirectoryBuildStep where
   buildStepInputs = to (\_ -> Set.empty)
   buildStepOutputs = to (\_ -> Set.empty)
   performBuildStep make = do
-    putStrLn $ Text.unpack $ Text.intercalate " "
-      ["mkdir", make ^. makeDirectoryBuildStepPath]
+    let path = Text.unpack $ make ^. makeDirectoryBuildStepPath
+    exists <- IO.doesDirectoryExist path
+    if exists
+      then return True
+      else do
+        IO.createDirectory path
+        return True
 instance TextShow MakeDirectoryBuildStep where
   textShow make =
     Text.concat $
@@ -503,7 +566,12 @@ instance BuildStep ConditionalBuildStep where
           if value
             then conditionalBuildStepWhenTrue
             else conditionalBuildStepWhenFalse
-    mapM_ performBuildStep (conditional ^. field)
+    foldM (\result step -> do
+             if result
+               then performBuildStep step
+               else return False)
+          True
+          (conditional ^. field)
 instance TextShow ConditionalBuildStep where
   textShow conditional =
     Text.concat $
@@ -704,10 +772,10 @@ instance HasName Project where
 main :: IO ()
 main = do
   project <- makeProject "Modern Data"
-  mainLibrary <- makeLibrary "modern" "../../C/library/" $
-    Set.fromList ["../../C/library/modern.h"]
+  mainLibrary <- makeLibrary "modern" "library/" $
+    Set.fromList ["library/modern.h"]
   makeKeywordsExecutable <-
-    makeExecutable "make-keywords" "../../C/tools/make-keywords/"
+    makeExecutable "make-keywords" "tools/make-keywords/"
   mainLibrary <- return $
     over targetPrerequisites
          (Set.insert $ AnyTarget makeKeywordsExecutable)
@@ -716,8 +784,17 @@ main = do
     over projectTargets
          (Set.insert $ AnyTarget mainLibrary)
          project
-  mapM_ performBuildStep
-        (outputtingBuildSteps $ targetBuildSteps BinaryTask mainLibrary)
+  result <-
+    foldM (\result step -> do
+             if result
+               then performBuildStep step
+               else return False)
+          True
+          (outputtingBuildSteps $
+            targetBuildSteps AmalgamationTask mainLibrary)
+  if result
+    then putStrLn "\nSuccess"
+    else putStrLn "\nFailure"
 
 
 makeProject :: Text.Text -> IO Project
@@ -877,15 +954,20 @@ outputtingBuildSteps steps =
   in result
 
 
-compileInvocationBuildStep :: [AnyFile] -> AnyFile -> AnyBuildStep
-compileInvocationBuildStep inputs output =
+compileInvocationBuildStep
+    :: [Text.Text] -> [Text.Text] -> [AnyFile] -> AnyFile -> AnyBuildStep
+compileInvocationBuildStep includeDirectories phaseArguments inputs output =
   AnyBuildStep $ InvocationBuildStep {
       _invocationBuildStepExecutable = ExecutableFile {
           _executableFilePath = "clang",
           _executableFileProvenance = SystemProvenance
         },
       _invocationBuildStepParameters =
-        ["-O3", "-o", output ^. path] ++ map (view path) inputs,
+        ["-O3"]
+        ++ phaseArguments
+        ++ ["-o", output ^. path]
+        ++ (concatMap (\directory -> ["-I", directory]) includeDirectories)
+        ++ (map (view path) inputs),
       _invocationBuildStepInputs = Set.fromList inputs,
       _invocationBuildStepOutputs = Set.singleton output
     }
@@ -895,7 +977,7 @@ compileFileBuildStep :: AnyTarget -> SourceFile -> AnyBuildStep
 compileFileBuildStep target input =
   let output = ObjectFile {
           _objectFilePath =
-            Text.concat ["build/",
+            Text.concat ["_build/",
                          target ^. name,
                          "/binary/objects/",
                          Text.pack $ IO.takeBaseName $ Text.unpack $
@@ -903,20 +985,23 @@ compileFileBuildStep target input =
                          ".o"],
           _objectFileProvenance = BuiltProvenance
         }
-  in compileInvocationBuildStep [AnyFile input] (AnyFile output)
+      includeDirectories =
+        [Text.pack $ IO.dropFileName $ Text.unpack $ input ^. path]
+  in compileInvocationBuildStep
+       includeDirectories ["-c"] [AnyFile input] (AnyFile output)
 
 
 linkExecutableFileBuildStep :: AnyTarget -> [ObjectFile] -> AnyBuildStep
 linkExecutableFileBuildStep target inputs =
   let output = ExecutableFile {
           _executableFilePath =
-            Text.concat ["build/",
+            Text.concat ["_build/",
                          target ^. name,
                          "/binary/bin/",
                          target ^. name],
           _executableFileProvenance = BuiltProvenance
         }
-  in compileInvocationBuildStep (map AnyFile inputs) (AnyFile output)
+  in compileInvocationBuildStep [] [] (map AnyFile inputs) (AnyFile output)
 
 
 installFileBuildStep :: Text.Text -> AnyFile -> AnyBuildStep
@@ -926,3 +1011,10 @@ installFileBuildStep path input =
       _copyFileBuildStepOutputPath = path
     }
 
+
+amalgamateFilesBuildStep :: SourceFile -> [SourceFile] -> AnyBuildStep
+amalgamateFilesBuildStep output inputs =
+  AnyBuildStep $ AmalgamateFilesBuildStep {
+      _amalgamateFilesBuildStepOutput = output,
+      _amalgamateFilesBuildStepInputs = inputs
+    }
