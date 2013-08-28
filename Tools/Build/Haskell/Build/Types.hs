@@ -83,14 +83,22 @@ module Build.Types
      projectSpecificationName,
      projectSpecificationDefaultTarget,
      projectSpecificationTargets,
+   InvocationSpecification(..),
+     invocationSpecificationExecutable,
+     invocationSpecificationParameters,
+     invocationSpecificationInputs,
+     invocationSpecificationOutputs,
    ExecutableSpecification(..),
      executableSpecificationName,
      executableSpecificationPrerequisites,
-     executableSpecificationBuildPhases,
+     executableSpecificationExtraInvocations,
+     executableSpecificationExtraSources,
    LibrarySpecification(..),
      librarySpecificationName,
      librarySpecificationPrerequisites,
-     librarySpecificationBuildPhases)
+     librarySpecificationExtraInvocations,
+     librarySpecificationExtraSources,
+   Buildfile(..))
   where
 
 
@@ -374,11 +382,22 @@ data ProjectSpecification =
 makeLenses ''ProjectSpecification
 
 
+data InvocationSpecification =
+  InvocationSpecification {
+      _invocationSpecificationExecutable :: Text.Text,
+      _invocationSpecificationParameters :: [Text.Text],
+      _invocationSpecificationInputs :: [Text.Text],
+      _invocationSpecificationOutputs :: [Text.Text]
+    }
+makeLenses ''InvocationSpecification
+
+
 data ExecutableSpecification =
   ExecutableSpecification {
       _executableSpecificationName :: Text.Text,
       _executableSpecificationPrerequisites :: Set.Set Text.Text,
-      _executableSpecificationBuildPhases :: [BuildPhaseSpecification]
+      _executableSpecificationExtraInvocations :: [InvocationSpecification],
+      _executableSpecificationExtraSources :: Set.Set Text.Text
     }
 makeLenses ''ExecutableSpecification
 
@@ -387,12 +406,14 @@ data LibrarySpecification =
   LibrarySpecification {
       _librarySpecificationName :: Text.Text,
       _librarySpecificationPrerequisites :: Set.Set Text.Text,
-      _librarySpecificationBuildPhases :: [BuildPhaseSpecification]
+      _librarySpecificationExtraInvocations :: [InvocationSpecification],
+      _librarySpecificationExtraSources :: Set.Set Text.Text
     }
 makeLenses ''LibrarySpecification
 
 
-data BuildPhaseSpecification =
-  BuildPhaseSpecification {
-    }
-makeLenses ''BuildPhaseSpecification
+data Buildfile
+  = ProjectBuildfile ProjectSpecification
+  | ExecutableBuildfile ExecutableSpecification
+  | LibraryBuildfile LibrarySpecification
+

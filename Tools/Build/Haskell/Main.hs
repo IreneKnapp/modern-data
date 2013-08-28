@@ -3,6 +3,9 @@
              StandaloneDeriving #-}
 module Main (main) where
 
+import qualified Data.Aeson as JSON
+import qualified Data.Aeson.Types as JSON
+import qualified Data.HashMap.Strict as HashMap
 import qualified Data.Set as Set
 import qualified Data.Text as Text
 import qualified System.Directory as IO
@@ -10,6 +13,7 @@ import qualified System.Exit as IO
 import qualified System.FilePath.Posix as IO
 import qualified System.Process as IO
 
+import Control.Applicative
 import Control.Lens
 import Control.Monad
 import Data.Function
@@ -769,8 +773,100 @@ instance HasName Project where
   name = projectName
 
 
+instance JSON.FromJSON Buildfile where
+  parseJSON (JSON.Object object) = do
+    type' <- object JSON..: "type" :: JSON.Parser Text.Text
+    let subobject = JSON.Object $ HashMap.delete "type" object
+    case type' of
+      "project" -> ProjectBuildfile <$> JSON.parseJSON subobject
+      "executable" -> ExecutableBuildfile <$> JSON.parseJSON subobject
+      "library" -> LibraryBuildfile <$> JSON.parseJSON subobject
+      _ -> mzero
+  parseJSON _ = mzero
+
+
+parseObject
+    :: Set.Set Text.Text
+    -> Set.Set Text.Text
+    -> (HashMap.HashMap Text.Text JSON.Value -> JSON.Parser a)
+    -> JSON.Value
+    -> JSON.Parser a
+parseObject mandatoryKeys optionalKeys subparser (JSON.Object object) = do
+  let presentKeys = Set.fromList $ HashMap.keys object
+      allowedKeys = Set.union mandatoryKeys optionalKeys
+      missingKeys = Set.difference mandatoryKeys presentKeys
+      extraKeys = Set.difference presentKeys allowedKeys
+      missingKeysMessage =
+        if Set.null missingKeys
+          then Nothing
+          else Just $ Text.concat
+                 ["Missing keys ",
+                  Text.intercalate " " $ Set.toList missingKeys]
+      extraKeysMessage =
+        if Set.null extraKeys
+          then Nothing
+          else Just $ Text.concat
+                 ["Extra keys ",
+                  Text.intercalate " " $ Set.toList extraKeys]
+      messages = catMaybes [missingKeysMessage, extraKeysMessage]
+  if messages == []
+    then subparser object
+    else fail $ Text.unpack $ Text.intercalate "; " messages
+parseObject _ _ _ _ = mzero
+
+
+instance JSON.FromJSON ProjectSpecification where
+  parseJSON =
+    parseObject (Set.fromList ["name", "targets"])
+                (Set.fromList ["default-target"])
+                (\object ->
+                   ProjectSpecification
+                     <$> object JSON..: "name"
+                     <*> object JSON..:? "default-target"
+                     <*> object JSON..: "targets")
+
+
+instance JSON.FromJSON InvocationSpecification where
+  parseJSON =
+    parseObject (Set.fromList ["executable"])
+                (Set.fromList ["parameters", "inputs", "outputs"])
+                (\object ->
+                   InvocationSpecification
+                     <$> object JSON..: "executable"
+                     <*> object JSON..:? "parameters" JSON..!= []
+                     <*> object JSON..:? "inputs" JSON..!= []
+                     <*> object JSON..:? "outputs" JSON..!= [])
+
+
+instance JSON.FromJSON ExecutableSpecification where
+  parseJSON =
+    parseObject (Set.fromList ["name"])
+                (Set.fromList ["prerequisites", "extra-invocations",
+                               "extra-sources"])
+                (\object ->
+                   ExecutableSpecification
+                     <$> object JSON..: "name"
+                     <*> object JSON..:? "prerequisites" JSON..!= Set.empty
+                     <*> object JSON..:? "extra-invocations" JSON..!= []
+                     <*> object JSON..:? "extra-sources" JSON..!= Set.empty)
+
+
+instance JSON.FromJSON LibrarySpecification where
+  parseJSON =
+    parseObject (Set.fromList ["name"])
+                (Set.fromList ["prerequisites", "extra-invocations",
+                               "extra-sources"])
+                (\object ->
+                   LibrarySpecification
+                     <$> object JSON..: "name"
+                     <*> object JSON..:? "prerequisites" JSON..!= Set.empty
+                     <*> object JSON..:? "extra-invocations" JSON..!= []
+                     <*> object JSON..:? "extra-sources" JSON..!= Set.empty)
+
+
 main :: IO ()
 main = do
+  buildfile <- loadBuildfile ""
   project <- makeProject "Modern Data"
   mainLibrary <- makeLibrary "modern" "library/" $
     Set.fromList ["library/modern.h"]
