@@ -83,21 +83,29 @@ module Build.Types
      projectSpecificationName,
      projectSpecificationDefaultTarget,
      projectSpecificationTargets,
+     projectSpecificationSubprojects,
+   SubprojectSpecification(..),
+     subprojectSpecificationParent,
+     subprojectSpecificationDefaultTarget,
+     subprojectSpecificationTargets,
+     subprojectSpecificationSubprojects,
+   AnyTargetSpecification(..),
+   TargetSpecification(..),
+   ExecutableSpecification(..),
+     executableSpecificationName,
+     executableSpecificationPrerequisites,
+     executableSpecificationSources,
+     executableSpecificationExtraInvocations,
+   LibrarySpecification(..),
+     librarySpecificationName,
+     librarySpecificationPrerequisites,
+     librarySpecificationSources,
+     librarySpecificationExtraInvocations,
    InvocationSpecification(..),
      invocationSpecificationExecutable,
      invocationSpecificationParameters,
      invocationSpecificationInputs,
      invocationSpecificationOutputs,
-   ExecutableSpecification(..),
-     executableSpecificationName,
-     executableSpecificationPrerequisites,
-     executableSpecificationExtraInvocations,
-     executableSpecificationExtraSources,
-   LibrarySpecification(..),
-     librarySpecificationName,
-     librarySpecificationPrerequisites,
-     librarySpecificationExtraInvocations,
-     librarySpecificationExtraSources,
    Buildfile(..))
   where
 
@@ -373,15 +381,6 @@ data Project =
 makeLenses ''Project
 
 
-data ProjectSpecification =
-  ProjectSpecification {
-      _projectSpecificationName :: Text.Text,
-      _projectSpecificationDefaultTarget :: Maybe Text.Text,
-      _projectSpecificationTargets :: Set.Set Text.Text
-    }
-makeLenses ''ProjectSpecification
-
-
 data InvocationSpecification =
   InvocationSpecification {
       _invocationSpecificationExecutable :: Text.Text,
@@ -396,8 +395,8 @@ data ExecutableSpecification =
   ExecutableSpecification {
       _executableSpecificationName :: Text.Text,
       _executableSpecificationPrerequisites :: Set.Set Text.Text,
-      _executableSpecificationExtraInvocations :: [InvocationSpecification],
-      _executableSpecificationExtraSources :: Set.Set Text.Text
+      _executableSpecificationSources :: Set.Set Text.Text,
+      _executableSpecificationExtraInvocations :: [InvocationSpecification]
     }
 makeLenses ''ExecutableSpecification
 
@@ -406,14 +405,45 @@ data LibrarySpecification =
   LibrarySpecification {
       _librarySpecificationName :: Text.Text,
       _librarySpecificationPrerequisites :: Set.Set Text.Text,
-      _librarySpecificationExtraInvocations :: [InvocationSpecification],
-      _librarySpecificationExtraSources :: Set.Set Text.Text
+      _librarySpecificationSources :: Set.Set Text.Text,
+      _librarySpecificationExtraInvocations :: [InvocationSpecification]
     }
 makeLenses ''LibrarySpecification
 
 
+data AnyTargetSpecification =
+  forall target . TargetSpecification target => AnyTargetSpecification target
+
+
+class (HasName target, TextShow target, Typeable target)
+      => TargetSpecification target where
+  fromAnyTargetSpecification :: AnyTargetSpecification -> Maybe target
+  targetSpecificationPrerequisites :: Simple Lens target (Set.Set Text.Text)
+  targetSpecificationSources :: Simple Lens target (Set.Set Text.Text)
+  targetSpecificationExtraInvocations
+    :: Simple Lens target [InvocationSpecification]
+
+
+data ProjectSpecification =
+  ProjectSpecification {
+      _projectSpecificationName :: Text.Text,
+      _projectSpecificationDefaultTarget :: Maybe Text.Text,
+      _projectSpecificationTargets :: [AnyTargetSpecification],
+      _projectSpecificationSubprojects :: Set.Set Text.Text
+    }
+makeLenses ''ProjectSpecification
+
+
+data SubprojectSpecification =
+  SubprojectSpecification {
+      _subprojectSpecificationParent :: Text.Text,
+      _subprojectSpecificationDefaultTarget :: Maybe Text.Text,
+      _subprojectSpecificationTargets :: [AnyTargetSpecification],
+      _subprojectSpecificationSubprojects :: Set.Set Text.Text
+    }
+makeLenses ''SubprojectSpecification
+
+
 data Buildfile
   = ProjectBuildfile ProjectSpecification
-  | ExecutableBuildfile ExecutableSpecification
-  | LibraryBuildfile LibrarySpecification
-
+  | SubprojectBuildfile SubprojectSpecification

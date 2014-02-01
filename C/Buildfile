@@ -1,0 +1,10 @@
+{
+  "type": "project",
+  "name": "Modern Data",
+  "subprojects": [
+    "library",
+    "tools",
+    "tests",
+    "examples"
+  ]
+}

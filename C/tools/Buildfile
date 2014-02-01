@@ -1,0 +1,6 @@
+{
+  "type": "subproject",
+  "subprojects": [
+    "make-keywords"
+  ]
+}

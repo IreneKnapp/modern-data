@@ -5,7 +5,9 @@ module Main (main) where
 
 import qualified Data.Aeson as JSON
 import qualified Data.Aeson.Types as JSON
+import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.HashMap.Strict as HashMap
+import qualified Data.Map as Map
 import qualified Data.Set as Set
 import qualified Data.Text as Text
 import qualified System.Directory as IO
@@ -64,6 +66,9 @@ deriving instance Typeable NotCondition
 deriving instance Typeable PathExistsCondition
 deriving instance Typeable FileExistsCondition
 deriving instance Typeable DirectoryExistsCondition
+deriving instance Typeable AnyTargetSpecification
+deriving instance Typeable ExecutableSpecification
+deriving instance Typeable LibrarySpecification
 
 
 instance TextShow Language where
@@ -773,18 +778,6 @@ instance HasName Project where
   name = projectName
 
 
-instance JSON.FromJSON Buildfile where
-  parseJSON (JSON.Object object) = do
-    type' <- object JSON..: "type" :: JSON.Parser Text.Text
-    let subobject = JSON.Object $ HashMap.delete "type" object
-    case type' of
-      "project" -> ProjectBuildfile <$> JSON.parseJSON subobject
-      "executable" -> ExecutableBuildfile <$> JSON.parseJSON subobject
-      "library" -> LibraryBuildfile <$> JSON.parseJSON subobject
-      _ -> mzero
-  parseJSON _ = mzero
-
-
 parseObject
     :: Set.Set Text.Text
     -> Set.Set Text.Text
@@ -815,17 +808,57 @@ parseObject mandatoryKeys optionalKeys subparser (JSON.Object object) = do
 parseObject _ _ _ _ = mzero
 
 
+instance JSON.FromJSON Buildfile where
+  parseJSON (JSON.Object object) = do
+    type' <- object JSON..: "type" :: JSON.Parser Text.Text
+    let subobject = JSON.Object $ HashMap.delete "type" object
+    case type' of
+      "project" -> ProjectBuildfile <$> JSON.parseJSON subobject
+      "subproject" -> SubprojectBuildfile <$> JSON.parseJSON subobject
+      _ -> mzero
+  parseJSON _ = mzero
+
+
 instance JSON.FromJSON ProjectSpecification where
   parseJSON =
-    parseObject (Set.fromList ["name", "targets"])
-                (Set.fromList ["default-target"])
+    parseObject (Set.fromList ["name"])
+                (Set.fromList ["default-target", "targets", "subprojects"])
                 (\object ->
                    ProjectSpecification
                      <$> object JSON..: "name"
                      <*> object JSON..:? "default-target"
-                     <*> object JSON..: "targets")
+                     <*> object JSON..:? "targets" JSON..!= []
+                     <*> object JSON..:? "subprojects" JSON..!= Set.empty)
 
 
+instance JSON.FromJSON SubprojectSpecification where
+  parseJSON =
+    parseObject (Set.fromList [])
+                (Set.fromList ["parent", "default-target", "targets",
+                               "subprojects"])
+                (\object ->
+                   SubprojectSpecification
+                     <$> object JSON..:? "parent" JSON..!= ".."
+                     <*> object JSON..:? "default-target"
+                     <*> object JSON..:? "targets" JSON..!= []
+                     <*> object JSON..:? "subprojects" JSON..!= Set.empty)
+
+
+instance TextShow InvocationSpecification where
+  textShow specification =
+    Text.concat $
+      ["(invocation-specification \"",
+       specification ^. invocationSpecificationExecutable,
+       "\" (",
+       Text.intercalate " "
+         (specification ^. invocationSpecificationParameters),
+       ") (",
+       Text.intercalate " "
+         (specification ^. invocationSpecificationInputs),
+       ") (",
+       Text.intercalate " "
+         (specification ^. invocationSpecificationOutputs),
+       "))"]
 instance JSON.FromJSON InvocationSpecification where
   parseJSON =
     parseObject (Set.fromList ["executable"])
@@ -838,59 +871,309 @@ instance JSON.FromJSON InvocationSpecification where
                      <*> object JSON..:? "outputs" JSON..!= [])
 
 
+anyTargetSpecification
+    :: forall a f . (Functor f)
+    => (forall specification . (TargetSpecification specification)
+        => (a -> f a) -> specification -> f specification)
+    -> ((a -> f a) -> AnyTargetSpecification -> f AnyTargetSpecification)
+anyTargetSpecification underlying f (AnyTargetSpecification file) =
+  AnyTargetSpecification <$> underlying f file
+instance JSON.FromJSON AnyTargetSpecification where
+  parseJSON (JSON.Object object) = do
+    type' <- object JSON..: "type" :: JSON.Parser Text.Text
+    let subobject = JSON.Object $ HashMap.delete "type" object
+    case type' of
+      "executable" -> AnyTargetSpecification
+        <$> (JSON.parseJSON subobject :: JSON.Parser ExecutableSpecification)
+      "library" -> AnyTargetSpecification
+        <$> (JSON.parseJSON subobject :: JSON.Parser LibrarySpecification)
+      _ -> mzero
+  parseJSON _ = mzero
+instance HasName AnyTargetSpecification where
+  name = anyTargetSpecification name
+instance TargetSpecification AnyTargetSpecification where
+  fromAnyTargetSpecification (AnyTargetSpecification specification) =
+    cast specification
+  targetSpecificationPrerequisites =
+    anyTargetSpecification targetSpecificationPrerequisites
+  targetSpecificationSources =
+    anyTargetSpecification targetSpecificationSources
+  targetSpecificationExtraInvocations =
+    anyTargetSpecification targetSpecificationExtraInvocations
+instance TextShow AnyTargetSpecification where
+  textShow (AnyTargetSpecification specification) = textShow specification
+
+
+instance HasName ExecutableSpecification where
+  name = executableSpecificationName
+instance TextShow ExecutableSpecification where
+  textShow specification =
+    Text.concat $
+      ["(library-specification \"",
+       specification ^. name,
+       "\" (",
+       Text.intercalate " "
+         (Set.elems $ specification ^. executableSpecificationPrerequisites),
+       ") (",
+       Text.intercalate " "
+         (Set.elems $ specification ^. executableSpecificationSources),
+       ") (",
+       Text.intercalate " " $ map textShow
+         (specification ^. executableSpecificationExtraInvocations),
+       "))"]
+instance TargetSpecification ExecutableSpecification where
+  fromAnyTargetSpecification (AnyTargetSpecification specification) =
+    cast specification
+  targetSpecificationPrerequisites = executableSpecificationPrerequisites
+  targetSpecificationSources = executableSpecificationSources
+  targetSpecificationExtraInvocations = executableSpecificationExtraInvocations
 instance JSON.FromJSON ExecutableSpecification where
   parseJSON =
-    parseObject (Set.fromList ["name"])
-                (Set.fromList ["prerequisites", "extra-invocations",
-                               "extra-sources"])
+    parseObject (Set.fromList ["name", "sources"])
+                (Set.fromList ["prerequisites", "extra-invocations"])
                 (\object ->
                    ExecutableSpecification
                      <$> object JSON..: "name"
                      <*> object JSON..:? "prerequisites" JSON..!= Set.empty
-                     <*> object JSON..:? "extra-invocations" JSON..!= []
-                     <*> object JSON..:? "extra-sources" JSON..!= Set.empty)
+                     <*> object JSON..: "sources"
+                     <*> object JSON..:? "extra-invocations" JSON..!= [])
 
 
+instance HasName LibrarySpecification where
+  name = librarySpecificationName
+instance TextShow LibrarySpecification where
+  textShow specification =
+    Text.concat $
+      ["(library-specification \"",
+       specification ^. name,
+       "\" (",
+       Text.intercalate " "
+         (Set.elems $ specification ^. librarySpecificationPrerequisites),
+       ") (",
+       Text.intercalate " "
+         (Set.elems $ specification ^. librarySpecificationSources),
+       ") (",
+       Text.intercalate " " $ map textShow
+         (specification ^. librarySpecificationExtraInvocations),
+       "))"]
+instance TargetSpecification LibrarySpecification where
+  fromAnyTargetSpecification (AnyTargetSpecification specification) =
+    cast specification
+  targetSpecificationPrerequisites = librarySpecificationPrerequisites
+  targetSpecificationSources = librarySpecificationSources
+  targetSpecificationExtraInvocations = librarySpecificationExtraInvocations
 instance JSON.FromJSON LibrarySpecification where
   parseJSON =
-    parseObject (Set.fromList ["name"])
-                (Set.fromList ["prerequisites", "extra-invocations",
-                               "extra-sources"])
+    parseObject (Set.fromList ["name", "sources"])
+                (Set.fromList ["prerequisites", "extra-invocations"])
                 (\object ->
                    LibrarySpecification
                      <$> object JSON..: "name"
                      <*> object JSON..:? "prerequisites" JSON..!= Set.empty
-                     <*> object JSON..:? "extra-invocations" JSON..!= []
-                     <*> object JSON..:? "extra-sources" JSON..!= Set.empty)
+                     <*> object JSON..: "sources"
+                     <*> object JSON..:? "extra-invocations" JSON..!= [])
 
 
 main :: IO ()
 main = do
-  buildfile <- loadBuildfile ""
-  project <- makeProject "Modern Data"
-  mainLibrary <- makeLibrary "modern" "library/" $
-    Set.fromList ["library/modern.h"]
-  makeKeywordsExecutable <-
-    makeExecutable "make-keywords" "tools/make-keywords/"
-  mainLibrary <- return $
-    over targetPrerequisites
-         (Set.insert $ AnyTarget makeKeywordsExecutable)
-         mainLibrary
-  project <- return $
-    over projectTargets
-         (Set.insert $ AnyTarget mainLibrary)
-         project
-  result <-
-    foldM (\result step -> do
-             if result
-               then performBuildStep step
-               else return False)
-          True
-          (outputtingBuildSteps $
-            targetBuildSteps AmalgamationTask mainLibrary)
+  maybeProjectAndTarget <- loadProject "Buildfile" Nothing
+  result <- case maybeProjectAndTarget of
+              Nothing -> return False
+              Just (project, target) -> do
+                foldM (\result step -> do
+                         if result
+                           then performBuildStep step
+                           else return False)
+                      True
+                      (outputtingBuildSteps $
+                        targetBuildSteps AmalgamationTask target)
   if result
     then putStrLn "\nSuccess"
     else putStrLn "\nFailure"
+
+
+loadProject
+  :: IO.FilePath
+  -> Maybe Text.Text
+  -> IO (Maybe (Project, AnyTarget))
+loadProject initialBuildfilePath maybeSpecifiedTargetName = do
+  let defaultBuildfileName :: IO.FilePath
+      defaultBuildfileName = "Buildfile"
+      ensureBuildfileCached
+        :: Map.Map IO.FilePath Buildfile
+        -> IO.FilePath
+        -> IO (Map.Map IO.FilePath Buildfile)
+      ensureBuildfileCached buildfileCache filePath = do
+        case Map.lookup filePath buildfileCache of
+          Just buildfile -> return buildfileCache
+          Nothing -> do
+            maybeBuildfile <- loadBuildfile filePath
+            case maybeBuildfile of
+              Nothing -> do
+                putStrLn $ concat
+                  ["Unable to load the buildfile \"",
+                   filePath,
+                   "\"."]
+                return (buildfileCache)
+              Just buildfile -> do
+                return $ Map.insert filePath buildfile buildfileCache
+      prefixCachePaths
+        :: IO.FilePath
+        -> Map.Map IO.FilePath Buildfile
+        -> Map.Map IO.FilePath Buildfile
+      prefixCachePaths prefixPath buildfileCache =
+        Map.mapKeys (\path -> prefixPath IO.</> path) buildfileCache
+      invertPath :: IO.FilePath -> IO.FilePath -> IO (Maybe IO.FilePath)
+      invertPath upwardPath referencedFromPath = do
+        parentDirectories <- IO.getCurrentDirectory
+          >>= return . reverse . map IO.dropTrailingPathSeparator
+              . IO.splitPath
+        let loop :: [String] -> [String] -> IO (Maybe IO.FilePath)
+            loop soFar [] = return $ Just $ IO.joinPath soFar
+            loop soFar (directoryName : rest) = do
+              if directoryName == ".."
+                then do
+                  case drop (length soFar) parentDirectories of
+                    [] -> do
+                      putStrLn $ concat
+                        ["A parent buildfile's path would be in ",
+                         "the parent of the root directory; ",
+                         "the path given is \"",
+                         upwardPath,
+                         "\", and it is referenced in \"",
+                         referencedFromPath,
+                         "\"."]
+                      return Nothing
+                    (here : _) -> loop (soFar ++ [here]) rest
+                else do
+                  putStrLn $ concat
+                    ["Parent buildfiles must always be ",
+                     "in parent directories, but \"",
+                     upwardPath,
+                     "\" referenced in \"",
+                     referencedFromPath,
+                     "\" is not."]
+                  return Nothing
+        loop [] (reverse $ IO.splitPath upwardPath)
+      loadAllBuildfilesUpward
+        :: Map.Map IO.FilePath Buildfile
+        -> IO.FilePath
+        -> IO (Map.Map IO.FilePath Buildfile, Maybe IO.FilePath)
+      loadAllBuildfilesUpward buildfileCache filePath = do
+        buildfileCache <- ensureBuildfileCached buildfileCache filePath
+        case Map.lookup filePath buildfileCache of
+          Just (ProjectBuildfile _) -> return (buildfileCache, Just filePath)
+          Just (SubprojectBuildfile subprojectSpecification) -> do
+            let parentDirectoryPath = Text.unpack $
+                  subprojectSpecification ^. subprojectSpecificationParent
+                parentFilePath =
+                  parentDirectoryPath IO.</> defaultBuildfileName
+            maybeHereFromParentDirectoryPath <-
+              invertPath parentDirectoryPath filePath
+            case maybeHereFromParentDirectoryPath of
+              Nothing -> return (buildfileCache, Nothing)
+              Just hereFromParentDirectoryPath -> do
+                loadAllBuildfilesUpward
+                  (prefixCachePaths
+                    (IO.addTrailingPathSeparator parentDirectoryPath
+                     IO.</> IO.addTrailingPathSeparator
+                              hereFromParentDirectoryPath)
+                    buildfileCache)
+                  parentFilePath
+          Nothing -> return (buildfileCache, Nothing)
+      loadAllBuildfilesDownward
+        :: Map.Map IO.FilePath Buildfile
+        -> IO.FilePath
+        -> Bool
+        -> IO (Map.Map IO.FilePath Buildfile, Bool)
+      loadAllBuildfilesDownward buildfileCache filePath atTopLevel = do
+        buildfileCache <- ensureBuildfileCached buildfileCache filePath
+        let loadImmediatelyDownward
+              :: Set.Set Text.Text
+              -> IO (Map.Map IO.FilePath Buildfile, Bool)
+            loadImmediatelyDownward subprojectPathsSet = do
+              foldM (\(buildfileCache, resultSoFar) subprojectPath -> do
+                       let localBaseDirectoryPath = IO.takeDirectory filePath
+                           subprojectDirectoryPath =
+                             IO.addTrailingPathSeparator
+                               (Text.unpack subprojectPath)
+                           subprojectBuildfilePath =
+                             if localBaseDirectoryPath == "."
+                               then subprojectDirectoryPath
+                                    IO.</> defaultBuildfileName
+                               else localBaseDirectoryPath
+                                    IO.</> subprojectDirectoryPath
+                                    IO.</> defaultBuildfileName
+                       (buildfileCache, resultHere) <-
+                        loadAllBuildfilesDownward
+                          buildfileCache
+                          subprojectBuildfilePath
+                          False
+                       return (buildfileCache, resultSoFar && resultHere))
+                    (buildfileCache, True)
+                    (Set.elems subprojectPathsSet)
+        case Map.lookup filePath buildfileCache of
+          Just (ProjectBuildfile projectSpecification) -> do
+            if atTopLevel
+              then loadImmediatelyDownward
+                     (projectSpecification
+                      ^. projectSpecificationSubprojects)
+              else do
+                putStrLn $ concat
+                  ["Expected a subproject buildfile, ",
+                   "but found a whole-project one in \"",
+                   filePath,
+                   "\"."]
+                return (buildfileCache, False)
+          Just (SubprojectBuildfile subprojectSpecification) -> do
+            if atTopLevel
+              then do
+                putStrLn $ concat
+                  ["Expected a whole-project buildfile, ",
+                   "but found a subproject one in \"",
+                   filePath,
+                   "\"."]
+                return (buildfileCache, False)
+              else loadImmediatelyDownward
+                     (subprojectSpecification
+                      ^. subprojectSpecificationSubprojects)
+          Nothing -> return (buildfileCache, False)
+  (buildfileCache, maybeRootBuildfilePath) <-
+    loadAllBuildfilesUpward Map.empty initialBuildfilePath
+  case maybeRootBuildfilePath of
+    Just rootBuildfilePath -> do
+      (buildfileCache, result) <-
+        loadAllBuildfilesDownward buildfileCache rootBuildfilePath True
+      if result
+        then do
+          putStrLn $ concat
+            ["The root buildfile is \"",
+             rootBuildfilePath,
+             "\", and the subproject buildfiles are: ",
+             intercalate ", " $ map (\path -> concat ["\"", path, "\""]) $
+               Map.keys (Map.delete rootBuildfilePath buildfileCache),
+             "."]
+          IO.exitSuccess -- TODO
+        else do
+          putStrLn $ concat
+            ["Stopping before doing anything, ",
+             "as there were buildfile problems."]
+          return Nothing
+    Nothing -> return Nothing
+
+
+loadBuildfile :: IO.FilePath -> IO (Maybe Buildfile)
+loadBuildfile filePath = do
+  byteString <- LazyByteString.readFile filePath
+  case JSON.eitherDecode' byteString of
+    Left message -> do
+      putStrLn $ concat
+        ["Failure while parsing JSON from \"",
+         filePath,
+         "\": ",
+         message]
+      return Nothing
+    Right buildfile -> return $ Just buildfile
 
 
 makeProject :: Text.Text -> IO Project
