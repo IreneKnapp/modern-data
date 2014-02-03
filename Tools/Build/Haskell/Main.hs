@@ -1125,16 +1125,22 @@ loadProject maybeSpecifiedTargetName = do
 
 loadBuildfile :: IO.FilePath -> IO (Maybe Buildfile)
 loadBuildfile filePath = do
-  byteString <- LazyByteString.readFile filePath
-  case JSON.eitherDecode' byteString of
-    Left message -> do
-      putStrLn $ concat
-        ["Failure while parsing JSON from \"",
-         filePath,
-         "\": ",
-         message]
+  exists <- IO.doesFileExist filePath
+  if exists
+    then do
+      byteString <- LazyByteString.readFile filePath
+      case JSON.eitherDecode' byteString of
+        Left message -> do
+          putStrLn $ concat
+            ["Failure while parsing JSON from \"",
+             filePath,
+             "\": ",
+             message]
+          return Nothing
+        Right buildfile -> return $ Just buildfile
+    else do
+      putStrLn $ concat ["No buildfile exists at ", filePath]
       return Nothing
-    Right buildfile -> return $ Just buildfile
 
 
 makeProject :: Text.Text -> IO Project
