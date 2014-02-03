@@ -1,3 +1,13 @@
 {
-  "type": "subproject"
+  "type": "subproject",
+  "targets": [
+    {
+      "type": "executable",
+      "name": "make-keywords",
+      "sources": [
+        "make-keywords.c",
+        "../library/hash.c"
+      ]
+    }
+  ]
 }
