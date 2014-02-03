@@ -834,12 +834,10 @@ instance JSON.FromJSON ProjectSpecification where
 instance JSON.FromJSON SubprojectSpecification where
   parseJSON =
     parseObject (Set.fromList [])
-                (Set.fromList ["parent", "default-target", "targets",
-                               "subprojects"])
+                (Set.fromList ["default-target", "targets", "subprojects"])
                 (\object ->
                    SubprojectSpecification
-                     <$> object JSON..:? "parent" JSON..!= ".."
-                     <*> object JSON..:? "default-target"
+                     <$> object JSON..:? "default-target"
                      <*> object JSON..:? "targets" JSON..!= []
                      <*> object JSON..:? "subprojects" JSON..!= Set.empty)
 
@@ -976,7 +974,7 @@ instance JSON.FromJSON LibrarySpecification where
 
 main :: IO ()
 main = do
-  maybeProjectAndTarget <- loadProject "Buildfile" Nothing
+  maybeProjectAndTarget <- loadProject Nothing
   result <- case maybeProjectAndTarget of
               Nothing -> return False
               Just (project, target) -> do
@@ -993,21 +991,21 @@ main = do
 
 
 loadProject
-  :: IO.FilePath
-  -> Maybe Text.Text
+  :: Maybe Text.Text
   -> IO (Maybe (Project, AnyTarget))
-loadProject initialBuildfilePath maybeSpecifiedTargetName = do
-  let defaultBuildfileName :: IO.FilePath
-      defaultBuildfileName = "Buildfile"
+loadProject maybeSpecifiedTargetName = do
+  let buildfileFileName :: IO.FilePath
+      buildfileFileName = "Buildfile"
       ensureBuildfileCached
-        :: Map.Map IO.FilePath Buildfile
+        :: IO.FilePath
+        -> Map.Map IO.FilePath Buildfile
         -> IO.FilePath
         -> IO (Map.Map IO.FilePath Buildfile)
-      ensureBuildfileCached buildfileCache filePath = do
+      ensureBuildfileCached projectRootPath buildfileCache filePath = do
         case Map.lookup filePath buildfileCache of
           Just buildfile -> return buildfileCache
           Nothing -> do
-            maybeBuildfile <- loadBuildfile filePath
+            maybeBuildfile <- loadBuildfile (projectRootPath IO.</> filePath)
             case maybeBuildfile of
               Nothing -> do
                 putStrLn $ concat
@@ -1023,71 +1021,34 @@ loadProject initialBuildfilePath maybeSpecifiedTargetName = do
         -> Map.Map IO.FilePath Buildfile
       prefixCachePaths prefixPath buildfileCache =
         Map.mapKeys (\path -> prefixPath IO.</> path) buildfileCache
-      invertPath :: IO.FilePath -> IO.FilePath -> IO (Maybe IO.FilePath)
-      invertPath upwardPath referencedFromPath = do
-        parentDirectories <- IO.getCurrentDirectory
-          >>= return . reverse . map IO.dropTrailingPathSeparator
-              . IO.splitPath
-        let loop :: [String] -> [String] -> IO (Maybe IO.FilePath)
-            loop soFar [] = return $ Just $ IO.joinPath soFar
-            loop soFar (directoryName : rest) = do
-              if directoryName == ".."
-                then do
-                  case drop (length soFar) parentDirectories of
-                    [] -> do
-                      putStrLn $ concat
-                        ["A parent buildfile's path would be in ",
-                         "the parent of the root directory; ",
-                         "the path given is \"",
-                         upwardPath,
-                         "\", and it is referenced in \"",
-                         referencedFromPath,
-                         "\"."]
-                      return Nothing
-                    (here : _) -> loop (soFar ++ [here]) rest
-                else do
-                  putStrLn $ concat
-                    ["Parent buildfiles must always be ",
-                     "in parent directories, but \"",
-                     upwardPath,
-                     "\" referenced in \"",
-                     referencedFromPath,
-                     "\" is not."]
-                  return Nothing
-        loop [] (reverse $ IO.splitPath upwardPath)
       loadAllBuildfilesUpward
-        :: Map.Map IO.FilePath Buildfile
-        -> IO.FilePath
-        -> IO (Map.Map IO.FilePath Buildfile, Maybe IO.FilePath)
-      loadAllBuildfilesUpward buildfileCache filePath = do
-        buildfileCache <- ensureBuildfileCached buildfileCache filePath
-        case Map.lookup filePath buildfileCache of
-          Just (ProjectBuildfile _) -> return (buildfileCache, Just filePath)
+        :: IO.FilePath
+        -> Map.Map IO.FilePath Buildfile
+        -> IO (IO.FilePath, Map.Map IO.FilePath Buildfile, Maybe IO.FilePath)
+      loadAllBuildfilesUpward projectRootPath buildfileCache = do
+        buildfileCache <-
+          ensureBuildfileCached projectRootPath buildfileCache
+            buildfileFileName
+        case Map.lookup buildfileFileName buildfileCache of
+          Just (ProjectBuildfile _) ->
+            return (projectRootPath, buildfileCache, Just buildfileFileName)
           Just (SubprojectBuildfile subprojectSpecification) -> do
-            let parentDirectoryPath = Text.unpack $
-                  subprojectSpecification ^. subprojectSpecificationParent
-                parentFilePath =
-                  parentDirectoryPath IO.</> defaultBuildfileName
-            maybeHereFromParentDirectoryPath <-
-              invertPath parentDirectoryPath filePath
-            case maybeHereFromParentDirectoryPath of
-              Nothing -> return (buildfileCache, Nothing)
-              Just hereFromParentDirectoryPath -> do
-                loadAllBuildfilesUpward
-                  (prefixCachePaths
-                    (IO.addTrailingPathSeparator parentDirectoryPath
-                     IO.</> IO.addTrailingPathSeparator
-                              hereFromParentDirectoryPath)
-                    buildfileCache)
-                  parentFilePath
-          Nothing -> return (buildfileCache, Nothing)
+            loadAllBuildfilesUpward
+              (IO.dropTrailingPathSeparator $ IO.dropFileName projectRootPath)
+              (prefixCachePaths
+                (IO.addTrailingPathSeparator $ IO.takeFileName projectRootPath)
+                buildfileCache)
+          Nothing -> return (projectRootPath, buildfileCache, Nothing)
       loadAllBuildfilesDownward
-        :: Map.Map IO.FilePath Buildfile
+        :: IO.FilePath
+        -> Map.Map IO.FilePath Buildfile
         -> IO.FilePath
         -> Bool
         -> IO (Map.Map IO.FilePath Buildfile, Bool)
-      loadAllBuildfilesDownward buildfileCache filePath atTopLevel = do
-        buildfileCache <- ensureBuildfileCached buildfileCache filePath
+      loadAllBuildfilesDownward
+          projectRootPath buildfileCache filePath atTopLevel = do
+        buildfileCache <-
+          ensureBuildfileCached projectRootPath buildfileCache filePath
         let loadImmediatelyDownward
               :: Set.Set Text.Text
               -> IO (Map.Map IO.FilePath Buildfile, Bool)
@@ -1100,12 +1061,13 @@ loadProject initialBuildfilePath maybeSpecifiedTargetName = do
                            subprojectBuildfilePath =
                              if localBaseDirectoryPath == "."
                                then subprojectDirectoryPath
-                                    IO.</> defaultBuildfileName
+                                    IO.</> buildfileFileName
                                else localBaseDirectoryPath
                                     IO.</> subprojectDirectoryPath
-                                    IO.</> defaultBuildfileName
+                                    IO.</> buildfileFileName
                        (buildfileCache, resultHere) <-
                         loadAllBuildfilesDownward
+                          projectRootPath
                           buildfileCache
                           subprojectBuildfilePath
                           False
@@ -1138,21 +1100,20 @@ loadProject initialBuildfilePath maybeSpecifiedTargetName = do
                      (subprojectSpecification
                       ^. subprojectSpecificationSubprojects)
           Nothing -> return (buildfileCache, False)
-  (buildfileCache, maybeRootBuildfilePath) <-
-    loadAllBuildfilesUpward Map.empty initialBuildfilePath
+  projectRootPath <- IO.getCurrentDirectory
+  (projectRootPath, buildfileCache, maybeRootBuildfilePath) <-
+    loadAllBuildfilesUpward projectRootPath Map.empty
   case maybeRootBuildfilePath of
     Just rootBuildfilePath -> do
       (buildfileCache, result) <-
-        loadAllBuildfilesDownward buildfileCache rootBuildfilePath True
+        loadAllBuildfilesDownward
+          projectRootPath buildfileCache rootBuildfilePath True
       if result
         then do
           putStrLn $ concat
-            ["The root buildfile is \"",
-             rootBuildfilePath,
-             "\", and the subproject buildfiles are: ",
-             intercalate ", " $ map (\path -> concat ["\"", path, "\""]) $
-               Map.keys (Map.delete rootBuildfilePath buildfileCache),
-             "."]
+            ["The project root directory is \"",
+             IO.addTrailingPathSeparator projectRootPath,
+             "\"."]
           IO.exitSuccess -- TODO
         else do
           putStrLn $ concat

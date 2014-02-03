@@ -85,7 +85,6 @@ module Build.Types
      projectSpecificationTargets,
      projectSpecificationSubprojects,
    SubprojectSpecification(..),
-     subprojectSpecificationParent,
      subprojectSpecificationDefaultTarget,
      subprojectSpecificationTargets,
      subprojectSpecificationSubprojects,
@@ -436,7 +435,6 @@ makeLenses ''ProjectSpecification
 
 data SubprojectSpecification =
   SubprojectSpecification {
-      _subprojectSpecificationParent :: Text.Text,
       _subprojectSpecificationDefaultTarget :: Maybe Text.Text,
       _subprojectSpecificationTargets :: [AnyTargetSpecification],
       _subprojectSpecificationSubprojects :: Set.Set Text.Text
