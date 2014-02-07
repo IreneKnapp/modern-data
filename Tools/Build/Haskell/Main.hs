@@ -11,6 +11,7 @@ import qualified Data.Map as Map
 import qualified Data.Set as Set
 import qualified Data.Text as Text
 import qualified System.Directory as IO
+import qualified System.Environment as IO
 import qualified System.Exit as IO
 import qualified System.FilePath.Posix as IO
 import qualified System.Process as IO
@@ -333,7 +334,7 @@ instance TextShow ExecutableTarget where
 instance HasName LibraryTarget where
   name = libraryTargetName
 instance Target LibraryTarget where
-  targetBuildSteps AmalgamationTask library =
+  targetBuildSteps project AmalgamationTask library =
     let amalgamationFile = SourceFile {
             _sourceFileLanguage = CLanguage,
             _sourceFilePath =
@@ -349,17 +350,19 @@ instance Target LibraryTarget where
            (Set.toList $ view targetPrerequisites library))
       ++ [amalgamateFilesBuildStep amalgamationFile
             (Set.toList $ view libraryTargetSources library)]
-  targetBuildSteps BinaryTask library =
+  targetBuildSteps project BinaryTask library =
     concat (map (targetBuildSteps BinaryTask)
-                (Set.toList $ view targetPrerequisites library))
+                (Set.toList $ catMaybes $ map
+                  (\name -> Map.lookup name $ project ^. projectTargets)
+                  (view targetPrerequisites library)))
            ++ (map (compileFileBuildStep $ AnyTarget library)
                    (Set.toList $ view libraryTargetSources library))
            ++ (map (installFileBuildStep "include/")
                    (map AnyFile $ Set.toList $
                      view libraryTargetPublicHeaders library))
-  targetBuildSteps TestTask library = []
-  targetBuildSteps DebugTask library = []
-  targetBuildSteps CleanTask library = []
+  targetBuildSteps _ TestTask library = []
+  targetBuildSteps _ DebugTask library = []
+  targetBuildSteps _ CleanTask library = []
   targetPrerequisites = libraryTargetPrerequisites
   targetProducts =
     to (\library ->
@@ -817,8 +820,13 @@ instance JSON.FromJSON Buildfile where
       "subproject" -> SubprojectBuildfile <$> JSON.parseJSON subobject
       _ -> mzero
   parseJSON _ = mzero
+instance TextShow Buildfile where
+  textShow (ProjectBuildfile project) = textShow project
+  textShow (SubprojectBuildfile subproject) = textShow subproject
 
 
+instance HasName ProjectSpecification where
+  name = projectSpecificationName
 instance JSON.FromJSON ProjectSpecification where
   parseJSON =
     parseObject (Set.fromList ["name"])
@@ -829,6 +837,20 @@ instance JSON.FromJSON ProjectSpecification where
                      <*> object JSON..:? "default-target"
                      <*> object JSON..:? "targets" JSON..!= []
                      <*> object JSON..:? "subprojects" JSON..!= Set.empty)
+instance TextShow ProjectSpecification where
+  textShow project =
+    Text.concat $
+      ["(project-specification \"",
+       project ^. name,
+       "\" \"",
+       fromMaybe "(none)" (project ^. projectSpecificationDefaultTarget),
+       "\" (",
+       (Text.intercalate " " $ map textShow $ project ^.
+          projectSpecificationTargets),
+       ") (",
+       (Text.intercalate " " $ Set.toList $ project ^.
+          projectSpecificationSubprojects),
+       "))"]
 
 
 instance JSON.FromJSON SubprojectSpecification where
@@ -840,6 +862,18 @@ instance JSON.FromJSON SubprojectSpecification where
                      <$> object JSON..:? "default-target"
                      <*> object JSON..:? "targets" JSON..!= []
                      <*> object JSON..:? "subprojects" JSON..!= Set.empty)
+instance TextShow SubprojectSpecification where
+  textShow subproject =
+    Text.concat $
+      ["(subproject-specification \"",
+       fromMaybe "(none)" (subproject ^. subprojectSpecificationDefaultTarget),
+       "\" (",
+       (Text.intercalate " " $ map textShow $ subproject ^.
+         subprojectSpecificationTargets),
+       ") (",
+       (Text.intercalate " " $ Set.toList $ subproject ^.
+         subprojectSpecificationSubprojects),
+       "))"]
 
 
 instance TextShow InvocationSpecification where
@@ -892,12 +926,6 @@ instance HasName AnyTargetSpecification where
 instance TargetSpecification AnyTargetSpecification where
   fromAnyTargetSpecification (AnyTargetSpecification specification) =
     cast specification
-  targetSpecificationPrerequisites =
-    anyTargetSpecification targetSpecificationPrerequisites
-  targetSpecificationSources =
-    anyTargetSpecification targetSpecificationSources
-  targetSpecificationExtraInvocations =
-    anyTargetSpecification targetSpecificationExtraInvocations
 instance TextShow AnyTargetSpecification where
   textShow (AnyTargetSpecification specification) = textShow specification
 
@@ -922,17 +950,16 @@ instance TextShow ExecutableSpecification where
 instance TargetSpecification ExecutableSpecification where
   fromAnyTargetSpecification (AnyTargetSpecification specification) =
     cast specification
-  targetSpecificationPrerequisites = executableSpecificationPrerequisites
-  targetSpecificationSources = executableSpecificationSources
-  targetSpecificationExtraInvocations = executableSpecificationExtraInvocations
 instance JSON.FromJSON ExecutableSpecification where
   parseJSON =
     parseObject (Set.fromList ["name", "sources"])
-                (Set.fromList ["prerequisites", "extra-invocations"])
+                (Set.fromList ["prerequisites", "private-headers",
+                               "extra-invocations"])
                 (\object ->
                    ExecutableSpecification
                      <$> object JSON..: "name"
                      <*> object JSON..:? "prerequisites" JSON..!= Set.empty
+                     <*> object JSON..:? "private-headers" JSON..!= Set.empty
                      <*> object JSON..: "sources"
                      <*> object JSON..:? "extra-invocations" JSON..!= [])
 
@@ -957,43 +984,95 @@ instance TextShow LibrarySpecification where
 instance TargetSpecification LibrarySpecification where
   fromAnyTargetSpecification (AnyTargetSpecification specification) =
     cast specification
-  targetSpecificationPrerequisites = librarySpecificationPrerequisites
-  targetSpecificationSources = librarySpecificationSources
-  targetSpecificationExtraInvocations = librarySpecificationExtraInvocations
 instance JSON.FromJSON LibrarySpecification where
   parseJSON =
     parseObject (Set.fromList ["name", "sources"])
-                (Set.fromList ["prerequisites", "extra-invocations"])
+                (Set.fromList ["prerequisites", "public-headers",
+                               "private-headers", "extra-invocations"])
                 (\object ->
                    LibrarySpecification
                      <$> object JSON..: "name"
                      <*> object JSON..:? "prerequisites" JSON..!= Set.empty
+                     <*> object JSON..:? "public-headers" JSON..!= Set.empty
+                     <*> object JSON..:? "private-headers" JSON..!= Set.empty
                      <*> object JSON..: "sources"
                      <*> object JSON..:? "extra-invocations" JSON..!= [])
 
 
 main :: IO ()
 main = do
-  maybeProjectAndTarget <- loadProject Nothing
-  result <- case maybeProjectAndTarget of
-              Nothing -> return False
-              Just (project, target) -> do
-                foldM (\result step -> do
-                         if result
-                           then performBuildStep step
-                           else return False)
-                      True
-                      (outputtingBuildSteps $
-                        targetBuildSteps AmalgamationTask target)
-  if result
-    then putStrLn "\nSuccess"
-    else putStrLn "\nFailure"
-
+  arguments <- IO.getArgs
+  let mode = case arguments of
+               ["amalgamation"] ->
+                 TaskMode AmalgamationTask Nothing
+               ["amalgamation", targetName] ->
+                 TaskMode AmalgamationTask (Just $ Text.pack targetName)
+               ["binary"] ->
+                 TaskMode BinaryTask Nothing
+               ["binary", targetName] ->
+                 TaskMode BinaryTask (Just $ Text.pack targetName)
+               ["test"] ->
+                 TaskMode TestTask Nothing
+               ["test", targetName] ->
+                 TaskMode TestTask (Just $ Text.pack targetName)
+               ["debug"] ->
+                 TaskMode DebugTask Nothing
+               ["debug", targetName] ->
+                 TaskMode DebugTask (Just $ Text.pack targetName)
+               ["clean"] ->
+                 TaskMode CleanTask Nothing
+               ["clean", targetName] ->
+                 TaskMode CleanTask (Just $ Text.pack targetName)
+               [] -> TaskMode BinaryTask Nothing
+               [targetName] ->
+                 TaskMode BinaryTask (Just $ Text.pack targetName)
+               _ -> HelpMode
+  case mode of
+    HelpMode -> do
+      putStrLn "Usage: build [<task>] [<target>]"
+      putStrLn $ concat
+        ["<task> is one of \"amalgamation\", \"binary\", \"test\", ",
+         "\"debug\", and \"clean\".  If omitted, it defaults to \"binary\"."]
+      putStrLn $ concat
+        ["<target> is (at most one) target name as specified in any ",
+         "buildfile in this project.  If omitted, it defaults to the target ",
+         "specified as the default in the current directory's buildfile; if ",
+         "there is none specified there, building is not attempted."]
+    TaskMode task maybeExplicitTargetName -> do
+      result <- do
+        maybeProjectAndDefaults <- loadProject
+        case maybeProjectAndDefaults of
+          Nothing -> return False
+          Just (project, defaults) -> do
+            case defaults ^. defaultsTarget of
+              Nothing -> do
+                putStrLn
+                  "No default target specified in this directory's Buildfile."
+                return False
+              Just targetName -> do
+                case Map.lookup targetName (project ^. projectTargets) of
+                  Nothing -> do
+                    putStrLn $ concat
+                      ["The specified target, \"",
+                       Text.unpack targetName,
+                       "\", is not defined by any Buildfile in this project."]
+                    return False
+                  Just target -> do
+                    foldM (\result step -> do
+                             if result
+                               then performBuildStep step
+                               else return False)
+                          True
+                          (outputtingBuildSteps $
+                            targetBuildSteps AmalgamationTask target)
+      if result
+        then putStrLn "\nBuild succeeded."
+        else putStrLn "\nBuild FAILED."
+  
 
 loadProject
-  :: Maybe Text.Text
-  -> IO (Maybe (Project, AnyTarget))
-loadProject maybeSpecifiedTargetName = do
+  :: IO (Maybe (Project, Defaults))
+loadProject = do
   let buildfileFileName :: IO.FilePath
       buildfileFileName = "Buildfile"
       ensureBuildfileCached
@@ -1100,6 +1179,183 @@ loadProject maybeSpecifiedTargetName = do
                      (subprojectSpecification
                       ^. subprojectSpecificationSubprojects)
           Nothing -> return (buildfileCache, False)
+      translateProjectSpecification
+        :: Map.Map Text.Text AnyFile
+        -> IO.FilePath
+        -> Map.Map IO.FilePath Buildfile
+        -> IO.FilePath
+        -> Maybe (Project, Defaults)
+      translateProjectSpecification
+          availableFiles currentDirectory buildfileCache filePath =
+        case (Map.lookup filePath buildfileCache,
+              Map.lookup (IO.addTrailingPathSeparator currentDirectory
+                          IO.</> buildfileFileName)
+                          buildfileCache) of
+          (Just (ProjectBuildfile project), Just defaults) -> Just
+            (Project (project ^. name)
+                     (foldl' Map.union
+                             (Map.fromList $ catMaybes $ map
+                                (\target ->
+                                   fmap (\result -> (target ^. name, result))
+                                        (translateTargetSpecification
+                                          availableFiles
+                                          (IO.dropFileName filePath)
+                                          target))
+                                (project ^. projectSpecificationTargets))
+                             (map (\subdirectoryName ->
+                                     translateSubprojectSpecification
+                                       availableFiles
+                                       buildfileCache
+                                       (IO.dropFileName filePath
+                                        IO.</> subdirectoryName
+                                        IO.</> buildfileFileName))
+                                  (map Text.unpack $ Set.toList $ project ^.
+                                     projectSpecificationSubprojects))),
+             case defaults of
+               ProjectBuildfile defaultsProject ->
+                 Defaults
+                   (defaultsProject ^. projectSpecificationDefaultTarget)
+               SubprojectBuildfile defaultsSubproject ->
+                 Defaults
+                   (defaultsSubproject ^.
+                      subprojectSpecificationDefaultTarget))
+          _ -> Nothing
+      translateSubprojectSpecification
+        :: Map.Map Text.Text AnyFile
+        -> Map.Map IO.FilePath Buildfile
+        -> IO.FilePath
+        -> Map.Map Text.Text AnyTarget
+      translateSubprojectSpecification
+          availableFiles buildfileCache filePath =
+        case Map.lookup filePath buildfileCache of
+          Just (SubprojectBuildfile subproject) ->
+            (foldl' Map.union
+                    (Map.fromList $ catMaybes $ map
+                       (\target ->
+                          fmap (\result -> (target ^. name, result))
+                               (translateTargetSpecification
+                                 availableFiles
+                                 (IO.dropFileName filePath)
+                                 target))
+                       (subproject ^. subprojectSpecificationTargets))
+                    (map (\subdirectoryName ->
+                            translateSubprojectSpecification
+                              availableFiles
+                              buildfileCache
+                              (IO.dropFileName filePath
+                               IO.</> subdirectoryName
+                               IO.</> buildfileFileName))
+                         (map Text.unpack $ Set.toList $
+                            subproject ^. subprojectSpecificationSubprojects)))
+          _ -> Map.empty
+      translateTargetSpecification
+        :: Map.Map Text.Text AnyFile
+        -> IO.FilePath
+        -> AnyTargetSpecification
+        -> Maybe AnyTarget
+      translateTargetSpecification availableFiles basePath target =
+        case fromAnyTargetSpecification target of
+          Just actualTarget ->
+            fmap AnyTarget $ translateExecutableSpecification
+              availableFiles basePath actualTarget
+          Nothing -> case fromAnyTargetSpecification target of
+                 Just actualTarget ->
+                   fmap AnyTarget $ translateLibrarySpecification
+                     availableFiles basePath actualTarget
+                 Nothing -> Nothing
+      translateExecutableSpecification
+        :: Map.Map Text.Text AnyFile
+        -> IO.FilePath
+        -> ExecutableSpecification
+        -> Maybe ExecutableTarget
+      translateExecutableSpecification availableFiles basePath target =
+        let privateHeaders =
+              translateFiles (translateHeaderFile availableFiles basePath)
+                             (target ^. executableSpecificationPrivateHeaders)
+            sources =
+              translateFiles (translateSourceFile availableFiles basePath)
+                             (target ^. executableSpecificationSources)
+            allFiles = foldl' Map.union Map.empty
+              [availableFiles,
+               Map.map AnyFile privateHeaders,
+               Map.map AnyFile sources]
+        in Just $ ExecutableTarget
+             (target ^. name)
+             (target ^. executableSpecificationPrerequisites)
+             (Set.fromList $ Map.elems privateHeaders)
+             (Set.fromList $ Map.elems sources)
+             (catMaybes $ map (translateInvocation allFiles) $ target ^.
+                executableSpecificationExtraInvocations)
+      translateLibrarySpecification
+        :: Map.Map Text.Text AnyFile
+        -> IO.FilePath
+        -> LibrarySpecification
+        -> Maybe LibraryTarget
+      translateLibrarySpecification availableFiles basePath target =
+        let publicHeaders =
+              translateFiles (translateHeaderFile availableFiles basePath)
+                             (target ^. librarySpecificationPublicHeaders)
+            privateHeaders =
+              translateFiles (translateHeaderFile availableFiles basePath)
+                             (target ^. librarySpecificationPrivateHeaders)
+            sources =
+              translateFiles (translateSourceFile availableFiles basePath)
+                             (target ^. librarySpecificationSources)
+            allFiles = foldl' Map.union Map.empty
+              [availableFiles,
+               Map.map AnyFile publicHeaders,
+               Map.map AnyFile privateHeaders,
+               Map.map AnyFile sources]
+        in Just $ LibraryTarget
+             (target ^. name)
+             (target ^. librarySpecificationPrerequisites)
+             (Set.fromList $ Map.elems publicHeaders)
+             (Set.fromList $ Map.elems privateHeaders)
+             (Set.fromList $ Map.elems sources)
+             (catMaybes $ map (translateInvocation allFiles) $ target ^.
+                librarySpecificationExtraInvocations)
+      translateFiles
+        :: (File file)
+        => (Text.Text -> file)
+        -> Set.Set Text.Text
+        -> Map.Map Text.Text file
+      translateFiles translateFile files =
+        Map.fromList $ map
+          (\filePath ->
+             let file = translateFile filePath
+             in (Text.pack $ IO.takeFileName $ Text.unpack $ file ^. path,
+                 file))
+          (Set.toList files)
+      translateHeaderFile
+        :: Map.Map Text.Text AnyFile
+        -> IO.FilePath
+        -> Text.Text
+        -> HeaderFile
+      translateHeaderFile basePath fileName =
+        undefined -- IAK
+      translateSourceFile
+        :: Map.Map Text.Text AnyFile
+        -> IO.FilePath
+        -> Text.Text
+        -> SourceFile
+      translateSourceFile basePath fileName =
+        undefined -- IAK
+      translateInvocation
+        :: Map.Map Text.Text AnyFile
+        -> InvocationSpecification
+        -> Maybe InvocationBuildStep
+      translateInvocation allFiles invocation = do
+        InvocationBuildStep
+          <$> (Map.lookup (invocation ^. invocationSpecificationExecutable)
+                          allFiles
+               >>= fromAnyFile)
+          <*> Just (invocation ^. invocationSpecificationParameters)
+          <*> (mapM (\input -> Map.lookup input allFiles)
+                    (invocation ^. invocationSpecificationInputs)
+               >>= return . Set.fromList)
+          <*> (mapM (\output -> Map.lookup output allFiles)
+                    (invocation ^. invocationSpecificationOutputs)
+               >>= return . Set.fromList)
   projectRootPath <- IO.getCurrentDirectory
   (projectRootPath, buildfileCache, maybeRootBuildfilePath) <-
     loadAllBuildfilesUpward projectRootPath Map.empty
@@ -1114,7 +1370,43 @@ loadProject maybeSpecifiedTargetName = do
             ["The project root directory is \"",
              IO.addTrailingPathSeparator projectRootPath,
              "\"."]
-          IO.exitSuccess -- TODO
+          let availableFiles =
+                foldl' Map.union Map.empty $ map
+                  (\(basePath, buildfile) ->
+                     let availableTargets =
+                           case buildfile of
+                             ProjectBuildfile availableProject ->
+                               availableProject ^. projectSpecificationTargets
+                             SubprojectBuildfile availableSubproject ->
+                               availableSubproject ^.
+                                 subprojectSpecificationTargets
+                         availableFilesFromTarget
+                             (AnyTargetSpecification target) =
+                           availableFilesFromTarget target
+                         availableFilesFromTarget
+                             (ExecutableSpecification executable) =
+                           let theName = executable ^.
+                                 executableSpecificationName
+                           in Map.fromList
+                               [(theName,
+                                 ExecutableFile
+                                   (Text.pack $
+                                      IO.addTrailingPathSeparator basePath
+                                      IO.</> theName)
+                                   BuiltProvenance)]
+                         availableFilesFromTarget
+                             (LibrarySpecification library) =
+                           Map.empty
+                     in map availableFilesFromTarget availableTargets)
+                  (Map.mapWithKey buildfileCache)
+          currentDirectory <- IO.getCurrentDirectory
+          mapM_ (\(key, value) -> putStrLn $ Text.unpack $ Text.intercalate " "
+                    [Text.pack key, textShow value])
+                (Map.toList buildfileCache)
+          return $ translateProjectSpecification availableFiles
+                                                 currentDirectory
+                                                 buildfileCache
+                                                 rootBuildfilePath
         else do
           putStrLn $ concat
             ["Stopping before doing anything, ",
@@ -1141,57 +1433,6 @@ loadBuildfile filePath = do
     else do
       putStrLn $ concat ["No buildfile exists at ", filePath]
       return Nothing
-
-
-makeProject :: Text.Text -> IO Project
-makeProject name = do
-  return $ Project {
-               _projectName = name,
-               _projectDefaultTarget = Nothing,
-               _projectTargets = Set.empty
-             }
-
-
-makeExecutable :: Text.Text -> Text.Text -> IO ExecutableTarget
-makeExecutable name directory = do
-  files <- scanDirectory directory
-  let headers =
-        Set.fromList $ catMaybes $ map fromAnyFile $ Set.toList files
-      sources =
-        Set.fromList $ catMaybes $ map fromAnyFile $ Set.toList files
-  return $ ExecutableTarget {
-               _executableTargetName = name,
-               _executableTargetPrerequisites = Set.empty,
-               _executableTargetPrivateHeaders = headers,
-               _executableTargetSources = sources
-             }
-
-
-makeLibrary :: Text.Text -> Text.Text -> Set.Set Text.Text -> IO LibraryTarget
-makeLibrary name directory publicHeadersIn = do
-  files <- scanDirectory directory
-  let allHeaders =
-        Set.fromList $ catMaybes $ map fromAnyFile $ Set.toList files
-      sources =
-        Set.fromList $ catMaybes $ map fromAnyFile $ Set.toList files
-      publicHeaders =
-        Set.filter (\header -> Set.member (view path header) publicHeadersIn)
-                   allHeaders
-      privateHeaders = Set.difference allHeaders publicHeaders
-      missingHeaders =
-        Set.difference publicHeadersIn $ Set.map (view path) allHeaders
-  if Set.null missingHeaders
-    then return $ LibraryTarget {
-                      _libraryTargetName = name,
-                      _libraryTargetPrerequisites = Set.empty,
-                      _libraryTargetPublicHeaders = Set.empty,
-                      _libraryTargetPrivateHeaders = privateHeaders,
-                      _libraryTargetSources = sources
-                    }
-    else fail $ Text.unpack $
-      Text.concat ["Headers not found: ",
-                   Text.intercalate ", " $ Set.toList $ missingHeaders,
-                   "."]
 
 
 scanDirectory :: Text.Text -> IO (Set.Set AnyFile)

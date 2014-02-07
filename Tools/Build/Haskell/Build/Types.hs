@@ -1,4 +1,4 @@
-{-# LANGUAGE ExistentialQuantification, TemplateHaskell #-}
+{-# LANGUAGE TemplateHaskell #-}
 module Build.Types
   (TextShow(..),
    HasName(..),
@@ -13,98 +13,38 @@ module Build.Types
    AnyFile(..),
    Task(..),
    HeaderFile(..),
-     headerFileLanguage,
-     headerFilePath,
-     headerFileProvenance,
    SourceFile(..),
-     sourceFileLanguage,
-     sourceFilePath,
-     sourceFileProvenance,
    ObjectFile(..),
-     objectFilePath,
-     objectFileProvenance,
    ExecutableFile(..),
-     executableFilePath,
-     executableFileProvenance,
    LibraryFile(..),
-     libraryFilePath,
-     libraryFileProvenance,
    BuildStepType(..),
    AnyBuildStep(..),
    AnyTarget(..),
    ExecutableTarget(..),
-     executableTargetName,
-     executableTargetPrerequisites,
-     executableTargetPrivateHeaders,
-     executableTargetSources,
    LibraryTarget(..),
-     libraryTargetName,
-     libraryTargetPrerequisites,
-     libraryTargetPublicHeaders,
-     libraryTargetPrivateHeaders,
-     libraryTargetSources,
    InvocationBuildStep(..),
-     invocationBuildStepExecutable,
-     invocationBuildStepParameters,
-     invocationBuildStepInputs,
-     invocationBuildStepOutputs,
    AmalgamateFilesBuildStep(..),
-     amalgamateFilesBuildStepOutput,
-     amalgamateFilesBuildStepInputs,
    CopyFileBuildStep(..),
-     copyFileBuildStepInput,
-     copyFileBuildStepOutputPath,
    MakeDirectoryBuildStep(..),
-     makeDirectoryBuildStepPath,
    ConditionalBuildStep(..),
-     conditionalBuildStepCondition,
-     conditionalBuildStepWhenTrue,
-     conditionalBuildStepWhenFalse,
    ConditionType(..),
    AnyCondition(..),
    AndCondition(..),
-     andConditionItems,
    OrCondition(..),
-     orConditionItems,
    NotCondition(..),
-     notConditionItem,
    PathExistsCondition(..),
-     pathExistsConditionPath,
    FileExistsCondition(..),
-     fileExistsConditionPath,
    DirectoryExistsCondition(..),
-     directoryExistsConditionPath,
    Mode(..),
    Project(..),
-     projectName,
-     projectDefaultTarget,
-     projectTargets,
+   Defaults(..),
    ProjectSpecification(..),
-     projectSpecificationName,
-     projectSpecificationDefaultTarget,
-     projectSpecificationTargets,
-     projectSpecificationSubprojects,
    SubprojectSpecification(..),
-     subprojectSpecificationDefaultTarget,
-     subprojectSpecificationTargets,
-     subprojectSpecificationSubprojects,
    AnyTargetSpecification(..),
    TargetSpecification(..),
    ExecutableSpecification(..),
-     executableSpecificationName,
-     executableSpecificationPrerequisites,
-     executableSpecificationSources,
-     executableSpecificationExtraInvocations,
    LibrarySpecification(..),
-     librarySpecificationName,
-     librarySpecificationPrerequisites,
-     librarySpecificationSources,
-     librarySpecificationExtraInvocations,
    InvocationSpecification(..),
-     invocationSpecificationExecutable,
-     invocationSpecificationParameters,
-     invocationSpecificationInputs,
-     invocationSpecificationOutputs,
    Buildfile(..))
   where
 
@@ -116,6 +56,8 @@ import qualified Data.Text as Text
 import Control.Lens
 import Data.Function
 import Data.Typeable
+
+import Build.Classes
 
 
 class TextShow textShow where
@@ -130,9 +72,6 @@ class HasLanguage hasLanguage where
   language :: Simple Lens hasLanguage Language
 
 
-data AnyFile = forall file . File file => AnyFile file
-
-
 class (TextShow file, Eq file, Ord file, Typeable file) => File file where
   fromAnyFile :: AnyFile -> Maybe file
   fileType :: Getter file FileType
@@ -140,16 +79,10 @@ class (TextShow file, Eq file, Ord file, Typeable file) => File file where
   provenance :: Simple Lens file Provenance
 
 
-data BuildStepType
-  = InvocationBuildStepType
-  | AmalgamateFilesBuildStepType
-  | CopyFileBuildStepType
-  | MakeDirectoryBuildStepType
-  | ConditionalBuildStepType
-
-
-data AnyBuildStep =
-  forall buildStep . BuildStep buildStep => AnyBuildStep buildStep
+class (HasName target, TextShow target, Typeable target) => Target target where
+  targetBuildSteps :: Project -> Task -> target -> [AnyBuildStep]
+  targetPrerequisites :: Simple Lens target (Set.Set Text.Text)
+  targetProducts :: Getter target (Set.Set AnyFile)
 
 
 class (TextShow buildStep, Eq buildStep, Ord buildStep, Typeable buildStep)
@@ -161,13 +94,39 @@ class (TextShow buildStep, Eq buildStep, Ord buildStep, Typeable buildStep)
   performBuildStep :: buildStep -> IO Bool
 
 
+class (TextShow condition, Eq condition, Ord condition, Typeable condition)
+      => Condition condition where
+  fromAnyCondition :: AnyCondition -> Maybe condition
+  conditionType :: Getter condition ConditionType
+  explainCondition :: condition -> Text.Text
+  testCondition :: condition -> IO Bool
+
+
+class (HasName target, TextShow target, Typeable target)
+      => TargetSpecification target where
+  fromAnyTargetSpecification :: AnyTargetSpecification -> Maybe target
+
+
+data AnyFile = forall file . File file => AnyFile file
+
+
 data AnyTarget = forall target . Target target => AnyTarget target
 
 
-class (HasName target, TextShow target, Typeable target) => Target target where
-  targetBuildSteps :: Task -> target -> [AnyBuildStep]
-  targetPrerequisites :: Simple Lens target (Set.Set AnyTarget)
-  targetProducts :: Getter target (Set.Set AnyFile)
+data AnyBuildStep =
+  forall buildStep . BuildStep buildStep => AnyBuildStep buildStep
+
+
+data AnyCondition =
+  forall condition . Condition condition => AnyCondition condition
+
+
+data BuildStepType
+  = InvocationBuildStepType
+  | AmalgamateFilesBuildStepType
+  | CopyFileBuildStepType
+  | MakeDirectoryBuildStepType
+  | ConditionalBuildStepType
 
 
 data ConditionType
@@ -177,18 +136,6 @@ data ConditionType
   | PathExistsConditionType
   | FileExistsConditionType
   | DirectoryExistsConditionType
-
-
-data AnyCondition =
-  forall condition . Condition condition => AnyCondition condition
-
-
-class (TextShow condition, Eq condition, Ord condition, Typeable condition)
-      => Condition condition where
-  fromAnyCondition :: AnyCondition -> Maybe condition
-  conditionType :: Getter condition ConditionType
-  explainCondition :: condition -> Text.Text
-  testCondition :: condition -> IO Bool
 
 
 data Language
@@ -259,27 +206,6 @@ data LibraryFile =
       _libraryFileProvenance :: Provenance
     }
 makeLenses ''LibraryFile
-
-
-data ExecutableTarget =
-  ExecutableTarget {
-      _executableTargetName :: Text.Text,
-      _executableTargetPrerequisites :: Set.Set AnyTarget,
-      _executableTargetPrivateHeaders :: Set.Set HeaderFile,
-      _executableTargetSources :: Set.Set SourceFile
-    }
-makeLenses ''ExecutableTarget
-
-
-data LibraryTarget =
-  LibraryTarget {
-      _libraryTargetName :: Text.Text,
-      _libraryTargetPrerequisites :: Set.Set AnyTarget,
-      _libraryTargetPublicHeaders :: Set.Set HeaderFile,
-      _libraryTargetPrivateHeaders :: Set.Set HeaderFile,
-      _libraryTargetSources :: Set.Set SourceFile
-    }
-makeLenses ''LibraryTarget
 
 
 data InvocationBuildStep =
@@ -366,18 +292,47 @@ data DirectoryExistsCondition =
 makeLenses ''DirectoryExistsCondition
 
 
+data ExecutableTarget =
+  ExecutableTarget {
+      _executableTargetName :: Text.Text,
+      _executableTargetPrerequisites :: Set.Set Text.Text,
+      _executableTargetPrivateHeaders :: Set.Set HeaderFile,
+      _executableTargetSources :: Set.Set SourceFile,
+      _executableTargetExtraInvocations :: [InvocationBuildStep]
+    }
+makeLenses ''ExecutableTarget
+
+
+data LibraryTarget =
+  LibraryTarget {
+      _libraryTargetName :: Text.Text,
+      _libraryTargetPrerequisites :: Set.Set Text.Text,
+      _libraryTargetPublicHeaders :: Set.Set HeaderFile,
+      _libraryTargetPrivateHeaders :: Set.Set HeaderFile,
+      _libraryTargetSources :: Set.Set SourceFile,
+      _libraryTargetExtraInvocations :: [InvocationBuildStep]
+    }
+makeLenses ''LibraryTarget
+
+
 data Mode
   = HelpMode
-  | TaskMode Task AnyTarget
+  | TaskMode Task (Maybe Text.Text)
 
 
 data Project =
   Project {
       _projectName :: Text.Text,
-      _projectDefaultTarget :: Maybe AnyTarget,
-      _projectTargets :: Set.Set AnyTarget
+      _projectTargets :: Map.Map Text.Text AnyTarget
     }
 makeLenses ''Project
+
+
+data Defaults =
+  Defaults {
+      _defaultsTarget :: Maybe Text.Text
+    }
+makeLenses ''Defaults
 
 
 data InvocationSpecification =
@@ -394,6 +349,7 @@ data ExecutableSpecification =
   ExecutableSpecification {
       _executableSpecificationName :: Text.Text,
       _executableSpecificationPrerequisites :: Set.Set Text.Text,
+      _executableSpecificationPrivateHeaders :: Set.Set Text.Text,
       _executableSpecificationSources :: Set.Set Text.Text,
       _executableSpecificationExtraInvocations :: [InvocationSpecification]
     }
@@ -404,6 +360,8 @@ data LibrarySpecification =
   LibrarySpecification {
       _librarySpecificationName :: Text.Text,
       _librarySpecificationPrerequisites :: Set.Set Text.Text,
+      _librarySpecificationPublicHeaders :: Set.Set Text.Text,
+      _librarySpecificationPrivateHeaders :: Set.Set Text.Text,
       _librarySpecificationSources :: Set.Set Text.Text,
       _librarySpecificationExtraInvocations :: [InvocationSpecification]
     }
@@ -412,15 +370,6 @@ makeLenses ''LibrarySpecification
 
 data AnyTargetSpecification =
   forall target . TargetSpecification target => AnyTargetSpecification target
-
-
-class (HasName target, TextShow target, Typeable target)
-      => TargetSpecification target where
-  fromAnyTargetSpecification :: AnyTargetSpecification -> Maybe target
-  targetSpecificationPrerequisites :: Simple Lens target (Set.Set Text.Text)
-  targetSpecificationSources :: Simple Lens target (Set.Set Text.Text)
-  targetSpecificationExtraInvocations
-    :: Simple Lens target [InvocationSpecification]
 
 
 data ProjectSpecification =
