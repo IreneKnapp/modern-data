@@ -19,8 +19,10 @@ Source-Repository head
 
 Executable build
   main-is: Main.hs
-  other-modules: Build.Classes,
-                 Build.Types
+  other-modules: Build.Types,
+                 Build.Types.Instances,
+                 Build.Types.Lenses,
+                 Build.Types.Types
   hs-source-dirs: Haskell
   build-depends: aeson >= 0.6.1.0 && < 1,
                  base >= 4.1 && < 5,
