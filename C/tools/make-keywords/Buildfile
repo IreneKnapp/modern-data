@@ -1,5 +1,6 @@
 {
   "type": "subproject",
+  "default-target": "make-keywords",
   "targets": [
     {
       "type": "executable",
