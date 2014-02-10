@@ -946,11 +946,14 @@ instance HasName ExecutableSpecification where
 instance TextShow ExecutableSpecification where
   textShow specification =
     Text.concat $
-      ["(library-specification \"",
+      ["(executable-specification \"",
        specification ^. name,
        "\" (",
        Text.intercalate " "
          (Set.elems $ specification ^. executableSpecificationPrerequisites),
+       ") (",
+       Text.intercalate " "
+         (Set.elems $ specification ^. executableSpecificationPrivateHeaders),
        ") (",
        Text.intercalate " "
          (Set.elems $ specification ^. executableSpecificationSources),
@@ -985,6 +988,12 @@ instance TextShow LibrarySpecification where
        "\" (",
        Text.intercalate " "
          (Set.elems $ specification ^. librarySpecificationPrerequisites),
+       ") (",
+       Text.intercalate " "
+         (Set.elems $ specification ^. librarySpecificationPublicHeaders),
+       ") (",
+       Text.intercalate " "
+         (Set.elems $ specification ^. librarySpecificationPrivateHeaders),
        ") (",
        Text.intercalate " "
          (Set.elems $ specification ^. librarySpecificationSources),

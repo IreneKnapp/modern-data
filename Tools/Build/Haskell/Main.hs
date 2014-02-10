@@ -19,6 +19,8 @@ import Data.Maybe
 
 import Build.Types
 
+import Debug.Trace
+
 
 main :: IO ()
 main = do
@@ -63,7 +65,9 @@ main = do
       result <- do
         maybeProjectAndDefaults <- loadProject
         case maybeProjectAndDefaults of
-          Nothing -> return False
+          Nothing -> do
+            putStrLn "Project wasn't able to load."
+            return False
           Just (project, defaults) -> do
             case defaults ^. defaultsTarget of
               Nothing -> do
@@ -123,18 +127,26 @@ loadProject = do
         Map.mapKeys (\path -> prefixPath IO.</> path) buildfileCache
       loadAllBuildfilesUpward
         :: IO.FilePath
+        -> IO.FilePath
         -> Map.Map IO.FilePath Buildfile
-        -> IO (IO.FilePath, Map.Map IO.FilePath Buildfile, Maybe IO.FilePath)
-      loadAllBuildfilesUpward projectRootPath buildfileCache = do
+        -> IO (IO.FilePath,
+               Map.Map IO.FilePath Buildfile,
+               Maybe (IO.FilePath, IO.FilePath))
+      loadAllBuildfilesUpward
+          projectRootPath defaultBuildfilePath buildfileCache = do
         buildfileCache <-
           ensureBuildfileCached projectRootPath buildfileCache
             buildfileFileName
         case Map.lookup buildfileFileName buildfileCache of
           Just (ProjectBuildfile _) ->
-            return (projectRootPath, buildfileCache, Just buildfileFileName)
+            return (projectRootPath,
+                    buildfileCache,
+                    Just (buildfileFileName, defaultBuildfilePath))
           Just (SubprojectBuildfile subprojectSpecification) -> do
             loadAllBuildfilesUpward
               (IO.dropTrailingPathSeparator $ IO.dropFileName projectRootPath)
+              ((IO.addTrailingPathSeparator $ IO.takeFileName projectRootPath)
+               IO.</> defaultBuildfilePath)
               (prefixCachePaths
                 (IO.addTrailingPathSeparator $ IO.takeFileName projectRootPath)
                 buildfileCache)
@@ -202,16 +214,14 @@ loadProject = do
           Nothing -> return (buildfileCache, False)
       translateProjectSpecification
         :: Map.Map Text.Text AnyFile
-        -> IO.FilePath
         -> Map.Map IO.FilePath Buildfile
+        -> IO.FilePath
         -> IO.FilePath
         -> Maybe (Project, Defaults)
       translateProjectSpecification
-          availableFiles currentDirectory buildfileCache filePath =
-        case (Map.lookup filePath buildfileCache,
-              Map.lookup (IO.addTrailingPathSeparator currentDirectory
-                          IO.</> buildfileFileName)
-                          buildfileCache) of
+          availableFiles buildfileCache rootFilePath defaultFilePath =
+        case (Map.lookup rootFilePath buildfileCache,
+              Map.lookup defaultFilePath buildfileCache) of
           (Just (ProjectBuildfile project), Just defaults) -> Just
             (Project (project ^. name)
                      (foldl' Map.union
@@ -220,14 +230,14 @@ loadProject = do
                                    fmap (\result -> (target ^. name, result))
                                         (translateTargetSpecification
                                           availableFiles
-                                          (IO.dropFileName filePath)
+                                          (IO.dropFileName rootFilePath)
                                           target))
                                 (project ^. projectSpecificationTargets))
                              (map (\subdirectoryName ->
                                      translateSubprojectSpecification
                                        availableFiles
                                        buildfileCache
-                                       (IO.dropFileName filePath
+                                       (IO.dropFileName rootFilePath
                                         IO.</> subdirectoryName
                                         IO.</> buildfileFileName))
                                   (map Text.unpack $ Set.toList $ project ^.
@@ -378,10 +388,10 @@ loadProject = do
                     (invocation ^. invocationSpecificationOutputs)
                >>= return . Set.fromList)
   projectRootPath <- IO.getCurrentDirectory
-  (projectRootPath, buildfileCache, maybeRootBuildfilePath) <-
-    loadAllBuildfilesUpward projectRootPath Map.empty
-  case maybeRootBuildfilePath of
-    Just rootBuildfilePath -> do
+  (projectRootPath, buildfileCache, maybeBuildfilePaths) <-
+    loadAllBuildfilesUpward projectRootPath buildfileFileName Map.empty
+  case maybeBuildfilePaths of
+    Just (rootBuildfilePath, defaultBuildfilePath) -> do
       (buildfileCache, result) <-
         loadAllBuildfilesDownward
           projectRootPath buildfileCache rootBuildfilePath True
@@ -426,14 +436,10 @@ loadProject = do
                      in foldl' Map.union Map.empty
                           (map availableFilesFromTarget availableTargets))
                   (Map.toList buildfileCache)
-          currentDirectory <- IO.getCurrentDirectory
-          mapM_ (\(key, value) -> putStrLn $ Text.unpack $ Text.intercalate " "
-                    [Text.pack key, textShow value])
-                (Map.toList buildfileCache)
           return $ translateProjectSpecification availableFiles
-                                                 currentDirectory
                                                  buildfileCache
                                                  rootBuildfilePath
+                                                 defaultBuildfilePath
         else do
           putStrLn $ concat
             ["Stopping before doing anything, ",
