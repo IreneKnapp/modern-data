@@ -790,6 +790,15 @@ instance Ord Project where
   compare a b = on compare _projectName a b
 instance HasName Project where
   name = projectName
+instance TextShow Project where
+  textShow project =
+    Text.concat $
+      ["(project \"",
+       project ^. name,
+       "\" ",
+       Text.intercalate " " $ map textShow $ Map.elems $
+         project ^. projectTargets,
+       ")"]
 
 
 parseObject

@@ -19,8 +19,6 @@ import Data.Maybe
 
 import Build.Types
 
-import Debug.Trace
-
 
 main :: IO ()
 main = do
@@ -69,6 +67,7 @@ main = do
             putStrLn "Project wasn't able to load."
             return False
           Just (project, defaults) -> do
+            putStrLn $ Text.unpack $ textShow project
             case defaults ^. defaultsTarget of
               Nothing -> do
                 putStrLn
@@ -216,11 +215,10 @@ loadProject = do
         :: Map.Map Text.Text AnyFile
         -> Map.Map IO.FilePath Buildfile
         -> IO.FilePath
-        -> IO.FilePath
         -> Maybe (Project, Defaults)
       translateProjectSpecification
-          availableFiles buildfileCache rootFilePath defaultFilePath =
-        case (Map.lookup rootFilePath buildfileCache,
+          availableFiles buildfileCache defaultFilePath =
+        case (Map.lookup buildfileFileName buildfileCache,
               Map.lookup defaultFilePath buildfileCache) of
           (Just (ProjectBuildfile project), Just defaults) -> Just
             (Project (project ^. name)
@@ -230,15 +228,14 @@ loadProject = do
                                    fmap (\result -> (target ^. name, result))
                                         (translateTargetSpecification
                                           availableFiles
-                                          (IO.dropFileName rootFilePath)
+                                          ""
                                           target))
                                 (project ^. projectSpecificationTargets))
                              (map (\subdirectoryName ->
                                      translateSubprojectSpecification
                                        availableFiles
                                        buildfileCache
-                                       (IO.dropFileName rootFilePath
-                                        IO.</> subdirectoryName
+                                       (subdirectoryName
                                         IO.</> buildfileFileName))
                                   (map Text.unpack $ Set.toList $ project ^.
                                      projectSpecificationSubprojects))),
@@ -438,7 +435,6 @@ loadProject = do
                   (Map.toList buildfileCache)
           return $ translateProjectSpecification availableFiles
                                                  buildfileCache
-                                                 rootBuildfilePath
                                                  defaultBuildfilePath
         else do
           putStrLn $ concat
