@@ -39,6 +39,7 @@ module Build.Types.Lenses
    pathExistsConditionPath,
    fileExistsConditionPath,
    directoryExistsConditionPath,
+   projectRootPath,
    projectName,
    projectTargets,
    defaultsTarget,

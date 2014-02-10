@@ -1,4 +1,4 @@
-{-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE ExistentialQuantification, Rank2Types #-}
 module Build.Types.Types
   (TextShow(..),
    HasName(..),
@@ -301,6 +301,7 @@ data Mode
 
 data Project =
   Project {
+      _projectRootPath :: Text.Text,
       _projectName :: Text.Text,
       _projectTargets :: Map.Map Text.Text AnyTarget
     }

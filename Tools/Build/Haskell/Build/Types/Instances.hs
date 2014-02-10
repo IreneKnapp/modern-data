@@ -75,6 +75,8 @@ instance TextShow Language where
 
 instance TextShow Provenance where
   textShow InputProvenance = "input-provenance"
+  textShow BuiltProvenance = "built-provenance"
+  textShow SystemProvenance = "system-provenance"
 
 
 anyFile
@@ -316,9 +318,9 @@ instance Target ExecutableTarget where
           Set.fromList
             [AnyFile $ ExecutableFile {
                  _executableFilePath =
-                   Text.concat ["_build/",
+                   Text.concat ["_build/targets/",
                                 executable ^. name,
-                                "/binary/products/",
+                                "/executables/",
                                 executable ^. name],
                  _executableFileProvenance = BuiltProvenance
                }])
@@ -346,7 +348,7 @@ instance Target LibraryTarget where
     let amalgamationFile = SourceFile {
             _sourceFileLanguage = CLanguage,
             _sourceFilePath =
-              Text.concat ["_build/",
+              Text.concat ["_build/targets/",
                            library ^. name,
                            "/amalgamation/",
                            library ^. name,
@@ -379,9 +381,9 @@ instance Target LibraryTarget where
           Set.fromList
             [AnyFile $ LibraryFile {
                  _libraryFilePath =
-                   Text.concat ["_build/",
+                   Text.concat ["_build/targets/",
                                 library ^. name,
-                                "/binary/products/lib",
+                                "/libraries/lib",
                                 library ^. name,
                                 ".a"],
                  _libraryFileProvenance = BuiltProvenance
@@ -535,13 +537,11 @@ instance BuildStep MakeDirectoryBuildStep where
   buildStepInputs = to (\_ -> Set.empty)
   buildStepOutputs = to (\_ -> Set.empty)
   performBuildStep make = do
-    let path = Text.unpack $ make ^. makeDirectoryBuildStepPath
-    exists <- IO.doesDirectoryExist path
-    if exists
-      then return True
-      else do
-        IO.createDirectory path
-        return True
+    putStrLn $ Text.unpack $ Text.intercalate " "
+      ["mkdir",
+       make ^. makeDirectoryBuildStepPath]
+    IO.createDirectory $ Text.unpack $ make ^. makeDirectoryBuildStepPath
+    return True
 instance TextShow MakeDirectoryBuildStep where
   textShow make =
     Text.concat $
@@ -777,7 +777,8 @@ instance Condition DirectoryExistsCondition where
     Text.concat
       ["(directory-exists ", condition ^. directoryExistsConditionPath, ")"]
   testCondition condition = do
-    return False
+    IO.doesDirectoryExist $ Text.unpack $
+      condition ^. directoryExistsConditionPath
 instance TextShow DirectoryExistsCondition where
   textShow condition =
     Text.concat
@@ -794,6 +795,8 @@ instance TextShow Project where
   textShow project =
     Text.concat $
       ["(project \"",
+       project ^. projectRootPath,
+       "\" \"",
        project ^. name,
        "\" ",
        Text.intercalate " " $ map textShow $ Map.elems $
@@ -1051,9 +1054,9 @@ compileFileBuildStep :: AnyTarget -> SourceFile -> AnyBuildStep
 compileFileBuildStep target input =
   let output = ObjectFile {
           _objectFilePath =
-            Text.concat ["_build/",
+            Text.concat ["_build/targets/",
                          target ^. name,
-                         "/binary/objects/",
+                         "/objects/",
                          Text.pack $ IO.takeBaseName $ Text.unpack $
                            input ^. path,
                          ".o"],
@@ -1069,9 +1072,9 @@ linkExecutableFileBuildStep :: AnyTarget -> [ObjectFile] -> AnyBuildStep
 linkExecutableFileBuildStep target inputs =
   let output = ExecutableFile {
           _executableFilePath =
-            Text.concat ["_build/",
+            Text.concat ["_build/targets/",
                          target ^. name,
-                         "/binary/bin/",
+                         "/executables/",
                          target ^. name],
           _executableFileProvenance = BuiltProvenance
         }

@@ -67,7 +67,6 @@ main = do
             putStrLn "Project wasn't able to load."
             return False
           Just (project, defaults) -> do
-            putStrLn $ Text.unpack $ textShow project
             case defaults ^. defaultsTarget of
               Nothing -> do
                 putStrLn
@@ -82,13 +81,15 @@ main = do
                        "\", is not defined by any Buildfile in this project."]
                     return False
                   Just target -> do
+                    IO.setCurrentDirectory $ Text.unpack $
+                      project ^. projectRootPath
                     foldM (\result step -> do
                              if result
                                then performBuildStep step
                                else return False)
                           True
-                          (outputtingBuildSteps $
-                            targetBuildSteps project AmalgamationTask target)
+                          (outputtingBuildSteps project $
+                            targetBuildSteps project task target)
       if result
         then putStrLn "\nBuild succeeded."
         else putStrLn "\nBuild FAILED."
@@ -104,11 +105,11 @@ loadProject = do
         -> Map.Map IO.FilePath Buildfile
         -> IO.FilePath
         -> IO (Map.Map IO.FilePath Buildfile)
-      ensureBuildfileCached projectRootPath buildfileCache filePath = do
+      ensureBuildfileCached theProjectRootPath buildfileCache filePath = do
         case Map.lookup filePath buildfileCache of
           Just buildfile -> return buildfileCache
           Nothing -> do
-            maybeBuildfile <- loadBuildfile (projectRootPath IO.</> filePath)
+            maybeBuildfile <- loadBuildfile (theProjectRootPath IO.</> filePath)
             case maybeBuildfile of
               Nothing -> do
                 putStrLn $ concat
@@ -132,24 +133,27 @@ loadProject = do
                Map.Map IO.FilePath Buildfile,
                Maybe (IO.FilePath, IO.FilePath))
       loadAllBuildfilesUpward
-          projectRootPath defaultBuildfilePath buildfileCache = do
+          theProjectRootPath defaultBuildfilePath buildfileCache = do
         buildfileCache <-
-          ensureBuildfileCached projectRootPath buildfileCache
+          ensureBuildfileCached theProjectRootPath buildfileCache
             buildfileFileName
         case Map.lookup buildfileFileName buildfileCache of
           Just (ProjectBuildfile _) ->
-            return (projectRootPath,
+            return (theProjectRootPath,
                     buildfileCache,
                     Just (buildfileFileName, defaultBuildfilePath))
           Just (SubprojectBuildfile subprojectSpecification) -> do
             loadAllBuildfilesUpward
-              (IO.dropTrailingPathSeparator $ IO.dropFileName projectRootPath)
-              ((IO.addTrailingPathSeparator $ IO.takeFileName projectRootPath)
+              (IO.dropTrailingPathSeparator $ IO.dropFileName
+                 theProjectRootPath)
+              ((IO.addTrailingPathSeparator $ IO.takeFileName
+                 theProjectRootPath)
                IO.</> defaultBuildfilePath)
               (prefixCachePaths
-                (IO.addTrailingPathSeparator $ IO.takeFileName projectRootPath)
+                (IO.addTrailingPathSeparator $ IO.takeFileName
+                   theProjectRootPath)
                 buildfileCache)
-          Nothing -> return (projectRootPath, buildfileCache, Nothing)
+          Nothing -> return (theProjectRootPath, buildfileCache, Nothing)
       loadAllBuildfilesDownward
         :: IO.FilePath
         -> Map.Map IO.FilePath Buildfile
@@ -157,9 +161,9 @@ loadProject = do
         -> Bool
         -> IO (Map.Map IO.FilePath Buildfile, Bool)
       loadAllBuildfilesDownward
-          projectRootPath buildfileCache filePath atTopLevel = do
+          theProjectRootPath buildfileCache filePath atTopLevel = do
         buildfileCache <-
-          ensureBuildfileCached projectRootPath buildfileCache filePath
+          ensureBuildfileCached theProjectRootPath buildfileCache filePath
         let loadImmediatelyDownward
               :: Set.Set Text.Text
               -> IO (Map.Map IO.FilePath Buildfile, Bool)
@@ -178,7 +182,7 @@ loadProject = do
                                     IO.</> buildfileFileName
                        (buildfileCache, resultHere) <-
                         loadAllBuildfilesDownward
-                          projectRootPath
+                          theProjectRootPath
                           buildfileCache
                           subprojectBuildfilePath
                           False
@@ -215,13 +219,15 @@ loadProject = do
         :: Map.Map Text.Text AnyFile
         -> Map.Map IO.FilePath Buildfile
         -> IO.FilePath
+        -> IO.FilePath
         -> Maybe (Project, Defaults)
       translateProjectSpecification
-          availableFiles buildfileCache defaultFilePath =
+          availableFiles buildfileCache theProjectRootPath defaultFilePath =
         case (Map.lookup buildfileFileName buildfileCache,
               Map.lookup defaultFilePath buildfileCache) of
           (Just (ProjectBuildfile project), Just defaults) -> Just
-            (Project (project ^. name)
+            (Project (Text.pack theProjectRootPath)
+                     (project ^. name)
                      (foldl' Map.union
                              (Map.fromList $ catMaybes $ map
                                 (\target ->
@@ -401,19 +407,19 @@ loadProject = do
           <*> (mapM (\output -> Map.lookup output allFiles)
                     (invocation ^. invocationSpecificationOutputs)
                >>= return . Set.fromList)
-  projectRootPath <- IO.getCurrentDirectory
-  (projectRootPath, buildfileCache, maybeBuildfilePaths) <-
-    loadAllBuildfilesUpward projectRootPath buildfileFileName Map.empty
+  theProjectRootPath <- IO.getCurrentDirectory
+  (theProjectRootPath, buildfileCache, maybeBuildfilePaths) <-
+    loadAllBuildfilesUpward theProjectRootPath buildfileFileName Map.empty
   case maybeBuildfilePaths of
     Just (rootBuildfilePath, defaultBuildfilePath) -> do
       (buildfileCache, result) <-
         loadAllBuildfilesDownward
-          projectRootPath buildfileCache rootBuildfilePath True
+          theProjectRootPath buildfileCache rootBuildfilePath True
       if result
         then do
           putStrLn $ concat
             ["The project root directory is \"",
-             IO.addTrailingPathSeparator projectRootPath,
+             IO.addTrailingPathSeparator theProjectRootPath,
              "\"."]
           let availableFiles =
                 foldl' Map.union Map.empty $ map
@@ -452,6 +458,7 @@ loadProject = do
                   (Map.toList buildfileCache)
           return $ translateProjectSpecification availableFiles
                                                  buildfileCache
+                                                 theProjectRootPath
                                                  defaultBuildfilePath
         else do
           putStrLn $ concat
@@ -555,8 +562,8 @@ buildStepOutputDirectories = to $ \buildStep ->
                innermostDirectories
 
 
-outputtingBuildSteps :: [AnyBuildStep] -> [AnyBuildStep]
-outputtingBuildSteps steps =
+outputtingBuildSteps :: Project -> [AnyBuildStep] -> [AnyBuildStep]
+outputtingBuildSteps project steps =
   let ensureDirectory path =
         [AnyBuildStep $ ConditionalBuildStep {
              _conditionalBuildStepCondition =
@@ -572,6 +579,16 @@ outputtingBuildSteps steps =
                   }],
              _conditionalBuildStepWhenFalse = []
            }]
+      directoriesOutsideProject =
+        Set.fromList $ unfoldr
+          (\path ->
+             let pathComponents =
+                   tail $ IO.splitPath $ IO.dropTrailingPathSeparator path
+             in if (length pathComponents) < 1
+                  then Nothing
+                  else Just (Text.pack $ IO.dropTrailingPathSeparator path,
+                             IO.joinPath ("/" : init pathComponents)))
+          (Text.unpack $ project ^. projectRootPath)
       (result, _) =
         foldl' (\(soFar, directoriesSoFar) step ->
                   let directoriesHere =
@@ -582,6 +599,6 @@ outputtingBuildSteps steps =
                                     (Set.toList directoriesHere))
                       ++ [step],
                       Set.union directoriesSoFar directoriesHere))
-               ([], Set.empty)
+               ([], directoriesOutsideProject)
                steps
   in result
