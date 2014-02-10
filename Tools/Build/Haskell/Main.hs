@@ -344,30 +344,47 @@ loadProject = do
                 librarySpecificationExtraInvocations)
       translateFiles
         :: (File file)
-        => (Text.Text -> file)
+        => (Text.Text -> Maybe file)
         -> Set.Set Text.Text
         -> Map.Map Text.Text file
       translateFiles translateFile files =
-        Map.fromList $ map
+        Map.fromList $ catMaybes $ map
           (\filePath ->
-             let file = translateFile filePath
-             in (Text.pack $ IO.takeFileName $ Text.unpack $ file ^. path,
-                 file))
+             let maybeFile = translateFile filePath
+             in fmap (\file ->
+                        (Text.pack $ IO.takeFileName $ Text.unpack $
+                           file ^. path,
+                         file))
+                     maybeFile)
           (Set.toList files)
       translateHeaderFile
         :: Map.Map Text.Text AnyFile
         -> IO.FilePath
         -> Text.Text
-        -> HeaderFile
-      translateHeaderFile basePath fileName =
-        undefined -- IAK
+        -> Maybe HeaderFile
+      translateHeaderFile availableFiles basePath fileName =
+        listToMaybe $ catMaybes $ map fromAnyFile $ filter
+          (\anyFile -> case fromAnyFile anyFile of
+                         Just file ->
+                           (Text.pack $ IO.takeFileName $ Text.unpack $
+                             (file :: HeaderFile) ^. path)
+                           == fileName
+                         Nothing -> False)
+          (Map.elems availableFiles)
       translateSourceFile
         :: Map.Map Text.Text AnyFile
         -> IO.FilePath
         -> Text.Text
-        -> SourceFile
-      translateSourceFile basePath fileName =
-        undefined -- IAK
+        -> Maybe SourceFile
+      translateSourceFile availableFiles basePath fileName =
+        listToMaybe $ catMaybes $ map fromAnyFile $ filter
+          (\anyFile -> case fromAnyFile anyFile of
+                         Just file ->
+                           (Text.pack $ IO.takeFileName $ Text.unpack $
+                             (file :: SourceFile) ^. path)
+                           == fileName
+                         Nothing -> False)
+          (Map.elems availableFiles)
       translateInvocation
         :: Map.Map Text.Text AnyFile
         -> InvocationSpecification
