@@ -3,6 +3,7 @@ module Main (main) where
 
 import qualified Data.Aeson as JSON
 import qualified Data.ByteString.Lazy as LazyByteString
+import qualified Data.List as List
 import qualified Data.Map as Map
 import qualified Data.Set as Set
 import qualified Data.Text as Text
@@ -383,14 +384,42 @@ loadProject = do
         -> Text.Text
         -> Maybe SourceFile
       translateSourceFile availableFiles basePath fileName =
-        listToMaybe $ catMaybes $ map fromAnyFile $ filter
-          (\anyFile -> case fromAnyFile anyFile of
-                         Just file ->
-                           (Text.pack $ IO.takeFileName $ Text.unpack $
-                             (file :: SourceFile) ^. path)
-                           == fileName
-                         Nothing -> False)
-          (Map.elems availableFiles)
+        case listToMaybe $ catMaybes $ map fromAnyFile $ filter
+               (\anyFile -> case fromAnyFile anyFile of
+                              Just file ->
+                                (Text.pack $ IO.takeFileName $ Text.unpack $
+                                  (file :: SourceFile) ^. path)
+                                == fileName
+                              Nothing -> False)
+               (Map.elems availableFiles) of
+         result@(Just _) -> result
+         Nothing -> do
+           language <- inferSourceFileLanguage $ IO.takeFileName $ Text.unpack
+             fileName
+           path <- normalFilePath $ basePath IO.</> Text.unpack fileName
+           return $ SourceFile {
+                        _sourceFileLanguage = language,
+                        _sourceFilePath = Text.pack path,
+                        _sourceFileProvenance = InputProvenance
+                      }
+      inferSourceFileLanguage
+        :: IO.FilePath
+        -> Maybe Language
+      inferSourceFileLanguage fileName =
+        case IO.takeExtension fileName of
+          ".c" -> Just CLanguage
+          ".h" -> Just CLanguage
+          ".hs" -> Just HaskellLanguage
+          _ -> Nothing
+      normalFilePath
+        :: IO.FilePath
+        -> Maybe IO.FilePath
+      normalFilePath path =
+        let normalizedPath = IO.normalise path
+            escapes = False -- any (== "..") $ IO.splitDirectories normalizedPath
+        in if escapes
+             then Nothing
+             else Just normalizedPath
       translateInvocation
         :: Map.Map Text.Text AnyFile
         -> InvocationSpecification
@@ -456,10 +485,14 @@ loadProject = do
                      in foldl' Map.union Map.empty
                           (map availableFilesFromTarget availableTargets))
                   (Map.toList buildfileCache)
-          return $ translateProjectSpecification availableFiles
+          let project = translateProjectSpecification availableFiles
                                                  buildfileCache
                                                  theProjectRootPath
                                                  defaultBuildfilePath
+          case project of
+            Just (project', _) -> putStrLn $ Text.unpack $ textShow project'
+            _ -> return ()
+          return project
         else do
           putStrLn $ concat
             ["Stopping before doing anything, ",
@@ -482,7 +515,9 @@ loadBuildfile filePath = do
              "\": ",
              message]
           return Nothing
-        Right buildfile -> return $ Just buildfile
+        Right buildfile -> do
+          putStrLn $ Text.unpack $ textShow buildfile
+          return $ Just buildfile
     else do
       putStrLn $ concat ["No buildfile exists at ", filePath]
       return Nothing
