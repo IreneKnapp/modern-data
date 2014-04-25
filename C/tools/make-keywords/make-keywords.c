@@ -77,9 +77,17 @@ struct bucket {
 
 
 int main(int argc, char **argv) {
-    if(argc != 1) {
-        fprintf(stderr, "Usage: make-keywords\n");
+    if(argc < 1 || argc > 2) {
+        fprintf(stderr, "Usage: make-keywords [output.c]\n");
         return 1;
+    }
+    
+    char *filename = NULL;
+    FILE *out;
+    if(argc == 2) {
+        out = fopen(argv[1], "w");
+    } else {
+        out = stdout;
     }
     
     size_t keyword_count = 0;
@@ -130,55 +138,61 @@ int main(int argc, char **argv) {
         free(buckets);
     }
     
-    printf("#define KEYWORD_COUNT %i\n", (int) keyword_count);
-    printf("#define KEYWORD_MODULUS %i\n", (int) bucket_count);
-    printf("\n\n");
-    printf("struct keyword {\n");
-    printf("    uint8_t *text;\n");
-    printf("    void (*emit)\n");
-    printf("         (struct processor_explicatory_state *process_state,\n");
-    printf("          struct modern_stream *stream, void *stream_state,\n");
-    printf("          struct modern_vfile *vfile, void *vfile_state);\n");
-    printf("};\n");
-    printf("\n\n");
-    printf("int8_t keyword_table1[KEYWORD_MODULUS] = {\n");
+    fprintf(out, "#define KEYWORD_COUNT %i\n", (int) keyword_count);
+    fprintf(out, "#define KEYWORD_MODULUS %i\n", (int) bucket_count);
+    fprintf(out, "\n\n");
+    fprintf(out, "struct keyword {\n");
+    fprintf(out, "    uint8_t *text;\n");
+    fprintf(out, "    void (*emit)\n");
+    fprintf(out,
+            "         (struct processor_explicatory_state *process_state,\n");
+    fprintf(out,
+            "          struct modern_stream *stream, void *stream_state,\n");
+    fprintf(out, "          struct modern_vfile *vfile, void *vfile_state);\n");
+    fprintf(out, "};\n");
+    fprintf(out, "\n\n");
+    fprintf(out, "int8_t keyword_table1[KEYWORD_MODULUS] = {\n");
     for(size_t i = 0; i < bucket_count; i++) {
-        if(i % 16 == 0) printf("    ");
-        else printf(" ");
-        printf("%i,",
+        if(i % 16 == 0) fprintf(out, "    ");
+        else fprintf(out, " ");
+        fprintf(out, "%i,",
                buckets[i]->count ? (int) buckets[i]->keywords[0]->index : -1);
-        if((i % 16 == 15) || (i + 1 == bucket_count)) printf("\n");
+        if((i % 16 == 15) || (i + 1 == bucket_count)) fprintf(out, "\n");
     }
-    printf("};\n");
-    printf("\n\n");
+    fprintf(out, "};\n");
+    fprintf(out, "\n\n");
     for(size_t i = 0; i < keyword_count; i++) {
-        printf("HELPER void emit_%s\n", (char *) keywords[i]->text);
-        printf("     (struct processor_explicatory_state *process_state,\n");
-        printf("      struct modern_stream *stream, void *stream_state,\n");
-        printf("      struct modern_vfile *vfile, void *vfile_state);\n");
+        fprintf(out, "HELPER void emit_%s\n", (char *) keywords[i]->text);
+        fprintf(out,
+                "     (struct processor_explicatory_state *process_state,\n");
+        fprintf(out,
+                "      struct modern_stream *stream, void *stream_state,\n");
+        fprintf(out, "      struct modern_vfile *vfile, void *vfile_state);\n");
     }
-    printf("\n\n");
-    printf("struct keyword keyword_table2[KEYWORD_COUNT] = {\n");
+    fprintf(out, "\n\n");
+    fprintf(out, "struct keyword keyword_table2[KEYWORD_COUNT] = {\n");
     for(size_t i = 0; i < keyword_count; i++) {
-        printf("    { (uint8_t *) \"%s\", emit_%s },\n",
+        fprintf(out, "    { (uint8_t *) \"%s\", emit_%s },\n",
                (char *) keywords[i]->text, (char *) keywords[i]->text);
     }
-    printf("};\n");
-    printf("\n\n");
-    printf("HELPER void (*get_keyword(uint8_t *text, size_t length))\n");
-    printf("    (struct processor_explicatory_state *process_state,\n");
-    printf("     struct modern_stream *stream, void *stream_state,\n");
-    printf("     struct modern_vfile *vfile, void *vfile_state)\n");
-    printf("{\n");
-    printf("    struct modern_hash hash;\n");
-    printf("    modern_hash_compute(text, length, &hash);\n");
-    printf("    size_t bucket = keyword_table1[hash.a %% KEYWORD_MODULUS];\n");
-    printf("    if(bucket == -1) return NULL;\n");
-    printf("    struct keyword *keyword = &keyword_table2[bucket];\n");
-    printf("    if(strncmp((char *) keyword->text, (char *) text, length))\n");
-    printf("        return NULL;\n");
-    printf("    return keyword->emit;\n");
-    printf("}\n");
+    fprintf(out, "};\n");
+    fprintf(out, "\n\n");
+    fprintf(out, "HELPER void (*get_keyword(uint8_t *text, size_t length))\n");
+    fprintf(out, "    (struct processor_explicatory_state *process_state,\n");
+    fprintf(out, "     struct modern_stream *stream, void *stream_state,\n");
+    fprintf(out, "     struct modern_vfile *vfile, void *vfile_state)\n");
+    fprintf(out, "{\n");
+    fprintf(out, "    struct modern_hash hash;\n");
+    fprintf(out, "    modern_hash_compute(text, length, &hash);\n");
+    fprintf(out,
+            "    size_t bucket = keyword_table1[hash.a %% KEYWORD_MODULUS];\n");
+    fprintf(out, "    if(bucket == -1) return NULL;\n");
+    fprintf(out, "    struct keyword *keyword = &keyword_table2[bucket];\n");
+    fprintf(out,
+            "    if(strncmp((char *) keyword->text, (char *) text, length))\n");
+    fprintf(out, "        return NULL;\n");
+    fprintf(out, "    return keyword->emit;\n");
+    fprintf(out, "}\n");
     
     return 0;
 }
