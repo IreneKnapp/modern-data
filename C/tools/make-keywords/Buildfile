@@ -7,7 +7,7 @@
       "name": "make-keywords",
       "sources": [
         "make-keywords.c",
-        "../library/hash.c"
+        "../../library/hash.c"
       ]
     }
   ]
